@@ -60,10 +60,10 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import config  # noqa: E402
-import logHandler  # noqa: E402
-from logHandler import log  # noqa: E402
-import winKernel  # noqa: E402
+import config
+import logHandler
+from logHandler import log
+import winKernel
 
 # Find out if NVDA is running as a Windows Store application
 bufLen = ctypes.c_int()
@@ -81,7 +81,7 @@ NVDAState._initializeStartTime()
 
 
 # Check OS version requirements
-import winVersion  # noqa: E402
+import winVersion
 
 if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION), None, winUser.MB_ICONERROR)
@@ -101,7 +101,7 @@ def __getattr__(attrName: str) -> Any:
 
 			log.warning(f"__main__.{attrName} is deprecated, use argsParsing.getParser() instead.")
 			return argsParsing.getParser()
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 _parser = getParser()
@@ -149,7 +149,7 @@ def terminateRunningNVDA(window):
 # Handle running multiple instances of NVDA
 try:
 	oldAppWindowHandle = winUser.FindWindow("wxWindowClassNR", "NVDA")
-except WindowsError as e:
+except OSError as e:
 	_log.info("Can't find existing NVDA via Window Class")
 	_log.debug(f"FindWindow error: {e}")
 	oldAppWindowHandle = 0
@@ -185,8 +185,8 @@ elif globalVars.appArgs.check_running:
 
 
 # Suppress E402 (module level import not at top of file)
-from utils.security import isRunningOnSecureDesktop  # noqa: E402
-from systemUtils import _getDesktopName  # noqa: E402
+from utils.security import isRunningOnSecureDesktop
+from systemUtils import _getDesktopName
 
 # Ensure multiple instances are not fully started by using a mutex
 desktopName = _getDesktopName()
@@ -286,8 +286,8 @@ if isRunningOnSecureDesktop():
 _log = None
 logHandler.initialize()
 if logHandler.log.getEffectiveLevel() is log.DEBUG:
-	log.debug("Provided arguments: {}".format(sys.argv[1:]))
-import buildVersion  # noqa: E402
+	log.debug(f"Provided arguments: {sys.argv[1:]}")
+import buildVersion
 
 log.info(f"Starting NVDA version {buildVersion.version} {os.environ['PROCESSOR_ARCHITECTURE']}")
 log.debug("Debug level logging enabled")

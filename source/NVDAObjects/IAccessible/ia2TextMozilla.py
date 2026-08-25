@@ -7,12 +7,6 @@
 This is now used by other applications as well.
 """
 
-import typing
-from typing import (
-	Optional,
-	Dict,
-	Type,
-)
 
 from comtypes import COMError
 import winUser
@@ -28,13 +22,13 @@ import locationHelper
 from logHandler import log
 
 
-def _getRawTextInfo(obj) -> Type[offsets.OffsetsTextInfo]:
+def _getRawTextInfo(obj) -> type[offsets.OffsetsTextInfo]:
 	if obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
 
-def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
+def _getEmbedded(obj, offset) -> IAccessible | None:
 	if not hasattr(obj, "IAccessibleTextObject"):
 		return obj.getChild(offset)
 	# Mozilla uses IAccessibleHypertext to facilitate quick retrieval of embedded objects.
@@ -104,7 +98,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return False
 
 	def __init__(self, obj, position):
-		super(MozillaCompoundTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		# #3156: The position when the caret is at the end of a wrapped line (e.g.
 		# when you press the end key) has the same offset as the start of the next
 		# line. We need to handle this specially so that the correct units are
@@ -319,7 +313,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			elif isinstance(item, str):
 				yield item
 			elif isinstance(item, int):  # Embedded object.
-				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
+				embedded: IAccessible | None = _getEmbedded(ti.obj, item)
 				if embedded is None:
 					continue
 				notText = _getRawTextInfo(embedded) is NVDAObjectTextInfo
@@ -453,7 +447,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def _get_text(self):
 		return "".join(self._getText(False))
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
 	def _adjustIfEndOfLine(

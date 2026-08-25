@@ -8,14 +8,8 @@
 import os
 from typing import (
 	Any,
-	Callable,
-	Generator,
-	List,
-	Optional,
-	Set,
-	Tuple,
-	Union,
 )
+from collections.abc import Callable, Generator
 from collections import OrderedDict
 import ctypes
 from ctypes.wintypes import HANDLE
@@ -61,7 +55,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 	def __init__(
 		self,
 		defaultLanguage: str,
-		availableLanguages: Set[str],
+		availableLanguages: set[str],
 	):
 		"""
 		Used for newer OneCore installations (OneCore API > 5)
@@ -103,7 +97,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# Therefore, we don't use it.
 		return None
 
-	def convertLangChangeCommand(self, command: LangChangeCommand) -> Optional[speechXml.SetAttrCommand]:
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> speechXml.SetAttrCommand | None:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning(f"Invalid language: {command.lang}")
@@ -125,7 +119,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 	def __init__(
 		self,
 		defaultLanguage: str,
-		availableLanguages: Set[str],
+		availableLanguages: set[str],
 		rate: float,
 		pitch: float,
 		volume: float,
@@ -147,7 +141,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		self._pitch = pitch
 		self._volume = volume
 
-	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any, None, None]:
+	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any]:
 		commands = super().generateBalancerCommands(speechSequence)
 		# The EncloseAllCommand from SSML must be first.
 		yield next(commands)
@@ -256,7 +250,7 @@ class OneCoreSynthDriver(SynthDriver):
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = None
 		# Initialize state.
-		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []
+		self._queuedSpeech: list[str | tuple[Callable[[ctypes.POINTER, float], None], float]] = []
 
 		self._wasCancelled = False
 		self._isProcessing = False
@@ -571,12 +565,12 @@ class OneCoreSynthDriver(SynthDriver):
 		subkey = "\\".join(IDParts[1:])
 		try:
 			hkey = winreg.OpenKey(rootKey, subkey)
-		except WindowsError as e:
+		except OSError as e:
 			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
 			return False
 		try:
 			langDataPath = winreg.QueryValueEx(hkey, "langDataPath")
-		except WindowsError as e:
+		except OSError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
 		if not langDataPath or not isinstance(langDataPath[0], str):
@@ -587,7 +581,7 @@ class OneCoreSynthDriver(SynthDriver):
 			return False
 		try:
 			voicePath = winreg.QueryValueEx(hkey, "voicePath")
-		except WindowsError as e:
+		except OSError as e:
 			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
 			return False
 		if not voicePath or not isinstance(voicePath[0], str):

@@ -22,7 +22,6 @@ GUID for the property.
 import dataclasses
 from typing import (
 	ClassVar,
-	Dict,
 )
 
 from comtypes import (
@@ -43,7 +42,7 @@ class CustomPropertyInfo:
 	guid: GUID
 	programmaticName: str
 	uiaType: UIAutomationType
-	_registeredProperties: ClassVar[Dict[GUID, int]] = dict()
+	_registeredProperties: ClassVar[dict[GUID, int]] = dict()
 
 	def _registerCustomProperty(self) -> int:
 		"""Registers a custom property with a given id.

@@ -6,9 +6,9 @@
 
 from typing import (
 	Any,
-	Generator,
 	cast,
 )
+from collections.abc import Generator
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
 import winVersion
@@ -302,7 +302,7 @@ def msWord_textRange_expandToEnclosingSentence(
 
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange,
-) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
+) -> Generator[tuple[int, str, UIA.IUIAutomationElement]]:
 	op = operation.Operation()
 
 	@op.buildIterableFunction

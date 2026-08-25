@@ -29,7 +29,7 @@ import watchdog
 import exceptions
 import appModuleHandler
 import cursorManager
-from typing import Any, Optional
+from typing import Any
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
@@ -77,7 +77,7 @@ def setForegroundObject(obj: NVDAObjects.NVDAObject) -> bool:
 # C901 'setFocusObject' is too complex
 # Note: when working on setFocusObject, look for opportunities to simplify
 # and move logic out into smaller helper functions.
-def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
+def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:
 	"""Stores an object as the current focus object.
 	Note: this does not physically change the window with focus in the operating system,
 	but allows NVDA to keep track of the correct object.
@@ -396,7 +396,7 @@ def processPendingEvents(processEventQueue=True):
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
 
-def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
+def copyToClip(text: str, notify: bool | None = False) -> bool:
 	"""Copies the given text to the windows clipboard.
 	@returns: True if it succeeds, False otherwise.
 	@param text: the text which will be copied to the clipboard
@@ -435,7 +435,7 @@ def getClipData():
 		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or ""
 
 
-def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
+def getStatusBar() -> NVDAObjects.NVDAObject | None:
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.
 	"""

@@ -4,7 +4,7 @@
 # Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
 
 from collections import defaultdict
-from typing import Dict, Any, List, Union
+from typing import Any
 import re
 
 from io import BytesIO
@@ -35,7 +35,7 @@ def bytesToInt(byteData: bytes):
 class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	_dev: hwIo.IoBase
 	# Used to for error checking.
-	_awaitingFrameReceipts: Dict[int, Any]
+	_awaitingFrameReceipts: dict[int, Any]
 	name = constants.name
 	# Translators: Names of braille displays.
 	description = constants.description
@@ -119,7 +119,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 						writeTimeout=self.timeout,
 						onReceive=self._onReceive,
 					)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning(f"Error while connecting to port {port}", exc_info=True)
 				continue
 
@@ -137,11 +137,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			if self.numCells and self.deviceType:
 				# A display responded.
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self.deviceType,
-						type=portType,
-						port=port,
-					),
+					f"Found {self.deviceType} connected via {portType} ({port})",
 				)
 				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
@@ -175,7 +171,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	def _prepFirstByteStreamAndData(
 		self,
 		data: bytes,
-	) -> tuple[bytes, Union[BytesIO, hwIo.IoBase], bytes]:
+	) -> tuple[bytes, BytesIO | hwIo.IoBase, bytes]:
 		if self.isHid:
 			# data contains the entire packet.
 			# HID Packets start with 0x00.
@@ -301,7 +297,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 					pass
 				self._ignoreCommandKeyReleases = not isIris and (
 					group == constants.EB_KEY_COMMAND or self.keysDown[constants.EB_KEY_COMMAND] > 0
-				)  # noqa E501
+				)
 			if not isIris and group == constants.EB_KEY_COMMAND:
 				self.keysDown[group] = arg
 			else:
@@ -350,7 +346,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			)
 			self._dev.write(hidPacket)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		self._sendPacket(
 			packetType=constants.EB_BRAILLE_DISPLAY,

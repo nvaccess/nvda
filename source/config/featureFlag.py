@@ -15,9 +15,6 @@ from .featureFlagEnums import (
 	BoolFlag,
 	FlagValueEnum,
 )
-from typing import (
-	Union,
-)
 from configobj.validate import (
 	ValidateError,
 	VdtParamError,
@@ -45,7 +42,7 @@ class FeatureFlag:
 		behaviorOfDefault: FlagValueEnum,
 	):
 		self.value = value
-		self.enumClassType: typing.Type[FlagValueEnum] = type(value)
+		self.enumClassType: type[FlagValueEnum] = type(value)
 		assert self.enumClassType is type(behaviorOfDefault)
 		assert behaviorOfDefault != value.DEFAULT
 		self.behaviorOfDefault = behaviorOfDefault
@@ -80,7 +77,7 @@ class FeatureFlag:
 
 
 def _validateConfig_featureFlag(
-	value: Union[str, FeatureFlag, None],
+	value: str | FeatureFlag | None,
 	optionsEnum: str,
 	behaviorOfDefault: str,
 ) -> FeatureFlag:

@@ -20,7 +20,7 @@ from .dataManager import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import AddonBundle, Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler import AddonBundle, Addon as AddonHandlerModel
 
 
 def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":

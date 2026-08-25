@@ -18,7 +18,7 @@ import speech
 import UIAHandler
 from NVDAObjects.UIA import UIA
 from NVDAObjects import NVDAObject
-from typing import Callable
+from collections.abc import Callable
 
 
 class AppModule(appModuleHandler.AppModule):

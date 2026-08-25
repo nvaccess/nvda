@@ -10,8 +10,8 @@ from typing import (
 	Self,
 	ClassVar,
 	Any,
-	Iterable,
 )
+from collections.abc import Iterable
 import ctypes
 from ctypes import (
 	_SimpleCData,
@@ -133,9 +133,9 @@ class InstructionBase(metaclass=ABCMeta):
 		for paramName, param in self.params.items():
 			paramOutput = f"{paramName}="
 			if isinstance(param, ctypes.Array) and param._type_ == c_wchar:
-				paramOutput += f"c_wchar_array({repr(param.value)})"
+				paramOutput += f"c_wchar_array({param.value!r})"
 			else:
-				paramOutput += f"{repr(param)}"
+				paramOutput += f"{param!r}"
 			paramOutputList.append(paramOutput)
 		output += "(" + ", ".join(paramOutputList) + ")"
 		return output

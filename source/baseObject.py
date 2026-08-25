@@ -7,11 +7,9 @@
 
 from typing import (
 	Any,
-	Callable,
-	Optional,
-	Set,
 	Union,
 )
+from collections.abc import Callable
 import weakref
 import garbageHandler
 from logHandler import log
@@ -21,7 +19,7 @@ GetterReturnT = Any
 GetterMethodT = Callable[["AutoPropertyObject"], GetterReturnT]
 
 
-class Getter(object):
+class Getter:
 	def __init__(self, fget, abstract=False):
 		self.fget = fget
 		if abstract:
@@ -75,7 +73,7 @@ class AutoPropertyType(ABCMeta):
 		oldAbstractProps = set()
 		# given _get_myVal, _set_myVal, and _del_myVal: "myVal" would be output 3 times
 		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
-		props = {x[5:] for x in namespace.keys() if x[0:5] in ("_get_", "_set_", "_del_")}
+		props = {x[5:] for x in namespace if x[0:5] in ("_get_", "_set_", "_del_")}
 		for x in props:
 			g = namespace.get("_get_%s" % x, None)
 			s = namespace.get("_set_%s" % x, None)
@@ -145,17 +143,17 @@ class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyTyp
 	#: @type: bool
 	cachePropertiesByDefault = False
 
-	_propertyCache: Set[GetterMethodT]
+	_propertyCache: set[GetterMethodT]
 
 	def __new__(cls, *args, **kwargs):
-		self = super(AutoPropertyObject, cls).__new__(cls)
+		self = super().__new__(cls)
 		#: Maps properties to cached values.
 		#: @type: dict
 		self._propertyCache = {}
 		self.__instances[self] = None
 		return self
 
-	def _getPropertyViaCache(self, getterMethod: Optional[GetterMethodT] = None) -> GetterReturnT:
+	def _getPropertyViaCache(self, getterMethod: GetterMethodT | None = None) -> GetterReturnT:
 		if not getterMethod:
 			raise ValueError("getterMethod is None")
 		missing = False
@@ -236,7 +234,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 				self.bindGestures(cls._scriptDecoratorGestures)
 			except AttributeError:
 				pass
-		super(ScriptableObject, self).__init__()
+		super().__init__()
 
 	def bindGesture(self, gestureIdentifier, scriptName):
 		"""Bind an input gesture to a script.
@@ -252,10 +250,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 		func = getattr(self.__class__, scriptAttrName, None)
 		if not func:
 			raise LookupError(
-				"No such script on class {className}. Couldn't find attribute: {scriptAttrName}".format(
-					className=self.__class__.__name__,
-					scriptAttrName=scriptAttrName,
-				),
+				f"No such script on class {self.__class__.__name__}. Couldn't find attribute: {scriptAttrName}",
 			)
 		# Import late to avoid circular import.
 		import inputCore
@@ -317,8 +312,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 					else None,
 				)
 				return None
-		else:
-			return None
+		return None
 
 	#: A value for sleepMode which indicates that NVDA should fully sleep for this object;
 	#: i.e. braille and speech via NVDA controller client is disabled and the user cannot disable sleep mode.

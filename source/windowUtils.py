@@ -20,7 +20,6 @@ from winBindings.user32 import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
-from typing import Optional
 from winBindings import user32
 
 
@@ -122,8 +121,8 @@ def getWindowScalingFactor(window: int) -> int:
 	if winDpi <= 0:
 		log.debugWarning(
 			"Failed to get the DPI for the window, assuming a "
-			"DPI of {} and using a scaling of 1. The hWnd value "
-			"used was: {}".format(DEFAULT_DPI_LEVEL, window),
+			f"DPI of {DEFAULT_DPI_LEVEL} and using a scaling of 1. The hWnd value "
+			f"used was: {window}",
 		)
 		return 1
 
@@ -141,7 +140,7 @@ class CustomWindow(AutoPropertyObject):
 	but it can be explicitly destroyed using L{destroy}.
 	"""
 
-	handle: Optional[int] = None
+	handle: int | None = None
 
 	@classmethod
 	def __new__(cls, *args, **kwargs):
@@ -174,10 +173,10 @@ class CustomWindow(AutoPropertyObject):
 
 	def __init__(
 		self,
-		windowName: Optional[str] = None,
+		windowName: str | None = None,
 		windowStyle: int = 0,
 		extendedWindowStyle: int = 0,
-		parent: Optional[int] = None,
+		parent: int | None = None,
 	):
 		"""Constructor.
 		@param windowName: The name of the window.
@@ -263,7 +262,7 @@ class CustomWindow(AutoPropertyObject):
 			or C{None} to call DefWindowProc.
 		@rtype: int or None
 		"""
-		return None
+		return
 
 	@staticmethod
 	@WNDPROC

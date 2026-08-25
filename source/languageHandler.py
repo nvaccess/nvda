@@ -318,7 +318,7 @@ def _createGettextTranslation(
 	try:
 		trans = gettext.translation("nvda", localedir="locale", languages=[localeName])
 		return trans, localeName
-	except IOError:
+	except OSError:
 		log.debugWarning(f"couldn't set the translation service locale to {localeName}")
 		return None, None
 

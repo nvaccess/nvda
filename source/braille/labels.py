@@ -5,11 +5,10 @@
 
 from __future__ import annotations
 
-import typing
 
 import controlTypes
 
-roleLabels: typing.Dict[controlTypes.Role, str] = {
+roleLabels: dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
 	controlTypes.Role.WINDOW: _("wnd"),

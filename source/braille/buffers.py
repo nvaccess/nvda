@@ -48,7 +48,7 @@ class _WindowRowPositions:
 
 
 class BrailleBuffer(baseObject.AutoPropertyObject):
-	handler: "BrailleHandler"
+	handler: BrailleHandler
 	regions: list[Region]
 	"""The regions in this buffer."""
 

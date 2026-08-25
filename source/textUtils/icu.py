@@ -13,7 +13,7 @@ from collections.abc import Callable
 from contextlib import contextmanager
 
 import textUtils
-import winBindings.icu as icu
+from winBindings import icu
 from logHandler import log
 
 _ROOT_LOCALE: bytes = b""

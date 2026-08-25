@@ -280,7 +280,7 @@ class SsmlConverter(SpeechXmlConverter):
 			),
 		)
 		yield EncloseAllCommand("speak", attrs)
-		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
+		for command in super().generateBalancerCommands(speechSequence):
 			yield command
 
 	def convertIndexCommand(self, command):
@@ -369,7 +369,7 @@ class SpeechXmlParser:
 		return self._speechSequence
 
 
-ParseGeneratorT = Generator[SpeechCommand, None, None]
+ParseGeneratorT = Generator[SpeechCommand]
 ParseFuncT = Callable[[dict[str, str] | None], ParseGeneratorT]
 MarkCallbackT = Callable[[str], None]
 

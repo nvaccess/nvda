@@ -23,14 +23,14 @@ class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 			role = controlTypes.Role.LINK
 		attrs["role"] = role
 		attrs["states"] = states
-		return super(LotusNotesRichText_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 
 class LotusNotesRichText(VirtualBuffer):
 	TextInfo = LotusNotesRichText_TextInfo
 
 	def __init__(self, rootNVDAObject):
-		super(LotusNotesRichText, self).__init__(rootNVDAObject, backendName="lotusNotesRichText")
+		super().__init__(rootNVDAObject, backendName="lotusNotesRichText")
 
 	def __contains__(self, obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
@@ -96,7 +96,7 @@ class LotusNotesRichText(VirtualBuffer):
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l = obj.location  # noqa: E741
+		l = obj.location
 		if not l:
 			log.debugWarning("no location for field")
 			return

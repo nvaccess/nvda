@@ -47,7 +47,7 @@ def __getattr__(attrName: str) -> Any:
 			"use winAPI.messageWindow.pre_handleWindowMessage instead.",
 		)
 		return pre_handleWindowMessage
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 # Inform those who want to know that NVDA has finished starting up.
@@ -213,8 +213,8 @@ def doStartupDialogs():
 @dataclass
 class NewNVDAInstance:
 	filePath: str
-	parameters: Optional[str] = None
-	directory: Optional[str] = None
+	parameters: str | None = None
+	directory: str | None = None
 
 
 def computeRestartCLIArgs(removeArgsList: list[str] | None = None) -> list[str]:
@@ -473,14 +473,14 @@ def _startNewInstance(newNVDA: NewNVDAInstance):
 	)
 
 
-def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+def _doShutdown(newNVDA: NewNVDAInstance | None):
 	_handleNVDAModuleCleanupBeforeGUIExit()
 	_closeAllWindows()
 	if newNVDA is not None:
 		_startNewInstance(newNVDA)
 
 
-def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
+def triggerNVDAExit(newNVDA: NewNVDAInstance | None = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
 	instance information with `newNVDA`.
@@ -514,7 +514,6 @@ def _closeAllWindows():
 	"""
 	import gui
 	from gui.settingsDialogs import SettingsDialog
-	from typing import Dict
 	import wx
 
 	app = wx.GetApp()
@@ -522,7 +521,7 @@ def _closeAllWindows():
 	# prevent race condition with object deletion
 	# prevent deletion of the object while we work on it.
 	_SettingsDialog = SettingsDialog
-	nonWeak: Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+	nonWeak: dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
 
 	for instance, state in nonWeak.items():
 		if state is _SettingsDialog.DialogState.DESTROYED:
@@ -531,7 +530,7 @@ def _closeAllWindows():
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}",
 			)
 		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+			log.debug(f"Exiting NVDA with an open settings dialog: {instance!r}")
 
 	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
 	# They must be manually destroyed when exiting the app.
@@ -651,7 +650,6 @@ def _setUpWxApp() -> "wx.App":
 			and it is better to remove wx from the equation so this method is a No-op.
 			This code may need to be revisited when we update Python / wxPython.
 			"""
-			pass
 
 	app = App(redirect=False)
 

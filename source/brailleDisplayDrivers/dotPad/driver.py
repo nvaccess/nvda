@@ -420,9 +420,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		if (
 			value == BrailleDestination.TEXT
 			and self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY
-		):
-			self._brailleDestination = value
-		elif (
+		) or (
 			value == BrailleDestination.GRAPHIC
 			and self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY
 		):

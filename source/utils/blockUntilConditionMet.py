@@ -10,10 +10,8 @@ from time import (
 )
 from typing import (
 	Any,
-	Callable,
-	Optional,
-	Tuple,
 )
+from collections.abc import Callable
 
 
 EvaluatorWasMetT = bool
@@ -34,9 +32,9 @@ def blockUntilConditionMet(
 	giveUpAfterSeconds: float,
 	shouldStopEvaluator: Callable[[GetValueResultT], bool] = lambda value: bool(value),
 	intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
-) -> Tuple[
+) -> tuple[
 	EvaluatorWasMetT,  # Was evaluator met?
-	Optional[GetValueResultT],  # None or the value when the evaluator was met
+	GetValueResultT | None,  # None or the value when the evaluator was met
 ]:
 	"""Repeatedly tries to get a value up until a time limit expires.
 	Tries are separated by a time interval.

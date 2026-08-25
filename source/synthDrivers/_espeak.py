@@ -7,7 +7,7 @@ import nvwave
 import threading
 import queue
 from ctypes import cdll, CFUNCTYPE, c_int, c_void_p, POINTER, sizeof, c_short
-from ctypes import *  # noqa: F403
+from ctypes import *
 import config
 import globalVars
 from logHandler import log
@@ -88,18 +88,18 @@ EE_OK = 0
 espeakINITIALIZE_DONT_EXIT = 0x8000
 
 
-class espeak_EVENT_id(Union):  # noqa: F405
+class espeak_EVENT_id(Union):
 	_fields_ = [
 		("number", c_int),
-		("name", c_char_p),  # noqa: F405
-		("string", c_char * 8),  # noqa: F405
+		("name", c_char_p),
+		("string", c_char * 8),
 	]
 
 
-class espeak_EVENT(Structure):  # noqa: F405
+class espeak_EVENT(Structure):
 	_fields_ = [
 		("type", c_int),
-		("unique_identifier", c_uint),  # noqa: F405
+		("unique_identifier", c_uint),
 		("text_position", c_int),
 		("length", c_int),
 		("audio_position", c_int),
@@ -109,21 +109,21 @@ class espeak_EVENT(Structure):  # noqa: F405
 	]
 
 
-class espeak_VOICE(Structure):  # noqa: F405
+class espeak_VOICE(Structure):
 	_fields_ = [
-		("name", c_char_p),  # noqa: F405
-		("languages", c_char_p),  # noqa: F405
-		("identifier", c_char_p),  # noqa: F405
-		("gender", c_byte),  # noqa: F405
-		("age", c_byte),  # noqa: F405
-		("variant", c_byte),  # noqa: F405
-		("xx1", c_byte),  # noqa: F405
+		("name", c_char_p),
+		("languages", c_char_p),
+		("identifier", c_char_p),
+		("gender", c_byte),
+		("age", c_byte),
+		("variant", c_byte),
+		("xx1", c_byte),
 		("score", c_int),
 		("spare", c_void_p),
 	]
 
 	def __eq__(self, other):
-		return isinstance(other, type(self)) and addressof(self) == addressof(other)  # noqa: F405
+		return isinstance(other, type(self)) and addressof(self) == addressof(other)
 
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
 	# The default hash implementation is fine for  our purposes.
@@ -238,7 +238,7 @@ def _speak(text):
 	# eSpeak can only process compound emojis  when using a UTF8 encoding
 	text = text.encode("utf8", errors="ignore")
 	flags = espeakCHARS_UTF8 | espeakSSML | espeakPHONEMES
-	return espeakDLL.espeak_Synth(text, 0, 0, 0, 0, flags, byref(uniqueID), 0)  # noqa: F405
+	return espeakDLL.espeak_Synth(text, 0, 0, 0, 0, flags, byref(uniqueID), 0)
 
 
 def speak(text):
@@ -334,10 +334,10 @@ def _setVoiceByLanguage(lang):
 	lang = toXmlLang(lang)
 	v.languages = encodeEspeakString(lang)
 	try:
-		espeakDLL.espeak_SetVoiceByProperties(byref(v))  # noqa: F405
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 	except:  # noqa: E722
 		v.languages = encodeEspeakString("en")
-		espeakDLL.espeak_SetVoiceByProperties(byref(v))  # noqa: F405
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))
 
 
 def setVoiceByLanguage(lang):
@@ -358,7 +358,7 @@ def initialize(indexCallback=None):
 	"""
 	global espeakDLL, bgThread, bgQueue, player, onIndexReached
 	espeakDLL = cdll.LoadLibrary(os.path.join(globalVars.appDir, "synthDrivers", "espeak.dll"))
-	espeakDLL.espeak_Info.restype = c_char_p  # noqa: F405
+	espeakDLL.espeak_Info.restype = c_char_p
 	espeakDLL.espeak_Synth.errcheck = espeak_errcheck
 	espeakDLL.espeak_SetVoiceByName.errcheck = espeak_errcheck
 	espeakDLL.espeak_SetVoiceByProperties.errcheck = espeak_errcheck
@@ -366,7 +366,7 @@ def initialize(indexCallback=None):
 	espeakDLL.espeak_Terminate.errcheck = espeak_errcheck
 	espeakDLL.espeak_ListVoices.restype = POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype = POINTER(espeak_VOICE)
-	espeakDLL.espeak_SetVoiceByName.argtypes = (c_char_p,)  # noqa: F405
+	espeakDLL.espeak_SetVoiceByName.argtypes = (c_char_p,)
 	eSpeakPath = os.path.join(globalVars.appDir, "synthDrivers")
 	sampleRate = espeakDLL.espeak_Initialize(
 		AUDIO_OUTPUT_SYNCHRONOUS,

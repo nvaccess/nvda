@@ -36,7 +36,7 @@ class LanguageInfo(StringParameterInfo):
 	def __init__(self, id):
 		"""Given a language ID (locale name) the description is automatically calculated."""
 		displayName = languageHandler.getLanguageDescription(id)
-		super(LanguageInfo, self).__init__(id, displayName)
+		super().__init__(id, displayName)
 
 
 class VoiceInfo(StringParameterInfo):
@@ -48,7 +48,7 @@ class VoiceInfo(StringParameterInfo):
 			C{None} if not known or the synth implements language separate from voices.
 		"""
 		self.language = language
-		super(VoiceInfo, self).__init__(id, displayName)
+		super().__init__(id, displayName)
 
 
 class SynthDriver(driverHandler.Driver):
@@ -335,7 +335,6 @@ class SynthDriver(driverHandler.Driver):
 		@param switch: C{True} to pause, C{False} to resume (unpause).
 		@type switch: bool
 		"""
-		pass
 
 	def languageIsSupported(self, lang: str | None) -> bool:
 		"""Determines if the specified language is supported.

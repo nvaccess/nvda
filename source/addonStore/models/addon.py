@@ -29,7 +29,7 @@ from .version import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import (  # noqa: F401
+	from addonHandler import (
 		Addon as AddonHandlerModel,
 		AddonBase as AddonHandlerBaseModel,
 		AddonManifest,
@@ -43,7 +43,7 @@ if TYPE_CHECKING:
 	"""
 
 
-AddonHandlerModelGeneratorT = Generator["AddonHandlerModel", None, None]
+AddonHandlerModelGeneratorT = Generator["AddonHandlerModel"]
 
 
 class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
@@ -205,7 +205,7 @@ class _AddonManifestModel(_AddonGUIModel):
 	addonId: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	manifest: "AddonManifest"
@@ -221,7 +221,7 @@ class _AddonManifestModel(_AddonGUIModel):
 
 	@property
 	def description(self) -> str:
-		description: Optional[str] = self.manifest.get("description")
+		description: str | None = self.manifest.get("description")
 		if description is None:
 			return ""
 		return description
@@ -253,7 +253,7 @@ class AddonManifestModel(_AddonManifestModel):
 	addonId: str
 	addonVersionName: str
 	channel: Channel
-	homepage: Optional[str]
+	homepage: str | None
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	manifest: "AddonManifest"
@@ -335,7 +335,7 @@ class AddonStoreModel(_AddonStoreModel):
 @dataclasses.dataclass
 class CachedAddonsModel:
 	cachedAddonData: "AddonGUICollectionT"
-	cacheHash: Optional[str]
+	cacheHash: str | None
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
 	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT | str
@@ -389,7 +389,7 @@ def _createStoreModelFromData(addon: dict[str, Any]) -> AddonStoreModel:
 
 
 def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifestModel:
-	homepage: Optional[str] = addon.manifest.get("url")
+	homepage: str | None = addon.manifest.get("url")
 	if homepage == "None":
 		# Manifest strings can be set to "None"
 		homepage = None

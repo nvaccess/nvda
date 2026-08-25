@@ -12,7 +12,7 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 import ctypes
 from ctypes import byref
 from ctypes.wintypes import USHORT
-from typing import Tuple, Callable, Optional
+from collections.abc import Callable
 from .ioThread import IoThread
 
 from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
@@ -133,8 +133,8 @@ class Hid(IoBase):
 		path: str,
 		onReceive: Callable[[bytes], None],
 		exclusive: bool = True,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -255,7 +255,7 @@ class Hid(IoBase):
 		self._outputValueCaps = valueCapsList
 		return self._outputValueCaps
 
-	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
+	def _prepareWriteBuffer(self, data: bytes) -> tuple[int, ctypes.c_char_p]:
 		"""For HID devices, the buffer to be written must match the
 		OutputReportByteLength fetched from HIDP_CAPS, to ensure this is the case
 		we create a buffer of that size. We also check that data is not bigger than
@@ -330,7 +330,7 @@ class Hid(IoBase):
 		if self._isClosed:
 			log.debug("Attempted to close an already closed device.")
 			return
-		super(Hid, self).close()
+		super().close()
 		winKernel.closeHandle(self._file)
 		self._file = None
 		winBindings.hid.HidD_FreePreparsedData(self._pd)

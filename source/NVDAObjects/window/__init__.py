@@ -42,7 +42,7 @@ def isUsableWindow(windowHandle):
 	return True
 
 
-class WindowProcessHandleContainer(object):
+class WindowProcessHandleContainer:
 	"""
 	Manages a Windows process handle. On instanciation it retreaves an open process handle from the process of the provided window, and closes the handle on deletion.
 	@ivar windowHandle: the handle of the window the whos process handle was requested
@@ -157,7 +157,7 @@ class Window(NVDAObject):
 					clsList.append(DisplayModelEditableText)
 
 		clsList.append(Window)
-		super(Window, self).findOverlayClasses(clsList)
+		super().findOverlayClasses(clsList)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None):
@@ -182,10 +182,10 @@ class Window(NVDAObject):
 		if not windowHandle:
 			raise ValueError("invalid or not specified window handle")
 		self.windowHandle = windowHandle
-		super(Window, self).__init__()
+		super().__init__()
 
 	def _isEqual(self, other):
-		return super(Window, self)._isEqual(other) and other.windowHandle == self.windowHandle
+		return super()._isEqual(other) and other.windowHandle == self.windowHandle
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)
@@ -297,7 +297,7 @@ class Window(NVDAObject):
 		return self.windowHandle == fg or winUser.isDescendantWindow(fg, self.windowHandle)
 
 	def _get_states(self):
-		states = super(Window, self)._get_states()
+		states = super()._get_states()
 		style = self.windowStyle
 		if not style & winUser.WS_VISIBLE:
 			states.add(controlTypes.State.INVISIBLE)
@@ -364,7 +364,7 @@ class Window(NVDAObject):
 	normalizedWindowClassNameCache = {}
 
 	def _get_devInfo(self):
-		info = super(Window, self).devInfo
+		info = super().devInfo
 		info.append("windowHandle: %r" % self.windowHandle)
 		try:
 			ret = repr(self.windowClassName)
@@ -429,10 +429,10 @@ class DisplayModelLiveText(LiveText, Window):
 		# Force the window to be redrawn, as our display model might be out of date.
 		self.redraw()
 		displayModel.requestTextChangeNotifications(self, True)
-		super(DisplayModelLiveText, self).startMonitoring()
+		super().startMonitoring()
 
 	def stopMonitoring(self):
-		super(DisplayModelLiveText, self).stopMonitoring()
+		super().stopMonitoring()
 		displayModel.requestTextChangeNotifications(self, False)
 
 	def _get_diffAlgo(self):

@@ -136,7 +136,7 @@ def __getattr__(attrName: str) -> Any:
 		import systemUtils
 
 		return systemUtils.ExecAndPump
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class MainFrame(wx.Frame):
@@ -598,7 +598,7 @@ class MainFrame(wx.Frame):
 		error: str | None = None
 		try:
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
-		except WindowsError as e:
+		except OSError as e:
 			# 1223 is "The operation was canceled by the user."
 			if e.winerror == 1223:
 				# Same as if the user selected "no" in the initial dialog.
@@ -649,7 +649,7 @@ class MainFrame(wx.Frame):
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 	def __init__(self, frame: MainFrame):
-		super(SysTrayIcon, self).__init__()
+		super().__init__()
 		icon = wx.Icon(ICON_PATH, wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, buildVersion.name)
 
@@ -978,7 +978,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.Raise()
 
 	def Pulse(self):
-		super(IndeterminateProgressDialog, self).Pulse()
+		super().Pulse()
 		# We want progress to be spoken on the first pulse and every 10 pulses thereafter.
 		# Therefore, cycle from 0 to 9 inclusive.
 		self._speechCounter = (self._speechCounter + 1) % 10
@@ -1040,7 +1040,7 @@ class NonReEntrantTimer(wx.Timer):
 		if run is not None:
 			self.run = run
 		self._inNotify = False
-		super(NonReEntrantTimer, self).__init__()
+		super().__init__()
 
 	def run(self):
 		"""Subclasses can override or specify in constructor."""

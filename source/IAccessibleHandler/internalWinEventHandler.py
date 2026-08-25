@@ -9,7 +9,7 @@ Provides a non-threaded (limited by GIL) Windows Event Hook and processing.
 
 from ctypes import c_int
 
-from typing import Dict, Callable
+from collections.abc import Callable
 
 import core
 from winBindings.user32 import WINEVENTPROC
@@ -74,7 +74,7 @@ def winEventCallback(
 	childID: int,
 	threadID: int,
 	timestamp: int,
-) -> None:  # noqa: C901
+) -> None:
 	if window is None:
 		window = 0
 	if isMSAADebugLoggingEnabled():
@@ -270,4 +270,4 @@ def _shouldGetEvents():
 # In order to handle speaking of typed characters etc.
 # winEventCallback adds these whenever it sees an event for ConsoleWindowClass windows,
 # As winEvents always contain the true thread ID.
-consoleWindowsToThreadIDs: Dict[int, int] = {}
+consoleWindowsToThreadIDs: dict[int, int] = {}

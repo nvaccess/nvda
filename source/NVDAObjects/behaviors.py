@@ -31,7 +31,6 @@ import braille.regions.properties
 import core
 import nvwave
 import globalVars
-from typing import List, Union
 from collections.abc import Generator
 import diffHandler
 from config.configFlags import (
@@ -52,13 +51,13 @@ class ProgressBar(NVDAObject):
 			or controlTypes.State.INVISIBLE in states
 			or controlTypes.State.OFFSCREEN in states
 		):
-			return super(ProgressBar, self).event_valueChange()
+			return super().event_valueChange()
 		val = self.value
 		try:
 			percentage = min(max(0.0, float(val.strip("%\0"))), 100.0)
 		except (AttributeError, ValueError):
 			log.debugWarning("Invalid value: %r" % val)
-			return super(ProgressBar, self).event_valueChange()
+			return super().event_valueChange()
 		braille.handler.handleUpdate(self)
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
@@ -190,7 +189,7 @@ class Dialog(NVDAObject):
 		return "\n".join(textList)
 
 	def _get_description(self):
-		superDesc = super(Dialog, self).description
+		superDesc = super().description
 		if superDesc and not superDesc.isspace():
 			# The object already provides a useful description, so don't override it.
 			return superDesc
@@ -201,7 +200,7 @@ class Dialog(NVDAObject):
 	def _get_isPresentableFocusAncestor(self):
 		# Only fetch this the first time it is requested,
 		# as it is very slow due to getDialogText and the answer shouldn't change anyway.
-		self.isPresentableFocusAncestor = res = super(Dialog, self).isPresentableFocusAncestor
+		self.isPresentableFocusAncestor = res = super().isPresentableFocusAncestor
 		return res
 
 
@@ -435,7 +434,7 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
+	def _get_diffAlgo(self) -> diffHandler.prefer_difflib | diffHandler.prefer_dmp:
 		"""
 		This property controls which diffing algorithm should be used by
 		this object. If the object contains a strictly contiguous
@@ -496,7 +495,7 @@ class LiveText(NVDAObject):
 		lengthRange = SKIPPED_LINES_BEEP_MAX_DURATION_MS - SKIPPED_LINES_BEEP_MIN_DURATION_MS
 		return round(SKIPPED_LINES_BEEP_MIN_DURATION_MS + lengthRange * ratio)
 
-	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None, None, None]:
+	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None]:
 		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
 		try:
 			for i, line in enumerate(lines, 1):
@@ -554,7 +553,7 @@ class LiveText(NVDAObject):
 			except:  # noqa: E722
 				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
+	def _calculateNewText(self, newText: str, oldText: str) -> list[str]:
 		return self.diffAlgo.diff(newText, oldText)
 
 
@@ -567,11 +566,11 @@ class Terminal(LiveText, EditableText):
 	role = controlTypes.Role.TERMINAL
 
 	def event_gainFocus(self):
-		super(Terminal, self).event_gainFocus()
+		super().event_gainFocus()
 		self.startMonitoring()
 
 	def event_loseFocus(self):
-		super(Terminal, self).event_loseFocus()
+		super().event_loseFocus()
 		self.stopMonitoring()
 
 	def _get_caretMovementDetectionUsesEvents(self):
@@ -682,7 +681,6 @@ class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
 	the flag to preserve keyboard state available in Windows 10 1607
 	and later."""
 
-	pass
 
 
 class CandidateItem(NVDAObject):
@@ -826,7 +824,7 @@ class RowWithFakeNavigation(NVDAObject):
 	def reportFocus(self):
 		col = self._savedColumnNumber
 		if not col:
-			return super(RowWithFakeNavigation, self).reportFocus()
+			return super().reportFocus()
 		self.__class__._savedColumnNumber = None
 		self._moveToColumnNumber(col)
 
@@ -966,7 +964,7 @@ class _FakeTableCell(NVDAObject):
 	role = controlTypes.Role.TABLECELL
 
 	def __init__(self, parent=None, column=None):
-		super(_FakeTableCell, self).__init__()
+		super().__init__()
 		self.parent = parent
 		self.columnNumber = column
 		try:

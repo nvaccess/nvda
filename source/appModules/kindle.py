@@ -2,10 +2,6 @@
 # Copyright (C) 2016-2021 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import (
-	Optional,
-	Dict,
-)
 
 from comtypes import COMError
 from comtypes.hresult import S_OK
@@ -286,10 +282,10 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			text += ", " + _("Page {pageNumber}").format(pageNumber=pageNumber)
 		return text
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
-		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
+		items = super().getTextWithFields(formatConfig=formatConfig)
 		for item in items:
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
 				if formatConfig["reportPage"]:
@@ -306,10 +302,10 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 	def getFormatFieldSpeech(
 		self,
 		attrs: textInfos.Field,
-		attrsCache: Optional[textInfos.Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: textInfos.Field | None = None,
+		formatConfig: dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:
@@ -343,7 +339,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			)
 			out.append(translation)
 
-		superSpeech = super(BookPageViewTextInfo, self).getFormatFieldSpeech(
+		superSpeech = super().getFormatFieldSpeech(
 			attrs,
 			attrsCache=attrsCache,
 			formatConfig=formatConfig,
@@ -376,7 +372,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 		sel.updateSelection()
 
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(
+		field = super()._getControlFieldForObject(
 			obj,
 			ignoreEditableText=ignoreEditableText,
 		)
@@ -429,7 +425,7 @@ class PageTurnFocusIgnorer(IAccessible):
 		if isinstance(focus, BookPageView) and focus.hasFocus:
 			# The book area reports that it still has the focus, so this event is bogus.
 			return False
-		return super(PageTurnFocusIgnorer, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 
 class Math(IAccessible):

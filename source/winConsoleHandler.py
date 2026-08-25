@@ -17,10 +17,6 @@ from logHandler import log
 import textInfos
 import config
 import locationHelper
-from typing import (
-	Optional,
-	Dict,
-)
 
 """
 Handler for NVDA's legacy Windows Console support,
@@ -71,7 +67,7 @@ def connectConsole(obj):
 	# Attach NVDA to this console so we can access its text etc
 	try:
 		wincon.AttachConsole(processID)
-	except WindowsError as e:
+	except OSError as e:
 		log.debugWarning("Could not attach console: %r" % e)
 		return False
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler, True)
@@ -119,12 +115,12 @@ def disconnectConsole():
 	consoleObject = None
 	try:
 		wincon.SetConsoleCtrlHandler(_consoleCtrlHandler, False)
-	except WindowsError:
+	except OSError:
 		pass
 	# Try freeing NVDA from this console
 	try:
 		wincon.FreeConsole()
-	except WindowsError:
+	except OSError:
 		pass
 	return True
 
@@ -265,7 +261,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 			start = end = self._getCaretOffset()
 		return start, end
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		commands = []
 		if self.isCollapsed:
 			return commands

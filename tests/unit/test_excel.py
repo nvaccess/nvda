@@ -6,7 +6,7 @@
 """Unit tests for the excel module."""
 
 import unittest
-import NVDAObjects.window.excel as excel
+from NVDAObjects.window import excel
 
 
 class TestCellStates(unittest.TestCase):

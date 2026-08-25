@@ -4,7 +4,7 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 from __future__ import annotations
-from typing import Type, cast
+from typing import cast
 from dataclasses import dataclass
 from comtypes import COMError
 from . import lowLevel
@@ -163,7 +163,7 @@ class LocalExecutor(operation.Executor):
 
 	def _instructionLoop(
 		self,
-		stopInstruction: Type[builder.InstructionBase] | None = None,
+		stopInstruction: type[builder.InstructionBase] | None = None,
 		breakAddress: int | None = None,
 		continueAddress: int | None = None,
 		catchAddress: int | None = None,

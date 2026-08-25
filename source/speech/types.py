@@ -11,11 +11,9 @@ Kept here so they can be re-used without having to worry about circular imports.
 from collections.abc import Sequence
 from typing import (
 	Union,
-	Iterable,
 	Any,
-	Optional,
-	Generator,
 )
+from collections.abc import Iterable, Generator
 
 import config
 from logHandler import log
@@ -49,8 +47,8 @@ class GeneratorWithReturn(Iterable):
 
 
 def _flattenNestedSequences(
-	nestedSequences: Union[Iterable[SpeechSequence], GeneratorWithReturn],
-) -> Generator[SequenceItemT, Any, Optional[bool]]:
+	nestedSequences: Iterable[SpeechSequence] | GeneratorWithReturn,
+) -> Generator[SequenceItemT, Any, bool | None]:
 	"""Turns [[a,b,c],[d,e]] into [a,b,c,d,e]"""
 	yield from (i for seq in nestedSequences for i in seq)
 	if isinstance(nestedSequences, GeneratorWithReturn):

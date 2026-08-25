@@ -18,7 +18,8 @@ import ctypes
 import threading
 from ctypes import byref
 from ctypes.wintypes import DWORD
-from typing import Optional, Any, Union, Tuple, Callable
+from typing import Any
+from collections.abc import Callable
 import weakref
 import serial
 from serial.win32 import (
@@ -49,7 +50,7 @@ def __getattr__(attrName: str) -> Any:
 		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
 
 		return LPOVERLAPPED_COMPLETION_ROUTINE
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 def _isDebug():
@@ -74,7 +75,7 @@ def requiresBackgroundThread(func: Callable) -> Callable:
 	return wrapper
 
 
-class IoBase(object):
+class IoBase:
 	"""Base class for raw I/O.
 	This watches for data of a specified size and calls a callback when it is received.
 	"""
@@ -83,12 +84,12 @@ class IoBase(object):
 
 	def __init__(
 		self,
-		fileHandle: Union[ctypes.wintypes.HANDLE],
+		fileHandle: ctypes.wintypes.HANDLE,
 		onReceive: Callable[[bytes], None],
-		writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
+		writeFileHandle: ctypes.wintypes.HANDLE | None = None,
 		onReceiveSize: int = 1,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
@@ -127,7 +128,7 @@ class IoBase(object):
 			raise RuntimeError("I/O thread is no longer available")
 		ioThread.queueAsApc(self._asyncRead)
 
-	def waitForRead(self, timeout: Union[int, float]) -> bool:
+	def waitForRead(self, timeout: float) -> bool:
 		"""Wait for a chunk of data to be received and processed.
 		This will return after L{onReceive} has been called or when the timeout elapses.
 		@param timeout: The maximum time to wait in seconds.
@@ -149,7 +150,7 @@ class IoBase(object):
 					log.debug("Waiting interrupted by completed i/o")
 				timeout -= int((time.time() - curTime) * 1000)
 
-	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
+	def _prepareWriteBuffer(self, data: bytes) -> tuple[int, ctypes.c_char_p]:
 		"""Private helper method to allow derived classes to prepare buffers in different ways"""
 		size = len(data)
 		return (
@@ -195,7 +196,7 @@ class IoBase(object):
 			if _isDebug():
 				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
-	def _asyncRead(self, param: Optional[int] = None):
+	def _asyncRead(self, param: int | None = None):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
@@ -250,8 +251,8 @@ class Serial(IoBase):
 		self,
 		*args,
 		onReceive: Callable[[bytes], None],
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 		**kwargs,
 	):
 		"""Constructor.
@@ -300,16 +301,16 @@ class Serial(IoBase):
 	def close(self):
 		if not self._ser:
 			return
-		super(Serial, self).close()
+		super().close()
 		self._ser.close()
 
 	def _notifyReceive(self, data: bytes):
 		# Set the timeout for onReceive in case it does a sync read.
 		self._setTimeout(self._origTimeout)
-		super(Serial, self)._notifyReceive(data)
+		super()._notifyReceive(data)
 		self._setTimeout(None)
 
-	def _setTimeout(self, timeout: Optional[int]):
+	def _setTimeout(self, timeout: int | None):
 		# #6035: pyserial reconfigures all settings of the port when setting a timeout.
 		# This can cause error 'Cannot configure port, some setting was wrong.'
 		# Therefore, manually set the timeouts using the Win32 API.
@@ -342,8 +343,8 @@ class Bulk(IoBase):
 		epOut: int,
 		onReceive: Callable[[bytes], None],
 		onReceiveSize: int = 1,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -358,8 +359,8 @@ class Bulk(IoBase):
 		"""
 		if _isDebug():
 			log.debug("Opening device %s" % path)
-		readPath = "{path}\\{endpoint}".format(path=path, endpoint=epIn)
-		writePath = "{path}\\{endpoint}".format(path=path, endpoint=epOut)
+		readPath = f"{path}\\{epIn}"
+		writePath = f"{path}\\{epOut}"
 		readHandle = CreateFile(
 			readPath,
 			winKernel.GENERIC_READ,
@@ -402,7 +403,7 @@ class Bulk(IoBase):
 		)
 
 	def close(self):
-		super(Bulk, self).close()
+		super().close()
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			winKernel.closeHandle(self._file)
 		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:

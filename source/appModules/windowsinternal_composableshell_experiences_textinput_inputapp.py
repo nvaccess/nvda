@@ -10,7 +10,7 @@ Other features include reporting candidates for misspellings if suggestions for 
 and managing cloud clipboard paste.
 This is applicable on Windows 10 Fall Creators Update and later."""
 
-from typing import Callable
+from collections.abc import Callable
 import appModuleHandler
 import api
 import eventHandler
@@ -71,7 +71,7 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 	keyboardShortcut = ""
 
 	def _get_candidateNumber(self):
-		number = super(ImeCandidateItem, self).keyboardShortcut
+		number = super().keyboardShortcut
 		try:
 			number = int(number)
 		except (ValueError, TypeError):
@@ -79,7 +79,7 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		return number
 
 	def _get_parent(self):
-		parent = super(ImeCandidateItem, self).parent
+		parent = super().parent
 		# Translators: A label for a 'candidate' list
 		# which contains symbols the user can choose from  when typing east-asian characters into a document.
 		parent.name = _("Candidate")
@@ -90,16 +90,16 @@ class ImeCandidateItem(CandidateItemBehavior, UIA):
 		try:
 			number = int(self.candidateNumber)
 		except (TypeError, ValueError):
-			return super(ImeCandidateItem, self).name
-		candidate = super(ImeCandidateItem, self).name
+			return super().name
+		candidate = super().name
 		return self.getFormattedCandidateName(number, candidate)
 
 	def _get_description(self):
-		candidate = super(ImeCandidateItem, self).name
+		candidate = super().name
 		return self.getFormattedCandidateDescription(candidate)
 
 	def _get_basicText(self):
-		return super(ImeCandidateItem, self).name
+		return super().name
 
 	def event_UIA_elementSelected(self):
 		oldNav = api.getNavigatorObject()
@@ -321,9 +321,7 @@ class AppModule(appModuleHandler.AppModule):
 	def event_nameChange(self, obj, nextHandler):
 		# Logic for IME candidate items is handled all within its own object
 		# Therefore pass these events straight on.
-		if isinstance(obj, ImeCandidateItem):
-			return nextHandler()
-		elif isinstance(obj, ImeCandidateUI):
+		if isinstance(obj, ImeCandidateItem) or isinstance(obj, ImeCandidateUI):
 			return nextHandler()
 
 		if (

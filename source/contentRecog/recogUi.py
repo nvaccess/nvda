@@ -11,7 +11,7 @@ NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recog
 """
 
 import ctypes
-from typing import Optional, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING
 import api
 import ui
 import screenBitmap
@@ -182,7 +182,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		self,
 		recognizer: ContentRecognizer,
 		imageInfo: RecogImageInfo,
-		obj: Optional[NVDAObjects.NVDAObject] = None,
+		obj: NVDAObjects.NVDAObject | None = None,
 	):
 		self.recognizer = recognizer
 		self.imageInfo = imageInfo
@@ -203,7 +203,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 			return
 		self.recognizer.recognize(pixels, self.imageInfo, onResult)
 
-	def _onFirstResult(self, result: Union[RecognitionResult, Exception]):
+	def _onFirstResult(self, result: RecognitionResult | Exception):
 		global _activeRecog
 		_activeRecog = None
 		# This might get called from a background thread, so any UI calls must be queued to the main thread.
@@ -241,7 +241,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 			return
 		core.callLater(0, self._recognize, self._onResult)
 
-	def _onResult(self, result: Union[RecognitionResult, Exception]):
+	def _onResult(self, result: RecognitionResult | Exception):
 		if not self.hasFocus:
 			# The user has dismissed the recognition result.
 			return

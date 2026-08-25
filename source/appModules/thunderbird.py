@@ -12,7 +12,7 @@ import api
 import speech
 import winUser
 from NVDAObjects import NVDAObject
-from typing import Callable
+from collections.abc import Callable
 
 
 class AppModule(appModuleHandler.AppModule):

@@ -9,7 +9,6 @@
 
 from collections import OrderedDict
 import time
-from typing import List, Optional
 
 import wx
 import braille
@@ -35,7 +34,7 @@ def brl_auto_id() -> bytes:
 	return bytes([STX, ord(b"S"), 0x0, 0x0, 0x0, 0x0, ETX])
 
 
-def brl_out(offset: int, data: List[int]) -> bytes:
+def brl_out(offset: int, data: list[int]) -> bytes:
 	"""send data to braille display
 	@param offset: Must be positive.
 	"""
@@ -90,7 +89,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	def __init__(self, port):
 		"""Initializes braille display driver"""
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._lastkey = ""
 		self._dev = None
@@ -176,9 +175,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	def terminate(self):
 		"""free resources"""
-		super(BrailleDisplayDriver, self).terminate()
+		super().terminate()
 		try:
-			if self._dev != None:  # noqa: E711
+			if self._dev != None:
 				self._dev.close()
 				self._dev = None
 				self._keyCheckTimer.Stop()
@@ -186,9 +185,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		except:  # noqa: E722
 			pass
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		"""write data to braille display"""
-		if self._dev != None:  # noqa: E711
+		if self._dev != None:
 			try:
 				self._dev.write(brl_out(self._offsetHorizontal, cells))
 			except:  # noqa: E722
@@ -205,7 +204,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	def _handleKeyPresses(self):  # called by the keycheck timer
 		"""if a button was pressed an input gesture is executed"""
-		if self._dev != None:  # noqa: E711
+		if self._dev != None:
 			data = brl_poll(self._dev)
 			if len(data) == 10 and data[1] == ord(b"K"):
 				pos = (data[2] << 8) + data[3]
@@ -296,12 +295,12 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 
 	def __init__(
 		self,
-		keyindex: Optional[int],
-		pressed: Optional[int],
-		keys: Optional[int],
+		keyindex: int | None,
+		pressed: int | None,
+		keys: int | None,
 		driver: BrailleDisplayDriver,
 	):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.id = ""
 		if keyindex is None:
 			self.id = driver._lastkey

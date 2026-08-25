@@ -72,7 +72,7 @@ NAVRELATION_EMBEDS = 0x1009
 # childID event params.
 liveNVDAObjectTable = weakref.WeakValueDictionary()
 
-IAccessibleRolesToNVDARoles: Dict[Union[int, str], controlTypes.Role] = {
+IAccessibleRolesToNVDARoles: dict[int | str, controlTypes.Role] = {
 	oleacc.ROLE_SYSTEM_WINDOW: controlTypes.Role.WINDOW,
 	oleacc.ROLE_SYSTEM_CLIENT: controlTypes.Role.PANE,
 	oleacc.ROLE_SYSTEM_TITLEBAR: controlTypes.Role.TITLEBAR,
@@ -254,23 +254,23 @@ State = controlTypes.State
 
 def _getStatesSetFromIAccessibleStates(
 	IAccessibleStates: int,
-) -> Set[controlTypes.State]:
+) -> set[controlTypes.State]:
 	return set(
 		IAccessibleStatesToNVDAStates[IAState]
-		for IAState in IAccessibleStatesToNVDAStates.keys()
+		for IAState in IAccessibleStatesToNVDAStates
 		if IAState & IAccessibleStates
 	)
 
 
-def getStatesSetFromIAccessible2States(IAccessible2States: int) -> Set[State]:
+def getStatesSetFromIAccessible2States(IAccessible2States: int) -> set[State]:
 	return set(
 		IAccessible2StatesToNVDAStates[IA2State]
-		for IA2State in IAccessible2StatesToNVDAStates.keys()
+		for IA2State in IAccessible2StatesToNVDAStates
 		if IA2State & IAccessible2States
 	)
 
 
-def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> Set[State]:
+def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> set[State]:
 	# States are serialized (in XML) with an attribute per state.
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.
@@ -278,12 +278,12 @@ def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> Set[Sta
 	IAccessibleStateAttrName = "IAccessible::state_{}"
 	return set(
 		IAccessibleStatesToNVDAStates[IAState]
-		for IAState in IAccessibleStatesToNVDAStates.keys()
+		for IAState in IAccessibleStatesToNVDAStates
 		if int(attrs.get(IAccessibleStateAttrName.format(IAState), 0))
 	)
 
 
-def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[State]:
+def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> set[State]:
 	# States are serialized (in XML) with an attribute per state.
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.
@@ -291,7 +291,7 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[St
 	IAccessible2StateAttrName = "IAccessible2::state_{}"
 	return set(
 		IAccessible2StatesToNVDAStates[IA2State]
-		for IA2State in IAccessible2StatesToNVDAStates.keys()
+		for IA2State in IAccessible2StatesToNVDAStates
 		if int(attrs.get(IAccessible2StateAttrName.format(IA2State), 0))
 	)
 
@@ -304,7 +304,7 @@ def calculateNvdaRole(IARole: int, IAStates: int) -> Role:
 	return role
 
 
-def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
+def calculateNvdaStates(IARole: int, IAStates: int) -> set[State]:
 	"""Convert IAStates bit set into a Set of NVDA States and apply any required transformations."""
 	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
 	states = _getStatesSetFromIAccessibleStates(IAStates)
@@ -312,7 +312,7 @@ def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
 	return states
 
 
-def NVDARoleFromAttr(accRole: Optional[str]) -> Role:
+def NVDARoleFromAttr(accRole: str | None) -> Role:
 	if not accRole:  # empty string or None
 		return controlTypes.Role.UNKNOWN
 	assert isinstance(accRole, str)
@@ -324,9 +324,9 @@ def NVDARoleFromAttr(accRole: Optional[str]) -> Role:
 
 
 def normalizeIAccessible(
-	pacc: Union[IUnknown, IA.IAccessible, IA2.IAccessible2],
+	pacc: IUnknown | IA.IAccessible | IA2.IAccessible2,
 	childID: int = 0,
-) -> Union[IA.IAccessible, IA2.IAccessible2]:
+) -> IA.IAccessible | IA2.IAccessible2:
 	if not isinstance(pacc, IA.IAccessible):
 		try:
 			pacc = pacc.QueryInterface(IA.IAccessible)
@@ -372,7 +372,7 @@ def accessibleObjectFromPoint(x, y):
 def windowFromAccessibleObject(ia) -> int:
 	try:
 		return oleacc.WindowFromAccessibleObject(ia)
-	except WindowsError:
+	except OSError:
 		log.debugWarning("windowFromAccessibleObject failed", exc_info=True)
 		return 0
 
@@ -382,7 +382,7 @@ def accessibleChildren(ia, startIndex, numChildren):
 	# new profiles dialogs
 	try:
 		rawChildren = oleacc.AccessibleChildren(ia, startIndex, numChildren)
-	except (WindowsError, COMError):
+	except (OSError, COMError):
 		log.debugWarning("AccessibleChildren failed", exc_info=True)
 		return []
 	children = []
@@ -518,13 +518,13 @@ def accNavigate(pacc, childID, direction):
 # C901 'winEventToNVDAEvent' is too complex
 # Note: when working on winEventToNVDAEvent, look for opportunities to simplify
 # and move logic out into smaller helper functions.
-def winEventToNVDAEvent(  # noqa: C901
+def winEventToNVDAEvent(
 	eventID: int,
 	window: int,
 	objectID: int,
 	childID: int,
 	useCache: bool = True,
-) -> Optional[Tuple[str, NVDAObjects.IAccessible.IAccessible]]:
+) -> tuple[str, NVDAObjects.IAccessible.IAccessible] | None:
 	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
 	@param eventID: the win event ID (type)
@@ -1010,13 +1010,13 @@ def initialize():
 	global accPropServices
 	try:
 		accPropServices = comtypes.client.CreateObject(IA.CAccPropServices)
-	except (WindowsError, COMError) as e:
+	except (OSError, COMError) as e:
 		log.debugWarning("AccPropServices is not available: %s" % e)
 	internalWinEventHandler.initialize(processDestroyWinEvent)
 
 
 # C901 'pumpAll' is too complex
-def pumpAll():  # noqa: C901
+def pumpAll():
 	if not internalWinEventHandler._shouldGetEvents():
 		return
 	focusWinEvents = []
@@ -1165,7 +1165,7 @@ def findGroupboxObject(obj):
 
 
 # C901 'getRecursiveTextFromIAccessibleTextObject'
-def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):  # noqa: C901
+def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 	if not isinstance(obj, IA2.IAccessibleText):
 		try:
 			textObject = obj.QueryInterface(IA2.IAccessibleText)
@@ -1223,9 +1223,9 @@ ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
 # C901: splitIA2Attribs is too complex
-def splitIA2Attribs(  # noqa: C901
+def splitIA2Attribs(
 	attribsString: str,
-) -> Dict[str, Union[str, Dict]]:
+) -> dict[str, str | dict]:
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
 	Subattributes are handled. Subattribute keys and values are placed into a dict which becomes the value

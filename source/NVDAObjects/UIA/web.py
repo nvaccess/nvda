@@ -2,10 +2,6 @@
 # Copyright (C) 2015-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
-from typing import (
-	Optional,
-	Dict,
-)
 
 from comtypes import COMError
 from comtypes.automation import VARIANT
@@ -268,9 +264,9 @@ class UIAWebTextInfo(UIATextInfo):
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(  # noqa: C901
+	def getTextWithFields(
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,

@@ -23,14 +23,13 @@ import config
 from logHandler import log
 import visionEnhancementProviders
 import queueHandler
-from typing import Type, Dict, List, Optional, Set
 from . import exceptions
 
 
 def _getProviderClass(
 	moduleName: str,
 	caseSensitive: bool = True,
-) -> Type[VisionEnhancementProvider]:
+) -> type[VisionEnhancementProvider]:
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
 		return importlib.import_module(
@@ -47,8 +46,7 @@ def _getProviderClass(
 				"visionEnhancementProviders.%s" % name,
 				package="visionEnhancementProviders",
 			).VisionEnhancementProvider
-		else:
-			raise initialException
+		raise initialException
 
 
 def _getProvidersFromFileSystem():
@@ -86,7 +84,7 @@ class VisionHandler(AutoPropertyObject):
 	"""
 
 	def __init__(self):
-		self._providers: Dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()
+		self._providers: dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()
 		self.extensionPoints: EventExtensionPoints = EventExtensionPoints()
 		queueHandler.queueFunction(queueHandler.eventQueue, self.postGuiInit)
 
@@ -99,7 +97,7 @@ class VisionHandler(AutoPropertyObject):
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	_allProviders: List[providerInfo.ProviderInfo] = []
+	_allProviders: list[providerInfo.ProviderInfo] = []
 
 	def _getBuiltInProviderIds(self):
 		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
@@ -129,7 +127,7 @@ class VisionHandler(AutoPropertyObject):
 		self,
 		onlyStartable: bool = True,
 		reloadFromSystem: bool = False,
-	) -> List[providerInfo.ProviderInfo]:
+	) -> list[providerInfo.ProviderInfo]:
 		"""Gets a list of available vision enhancement provider information
 		@param onlyStartable: excludes all providers for which the check method returns C{False}.
 		@param reloadFromSystem: ensure the list is fresh. Providers may have been added to the file system.
@@ -153,7 +151,7 @@ class VisionHandler(AutoPropertyObject):
 					)
 		return providerList
 
-	def getProviderInfo(self, providerId: providerInfo.ProviderIdT) -> Optional[providerInfo.ProviderInfo]:
+	def getProviderInfo(self, providerId: providerInfo.ProviderIdT) -> providerInfo.ProviderInfo | None:
 		for p in self._allProviders:
 			if p.providerId == providerId:
 				return p
@@ -162,12 +160,12 @@ class VisionHandler(AutoPropertyObject):
 	def getActiveProviderInstances(self):
 		return list(self._providers.values())
 
-	def getActiveProviderInfos(self) -> List[providerInfo.ProviderInfo]:
+	def getActiveProviderInfos(self) -> list[providerInfo.ProviderInfo]:
 		activeProviderInfos = [self.getProviderInfo(p) for p in self._providers]
 		return list(activeProviderInfos)
 
-	def getConfiguredProviderInfos(self) -> List[providerInfo.ProviderInfo]:
-		configuredProviderInfos: List[providerInfo.ProviderInfo] = [
+	def getConfiguredProviderInfos(self) -> list[providerInfo.ProviderInfo]:
+		configuredProviderInfos: list[providerInfo.ProviderInfo] = [
 			p for p in self._allProviders if p.providerClass.isEnabledInConfig()
 		]
 		return configuredProviderInfos
@@ -175,7 +173,7 @@ class VisionHandler(AutoPropertyObject):
 	def getProviderInstance(
 		self,
 		provider: providerInfo.ProviderInfo,
-	) -> Optional[VisionEnhancementProvider]:
+	) -> VisionEnhancementProvider | None:
 		return self._providers.get(provider.providerId)
 
 	def terminateProvider(
@@ -336,10 +334,10 @@ class VisionHandler(AutoPropertyObject):
 		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
 	def handleConfigProfileSwitch(self) -> None:
-		configuredProviders: Set[providerInfo.ProviderIdT] = set(
+		configuredProviders: set[providerInfo.ProviderIdT] = set(
 			info.providerId for info in self.getConfiguredProviderInfos()
 		)
-		curProviders: Set[providerInfo.ProviderIdT] = set(self._providers)
+		curProviders: set[providerInfo.ProviderIdT] = set(self._providers)
 		providersToInitialize = configuredProviders - curProviders
 		providersToTerminate = curProviders - configuredProviders
 		for providerId in providersToTerminate:

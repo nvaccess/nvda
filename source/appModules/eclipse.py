@@ -22,7 +22,7 @@ SCRCAT_ECLIPSE = _("Eclipse")
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 	def event_suggestionsClosed(self):
-		super(EclipseTextArea, self).event_suggestionsClosed()
+		super().event_suggestionsClosed()
 		self.appModule.selectedItem = None
 		self.appModule.selectedItemName = None
 
@@ -34,7 +34,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		pass
 
 	def event_caret(self):
-		super(EclipseTextArea, self).event_caret()
+		super().event_caret()
 
 		# Check suggestion item and close the list if it is not valid
 		try:
@@ -172,7 +172,7 @@ class AppModule(appModuleHandler.AppModule):
 	selectedItemName = None
 
 	def __init__(self, processID, appName=None):
-		super(AppModule, self).__init__(processID, appName)
+		super().__init__(processID, appName)
 
 	def event_NVDAObject_init(self, obj):
 		if (

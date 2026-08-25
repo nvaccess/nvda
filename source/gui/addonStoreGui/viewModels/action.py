@@ -5,13 +5,12 @@
 
 from abc import ABC, abstractmethod
 from typing import (
-	Callable,
 	Generic,
-	Iterable,
 	Optional,
 	TypeVar,
 	TYPE_CHECKING,
 )
+from collections.abc import Callable, Iterable
 
 from addonStore.dataManager import addonDataManager
 from addonStore.models.addon import _AddonGUIModel

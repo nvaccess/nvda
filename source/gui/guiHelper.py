@@ -53,10 +53,7 @@ from typing import (
 	Any,
 	Final,
 	Generic,
-	Optional,
-	Type,
 	TypeVar,
-	Union,
 	cast,
 	overload,
 )
@@ -95,7 +92,7 @@ def autoThaw(control: wx.Window):
 	control.Thaw()
 
 
-class ButtonHelper(object):
+class ButtonHelper:
 	"""Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
 	arrangement. This class should be used for groups of buttons. While it won't cause problems to use this class with a
 	single button there is little benefit. Individual buttons can be added directly to a sizer / sizer helper.
@@ -234,7 +231,7 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 	# A handler is automatically added to the control to ensure the label is also shown / hidden.
 	ShowChanged, EVT_SHOW_CHANGED = newevent.NewEvent()
 
-	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: Type[_LabeledControlT], **kwargs):
+	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: type[_LabeledControlT], **kwargs):
 		"""@param parent: An instance of the parent wx window. EG wx.Dialog
 		@param labelText: The text to associate with a wx control.
 		@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
@@ -302,7 +299,7 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 		return self._sizer
 
 
-class PathSelectionHelper(object):
+class PathSelectionHelper:
 	"""
 	Abstracts away details for creating a path selection helper. The path selection helper is a textCtrl with a
 	button in horizontal layout. The Button launches a directory explorer. To get the path selected by the user, use the
@@ -348,8 +345,8 @@ class BoxSizerHelper:
 	def __init__(
 		self,
 		parent: wx.Dialog,
-		orientation: Optional[int] = None,
-		sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None,
+		orientation: int | None = None,
+		sizer: wx.BoxSizer | wx.StaticBoxSizer | None = None,
 	):
 		"""Init. Pass in either orientation OR sizer.
 		@param parent: An instance of the parent wx window. EG wx.Dialog
@@ -420,7 +417,7 @@ class BoxSizerHelper:
 	def addLabeledControl(
 		self,
 		labelText: str,
-		wxCtrlClass: Type[_LabeledControlT],
+		wxCtrlClass: type[_LabeledControlT],
 		**kwargs,
 	) -> _LabeledControlT:
 		"""Convenience method to create a labeled control
@@ -471,7 +468,7 @@ class BoxSizerHelper:
 		elif isinstance(buttons, int):
 			toAdd = self._parentRef().CreateButtonSizer(buttons)
 		else:
-			raise NotImplementedError("Unknown type: {}".format(buttons))
+			raise NotImplementedError(f"Unknown type: {buttons}")
 		if separated:
 			parentBox = self._parentRef()
 			if isinstance(self.sizer, wx.StaticBoxSizer):
@@ -485,7 +482,6 @@ class BoxSizerHelper:
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
-	pass
 
 
 def wxCallOnMain[**P, T](

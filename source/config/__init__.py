@@ -101,7 +101,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return _RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 def initialize():
@@ -135,7 +135,7 @@ def isInstalledCopy() -> bool:
 			"- this is not an installed copy.",
 		)
 		return False
-	except WindowsError:
+	except OSError:
 		log.error(
 			f"Unable to open isInstalledCopy registry key {_RegistryKey.INSTALLED_COPY}",
 			exc_info=True,
@@ -150,14 +150,14 @@ def isInstalledCopy() -> bool:
 			"- this may not be an installed copy.",
 		)
 		return False
-	except WindowsError:
+	except OSError:
 		log.error("Unable to query isInstalledCopy registry key", exc_info=True)
 		return False
 
 	k.Close()
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
-	except (WindowsError, FileNotFoundError):
+	except (OSError, FileNotFoundError):
 		log.error(
 			"Failed to access the installed NVDA directory,"
 			"or, a portable copy failed to access the current NVDA app directory",
@@ -172,7 +172,7 @@ def getInstalledUserConfigPath() -> str | None:
 	except FileNotFoundError:
 		log.debug("Could not find nvda registry key, NVDA is not currently installed")
 		return None
-	except WindowsError:
+	except OSError:
 		log.error("Could not open nvda registry key", exc_info=True)
 		return None
 
@@ -184,7 +184,7 @@ def getInstalledUserConfigPath() -> str | None:
 	configParent = SHGetKnownFolderPath(configFolder)
 	try:
 		return os.path.join(configParent, "nvda")
-	except WindowsError:
+	except OSError:
 		# (#13242) There is some uncertainty as to how this could be caused
 		log.debugWarning("Installed user config is not in local app data", exc_info=True)
 		return None
@@ -445,7 +445,7 @@ def setStartOnLogonScreen(enable: bool) -> None:
 	try:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
-	except WindowsError:
+	except OSError:
 		log.debugWarning(
 			"Failed to set start on logon screen's config, retrying elevated.",
 			exc_info=True,
@@ -595,7 +595,6 @@ class ConfigManager:
 		:param profile: The profile to check for logging settings.
 		:return: True if debug level logging is enabled, False otherwise.
 		"""
-		#
 		try:
 			logLevelName: str = profile["general"]["loggingLevel"]
 			if not logLevelName:
@@ -614,7 +613,7 @@ class ConfigManager:
 		:raises e: Re-raises any exception that occurs during the profile upgrade process.
 		:return: The loaded configuration object.
 		"""
-		log.info("Loading config: {0}".format(fn))
+		log.info(f"Loading config: {fn}")
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
@@ -1075,7 +1074,7 @@ class ConfigManager:
 
 	def setConfigValue(
 		self,
-		value: bool | int | float | str,
+		value: bool | float | str,
 		*keyPath: *tuple[str, str, *tuple[str, ...]],
 	) -> None:
 		"""

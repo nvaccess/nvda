@@ -121,7 +121,7 @@ class _WritePaths:
 		try:
 			with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	@property
@@ -137,7 +137,7 @@ class _WritePaths:
 				access=winreg.KEY_WOW64_32KEY,
 			) as k:
 				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	@property
@@ -180,7 +180,7 @@ class _WritePaths:
 				RegistryKey.INSTALLED_COPY.value,
 			) as k:
 				return winreg.QueryValueEx(k, "UninstallDirectory")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	@property
@@ -195,7 +195,7 @@ class _WritePaths:
 				access=winreg.KEY_WOW64_32KEY,
 			) as k:
 				return winreg.QueryValueEx(k, "UninstallDirectory")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	def getSymbolsConfigFile(self, locale: str) -> str:
@@ -374,7 +374,7 @@ def _forceSecureModeEnabled() -> bool:
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 			return bool(winreg.QueryValueEx(k, RegistryKey.FORCE_SECURE_MODE_SUBKEY.value)[0])
-	except WindowsError:
+	except OSError:
 		# Expected state by default, forceSecureMode parameter not set
 		return False
 
@@ -386,7 +386,7 @@ def _serviceDebugEnabled() -> bool:
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 			return bool(winreg.QueryValueEx(k, RegistryKey.SERVICE_DEBUG_SUBKEY.value)[0])
-	except WindowsError:
+	except OSError:
 		# Expected state by default, serviceDebug parameter not set
 		return False
 
@@ -402,6 +402,6 @@ def _configInLocalAppDataEnabled() -> bool:
 	except FileNotFoundError:
 		log.debug("Installed user config is not in local app data")
 		return False
-	except WindowsError:
+	except OSError:
 		# Expected state by default, configInLocalAppData parameter not set
 		return False

@@ -131,16 +131,14 @@ class testFollowerWarning(unittest.TestCase):
 		isUserAnAdmin: bool,
 		expectedReturn: bool,
 	):
-		with patch("winBindings.shell32.IsUserAnAdmin", return_value=isUserAnAdmin):
-			with patch(
-				"_remoteClient.client.RemoteClient",
-				isConnectedAsFollower=isConnectedAsFollower,
-			) as patchedRemoteClient:
-				with patch.dict(
-					"_remoteClient.__dict__",
-					_remoteClient=patchedRemoteClient if remoteEnabled else None,
-				):
-					self.assertEqual(installerGui._shouldWarnBeforeUpdate(), expectedReturn)
+		with patch("winBindings.shell32.IsUserAnAdmin", return_value=isUserAnAdmin), patch(
+			"_remoteClient.client.RemoteClient",
+			isConnectedAsFollower=isConnectedAsFollower,
+		) as patchedRemoteClient, patch.dict(
+			"_remoteClient.__dict__",
+			_remoteClient=patchedRemoteClient if remoteEnabled else None,
+		):
+			self.assertEqual(installerGui._shouldWarnBeforeUpdate(), expectedReturn)
 
 
 class Test_comparePreviousInstall(unittest.TestCase):

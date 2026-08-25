@@ -60,13 +60,13 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 					super().event_caret()
 					self._fromUpdateBrailleAndReviewPosition = False
 				return
-		super(WordDocument, self).event_caret()
+		super().event_caret()
 
 	def _get_role(self):
 		return controlTypes.Role.EDITABLETEXT
 
 	def _get_states(self):
-		states = super(WordDocument, self).states
+		states = super().states
 		states.add(controlTypes.State.MULTILINE)
 		return states
 
@@ -404,11 +404,11 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			ui.message(_("Not in table"))
 			return False
 		_cell = table.cell
-		getCell = (  # noqa: E731
+		getCell = (
 			lambda thisIndex, otherIndex: (
 				_cell(thisIndex, otherIndex) if row else _cell(otherIndex, thisIndex)
 			)
-		)  # noqa: E731
+		)
 		thisIndex = rowNumber if row else columnNumber
 		otherIndex = columnNumber if row else rowNumber
 		thisLimit = (rowCount if row else columnCount) if forward else 1
@@ -548,8 +548,8 @@ class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 
 	def _get_name(self):
 		if self.WinwordVersion < 13:
-			return super(SpellCheckErrorField, self).description
-		return super(SpellCheckErrorField, self).name
+			return super().description
+		return super().name
 
 	description = None
 

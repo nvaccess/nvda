@@ -17,8 +17,6 @@ from ctypes import byref, sizeof, Structure, WinError
 from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID
 from typing import (
 	TYPE_CHECKING,
-	Optional,
-	Union,
 )
 
 if TYPE_CHECKING:
@@ -284,7 +282,7 @@ def FileTimeToSystemTime(lpFileTime: _FILETIME, lpSystemTime: _SYSTEMTIME) -> No
 
 
 def SystemTimeToTzSpecificLocalTime(
-	timeZoneInformation: Union[_TIME_ZONE_INFORMATION, None],
+	timeZoneInformation: _TIME_ZONE_INFORMATION | None,
 	lpUniversalTime: _SYSTEMTIME,
 	lpLocalTime: _SYSTEMTIME,
 ) -> None:
@@ -411,7 +409,7 @@ class SECURITY_ATTRIBUTES(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)
+		super().__init__(nLength=sizeof(self), **kwargs)
 
 
 def CreatePipe(pipeAttributes, size):
@@ -520,7 +518,7 @@ class HGLOBAL(HANDLE):
 		@param autoFree: True by default, the handle will automatically be freed with GlobalFree
 		when this object goes out of scope.
 		"""
-		super(HGLOBAL, self).__init__(h)
+		super().__init__(h)
 		self._autoFree = autoFree
 
 	def __del__(self):
@@ -585,7 +583,7 @@ def SetThreadExecutionState(esFlags):
 	return res
 
 
-def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+def LCIDToLocaleName(windowsLCID: LCID) -> str | None:
 	# NVDA cannot run with this imported at module level
 	from logHandler import log
 

@@ -9,9 +9,6 @@
 import itertools
 from typing import (
 	TYPE_CHECKING,
-	Optional,
-	Tuple,
-	Union,
 )
 from comtypes import COMError
 from annotation import (
@@ -201,7 +198,7 @@ class GlobalCommands(ScriptableObject):
 	def __init__(self) -> None:
 		super().__init__()
 		self._reviewCopyStartMarker: textInfos.TextInfo | None = None
-		self._reviewCopyStartMarkerObj: "documentBase.TextContainerObject | None" = None
+		self._reviewCopyStartMarkerObj: documentBase.TextContainerObject | None = None
 		self._reviewSelectThenCopyRange: textInfos.TextInfo | None = None
 
 	def _clearReviewCopyStartMarker(self) -> None:
@@ -1558,7 +1555,7 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.message(text)
 
 	@staticmethod
-	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
+	def _reportLocationText(objs: tuple[None | NVDAObject | textInfos.TextInfo, ...]) -> None:
 		for obj in objs:
 			if obj is not None and obj.locationText:
 				ui.message(obj.locationText)
@@ -2738,7 +2735,7 @@ class GlobalCommands(ScriptableObject):
 	def _getTIAtCaret(
 		fallbackToPOSITION_FIRST: bool = False,
 		reportFailure: bool = True,
-	) -> Optional[textInfos.TextInfo]:
+	) -> textInfos.TextInfo | None:
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
 		# Note that if there is no caret this fact is announced in speech and braille
 		# unless reportFailure is set to C{False}
@@ -2827,7 +2824,7 @@ class GlobalCommands(ScriptableObject):
 		elif repeats == 1:
 			self.script_showFormattingAtCaret(gesture)
 
-	def _getNvdaObjWithAnnotationUnderCaret(self) -> Optional[NVDAObject]:
+	def _getNvdaObjWithAnnotationUnderCaret(self) -> NVDAObject | None:
 		"""If it has an annotation, get the NVDA object for the single character under the caret or the object
 		with system focus.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
@@ -2974,7 +2971,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
 	@staticmethod
-	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
+	def _getStatusBarText(setReviewCursor: bool = False) -> str | None:
 		"""Returns text of the current status bar and optionally sets review cursor to it.
 		If no status bar has been found `None` is returned and this fact is announced in speech and braille.
 		"""
@@ -4224,7 +4221,6 @@ class GlobalCommands(ScriptableObject):
 				oldInfo = pos.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			except Exception as e:
 				log.debug("Error trying to get initial selection information %s" % e)
-				pass
 			try:
 				copyMarker.updateSelection()
 				if hasattr(pos.obj, "reportSelectionChange"):
@@ -5608,7 +5604,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		# Iterate through the available profiles, creating scripts for them.
 		for profile in config.conf.listProfiles():
 			cls.addScriptForProfile(profile)
-		return super(ConfigProfileActivationCommands, cls).__new__(cls)
+		return super().__new__(cls)
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
@@ -5645,7 +5641,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param name: The name of the profile to add a script for.
 		@type name: str
 		"""
-		script = lambda self, gesture: cls._profileScript(name)  # noqa: E731
+		script = lambda self, gesture: cls._profileScript(name)
 		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)
 		# Just set the doc string of the script, using the decorator is overkill here.
 		# Translators: The description shown in input help for a script that

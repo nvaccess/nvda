@@ -57,7 +57,7 @@ FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), "\\" + s) for s in "^$.*+?()[]{}|"})
 
 def _prepareForFindByAttributes(attribs):
 	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression.
-	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)  # noqa: E731
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
@@ -97,7 +97,7 @@ def _prepareForFindByAttributes(attribs):
 class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def __init__(self, itemType, document, vbufNode, startOffset, endOffset):
 		textInfo = document.makeTextInfo(textInfos.offsets.Offsets(startOffset, endOffset))
-		super(VirtualBufferQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 		docHandle = ctypes.c_int()
 		ID = ctypes.c_int()
 		NVDAHelper.localLib.VBuf_getIdentifierFromControlFieldNode(
@@ -148,7 +148,7 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 					return True
 			except (KeyError, ValueError, TypeError):
 				return False
-		return super(VirtualBufferQuickNavItem, self).isChild(parent)
+		return super().isChild(parent)
 
 
 class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.offsets.OffsetsTextInfo):
@@ -251,7 +251,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 
 	def __init__(self, obj, position):
 		self.obj = obj
-		super(VirtualBufferTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	def _getSelectionOffsets(self):
 		start = ctypes.c_int()
@@ -342,7 +342,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 		]
 		return commandList
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start = self._startOffset
 		end = self._endOffset
 		if start == end:
@@ -361,7 +361,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 			ctypes.byref(lineStart),
 			ctypes.byref(lineEnd),
 		)
-		word_startOffset, word_endOffset = super(VirtualBufferTextInfo, self)._getWordOffsets(offset)
+		word_startOffset, word_endOffset = super()._getWordOffsets(offset)
 		return (max(lineStart.value, word_startOffset), min(lineEnd.value, word_endOffset))
 
 	def _getLineOffsets(self, offset):
@@ -491,7 +491,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 				ctypes.byref(node),
 			)
 			return startOffset.value, endOffset.value
-		return super(VirtualBufferTextInfo, self)._getUnitOffsets(unit, offset)
+		return super()._getUnitOffsets(unit, offset)
 
 	def _get_clipboardText(self):
 		# Blocks should start on a new line, but they don't necessarily have an end of line indicator.
@@ -520,7 +520,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	rootIdentifiers = weakref.WeakValueDictionary()
 
 	def __init__(self, rootNVDAObject, backendName=None):
-		super(VirtualBuffer, self).__init__(rootNVDAObject)
+		super().__init__(rootNVDAObject)
 		self.backendName = backendName
 		self.VBufHandle = None
 		self.isLoading = False
@@ -545,7 +545,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		return not self.isLoading and not self.VBufHandle
 
 	def terminate(self):
-		super(VirtualBuffer, self).terminate()
+		super().terminate()
 		if not self.VBufHandle:
 			return
 		self.unloadBuffer()
@@ -630,7 +630,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 					NVDAHelper.localLib.VBuf_destroyBuffer,
 					ctypes.byref(self.VBufHandle),
 				)
-			except WindowsError:
+			except OSError:
 				pass
 			self.VBufHandle = None
 
@@ -889,7 +889,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		raise LookupError
 
 	def _isNVDAObjectInApplication_noWalk(self, obj):
-		inApp = super(VirtualBuffer, self)._isNVDAObjectInApplication_noWalk(obj)
+		inApp = super()._isNVDAObjectInApplication_noWalk(obj)
 		if inApp is not None:
 			return inApp
 		# If the object is in the buffer, it's definitely not in an application.
@@ -911,7 +911,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 				objId,
 				ctypes.byref(node),
 			)
-		except WindowsError:
+		except OSError:
 			return None
 		if node:
 			return False

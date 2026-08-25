@@ -5,9 +5,9 @@
 
 
 from typing import (
-	Callable,
 	ParamSpec,
 )
+from collections.abc import Callable
 import threading
 import itertools
 import time

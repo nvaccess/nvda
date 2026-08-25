@@ -6,7 +6,6 @@
 
 from typing import (
 	NamedTuple,
-	Optional,
 	Protocol,
 )
 import addonAPIVersion
@@ -106,7 +105,7 @@ class SupportsVersionCheck(Protocol):
 		self,
 		backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO,
 		currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT,
-	) -> Optional[str]:
+	) -> str | None:
 		from addonHandler.addonVersionCheck import hasAddonGotRequiredSupport, isAddonTested
 
 		if not hasAddonGotRequiredSupport(self, currentAPIVersion):

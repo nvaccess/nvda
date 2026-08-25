@@ -49,7 +49,7 @@ class FakeSerializer:
 
 		if isinstance(type, enum.Enum):
 			type = type.value
-		return f"type={type}|{kwargs}\n".encode("utf-8")
+		return f"type={type}|{kwargs}\n".encode()
 
 	def deserialize(self, line: bytes):
 		s = line.decode("utf-8").strip()
@@ -249,7 +249,7 @@ class TestSendQueue(unittest.TestCase):
 		self.transport.queue.put(item1)
 
 		def fakeSendall(data):
-			raise socket.error("Test error")
+			raise OSError("Test error")
 
 		self.transport.serverSock.sendall = fakeSendall
 		# Should complete without raising further exception
@@ -366,7 +366,7 @@ class DummyConnectorTransport(Transport):
 
 	def run(self):
 		self.runCalled += 1
-		raise socket.error("Simulated socket error")
+		raise OSError("Simulated socket error")
 
 	def processIncomingSocketData(self):
 		pass
@@ -386,7 +386,7 @@ class TestConnectorThread(unittest.TestCase):
 		for _ in range(iterations):
 			try:
 				fakeTransport.run()
-			except socket.error:
+			except OSError:
 				pass
 		connector.running = False
 		self.assertEqual(fakeTransport.runCalled, iterations)

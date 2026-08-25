@@ -41,7 +41,7 @@ LCID_CENTRAL_KURDISH = 0x0492
 LCID_KHMER_CAMBODIA = 0x0453
 LCID_INVALID = 0xFFFF
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
-TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}  # noqa: E741
+TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
 WINDOWS_LANGS = generateWindowsLocales()
 
 

@@ -17,9 +17,6 @@ import UIAHandler
 from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
-from typing import (
-	Optional,
-)
 from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo
@@ -31,11 +28,11 @@ __all__ = [
 	"ConsoleUIATextInfo",
 	"ConsoleUIATextInfoWorkaroundEndInclusive",
 	"WinConsoleUIA",
-	"consoleUIAWindow",
-	"findExtraOverlayClasses",
-	"_WinTerminalUIATextInfo",
 	"_DiffBasedWinTerminalUIA",
 	"_NotificationsBasedWinTerminalUIA",
+	"_WinTerminalUIATextInfo",
+	"consoleUIAWindow",
+	"findExtraOverlayClasses",
 ]
 
 
@@ -58,7 +55,7 @@ class ConsoleUIATextInfo(UIATextInfo):
 				log.warning("Couldn't get bounding range for console", exc_info=True)
 				# Fall back to presenting the entire buffer.
 				_rangeObj, collapseToEnd = None, None
-		super(ConsoleUIATextInfo, self).__init__(obj, position, _rangeObj)
+		super().__init__(obj, position, _rangeObj)
 		if collapseToEnd is not None:
 			self.collapse(end=collapseToEnd)
 
@@ -112,7 +109,7 @@ class ConsoleUIATextInfo(UIATextInfo):
 
 	def _move(self, unit, direction, endPoint=None):
 		"Perform a move without respect to bounding."
-		return super(ConsoleUIATextInfo, self).move(unit, direction, endPoint)
+		return super().move(unit, direction, endPoint)
 
 	def _get_text(self) -> str:
 		# #14689: IMPROVED and END_INCLUSIVE UIA consoles have many blank lines,
@@ -496,10 +493,10 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 
 	def event_UIA_notification(
 		self,
-		notificationKind: Optional[int] = None,
-		notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
-		displayString: Optional[str] = None,
-		activityId: Optional[str] = None,
+		notificationKind: int | None = None,
+		notificationProcessing: int | None = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+		displayString: str | None = None,
+		activityId: str | None = None,
 	):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:

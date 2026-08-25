@@ -5,13 +5,8 @@
 
 from __future__ import annotations
 
-import typing
 from typing import (
-	Dict,
 	Any,
-	Optional,
-	Set,
-	Union,
 )
 
 import config
@@ -37,7 +32,7 @@ from ..labels import (
 
 
 def _getAnnotationProperty(
-	propertyValues: Dict[str, Any],
+	propertyValues: dict[str, Any],
 ) -> str:
 	# Translators: Braille when there are further details/annotations that can be fetched manually.
 	genericDetailsRole = _("details")
@@ -52,11 +47,11 @@ def _getAnnotationProperty(
 		# %s specifies the type of details (e.g. "has comment suggestion")
 		hasDetailsRoleTemplate = _("has %s")
 		rolesLabels = list(
-			(
+			
 				hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
 				for role in detailsRoles
 				if role  # handle None case without the "has X" grammar.
-			)
+			
 		)
 		if None in detailsRoles:
 			rolesLabels.insert(0, genericDetailsRole)
@@ -66,12 +61,12 @@ def _getAnnotationProperty(
 # C901 'getPropertiesBraille' is too complex
 # Note: when working on getPropertiesBraille, look for opportunities to simplify
 # and move logic out into smaller helper functions.
-def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
+def getPropertiesBraille(**propertyValues) -> str:
 	textList = []
 	name = propertyValues.get("name")
 	if name:
 		textList.append(name)
-	role: Optional[Union[controlTypes.Role, int]] = propertyValues.get("role")
+	role: controlTypes.Role | int | None = propertyValues.get("role")
 	roleText = propertyValues.get("roleText")
 	states = propertyValues.get("states")
 	positionInfo = propertyValues.get("positionInfo")
@@ -213,13 +208,13 @@ def getPropertiesBraille(**propertyValues) -> str:  # noqa: C901
 
 
 def _getControlFieldForLayoutPresentation(
-	description: Optional[str],
+	description: str | None,
 	current: controlTypes.IsCurrent,
 	hasDetails: bool,
 	detailsRoles: _AnnotationRolesT,
 	role: controlTypes.Role,
-	content: Optional[str],
-) -> Optional[str]:
+	content: str | None,
+) -> str | None:
 	text = []
 	if description:
 		text.append(getPropertiesBraille(description=description))
@@ -236,13 +231,13 @@ def _getControlFieldForLayoutPresentation(
 
 
 def _getControlFieldForTableCell(
-	description: Optional[str],
+	description: str | None,
 	current: controlTypes.IsCurrent,
 	hasDetails: bool,
 	detailsRoles: _AnnotationRolesT,
 	field: textInfos.Field,
 	formatConfig: config.AggregatedSection,
-	states: Set[controlTypes.State],
+	states: set[controlTypes.State],
 ) -> str:
 	reportTableHeaders = formatConfig["reportTableHeaders"]
 	reportTableCellCoords = formatConfig["reportTableCellCoords"]
@@ -264,18 +259,18 @@ def _getControlFieldForTableCell(
 
 
 def _getControlFieldForReportStart(
-	description: Optional[str],
+	description: str | None,
 	current: controlTypes.IsCurrent,
 	hasDetails: bool,
 	detailsRoles: _AnnotationRolesT,
 	field: textInfos.Field,
 	role: controlTypes.Role,
-	states: Set[controlTypes.State],
-	content: Optional[str],
+	states: set[controlTypes.State],
+	content: str | None,
 	info: textInfos.TextInfo,
-	value: Optional[str],
+	value: str | None,
 	roleText: str,
-	placeholder: Optional[str],
+	placeholder: str | None,
 	errorMessage: str | None,
 ) -> str:
 	props = {
@@ -337,10 +332,10 @@ def _getControlFieldForReportStart(
 def getControlFieldBraille(
 	info: textInfos.TextInfo,
 	field: textInfos.Field,
-	ancestors: typing.List[textInfos.Field],
+	ancestors: list[textInfos.Field],
 	reportStart: bool,
 	formatConfig: config.AggregatedSection,
-) -> Optional[str]:
+) -> str | None:
 	presCat = field.getPresentationCategory(ancestors, formatConfig)
 	# Cache this for later use.
 	field._presCat = presCat
@@ -384,7 +379,7 @@ def getControlFieldBraille(
 
 	hasDetails = field.get("hasDetails", False) and config.conf["annotations"]["reportDetails"]
 	if config.conf["annotations"]["reportDetails"]:
-		detailsRoles: Set[Union[None, controlTypes.Role]] = field.get("detailsRoles")
+		detailsRoles: set[None | controlTypes.Role] = field.get("detailsRoles")
 	else:
 		detailsRoles = set()
 

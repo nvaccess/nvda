@@ -23,8 +23,8 @@ if not virtualEnv or not uv or Path.cwd() != Path(virtualEnv).parent:
 	)
 	sys.exit(1)
 
-import time  # noqa: E402
-import importlib.util  # noqa: E402
+import time
+import importlib.util
 
 
 def recursiveCopy(env, targetDir, sourceDir):
@@ -43,12 +43,12 @@ def recursiveCopy(env, targetDir, sourceDir):
 
 
 # Import NVDA's versionInfo module.
-import gettext  # noqa: E402
+import gettext
 
 gettext.install("nvda")
 sys.path.append("source")
-import buildVersion  # noqa: E402
-import versionInfo  # noqa: E402
+import buildVersion
+import versionInfo
 
 del sys.path[-1]
 
@@ -395,15 +395,10 @@ def NVDADistGenerator(target, source, env, for_signature):
 	action = [
 		lambda target, source, env: (
 			open(buildVersionFn, "w", encoding="utf-8").write(
-				"version = {version!r}\n"
-				"publisher = {publisher!r}\n"
-				"updateVersionType = {updateVersionType!r}\n"
-				"version_build = {version_build!r}\n".format(
-					version=version,
-					publisher=publisher,
-					updateVersionType=updateVersionType,
-					version_build=version_build,
-				),
+				f"version = {version!r}\n"
+				f"publisher = {publisher!r}\n"
+				f"updateVersionType = {updateVersionType!r}\n"
+				f"version_build = {version_build!r}\n",
 			)
 			# In Python 3 write returns the number of characters written,
 			# which scons treats as an error code.
@@ -460,7 +455,7 @@ def ZipArchiveAction(target, source, env):
 				arcName = arcName.replace(".." + os.path.sep, "")
 			return "" if arcName == "." else arcName
 	else:
-		getArcName = lambda origName: "" if origName == "." else origName  # noqa: E731
+		getArcName = lambda origName: "" if origName == "." else origName
 
 	# Nasty hack to make zipfile use best compression, since it isn't configurable.
 	# Tried setting memlevel to 9 as well, but it made compression slightly worse.

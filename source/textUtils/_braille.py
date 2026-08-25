@@ -21,4 +21,4 @@ def _applyOffsetConverter(
 		]
 	if cursorPos is not None:
 		cursorPos = cast(int, converter.strToEncodedOffsets(cursorPos))
-	return cast(str, getattr(converter, "encoded")), textToTranslateTypeforms, cursorPos
+	return cast(str, converter.encoded), textToTranslateTypeforms, cursorPos

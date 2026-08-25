@@ -75,7 +75,7 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 		else:
 			raise ValueError("Invalid UIAElementOrRange")
 		textInfo = document.TextInfo(document, None, _rangeObj=UIATextRange)
-		super(UIATextRangeQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 
 	@property
 	def obj(self):
@@ -95,7 +95,7 @@ class TextAttribUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 	def __init__(self, attribValues, itemType, document, textInfo):
 		self.attribValues = attribValues
-		super(TextAttribUIATextInfoQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 
 
 class ErrorUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
@@ -160,7 +160,7 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 		label: str | None = None,
 		level: int = 0,
 	):
-		super(HeadingUIATextInfoQuickNavItem, self).__init__(itemType, document, position)
+		super().__init__(itemType, document, position)
 		self.level = level
 		self._label = label
 

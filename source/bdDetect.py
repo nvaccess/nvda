@@ -44,7 +44,7 @@ HID_USAGE_PAGE_BRAILLE = 0x41
 
 DBT_DEVNODES_CHANGED = 7
 
-USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
+USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.UNICODE)
 
 
 class ProtocolType(StrEnum):
@@ -86,7 +86,6 @@ class DeviceType(metaclass=_DeviceTypeMeta):
 	"""This class is kept for backwards compatibility.
 	Former members were split into the L{ProtocolType} and L{CommunicationType} enums."""
 
-	...
 
 
 def __getattr__(attrName: str) -> Any:
@@ -110,7 +109,7 @@ def __getattr__(attrName: str) -> Any:
 			f"Use bdDetect.{replacementSymbol.__class__.__name__}.{replacementSymbol.value} instead. ",
 		)
 		return replacementSymbol.value
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class DeviceMatch(NamedTuple):

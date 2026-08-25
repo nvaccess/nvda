@@ -79,10 +79,9 @@ class AppModule(appModuleHandler.AppModule):
 			displayName = mon.GetDisplayName(bctx, None)
 			if displayName == f"!VisualStudio.DTE.{self.vsMajor}.0:{self.processID}":
 				return comtypes.client.dynamic.Dispatch(ROT.GetObject(mon).QueryInterface(IDispatch))
-		else:
-			# None found.
-			log.debugWarning("No top level automation object found", exc_info=True)
-			return None
+		# None found.
+		log.debugWarning("No top level automation object found", exc_info=True)
+		return None
 
 	def _get_DTE(self):
 		thread = threading.get_ident()

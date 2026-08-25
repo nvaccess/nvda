@@ -251,14 +251,14 @@ def removeOldLibFiles(destPath: str, rebootOK: bool = False):
 			for d in subdirs:
 				path = os.path.join(parent, d)
 				if path != currentLibPath:
-					log.debug(f"Removing old lib directory: {repr(path)}")
+					log.debug(f"Removing old lib directory: {path!r}")
 					try:
 						os.rmdir(path)
 					except OSError:
 						log.warning(
 							"Failed to remove a directory no longer needed. "
 							"This can be manually removed after a reboot or the  installer will try"
-							f" removing it again next time. Directory: {repr(path)}",
+							f" removing it again next time. Directory: {path!r}",
 						)
 			for f in files:
 				path = os.path.join(parent, f)
@@ -594,11 +594,11 @@ def _unregisterEaseOfAccessApp():
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Ease of Access app key not found. Nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
-	except WindowsError:
+	except OSError:
 		log.debug("Could not disable auto start on logon screen.")
 
 
@@ -608,7 +608,7 @@ def _unregisterDesktopShortcut(keepDesktopShortcut: bool):
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
 		try:
 			os.remove(desktopPath)
-		except WindowsError:
+		except OSError:
 			pass
 
 
@@ -640,7 +640,7 @@ def _unregisterFromUninstallRegistry() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Uninstall registry key not found for 64-bit, nothing to unregister.")
 	try:
 		winreg.DeleteKeyEx(
@@ -648,7 +648,7 @@ def _unregisterFromUninstallRegistry() -> None:
 			RegistryKey.INSTALLED_COPY.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Uninstall registry key not found for 32-bit, nothing to unregister.")
 
 
@@ -660,7 +660,7 @@ def _unregisterFromAppPathRegistry() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("App path registry key not found for 64-bit, nothing to unregister.")
 	try:
 		winreg.DeleteKeyEx(
@@ -668,7 +668,7 @@ def _unregisterFromAppPathRegistry() -> None:
 			RegistryKey.APP_PATH.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("App path registry key not found for 32-bit, nothing to unregister.")
 
 
@@ -680,7 +680,7 @@ def _unregisterFromSoftwareRegistry() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("NVDA registry key not found for 64-bit, nothing to unregister.")
 	try:
 		winreg.DeleteKeyEx(
@@ -688,7 +688,7 @@ def _unregisterFromSoftwareRegistry() -> None:
 			RegistryKey.NVDA.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("NVDA registry key not found for 32-bit, nothing to unregister.")
 
 
@@ -714,7 +714,7 @@ def registerAddonFileAssociation(slaveExe: str):
 			# Translators: A file extension label for NVDA add-on package.
 			winreg.SetValueEx(k, None, 0, winreg.REG_SZ, _("NVDA add-on package"))
 			with winreg.CreateKeyEx(k, "DefaultIcon", 0, winreg.KEY_WRITE) as k2:
-				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, "@{slaveExe},1".format(slaveExe=slaveExe))
+				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, f"@{slaveExe},1")
 			# Point the open verb to nvda_slave addons_installAddonPackage action
 			with winreg.CreateKeyEx(k, "shell\\open\\command", 0, winreg.KEY_WRITE) as k2:
 				winreg.SetValueEx(
@@ -743,7 +743,7 @@ def registerAddonFileAssociation(slaveExe: str):
 			winreg.CloseKey(k2)
 		# Notify the shell that a file association has changed:
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
-	except WindowsError:
+	except OSError:
 		log.error("Can not create addon file association.", exc_info=True)
 
 
@@ -757,7 +757,7 @@ def unregisterAddonFileAssociation() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Addon prog ID registry key not found for 64-bit, nothing to unregister.")
 	else:
 		shouldNotifyShell = True
@@ -767,7 +767,7 @@ def unregisterAddonFileAssociation() -> None:
 			RegistryKey.ADDON_PROG.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Addon prog ID registry key not found for 32-bit, nothing to unregister.")
 	else:
 		shouldNotifyShell = True
@@ -790,7 +790,7 @@ def tryRemoveFile(
 	tempPath = _createEmptyTempFileForDeletingFile(dir=dirPath)
 	try:
 		os.replace(path, tempPath)
-	except (WindowsError, IOError):
+	except OSError:
 		raise RetriableFailure("Failed to rename file %s before  remove" % path)
 	for count in range(numRetries):
 		try:
@@ -810,7 +810,7 @@ def tryRemoveFile(
 			pathQualifier = "\\\\?\\"
 			# #9847: Move file to None to delete it.
 			winKernel.moveFileEx(pathQualifier + tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		except WindowsError:
+		except OSError:
 			log.debugWarning(f"Failed to mark file {tempPath} for delete on reboot", exc_info=True)
 		else:
 			return
@@ -834,7 +834,7 @@ def tryCopyFile(sourceFilePath: str, destFilePath: str):
 		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
 		try:
 			os.replace(destFilePath, tempPath)
-		except (WindowsError, OSError):
+		except OSError:
 			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
 			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
 		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)

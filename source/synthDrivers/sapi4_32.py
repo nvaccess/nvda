@@ -31,5 +31,5 @@ class SynthDriver(SynthDriverProxy32):
 				winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
 			).Close()
 			return True
-		except WindowsError:
+		except OSError:
 			return False

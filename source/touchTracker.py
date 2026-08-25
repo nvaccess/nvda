@@ -176,7 +176,7 @@ Longer than multitouchTimeout so users aren't forced to rush the gesture.
 """
 
 
-class SingleTouchTracker(object):
+class SingleTouchTracker:
 	"""
 	Represents the lifetime of one single finger while its in contact with the touch device, tracking start and current coordinates, start and end times, and whether its complete (broken contact yet).
 	It also calculates what kind of single action (tap, flick, hover) this finger is performing, once it has enough data.
@@ -206,19 +206,19 @@ class SingleTouchTracker(object):
 
 	__slots__ = [
 		"ID",
-		"x",
-		"y",
-		"startX",
-		"startY",
-		"peakX",
-		"peakY",
-		"startTime",
+		"_samples",
+		"action",
+		"complete",
 		"endTime",
 		"maxAbsDeltaX",
 		"maxAbsDeltaY",
-		"action",
-		"complete",
-		"_samples",
+		"peakX",
+		"peakY",
+		"startTime",
+		"startX",
+		"startY",
+		"x",
+		"y",
 	]
 
 	def __init__(self, ID: int, x: int, y: int) -> None:
@@ -306,15 +306,15 @@ class SingleTouchTracker(object):
 class MultiTouchTracker:
 	__slots__ = [
 		"action",
-		"x",
-		"y",
-		"startTime",
-		"endTime",
-		"numFingers",
 		"actionCount",
 		"childTrackers",
-		"rawSingleTouchTracker",
+		"endTime",
+		"numFingers",
 		"pluralTimeout",
+		"rawSingleTouchTracker",
+		"startTime",
+		"x",
+		"y",
 	]
 
 	def __init__(
@@ -357,7 +357,7 @@ class MultiTouchTracker:
 		self.endTime = endTime
 		self.numFingers = numFingers
 		self.actionCount = actionCount
-		self.childTrackers: list["MultiTouchTracker"] = []
+		self.childTrackers: list[MultiTouchTracker] = []
 		"""a list of L{MultiTouchTracker} objects which represent the direct sub-actions of this action.
 		e.g. a 2-finger triple tap's childTrackers will contain 3 2-finger taps.
 		Each of the 2-finger taps' childTrackers will contain 2 taps.
@@ -377,13 +377,7 @@ class MultiTouchTracker:
 
 	def __repr__(self):
 		return (
-			"<MultiTouchTracker {numFingers}finger {action} {actionCount} times at position {x},{y}>".format(
-				action=self.action,
-				x=self.x,
-				y=self.y,
-				numFingers=self.numFingers,
-				actionCount=self.actionCount,
-			)
+			f"<MultiTouchTracker {self.numFingers}finger {self.action} {self.actionCount} times at position {self.x},{self.y}>"
 		)
 
 	def getDevInfoString(self):
@@ -396,7 +390,7 @@ class MultiTouchTracker:
 		return msg
 
 
-class TrackerManager(object):
+class TrackerManager:
 	"""
 	Tracks touch input by managing L{SingleTouchTracker} instances and emitting L{MultiTouchTracker} instances representing high-level multiFingered plural trackers.
 	"""
@@ -697,8 +691,7 @@ class TrackerManager(object):
 				del self.multiTouchTrackers[index]
 				self.processAndQueueMultiTouchTracker(mergedTracker)
 				return
-		else:
-			self.multiTouchTrackers.append(tracker)
+		self.multiTouchTrackers.append(tracker)
 
 	pendingEmitInterval: float | None = None
 	"""If set: how long to wait before calling emitTrackers again as trackers are still in the queue"""

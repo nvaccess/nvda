@@ -36,7 +36,7 @@ class MMCTableCell(IAccessible):
 		"""When 'Guess object position info when unavailable' is enabled
 		these controls report very strange information such as 65537 of 12, especially in braille.
 		Disable reporting of position info all together."""
-		return None
+		return
 
 
 class toolTipWithEmptyName(ToolTip):

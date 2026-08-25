@@ -21,7 +21,7 @@ from ._scanner import Scanner
 from ._io import Ble
 from ..base import requiresBackgroundThread
 
-__all__ = ["Scanner", "Ble", "scanner", "findDeviceByAddress"]
+__all__ = ["Ble", "Scanner", "findDeviceByAddress", "scanner"]
 
 #: Module-level singleton scanner shared by all BLE consumers.
 #: Using a single scanner avoids contention over the Windows BLE stack and

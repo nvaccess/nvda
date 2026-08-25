@@ -30,7 +30,7 @@ import socket
 import ssl
 import tempfile
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, UTC
 from pathlib import Path
 from select import select
 from itertools import count
@@ -103,7 +103,7 @@ class RemoteCertificateManager:
 			cert = x509.load_pem_x509_certificate(certData)
 
 		# Check validity period
-		now = datetime.now(timezone.utc)
+		now = datetime.now(UTC)
 		if not (cert.not_valid_before_utc < now <= cert.not_valid_after_utc):
 			raise ValueError("Certificate is not within its validity period")
 
@@ -150,7 +150,7 @@ class RemoteCertificateManager:
 			],
 		)
 
-		now = datetime.now(timezone.utc)
+		now = datetime.now(UTC)
 		cert = (
 			x509.CertificateBuilder()
 			.subject_name(
@@ -384,7 +384,7 @@ class LocalRelayServer:
 		try:
 			clientSock, addr = sock.accept()
 			log.info(f"New client connection from {addr}")
-		except (ssl.SSLError, socket.error, OSError):
+		except (ssl.SSLError, OSError):
 			log.error("Error accepting connection", exc_info=True)
 			return
 		# Disable Nagle's algorithm so that packets are always sent immediately.

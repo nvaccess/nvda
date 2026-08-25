@@ -87,7 +87,7 @@ def _getNoVBuf_AriaDetails_sample() -> str:
 
 def _doTestAriaDetails_NoVBufNoTextInterface(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 	_chrome.prepareChrome(_getNoVBuf_AriaDetails_sample())
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	spy.modifyNVDAConfig(nvdaConfValues)
 
 	actualSpeech = _NvdaLib.getSpeechAfterKey("tab")
@@ -367,7 +367,7 @@ def exercise_mark_aria_details(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 		</div>
 		""",
 	)
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	spy.modifyNVDAConfig(nvdaConfValues)
 
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("downArrow")
@@ -2686,7 +2686,7 @@ def test_styleNav():
 	By default these commands don't have assigned gestures,
 	so we will assign temporary gestures just for testing.
 	"""
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	spy.assignGesture(
 		"kb:s",
 		"browseMode",
@@ -2762,7 +2762,7 @@ def test_styleNav():
 
 def test_clickableNavigation() -> None:
 	"""Tests that unassigned quick navigation commands move between clickable elements."""
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	spy.assignGesture(
 		"kb:z",
 		"browseMode",
@@ -2899,7 +2899,7 @@ def _doTestReportLanguage(nvdaConfValues: "NVDASpyLib.NVDAConfMods"):
 		<p><span lang="fr">Cyrille</span> created this <span lang="unknown">test:</span> Let's mention <span lang="es-ES">Noelia</span> and <span lang="la">Leonem</span> in the same sentence.</p>
 	""",
 	)
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	spy.modifyNVDAConfig(nvdaConfValues)
 
 
@@ -2939,7 +2939,7 @@ def test_reportLanguageEnabled():
 			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
 		],
 	)
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
@@ -2975,7 +2975,7 @@ def test_reportLanguageWithoutDialects():
 			(REPORT_NOT_SUPPORTED_LANGUAGE_KEY, "off"),
 		],
 	)
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
@@ -3040,7 +3040,7 @@ def test_reportNotSupportedLanguageAndOtherLanguages():
 		],
 	)
 
-	spy: "NVDASpyLib" = _NvdaLib.getSpyLib()
+	spy: NVDASpyLib = _NvdaLib.getSpyLib()
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,

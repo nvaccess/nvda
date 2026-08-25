@@ -11,7 +11,7 @@ import config
 from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject
 from .visionHandlerExtensionPoints import EventExtensionPoints
-from typing import Optional, Any
+from typing import Any
 
 
 class VisionEnhancementProviderSettings(AutoSettings):
@@ -106,7 +106,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 		...
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Any]:
+	def getSettingsPanelClass(cls) -> Any | None:
 		"""Returns the class to be used in order to construct a settingsPanel instance for the provider.
 		The returned class must have a constructor which accepts:
 			- parent: wx.Window

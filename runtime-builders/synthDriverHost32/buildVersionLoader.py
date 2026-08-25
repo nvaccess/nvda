@@ -23,9 +23,9 @@ finally:
 	del sys.path[0]
 
 __all__ = [
-	"version_detailed",
 	"formatBuildVersionString",
 	"name",
 	"publisher",
 	"version",
+	"version_detailed",
 ]

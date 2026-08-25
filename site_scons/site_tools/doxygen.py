@@ -39,7 +39,7 @@ def fetchDoxygenPath():
 				"Bin",
 				"doxygen.exe",
 			)
-	except WindowsError:
+	except OSError:
 		return "doxygen"
 	return doxygenPath
 

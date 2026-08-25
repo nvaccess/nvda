@@ -113,7 +113,7 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
 
 
-def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
+def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:
 	"""Installs the addon bundle at path.
 	Only used for installing external add-on bundles.
 	Any error messages / warnings are presented to the user via a GUI message box.
@@ -293,14 +293,14 @@ class IncompatibleAddonsDialog(
 		return None until this is replaced with a weakref.ref object. Then the instance is retrieved
 		with by treating that object as a callable.
 		"""
-		return None
+		return
 
 	helpId = "IncompatibleAddonsManager"
 
 	def __new__(cls, *args, **kwargs):
 		instance = IncompatibleAddonsDialog._instance()
 		if instance is None:
-			return super(IncompatibleAddonsDialog, cls).__new__(cls, *args, **kwargs)
+			return super().__new__(cls, *args, **kwargs)
 		return instance
 
 	def __init__(

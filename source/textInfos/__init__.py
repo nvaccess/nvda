@@ -35,11 +35,11 @@ from logHandler import log
 from utils.urlUtils import _LinkData
 
 if typing.TYPE_CHECKING:
-	import documentBase  # noqa: F401 used for type checking only
+	import documentBase
 	import NVDAObjects
 
 
-SpeechSequence = List[Union[Any, str]]
+SpeechSequence = list[Any | str]
 
 
 class Field(dict):
@@ -242,13 +242,13 @@ class ControlField(Field):
 		return self.PRESCAT_LAYOUT
 
 
-class FieldCommand(object):
+class FieldCommand:
 	"""A command indicating a L{Field} in a sequence of text and fields.
 	When retrieving text with its associated fields, a L{TextInfo} provides a sequence of text strings and L{FieldCommand}s.
 	A command indicates the start or end of a control or that the formatting of the text has changed.
 	"""
 
-	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
+	def __init__(self, command: str, field: ControlField | FormatField | None):
 		"""Constructor.
 		@param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
@@ -364,14 +364,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def __init__(
 		self,
 		obj: "documentBase.TextContainerObject",
-		position: Union[int, Tuple, str],
+		position: int | tuple | str,
 	):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
 		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
 		@param obj: The object containing the range of text being represented.
 		"""
-		super(TextInfo, self).__init__()
+		super().__init__()
 		self._obj = weakref.ref(obj) if type(obj) is not weakref.ProxyType else obj
 		#: The position with which this instance was constructed.
 		self.basePosition = position
@@ -444,9 +444,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		raise NotImplementedError
 
 	TextOrFieldsT = Union[str, FieldCommand]
-	TextWithFieldsT = List[TextOrFieldsT]
+	TextWithFieldsT = list[TextOrFieldsT]
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
+	def getTextWithFields(self, formatConfig: dict | None = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
@@ -650,10 +650,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 		while unitInfo.start < self.end:
 			unitInfo.expand(unit)
 			chunkInfo = unitInfo.copy()
-			if chunkInfo.start < self.start:
-				chunkInfo.start = self.start
-			if chunkInfo.end > self.end:
-				chunkInfo.end = self.end
+			chunkInfo.start = max(chunkInfo.start, self.start)
+			chunkInfo.end = min(chunkInfo.end, self.end)
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
 			if unitInfo.start < chunkInfo.end:
@@ -663,11 +661,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getControlFieldSpeech(
 		self,
 		attrs: ControlField,
-		ancestorAttrs: List[Field],
+		ancestorAttrs: list[Field],
 		fieldType: str,
-		formatConfig: Optional[Dict[str, bool]] = None,
+		formatConfig: dict[str, bool] | None = None,
 		extraDetail: bool = False,
-		reason: Optional[OutputReason] = None,
+		reason: OutputReason | None = None,
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
@@ -698,10 +696,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getFormatFieldSpeech(
 		self,
 		attrs: Field,
-		attrsCache: Optional[Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: Field | None = None,
+		formatConfig: dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:
@@ -1024,7 +1022,7 @@ class TextInfoEndpoint:
 	< <= == != >= >
 	"""
 
-	_whichMap: Dict[Tuple[bool, bool], str] = {
+	_whichMap: dict[tuple[bool, bool], str] = {
 		(True, True): "startToStart",
 		(True, False): "startToEnd",
 		(False, True): "endToStart",

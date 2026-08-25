@@ -15,12 +15,6 @@ import ctypes.wintypes
 import os
 import sys
 from types import ModuleType
-from typing import (
-	Dict,
-	List,
-	Optional,
-	Tuple,
-)
 
 import winBindings.kernel32
 import winVersion
@@ -70,7 +64,7 @@ __getattr__ = _deprecate.handleDeprecations(
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
-runningTable: Dict[int, AppModule] = {}
+runningTable: dict[int, AppModule] = {}
 _getAppModuleLock = threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -79,7 +73,7 @@ _getAppModuleLock = threading.RLock()
 post_appSwitch = extensionPoints.Action()
 
 
-_executableNamesToAppModsAddons: Dict[str, str] = dict()
+_executableNamesToAppModsAddons: dict[str, str] = dict()
 """AppModules registered with a given binary by add-ons are placed here.
 We cannot use l{appModules.EXECUTABLE_NAMES_TO_APP_MODS} for modules included in add-ons,
 since appModules in add-ons should take precedence over the one bundled in NVDA.
@@ -99,7 +93,7 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
+def _getPossibleAppModuleNamesForExecutable(executableName: str) -> tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
 	- The alias registered by add-ons if any add-on registered an appModule for the executable
@@ -133,7 +127,7 @@ def doesAppModuleExist(name: str) -> bool:
 	return True
 
 
-def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
+def _importAppModuleForExecutable(executableName: str) -> ModuleType | None:
 	"""Import and return appModule for a given executable or `None` if there is no module."""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
 		# First, check whether the module exists.
@@ -161,7 +155,7 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	FProcessEntry32 = winBindings.kernel32.PROCESSENTRY32W()
 	FProcessEntry32.dwSize = ctypes.sizeof(FProcessEntry32)
 	ContinueLoop = winBindings.kernel32.Process32First(FSnapshotHandle, ctypes.byref(FProcessEntry32))
-	appName = str()
+	appName = ""
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
 			appName = FProcessEntry32.szExeFile
@@ -205,7 +199,7 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 			)
 		):
 			raise ctypes.WinError()
-	except WindowsError:
+	except OSError:
 		log.debugWarning(f"Unable to open process for processId {processId}", exc_info=True)
 	else:
 		return processHandle
@@ -220,7 +214,7 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 				raise RuntimeError(f"No window handle found for process {processId} to create process handle")
 			if not (processHandle := _getProcessHandleFromHwnd(foundWindowHandle)):
 				raise ctypes.WinError()
-		except (WindowsError, RuntimeError):
+		except (OSError, RuntimeError):
 			log.debugWarning(
 				f"Unable to get process handle for process {processId} using window enumeration "
 				"and subsequently getting process handle from that window",
@@ -506,13 +500,13 @@ class AppModule(baseObject.ScriptableObject):
 	"""The application name"""
 
 	def __init__(self, processID, appName=None):
-		super(AppModule, self).__init__()
+		super().__init__()
 		self.processID = processID
 		if appName is None:
 			appName = getAppNameFromProcessID(processID)
 		self.appName = appName
 		self.processHandle = getProcessHandleFromProcessId(processID)
-		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
+		self.helperLocalBindingHandle: ctypes.c_long | None = None
 		"""RPC binding handle pointing to the RPC server for this process"""
 
 		self._inprocRegistrationHandle = None
@@ -734,7 +728,7 @@ class AppModule(baseObject.ScriptableObject):
 			self.isRunningUnderDifferentLogonSession = (
 				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
 			)
-		except WindowsError:
+		except OSError:
 			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
 			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
@@ -892,10 +886,10 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError()
 
-	devInfo: List[str]
+	devInfo: list[str]
 	"""Information about this appModule useful to developers."""
 
-	def _get_devInfo(self) -> List[str]:
+	def _get_devInfo(self) -> list[str]:
 		"""Information about this appModule useful to developers.
 		For an NVDAObject, its appModule devInfo is appended to NVDAObject.devInfo.
 		Subclasses may extend this, calling the superclass property first.

@@ -7,7 +7,7 @@
 Voice Access allows users to dictate text and perform voice commands, replacing Windows Speech Recognition.
 """
 
-from typing import Callable
+from collections.abc import Callable
 import appModuleHandler
 import ui
 import winUser

@@ -8,9 +8,6 @@
 
 import threading
 import typing
-from typing import (
-	Optional,
-)
 from enum import Enum, auto
 from ctypes import (
 	c_uint,
@@ -202,7 +199,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 	#: Use the default device, this is the configSpec default value.
 	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("audio", "outputDevice")).default)
 	#: The silence output device, None if not initialized.
-	_silenceDevice: typing.Optional[str] = None
+	_silenceDevice: str | None = None
 
 	def __init__(
 		self,
@@ -300,7 +297,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		"""
 		try:
 			wasapi.wasPlay_open(self._player)
-		except WindowsError:
+		except OSError:
 			log.warning(
 				"Couldn't open specified or default audio device. There may be no audio devices.",
 			)
@@ -315,9 +312,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 
 	def feed(
 		self,
-		data: typing.Union[bytes, c_void_p],
-		size: typing.Optional[int] = None,
-		onDone: typing.Optional[typing.Callable] = None,
+		data: bytes | c_void_p,
+		size: int | None = None,
+		onDone: typing.Callable | None = None,
 	) -> None:
 		"""Feed a chunk of audio data to be played.
 		This will block until there is sufficient space in the buffer.
@@ -350,7 +347,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				size if size is not None else len(data),
 				byref(feedId) if onDone else None,
 			)
-		except WindowsError:
+		except OSError:
 			# #16722: This might occur on a Remote Desktop server when a client session
 			# disconnects without exiting NVDA. That will cause audio to become
 			# unavailable with an unexpected error code. In any case, the C++
@@ -419,9 +416,9 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def setVolume(
 		self,
 		*,
-		all: Optional[float] = None,
-		left: Optional[float] = None,
-		right: Optional[float] = None,
+		all: float | None = None,
+		left: float | None = None,
+		right: float | None = None,
 	):
 		"""Set the volume of one or more channels in this stream.
 		Levels must be specified as a number between 0 and 1.
@@ -438,7 +435,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 		wasapi.wasPlay_setChannelVolume(self._player, 0, c_float(left))
 		try:
 			wasapi.wasPlay_setChannelVolume(self._player, 1, c_float(right))
-		except WindowsError as e:
+		except OSError as e:
 			# E_INVALIDARG indicates that the audio device doesn't support this channel.
 			# If we're trying to set all channels, that's fine; we've already set the
 			# single channel that this device supports.
@@ -538,7 +535,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 				break
 
 
-fileWavePlayer: Optional[WavePlayer] = None
+fileWavePlayer: WavePlayer | None = None
 fileWavePlayerThread: threading.Thread | None = None
 
 

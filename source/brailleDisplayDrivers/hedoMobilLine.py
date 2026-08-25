@@ -10,7 +10,6 @@
 # hedo MobilLine USB, a product from hedo Reha-Technik GmbH
 # see www.hedo.de for more details
 
-from typing import List
 
 import wx
 import serial
@@ -44,7 +43,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return True
 
 	def __init__(self):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
@@ -82,7 +81,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# Read out the input buffer
 			ackS: bytes = self._ser.read(2)
 			if HEDO_MOBIL_ACK in ackS:
-				log.info("Found hedo MobilLine connected via {port}".format(port=port))
+				log.info(f"Found hedo MobilLine connected via {port}")
 				break
 
 		else:
@@ -96,7 +95,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 			self._readTimer.Stop()
 			self._readTimer = None
 		finally:
@@ -104,7 +103,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# If we don't, we won't be able to re-open it later.
 			self._ser.close()
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# every transmitted line consists of the preamble HEDO_MOBIL_INIT, the statusCells and the Cells
 		statusPadding = bytes(HEDO_MOBIL_STATUS_CELL_COUNT)
 		cellBytes: bytes = HEDO_MOBIL_INIT + statusPadding + bytes(cells)
@@ -130,7 +129,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				inputCore.manager.executeGesture(InputGestureRouting(data - HEDO_MOBIL_CR_BEGIN))
 			except inputCore.NoInputGestureAction:
 				log.debug("No Action for routing index: %d", data)
-				pass
 			return
 
 		# On every keypress or keyrelease information about all keys is sent
@@ -184,7 +182,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				inputCore.manager.executeGesture(InputGestureKeys(keys))
 			except inputCore.NoInputGestureAction:
 				log.debug("No Action for keys " + keys)
-				pass
 
 	gestureMap = inputCore.GlobalGestureMap(
 		{
@@ -205,7 +202,7 @@ class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__()
+		super().__init__()
 
 		self.id = keys
 
@@ -214,7 +211,7 @@ class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
-		super(InputGestureRouting, self).__init__()
+		super().__init__()
 
 		self.id = "routing"
 		self.cellIndexes = [index]

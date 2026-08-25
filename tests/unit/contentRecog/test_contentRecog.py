@@ -38,9 +38,8 @@ class TestRecogImageInfo(unittest.TestCase):
 
 	def test_nonPositiveDimensions(self):
 		for width, height in ((0, 100), (100, 0)):
-			with self.subTest(width=width, height=height):
-				with self.assertRaises(ValueError):
-					contentRecog.RecogImageInfo(0, 0, width, height, 1)
+			with self.subTest(width=width, height=height), self.assertRaises(ValueError):
+				contentRecog.RecogImageInfo(0, 0, width, height, 1)
 
 	def test_noOffsetWithResize(self):
 		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 2)
@@ -61,7 +60,7 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.convertHeightToScreen(400), 200)
 
 
-class FakeNVDAObject(object):
+class FakeNVDAObject:
 	pass
 
 

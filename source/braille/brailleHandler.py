@@ -10,14 +10,8 @@ import ctypes.wintypes
 import itertools
 import threading
 import time
-import typing
 from typing import (
 	TYPE_CHECKING,
-	List,
-	Optional,
-	Set,
-	Type,
-	Union,
 )
 
 import api
@@ -88,7 +82,7 @@ FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "translationTable")
 """Table to use if the output table configuration is invalid."""
 
 
-def formatCellsForLog(cells: List[int]) -> str:
+def formatCellsForLog(cells: list[int]) -> str:
 	"""Formats a sequence of braille cells so that it is suitable for logging.
 	The output contains the dot numbers for each cell, with each cell separated by a space.
 	A C{-} indicates an empty cell.
@@ -111,10 +105,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_REVIEW = TetherTo.REVIEW.value
 	tetherValues = [(v.value, v.displayString) for v in TetherTo]
 
-	queuedWrite: Optional[List[int]] = None
+	queuedWrite: list[int] | None = None
 	queuedWriteLock: threading.Lock
 	ackTimerHandle: int
-	_regionsPendingUpdate: Set[Union[NVDAObjectRegion, TextInfoRegion]]
+	_regionsPendingUpdate: set[NVDAObjectRegion | TextInfoRegion]
 	"""
 	Regions pending an update.
 	Regions are added by L{handleUpdate} and L{handleCaretMove} and cleared in L{_handlePendingUpdate}.
@@ -123,7 +117,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def __init__(self):
 		louisHelper.initialize()
 		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
-		self.display: Optional[BrailleDisplayDriver] = None
+		self.display: BrailleDisplayDriver | None = None
 		self._displayDimensions: DisplayDimensions = DisplayDimensions(1, 0)
 		"""
 		Internal cache for the displayDimensions property.
@@ -164,7 +158,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		post_sessionLockStateChanged.register(self._onSessionLockStateChanged)
 		post_secureDesktopStateChange.register(self._onSecureDesktopStateChanged)
 		brailleViewer.postBrailleViewerToolToggledAction.register(self._onBrailleViewerChangedState)
-		# noqa: F401 avoid module level import to prevent cyclical dependency
+
 		# between speech and braille
 		from speech.extensions import pre_speech, pre_speechCanceled
 
@@ -172,7 +166,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		pre_speechCanceled.register(self.clearBrailleRegions)
 
 	def terminate(self):
-		# noqa: F401 avoid module level import to prevent cyclical dependency
+
 		# between speech and braille
 		from speech.extensions import pre_speech, pre_speechCanceled
 
@@ -265,7 +259,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	# and the braille mode is set to speech output
 	_showSpeechInBrailleRegions: list[TextRegion] = []
 
-	def _showSpeechInBraille(self, speechSequence: "SpeechSequence"):
+	def _showSpeechInBraille(self, speechSequence: SpeechSequence):
 		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value or not self.enabled:
 			return
 		_showSpeechInBrailleRegions = self._showSpeechInBrailleRegions
@@ -450,7 +444,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self,
 		name: str,
 		isFallback: bool = False,
-		detected: typing.Optional[bdDetect.DeviceMatch] = None,
+		detected: bdDetect.DeviceMatch | None = None,
 	) -> bool:
 		if name == AUTO_DISPLAY_NAME:
 			# Calling _enableDetection will set the display to noBraille until a display is detected.
@@ -494,10 +488,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _switchDisplay(
 		self,
-		oldDisplay: Optional["BrailleDisplayDriver"],
-		newDisplayClass: Type["BrailleDisplayDriver"],
+		oldDisplay: BrailleDisplayDriver | None,
+		newDisplayClass: type[BrailleDisplayDriver],
 		**kwargs,
-	) -> "BrailleDisplayDriver":
+	) -> BrailleDisplayDriver:
 		sameDisplayReInit = newDisplayClass == oldDisplay.__class__
 		if sameDisplayReInit:
 			# This is the same driver as was already set, so just re-initialize it.
@@ -519,9 +513,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def _setDisplay(
 		self,
-		newDisplayClass: Type["BrailleDisplayDriver"],
+		newDisplayClass: type[BrailleDisplayDriver],
 		isFallback: bool = False,
-		detected: typing.Optional[bdDetect.DeviceMatch] = None,
+		detected: bdDetect.DeviceMatch | None = None,
 	):
 		kwargs = {}
 		if detected:
@@ -547,7 +541,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	def _onBrailleViewerChangedState(self, created):
 		if created:
 			self._updateDisplay()
-		log.debug("Braille Viewer enabled: {}".format(self.enabled))
+		log.debug(f"Braille Viewer enabled: {self.enabled}")
 
 	def _updateDisplay(self):
 		if self._cursorBlinkTimer:
@@ -600,7 +594,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			newCells = oldCells
 		return newCells
 
-	def _writeCells(self, cells: List[int]):
+	def _writeCells(self, cells: list[int]):
 		handlerCellCount = self.displaySize
 		pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
 		displayCellCount = self.display.numCells
@@ -625,7 +619,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.handleDisplayUnavailable()
 			return
 		with self.queuedWriteLock:
-			alreadyQueued: Optional[List[int]] = self.queuedWrite
+			alreadyQueued: list[int] | None = self.queuedWrite
 			self.queuedWrite = cells
 		# If a write was already queued, we don't need to queue another;
 		# we just replace the data.
@@ -780,7 +774,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		self._autoScrollCallLater.Restart()
 
-	def handleGainFocus(self, obj: "NVDAObject", shouldAutoTether: bool = True) -> None:
+	def handleGainFocus(self, obj: NVDAObject, shouldAutoTether: bool = True) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
@@ -833,7 +827,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	def handleCaretMove(
 		self,
-		obj: "NVDAObject",
+		obj: NVDAObject,
 		shouldAutoTether: bool = True,
 	) -> None:
 		if not self.enabled or config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value:
@@ -858,7 +852,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self._regionsPendingUpdate:
 			return
 		try:
-			scrollTo: Optional[TextInfoRegion] = None
+			scrollTo: TextInfoRegion | None = None
 			self.mainBuffer.saveWindow()
 			for region in self._regionsPendingUpdate:
 				from treeInterceptorHandler import TreeInterceptor
@@ -906,7 +900,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	# e.g. the time remaining. Therefore, update the dialog when a contained progress bar changes.
 	def _handleProgressBarUpdate(
 		self,
-		obj: "NVDAObject",
+		obj: NVDAObject,
 	) -> None:
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			return
@@ -921,7 +915,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.handleUpdate(obj)
 				return
 
-	def handleUpdate(self, obj: "NVDAObject") -> None:
+	def handleUpdate(self, obj: NVDAObject) -> None:
 		if not self.enabled:
 			return
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
@@ -1051,7 +1045,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self,
 		usb: bool = True,
 		bluetooth: bool = True,
-		limitToDevices: Optional[List[str]] = None,
+		limitToDevices: list[str] | None = None,
 		preferredDevice: bdDetect.DriverAndDeviceMatch | None = None,
 	):
 		"""Enables automatic detection of braille displays.
@@ -1102,7 +1096,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Do not write cells when we are awaiting an ACK
 			return
 		with self.queuedWriteLock:
-			data: Optional[List[int]] = self.queuedWrite
+			data: list[int] | None = self.queuedWrite
 			self.queuedWrite = None
 		if not data:
 			return

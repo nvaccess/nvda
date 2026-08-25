@@ -12,10 +12,8 @@ from collections.abc import Callable
 from datetime import datetime
 from typing import (
 	Any,
-	Dict,
 	Optional,
 	Self,
-	Tuple,
 )
 from uuid import uuid4
 from winBindings import crypt32
@@ -35,9 +33,9 @@ import buildVersion
 if not buildVersion.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
-import gui.contextHelp  # noqa: E402
-from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
-import sys  # noqa: E402
+import gui.contextHelp
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import sys
 import subprocess
 import os
 import inspect
@@ -56,13 +54,13 @@ import wx
 import languageHandler
 
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
-import synthDriverHandler  # noqa: E402
+import synthDriverHandler
 import braille
 import gui
 from gui import guiHelper
-from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal  # noqa: E402
+from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
-from addonStore.models.version import (  # noqa: E402
+from addonStore.models.version import (
 	getAddonCompatibilityMessage,
 	getAddonCompatibilityConfirmationMessage,
 )
@@ -98,7 +96,7 @@ except OSError:
 		log.debugWarning("Default download path for updates %s could not be created." % storeUpdatesDir)
 
 #: Persistent state information.
-state: Optional[Dict[str, Any]] = None
+state: dict[str, Any] | None = None
 
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
@@ -199,7 +197,7 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	# #11837: build version string, service pack, and product type manually
 	# because winVersion.getWinVer adds Windows release name.
 	winVersion = sys.getwindowsversion()
-	winVersionText = "{v.major}.{v.minor}.{v.build}".format(v=winVersion)
+	winVersionText = f"{winVersion.major}.{winVersion.minor}.{winVersion.build}"
 	if winVersion.service_pack_major != 0:
 		winVersionText += " service pack %d" % winVersion.service_pack_major
 		if winVersion.service_pack_minor != 0:
@@ -242,7 +240,7 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	try:
 		log.debug(f"Fetching update data from {url}")
 		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
-	except IOError as e:
+	except OSError as e:
 		if (
 			isinstance(e.reason, ssl.SSLCertVerificationError)
 			and e.reason.reason == "CERTIFICATE_VERIFY_FAILED"
@@ -280,7 +278,7 @@ def _setStateToNone(_state):
 	_state["pendingUpdateBackCompatToAPIVersion"] = (0, 0, 0)
 
 
-def getPendingUpdate() -> Optional[Tuple]:
+def getPendingUpdate() -> tuple | None:
 	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise."""
 	try:
 		pendingUpdateFile = state["pendingUpdateFile"]
@@ -439,7 +437,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			wx.OK | wx.ICON_ERROR,
 		)
 
-	def _result(self, info: Optional[UpdateInfo]) -> None:
+	def _result(self, info: UpdateInfo | None) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -879,8 +877,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			while True:
 				if self._shouldCancel:
 					return
-				if size - read < chunk:
-					chunk = size - read
+				chunk = min(chunk, size - read)
 				block = remote.read(chunk)
 				if not block:
 					break
@@ -953,7 +950,7 @@ class DonateRequestDialog(wx.Dialog):
 
 	def __init__(self, parent, continueFunc):
 		# Translators: The title of the dialog requesting donations from users.
-		super(DonateRequestDialog, self).__init__(parent, title=_("Please Donate"))
+		super().__init__(parent, title=_("Please Donate"))
 		self._continue = continueFunc
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)

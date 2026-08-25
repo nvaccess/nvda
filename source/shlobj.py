@@ -15,7 +15,6 @@ import comtypes
 import ctypes
 from enum import Enum
 import functools
-from typing import Optional, Union
 
 
 import winBindings.shell32
@@ -44,9 +43,9 @@ class FolderId(str, Enum):
 
 @functools.lru_cache(maxsize=128)
 def SHGetKnownFolderPath(
-	folderGuid: Union[FolderId, str],
+	folderGuid: FolderId | str,
 	dwFlags: int = 0,
-	hToken: Optional[int] = None,
+	hToken: int | None = None,
 ) -> str:
 	"""Wrapper for `SHGetKnownFolderPath` which caches the results
 	to avoid calling the win32 function unnecessarily."""

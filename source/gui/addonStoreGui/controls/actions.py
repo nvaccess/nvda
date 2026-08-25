@@ -7,10 +7,10 @@ from abc import ABC, abstractmethod
 import functools
 from typing import (
 	Generic,
-	Iterable,
 	TypeVar,
 	cast,
 )
+from collections.abc import Iterable
 
 import wx
 
@@ -32,10 +32,10 @@ from ..viewModels.store import AddonStoreVM
 
 __all__ = [
 	"AddonActionT",
-	"_ActionsContextMenuP",
-	"_MonoActionsContextMenu",
-	"_BatchActionsContextMenu",
 	"AddonListValidator",
+	"_ActionsContextMenuP",
+	"_BatchActionsContextMenu",
+	"_MonoActionsContextMenu",
 ]
 
 AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM, AddonUpdateChannelActionVM)

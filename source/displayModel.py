@@ -23,12 +23,6 @@ import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
 from textUtils.segFlag import CharSegFlag, WordSegFlag
-from typing import (
-	List,
-	Tuple,
-	Optional,
-	Dict,
-)
 
 #: A text info unit constant for a single chunk in a display model
 UNIT_DISPLAYCHUNK = "displayChunk"
@@ -36,7 +30,7 @@ UNIT_DISPLAYCHUNK = "displayChunk"
 
 def wcharToInt(c):
 	i = ord(c)
-	return c_short(i).value  # noqa: F405
+	return c_short(i).value
 
 
 def detectStringDirection(s):
@@ -50,7 +44,7 @@ def detectStringDirection(s):
 
 
 def normalizeRtlString(s):
-	l = []  # noqa: E741
+	l = []
 	for c in s:
 		# If this is an arabic presentation form b character (commenly given by Windows when converting from glyphs)
 		# Decompose it to its original basic arabic (non-presentational_ character.
@@ -63,7 +57,7 @@ def normalizeRtlString(s):
 	return "".join(l)
 
 
-def yieldListRange(l, start, stop):  # noqa: E741
+def yieldListRange(l, start, stop):
 	for x in range(start, stop):
 		yield l[x]
 
@@ -280,21 +274,21 @@ def getWindowTextInRect(
 
 
 def getFocusRect(obj):
-	left = c_long()  # noqa: F405
-	top = c_long()  # noqa: F405
-	right = c_long()  # noqa: F405
-	bottom = c_long()  # noqa: F405
+	left = c_long()
+	top = c_long()
+	right = c_long()
+	bottom = c_long()
 	if (
 		NVDAHelper.localLib.displayModel_getFocusRect(
 			obj.appModule.helperLocalBindingHandle,
 			obj.windowHandle,
-			byref(left),  # noqa: F405
-			byref(top),  # noqa: F405
-			byref(right),  # noqa: F405
-			byref(bottom),  # noqa: F405
+			byref(left),
+			byref(top),
+			byref(right),
+			byref(bottom),
 		)
 		== 0
-	):  # noqa: F405
+	):
 		return left.value, top.value, right.value, bottom.value
 	return None
 
@@ -379,17 +373,17 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			self._location = limitRect.left, limitRect.top, limitRect.right, limitRect.bottom
 		else:
 			self._location = None
-		super(DisplayModelTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	_cache__storyFieldsAndRects = True
 
 	def _get__storyFieldsAndRects(
 		self,
-	) -> Tuple[
-		List[textInfos.TextInfo.TextOrFieldsT],
-		List[RectLTRB],
-		List[int],
-		List[int],
+	) -> tuple[
+		list[textInfos.TextInfo.TextOrFieldsT],
+		list[RectLTRB],
+		list[int],
+		list[int],
 	]:
 		# All returned coordinates are logical coordinates.
 		if self._location:
@@ -536,7 +530,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start = self._startOffset
 		end = self._endOffset
 		if start == end:
@@ -611,7 +605,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return obj
 
 	def _getOffsetsFromNVDAObject(self, obj):
-		l = obj.location  # noqa: E741
+		l = obj.location
 		if not l:
 			log.debugWarning("object has no location")
 			raise LookupError
@@ -673,7 +667,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				if lineEndOffset >= self._endOffset:
 					return
 			return
-		for chunk in super(DisplayModelTextInfo, self).getTextInChunks(unit):
+		for chunk in super().getTextInChunks(unit):
 			yield chunk
 
 	def _get_boundingRects(self):
@@ -785,7 +779,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
 	def _getSelectionOffsets(self):
 		try:
-			return super(EditableTextDisplayModelTextInfo, self)._getSelectionOffsets()
+			return super()._getSelectionOffsets()
 		except LookupError:
 			offset = self._getCaretOffset()
 			return offset, offset

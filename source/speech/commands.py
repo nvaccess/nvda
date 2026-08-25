@@ -9,38 +9,35 @@ Commands that can be embedded in a speech sequence for changing synth parameters
 """
 
 from abc import ABCMeta, abstractmethod
-from typing import (
-	Optional,
-)
 
 import config
 from synthDriverHandler import getSynth
 
 __all__ = [
-	"SpeechCommand",
-	"_CancellableSpeechCommand",
-	"SynthCommand",
-	"IndexCommand",
-	"SynthParamCommand",
-	"CharacterModeCommand",
-	"LangChangeCommand",
-	"BreakCommand",
-	"EndUtteranceCommand",
-	"SuppressUnicodeNormalizationCommand",
-	"BaseProsodyCommand",
-	"PitchCommand",
-	"VolumeCommand",
-	"RateCommand",
-	"PhonemeCommand",
 	"BaseCallbackCommand",
-	"CallbackCommand",
+	"BaseProsodyCommand",
 	"BeepCommand",
-	"WaveFileCommand",
+	"BreakCommand",
+	"CallbackCommand",
+	"CharacterModeCommand",
 	"ConfigProfileTriggerCommand",
+	"EndUtteranceCommand",
+	"IndexCommand",
+	"LangChangeCommand",
+	"PhonemeCommand",
+	"PitchCommand",
+	"RateCommand",
+	"SpeechCommand",
+	"SuppressUnicodeNormalizationCommand",
+	"SynthCommand",
+	"SynthParamCommand",
+	"VolumeCommand",
+	"WaveFileCommand",
+	"_CancellableSpeechCommand",
 ]
 
 
-class SpeechCommand(object):
+class SpeechCommand:
 	"""The base class for objects that can be inserted between strings of text to perform actions,
 	change voice parameters, etc.
 
@@ -330,10 +327,7 @@ class BaseProsodyCommand(SynthParamCommand):
 			param = "multiplier=%g" % self._multiplier
 		else:
 			param = ""
-		return "{type}({param})".format(
-			type=type(self).__name__,
-			param=param,
-		)
+		return f"{type(self).__name__}({param})"
 
 	def __eq__(self, __o: object) -> bool:
 		if __o is self:
@@ -426,7 +420,7 @@ class CallbackCommand(BaseCallbackCommand):
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
-	def __init__(self, callback, name: Optional[str] = None):
+	def __init__(self, callback, name: str | None = None):
 		self._callback = callback
 		self._name = name if name else repr(callback)
 
@@ -434,9 +428,7 @@ class CallbackCommand(BaseCallbackCommand):
 		return self._callback(*args, **kwargs)
 
 	def __repr__(self):
-		return "CallbackCommand(name={name})".format(
-			name=self._name,
-		)
+		return f"CallbackCommand(name={self._name})"
 
 
 class BeepCommand(BaseCallbackCommand):
@@ -460,12 +452,7 @@ class BeepCommand(BaseCallbackCommand):
 		)
 
 	def __repr__(self):
-		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
-			hz=self.hz,
-			length=self.length,
-			left=self.left,
-			right=self.right,
-		)
+		return f"BeepCommand({self.hz}, {self.length}, left={self.left}, right={self.right})"
 
 
 class WaveFileCommand(BaseCallbackCommand):

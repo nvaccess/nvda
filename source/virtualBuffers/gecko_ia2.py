@@ -5,10 +5,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
-from typing import (
-	Iterable,
-	Optional,
-)
+from collections.abc import Iterable
 import typing
 from ctypes import byref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -33,7 +30,7 @@ import documentBase
 import locationHelper
 
 
-def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
+def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
 	try:
 		isCurrent = controlTypes.IsCurrent(valForCurrent)
@@ -76,7 +73,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if not hasattr(obj, "IAccessibleTextObject"):
 				raise LookupError("Object doesn't have an IAccessibleTextObject")
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
-		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
+		return super()._getBoundingRectFromOffset(offset)
 
 	def _calculateDescriptionFrom(self, attrs: textInfos.ControlField) -> controlTypes.DescriptionFrom:
 		"""Overridable calculation of DescriptionFrom
@@ -101,7 +98,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# C901 '_normalizeControlField' is too complex
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _normalizeControlField(self, attrs):  # noqa: C901
+	def _normalizeControlField(self, attrs):
 		# convert some IAccessible2 text values to integers
 		for name in (
 			"ia2TextWindowHandle",
@@ -228,7 +225,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["table-id"] = (int(attrs["controlIdentifier_docHandle"]), tableID)
 		return attrs
 
-	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
+	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[controlTypes.Role | None]:
 		"""
 		The attribute has been added directly to the buffer as a string, containing a comma separated list
 		of values, each value is either:
@@ -241,7 +238,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
 
 		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"detailsRoles: {repr(detailsRoles)}")
+			log.debug(f"detailsRoles: {detailsRoles!r}")
 		detailsRolesValues = detailsRoles.split(",")
 		for detailsRole in detailsRolesValues:
 			if detailsRole.isdigit():
@@ -272,7 +269,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			val = attrs.get(name, None)
 			if val is not None:
 				attrs[name] = int(val)
-		return super(Gecko_ia2_TextInfo, self)._normalizeFormatField(attrs)
+		return super()._normalizeFormatField(attrs)
 
 	def _get_location(self) -> locationHelper.RectLTWH:
 		document = self.obj.rootNVDAObject.IAccessibleObject
@@ -286,7 +283,7 @@ class Gecko_ia2(VirtualBuffer):
 	_nativeAppSelectionModeSupported = True
 
 	def __init__(self, rootNVDAObject):
-		super(Gecko_ia2, self).__init__(rootNVDAObject, backendName="gecko_ia2")
+		super().__init__(rootNVDAObject, backendName="gecko_ia2")
 		self._initialScrollObj = None
 
 	def __contains__(self, obj):
@@ -364,18 +361,18 @@ class Gecko_ia2(VirtualBuffer):
 	def _shouldIgnoreFocus(self, obj):
 		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.EDITABLE not in obj.states:
 			return True
-		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
+		return super()._shouldIgnoreFocus(obj)
 
 	def _postGainFocus(self, obj):
 		if isinstance(obj, NVDAObjects.behaviors.EditableText):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
-		super(Gecko_ia2, self)._postGainFocus(obj)
+		super()._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
 		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.State.LINKED in obj.states:
 			return True
-		return super(Gecko_ia2, self)._shouldSetFocusToObj(obj)
+		return super()._shouldSetFocusToObj(obj)
 
 	def _activateLongDesc(self, controlField):
 		index = int(controlField["IAccessibleAction_showlongdesc"])
@@ -625,7 +622,7 @@ class Gecko_ia2(VirtualBuffer):
 			return None
 
 	def _getInitialCaretPos(self):
-		initialPos = super(Gecko_ia2, self)._getInitialCaretPos()
+		initialPos = super()._getInitialCaretPos()
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
@@ -705,8 +702,8 @@ class Gecko_ia2(VirtualBuffer):
 			break
 		if ia2Sel.endOffset is None:
 			raise NotImplementedError("No ia2TextEndOffset in any field")
-		log.debug(f"ia2 end window: {repr(ia2Sel.endWindow)}")
-		log.debug(f"ia2 end ID: {repr(ia2Sel.endID)}")
+		log.debug(f"ia2 end window: {ia2Sel.endWindow!r}")
+		log.debug(f"ia2 end ID: {ia2Sel.endID!r}")
 		log.debug(f"ia2 end offset: {ia2Sel.endOffset}")
 		if ia2Sel.endID == ia2Sel.startID:
 			ia2Sel.endObj = ia2Sel.startObj

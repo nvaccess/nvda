@@ -5,8 +5,6 @@
 
 from typing import (
 	Any,
-	Optional,
-	Dict,
 )
 
 import comtypes
@@ -337,7 +335,7 @@ class DocumentWindow(PaneClassDC):
 	def _get_currentSlide(self):
 		if self.ppActivePaneViewType in (ppViewSlideSorter, ppViewThumbnails, ppViewMasterThumbnails):
 			return None
-		return super(DocumentWindow, self).currentSlide
+		return super().currentSlide
 
 	def _get_ppSelection(self):
 		"""Fetches and caches the current Powerpoint Selection object for the current presentation."""
@@ -521,7 +519,7 @@ class PpObject(Window):
 	def __init__(self, windowHandle=None, documentWindow=None, ppObject=None):
 		self.documentWindow = documentWindow
 		self.ppObject = ppObject
-		super(PpObject, self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 	def _get_parent(self):
 		return self.documentWindow
@@ -551,7 +549,7 @@ class SlideBase(PpObject):
 		clsList.append(SlideBase)
 
 	def _isEqual(self, other):
-		return super(SlideBase, self)._isEqual(other) and self.name == other.name
+		return super()._isEqual(other) and self.name == other.name
 
 	role = controlTypes.Role.PANE
 
@@ -591,7 +589,7 @@ class Shape(PpObject):
 	presentationType = Window.presType_content
 
 	def __init__(self, **kwargs):
-		super(Shape, self).__init__(**kwargs)
+		super().__init__(**kwargs)
 		if self.role == controlTypes.Role.EMBEDDEDOBJECT:
 			if self.ppObject.OLEFormat.ProgID.startswith(MATHTYPE_PROGID):
 				self.role = controlTypes.Role.MATH
@@ -946,7 +944,7 @@ class Shape(PpObject):
 		return label
 
 	def _isEqual(self, other):
-		return super(Shape, self)._isEqual(other) and self.ppObject.ID == other.ppObject.ID
+		return super()._isEqual(other) and self.ppObject.ID == other.ppObject.ID
 
 	def _get_description(self):
 		return self.ppObject.alternativeText
@@ -977,7 +975,7 @@ class Shape(PpObject):
 			return self.ppObject.textFrame.textRange.text
 
 	def _get_states(self):
-		states = super(Shape, self).states
+		states = super().states
 		if self._overlapInfo[1] is not None:
 			states.add(controlTypes.State.OBSCURED)
 		if any(x for x in self._edgeDistances if x < 0):
@@ -1034,7 +1032,7 @@ class ChartShape(Shape):
 		chartObj = self.chart.officeChartObject
 		if chartObj.hasTitle:
 			return chartObj.chartTitle.text
-		return super(ChartShape, self).name
+		return super().name
 
 	role = controlTypes.Role.CHART
 
@@ -1294,7 +1292,7 @@ class TableCell(PpObject):
 		self.parent = self.table = table
 		self.columnNumber = columnNumber
 		self.rowNumber = rowNumber
-		super(TableCell, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			documentWindow=documentWindow,
 			ppObject=ppObject,
@@ -1307,7 +1305,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection, PpObject):
 	TextInfo = TextFrameTextInfo
 
 	def __init__(self, windowHandle=None, documentWindow=None, ppObject=None):
-		super(TextFrame, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			documentWindow=documentWindow,
 			ppObject=ppObject,
@@ -1319,7 +1317,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection, PpObject):
 		EditableTextWithoutAutoSelectDetection.initClass(self)
 
 	def _isEqual(self, other):
-		return super(TextFrame, self)._isEqual(other) and self.ppObject.parent.ID == other.ppObject.parent.ID
+		return super()._isEqual(other) and self.ppObject.parent.ID == other.ppObject.parent.ID
 
 	name = None
 	role = controlTypes.Role.EDITABLETEXT
@@ -1331,7 +1329,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection, PpObject):
 			return Shape(windowHandle=self.windowHandle, documentWindow=self.documentWindow, ppObject=parent)
 
 	def script_caret_backspaceCharacter(self, gesture):
-		super(TextFrame, self).script_caret_backspaceCharacter(gesture)
+		super().script_caret_backspaceCharacter(gesture)
 		# #3231: The typedCharacter event is never fired for the backspace key.
 		# Call it here so that speak typed words works as expected.
 		self.event_typedCharacter("\b")
@@ -1370,7 +1368,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 			return (0, self._getStoryLength())
 		raise LookupError
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = self.obj.rootNVDAObject.basicTextFields
 		text = self.obj.rootNVDAObject.basicText
 		out = []
@@ -1615,7 +1613,7 @@ class AppModule(appModuleHandler.AppModule):
 		# We must disable it in order to fall back to our own code.
 		if winUser.getClassName(hwnd) in objectModelWindowClasses:
 			return True
-		return super(AppModule, self).isBadUIAWindow(hwnd)
+		return super().isBadUIAWindow(hwnd)
 
 	def _registerCOMWithFocusJuggle(self):
 		import wx
@@ -1631,7 +1629,7 @@ class AppModule(appModuleHandler.AppModule):
 		api.processPendingEvents()
 		try:
 			comtypes.client.PumpEvents(1)
-		except WindowsError:
+		except OSError:
 			log.debugWarning("Error while pumping com events", exc_info=True)
 		d.Destroy()
 		gui.mainFrame.postPopup()

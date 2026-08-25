@@ -10,8 +10,6 @@ import time
 import re
 import typing
 from typing import (
-	Tuple,
-	List,
 	Optional,
 	Any,
 )
@@ -39,7 +37,7 @@ import winKernel
 from winBindings import user32
 
 if typing.TYPE_CHECKING:
-	from NVDAObjects import NVDAObject  # noqa: F401
+	from NVDAObjects import NVDAObject
 	from watchdog import WatchdogObserver
 
 _watchdogObserver: typing.Optional["WatchdogObserver"] = None
@@ -139,15 +137,11 @@ def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
 		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
 		and vkCode == winUser.VK_INSERT
 		and not extended
-	):
-		return True
-	elif (
+	) or (
 		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT)
 		and vkCode == winUser.VK_INSERT
 		and extended
-	):
-		return True
-	elif (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK) and vkCode == winUser.VK_CAPITAL:
+	) or (config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.CAPS_LOCK) and vkCode == winUser.VK_CAPITAL:
 		return True
 	else:
 		return False
@@ -161,10 +155,10 @@ def __getattr__(attrName: str) -> Any:
 			"Consider using the class config.configFlags.NVDAKey instead.",
 		)
 		return ("capslock", "numpadinsert", "insert")
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
-def getNVDAModifierKeys() -> List[Tuple[int, Optional[bool]]]:
+def getNVDAModifierKeys() -> list[tuple[int, bool | None]]:
 	keys = []
 	if config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.EXTENDED_INSERT:
 		keys.append(vkCodes.byName["insert"])
@@ -529,7 +523,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		self.vkCode = vkCode
 		self.scanCode = scanCode
 		self.isExtended = isExtended
-		super(KeyboardInputGesture, self).__init__()
+		super().__init__()
 
 	@classmethod
 	def _generalizeModifiers(cls, modifiers: _ModifierT) -> _ModifierT:
@@ -685,8 +679,8 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
 		return (
-			"kb({layout}):{key}".format(layout=self.layout, key=keyName),
-			"kb:{key}".format(key=keyName),
+			f"kb({self.layout}):{keyName}",
+			f"kb:{keyName}",
 		)
 
 	def _get_shouldReportAsCommand(self):

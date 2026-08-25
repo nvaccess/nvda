@@ -3,11 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (
-	Optional,
-	Dict,
-	Generator,
-)
+from collections.abc import Generator
 
 import enum
 from comtypes import COMError
@@ -251,12 +247,12 @@ class WordDocumentTextInfo(UIATextInfo):
 		# Therefore for now, get the screen coordinates, and if the word object model is available, use our legacy code to get the location text.
 		om = self.obj.WinwordWindowObject
 		if not om:
-			return super(WordDocumentTextInfo, self).locationText
+			return super().locationText
 		try:
 			r = om.rangeFromPoint(point.x, point.y)
 		except (COMError, NameError):
 			log.debugWarning("MS Word object model does not support rangeFromPoint")
-			return super(WordDocumentTextInfo, self).locationText
+			return super().locationText
 		from NVDAObjects.window.winword import WordDocumentTextInfo as WordObjectModelTextInfo
 
 		i = WordObjectModelTextInfo(self.obj, None, _rangeObj=r)
@@ -266,7 +262,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		if UIAFormatUnits is None and self.UIAFormatUnits:
 			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types
 			UIAFormatUnits = self.UIAFormatUnits
-		return super(WordDocumentTextInfo, self)._getTextWithFields_text(
+		return super()._getTextWithFields_text(
 			textRange,
 			formatConfig,
 			UIAFormatUnits=UIAFormatUnits,
@@ -284,7 +280,7 @@ class WordDocumentTextInfo(UIATextInfo):
 	):
 		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc)
 		automationId = obj.UIAAutomationId
-		field = super(WordDocumentTextInfo, self)._getControlFieldForUIAObject(
+		field = super()._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
@@ -326,7 +322,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		return field
 
 	def _getTextFromUIARange(self, textRange):
-		t = super(WordDocumentTextInfo, self)._getTextFromUIARange(textRange)
+		t = super()._getTextFromUIARange(textRange)
 		if t:
 			# HTML emails expose a lot of vertical tab chars in their text
 			# Really better as carage returns
@@ -413,7 +409,7 @@ class WordDocumentTextInfo(UIATextInfo):
 				return self._moveBySentenceRemote(direction)
 			return self._moveEndpointBySentenceRemote(endPoint, direction)
 		if endPoint is None:
-			res = super(WordDocumentTextInfo, self).move(unit, direction)
+			res = super().move(unit, direction)
 			if res == 0:
 				return 0
 			# Skip over end of Row marks
@@ -421,7 +417,7 @@ class WordDocumentTextInfo(UIATextInfo):
 				if self.move(unit, 1 if direction > 0 else -1) == 0:
 					break
 			return res
-		return super(WordDocumentTextInfo, self).move(unit, direction, endPoint)
+		return super().move(unit, direction, endPoint)
 
 	def expand(self, unit):
 		match unit:
@@ -436,7 +432,7 @@ class WordDocumentTextInfo(UIATextInfo):
 				return
 			case _:
 				pass
-		super(WordDocumentTextInfo, self).expand(unit)
+		super().expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
 		# Therefore work around this by detecting if the expand to line failed, and moving the end of the range to the end of the document manually.
@@ -448,9 +444,9 @@ class WordDocumentTextInfo(UIATextInfo):
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(  # noqa: C901
+	def getTextWithFields(
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = None
 		# #11043: when a non-collapsed text range is positioned within a blank table cell
@@ -707,7 +703,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		elif obj.role == controlTypes.Role.MATH:
 			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with by math presentation providers.
 			return False
-		return super(WordBrowseModeDocument, self).shouldPassThrough(obj, reason=reason)
+		return super().shouldPassThrough(obj, reason=reason)
 
 	def script_tab(self, gesture):
 		oldBookmark = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
@@ -746,7 +742,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 				pos,
 				direction=direction,
 			)
-		return super(WordBrowseModeDocument, self)._iterNodesByType(nodeType, direction=direction, pos=pos)
+		return super()._iterNodesByType(nodeType, direction=direction, pos=pos)
 
 	ElementsListDialog = ElementsListDialog
 
@@ -755,7 +751,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 		kind: str,
 		direction: documentBase._Movement = documentBase._Movement.NEXT,
 		pos: textInfos.TextInfo | None = None,
-	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+	) -> Generator[browseMode.TextInfoQuickNavItem]:
 		raise NotImplementedError(
 			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
@@ -774,7 +770,7 @@ class WordDocumentNode(UIA):
 	def _get_role(self):
 		if self.mathMl:
 			return controlTypes.Role.MATH
-		role = super(WordDocumentNode, self).role
+		role = super().role
 		# Some elements have a role of unknown. Force them to editableText so that their text is presented correctly
 		if role == controlTypes.Role.UNKNOWN:
 			role = controlTypes.Role.EDITABLETEXT
@@ -807,7 +803,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		# such as "delete back word" when Control+Backspace is pressed or font attributes are toggled.
 		if activityId in self.suppressedActivityIds:
 			return
-		super(WordDocument, self).event_UIA_notification(**kwargs)
+		super().event_UIA_notification(**kwargs)
 
 	def _moveBySentenceWithObjectModel(self, direction: int) -> LegacyWordDocumentTextInfo:
 		"""
@@ -905,7 +901,6 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		else:
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))
-		return
 
 	@script(gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self, gesture):

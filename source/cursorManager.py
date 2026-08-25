@@ -216,7 +216,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		del cls._searchEntries[_MAX_SEARCH_HISTORY_ENTRIES:]
 
 	def __init__(self, *args, **kwargs):
-		super(CursorManager, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		self.initCursorManager()
 
 	def initOverlayClass(self):
@@ -743,7 +743,7 @@ class ReviewCursorManager(CursorManager):
 	_focusEventMustUpdateCaretPosition = True
 
 	def initCursorManager(self):
-		super(ReviewCursorManager, self).initCursorManager()
+		super().initCursorManager()
 		realTI = self.TextInfo
 		self.TextInfo = type(
 			"ReviewCursorManager_%s" % realTI.__name__,
@@ -759,4 +759,4 @@ class ReviewCursorManager(CursorManager):
 			sel = self._selection.copy()
 			sel.collapse()
 			return sel
-		return super(ReviewCursorManager, self).makeTextInfo(position)
+		return super().makeTextInfo(position)

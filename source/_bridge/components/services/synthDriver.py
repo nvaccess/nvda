@@ -4,10 +4,10 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import (
-	Callable,
 	Any,
 	TypeAlias,
 )
+from collections.abc import Callable
 import json
 import rpyc
 from logHandler import log

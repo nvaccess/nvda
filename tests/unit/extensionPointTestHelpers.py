@@ -29,7 +29,7 @@ def _extensionPointTester(
 	useAssertDictContainsSubset: bool,
 	expectedKwargs: dict,
 	actualKwargs: dict,
-) -> Generator[ExpectedOutputT, None, None]:
+) -> Generator[ExpectedOutputT]:
 	"""A helper function to test extension points.
 	:param testCase: The test case to apply assertions on.
 	:param extensionPoint: The extensionPoint that will be triggered by the test case.

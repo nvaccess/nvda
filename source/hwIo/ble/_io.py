@@ -7,7 +7,7 @@ import time
 from itertools import count, takewhile
 from queue import Empty, Queue
 from threading import Event, Thread
-from typing import Callable, Iterator
+from collections.abc import Callable, Iterator
 import weakref
 
 from _asyncioEventLoop.utils import runCoroutineSync
@@ -156,7 +156,7 @@ class Ble(IoBase):
 		# Listen for notifications
 		await self._client.start_notify(self._readCharacteristicUuid, self._notifyReceive)
 
-	def waitForRead(self, timeout: int | float) -> bool:
+	def waitForRead(self, timeout: float) -> bool:
 		"""Wait for data to be received from the peripheral."""
 		self._readEvent.clear()
 		return self._readEvent.wait(timeout)
@@ -210,7 +210,7 @@ class Ble(IoBase):
 		"""Check if the BLE peripheral is currently connected."""
 		return self._client.is_connected
 
-	def waitForConnection(self, maxWait: int | float):
+	def waitForConnection(self, maxWait: float):
 		"""Wait for connection and service discovery.
 
 		:param maxWait: Maximum time to wait in seconds.

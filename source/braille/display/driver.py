@@ -11,11 +11,7 @@ import importlib
 import itertools
 import pkgutil
 import typing
-from typing import (
-	Iterable,
-	Optional,
-	Union,
-)
+from collections.abc import Iterable
 
 import bdDetect
 import brailleDisplayDrivers
@@ -36,7 +32,7 @@ from ..constants import (
 )
 
 
-def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> typing.Type["BrailleDisplayDriver"]:
+def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> type[BrailleDisplayDriver]:
 	try:
 		return importlib.import_module(
 			"brailleDisplayDrivers.%s" % moduleName,
@@ -52,8 +48,7 @@ def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> typing.Typ
 				"brailleDisplayDrivers.%s" % name,
 				package="brailleDisplayDrivers",
 			).BrailleDisplayDriver
-		else:
-			raise initialException
+		raise initialException
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
@@ -117,7 +112,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	#: Furthermore, it is used to stop waiting for missed acknowledgement packets.
 	timeout: float = 0.2
 
-	def __init__(self, port: typing.Union[None, str, bdDetect.DeviceMatch] = None):
+	def __init__(self, port: None | str | bdDetect.DeviceMatch = None):
 		"""Constructor
 		@param port: Information on how to connect to the device.
 			Use L{_getTryPorts} to normalise to L{DeviceMatch} instances.
@@ -277,7 +272,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			pass
 
 	@classmethod
-	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
+	def getManualPorts(cls) -> typing.Iterator[tuple[str, str]]:
 		"""Get possible manual hardware ports for this driver.
 		This is for ports which cannot be detected automatically
 		such as serial ports.
@@ -288,7 +283,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	@classmethod
 	def _getTryPorts(
 		cls,
-		port: Union[str, bdDetect.DeviceMatch],
+		port: str | bdDetect.DeviceMatch,
 	) -> typing.Iterator[bdDetect.DeviceMatch]:
 		"""Returns the ports for this driver to which a connection attempt should be made.
 		This generator function is usually used in L{__init__} to connect to the desired display.
@@ -318,7 +313,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					yield match
 
 	#: Global input gesture map for this display driver.
-	gestureMap: Optional[inputCore.GlobalGestureMap] = None
+	gestureMap: inputCore.GlobalGestureMap | None = None
 
 	@classmethod
 	def _getModifierGestures(cls, model=None):
@@ -335,9 +330,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		globalMaps = [inputCore.manager.userGestureMap]
 		if cls.gestureMap:
 			globalMaps.append(cls.gestureMap)
-		prefixes = ["br({source})".format(source=cls.name)]
+		prefixes = [f"br({cls.name})"]
 		if model:
-			prefixes.insert(0, "br({source}.{model})".format(source=cls.name, model=model))
+			prefixes.insert(0, f"br({cls.name}.{model})")
 		for globalMap in globalMaps:
 			for scriptCls, gesture, scriptName in globalMap.getScriptsForAllGestures():
 				if (

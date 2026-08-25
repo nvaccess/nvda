@@ -11,7 +11,6 @@ import braille.display.driver
 import braille.display.gesture
 from logHandler import log
 import inputCore
-from typing import List
 
 try:
 	import brlapi
@@ -38,10 +37,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	isThreadSafe = True
 
 	# Type info for auto property: _get_brlapi_pipes
-	brlapi_pipes: List[str]
+	brlapi_pipes: list[str]
 
 	@classmethod
-	def _get_brlapi_pipes(cls) -> List[str]:
+	def _get_brlapi_pipes(cls) -> list[str]:
 		"""Get the BrlAPI named pipes
 
 		Every BRLTTY instance with the BrlAPI enabled will have it's own named pipe to accept API connections.
@@ -91,7 +90,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def _get_numRows(self) -> int:
 		return self._con.displaySize[1]
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		cells = bytes(cells)
 		# HACK: Temporarily work around a bug which causes brltty to freeze if data is written while there are key presses waiting.
 		# Simply consume and act upon any waiting key presses.

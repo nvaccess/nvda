@@ -251,8 +251,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		for match in matches:
 			matchedText = self.searchableText[match.start : match.end]
 			ratio = SequenceMatcher(None, searchTerm, matchedText).ratio()
-			if ratio > bestRatio:
-				bestRatio = ratio
+			bestRatio = max(bestRatio, ratio)
 		# Cap at 0.99 to ensure exact matches of name are always ranked higher.
 		return min(bestRatio, 0.99)
 
@@ -430,7 +429,7 @@ class AddonListVM:
 		if sortField is not None:
 			assert sortField in AddonListField
 		if selectionIndex is not None:
-			assert 0 <= selectionIndex and selectionIndex < len(self._addonsFilteredOrdered)
+			assert 0 <= selectionIndex < len(self._addonsFilteredOrdered)
 		if selectionId is not None:
 			assert selectionId in self._addons.keys()
 

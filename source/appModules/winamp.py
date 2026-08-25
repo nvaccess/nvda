@@ -3,8 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import *  # noqa: F403
-from ctypes.wintypes import *  # noqa: F403
+from ctypes import *
+from ctypes.wintypes import *
 import winKernel
 import winUser
 from scriptHandler import isScriptWaiting
@@ -36,11 +36,11 @@ IPC_PE_GETINDEXTOTAL = 101
 IPC_PE_GETINDEXTITLE = 200  #  lParam = pointer to fileinfo2 structure
 
 
-class fileinfo2(Structure):  # noqa: F405
+class fileinfo2(Structure):
 	_fields_ = [
-		("fileindex", c_int),  # noqa: F405
-		("filetitle", c_char * 256),  # noqa: F405
-		("filelength", c_char * 16),  # noqa: F405
+		("fileindex", c_int),
+		("filetitle", c_char * 256),
+		("filelength", c_char * 16),
 	]
 
 
@@ -114,14 +114,14 @@ class winampPlaylistEditor(winampMainWindow):
 		internalInfo = winKernel.virtualAllocEx(
 			self.processHandle,
 			None,
-			sizeof(info),  # noqa: F405
+			sizeof(info),
 			winKernel.MEM_COMMIT,
-			winKernel.PAGE_READWRITE,  # noqa: F405
-		)  # noqa: F405
+			winKernel.PAGE_READWRITE,
+		)
 		try:
-			winKernel.writeProcessMemory(self.processHandle, internalInfo, byref(info), sizeof(info), None)  # noqa: F405
+			winKernel.writeProcessMemory(self.processHandle, internalInfo, byref(info), sizeof(info), None)
 			watchdog.cancellableSendMessage(self.windowHandle, WM_WA_IPC, IPC_PE_GETINDEXTITLE, internalInfo)
-			winKernel.readProcessMemory(self.processHandle, internalInfo, byref(info), sizeof(info), None)  # noqa: F405
+			winKernel.readProcessMemory(self.processHandle, internalInfo, byref(info), sizeof(info), None)
 		finally:
 			winKernel.virtualFreeEx(self.processHandle, internalInfo, 0, winKernel.MEM_RELEASE)
 		# file title is fetched in the current locale encoding.

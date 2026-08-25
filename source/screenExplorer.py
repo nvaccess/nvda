@@ -11,7 +11,7 @@ import speech
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 
-class ScreenExplorer(object):
+class ScreenExplorer:
 	updateReview = False
 
 	def __init__(self):
@@ -21,7 +21,7 @@ class ScreenExplorer(object):
 	# C901 'moveTo' is too complex
 	# Note: when working on moveTo, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def moveTo(  # noqa: C901
+	def moveTo(
 		self,
 		x: int,
 		y: int,

@@ -30,7 +30,6 @@ By line symbol expectations:
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import enum as _enum
-import typing as _typing
 
 from SystemTestSpy import (
 	_getLib,
@@ -86,7 +85,7 @@ class ReportLineIndentation(_enum.Enum):
 	SPEECH = 1
 
 
-def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]:
+def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> list[str]:
 	actual = []
 	for _ in range(numberOfTimes):
 		spoken = _NvdaLib.getSpeechAfterKey(key)
@@ -379,7 +378,7 @@ def test_selByWord():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(
-			(
+			
 				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
 				for i in [
 					"Test: ",
@@ -413,7 +412,7 @@ def test_selByWord():
 					"t-shirt",
 					# end of doc
 				]
-			)
+			
 		),
 	)
 
@@ -424,7 +423,7 @@ def test_selByWord():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=list(
-			(
+			
 				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
 				for i in [
 					"Test colon: ",
@@ -458,7 +457,7 @@ def test_selByWord():
 					"t dash-shirt",
 					# end of doc
 				]
-			)
+			
 		),
 	)
 
@@ -474,7 +473,7 @@ def test_selByLine():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(
-			(
+			
 				i + ("   " if i else "") + "selected"
 				for i in [
 					"Test:",
@@ -495,7 +494,7 @@ def test_selByLine():
 					"",  # four spaces todo: There should not be any "empty" lines.
 					# end of doc
 				]
-			)
+			
 		),
 	)
 
@@ -506,7 +505,7 @@ def test_selByLine():
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.NONE,
 		expectedSpeech=list(
-			(
+			
 				i + (" " if i else "") + "selected"
 				for i in [
 					"Test colon:  ",
@@ -527,7 +526,7 @@ def test_selByLine():
 					"",  # 4 spaces
 					# end of doc
 				]
-			)
+			
 		),
 	)
 
@@ -541,7 +540,7 @@ def test_selByChar():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=list(
-			(
+			
 				i + ("  " if i else "") + "selected"
 				for i in [
 					"T",
@@ -558,7 +557,7 @@ def test_selByChar():
 					"tab",  # Expect tab named
 					"",  # Expect Windows/notepad newline is \r\n
 				]
-			)
+			
 		),
 	)
 
@@ -569,7 +568,7 @@ def test_selByChar():
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=list(
-			(
+			
 				i + ("  " if i else "") + "selected"
 				for i in [
 					"T",
@@ -587,7 +586,7 @@ def test_selByChar():
 					"tab",  # Expect whitespace named.
 					"",  # on Windows/notepad newline is \r\n
 				]
-			)
+			
 		),
 	)
 
@@ -645,7 +644,7 @@ def _setConfig(
 
 def _doTest(
 	navKey: Move,
-	expectedSpeech: _typing.List[str],
+	expectedSpeech: list[str],
 	reportedAfterLast: EndSpeech,
 	symbolLevel: SymLevel = SymLevel.SOME,
 	reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
@@ -798,7 +797,7 @@ def test_ignoreBlankLinesForReportLineIndentation():
 		),
 	)
 
-	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
+	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: list[str]) -> None:
 		_doTest(
 			navKey=Move.REVIEW_LINE,
 			reportedAfterLast=EndSpeech.BOTTOM,

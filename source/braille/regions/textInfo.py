@@ -39,7 +39,7 @@ class TextInfoRegion(Region):
 	pendingCaretUpdate = False  #: True if the cursor should be updated for this region on the display
 	allowPageTurns = True  #: True if a page turn should be tried when a TextInfo cannot move anymore and the object supports page turns.
 
-	def __init__(self, obj: "NVDAObject"):
+	def __init__(self, obj: NVDAObject):
 		if objectBelowLockScreenAndWindowsIsLocked(obj):
 			raise RuntimeError("NVDA object is secure and should not be initialized as a braille region")
 		super().__init__()
@@ -206,7 +206,7 @@ class TextInfoRegion(Region):
 					ctrlFields.append(field)
 					if not text:
 						continue
-					if getattr(field, "_presCat") == field.PRESCAT_MARKER:
+					if field._presCat == field.PRESCAT_MARKER:
 						# In this case, the field text is what the user cares about,
 						# not the actual content.
 						fieldStart = len(self.rawText)
@@ -340,7 +340,7 @@ class TextInfoRegion(Region):
 		if not self.focusToHardLeft:
 			# If this is a multiline control, position it at the absolute left of the display when focused.
 			self.focusToHardLeft = self._isMultiline()
-		super(TextInfoRegion, self).update()
+		super().update()
 
 		if rawInputIndStart is not None:
 			assert rawInputIndEnd is not None, "rawInputIndStart set but rawInputIndEnd isn't"

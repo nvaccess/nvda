@@ -21,7 +21,8 @@ from ctypes import (
 from enum import IntEnum
 from collections import OrderedDict, deque
 import threading
-from typing import TYPE_CHECKING, Any, NamedTuple, Generator
+from typing import TYPE_CHECKING, Any, NamedTuple
+from collections.abc import Generator
 import winBindings.ole32
 import audioDucking
 from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
@@ -123,7 +124,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return _deprecatedTypes[attrName]
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class _SPEventLParamType(IntEnum):
@@ -211,7 +212,7 @@ class _SapiEvent(SPEVENT):
 		return hr == hresult.S_OK
 
 	@staticmethod
-	def enumerateFrom(eventSource: _Pointer[ISpEventSource]) -> Generator["_SapiEvent", None, None]:
+	def enumerateFrom(eventSource: _Pointer[ISpEventSource]) -> Generator["_SapiEvent"]:
 		"""Enumerate all events in the event source."""
 		while True:
 			event = _SapiEvent()
@@ -315,7 +316,6 @@ class SynthDriverAudioStream(COMObject):
 	def IStream_Commit(self, grfCommitFlags: int):
 		"""This is called when MSSP wants to flush the written data.
 		Does nothing."""
-		pass
 
 	def ISpStreamFormat_GetFormat(self, pguidFormatId: _Pointer[GUID]) -> _Pointer[WAVEFORMATEX]:
 		"""This is called when SAPI wants to get the current wave format.
@@ -336,7 +336,7 @@ class SynthDriverAudioStream(COMObject):
 
 	def ISpAudio_SetState(self, NewState: SPAUDIOSTATE, ullReserved: int) -> None:
 		"""This is called when the audio state changes, for example, when the audio stream is paused or closed."""
-		pass  # do nothing
+		# do nothing
 
 	def ISpAudio_SetFormat(self, rguidFmtId: _Pointer[GUID], pWaveFormatEx: _Pointer[WAVEFORMATEX]):
 		"""This is called when SAPI wants to tell us what wave format we should use.
@@ -353,8 +353,7 @@ class SynthDriverAudioStream(COMObject):
 		wfx = self.waveFormat
 		wfx.wFormatTag = nvwave.WAVE_FORMAT_PCM
 		wfx.cbSize = 0
-		if wfx.nChannels > 2:
-			wfx.nChannels = 2
+		wfx.nChannels = min(wfx.nChannels, 2)
 		wfx.wBitsPerSample = 16
 		wfx.nBlockAlign = wfx.nChannels * 2
 		wfx.nAvgBytesPerSec = wfx.nSamplesPerSec * wfx.nBlockAlign
@@ -399,7 +398,7 @@ class SynthDriverAudioStream(COMObject):
 		:param ullEventInterest: Types of events that should cause ISpNotifySink::Notify() to be called.
 		:param ullQueuedInterest: Types of events than should be stored in the event queue
 			and can be retrieved later with ISpEventSource::GetEvents()."""
-		pass  # do nothing
+		# do nothing
 
 	def ISpEventSource_GetEvents(
 		self,

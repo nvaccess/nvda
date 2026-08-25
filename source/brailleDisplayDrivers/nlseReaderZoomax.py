@@ -119,7 +119,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					writeTimeout=TIMEOUT_SEC,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("Port not yet available.", exc_info=True)
 				continue
 
@@ -153,7 +153,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def terminate(self):
 		try:
 			super().terminate()
-		except EnvironmentError:
+		except OSError:
 			pass
 		finally:
 			self._dev.close()

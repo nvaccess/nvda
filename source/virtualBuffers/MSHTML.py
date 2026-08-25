@@ -18,10 +18,6 @@ import textInfos
 import aria
 import config
 import exceptions
-from typing import (
-	Dict,
-	Optional,
-)
 
 FORMATSTATE_INSERTED = 1
 FORMATSTATE_DELETED = 2
@@ -39,7 +35,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			log.debug(f"textPositionValue={textPositionValue}")
 			return TextPosition.BASELINE
 
-	def _getTextAlignAttribute(self, attrs: Dict[str, str]) -> Optional[TextAlign]:
+	def _getTextAlignAttribute(self, attrs: dict[str, str]) -> TextAlign | None:
 		textAlignValue = attrs.get("text-align")
 		try:
 			return TextAlign(textAlignValue)
@@ -88,7 +84,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 
 	# C901 'MSHTMLTextInfo._normalizeControlField' is too complex (42)
 	# Look for opportunities to simplify this function.
-	def _normalizeControlField(self, attrs: textInfos.ControlField):  # noqa: C901
+	def _normalizeControlField(self, attrs: textInfos.ControlField):
 		level = None
 
 		isCurrent = self._getIsCurrentAttribute(attrs)
@@ -223,14 +219,14 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 			attrs["landmark"] = landmark
 		if description:
 			attrs["description"] = description
-		return super(MSHTMLTextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 
 class MSHTML(VirtualBuffer):
 	TextInfo = MSHTMLTextInfo
 
 	def __init__(self, rootNVDAObject):
-		super(MSHTML, self).__init__(rootNVDAObject, backendName="mshtml")
+		super().__init__(rootNVDAObject, backendName="mshtml")
 		# As virtualBuffers must be created at all times for MSHTML to support live regions,
 		# Force focus mode for applications, and dialogs with no parent treeInterceptor (E.g. a dialog embedded in an application)
 		if rootNVDAObject.role == controlTypes.Role.APPLICATION or (
@@ -250,7 +246,7 @@ class MSHTML(VirtualBuffer):
 			browseMode.reportPassThrough.last = True
 
 	def _getInitialCaretPos(self):
-		initialPos = super(MSHTML, self)._getInitialCaretPos()
+		initialPos = super()._getInitialCaretPos()
 		if initialPos:
 			return initialPos
 		try:
@@ -503,13 +499,13 @@ class MSHTML(VirtualBuffer):
 		)
 
 	def _activateNVDAObject(self, obj):
-		super(MSHTML, self)._activateNVDAObject(obj)
+		super()._activateNVDAObject(obj)
 		# If we activated a same-page link, then scroll to its anchor
 		count = 0
 		# #4134: The link may not always be the deepest node
 		while obj and count < 3 and isinstance(obj, NVDAObjects.IAccessible.MSHTML.MSHTML):
 			if obj.HTMLNodeName == "A":
-				anchorName = getattr(obj.HTMLNode, "hash")
+				anchorName = obj.HTMLNode.hash
 				if not anchorName:
 					return
 				obj = self._getNVDAObjectByAnchorName(anchorName[1:], HTMLDocument=obj.HTMLNode.document)
@@ -551,4 +547,4 @@ class MSHTML(VirtualBuffer):
 				return False
 		except COMError:
 			pass
-		return super(MSHTML, self).shouldPassThrough(obj, reason)
+		return super().shouldPassThrough(obj, reason)

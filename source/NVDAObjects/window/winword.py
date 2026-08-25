@@ -8,12 +8,10 @@
 import ctypes
 import time
 from typing import (
-	Optional,
-	Dict,
-	Generator,
 	Self,
 	TYPE_CHECKING,
 )
+from collections.abc import Generator
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
@@ -398,7 +396,7 @@ class WinWordColor(IntEnum):
 
 
 # map (highlighting) color index to color decimal value
-_colorIndexToColor: Dict[WinWordColorIndex, WinWordColor] = {
+_colorIndexToColor: dict[WinWordColorIndex, WinWordColor] = {
 	colorIndex.value: WinWordColor[colorIndex.name].value for colorIndex in WinWordColorIndex
 }
 
@@ -532,7 +530,7 @@ mapPUAToUnicode = {
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def __init__(self, nodeType, document, textInfo, level):
 		self.level = level
-		super(WordDocumentHeadingQuickNavItem, self).__init__(nodeType, document, textInfo)
+		super().__init__(nodeType, document, textInfo)
 
 	def isChild(self, parent):
 		if not isinstance(parent, WordDocumentHeadingQuickNavItem):
@@ -560,7 +558,7 @@ class WordDocumentCollectionQuickNavItem(browseMode.TextInfoQuickNavItem):
 		self.collectionItem = collectionItem
 		self.rangeObj = self.rangeFromCollectionItem(collectionItem)
 		textInfo = BrowseModeWordDocumentTextInfo(document, None, _rangeObj=self.rangeObj)
-		super(WordDocumentCollectionQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 
 
 class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
@@ -611,7 +609,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 			text = self.collectionItem.Chart.ChartTitle.Text
 		else:
 			text = self.collectionItem.Chart.Name
-		return "{text}".format(text=text)
+		return f"{text}"
 
 	def moveTo(self):
 		chartNVDAObj = _msOfficeChart.OfficeChart(
@@ -665,7 +663,7 @@ class WordDocumentEndnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 		return _("endnote reference {number}: {text}").format(number=number, text=text)
 
 
-class WinWordCollectionQuicknavIterator(object):
+class WinWordCollectionQuicknavIterator:
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
 	"""
@@ -725,9 +723,9 @@ class WinWordCollectionQuicknavIterator(object):
 			except COMError:
 				message = (
 					"Error iterating over item with "
-					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+					f"type: {self.itemType}, iteration direction: {self.direction}, total item count: {itemCount}, item at index: {index}"
 					"\nThis could be caused by an issue with some element within or a corruption of the word document."
-				).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				)
 				log.debugWarning(message, exc_info=True)
 				continue
 			itemRange = item.rangeObj
@@ -855,7 +853,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	# force mouse reading chunk to sentense to make it what it used to be in 2014.4.
 	# We need to however fix line so it does not accidentially scroll.
 	def _get_unit_mouseChunk(self):
-		unit = super(WordDocumentTextInfo, self).unit_mouseChunk
+		unit = super().unit_mouseChunk
 		if unit == textInfos.UNIT_LINE:
 			unit = textInfos.UNIT_SENTENCE
 		return unit
@@ -868,7 +866,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if s.isEqual(r):
 			r = s
 		else:
-			return super(WordDocumentTextInfo, self).locationText
+			return super().locationText
 		offset = r.information(wdHorizontalPositionRelativeToPage)
 		distance = self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
@@ -1011,7 +1009,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self._rangeObj.setRange(lineStart.value, lineEnd.value)
 
 	def __init__(self, obj, position, _rangeObj=None):
-		super(WordDocumentTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		if _rangeObj:
 			self._rangeObj = _rangeObj.Duplicate
 			return
@@ -1050,9 +1048,9 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(  # noqa: C901
+	def getTextWithFields(
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed:
 			return []
@@ -1255,7 +1253,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				hlColor = self.obj.winwordColorToNVDAColor(val)
 			except (KeyError, ValueError):
 				log.debugWarning("highlight color error", exc_info=True)
-				pass
 			if hlColor is not None:
 				field["highlight-color"] = hlColor
 		try:
@@ -1264,7 +1261,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field["language"] = languageHandler.windowsLCIDToLocaleName(languageId)
 		except:  # noqa: E722
 			log.debugWarning("language error", exc_info=True)
-			pass
 		for x in ("first-line-indent", "left-indent", "right-indent", "hanging-indent"):
 			v = field.get(x)
 			if not v:
@@ -1484,7 +1480,7 @@ class BrowseModeWordDocumentTextInfo(
 	def __init__(self, obj, position, _rangeObj=None):
 		if isinstance(position, WordDocument):
 			position = textInfos.POSITION_CARET
-		super(BrowseModeWordDocumentTextInfo, self).__init__(obj, position, _rangeObj=_rangeObj)
+		super().__init__(obj, position, _rangeObj=_rangeObj)
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
@@ -1646,7 +1642,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		kind: str,
 		direction: documentBase._Movement = documentBase._Movement.NEXT,
 		pos: textInfos.TextInfo | None = None,
-	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+	) -> Generator[browseMode.TextInfoQuickNavItem]:
 		raise NotImplementedError(
 			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
@@ -1716,7 +1712,7 @@ class WordDocument(Window, EditableTextBase):
 					winUser.OBJID_NATIVEOM,
 					interface=comtypes.automation.IDispatch,
 				)
-			except (COMError, WindowsError):
+			except (OSError, COMError):
 				log.debugWarning(
 					"Could not get MS Word object model from window %s with class %s"
 					% (self.documentWindowHandle, winUser.getClassName(self.documentWindowHandle)),
@@ -2205,11 +2201,11 @@ class WordDocument_WwN(WordDocument):
 		w = NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID, "_WwG", True)
 		if not w:
 			log.debugWarning("Could not find window for class _WwG in thread.")
-			w = super(WordDocument_WwN, self).documentWindowHandle
+			w = super().documentWindowHandle
 		return w
 
 	def _get_WinwordWindowObject(self):
-		window = super(WordDocument_WwN, self).WinwordWindowObject
+		window = super().WinwordWindowObject
 		if not window:
 			return None
 		try:

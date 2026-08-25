@@ -337,13 +337,13 @@ class TouchInputGesture(inputCore.InputGesture):
 	def _get_speechEffectWhenExecuted(self):
 		if self.tracker.action in (TouchAction.HOVER, TouchAction.HOVER_UP):
 			return None
-		return super(TouchInputGesture, self).speechEffectWhenExecuted
+		return super().speechEffectWhenExecuted
 
 	def _get_reportInInputHelp(self):
 		return self.tracker.action != TouchAction.HOVER
 
 	def __init__(self, preheldTracker, tracker, mode):
-		super(TouchInputGesture, self).__init__()
+		super().__init__()
 		self.tracker = tracker
 		self.preheldTracker = preheldTracker
 		self.mode = mode
@@ -415,7 +415,7 @@ class TouchInputGesture(inputCore.InputGesture):
 				modeLabel = TouchMode(mode).displayString
 			except ValueError:
 				modeLabel = mode
-			source = "{source}, {mode}".format(source=source, mode=modeLabel)
+			source = f"{source}, {modeLabel}"
 		return source, " + ".join(actions)
 
 	def _get__immediate(self):
@@ -597,7 +597,7 @@ class TouchHandler(threading.Thread):
 		"""
 		winBindings.oleacc.AccNotifyTouchInteraction(
 			gui.mainFrame.Handle,
-			obj.windowHandle,  # noqa: F405
+			obj.windowHandle,
 			obj.location.center.toPOINT(),
 		)
 

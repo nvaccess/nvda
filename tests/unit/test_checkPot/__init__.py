@@ -28,7 +28,7 @@ class TestCheckPot(unittest.TestCase):
 	def tearDown(self):
 		self.checkPot.EXPECTED_MESSAGES_WITHOUT_COMMENTS = self.saved_EXPECTED_MESSAGES_WITHOUT_COMMENTS
 
-	def doCheckPot(self, fileName: str) -> Tuple[int, str]:
+	def doCheckPot(self, fileName: str) -> tuple[int, str]:
 		"""Run checkPot against the specified test POT file and returns its error count and status line."""
 		filePath = os.path.join(os.path.dirname(__file__), fileName)
 		bufOut = StringIO()

@@ -34,7 +34,7 @@ def _updateVersionFromVCS():
 
 
 def _formatDevVersionString():
-	return "{y}.{M}.{m}dev".format(y=version_year, M=version_major, m=version_minor)
+	return f"{version_year}.{version_major}.{version_minor}dev"
 
 
 def formatBuildVersionString():
@@ -42,7 +42,7 @@ def formatBuildVersionString():
 	Examples:
 	- "2019.1.0.123"
 	"""
-	return "{y}.{M}.{m}.{b}".format(y=version_year, M=version_major, m=version_minor, b=version_build)
+	return f"{version_year}.{version_major}.{version_minor}.{version_build}"
 
 
 def formatVersionForGUI(year, major, minor):
@@ -54,11 +54,11 @@ def formatVersionForGUI(year, major, minor):
 	"""
 	if None in (year, major, minor):
 		raise ValueError(
-			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor),
+			f"Three values must be provided. Got year={year}, major={major}, minor={minor}",
 		)
 	if minor == 0:
-		return "{y}.{M}".format(y=year, M=major)
-	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
+		return f"{year}.{major}"
+	return f"{year}.{major}.{minor}"
 
 
 # Version information for NVDA

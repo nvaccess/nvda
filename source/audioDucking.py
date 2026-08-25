@@ -6,7 +6,6 @@
 from enum import IntEnum
 from utils.displayString import DisplayStringIntEnum
 import threading
-from typing import Dict
 from ctypes import wintypes
 import time
 import winBindings.oleacc
@@ -23,7 +22,7 @@ def _isDebug():
 class AutoEvent(wintypes.HANDLE):
 	def __init__(self):
 		e = winBindings.kernel32.CreateEvent(None, True, False, None)
-		super(AutoEvent, self).__init__(e)
+		super().__init__(e)
 
 	def __del__(self):
 		if self:
@@ -39,7 +38,7 @@ class AudioDuckingMode(DisplayStringIntEnum):
 	ALWAYS = 2
 
 	@property
-	def _displayStringLabels(self) -> Dict[IntEnum, str]:
+	def _displayStringLabels(self) -> dict[IntEnum, str]:
 		return {
 			# Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 			# See the Audio Ducking Mode section of the User Guide for details.
@@ -88,7 +87,7 @@ def _setDuckingState(switch):
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 					ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
-		except WindowsError as e:
+		except OSError as e:
 			# When the NVDA build is not signed, audio ducking fails with access denied.
 			# A developer built launcher is unlikely to be signed. Catching this error stops developers from looking into
 			# "expected" errors.
@@ -101,7 +100,7 @@ def _setDuckingState(switch):
 			else:
 				# we want developers to hear the "error sound", and to halt, so still raise the exception.
 				log.error(
-					"Unknown error when setting ducking state:  Error number: {:#010X}".format(errorCode),
+					f"Unknown error when setting ducking state:  Error number: {errorCode:#010X}",
 					exc_info=True,
 				)
 				raise e
@@ -190,7 +189,7 @@ def handlePostConfigProfileSwitch():
 	setAudioDuckingMode(config.conf["audio"]["audioDuckingMode"])
 
 
-class AudioDucker(object):
+class AudioDucker:
 	"""Create one of these objects to manage ducking of background audio.
 	Use the enable and disable methods on this object to denote when you require audio to be ducked.
 	If this object is deleted while ducking is still enabled, the object will automatically disable ducking first.

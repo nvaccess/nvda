@@ -3,7 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from typing import Set
 import weakref
 import wx
 
@@ -41,7 +40,7 @@ class WelcomeDialog(
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
 		"From this menu, you can configure NVDA, get help, and access other NVDA functions.",
 	)
-	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
+	_instances: set["WelcomeDialog"] = weakref.WeakSet()
 
 	def __init__(self, parent):
 		# Translators: The title of the Welcome dialog when user starts NVDA for the first time.

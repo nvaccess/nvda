@@ -5,14 +5,14 @@
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Optional, Tuple, Union
+from typing import Any, Union
 from baseObject import AutoPropertyObject, ScriptableObject
 import config
 import textInfos
 import controlTypes
 from speech import sayAll
 
-_TableID = Union[int, Tuple, Any]
+_TableID = Union[int, tuple, Any]
 """
 A variety of types can be used for a tableID.
 Known to be a tuple for UIA, an integer for virtual buffers.
@@ -90,7 +90,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 	The document could be an NVDAObject, or a BrowseModeDocument treeIntercepter for example.
 	"""
 
-	_lastTableSelection: Optional[_TableSelection] = None
+	_lastTableSelection: _TableSelection | None = None
 
 	def _maybeGetLayoutTableIds(self, info: textInfos.TextInfo):
 		"""
@@ -154,7 +154,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 	def _getTableCellCoordsCached(
 		self,
 		info: textInfos.TextInfo,
-		axis: Optional[_Axis] = None,
+		axis: _Axis | None = None,
 	) -> _TableCell:
 		cell = self._getTableCellCoords(info)
 
@@ -197,7 +197,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 		except LookupError:
 			return False
 
-	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
+	def _getTableDimensions(self, info: textInfos.TextInfo) -> tuple[int, int]:
 		"""
 		Fetches information about the deepest table dimension.
 		@param info:  the position where the table cell should be looked for.
@@ -346,11 +346,11 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 
 	def _tableFindNewCell(
 		self,
-		movement: Optional[_Movement] = None,
-		axis: Optional[_Axis] = None,
-		selection: Optional[textInfos.TextInfo] = None,
+		movement: _Movement | None = None,
+		axis: _Axis | None = None,
+		selection: textInfos.TextInfo | None = None,
 		raiseOnEdge: bool = False,
-	) -> Tuple[_TableCell, textInfos.TextInfo, Optional[_TableSelection]]:
+	) -> tuple[_TableCell, textInfos.TextInfo, _TableSelection | None]:
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		import ui
 
@@ -414,7 +414,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 	def _tableMovementScriptHelper(
 		self,
 		movement: _Movement = _Movement.NEXT,
-		axis: Optional[_Axis] = None,
+		axis: _Axis | None = None,
 	):
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		# at run-time. (#12404)

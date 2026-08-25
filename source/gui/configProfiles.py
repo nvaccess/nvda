@@ -25,7 +25,7 @@ class ProfilesDialog(
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
 		if ProfilesDialog._instance is None:
-			return super(ProfilesDialog, cls).__new__(cls, *args, **kwargs)
+			return super().__new__(cls, *args, **kwargs)
 		return ProfilesDialog._instance
 
 	def __init__(self, parent):
@@ -379,8 +379,8 @@ class ProfilesDialog(
 			)
 
 
-class TriggerInfo(object):
-	__slots__ = ("spec", "display", "profile")
+class TriggerInfo:
+	__slots__ = ("display", "profile", "spec")
 
 	def __init__(self, spec, display, profile):
 		self.spec = spec

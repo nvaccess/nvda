@@ -24,7 +24,7 @@ class NVDAObjectWithRole(PlaceholderNVDAObject):
 	This class can be used to quickly create objects for a fake focus ancestry."""
 
 	def __init__(self, role=controlTypes.Role.UNKNOWN, **kwargs):
-		super(NVDAObjectWithRole, self).__init__(**kwargs)
+		super().__init__(**kwargs)
 		self.role = role
 
 	# Type information for autoproperty _get_name

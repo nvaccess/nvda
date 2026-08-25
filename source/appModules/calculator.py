@@ -19,7 +19,7 @@ import braille
 import speech
 import UIAHandler
 from comtypes import COMError
-from typing import Callable
+from collections.abc import Callable
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [

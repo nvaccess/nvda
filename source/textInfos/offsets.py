@@ -21,11 +21,7 @@ from textUtils._wordSeg.wordSegmenter import WordSegmenter
 from dataclasses import dataclass
 from typing import (
 	Any,
-	Dict,
-	List,
-	Optional,
 	Self,
-	Tuple,
 )
 from logHandler import log
 
@@ -273,7 +269,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		return None
 
 	#: The encoding internal to the underlying text info implementation.
-	encoding: Optional[str] = textUtils.WCHAR_ENCODING
+	encoding: str | None = textUtils.WCHAR_ENCODING
 
 	def __eq__(self, other):
 		if self is other or (
@@ -308,7 +304,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	# C901 '_get_boundingRects' is too complex
 	# Note: when working on _get_boundingRects, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
+	def _get_boundingRects(self) -> list[locationHelper.RectLTWH]:
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -349,8 +345,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			offset = startOffset
 			while offset <= inclusiveEndOffset:
 				lineStart, lineEnd = self._getLineOffsets(offset)
-				if lineStart < startOffset:
-					lineStart = startOffset
+				lineStart = max(lineStart, startOffset)
 				# Line offsets are exclusive, so the end offset is at the start of the next line, if any.
 				inclusiveLineEnd = lineEnd - 1
 				if inclusiveLineEnd > inclusiveEndOffset:
@@ -441,7 +436,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		lineText: str,
 		unit: str,
 		relOffset: int,
-	) -> Optional[Tuple[int, int]]:
+	) -> tuple[int, int] | None:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
@@ -602,7 +597,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		"""Constructor.
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
-		super(OffsetsTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		self.wordSegConf: FeatureFlag = config.conf["documentNavigation"]["wordSegmentationStandard"]
 
 		from NVDAObjects import NVDAObject
@@ -738,7 +733,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			else:
 				self._startOffset = self._endOffset
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig["detectFormatAfterCursor"]:

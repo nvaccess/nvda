@@ -103,8 +103,7 @@ def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
 		return
 	try:
 		with open(path, "w", encoding="utf-8") as f:
-			for event in events:
-				f.write(f"{event.json()}\n")
+			f.writelines(f"{event.json()}\n" for event in events)
 	except OSError:
 		log.debugWarning("Failed to update crash stats file", exc_info=True)
 

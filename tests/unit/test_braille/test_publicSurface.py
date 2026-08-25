@@ -135,15 +135,14 @@ class TestBraillePublicSurface(unittest.TestCase):
 	def test_deprecatedNamesReturnCorrectObject(self):
 		"""Each deprecated name must resolve to the same object as the new-home import."""
 		for name, expected in DEPRECATED.items():
-			with self.subTest(name=name):
-				with patch("logHandler.log") as mockLog:
-					actual = getattr(braille, name)
-					self.assertIs(
-						actual,
-						expected,
-						f"braille.{name} returned wrong object",
-					)
-					mockLog.warning.assert_called_once()
+			with self.subTest(name=name), patch("logHandler.log") as mockLog:
+				actual = getattr(braille, name)
+				self.assertIs(
+					actual,
+					expected,
+					f"braille.{name} returned wrong object",
+				)
+				mockLog.warning.assert_called_once()
 
 
 #: Names that live directly on ``braille.input`` and must NOT emit a deprecation warning.
@@ -185,15 +184,14 @@ class TestBrailleInputPublicSurface(unittest.TestCase):
 	def test_deprecatedNamesReturnCorrectObject(self):
 		"""Each deprecated name must resolve to the same object as the new-home import."""
 		for name, expected in INPUT_DEPRECATED.items():
-			with self.subTest(name=name):
-				with patch("logHandler.log") as mockLog:
-					actual = getattr(brailleInput, name)
-					self.assertIs(
-						actual,
-						expected,
-						f"brailleInput.{name} returned wrong object",
-					)
-					mockLog.warning.assert_called_once()
+			with self.subTest(name=name), patch("logHandler.log") as mockLog:
+				actual = getattr(brailleInput, name)
+				self.assertIs(
+					actual,
+					expected,
+					f"brailleInput.{name} returned wrong object",
+				)
+				mockLog.warning.assert_called_once()
 
 	def test_removedNamesReturnOldValue(self):
 		"""Each removed name must still resolve to the value it held before removal."""

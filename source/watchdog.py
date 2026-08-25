@@ -41,7 +41,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return logHandler.getFormattedStacksForAllThreads
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 MIN_CORE_ALIVE_TIMEOUT = 0.5
@@ -313,7 +313,7 @@ def terminate():
 	_watcherThread.join()
 
 
-class Suspender(object):
+class Suspender:
 	"""A context manager to temporarily suspend the watchdog for a block of code."""
 
 	def __enter__(self):
@@ -333,7 +333,7 @@ class CancellableCallThread(threading.Thread):
 	"""
 
 	def __init__(self):
-		super(CancellableCallThread, self).__init__()
+		super().__init__()
 		self.daemon = True
 		self._executeEvent = threading.Event()
 		self._executionDoneEvent = winBindings.kernel32.CreateEvent(None, False, False, None)

@@ -3,7 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
-from typing import Optional, List
 
 import os
 import globalVars
@@ -20,7 +19,7 @@ try:
 except:  # noqa: E722
 	lilliDll = None
 
-lilliCellsMap: List[int] = []
+lilliCellsMap: list[int] = []
 KEY_CHECK_INTERVAL = 50
 
 LILLI_KEYS = [
@@ -119,7 +118,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def __init__(self):
 		global lilliCellsMap
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		lilliCellsMap = [convertLilliCells(x) for x in range(256)]
 		if lilliDll.Init408USB():
 			self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
@@ -128,7 +127,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			raise RuntimeError("No display found")
 
 	def terminate(self):
-		super(BrailleDisplayDriver, self).terminate()
+		super().terminate()
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
@@ -141,7 +140,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def _handleKeyPresses(self):
 		while True:
-			key: Optional[int] = None
+			key: int | None = None
 			try:
 				# Python 3: review required
 				# The code seems to assume this returns an int.
@@ -149,7 +148,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				key = lilliDll.ReadBuf()
 			except:  # noqa: E722
 				log.debug("", exc_info=True)
-				pass
 			if not key:
 				break
 			if (key <= 0x40) or (0x101 <= key <= 0x128):
@@ -164,7 +162,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		lilliDll.WriteBuf(bytes(lilliCellsMap[x] for x in cells))
 
 	gestureMap = inputCore.GlobalGestureMap(
@@ -188,7 +186,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, command: str, argument: int):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.id = command
 		if command == ROUTE_COMMAND:
 			self.cellIndexes = [argument]

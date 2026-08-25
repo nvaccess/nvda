@@ -97,7 +97,7 @@ class StringSynthSetting(SynthSetting):
 			# Voice parameters may change when the voice changes, so update the config.
 			self.synth.saveSettings()
 		else:
-			super(StringSynthSetting, self)._set_value(id)
+			super()._set_value(id)
 
 	def _getReportValue(self, val):
 		return self._values[val].displayName
@@ -105,13 +105,13 @@ class StringSynthSetting(SynthSetting):
 
 class BooleanSynthSetting(SynthSetting):
 	def __init__(self, synth, setting):
-		super(BooleanSynthSetting, self).__init__(synth, setting, 0, 1)
+		super().__init__(synth, setting, 0, 1)
 
 	def _get_value(self):
-		return int(super(BooleanSynthSetting, self).value)
+		return int(super().value)
 
 	def _set_value(self, val):
-		super(BooleanSynthSetting, self)._set_value(bool(val))
+		super()._set_value(bool(val))
 
 	def _getReportValue(self, val):
 		return _("on") if val else _("off")

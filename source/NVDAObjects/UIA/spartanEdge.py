@@ -96,7 +96,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 	# C901 '_getTextWithFieldsForUIARange' is too complex
 	# Note: when working here look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _getTextWithFieldsForUIARange(  # noqa: C901
+	def _getTextWithFieldsForUIARange(
 		self,
 		rootElement,
 		textRange,

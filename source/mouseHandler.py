@@ -170,7 +170,7 @@ def getMouseRestrictedToScreens(x, y, displays):
 		)
 		edgeToMouse = mpos - mouseLimitedToScreen
 		distFromRectToMouseSqd = abs(edgeToMouse.x) + abs(edgeToMouse.y)
-		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:  # noqa: E711
+		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:
 			closestDistValue = distFromRectToMouseSqd
 			newXY = mouseLimitedToScreen
 
@@ -196,13 +196,13 @@ def getTotalWidthAndHeightAndMinimumPosition(displays: list[wx.Rect]) -> tuple[i
 	smallestX, smallestY, largestX, largestY = (None, None, None, None)
 	for screenRect in displays:
 		(screenMin, screenMax) = getMinMaxPoints(screenRect)
-		if smallestX == None or screenMin.x < smallestX:  # noqa: E711
+		if smallestX == None or screenMin.x < smallestX:
 			smallestX = screenMin.x
-		if smallestY == None or screenMin.y < smallestY:  # noqa: E711
+		if smallestY == None or screenMin.y < smallestY:
 			smallestY = screenMin.y
-		if largestX == None or screenMax.x > largestX:  # noqa: E711
+		if largestX == None or screenMax.x > largestX:
 			largestX = screenMax.x
-		if largestY == None or screenMax.y > largestY:  # noqa: E711
+		if largestY == None or screenMax.y > largestY:
 			largestY = screenMax.y
 
 	# get full range, including any "blank space" between monitors

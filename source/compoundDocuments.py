@@ -4,8 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import (
-	Optional,
-	Dict,
 	Self,
 )
 
@@ -205,12 +203,10 @@ class CompoundTextInfo(textInfos.TextInfo):
 				field["table-rowsspanned"] = obj.rowSpan
 			except NotImplementedError:
 				log.debug("Row span not supported")
-				pass
 			try:
 				field["table-columnsspanned"] = obj.columnSpan
 			except NotImplementedError:
 				log.debug("Column span not supported")
-				pass
 		return field
 
 	def __eq__(self, other):
@@ -259,7 +255,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 	)
 
 	def __init__(self, obj, position):
-		super(TreeCompoundTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		rootObj = obj.rootNVDAObject
 		if isinstance(position, NVDAObject):
 			# FIXME
@@ -332,7 +328,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		text = info._getTextRange(0, info._startOffset)
 		return text.count(textUtils.OBJ_REPLACEMENT_CHAR)
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		# Get the initial control fields.
 		fields = []
 		rootObj = self.obj.rootNVDAObject
@@ -517,7 +513,7 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 	TextInfo = TreeCompoundTextInfo
 
 	def __init__(self, rootNVDAObject):
-		super(CompoundDocument, self).__init__(rootNVDAObject)
+		super().__init__(rootNVDAObject)
 
 	def _get_isAlive(self):
 		root = self.rootNVDAObject

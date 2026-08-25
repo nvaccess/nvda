@@ -53,7 +53,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self._serial = None
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			log.debug("Checking port %s for a Nattiq nBraille", port)
@@ -66,7 +66,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					parity=serial.PARITY_NONE,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			# Check for cell information
@@ -80,7 +80,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			self._serial.write(RESET_TAG)
 			self._serial.close()
@@ -142,7 +142,7 @@ class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__()
+		super().__init__()
 		if keys == UP_KEY_PRESS:
 			self.id = "tback"
 		elif keys == DOWN_KEY_PRESS:
@@ -157,6 +157,6 @@ class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex):
-		super(RoutingInputGesture, self).__init__()
+		super().__init__()
 		self.cellIndexes = [routingIndex]
 		self.id = "routing"

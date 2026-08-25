@@ -44,7 +44,7 @@ def createAndDeleteTempFilePath_contextManager(
 	dir: str | None = None,
 	prefix: str | None = None,
 	suffix: str | None = None,
-) -> Generator[str, None, None]:
+) -> Generator[str]:
 	"""A context manager that creates a temporary file and deletes it when the context is exited"""
 	with tempfile.NamedTemporaryFile(dir=dir, prefix=prefix, suffix=suffix, delete=False) as tempFile:
 		tempFilePath = tempFile.name
@@ -95,10 +95,8 @@ def getSkeletonContentFromXliffText(skeletonText: str | None) -> str:
 		return ""
 	# Skeleton content is written as <skeleton>\n{content}\n</skeleton>.
 	# Remove only wrapper newlines, not significant whitespace inside the skeleton itself.
-	if skeletonText.startswith("\n"):
-		skeletonText = skeletonText[1:]
-	if skeletonText.endswith("\n"):
-		skeletonText = skeletonText[:-1]
+	skeletonText = skeletonText.removeprefix("\n")
+	skeletonText = skeletonText.removesuffix("\n")
 	return skeletonText
 
 
@@ -118,15 +116,9 @@ def skeletonizeLine(mdLine: str) -> str | None:
 		return None
 	elif m := re_heading.match(mdLine):
 		prefix, content, suffix = m.groups()
-	elif m := re_bullet.match(mdLine):
+	elif (m := re_bullet.match(mdLine)) or (m := re_number.match(mdLine)):
 		prefix, content = m.groups()
-	elif m := re_number.match(mdLine):
-		prefix, content = m.groups()
-	elif m := re_tableRow.match(mdLine):
-		prefix, content, suffix = m.groups()
-	elif m := re_kcTitle.match(mdLine):
-		prefix, content, suffix = m.groups()
-	elif m := re_kcSettingsSection.match(mdLine):
+	elif (m := re_tableRow.match(mdLine)) or (m := re_kcTitle.match(mdLine)) or (m := re_kcSettingsSection.match(mdLine)):
 		prefix, content, suffix = m.groups()
 	elif re_comment.match(mdLine):
 		return None
@@ -147,7 +139,7 @@ def generateSkeleton(mdPath: str, outputPath: str) -> Result_generateSkeleton:
 		open(mdPath, "r", encoding="utf8") as mdFile,
 		open(outputPath, "w", encoding="utf8", newline="") as outputFile,
 	):
-		for mdLine in mdFile.readlines():
+		for mdLine in mdFile:
 			res.numTotalLines += 1
 			skelLine = skeletonizeLine(mdLine)
 			if skelLine:

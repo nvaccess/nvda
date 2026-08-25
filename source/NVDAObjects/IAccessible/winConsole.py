@@ -29,7 +29,6 @@ class LegacyWinConsole(winConsole.WinConsole, IAccessible):
 	before 1607.
 	"""
 
-	pass
 
 
 def findExtraOverlayClasses(obj, clsList):

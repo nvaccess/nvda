@@ -16,7 +16,7 @@ from . import deprecatedAliases
 # deprecatedAliases included for backwards compatibility.
 # Supress F403 - unable to detect undefined names.
 # Supress F401 - imported but unused
-from .deprecatedAliases import *  # noqa: F403, F401
+from .deprecatedAliases import *
 
 # Override (and limit) the symbols exported by the controlTypes package
 # These are the symbols available when `from controlTypes import *` is used.

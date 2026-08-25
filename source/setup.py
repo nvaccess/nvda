@@ -19,20 +19,20 @@ from buildVersion import (
 )
 
 gettext.install("nvda")
-from glob import glob  # noqa: E402
-import fnmatch  # noqa: E402
+from glob import glob
+import fnmatch
 
 # versionInfo names must be imported after Gettext
 # Suppress E402 (module level import not at top of file)
-from versionInfo import (  # noqa: E402
+from versionInfo import (
 	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
 )
-from py2exe import freeze  # noqa: E402
-from py2exe.dllfinder import DllFinder  # noqa: E402
-import py2exe.hooks  # noqa: E402
-import wx  # noqa: E402
-import importlib.machinery  # noqa: E402
+from py2exe import freeze
+from py2exe.dllfinder import DllFinder
+import py2exe.hooks
+import wx
+import importlib.machinery
 
 if TYPE_CHECKING:
 	from ast import AnnAssign

@@ -161,7 +161,7 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 	def assertFeatureFlagState(
 		self,
 		flag: FeatureFlag,
-		enumType: typing.Type,
+		enumType: type,
 		value: enum.Enum,
 		behaviorOfDefault: enum.Enum,
 		calculatedValue: bool,
@@ -350,7 +350,7 @@ class CustomEnum(DisplayStringEnum):
 	WHEN_REQUIRED = enum.auto()
 	NEVER = enum.auto()
 
-	def _displayStringLabels(self) -> typing.Dict[enum.Enum, str]:
+	def _displayStringLabels(self) -> dict[enum.Enum, str]:
 		return {}
 
 

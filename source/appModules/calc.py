@@ -52,7 +52,7 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 	)
 
 	def _get_name(self):
-		name = super(Display, self).name
+		name = super().name
 		if not name:
 			name = _("Display")
 		return name

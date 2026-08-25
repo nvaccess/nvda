@@ -7,13 +7,10 @@ import enum
 import os
 from pathlib import Path
 from typing import (
-	Dict,
-	Optional,
-	OrderedDict,
 	Protocol,
-	Set,
 	TYPE_CHECKING,
 )
+from collections import OrderedDict
 
 import globalVars
 from logHandler import log
@@ -23,8 +20,8 @@ from utils.displayString import DisplayStringEnum
 from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel  # noqa: F401
-	from addonHandler import AddonsState  # noqa: F401
+	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel
+	from addonHandler import AddonsState
 
 
 class EnabledStatus(DisplayStringEnum):
@@ -33,7 +30,7 @@ class EnabledStatus(DisplayStringEnum):
 	DISABLED = enum.auto()
 
 	@property
-	def _displayStringLabels(self) -> Dict["EnabledStatus", str]:
+	def _displayStringLabels(self) -> dict["EnabledStatus", str]:
 		return {
 			# Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 			self.ALL: pgettext("addonStore", "All"),
@@ -80,7 +77,7 @@ class AvailableAddonStatus(DisplayStringEnum):
 	RUNNING = enum.auto()  # enabled and active.
 
 	@property
-	def _displayStringLabels(self) -> Dict["AvailableAddonStatus", str]:
+	def _displayStringLabels(self) -> dict["AvailableAddonStatus", str]:
 		return {
 			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_REMOVE: pgettext("addonStore", "Pending removal"),
@@ -168,7 +165,7 @@ class _StatusFilterKey(DisplayStringEnum):
 	INCOMPATIBLE = enum.auto()
 
 	@property
-	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
+	def _displayStringLabels(self) -> dict["_StatusFilterKey", str]:
 		return {
 			# Translators: The label of a tab to display installed add-ons in the add-on store.
 			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -185,7 +182,7 @@ class _StatusFilterKey(DisplayStringEnum):
 		}
 
 	@property
-	def _displayStringLabelsWithAccelerators(self) -> Dict["_StatusFilterKey", str]:
+	def _displayStringLabelsWithAccelerators(self) -> dict["_StatusFilterKey", str]:
 		return {
 			# Translators: The label of the add-ons list in the corresponding panel.
 			# Preferably use the same accelerator key for the four labels.
@@ -217,7 +214,7 @@ class _StatusFilterKey(DisplayStringEnum):
 			raise e
 
 
-def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def _getDownloadableStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	from ..dataManager import addonDataManager
 
 	assert addonDataManager is not None
@@ -302,7 +299,7 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 		# Update/install already pending
 		return None
 
-	installedAddonData: "_AddonStoreModel | AddonHandlerModel | None" = (
+	installedAddonData: _AddonStoreModel | AddonHandlerModel | None = (
 		addonDataManager._getCachedInstalledAddonData(model.addonId)
 	)
 	if installedAddonData is None:
@@ -332,7 +329,7 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 			raise ValueError(f"Unexpected value: {canUpdateAddon}")
 
 
-def _getInstalledStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
+def _getInstalledStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 	from addonHandler import state as addonHandlerState
 	from ..dataManager import addonDataManager
 
@@ -392,7 +389,7 @@ def getStatus(model: "_AddonGUIModel", context: _StatusFilterKey) -> AvailableAd
 
 _addonStoreStateToAddonHandlerState: OrderedDict[
 	AvailableAddonStatus,
-	Set[AddonStateCategory],
+	set[AddonStateCategory],
 ] = OrderedDict(
 	{
 		# Pending states must be first as the pending state may be altering another state.
@@ -459,7 +456,7 @@ _updatableStatuses: set[AvailableAddonStatus] = {
 	AvailableAddonStatus.REPLACE_SIDE_LOAD,
 }
 
-_statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = OrderedDict(
+_statusFilters: OrderedDict[_StatusFilterKey, set[AvailableAddonStatus]] = OrderedDict(
 	{
 		_StatusFilterKey.INSTALLED: _installedAddonStatuses,
 		_StatusFilterKey.UPDATE: _updatableStatuses.union(_installingStatuses),

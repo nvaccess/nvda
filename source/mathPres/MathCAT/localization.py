@@ -220,5 +220,5 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	# Translators: at the moment, do NOT translate this string as some code specifically looks for this name.
 	allStyleFiles.append("LiteralSpeak")
 	for name in allStyleFiles:
-		resultSpeechStyles.append((name))
+		resultSpeechStyles.append(name)
 	return resultSpeechStyles

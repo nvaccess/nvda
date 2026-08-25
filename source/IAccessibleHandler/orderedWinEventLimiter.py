@@ -1,4 +1,3 @@
-from typing import Optional, List
 import heapq
 import itertools
 
@@ -18,7 +17,7 @@ MENU_EVENTIDS = (
 )
 
 
-class OrderedWinEventLimiter(object):
+class OrderedWinEventLimiter:
 	"""Collects and limits winEvents based on whether they are focus changes,
 	or just generic (all other ones).
 
@@ -82,7 +81,7 @@ class OrderedWinEventLimiter(object):
 
 	def flushEvents(
 		self,
-		alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,
+		alwaysAllowedObjects: list[IAccessibleObjectIdentifierType] | None = None,
 	) -> list[tuple[int, int, int, int]]:
 		"""Returns a list of winEvents that have been added.
 		Due to limiting, it will not necessarily be all the winEvents that were originally added.

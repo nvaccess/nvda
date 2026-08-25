@@ -442,7 +442,7 @@ class RemoteHandler(logging.Handler):
 		msg = self.format(record)
 		try:
 			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, globalVars.appPid, msg)
-		except WindowsError:
+		except OSError:
 			pass
 
 
@@ -460,7 +460,7 @@ class Formatter(logging.Formatter):
 	default_msec_format = "%s.%03d"
 
 	def formatException(self, ex):
-		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+		return stripBasePathFromTracebackText(super().formatException(ex))
 
 	def format(self, record: logging.LogRecord) -> str:
 		# NVDA's log calls provide / generate a special 'codepath' record attribute.
@@ -487,7 +487,7 @@ class Formatter(logging.Formatter):
 		return self.default_msec_format % (res, record.msecs)
 
 
-class StreamRedirector(object):
+class StreamRedirector:
 	"""Redirects an output stream to a logger."""
 
 	def __init__(self, name, logger, level):
@@ -646,11 +646,11 @@ def initialize(shouldDoRemoteLogging=False):
 				if os.path.exists(oldLogFileName):
 					os.unlink(oldLogFileName)
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
-			except (IOError, WindowsError):
+			except OSError:
 				pass  # Probably log does not exist, don't care.
 			try:
 				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
-			except IOError:
+			except OSError:
 				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
 				# and set log filename to None to inform logViewer about it
 				globalVars.appArgs.logFileName = None

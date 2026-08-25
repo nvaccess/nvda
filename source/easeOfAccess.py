@@ -40,7 +40,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
 		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
 		return True
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class AutoStartContext(IntEnum):
@@ -60,7 +60,7 @@ def isRegistered() -> bool:
 		return True
 	except FileNotFoundError:
 		log.debug("Unable to find AT registry key")
-	except WindowsError:
+	except OSError:
 		log.error("Unable to open AT registry key", exc_info=True)
 	return False
 
@@ -121,7 +121,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	except FileNotFoundError:
 		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
 		return []
-	except WindowsError:
+	except OSError:
 		log.error(
 			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
 			exc_info=True,
@@ -132,7 +132,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
 	except FileNotFoundError:
 		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
-	except WindowsError:
+	except OSError:
 		log.error(
 			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
 			exc_info=True,

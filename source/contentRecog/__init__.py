@@ -14,7 +14,8 @@ They are implemented using the L{ContentRecognizer} class.
 
 from collections import namedtuple
 import ctypes
-from typing import Callable, Dict, List, Union
+from typing import Dict, List, Union
+from collections.abc import Callable
 import garbageHandler
 from baseObject import AutoPropertyObject
 import cursorManager
@@ -51,7 +52,7 @@ class ContentRecognizer(AutoPropertyObject):
 	without needing to press additional keys.
 	"""
 
-	def getResizeFactor(self, width: int, height: int) -> Union[int, float]:
+	def getResizeFactor(self, width: int, height: int) -> int | float:
 		"""Return the factor by which an image must be resized
 		before it is passed to this recognizer.
 		@param width: The width of the image in pixels.
@@ -121,7 +122,7 @@ class RecogImageInfo:
 		screenTop: int,
 		screenWidth: int,
 		screenHeight: int,
-		resizeFactor: Union[int, float],
+		resizeFactor: float,
 	):
 		"""
 		@param screenLeft: The x screen coordinate of the upper-left corner of the image.
@@ -208,7 +209,7 @@ class LinesWordsResult(RecognitionResult):
 	Several OCR engines produce output in a format which can be easily converted to this.
 	"""
 
-	def __init__(self, data: List[List[Dict[str, Union[str, int]]]], imageInfo: RecogImageInfo):
+	def __init__(self, data: list[list[dict[str, str | int]]], imageInfo: RecogImageInfo):
 		"""Constructor.
 		@param data: The lines/words data structure. For example:
 			[

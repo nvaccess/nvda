@@ -12,7 +12,7 @@ from ctypes import (
 	windll,
 )
 from os import path
-from typing import TYPE_CHECKING, Type
+from typing import TYPE_CHECKING
 
 import braille
 import braille.regions.base
@@ -115,7 +115,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def reportFocus(self) -> None:
 		"""Calls MathCAT's ZoomIn command and speaks the resulting text."""
 		self._shouldUpdateMathHighlight = False
-		super(MathCATInteraction, self).reportFocus()
+		super().reportFocus()
 		try:
 			text: str = libmathcat.DoNavigateCommand("ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
@@ -171,7 +171,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def getBrailleRegions(
 		self,
 		review: bool = False,
-	) -> Generator[braille.regions.base.Region, None, None]:
+	) -> Generator[braille.regions.base.Region]:
 		"""Yields braille.Region objects for this MathCATInteraction object."""
 		yield braille.regions.NVDAObject.NVDAObjectRegion(self, appendText=" ")
 		region: braille.regions.base.Region = braille.regions.base.Region()
@@ -231,7 +231,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		for cmd in NAV_COMMANDS:
 			scriptSuffix = cmd.commandName[0].lower() + cmd.commandName[1:]
 			funcName = f"script_{scriptSuffix}"
-			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)  # noqa: E731
+			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)
 			script.__doc__ = cmd.description
 			script.__name__ = funcName
 			script.category = SCRCAT_MATH_NAV
@@ -418,7 +418,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Invalid math formatting found"))
 			libmathcat.SetMathML("<math></math>")
 		try:
-			supportedCommands: set[Type["SynthCommand"]] = synth.supportedCommands
+			supportedCommands: set[type[SynthCommand]] = synth.supportedCommands
 			# Set preferences for capital letters
 			libmathcat.SetPreference(
 				"CapitalLetters_Beep",

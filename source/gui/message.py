@@ -13,7 +13,7 @@ from collections import deque
 from collections.abc import Callable, Collection
 from enum import Enum, IntEnum, auto
 from functools import partialmethod, singledispatchmethod, wraps
-from typing import Any, Literal, NamedTuple, Optional, Self
+from typing import Any, Literal, NamedTuple, Self
 
 import core
 import extensionPoints
@@ -107,7 +107,7 @@ def messageBox(
 	message: str,
 	caption: str = wx.MessageBoxCaptionStr,
 	style: int = wx.OK | wx.CENTER,
-	parent: Optional[wx.Window] = None,
+	parent: wx.Window | None = None,
 ) -> int:
 	"""Display a modal message dialog.
 
@@ -151,7 +151,7 @@ class DisplayableError(Exception):
 	@type displayableError: DisplayableError
 	"""
 
-	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
+	def __init__(self, displayMessage: str, titleMessage: str | None = None):
 		"""An error with a message that should be presented to the user via a message box.
 
 		Code outside the GUI layer may raise DisplayableError to report a failure with a

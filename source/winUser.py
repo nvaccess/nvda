@@ -693,7 +693,7 @@ def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
 def getPreviousWindow(hwnd: HWNDVal) -> HWNDVal:
 	try:
 		hwnd = _user32.GetWindow(hwnd, GW_HWNDPREV)
-	except WindowsError:
+	except OSError:
 		return 0
 	return hwnd or 0
 
@@ -769,7 +769,7 @@ class STICKYKEYS(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(STICKYKEYS, self).__init__(cbSize=sizeof(self), **kwargs)
+		super().__init__(cbSize=sizeof(self), **kwargs)
 
 
 SKF_STICKYKEYSON = 0x00000001
@@ -810,7 +810,7 @@ def paint(hwnd: int, paintStruct: _PAINTSTRUCT | None = None):
 		winBindings.user32.EndPaint(hwnd, byref(paintStruct))
 
 
-class WinTimer(object):
+class WinTimer:
 	"""Object that wraps the SetTimer function in user32.
 	The timer is automatically destroyed using KillTimer when the object is terminated using L{terminate}.
 	"""

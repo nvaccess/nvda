@@ -71,7 +71,7 @@ class InputComposition(EditableTextWithAutoSelectDetection, Window):
 
 	def __init__(self, parent=None):
 		self.parent = parent
-		super(InputComposition, self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(InputComposition)
@@ -138,7 +138,7 @@ class CandidateList(Window):
 
 	def __init__(self, parent=None):
 		self.parent = parent
-		super(CandidateList, self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(CandidateList)
@@ -156,7 +156,7 @@ class CandidateItem(CandidateItemBehavior, Window):
 		self.candidateStrings = candidateStrings
 		self.candidateIndex = candidateIndex
 		self.inputMethod = inputMethod
-		super(CandidateItem, self).__init__(windowHandle=parent.windowHandle)
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def findOverlayClasses(self, clsList):
 		clsList.append(CandidateItem)

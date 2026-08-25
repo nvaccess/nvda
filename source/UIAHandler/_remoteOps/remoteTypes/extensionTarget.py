@@ -6,9 +6,9 @@
 
 from __future__ import annotations
 from typing import (
-	Iterable,
 	Generic,
 )
+from collections.abc import Iterable
 from ctypes import (
 	c_ulong,
 )
@@ -62,7 +62,7 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 	def callExtension(
 		self,
 		extensionId: RemoteGuid | GUID,
-		*params: RemoteBaseObject | int | float | str,
+		*params: RemoteBaseObject | float | str,
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.CallExtension(

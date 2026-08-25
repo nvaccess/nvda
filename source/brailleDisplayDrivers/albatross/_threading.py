@@ -30,7 +30,7 @@ from threading import (
 	Thread,
 	Timer,
 )
-from typing import Callable
+from collections.abc import Callable
 import winBindings.kernel32
 from .constants import KC_INTERVAL
 

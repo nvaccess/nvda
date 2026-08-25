@@ -44,7 +44,7 @@ def __getattr__(attrName: str) -> Any:
 			)
 			return WritePaths.voiceDictsBackupDir
 
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 def createVoiceDictFileName(synthName, voiceName):

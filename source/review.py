@@ -3,10 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from typing import (
-	Optional,
-	Union,
-)
 
 import api
 from baseObject import ScriptableObject
@@ -96,7 +92,7 @@ modes = [
 _currentMode = 0
 
 
-def getPositionForCurrentMode(obj: NVDAObject) -> Union[textInfos.TextInfo, ScriptableObject]:
+def getPositionForCurrentMode(obj: NVDAObject) -> textInfos.TextInfo | ScriptableObject:
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode.
 	@param obj: the NVDAObject to review
@@ -116,9 +112,9 @@ def getCurrentMode():
 
 
 def setCurrentMode(
-	mode: Union[int, str],
+	mode: int | str,
 	updateReviewPosition: bool = True,
-) -> Optional[str]:
+) -> str | None:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).

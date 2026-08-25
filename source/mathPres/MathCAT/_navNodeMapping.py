@@ -5,7 +5,7 @@
 
 """Map MathCAT NavNode ids to source MathML rectangles."""
 
-import xml.etree.ElementTree as ElementTree
+from xml.etree import ElementTree
 from collections.abc import Generator
 from typing import TYPE_CHECKING
 
@@ -50,7 +50,7 @@ def _getSyntheticNodeId(nodePath: MathMlNodePath, prefix: str) -> MathMlNodeId:
 def _iterMathMlElements(
 	element: ElementTree.Element,
 	nodePath: MathMlNodePath,
-) -> Generator[tuple[ElementTree.Element, MathMlNodePath], None, None]:
+) -> Generator[tuple[ElementTree.Element, MathMlNodePath]]:
 	stack = [(element, nodePath)]
 	while stack:
 		currentElement, currentNodePath = stack.pop()
@@ -134,7 +134,7 @@ def prepareMathMlForNavigation(
 		# Fall back to normal math interaction if IA2 rectangle mapping fails.
 		log.debugWarning("Math highlight could not build IA2 rectangle map", exc_info=True)
 		return mathml, {}
-	nodeRectsById: dict[MathMlNodeId, "RectLTRB"] = {}
+	nodeRectsById: dict[MathMlNodeId, RectLTRB] = {}
 	missingPathCount = 0
 	tagMismatchCount = 0
 	for nodeId, mathMlNodeInfo in mathMlNodeInfoById.items():

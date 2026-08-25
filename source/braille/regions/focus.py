@@ -7,10 +7,8 @@ from __future__ import annotations
 
 from typing import (
 	TYPE_CHECKING,
-	Generator,
-	List,
-	Optional,
 )
+from collections.abc import Generator
 
 import api
 import config
@@ -47,9 +45,9 @@ def invalidateCachedFocusAncestors(index):
 
 
 def getFocusContextRegions(
-	obj: "NVDAObject",
-	oldFocusRegions: Optional[List[Region]] = None,
-) -> Generator[Region, None, None]:
+	obj: NVDAObject,
+	oldFocusRegions: list[Region] | None = None,
+) -> Generator[Region]:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
 	global _cachedFocusAncestorsEnd
@@ -124,9 +122,9 @@ def getFocusContextRegions(
 
 
 def getFocusRegions(
-	obj: "NVDAObject",
+	obj: NVDAObject,
 	review: bool = False,
-) -> Generator[Region, None, None]:
+) -> Generator[Region]:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
 	# Allow objects to override normal behaviour.

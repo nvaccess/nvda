@@ -23,7 +23,7 @@ class TestBrailleTables(unittest.TestCase):
 			with self.subTest(table=table.fileName):
 				self.assertTrue(
 					os.path.isfile(os.path.join(brailleTables.TABLES_DIR, table.fileName)),
-					msg="{table} table not found".format(table=table.displayName),
+					msg=f"{table.displayName} table not found",
 				)
 
 	def test_renamedTableExistence(self):

@@ -162,13 +162,12 @@ class TestFocusManager(unittest.TestCase):
 		with patch(
 			"_magnifier.utils.focusManager.api.getCaretPosition",
 			side_effect=OSError("WinError"),
-		):
-			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
-				mock_focus.return_value.location = (10, 20, 30, 40)
+		), patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
+			mock_focus.return_value.location = (10, 20, 30, 40)
 
-				coords = self.focusManager._getSystemFocusPosition()
-				# Top-left: (10, 20)
-				self.assertEqual(coords, Coordinates(10, 20))
+			coords = self.focusManager._getSystemFocusPosition()
+			# Top-left: (10, 20)
+			self.assertEqual(coords, Coordinates(10, 20))
 
 	def testGetMousePosition(self):
 		"""Getting mouse position."""

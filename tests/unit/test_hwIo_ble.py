@@ -208,7 +208,6 @@ class TestBle(unittest.TestCase):
 		def fakeRunCoroutineSync(coro: object, timeout: float | None = None) -> None:
 			if hasattr(coro, "close"):
 				coro.close()
-			return None
 
 		self.runCoroutineSyncPatcher = patch(
 			"hwIo.ble._io.runCoroutineSync",

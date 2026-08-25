@@ -72,4 +72,4 @@ def _deleteKeyAndSubkeys(key: int, subkey: str, access: int = 0) -> None:
 			subkey,
 		)
 	if result != 0:
-		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
+		raise OSError(result, f"RegDeleteTree failed for {subkey=}")

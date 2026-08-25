@@ -5,8 +5,6 @@
 
 from typing import (
 	TYPE_CHECKING,
-	Dict,
-	Optional,
 )
 
 from logHandler import log
@@ -110,10 +108,10 @@ class TreeInterceptor(baseObject.ScriptableObject):
 	shouldTrapNonCommandGestures = False  #: If true then gestures that do not have a script and are not a command gesture should be trapped from going through to Windows.
 
 	def __init__(self, rootNVDAObject: "NVDAObjects.NVDAObject"):
-		super(TreeInterceptor, self).__init__()
+		super().__init__()
 		self._passThrough = False
 		#: The root object of the tree wherein events and scripts are intercepted.
-		self.rootNVDAObject: "NVDAObjects.NVDAObject" = rootNVDAObject
+		self.rootNVDAObject: NVDAObjects.NVDAObject = rootNVDAObject
 
 	def terminate(self):
 		"""Terminate this interceptor.
@@ -198,7 +196,7 @@ class DocumentTreeInterceptor(documentBase.TextContainerObject, TreeInterceptor)
 
 class RootProxyTextInfo(textInfos.TextInfo):
 	def __init__(self, obj, position, **kwargs):
-		super(RootProxyTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		if isinstance(position, self.InnerTextInfoClass):
 			self.innerTextInfo = position
 		else:
@@ -262,7 +260,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def _get_boundingRects(self):
 		return self.innerTextInfo.boundingRects
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
 
 	def expand(self, unit):
@@ -280,10 +278,10 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def getFormatFieldSpeech(
 		self,
 		attrs: textInfos.Field,
-		attrsCache: Optional[textInfos.Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: textInfos.Field | None = None,
+		formatConfig: dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:

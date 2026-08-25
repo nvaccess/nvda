@@ -55,7 +55,7 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from addonStore.models.addon import (  # noqa: F401
+	from addonStore.models.addon import (
 		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		InstalledAddonStoreModel,
@@ -292,7 +292,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			try:
 				with open(statePath, "wt", encoding="utf-8") as file:
 					json.dump(self.toDict(), file)
-			except (IOError, TypeError):
+			except (OSError, TypeError):
 				log.debugWarning("Error saving state", exc_info=True)
 			return True
 		return False
@@ -335,7 +335,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 state = AddonsState()
 
 
-def getRunningAddons() -> "AddonHandlerModelGeneratorT":
+def getRunningAddons() -> AddonHandlerModelGeneratorT:
 	"""Returns currently loaded add-ons."""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
@@ -343,7 +343,7 @@ def getRunningAddons() -> "AddonHandlerModelGeneratorT":
 def getIncompatibleAddons(
 	currentAPIVersion=addonAPIVersion.CURRENT,
 	backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO,
-) -> "AddonHandlerModelGeneratorT":
+) -> AddonHandlerModelGeneratorT:
 	"""Returns a generator of the add-ons that are not compatible."""
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
@@ -421,7 +421,6 @@ def initialize():
 
 def terminate():
 	"""Terminates the add-ons subsystem."""
-	pass
 
 
 def _getDefaultAddonPaths() -> list[str]:
@@ -437,7 +436,7 @@ def _getDefaultAddonPaths() -> list[str]:
 def _getAvailableAddonsFromPath(
 	path: str,
 	isFirstLoad: bool = False,
-) -> "AddonHandlerModelGeneratorT":
+) -> AddonHandlerModelGeneratorT:
 	"""Gets available add-ons from path.
 	An addon is only considered available if the manifest file is loaded with no errors.
 	@param path: path from where to find addon directories.
@@ -490,12 +489,9 @@ def _getAvailableAddonsFromPath(
 						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
 						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
-						"Found add-on {name} - {a.version}."
-						" Requires API: {a.minimumNVDAVersion}."
-						" Last-tested API: {a.lastTestedNVDAVersion}".format(
-							name=name,
-							a=a,
-						),
+						f"Found add-on {name} - {a.version}."
+						f" Requires API: {a.minimumNVDAVersion}."
+						f" Last-tested API: {a.lastTestedNVDAVersion}",
 					)
 					if a.isDisabled:
 						log.debug("Disabling add-on %s", name)
@@ -512,9 +508,9 @@ _availableAddons = collections.OrderedDict()
 
 def getAvailableAddons(
 	refresh: bool = False,
-	filterFunc: Callable[["Addon"], bool] | None = None,
+	filterFunc: Callable[[Addon], bool] | None = None,
 	isFirstLoad: bool = False,
-) -> "AddonHandlerModelGeneratorT":
+) -> AddonHandlerModelGeneratorT:
 	"""Gets all available addons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
 	@param filterFunc: A function that allows filtering of add-ons.
@@ -606,17 +602,17 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 
 	@property
 	@abstractmethod
-	def manifest(self) -> "AddonManifest": ...
+	def manifest(self) -> AddonManifest: ...
 
 	@property
-	def _addonStoreData(self) -> "InstalledAddonStoreModel" | None:
+	def _addonStoreData(self) -> InstalledAddonStoreModel | None:
 		from addonStore.dataManager import addonDataManager
 
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
-	def _addonGuiModel(self) -> "AddonManifestModel":
+	def _addonGuiModel(self) -> AddonManifestModel:
 		from addonStore.models.addon import _createGUIModelFromManifest
 
 		return _createGUIModelFromManifest(self)
@@ -626,7 +622,7 @@ class Addon(AddonBase):
 	"""Represents an Add-on available on the file system."""
 
 	@property
-	def manifest(self) -> "AddonManifest":
+	def manifest(self) -> AddonManifest:
 		return self._manifest
 
 	def __init__(self, path: str):
@@ -701,7 +697,7 @@ class Addon(AddonBase):
 		)
 		try:
 			os.replace(self.path, tempPath)
-		except (WindowsError, IOError):
+		except OSError:
 			raise RuntimeError("Cannot rename add-on path for deletion")
 		shutil.rmtree(tempPath, ignore_errors=True)
 		if os.path.exists(tempPath):
@@ -1057,7 +1053,7 @@ class AddonBundle(AddonBase):
 				z.extract(info, addonPath)
 
 	@property
-	def manifest(self) -> "AddonManifest":
+	def manifest(self) -> AddonManifest:
 		"""Gets the manifest for the represented Addon."""
 		return self._manifest
 
@@ -1184,9 +1180,9 @@ docFileName = string(default=None)
 		self._errors = None
 		val = Validator({"apiVersion": validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
-		if result != True:  # noqa: E712
+		if result != True:
 			self._errors = result
-		elif True != self._validateApiVersionRange():  # noqa: E712
+		elif True != self._validateApiVersionRange():
 			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
 				self.get("minimumNVDAVersion"),
 				self.get("lastTestedNVDAVersion"),
@@ -1234,4 +1230,4 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 	try:
 		return addonAPIVersion.getAPIVersionTupleFromString(value)
 	except ValueError as e:
-		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
+		raise ValidateError(f'"{value}" is not a valid API Version string: {e}')

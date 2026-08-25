@@ -111,7 +111,7 @@ def mergeQuickNavItemIterators(iterators, direction="next"):
 		curValues.append((it, newVal))
 
 
-class QuickNavItem(object, metaclass=ABCMeta):
+class QuickNavItem(metaclass=ABCMeta):
 	"""Emitted by L{BrowseModeTreeInterceptor._iterNodesByType}, this represents one of many positions in a browse mode document, based on the type of item being searched for (e.g. link, heading, table etc)."""
 
 	itemType = None  #: The type of items searched for (e.g. link, heading, table etc)
@@ -190,7 +190,7 @@ class TextInfoQuickNavItem(QuickNavItem):
 		"""
 		self.textInfo = textInfo
 		self.outputReason = outputReason
-		super(TextInfoQuickNavItem, self).__init__(itemType, document)
+		super().__init__(itemType, document)
 
 	def __lt__(self, other):
 		return self.textInfo.compareEndPoints(other.textInfo, "startToStart") < 0
@@ -493,7 +493,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		kind: str,
 		direction: documentBase._Movement = documentBase._Movement.NEXT,
 		pos: textInfos.TextInfo | None = None,
-	) -> Generator[TextInfoQuickNavItem, None, None]:
+	) -> Generator[TextInfoQuickNavItem]:
 		raise NotImplementedError
 
 	def _iterSimilarParagraph(
@@ -503,7 +503,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		desiredValue: Any,
 		direction: _Movement,
 		pos: textInfos.TextInfo,
-	) -> Generator[TextInfoQuickNavItem, None, None]:
+	) -> Generator[TextInfoQuickNavItem]:
 		raise NotImplementedError
 
 	def _quickNavScript(self, gesture, itemType, direction, errorMessage, readUnit):
@@ -520,7 +520,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			def iterFactory(
 				direction: str,
 				pos: textInfos.TextInfo,
-			) -> Generator[TextInfoQuickNavItem, None, None]:
+			) -> Generator[TextInfoQuickNavItem]:
 				return self._iterSimilarParagraph(
 					kind="textParagraph",
 					paragraphFunction=paragraphFunc,
@@ -539,7 +539,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			def iterFactory(
 				direction: str,
 				pos: textInfos.TextInfo,
-			) -> Generator[TextInfoQuickNavItem, None, None]:
+			) -> Generator[TextInfoQuickNavItem]:
 				return self._iterSimilarParagraph(
 					kind="verticalParagraph",
 					paragraphFunction=paragraphFunc,
@@ -552,10 +552,10 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			def iterFactory(
 				direction: documentBase._Movement,
 				info: textInfos.TextInfo | None,
-			) -> Generator[TextInfoQuickNavItem, None, None]:
+			) -> Generator[TextInfoQuickNavItem]:
 				return self._iterTextStyle(itemType, direction, info)
 		else:
-			iterFactory = lambda direction, info: self._iterNodesByType(itemType, direction, info)  # noqa: E731
+			iterFactory = lambda direction, info: self._iterNodesByType(itemType, direction, info)
 		info = self.selection
 		try:
 			item = next(iterFactory(direction, info))
@@ -604,7 +604,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self, gesture: self._quickNavScript(gesture, itemType, "next", nextError, readUnit)  # noqa: E731
+		script = lambda self, gesture: self._quickNavScript(gesture, itemType, "next", nextError, readUnit)
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		script.resumeSayAllMode = sayAll.CURSOR.CARET
@@ -613,13 +613,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self, gesture: self._quickNavScript(  # noqa: E731
+		script = lambda self, gesture: self._quickNavScript(
 			gesture,
 			itemType,
 			"previous",
 			prevError,
 			readUnit,
-		)  # noqa: E731
+		)
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		script.resumeSayAllMode = sayAll.CURSOR.CARET
@@ -1817,7 +1817,7 @@ class BrowseModeDocumentTreeInterceptor(
 	programmaticScrollMayFireEvent = False
 
 	def __init__(self, obj):
-		super(BrowseModeDocumentTreeInterceptor, self).__init__(obj)
+		super().__init__(obj)
 		self._lastProgrammaticScrollTime = None
 		# Cache the document constant identifier so it can be saved with the last caret position on termination.
 		# As the original property may not be available as the document will be already dead.
@@ -1926,10 +1926,10 @@ class BrowseModeDocumentTreeInterceptor(
 			obj = info.NVDAObjectAtStart
 			if not obj:
 				return
-		super(BrowseModeDocumentTreeInterceptor, self)._activatePosition(obj=obj)
+		super()._activatePosition(obj=obj)
 
 	def _set_selection(self, info, reason=OutputReason.CARET):
-		super(BrowseModeDocumentTreeInterceptor, self)._set_selection(info)
+		super()._set_selection(info)
 		if isScriptWaiting() or not info.isCollapsed:
 			return
 		# Save the last caret position for use in terminate().
@@ -2569,7 +2569,7 @@ class BrowseModeDocumentTreeInterceptor(
 
 		microsoftWordMode: bool = isinstance(self, (WordBrowseModeDocument, WordDocumentTreeInterceptor))
 		stack: list[textInfos.FormatField] = [{}]
-		result: "textInfos.TextInfo.TextWithFieldsT" = []
+		result: textInfos.TextInfo.TextWithFieldsT = []
 		reportFormattingOptions = (
 			"reportFontName",
 			"reportFontSize",
@@ -2635,7 +2635,7 @@ class BrowseModeDocumentTreeInterceptor(
 		# Now merging adjacent strings
 		result = []
 		for k, g in itertools.groupby(sequence, key=type):
-			if k == str:  # noqa: E721
+			if k == str:
 				result.append("".join(g))
 			else:
 				result.extend(list(g))
@@ -2687,11 +2687,10 @@ class BrowseModeDocumentTreeInterceptor(
 						endInfo = paragraphInfo.moveToCodepointOffset(endIndex)
 						resultInfo.setEndPoint(endInfo, which="startToStart")
 					return resultInfo
-			else:
-				resultInfo.setEndPoint(
-					paragraphInfo,
-					which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart",
-				)
+			resultInfo.setEndPoint(
+				paragraphInfo,
+				which="endToEnd" if direction == documentBase._Movement.NEXT else "startToStart",
+			)
 		return resultInfo
 
 	def _moveToNextParagraph(
@@ -2733,7 +2732,7 @@ class BrowseModeDocumentTreeInterceptor(
 		kind: str,
 		direction: documentBase._Movement = documentBase._Movement.NEXT,
 		pos: textInfos.TextInfo | None = None,
-	) -> Generator[TextInfoQuickNavItem, None, None]:
+	) -> Generator[TextInfoQuickNavItem]:
 		if direction not in [
 			documentBase._Movement.NEXT,
 			documentBase._Movement.PREVIOUS,
@@ -2925,7 +2924,7 @@ class BrowseModeDocumentTreeInterceptor(
 		desiredValue: Any,
 		direction: _Movement,
 		pos: textInfos.TextInfo,
-	) -> Generator[TextInfoQuickNavItem, None, None]:
+	) -> Generator[TextInfoQuickNavItem]:
 		if direction not in [_Movement.NEXT, _Movement.PREVIOUS]:
 			raise RuntimeError
 		info = pos.copy()

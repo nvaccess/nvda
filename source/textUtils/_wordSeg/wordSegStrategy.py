@@ -141,7 +141,6 @@ class WordSegmentationStrategy(ABC):
 	@abstractmethod
 	def getSegmentForOffset(self, offset: int) -> tuple[int, int] | None:
 		"""Return (start inclusive, end exclusive) or None. Offsets are str offsets relative to self.text."""
-		pass
 
 	def segmentedText(self, sep: str = " ", newSepIndex: list[int] | None = None) -> str:
 		"""Segmented result with separators.

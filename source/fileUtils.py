@@ -92,7 +92,7 @@ def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
 	# Load file informations into buffer res
 	winBindings.version.GetFileVersionInfo(name, 0, size, res)
 	r = ctypes.c_void_p()
-	l = ctypes.c_uint()  # noqa: E741
+	l = ctypes.c_uint()
 	# Look for codepages
 	winBindings.version.VerQueryValue(
 		res,

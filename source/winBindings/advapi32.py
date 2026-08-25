@@ -29,13 +29,13 @@ from ctypes.wintypes import (
 from enum import IntEnum, IntFlag, StrEnum
 
 __all__ = (
+	"CreateProcessAsUser",
+	"GetTokenInformation",
 	"OpenProcessToken",
 	"RegCloseKey",
 	"RegDeleteTree",
 	"RegOpenKeyEx",
 	"RegQueryValueEx",
-	"CreateProcessAsUser",
-	"GetTokenInformation",
 )
 
 
@@ -159,7 +159,7 @@ class STARTUPINFOW(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
+		super().__init__(cb=sizeof(self), **kwargs)
 
 
 STARTUPINFO = STARTUPINFOW

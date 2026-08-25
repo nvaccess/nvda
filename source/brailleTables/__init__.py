@@ -205,7 +205,7 @@ RENAMED_TABLES = {
 
 # Add the builtin tables at import time.
 
-from . import __tables as __tables  # noqa: E402
+from . import __tables as __tables
 
 # Add new first maps for the custom tables - provided in the scratchpad directory
 # and/or by addons.

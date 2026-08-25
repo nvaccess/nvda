@@ -37,14 +37,14 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		attrs["states"] = states
 		if level:
 			attrs["level"] = level
-		return super(WebKit_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 
 class WebKit(VirtualBuffer):
 	TextInfo = WebKit_TextInfo
 
 	def __init__(self, rootNVDAObject):
-		super(WebKit, self).__init__(rootNVDAObject, backendName="webKit")
+		super().__init__(rootNVDAObject, backendName="webKit")
 
 	def __contains__(self, obj):
 		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle):
@@ -138,7 +138,7 @@ class WebKit(VirtualBuffer):
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l = obj.location  # noqa: E741
+		l = obj.location
 		if not l:
 			log.debugWarning("no location for field")
 			return
@@ -148,4 +148,4 @@ class WebKit(VirtualBuffer):
 		winUser.setCursorPos(oldX, oldY)
 
 	def _shouldSetFocusToObj(self, obj):
-		return obj.role != controlTypes.Role.GROUPING and super(WebKit, self)._shouldSetFocusToObj(obj)
+		return obj.role != controlTypes.Role.GROUPING and super()._shouldSetFocusToObj(obj)

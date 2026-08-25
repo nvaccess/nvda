@@ -14,13 +14,10 @@ import codecs
 import collections
 import re
 from typing import (
-	Callable,
-	Dict,
 	Generic,
-	List,
-	Optional,
 	TypeVar,
 )
+from collections.abc import Callable
 
 import NVDAState
 from logHandler import log
@@ -32,7 +29,7 @@ from NVDAState import WritePaths
 _LocaleDataT = TypeVar("_LocaleDataT")
 
 
-class LocaleDataMap(Generic[_LocaleDataT], object):
+class LocaleDataMap(Generic[_LocaleDataT]):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
 	def __init__(
@@ -43,7 +40,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		@param localeDataFactory: the factory to create data objects for the requested locale.
 		"""
 		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
-		self._dataMap: Dict[str, _LocaleDataT] = {}
+		self._dataMap: dict[str, _LocaleDataT] = {}
 		self._noDataLocalesCache: set[str] = set()
 
 	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
@@ -95,7 +92,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		self._noDataLocalesCache.clear()
 
 
-class CharacterDescriptions(object):
+class CharacterDescriptions:
 	"""
 	Represents a map of characters to one or more descriptions (examples) for that character.
 	The data is loaded from a file from the requested locale.
@@ -105,7 +102,7 @@ class CharacterDescriptions(object):
 		"""
 		@param locale: The characterDescriptions.dic file will be found by using this locale.
 		"""
-		self._entries: Dict[str, List[str]] = {}
+		self._entries: dict[str, list[str]] = {}
 		fileName = os.path.join(globalVars.appDir, "locale", locale, "characterDescriptions.dic")
 		if not os.path.isfile(fileName):
 			raise LookupError(fileName)
@@ -123,7 +120,7 @@ class CharacterDescriptions(object):
 		log.debug("Loaded %d entries." % len(self._entries))
 		f.close()
 
-	def getCharacterDescription(self, character: str) -> Optional[List[str]]:
+	def getCharacterDescription(self, character: str) -> list[str] | None:
 		"""
 		Looks up the given character and returns a list containing all the description strings found.
 		"""
@@ -133,7 +130,7 @@ class CharacterDescriptions(object):
 _charDescLocaleDataMap: LocaleDataMap[CharacterDescriptions] = LocaleDataMap(CharacterDescriptions)
 
 
-def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
+def getCharacterDescription(locale: str, character: str) -> list[str] | None:
 	"""
 	Finds a description or examples for the given character, which makes sense in the given locale.
 	@param locale: the locale (language[_COUNTRY]) the description should be for.
@@ -141,7 +138,7 @@ def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 	@return: the found description for the given character
 	"""
 	try:
-		l = _charDescLocaleDataMap.fetchLocaleData(locale)  # noqa: E741
+		l = _charDescLocaleDataMap.fetchLocaleData(locale)
 	except LookupError:
 		if not locale.startswith("en"):
 			return getCharacterDescription("en", character)
@@ -200,8 +197,8 @@ SPEECH_SYMBOL_PRESERVE_LABELS = {
 SPEECH_SYMBOL_PRESERVES = (SYMPRES_NEVER, SYMPRES_ALWAYS, SYMPRES_NOREP)
 
 
-class SpeechSymbol(object):
-	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
+class SpeechSymbol:
+	__slots__ = ("displayName", "identifier", "level", "pattern", "preserve", "replacement")
 
 	def __init__(
 		self,
@@ -223,10 +220,7 @@ class SpeechSymbol(object):
 		attrs = []
 		for attr in self.__slots__:
 			attrs.append(
-				"{name}={val!r}".format(
-					name=attr,
-					val=getattr(self, attr),
-				),
+				f"{attr}={getattr(self, attr)!r}",
 			)
 		return "SpeechSymbol(%s)" % ", ".join(attrs)
 
@@ -270,10 +264,7 @@ class SpeechSymbols:
 						raise ValueError
 				except ValueError:
 					log.warning(
-						"Invalid line in file {file}: {line}".format(
-							file=fileName,
-							line=line,
-						),
+						f"Invalid line in file {fileName}: {line}",
 					)
 
 	def _loadComplexSymbol(self, line: str) -> None:
@@ -517,10 +508,7 @@ class SpeechSymbolProcessor:
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
 				log.warning(
-					"Replacement not defined in locale {locale} for symbol: {symbol}".format(
-						symbol=symbol.identifier,
-						locale=self.locale,
-					),
+					f"Replacement not defined in locale {self.locale} for symbol: {symbol.identifier}",
 				)
 				del symbols[symbol.identifier]
 				try:
@@ -552,7 +540,7 @@ class SpeechSymbolProcessor:
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
-			"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
+			f"(?P<c{index}>{symbol.pattern})"
 			for index, symbol in enumerate(complexSymbolsList)
 		)
 		patterns.extend(
@@ -619,7 +607,7 @@ class SpeechSymbolProcessor:
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
 			if self._level >= symbol.level:
-				return "  {count} {char} ".format(count=len(text), char=symbol.replacement)
+				return f"  {len(text)} {symbol.replacement} "
 			elif symbol.preserve in [SYMPRES_ALWAYS, SYMPRES_NOREP]:
 				return text
 			else:
@@ -645,7 +633,7 @@ class SpeechSymbolProcessor:
 			else:
 				suffix = " "
 			if self._level >= symbol.level and replacement:
-				return " {repl}{suffix}".format(repl=replacement, suffix=suffix)
+				return f" {replacement}{suffix}"
 			else:
 				return suffix
 
@@ -839,7 +827,7 @@ class SymbolDictionaryDefinition:
 		else:
 			try:
 				symbols.load(self.path.format(locale=locale), self.allowComplexSymbols)
-			except IOError:
+			except OSError:
 				if raiseOnError:
 					raise
 				log.error(f"Error loading {self.name!r} data for locale {locale!r}", exc_info=True)

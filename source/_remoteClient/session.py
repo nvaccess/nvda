@@ -207,10 +207,7 @@ class RemoteSession:
 		"""
 		conf = configuration.getRemoteConfig()
 		connection = self.getConnectionInfo()
-		address = "{host}:{port}".format(
-			host=connection.hostname,
-			port=connection.port,
-		)
+		address = f"{connection.hostname}:{connection.port}"
 		motdBytes = motd.encode("utf-8", errors="surrogatepass")
 		hashed = hashlib.sha1(motdBytes).hexdigest()
 		current = conf["seenMOTDs"].get(address, "")

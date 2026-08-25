@@ -121,7 +121,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 			except Exception:
 				log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {appModule}")
-				pass
 
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -130,7 +129,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
 				except Exception:
 					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
-					pass
 
 		# After all other mutation has finished,
 		# add LockScreenObject if Windows is locked.
@@ -185,7 +183,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				appModule.event_NVDAObject_init(obj)
 			except Exception:
 				log.exception(f"Exception in event_NVDAObject_init for {appModule}")
-				pass
 
 		return obj
 
@@ -196,7 +193,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-	def _insertLockScreenObject(self, clsList: typing.List["NVDAObject"]) -> None:
+	def _insertLockScreenObject(self, clsList: list["NVDAObject"]) -> None:
 		"""
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
@@ -301,7 +298,7 @@ class NVDAObject(
 		"""
 		raise NotImplementedError
 
-	def findOverlayClasses(self, clsList: typing.List[typing.Type["NVDAObject"]]) -> None:
+	def findOverlayClasses(self, clsList: list[type["NVDAObject"]]) -> None:
 		"""
 		Chooses overlay classes which should be added to this object's class structure,
 		after the object has been initially instantiated.
@@ -380,7 +377,7 @@ class NVDAObject(
 		return APIClass(chooseBestAPI=False, **kwargs) if APIClass else None
 
 	def __init__(self):
-		super(NVDAObject, self).__init__()
+		super().__init__()
 		self._mouseEntered = (
 			False  #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		)
@@ -418,10 +415,10 @@ class NVDAObject(
 		None  #: Another object which should be treeted as the focus if focus is ever given to this object.
 	)
 
-	treeInterceptorClass: typing.Type[TreeInterceptor]
+	treeInterceptorClass: type[TreeInterceptor]
 	"""Type definition for auto prop '_get_treeInterceptorClass'"""
 
-	def _get_treeInterceptorClass(self) -> typing.Type[TreeInterceptor]:
+	def _get_treeInterceptorClass(self) -> type[TreeInterceptor]:
 		"""
 		If this NVDAObject should use a treeInterceptor, then this property
 		provides the L{treeInterceptorHandler.TreeInterceptor} class it should use.
@@ -439,10 +436,10 @@ class NVDAObject(
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	treeInterceptor: typing.Optional[TreeInterceptor]
+	treeInterceptor: TreeInterceptor | None
 	"""Type definition for auto prop '_get_treeInterceptor'"""
 
-	def _get_treeInterceptor(self) -> typing.Optional[TreeInterceptor]:
+	def _get_treeInterceptor(self) -> TreeInterceptor | None:
 		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set,
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
@@ -463,7 +460,7 @@ class NVDAObject(
 				self._treeInterceptor = weakref.ref(ti)
 			return ti
 
-	def _set_treeInterceptor(self, obj: typing.Optional[TreeInterceptor]):
+	def _set_treeInterceptor(self, obj: TreeInterceptor | None):
 		"""Specifically sets a treeInterceptor to be associated with this object."""
 		if obj:
 			self._treeInterceptor = weakref.ref(obj)
@@ -501,9 +498,9 @@ class NVDAObject(
 		return controlTypes.Role.UNKNOWN
 
 	#: Type definition for auto prop '_get_roleText'
-	roleText: typing.Optional[str]
+	roleText: str | None
 
-	def _get_roleText(self) -> typing.Optional[str]:
+	def _get_roleText(self) -> str | None:
 		"""
 		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
 		No string is provided by default, meaning that NVDA will fall back to using role.
@@ -549,20 +546,20 @@ class NVDAObject(
 	"""Typing information for auto property _get_annotations
 	"""
 
-	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
+	def _get_annotations(self) -> AnnotationOrigin | None:
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(
 				f"Fetching annotations not supported on: {self.__class__.__qualname__}",
 			)
 		return None
 
-	detailsSummary: typing.Optional[str]
+	detailsSummary: str | None
 	"""
 	Typing information for auto property _get_detailsSummary
 	Deprecated, use self.annotations.targets instead.
 	"""
 
-	def _get_detailsSummary(self) -> typing.Optional[str]:
+	def _get_detailsSummary(self) -> str | None:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -580,12 +577,12 @@ class NVDAObject(
 		)
 		return bool(self.annotations)
 
-	detailsRole: typing.Optional[controlTypes.Role]
+	detailsRole: controlTypes.Role | None
 	"""Typing information for auto property _get_detailsRole
 	Deprecated, use self.annotations.roles instead.
 	"""
 
-	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> controlTypes.Role | None:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -635,9 +632,9 @@ class NVDAObject(
 		raise NotImplementedError
 
 	# Type info for auto property:
-	states: typing.Set[controlTypes.State]
+	states: set[controlTypes.State]
 
-	def _get_states(self) -> typing.Set[controlTypes.State]:
+	def _get_states(self) -> set[controlTypes.State]:
 		"""Retrieves the current states of this object (example: selected, focused).
 		@return: a set of State constants from L{controlTypes}.
 		"""
@@ -732,7 +729,7 @@ class NVDAObject(
 		return None
 
 	#: Type definition for auto prop '_get_children'
-	children: typing.List["NVDAObject"]
+	children: list["NVDAObject"]
 
 	def _get_children(self):
 		"""Retrieves a list of all the objects directly contained by this object (who's parent is this object).
@@ -803,9 +800,9 @@ class NVDAObject(
 		raise NotImplementedError
 
 	#: Typing information for auto-property: _get_cellCoordsText
-	cellCoordsText: typing.Optional[str]
+	cellCoordsText: str | None
 
-	def _get_cellCoordsText(self) -> typing.Optional[str]:
+	def _get_cellCoordsText(self) -> str | None:
 		"""
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
@@ -1059,7 +1056,7 @@ class NVDAObject(
 		@return: the active child if it has one else None
 		@rtype: L{NVDAObject} or None
 		"""
-		return None
+		return
 
 	#: Type definition for auto prop '_get_isFocusable'
 	isFocusable: bool
@@ -1083,7 +1080,6 @@ class NVDAObject(
 		"""
 		Tries to force this object to take the focus.
 		"""
-		pass
 
 	def scrollIntoView(self):
 		"""Scroll this object into view on the screen if possible."""
@@ -1094,7 +1090,7 @@ class NVDAObject(
 		@return: the label object if it has one else None.
 		@rtype: L{NVDAObject} or None
 		"""
-		return None
+		return
 
 	#: Type definition for auto prop "_get_errorMessage"
 	errorMessage: str | None
@@ -1107,9 +1103,9 @@ class NVDAObject(
 		return None
 
 	#: Type definition for auto prop '_get_positionInfo'
-	positionInfo: Dict[str, int]
+	positionInfo: dict[str, int]
 
-	def _get_positionInfo(self) -> Dict[str, int]:
+	def _get_positionInfo(self) -> dict[str, int]:
 		"""Retrieves position information for this object such as its level, its index with in a group, and the number of items in that group.
 		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
 		"""
@@ -1140,9 +1136,9 @@ class NVDAObject(
 		return isProtected
 
 	#: Type definition for auto prop '_get_indexInParent'
-	indexInParent: Optional[int]
+	indexInParent: int | None
 
-	def _get_indexInParent(self) -> Optional[int]:
+	def _get_indexInParent(self) -> int | None:
 		"""The index of this object in its parent object.
 		@return: The 0 based index, C{None} if there is no parent.
 		@raise NotImplementedError: If not supported by the underlying object.
@@ -1220,13 +1216,12 @@ class NVDAObject(
 		@rtype: String or None
 		"""
 		log.debug("Potential unimplemented child class: %r" % self)
-		return None
 
-	landmark: typing.Optional[str]
+	landmark: str | None
 	"""Typing information for auto property _get_landmark
 	"""
 
-	def _get_landmark(self) -> typing.Optional[str]:
+	def _get_landmark(self) -> str | None:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
 		"""
@@ -1492,13 +1487,13 @@ class NVDAObject(
 			return "%r (truncated)" % string[:truncateLen]
 		return repr(string)
 
-	devInfo: typing.List[str]
+	devInfo: list[str]
 	"""Information about this object useful to developers."""
 
 	# C901 '_get_devInfo' is too complex
 	# Note: when working on _get_devInfo, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _get_devInfo(self) -> typing.List[str]:  # noqa: C901
+	def _get_devInfo(self) -> list[str]:
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
 		@return: A list of text strings providing information about this object useful to developers.
@@ -1620,7 +1615,7 @@ class NVDAObject(
 
 	def _get_selectionContainer(self):
 		"""An ancestor NVDAObject which manages the selection for this object and other descendants."""
-		return None
+		return
 
 	def getSelectedItemsCount(self, maxCount=2):
 		"""

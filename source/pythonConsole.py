@@ -10,7 +10,7 @@ To use, call L{initialize} to create a singleton instance of the console GUI. Th
 import watchdog
 import builtins
 import os
-from typing import Sequence
+from collections.abc import Sequence
 import code
 import codeop
 import sys
@@ -30,7 +30,7 @@ import gui.contextHelp
 import textInfos
 
 
-class HelpCommand(object):
+class HelpCommand:
 	"""
 	Emulation of the 'help' command found in the Python interactive shell.
 	"""
@@ -44,7 +44,7 @@ class HelpCommand(object):
 		return pydoc.help(*args, **kwargs)
 
 
-class ExitConsoleCommand(object):
+class ExitConsoleCommand:
 	"""
 	An object that can be used as an exit command that can close the console or print a friendly message for its repr.
 	"""

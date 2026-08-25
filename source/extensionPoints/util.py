@@ -12,22 +12,19 @@ from __future__ import annotations
 import weakref
 import inspect
 from typing import (
-	Callable,
-	Generator,
 	Generic,
-	Optional,
-	OrderedDict,
-	Tuple,
 	TypeVar,
 	Union,
 )
+from collections import OrderedDict
+from collections.abc import Callable, Generator
 
 import NVDAState
 
 from logHandler import log
 
 HandlerT = TypeVar("HandlerT", bound=Callable)
-HandlerKeyT = Union[int, Tuple[int, int]]
+HandlerKeyT = Union[int, tuple[int, int]]
 
 
 class AnnotatableWeakref(weakref.ref, Generic[HandlerT]):
@@ -46,12 +43,12 @@ class BoundMethodWeakref(Generic[HandlerT]):
 	To get the actual method, you call an instance as you would a weakref.ref.
 	"""
 
-	handlerKey: Tuple[int, int]
+	handlerKey: tuple[int, int]
 
 	def __init__(
 		self,
 		target: HandlerT,
-		onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None,
+		onDelete: Callable[[BoundMethodWeakref], None] | None = None,
 	):
 		if onDelete:
 
@@ -65,7 +62,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 		self.weakInst = weakref.ref(inst, onRefDelete)
 		self.weakFunc = weakref.ref(func, onRefDelete)
 
-	def __call__(self) -> Optional[HandlerT]:
+	def __call__(self) -> HandlerT | None:
 		inst = self.weakInst()
 		if not inst:
 			return
@@ -111,7 +108,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		#: and the values are weak references.
 		self._handlers = OrderedDict[
 			HandlerKeyT,
-			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]],
+			BoundMethodWeakref[HandlerT] | AnnotatableWeakref[HandlerT],
 		]()
 
 	def register(self, handler: HandlerT):
@@ -157,7 +154,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 
 	def unregister(
 		self,
-		handler: Union[AnnotatableWeakref[HandlerT], BoundMethodWeakref[HandlerT], HandlerT],
+		handler: AnnotatableWeakref[HandlerT] | BoundMethodWeakref[HandlerT] | HandlerT,
 	):
 		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
 			key = handler.handlerKey
@@ -170,7 +167,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		return True
 
 	@property
-	def handlers(self) -> Generator[HandlerT, None, None]:
+	def handlers(self) -> Generator[HandlerT]:
 		"""Generator of registered handler functions.
 		This should be used when you want to call the handlers.
 		A snapshot of the registered handlers is taken before yielding,

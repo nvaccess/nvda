@@ -26,11 +26,7 @@ from .languageHandling import shouldSwitchVoice
 from logHandler import log
 from synthDriverHandler import getSynth, pre_synthSpeak
 from typing import (
-	Dict,
 	Any,
-	List,
-	Tuple,
-	Optional,
 	cast,
 )
 
@@ -84,7 +80,7 @@ log._speechManagerDebug = _speechManagerDebug
 log._speechManagerUnitTest = _speechManagerUnitTest
 
 
-class ParamChangeTracker(object):
+class ParamChangeTracker:
 	"""Keeps track of commands which change parameters from their defaults.
 	This is useful when an utterance needs to be split.
 	As you are processing a sequence,
@@ -116,7 +112,7 @@ class ParamChangeTracker(object):
 		return list(self._commands.values())
 
 
-class _ManagerPriorityQueue(object):
+class _ManagerPriorityQueue:
 	"""A speech queue for a specific priority.
 	This is intended for internal use by L{_SpeechManager} only.
 	Each priority has a separate queue.
@@ -130,14 +126,14 @@ class _ManagerPriorityQueue(object):
 		#: The pending speech sequences to be spoken.
 		#: These are split at indexes,
 		#: so a single utterance might be split over multiple sequences.
-		self.pendingSequences: List[SpeechSequence] = []
+		self.pendingSequences: list[SpeechSequence] = []
 		#: The configuration profile triggers that have been entered during speech.
-		self.enteredProfileTriggers: List[config.ProfileTrigger] = []
+		self.enteredProfileTriggers: list[config.ProfileTrigger] = []
 		#: Keeps track of parameters that have been changed during an utterance.
 		self.paramTracker: ParamChangeTracker = ParamChangeTracker()
 
 
-class SpeechManager(object):
+class SpeechManager:
 	"""Manages queuing of speech utterances, calling callbacks at desired points in the speech, profile switching, prioritization, etc.
 	This is intended for internal use only.
 	It is used by higher level functions such as L{speak}.
@@ -189,9 +185,9 @@ class SpeechManager(object):
 	All of this activity is (and must be) synchronized and serialized on the main thread.
 	"""
 
-	_cancelCommandsForUtteranceBeingSpokenBySynth: Dict[_CancellableSpeechCommand, _IndexT]
-	_priQueues: Dict[Any, _ManagerPriorityQueue]
-	_curPriQueue: Optional[_ManagerPriorityQueue]  # None indicates no more speech.
+	_cancelCommandsForUtteranceBeingSpokenBySynth: dict[_CancellableSpeechCommand, _IndexT]
+	_priQueues: dict[Any, _ManagerPriorityQueue]
+	_curPriQueue: _ManagerPriorityQueue | None  # None indicates no more speech.
 
 	def __init__(self):
 		#: A counter for indexes sent to the synthesizer for callbacks, etc.
@@ -203,7 +199,7 @@ class SpeechManager(object):
 	#: Maximum index number to pass to synthesizers.
 	MAX_INDEX: _IndexT = 9999
 
-	def _generateIndexes(self) -> typing.Generator[_IndexT, None, None]:
+	def _generateIndexes(self) -> typing.Generator[_IndexT]:
 		"""Generator of index numbers.
 		We don't want to reuse index numbers too quickly,
 		as there can be race conditions when cancelling speech which might result
@@ -540,9 +536,9 @@ class SpeechManager(object):
 	def _isIndexAAfterIndexB(cls, indexA: _IndexT, indexB: _IndexT) -> bool:
 		return indexA != indexB and not cls._isIndexABeforeIndexB(indexA, indexB)
 
-	def _getMostRecentlyCancelledUtterance(self) -> Optional[_IndexT]:
+	def _getMostRecentlyCancelledUtterance(self) -> _IndexT | None:
 		# Index of the most recently cancelled utterance.
-		latestCancelledUtteranceIndex: Optional[_IndexT] = None
+		latestCancelledUtteranceIndex: _IndexT | None = None
 		log._speechManagerDebug(
 			f"Length of _cancelCommandsForUtteranceBeingSpokenBySynth: "
 			f"{len(self._cancelCommandsForUtteranceBeingSpokenBySynth)} "
@@ -600,7 +596,7 @@ class SpeechManager(object):
 
 	# C901 'SpeechManager._removeCompletedFromQueue' is too complex
 	# SpeechManager needs unit tests and a breakdown of responsibilities.
-	def _removeCompletedFromQueue(self, index: int) -> Tuple[bool, bool]:  # noqa: C901
+	def _removeCompletedFromQueue(self, index: int) -> tuple[bool, bool]:
 		"""Removes completed speech sequences from the queue.
 		@param index: The index just reached indicating a completed sequence.
 		@return: Tuple of (valid, endOfUtterance),
@@ -718,7 +714,7 @@ class SpeechManager(object):
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
 
-	def _onSynthDoneSpeaking(self, synth: Optional[synthDriverHandler.SynthDriver] = None):
+	def _onSynthDoneSpeaking(self, synth: synthDriverHandler.SynthDriver | None = None):
 		log._speechManagerUnitTest(f"synthDoneSpeaking synth:{synth}")
 		if synth != getSynth():
 			return

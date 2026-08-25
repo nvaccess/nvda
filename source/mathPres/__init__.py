@@ -26,7 +26,7 @@ import textInfos
 
 if typing.TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
-	from speech.commands import SpeechCommand  # noqa F401: type-checking only
+	from speech.commands import SpeechCommand
 
 
 class MathPresentationProvider:
@@ -34,7 +34,7 @@ class MathPresentationProvider:
 	A single provider does not need to implement all presentation types.
 	"""
 
-	def getSpeechForMathMl(self, mathMl: str) -> List[Union[str, "SpeechCommand"]]:
+	def getSpeechForMathMl(self, mathMl: str) -> list[Union[str, "SpeechCommand"]]:
 		"""Get speech output for specified MathML markup.
 
 		:param mathMl: The MathML markup.
@@ -154,8 +154,8 @@ class MathInteractionNVDAObject(Window):
 		"""
 		self.parent = parent = api.getFocusObject()
 		self.provider = provider
-		self.sourceObj: "NVDAObject | None" = sourceObj
-		super(MathInteractionNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+		self.sourceObj: NVDAObject | None = sourceObj
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def setFocus(self):
 		ti = self.parent.treeInterceptor
@@ -193,7 +193,7 @@ def stripExtraneousXml(xml):
 	return RE_STRIP_XML_PREFIX.sub("", xml)
 
 
-def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> Optional[str]:
+def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> str | None:
 	"""Get MathML (if any) at the start of a TextInfo.
 
 	:param pos: The TextInfo in question.

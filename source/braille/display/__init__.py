@@ -10,14 +10,13 @@ import typing
 from locale import strxfrm
 from typing import (
 	Any,
-	Callable,
-	Generator,
 	List,
 	NamedTuple,
 	Optional,
 	Tuple,
 	Type,
 )
+from collections.abc import Callable, Generator
 
 import brailleDisplayDrivers
 import hwPortUtils
@@ -35,7 +34,7 @@ class DisplayDimensions(NamedTuple):
 		return self.numCols * self.numRows
 
 
-def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
+def getDisplayList(excludeNegativeChecks=True) -> list[tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
@@ -72,7 +71,7 @@ RENAMED_DRIVERS = {
 }
 
 
-def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
+def getSerialPorts(filterFunc=None) -> typing.Iterator[tuple[str, str]]:
 	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
 	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
 		For example, this can be used to filter by USB or Bluetooth com ports.
@@ -101,8 +100,8 @@ def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 
 
 def getDisplayDrivers(
-	filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None,
-) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
+	filterFunc: Callable[[type[BrailleDisplayDriver]], bool] | None = None,
+) -> Generator[type[BrailleDisplayDriver], Any, Any]:
 	"""Gets an iterator of braille display drivers meeting the given filter callable.
 	@param filterFunc: an optional callable that receives a driver as its only argument and returns
 		either True or False.

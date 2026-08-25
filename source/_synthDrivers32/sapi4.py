@@ -32,7 +32,8 @@ from ctypes import (
 	sizeof,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, MSG, WORD
-from typing import TYPE_CHECKING, Callable, NamedTuple, Optional
+from typing import TYPE_CHECKING, NamedTuple
+from collections.abc import Callable
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,
@@ -129,7 +130,9 @@ else:
 	c_ulonglong_p = POINTER(c_ulonglong)
 	LP_IAudioDestNotifySink = POINTER(IAudioDestNotifySink)
 
-_Bookmark = NamedTuple("Bookmark", [("bytePos", int), ("id", int)])
+class _Bookmark(NamedTuple):
+	bytePos: int
+	id: int
 
 _lastLoggedTimes: dict[Callable, float] = dict()
 
@@ -872,7 +875,7 @@ class SynthDriver(SynthDriver):
 		try:
 			winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, r"CLSID\%s" % CLSID_TTSEnumerator).Close()
 			return True
-		except WindowsError:
+		except OSError:
 			return False
 
 	def _fetchEnginesList(self):
@@ -893,7 +896,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self._comThread = _ComThread()
-		self._finalIndex: Optional[int] = None
+		self._finalIndex: int | None = None
 		self._ttsCentral = None
 		self._ttsAudio = None
 		self._sinkRegKey = DWORD()

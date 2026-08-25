@@ -13,9 +13,9 @@ import shutil
 from typing import (
 	TYPE_CHECKING,
 	cast,
-	Callable,
 	NamedTuple,
 )
+from collections.abc import Callable
 
 import requests
 
@@ -95,14 +95,14 @@ class AddonFileDownloader:
 	"""
 
 	def __init__(self):
-		self.progress: dict["AddonListItemVM[_AddonStoreModel]", int] = {}
+		self.progress: dict[AddonListItemVM[_AddonStoreModel], int] = {}
 		"""
 		Counts chunks received in a download of an add-on.
 
 		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
 		"""
 
-		self._activeDownloadPaths: dict["AddonListItemVM[_AddonStoreModel]", _TempDownloadPathT] = {}
+		self._activeDownloadPaths: dict[AddonListItemVM[_AddonStoreModel], _TempDownloadPathT] = {}
 		"""
 		Tracks the temporary path for the current download attempt for an add-on.
 
@@ -111,7 +111,7 @@ class AddonFileDownloader:
 
 		self._pending: dict[Future[os.PathLike | None], _PendingDownload] = {}
 		self.complete: dict[
-			"AddonListItemVM[_AddonStoreModel]",
+			AddonListItemVM[_AddonStoreModel],
 			# Path to downloaded file
 			os.PathLike | None,
 		] = {}
@@ -390,9 +390,8 @@ class AddonFileDownloader:
 
 	@staticmethod
 	def _checkChecksum(addonFilePath: str, addonData: _AddonStoreModel) -> bool:
-		with AddonFileDownloader.DOWNLOAD_LOCK:
-			with open(addonFilePath, "rb") as f:
-				sha256Addon = sha256_checksum(f)
+		with AddonFileDownloader.DOWNLOAD_LOCK, open(addonFilePath, "rb") as f:
+			sha256Addon = sha256_checksum(f)
 		return sha256Addon.casefold() == addonData.sha256.casefold()
 
 	@staticmethod

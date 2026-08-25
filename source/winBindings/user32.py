@@ -95,18 +95,18 @@ WNDPROC = WINFUNCTYPE(LRESULT, HWND, c_uint, WPARAM, LPARAM)
 
 class WNDCLASSEXW(Structure):
 	_fields_ = [
-		("cbSize", c_uint),  # noqa: F405
-		("style", c_uint),  # noqa: F405
+		("cbSize", c_uint),
+		("style", c_uint),
 		("lpfnWndProc", WNDPROC),
 		("cbClsExtra", c_int),
 		("cbWndExtra", c_int),
-		("hInstance", HINSTANCE),  # noqa: F405
-		("hIcon", HICON),  # noqa: F405
+		("hInstance", HINSTANCE),
+		("hIcon", HICON),
 		("HCURSOR", HCURSOR),
-		("hbrBackground", HBRUSH),  # noqa: F405
-		("lpszMenuName", LPWSTR),  # noqa: F405
-		("lpszClassName", LPWSTR),  # noqa: F405
-		("hIconSm", HICON),  # noqa: F405
+		("hbrBackground", HBRUSH),
+		("lpszMenuName", LPWSTR),
+		("lpszClassName", LPWSTR),
+		("hIconSm", HICON),
 	]
 
 
@@ -140,7 +140,7 @@ GetMessage.argtypes = (
 )
 GetMessage.restype = BOOL
 
-HOOKPROC = WINFUNCTYPE(LRESULT, c_int, WPARAM, LPARAM)  # noqa: F405
+HOOKPROC = WINFUNCTYPE(LRESULT, c_int, WPARAM, LPARAM)
 
 SetWindowsHookEx = WINFUNCTYPE(None)(("SetWindowsHookExW", dll))
 SetWindowsHookEx.argtypes = (

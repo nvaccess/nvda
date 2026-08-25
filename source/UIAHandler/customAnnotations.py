@@ -22,7 +22,6 @@ GUID for the annotation type.
 import dataclasses
 from typing import (
 	ClassVar,
-	Dict,
 )
 
 from comtypes import (
@@ -40,7 +39,7 @@ class CustomAnnotationTypeInfo:
 	"""
 
 	guid: GUID
-	_registeredAnnotations: ClassVar[Dict[GUID, int]] = dict()
+	_registeredAnnotations: ClassVar[dict[GUID, int]] = dict()
 
 	def _registerCustomAnnotation(self) -> int:
 		"""Registers the annotation with a given GUID.

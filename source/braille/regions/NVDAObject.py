@@ -22,7 +22,7 @@ from .properties import getPropertiesBraille
 from ._routing import _routingShouldMoveSystemCaret
 
 
-def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+def NVDAObjectHasUsefulText(obj: NVDAObject) -> bool:
 	"""Does obj contain useful text to display in braille
 
 	:param obj: object to check
@@ -46,7 +46,7 @@ class NVDAObjectRegion(Region):
 	A cursor routing request will activate the object's default action.
 	"""
 
-	def __init__(self, obj: "NVDAObject", appendText: str = ""):
+	def __init__(self, obj: NVDAObject, appendText: str = ""):
 		"""Constructor.
 		@param obj: The associated NVDAObject.
 		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
@@ -116,7 +116,7 @@ class NVDAObjectRegion(Region):
 				except (NotImplementedError, LookupError):
 					pass
 		self.rawText = text + self.appendText
-		super(NVDAObjectRegion, self).update()
+		super().update()
 
 	def routeTo(self, braillePos):
 		try:

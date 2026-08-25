@@ -73,7 +73,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 
 
 @functools.total_ordering
-class WinVersion(object):
+class WinVersion:
 	"""
 	Represents a Windows release.
 	Includes version major, minor, build, service pack information, machine architecture,
@@ -237,4 +237,4 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "WIN81" and NVDAState._allowDeprecatedAPI():
 		log.warning("WIN81 is deprecated.")
 		return WinVersion(major=6, minor=3, build=9600, releaseName="Windows 8.1")
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")

@@ -9,7 +9,6 @@ QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and s
 See Brailliant B module for BrailleNote Touch support routines.
 """
 
-from typing import List, Optional
 
 import serial
 import bdDetect
@@ -155,7 +154,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self._serial = None
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			log.debug("Checking port %s for a BrailleNote", port)
@@ -168,7 +167,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					parity=serial.PARITY_NONE,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			# Check for cell information
@@ -182,7 +181,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			self._serial.close()
 			self._serial = None
@@ -221,7 +220,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		self,
 		command: int,
 		arg: int,
-		arg2: Optional[str] = None,
+		arg2: str | None = None,
 	):
 		space = False
 		if command == THUMB_KEYS_TAG:
@@ -249,7 +248,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# ESCAPE must be quoted because it is a control character
 		cellBytesList = [intToByte(cell).replace(ESCAPE, ESCAPE * 2) for cell in cells]
 		cellBytesList.insert(0, DISPLAY_TAG)
@@ -316,13 +315,13 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 
 	def __init__(
 		self,
-		keys: Optional[int] = None,
-		dots: Optional[int] = None,
+		keys: int | None = None,
+		dots: int | None = None,
 		space: bool = False,
-		routing: Optional[int] = None,
-		wheel: Optional[int] = None,
-		qtMod: Optional[int] = None,
-		qtData: Optional[str] = None,
+		routing: int | None = None,
+		wheel: int | None = None,
+		qtMod: int | None = None,
+		qtData: str | None = None,
 	):
 		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# Denotes if we're dealing with a QT model.

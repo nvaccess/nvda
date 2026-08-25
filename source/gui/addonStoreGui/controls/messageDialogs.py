@@ -56,15 +56,15 @@ if TYPE_CHECKING:
 
 __all__ = [
 	"ErrorAddonInstallDialogWithYesNoButtons",
-	"_shouldProceedWhenInstalledAddonVersionUnknown",
-	"_shouldProceedToRemoveAddonDialog",
-	"_shouldInstallWhenAddonTooOldDialog",
+	"UpdatableAddonsDialog",
+	"_SafetyWarningDialog",
 	"_shouldEnableWhenAddonTooOldDialog",
+	"_shouldInstallWhenAddonTooOldDialog",
+	"_shouldProceedToRemoveAddonDialog",
+	"_shouldProceedWhenInstalledAddonVersionUnknown",
+	"_showAddonInfo",
 	"_showAddonRequiresNVDAUpdateDialog",
 	"_showConfirmAddonInstallDialog",
-	"_showAddonInfo",
-	"_SafetyWarningDialog",
-	"UpdatableAddonsDialog",
 ]
 
 

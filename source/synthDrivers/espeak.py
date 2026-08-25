@@ -183,7 +183,7 @@ class SynthDriver(SynthDriver):
 	# C901 'speak' is too complex
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
+	def speak(self, speechSequence: SpeechSequence):
 		textList: list[str] = []
 		langChanged = False
 		prosody: dict[str, int] = {}
@@ -306,7 +306,7 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices = OrderedDict()
 		for v in _espeak.getVoiceList():
-			l = _espeak.decodeEspeakString(v.languages[1:])  # noqa: E741
+			l = _espeak.decodeEspeakString(v.languages[1:])
 			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
 			name = _espeak.decodeEspeakString(v.name)
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
@@ -337,7 +337,7 @@ class SynthDriver(SynthDriver):
 		except:
 			self._voice = None
 			raise
-		self._language = super(SynthDriver, self).language
+		self._language = super().language
 
 	def _onIndexReached(self, index):
 		if index is not None:

@@ -9,7 +9,7 @@ import config
 import languageHandler
 import synthDriverHandler
 from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
-from typing import Callable
+from collections.abc import Callable
 import unittest
 from .extensionPointTestHelpers import actionTester
 

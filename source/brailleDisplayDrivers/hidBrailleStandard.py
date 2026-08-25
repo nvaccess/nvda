@@ -4,7 +4,6 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from dataclasses import dataclass
-from typing import List
 import enum
 import itertools
 import braille
@@ -103,7 +102,7 @@ class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 			# Try talking to the display.
 			try:
 				self._dev = hwIo.hid.Hid(port, onReceive=self._hidOnReceive)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue  # Couldn't connect.
 			if self._dev.usagePage != HID_USAGE_PAGE_BRAILLE:
@@ -126,12 +125,7 @@ class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 					log.warning("Reserved braille cells are not supported on multi-line displays")
 				# A display responded.
 				log.info(
-					"Found display with {rows} rows, {cols} cols connected via {type} ({port})".format(
-						rows=self.numRows,
-						cols=self.numCols,
-						type=portType,
-						port=port,
-					),
+					f"Found display with {self.numRows} rows, {self.numCols} cols connected via {portType} ({port})",
 				)
 				break
 			# This device can't be initialized. Move on to the next (if any).
@@ -240,7 +234,7 @@ class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 		# so they should be ignored.
 		self._ignoreKeyReleases = True
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		padded_cells = cells + [0] * (self._maxNumberOfCells - len(cells))
 		cellBytes = b"".join(intToByte(cell) for cell in padded_cells)

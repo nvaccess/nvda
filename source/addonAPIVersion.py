@@ -85,5 +85,5 @@ def formatForGUI(versionTuple: AddonApiVersionT) -> str:
 		default = _("unknown")
 		from logHandler import log
 
-		log.error("Unable to format versionTuple: {}".format(repr(versionTuple)), exc_info=True)
+		log.error(f"Unable to format versionTuple: {versionTuple!r}", exc_info=True)
 		return default

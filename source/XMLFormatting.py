@@ -10,11 +10,11 @@ import textUtils
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
 
-CommandsT = typing.Union[textInfos.FieldCommand, typing.Optional[str]]
-CommandListT = typing.List[CommandsT]
+CommandsT = typing.Union[textInfos.FieldCommand, str | None]
+CommandListT = list[CommandsT]
 
 
-class XMLTextParser(object):
+class XMLTextParser:
 	def __init__(self) -> None:
 		self._controlFieldStack: list[textInfos.ControlField] = []
 
@@ -65,7 +65,7 @@ class XMLTextParser(object):
 		else:
 			raise ValueError("unknown tag name: %s" % tagName)
 
-	def _CharacterDataHandler(self, data: typing.Optional[str], processBufferedSurrogates=False):
+	def _CharacterDataHandler(self, data: str | None, processBufferedSurrogates=False):
 		cmdList = self._commandList
 		if not isinstance(data, str):
 			dataStr = repr(data)

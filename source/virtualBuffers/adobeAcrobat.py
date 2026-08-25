@@ -37,7 +37,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				# Older versions of Adobe Reader have per word objects, but they don't expose a location
 				break
 			return obj.location
-		return super(AdobeAcrobat_TextInfo, self)._getBoundingRectFromOffset(offset)
+		return super()._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self, attrs):
 		stdName = attrs.get("acrobat::stdname", "")
@@ -66,7 +66,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		attrs["states"] = states
 		if level:
 			attrs["level"] = level
-		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 	def _normalizeFormatField(self, attrs):
 		try:
@@ -89,7 +89,7 @@ class AdobeAcrobat(VirtualBuffer):
 	programmaticScrollMayFireEvent = True
 
 	def __init__(self, rootNVDAObject):
-		super(AdobeAcrobat, self).__init__(rootNVDAObject, backendName="adobeAcrobat")
+		super().__init__(rootNVDAObject, backendName="adobeAcrobat")
 
 	def __contains__(self, obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)

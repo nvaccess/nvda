@@ -22,7 +22,7 @@ def _isSupportedFontPath(f: str) -> bool:
 	return os.path.isfile(f) and (f.endswith(".otf") or f.endswith(".ttf"))
 
 
-def addFonts(_fontSearchPath) -> List[str]:
+def addFonts(_fontSearchPath) -> list[str]:
 	searchPathFiles = [os.path.join(_fontSearchPath, f) for f in os.listdir(_fontSearchPath)]
 	fonts = [f for f in searchPathFiles if _isSupportedFontPath(f)]
 	log.debug(f"Fonts to load: {fonts}")
@@ -52,7 +52,7 @@ def _addFontResource(fontPath: str) -> int:
 
 
 # Fonts that have been loaded.
-_imported: List[str] = []
+_imported: list[str] = []
 
 
 def importFonts():

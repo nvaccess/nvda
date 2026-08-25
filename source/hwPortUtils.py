@@ -109,7 +109,6 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 				info["bluetoothAddress"], info["bluetoothName"] = getWidcommBluetoothPortInfo(port)
 			except Exception:
 				log.debugWarning(f"Couldn't get Widcomm bt name for hardware id {hwID!r}", exc_info=True)
-				pass
 		case h if "USB" in h or "FTDIBUS" in h:
 			usbIDStart = h.find("VID_")
 			if usbIDStart != -1:

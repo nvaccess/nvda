@@ -27,23 +27,23 @@ ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
 CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]
-ApcStoreT = typing.Dict[
+ApcStoreT = dict[
 	ApcIdT,
-	typing.Tuple[
-		typing.Union[ApcT, BoundMethodWeakref[ApcT], AnnotatableWeakref[ApcT]],
+	tuple[
+		ApcT | BoundMethodWeakref[ApcT] | AnnotatableWeakref[ApcT],
 		ApcIdT,
 	],
 ]
-CompletionRoutineStoreTypeT = typing.Dict[
+CompletionRoutineStoreTypeT = dict[
 	OverlappedStructAddressT,
-	typing.Tuple[
-		typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]],
+	tuple[
+		BoundMethodWeakref[CompletionRoutineT] | AnnotatableWeakref[CompletionRoutineT],
 		OVERLAPPED,
 	],
 ]
 
 
-def _generateApcParams() -> typing.Generator[ApcIdT, None, None]:
+def _generateApcParams() -> typing.Generator[ApcIdT]:
 	"""Generator of APC params for internal use.
 	Params generated using this generator are passed to our internal APC to lookup Python functions.
 	A parameter passed to an APC is of type ULONG_PTR, which has a size of 4 bytes.
@@ -188,7 +188,7 @@ class IoThread(threading.Thread):
 
 	def setWaitableTimer(
 		self,
-		handle: typing.Union[int, ctypes.wintypes.HANDLE],
+		handle: int | ctypes.wintypes.HANDLE,
 		dueTime: int,
 		func: ApcT,
 		param: int = 0,
@@ -242,7 +242,7 @@ class IoThread(threading.Thread):
 		self._completionRoutineStore[addr] = (reference, overlapped)
 		return self._internalCompletionRoutine
 
-	def stop(self, timeout: typing.Optional[float] = None):
+	def stop(self, timeout: float | None = None):
 		if not self.is_alive():
 			raise RuntimeError("Thread is not running")
 		self.exit = True

@@ -612,7 +612,7 @@ def getWindowHandleFromAccContext(vmID, accContext):
 		return vmIDsToWindowHandles.get(vmID)
 
 
-class JABContext(object):
+class JABContext:
 	def __init__(self, hwnd=None, vmID=None, accContext=None):
 		if hwnd and not vmID:
 			vmID = c_long()
@@ -1016,7 +1016,7 @@ def internal_hasFocus(sourceContext):
 	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == sourceContext:
 		return True
 	ancestors = reversed(api.getFocusAncestors())
-	return any((isinstance(x, NVDAObjects.JAB.JAB) and x.jabContext == sourceContext for x in ancestors))
+	return any(isinstance(x, NVDAObjects.JAB.JAB) and x.jabContext == sourceContext for x in ancestors)
 
 
 @AccessBridge_PropertyNameChangeFP
@@ -1215,7 +1215,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(NVDAState.ReadPaths.javaAccessBridgeDLL)
-	except WindowsError:
+	except OSError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
 	if (
@@ -1298,7 +1298,7 @@ JABKeyModifiersToLabels = {
 def _getKeyLabels(modifiers, character):
 	keys = [v for m, v in JABKeyModifiersToLabels.items() if modifiers & m]
 	if modifiers & AccessibleKeystroke.FKEY:
-		keys.append("F{}".format(ord(character)))
+		keys.append(f"F{ord(character)}")
 	elif modifiers & AccessibleKeystroke.CONTROLCODE:
 		keys.append(JABKeyControlCodesToLabels.get(ord(character), character))
 	else:

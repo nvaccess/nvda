@@ -8,7 +8,8 @@ Spotlight manager module for full-screen magnifier.
 Manages the spotlight effect, including zooming in on focus and zooming back.
 """
 
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
+from collections.abc import Callable
 import ui
 from .types import Coordinates, ZoomHistory, FullScreenMode
 import wx
@@ -24,7 +25,7 @@ class SpotlightManager:
 		self,
 		fullscreenMagnifier: "FullScreenMagnifier",
 	):
-		self._fullscreenMagnifier: "FullScreenMagnifier" = fullscreenMagnifier
+		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
 		self._spotlightIsActive: bool = False
 		self._lastMousePosition = Coordinates(0, 0)
 		self._timer: wx.CallLater | None = None

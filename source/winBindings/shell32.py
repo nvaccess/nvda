@@ -109,7 +109,7 @@ class SHELLEXECUTEINFOW(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(SHELLEXECUTEINFOW, self).__init__(cbSize=sizeof(self), **kwargs)
+		super().__init__(cbSize=sizeof(self), **kwargs)
 
 
 SHELLEXECUTEINFO = SHELLEXECUTEINFOW

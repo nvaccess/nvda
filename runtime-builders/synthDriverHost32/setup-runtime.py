@@ -25,8 +25,8 @@ runtimeDestDir = args.dest_dir
 
 sys.path.insert(0, nvdaSourceDir)
 
-import gettext  # noqa: E402
-from buildVersion import (  # noqa: E402
+import gettext
+from buildVersion import (
 	formatBuildVersionString,
 	name,
 	publisher,
@@ -43,14 +43,14 @@ gettext.install("nvda")
 
 # versionInfo names must be imported after Gettext
 # Suppress E402 (module level import not at top of file)
-from versionInfo import (  # noqa: E402
+from versionInfo import (
 	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
 )
 
 
-from py2exe import freeze  # noqa: E402
-from py2exe.dllfinder import DllFinder  # noqa: E402
+from py2exe import freeze
+from py2exe.dllfinder import DllFinder
 
 RT_MANIFEST = 24
 manifestTemplateFilePath = os.path.join(nvdaSourceDir, "manifest.template.xml")

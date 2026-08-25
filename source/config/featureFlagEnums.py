@@ -34,7 +34,6 @@ class FeatureFlagEnumProtocol(Protocol):
 class FlagValueEnum(enum.EnumMeta, _DisplayStringEnumMixin, FeatureFlagEnumProtocol):
 	"""Provided only for type annotations."""
 
-	pass
 
 
 class BoolFlag(DisplayStringEnum):
@@ -212,7 +211,7 @@ class SayAllReadingUnitFlag(DisplayStringEnum):
 		}
 
 
-def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
+def getAvailableEnums() -> typing.Generator[tuple[str, FlagValueEnum]]:
 	for name, value in globals().items():
 		if (
 			isinstance(value, type)  # is a class

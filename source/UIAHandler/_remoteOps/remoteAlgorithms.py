@@ -24,7 +24,7 @@ def remote_forEachUnitInTextRange(
 	textRange: RemoteTextRange,
 	unit: RemoteIntEnum[TextUnit] | TextUnit,
 	reverse: bool = False,
-) -> Generator[RemoteTextRange, None, None]:
+) -> Generator[RemoteTextRange]:
 	logicalTextRange = textRange.getLogicalAdapter(reverse)
 	logicalTempRange = logicalTextRange.clone()
 	logicalTempRange.end = logicalTempRange.start

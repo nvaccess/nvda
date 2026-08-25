@@ -29,7 +29,6 @@ class _DisplayStringEnumMixinMeta(ABCMeta, EnumMeta):
 	See `_DisplayStringEnumMixin`.
 	"""
 
-	pass
 
 
 class _DisplayStringEnumMixin(ABC):
@@ -68,28 +67,23 @@ class _DisplayStringEnumMixin(ABC):
 class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An Enum class that adds a displayString property defined by _displayStringLabels"""
 
-	pass
 
 
 class DisplayStringFlag(_DisplayStringEnumMixin, Flag, metaclass=_DisplayStringEnumMixinMeta):
 	"""A Flag class that adds a displayString property defined by _displayStringLabels"""
 
-	pass
 
 
 class DisplayStringStrEnum(_DisplayStringEnumMixin, str, Enum, metaclass=_DisplayStringEnumMixinMeta):
 	"""A str Enum class that adds a displayString property defined by _displayStringLabels"""
 
-	pass
 
 
 class DisplayStringIntEnum(_DisplayStringEnumMixin, IntEnum, metaclass=_DisplayStringEnumMixinMeta):
 	"""An IntEnum class that adds a displayString property defined by _displayStringLabels"""
 
-	pass
 
 
 class DisplayStringIntFlag(_DisplayStringEnumMixin, IntFlag, metaclass=_DisplayStringEnumMixinMeta):
 	"""An IntFlag class that adds a displayString property defined by _displayStringLabels"""
 
-	pass

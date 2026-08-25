@@ -5,7 +5,7 @@
 
 import threading
 from enum import Enum, auto
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 import config
 import requests

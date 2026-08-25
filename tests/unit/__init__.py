@@ -27,11 +27,11 @@ SOURCE_DIR = os.path.join(TOP_DIR, "source")
 # virtual environment has been created under different version of Windows than the one used for unit tests.
 # Suppress Flake8 warning E402 (module import not at top of file) as this cannot be imported until source
 # directory is appended to python path.
-import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
+import monkeyPatches.comtypesMonkeyPatches
 
 monkeyPatches.comtypesMonkeyPatches.replace_check_version()
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
-import globalVars  # noqa: E402
+import globalVars
 
 
 # Tell NvDA where its application directory is
@@ -54,8 +54,8 @@ os.chdir(SOURCE_DIR)
 __path__[0] = UNIT_DIR
 # We don't want logging for now,
 # though we may optionally want this in future; see #7045.
-import logging  # noqa: E402
-from logHandler import log  # noqa: E402
+import logging
+from logHandler import log
 
 log.addHandler(logging.NullHandler())
 # There's no point in logging anything at all, since it'll go nowhere.
@@ -63,33 +63,33 @@ log.setLevel(100)
 
 # Much of this should eventually be replaced by stuff which gets reset before each test
 # so the tests are isolated.
-import config  # noqa: E402
+import config
 
 config.initialize()
 # Initialize languageHandler so that translatable strings work.
-import languageHandler  # noqa: E402
+import languageHandler
 
 languageHandler.setLanguage("en")
 # NVDAObjects need appModuleHandler to be initialized.
-import appModuleHandler  # noqa: E402
+import appModuleHandler
 
 appModuleHandler.initialize()
 # Anything which notifies of cursor updates requires braille and vision to be initialized.
 # Suppress Flake8 warning E402 (Module level import not at top of file)
-import vision  # noqa: E402
+import vision
 
 vision.initialize()
 
-import characterProcessing  # noqa: E402
+import characterProcessing
 
 characterProcessing.initialize()
-import speech  # noqa: E402
+import speech
 
 speech.initialize()
 
-import braille  # noqa: E402
-import braille.display  # noqa: E402
-import braille.extensions  # noqa: E402
+import braille
+import braille.display
+import braille.extensions
 
 # Disable auto detection of braille displays when unit testing.
 config.conf["braille"]["display"] = "noBraille"
@@ -121,12 +121,12 @@ braille.handler.handleReviewMove = _patched_handleReviewMove
 
 # Changing braille displays might call braille.handler.disableDetection(),
 # which requires the bdDetect.deviceInfoFetcher to be set.
-import bdDetect  # noqa: E402
+import bdDetect
 
 bdDetect.deviceInfoFetcher = bdDetect._DeviceInfoFetcher()
 
 # Braille unit tests also need braille input to be initialized.
-import braille.input  # noqa: E402
+import braille.input
 
 braille.input.initialize()
 
@@ -134,16 +134,16 @@ braille.input.initialize()
 config.conf["braille"]["cursorBlink"] = False
 
 # textutils tests need uniscribe in NVDAHelper local lib
-import ctypes  # noqa: E402
-import NVDAHelper  # noqa: E402
-import NVDAState  # noqa: E402
+import ctypes
+import NVDAHelper
+import NVDAState
 
 NVDAHelper.localLib = ctypes.cdll.LoadLibrary(NVDAState.ReadPaths.nvdaHelperLocalDll)
 # The focus and navigator objects need to be initialized to something.
-from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole  # noqa: E402, F401
+from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole  # noqa: F401
 
 phObj = PlaceholderNVDAObject()
-import api  # noqa: E402
+import api
 
 api.setFocusObject(phObj)
 api.setNavigatorObject(phObj)

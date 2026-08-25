@@ -9,7 +9,7 @@ Provides workarounds for controls such as identifying Start button, notification
 
 from comtypes import COMError
 import time
-from typing import Callable
+from collections.abc import Callable
 import appModuleHandler
 import controlTypes
 import winUser
@@ -42,7 +42,7 @@ class MultitaskingViewFrameListItem(UIA):
 		if winUser.getAsyncKeyState(winUser.VK_MENU) & 32768:
 			return api.getDesktopObject()
 		else:
-			return super(MultitaskingViewFrameListItem, self).container
+			return super().container
 
 
 class SearchBoxClient(IAccessible):
@@ -110,7 +110,7 @@ class NotificationArea(IAccessible):
 
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		super(NotificationArea, self).event_gainFocus()
+		super().event_gainFocus()
 
 
 class ExplorerToolTip(ToolTip):
@@ -164,7 +164,7 @@ class StartButton(IAccessible):
 	def _get_states(self):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
-		states = super(StartButton, self).states
+		states = super().states
 		states.discard(controlTypes.State.SELECTED)
 		return states
 
@@ -179,7 +179,7 @@ class UIProperty(UIA):
 	"""
 
 	def _get_value(self):
-		value = super(UIProperty, self).value
+		value = super().value
 		if value is None:
 			return value
 		return value.replace(CHAR_LTR_MARK, "").replace(CHAR_RTL_MARK, "")
@@ -191,7 +191,7 @@ class ReadOnlyEditBox(Edit):
 	"""
 
 	def _get_windowText(self):
-		windowText = super(ReadOnlyEditBox, self).windowText
+		windowText = super().windowText
 		if windowText is not None:
 			return windowText.replace(CHAR_LTR_MARK, "").replace(CHAR_RTL_MARK, "")
 		return windowText
@@ -228,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 	# C901 'chooseNVDAObjectOverlayClasses' is too complex
 	# Note: when working on chooseNVDAObjectOverlayClasses, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):  # NOQA: C901
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		role = obj.role
 

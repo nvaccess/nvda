@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Coscell Kao, Babbage B.V.
 
-from typing import List
 
 import serial
 import bdDetect
@@ -47,7 +46,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="Auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			try:
 				self._dev = hwIo.Serial(
@@ -59,7 +58,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					writeTimeout=TIMEOUT,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 
@@ -78,7 +77,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# We must sleep before closing the COM port as not doing this can leave the display in a bad state where it can not be re-initialized
 			time.sleep(TIMEOUT)
@@ -97,8 +96,8 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		self._dev.read(1)
 		self.version = self._dev.read(8)
 
-	def display(self, cells: List[int]):
-		writeBytes: List[bytes] = [DISPLAY_TAG]
+	def display(self, cells: list[int]):
+		writeBytes: list[bytes] = [DISPLAY_TAG]
 		for cell in cells:
 			writeBytes.append(b"\x00")
 			writeBytes.append(intToByte(cell))

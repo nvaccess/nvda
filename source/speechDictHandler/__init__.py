@@ -51,9 +51,9 @@ def terminate() -> None:
 
 
 __all__ = [
-	"processText",
 	"initialize",
-	"terminate",
-	"loadVoiceDict",
 	"listAvailableSpeechDictDefinitions",
+	"loadVoiceDict",
+	"processText",
+	"terminate",
 ]

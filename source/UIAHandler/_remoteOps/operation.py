@@ -6,11 +6,9 @@
 from __future__ import annotations
 import contextlib
 from typing import (
-	Type,
 	Any,
-	Generator,
-	Callable,
 )
+from collections.abc import Generator, Callable
 from dataclasses import dataclass
 from logHandler import log
 from UIAHandler import UIA
@@ -147,7 +145,7 @@ class RemoteExecutor(Executor):
 
 
 class Operation:
-	_executorClass: Type[Executor] = RemoteExecutor
+	_executorClass: type[Executor] = RemoteExecutor
 	_compiletimeLoggingEnabled: bool
 	_runtimeLoggingEnabled: bool
 	_remoteLog: remoteAPI.RemoteString | None = None
@@ -307,7 +305,7 @@ class Operation:
 			f"Dumping instructions:\n--- Begin ---\n{self._rob.dumpInstructions()}--- End ---",
 		)
 
-	def _executeUntilSuccess(self, maxTries: int) -> Generator[ExecutionResult, None, None]:
+	def _executeUntilSuccess(self, maxTries: int) -> Generator[ExecutionResult]:
 		self._executionCount = 0
 		try:
 			while self._executionCount < maxTries:
@@ -344,7 +342,7 @@ class Operation:
 			raise NoReturnException()
 		return self._requestedResults[lowLevel.OperandId(returnId)].localValue
 
-	def iterExecute(self, maxTries: int = 1) -> Generator[Any, None, None]:
+	def iterExecute(self, maxTries: int = 1) -> Generator[Any]:
 		if self._yieldListOperand is None:
 			raise RuntimeError("RemoteOperation has no yield list operand")
 		for executionResult in self._executeUntilSuccess(maxTries):
