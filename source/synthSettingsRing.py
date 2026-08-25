@@ -204,24 +204,24 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if self._current is not None and hasattr(self, "settings")
 			else None
 		)
-		list: list[SynthSetting] = []  # noqa: F823
+		synthList: list[SynthSetting] = []  # noqa: F823
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing:
 				continue
 			if prevID == s.id:  # restore the last setting
-				self._current = len(list)
+				self._current = len(synthList)
 			if isinstance(s, NumericDriverSetting):
 				cls = SynthSetting
 			elif isinstance(s, BooleanDriverSetting):
 				cls = BooleanSynthSetting
 			else:
 				cls = StringSynthSetting
-			list.append(cls(synth, s))
-		if len(list) == 0:
+			synthList.append(cls(synth, s))
+		if len(synthList) == 0:
 			self._current = None
 			self.settings = None
 		else:
-			self.settings = list
+			self.settings = synthList
 		if (
 			not prevID
 			or not self.settings
