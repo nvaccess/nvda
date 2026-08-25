@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import weakref
+import weakref  # noqa: I001
 import wx
 
 import config
@@ -73,7 +73,7 @@ class WelcomeDialog(
 			index = self.kbdNames.index(config.conf["keyboard"]["keyboardLayout"])
 			self.kbdList.SetSelection(index)
 		except (ValueError, KeyError):
-			log.error("Could not set Keyboard layout list to current layout", exc_info=True)
+			log.error("Could not set Keyboard layout list to current layout", exc_info=True)  # noqa: G201
 		# Translators: The label of a checkbox in the Welcome dialog.
 		capsAsNVDAModifierText = _("&Use CapsLock as an NVDA modifier key")
 		self.capsAsNVDAModifierCheckBox = sHelper.addItem(
@@ -136,7 +136,7 @@ class WelcomeDialog(
 		)
 		try:
 			config.conf.save()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("Could not save", exc_info=True)
 		self.EndModal(wx.ID_OK)
 		self.Close()

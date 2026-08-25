@@ -4,7 +4,7 @@
 # Copyright (C) 2017-2023 NV Access Limited, Coscell Kao, Babbage B.V.
 
 
-import serial
+import serial  # noqa: I001
 import bdDetect
 import braille
 import braille.display
@@ -47,7 +47,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def __init__(self, port="Auto"):
 		super().__init__()
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			try:
 				self._dev = hwIo.Serial(
 					port,
@@ -68,7 +68,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# Check for cell information
 			if self.numCells:
 				# ok, it is a SuperBraille
-				log.info("Found superBraille device, version %s" % self.version)
+				log.info("Found superBraille device, version %s" % self.version)  # noqa: UP031
 				break
 			else:
 				self._dev.close()

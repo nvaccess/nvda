@@ -5,7 +5,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import ctypes
+import ctypes  # noqa: I001
 import time
 from typing import (
 	Self,
@@ -902,7 +902,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return mathPres.interactWithMathMl(mathMl)
 		newRng = self._rangeObj.Duplicate
 		newRng.End = newRng.End + 1
-		if newRng.InlineShapes.Count >= 1:
+		if newRng.InlineShapes.Count >= 1:  # noqa: SIM102
 			if newRng.InlineShapes[1].Type == wdInlineShapeChart:
 				return eventHandler.queueEvent(
 					"gainFocus",
@@ -942,7 +942,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			fieldText = field.code.text.strip().split(" ")
 			# the \\h field indicates that the field is a link
 			if not any(fieldText[i] == "\\h" for i in range(2, len(fieldText))):
-				log.debugWarning("no \\h for field xref: %s" % field.code.text)
+				log.debugWarning("no \\h for field xref: %s" % field.code.text)  # noqa: UP031
 				continue
 			bookmarkKey = fieldText[1]  # we want the _Ref12345 part
 			# get book mark start, we need to look at the whole document to find the bookmark.
@@ -1043,7 +1043,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# copying from one textInfo to another
 			self._rangeObj = position._rangeObj.duplicate
 		else:
-			raise NotImplementedError("position: %s" % position)
+			raise NotImplementedError("position: %s" % position)  # noqa: UP031
 
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
@@ -1091,7 +1091,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			log.debug("winword_getTextInRange cancelled; Word is not responding")
 			return [""]
 		if res or not text:
-			log.debugWarning("winword_getTextInRange failed with %d" % res)
+			log.debugWarning("winword_getTextInRange failed with %d" % res)  # noqa: UP031
 			return [self.text]
 		commandList = XMLFormatting.XMLTextParser().parse(text.value)
 		for index, item in enumerate(commandList):
@@ -1152,7 +1152,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			if fieldType != -1:
 				role = wdFieldTypesToNVDARoles.get(fieldType, controlTypes.Role.UNKNOWN)
 				if fieldType == wdFieldFormCheckBox and int(field.get("wdFieldResult", "0")) > 0:
-					field["states"] = set([controlTypes.State.CHECKED])
+					field["states"] = set([controlTypes.State.CHECKED])  # noqa: C405
 				elif fieldType == wdFieldFormDropDown:
 					field["value"] = field.get("wdFieldResult", None)
 			fieldStatusText = field.pop("wdFieldStatusText", None)
@@ -1166,7 +1166,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					if role == controlTypes.Role.CHECKBOX:
 						fieldChecked = bool(int(field.get("wdContentControlChecked", "0")))
 						if fieldChecked:
-							field["states"] = set([controlTypes.State.CHECKED])
+							field["states"] = set([controlTypes.State.CHECKED])  # noqa: C405
 					fieldTitle = field.get("wdContentControlTitle", None)
 					if fieldTitle:
 						field["name"] = fieldTitle
@@ -1174,7 +1174,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if role is not None:
 			field["role"] = role
 		if role == controlTypes.Role.TABLE and field.get("longdescription"):
-			field["states"] = set([controlTypes.State.HASLONGDESC])
+			field["states"] = set([controlTypes.State.HASLONGDESC])  # noqa: C405
 		storyType = int(field.pop("wdStoryType", 0))
 		if storyType:
 			name = storyTypeLocalizedLabels.get(storyType, None)
@@ -1298,7 +1298,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif unit in NVDAUnitsToWordUnits:
 			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 
 	def compareEndPoints(self, other, which):
 		if which == "startToStart":
@@ -1310,7 +1310,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif which == "endToEnd":
 			diff = self._rangeObj.End - other._rangeObj.End
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 		if diff < 0:
 			diff = -1
 		elif diff > 0:
@@ -1327,10 +1327,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif which == "endToEnd":
 			self._rangeObj.End = other._rangeObj.End
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 
 	def _get_isCollapsed(self):
-		if self._rangeObj.Start == self._rangeObj.End:
+		if self._rangeObj.Start == self._rangeObj.End:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -1363,7 +1363,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if unit in NVDAUnitsToWordUnits:
 			unit = NVDAUnitsToWordUnits[unit]
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 		if endPoint == "start":
 			moveFunc = _rangeObj.MoveStart
 		elif endPoint == "end":
@@ -1538,7 +1538,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			rangeObj = pos.innerTextInfo._rangeObj
 		else:
 			rangeObj = self.rootNVDAObject.WinwordDocumentObject.range(0, 0)
-		includeCurrent = False if pos else True
+		includeCurrent = False if pos else True  # noqa: SIM211
 		if nodeType == "link":
 			return LinkWinWordCollectionQuicknavIterator(
 				nodeType,
@@ -1647,7 +1647,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": "trapNonCommandGesture",
 		"kb:shift+tab": "trapNonCommandGesture",
 		"kb:control+alt+upArrow": "previousRow",
@@ -1692,7 +1692,7 @@ class WordDocument(Window, EditableTextBase):
 			return name
 		else:
 			raise ValueError(
-				"Unknown color format %x %x %x %x"
+				"Unknown color format %x %x %x %x"  # noqa: UP031
 				% ((val >> 24) & 0xFF, (val >> 16) & 0xFF, (val >> 8) & 0xFF, val & 0xFF),
 			)
 
@@ -1714,7 +1714,7 @@ class WordDocument(Window, EditableTextBase):
 				)
 			except (OSError, COMError):
 				log.debugWarning(
-					"Could not get MS Word object model from window %s with class %s"
+					"Could not get MS Word object model from window %s with class %s"  # noqa: UP031
 					% (self.documentWindowHandle, winUser.getClassName(self.documentWindowHandle)),
 					exc_info=True,
 				)
@@ -2190,7 +2190,7 @@ class WordDocument(Window, EditableTextBase):
 			self.bindGesture("kb:f8", "caret_changeSelection")
 			self.bindGesture("kb:shift+f8", "caret_changeSelection")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
@@ -2214,7 +2214,7 @@ class WordDocument_WwN(WordDocument):
 			log.debugWarning("Unable to get activePane")
 			return window.application.windows[1].activePane
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": None,
 		"kb:shift+tab": None,
 	}

@@ -9,7 +9,7 @@ Functions that wrap Windows API functions from user32.dll.
 When working on this file, consider moving to winAPI.
 """
 
-import contextlib
+import contextlib  # noqa: I001
 import ctypes
 from ctypes import (
 	byref,
@@ -551,7 +551,7 @@ def isHungAppWindow(hwnd: HWNDVal) -> bool:
 
 
 def isDescendantWindow(parentHwnd, childHwnd):
-	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):
+	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):  # noqa: SIM103
 		return True
 	else:
 		return False

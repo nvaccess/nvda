@@ -39,7 +39,7 @@ _textPositionLabels: dict[TextPosition, str] = {
 
 
 class FontSize:
-	_unitToTranslatableString: dict[str, str] = {
+	_unitToTranslatableString: dict[str, str] = {  # noqa: RUF012
 		# Translators: Abbreviation for pixels, a measurement of font size.
 		"px": pgettext("font size", "%s px"),
 		# Translators: A measurement unit of font size.
@@ -54,7 +54,7 @@ class FontSize:
 		"%": pgettext("font size", "%s%%"),
 	}
 
-	_keywordToTranslatableString: dict[str, str] = {
+	_keywordToTranslatableString: dict[str, str] = {  # noqa: RUF012
 		# Translators: A measurement unit of font size.
 		"xx-small": pgettext("font size", "xx-small"),
 		# Translators: A measurement unit of font size.

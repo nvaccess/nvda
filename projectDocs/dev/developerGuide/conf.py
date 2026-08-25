@@ -29,7 +29,7 @@ import languageHandler
 languageHandler.setLanguage("en")
 
 # Initialize globalVars.appArgs to something sensible.
-import globalVars
+import globalVars  # noqa: I001
 
 
 # Set an empty config path
@@ -107,7 +107,7 @@ autodoc_mock_imports = [
 
 # Perform some manual mocking of specific objects.
 # autodoc can only mock modules, not objects.
-from sphinx.ext.autodoc.mock import _make_subclass
+from sphinx.ext.autodoc.mock import _make_subclass  # noqa: I001
 
 import config
 

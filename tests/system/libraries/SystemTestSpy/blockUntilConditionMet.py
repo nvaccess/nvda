@@ -8,7 +8,7 @@ libraries. It is also copied into the (system test specific) NVDA profile direct
 package. This enables sharing utility methods between the global plugin and other Robot Framework libraries.
 """
 
-from time import (
+from time import (  # noqa: I001
 	perf_counter as _timer,
 	sleep as _sleep,
 )

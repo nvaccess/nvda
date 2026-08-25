@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from collections.abc import Iterator
 
 import ctypes
@@ -279,7 +279,7 @@ class _WinUsbBulk:
 				try:
 					self._onReceive(data)
 				except Exception:
-					log.error("", exc_info=True)
+					log.error("", exc_info=True)  # noqa: G201
 			self._recvEvt.set()
 
 	def waitForRead(self, timeout: float) -> bool:
@@ -618,7 +618,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		self._serialData = b""
 
 		for match in self._getTryPorts(port):
-			portType, portId, port, portInfo = match
+			portType, portId, port, portInfo = match  # noqa: RUF059
 			self.isBulk = portType == bdDetect.ProtocolType.CUSTOM
 			self.isHID = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
@@ -721,7 +721,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			self._sendPacket(b"\xfb", b"\x01", bytes(32))  # send 32 null bytes
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
-		log.debug("Considering sending identification requests for device %s" % str(match))
+		log.debug("Considering sending identification requests for device %s" % str(match))  # noqa: UP031
 		if "bluetoothName" in match.deviceInfo:  # Bluetooth
 			matchedModelsMap = [
 				modelTuple
@@ -743,14 +743,14 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				# There is only one model matching the criteria, and we have the proper number of cells.
 				# There's no point in sending an identification request at all, just use this model
 				log.debug(
-					"Use %s as model without sending an additional identification request" % modelCls.name,
+					"Use %s as model without sending an additional identification request" % modelCls.name,  # noqa: UP031
 				)
 				self._model = modelCls()
 				self.numCells = numCells
 				return
 		self._model = None
 		for modelId, cls in matchedModelsMap:
-			log.debug("Sending request for id %r" % modelId)
+			log.debug("Sending request for id %r" % modelId)  # noqa: UP031
 
 			self._dev.write(
 				b"".join(
@@ -763,30 +763,30 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			)
 			self._dev.waitForRead(self.timeout)
 			if self._model:
-				log.debug("%s model has been set" % self._model.name)
+				log.debug("%s model has been set" % self._model.name)  # noqa: UP031
 				break
 
 	def _handleIdentification(self, recvId: bytes):
 		modelCls = None
 		models = [modelCls for modelId, modelCls in modelMap if (modelId == recvId)]
-		log.debug("Identification received, id %s" % recvId)
+		log.debug("Identification received, id %s" % recvId)  # noqa: UP031
 		if not models:
 			raise ValueError("Device identification ID unknown in model map")
 		if len(models) == 1:
 			modelCls = models[0]
 			self.numCells = self.numCells or modelCls.numCells
-			log.debug("There is an exact match, %s found with %d cells" % (modelCls.name, self.numCells))
+			log.debug("There is an exact match, %s found with %d cells" % (modelCls.name, self.numCells))  # noqa: UP031
 		elif len(models) > 1:
-			log.debug("Multiple models match: %s" % ", ".join(modelCls.name for modelCls in models))
+			log.debug("Multiple models match: %s" % ", ".join(modelCls.name for modelCls in models))  # noqa: UP031
 			try:
 				modelCls = next(cls for cls in models if cls.numCells == self.numCells)
 				log.debug(
-					"There is an exact match out of multiple models, %s found with %d cells"
+					"There is an exact match out of multiple models, %s found with %d cells"  # noqa: UP031
 					% (modelCls.name, self.numCells),
 				)
 			except StopIteration:
 				log.debugWarning(
-					"No exact model match found for the reported %d cells display" % self.numCells,
+					"No exact model match found for the reported %d cells display" % self.numCells,  # noqa: UP031
 				)
 				try:
 					modelCls = next(cls for cls in models if not cls.numCells)
@@ -816,7 +816,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)  # noqa: UP031
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys))
@@ -832,7 +832,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		routingKey = int.from_bytes(data[2:7], "little", signed=False)
 		if routingKey != 0:  # Routing key
 			try:
-				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))
+				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))  # noqa: FURB163
 			except inputCore.NoInputGestureAction:
 				pass
 		else:  # Other key
@@ -848,7 +848,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)  # noqa: UP031
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys, True))
@@ -1118,7 +1118,7 @@ class KeyInputGesture(
 		for key in keys:
 			if isBrailleInput:
 				if isHid:
-					if 8 <= int(math.log(key, 2)) <= 15:
+					if 8 <= int(math.log(key, 2)) <= 15:  # noqa: FURB163
 						self.dots |= key >> 8
 					elif model.keys.get(key) == "space":
 						self.space = True

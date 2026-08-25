@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2024 NV Access Limited
 
-from typing import Any
+from typing import Any  # noqa: I001
 
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 import baseObject
@@ -236,5 +236,5 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 				queueHandler.queueFunction(
 					queueHandler.eventQueue,
 					ui.message,
-					"%s %s" % (self.currentSettingName, self.currentSettingValue),
+					"%s %s" % (self.currentSettingName, self.currentSettingValue),  # noqa: UP031
 				)

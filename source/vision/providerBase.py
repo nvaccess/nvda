@@ -6,7 +6,7 @@
 
 """Module within the vision framework that contains the base vision enhancement provider class."""
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 import config
 from autoSettingsUtils.autoSettings import AutoSettings
 from baseObject import AutoPropertyObject

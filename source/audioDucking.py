@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import IntEnum
+from enum import IntEnum  # noqa: I001
 from utils.displayString import DisplayStringIntEnum
 import threading
 from ctypes import wintypes
@@ -99,11 +99,11 @@ def _setDuckingState(switch):
 				log.warning("Unable to set ducking state: ERROR_ACCESS_DENIED.")
 			else:
 				# we want developers to hear the "error sound", and to halt, so still raise the exception.
-				log.error(
+				log.error(  # noqa: G201
 					f"Unknown error when setting ducking state:  Error number: {errorCode:#010X}",
 					exc_info=True,
 				)
-				raise e
+				raise e  # noqa: TRY201
 
 
 def _ensureDucked():
@@ -111,7 +111,7 @@ def _ensureDucked():
 	with _duckingRefCountLock:
 		_duckingRefCount += 1
 		if _isDebug():
-			log.debug("Increased ref count, _duckingRefCount=%d" % _duckingRefCount)
+			log.debug("Increased ref count, _duckingRefCount=%d" % _duckingRefCount)  # noqa: UP031
 		if _duckingRefCount == 1 and _audioDuckingMode != AudioDuckingMode.NONE:
 			_setDuckingState(True)
 			delta = 0
@@ -137,7 +137,7 @@ def _unensureDucked(delay=True):
 	with _duckingRefCountLock:
 		_duckingRefCount -= 1
 		if _isDebug():
-			log.debug("Decreased  ref count, _duckingRefCount=%d" % _duckingRefCount)
+			log.debug("Decreased  ref count, _duckingRefCount=%d" % _duckingRefCount)  # noqa: UP031
 		if _duckingRefCount == 0 and _audioDuckingMode != AudioDuckingMode.NONE:
 			_setDuckingState(False)
 
@@ -155,7 +155,7 @@ def setAudioDuckingMode(mode):
 			winBindings.kernel32.SetEvent(_modeChangeEvent)
 		_modeChangeEvent = AutoEvent()
 		if _isDebug():
-			log.debug("Switched modes from %s, to %s" % (oldMode, mode))
+			log.debug("Switched modes from %s, to %s" % (oldMode, mode))  # noqa: UP031
 		if oldMode == AudioDuckingMode.NONE and mode != AudioDuckingMode.NONE and _duckingRefCount > 0:
 			_setDuckingState(True)
 		elif oldMode != AudioDuckingMode.NONE and mode == AudioDuckingMode.NONE and _duckingRefCount > 0:
@@ -225,7 +225,7 @@ class AudioDucker:
 			deltaMS = int((INITIAL_DUCKING_DELAY - whenWasDucked) * 1000)
 			disableEvent = self._disabledEvent = AutoEvent()
 			if debug:
-				log.debug("whenWasDucked %s, deltaMS %s" % (whenWasDucked, deltaMS))
+				log.debug("whenWasDucked %s, deltaMS %s" % (whenWasDucked, deltaMS))  # noqa: UP031
 			if deltaMS <= 0 or _audioDuckingMode == AudioDuckingMode.NONE:
 				return True
 		import NVDAHelper
@@ -235,7 +235,7 @@ class AudioDucker:
 				log.debug("No background audio, not delaying")
 			return True
 		if debug:
-			log.debug("waiting %s ms or mode change" % deltaMS)
+			log.debug("waiting %s ms or mode change" % deltaMS)  # noqa: UP031
 		wasCanceled = (
 			winBindings.kernel32.WaitForMultipleObjects(
 				2,

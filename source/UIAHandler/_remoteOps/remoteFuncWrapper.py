@@ -4,8 +4,8 @@
 # Copyright (C) 2023-2025 NV Access Limited
 
 
-from collections.abc import Callable
-from typing import (
+from collections.abc import Callable  # noqa: I001
+from typing import (  # noqa: UP035
 	ContextManager,
 	Concatenate,
 )
@@ -21,7 +21,7 @@ class _BaseRemoteFuncWrapper:
 	def generateArgsKwargsString(self, *args, **kwargs) -> str:
 		argsString = ", ".join(map(repr, args))
 		kwargsString = ", ".join(f"{key}={val!r}" for key, val in kwargs.items())
-		return f"({', '.join([argsString, kwargsString])})"
+		return f"({', '.join([argsString, kwargsString])})"  # noqa: FLY002
 
 	def _execRawFunc[**P, R](
 		self,

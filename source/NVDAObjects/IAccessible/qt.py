@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import controlTypes
+import controlTypes  # noqa: I001
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
 from scriptHandler import isScriptWaiting
@@ -98,7 +98,7 @@ class TableCell(IAccessible):
 			if previous and controlTypes.State.FOCUSED in previous.states:
 				eventHandler.executeEvent("gainFocus", previous)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": "nextColumn",
 		"kb:rightArrow": "nextColumn",
 		"kb:shift+tab": "previousColumn",

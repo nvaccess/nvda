@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-import api
+import api  # noqa: I001
 from baseObject import ScriptableObject
 import winUser
 from logHandler import log
@@ -32,7 +32,7 @@ def getObjectPosition(obj):
 			pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		except (NotImplementedError, RuntimeError):
 			log.debugWarning(
-				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,
+				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,  # noqa: UP031
 			)
 			# First position not supported either, return first position from a generic NVDAObjectTextInfo
 			return NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST), obj
@@ -129,7 +129,7 @@ def setCurrentMode(
 				mode = index
 				break
 		else:
-			raise LookupError("mode %s not found" % mode)
+			raise LookupError("mode %s not found" % mode)  # noqa: UP031
 	obj = api.getNavigatorObject()
 	pos = func(obj)
 	if pos:
@@ -172,7 +172,7 @@ def handleCaretMove(pos):
 		obj = pos
 	mode = getCurrentMode()
 	if isinstance(obj, NVDAObject):
-		if not mode == "object" or obj != api.getNavigatorObject():
+		if not mode == "object" or obj != api.getNavigatorObject():  # noqa: SIM201
 			return
 	elif isinstance(obj, DocumentTreeInterceptor):
 		if mode not in ("object", "document"):

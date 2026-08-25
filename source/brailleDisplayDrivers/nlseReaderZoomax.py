@@ -5,7 +5,7 @@
 
 """NLS eReader Zoomax driver for NVDA."""
 
-import bdDetect
+import bdDetect  # noqa: I001
 import braille
 import braille.display.driver
 import braille.display.gesture
@@ -107,7 +107,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("NLS eReader Z"))
 
 	def _connect(self, port: str) -> bool:
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			try:
 				self._dev = hwIo.Serial(
 					port,

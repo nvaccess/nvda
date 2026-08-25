@@ -5,7 +5,7 @@
 
 """Unit tests for the excel module."""
 
-import unittest
+import unittest  # noqa: I001
 from NVDAObjects.window import excel
 
 

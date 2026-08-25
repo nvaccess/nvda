@@ -6,7 +6,7 @@
 
 """Check a translation template (pot) for strings without translator comments."""
 
-import sys
+import sys  # noqa: I001
 
 
 # Existing messages that we know don't have translator comments yet.
@@ -133,7 +133,7 @@ def checkPot(fileName):
 					# 	"keys are passed to the application"
 					msgid = ""
 					for line in pot:
-						if line.startswith("msgstr ") or line.startswith("msgid_plural"):
+						if line.startswith("msgstr ") or line.startswith("msgid_plural"):  # noqa: PIE810
 							# This begins the translated or plural message, so msgid has ended.
 							break
 						msgid += getStringFromLine(line)

@@ -4,7 +4,7 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import (
 	Generic,
 )
@@ -29,7 +29,7 @@ from . import (
 )
 
 
-class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
+class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):  # noqa: UP046
 	"""
 	Represents a remote object that supports UI Automation custom extensions.
 	Including checking for the existence of extensions and

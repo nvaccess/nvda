@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2024 NV Access Limited
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import contextlib
 from typing import (
 	Any,
@@ -297,7 +297,7 @@ class Operation:
 					f"Remote log for execution {self._executionCount}\n"
 					"--- Begin ---\n"
 					f"{logOutput}"
-					"--- end ---",  # fmt: skip
+					"--- end ---",  # fmt: skip  # noqa: RUF028
 				)
 
 	def _dumpCompiletimeLog(self):
@@ -346,5 +346,5 @@ class Operation:
 		if self._yieldListOperand is None:
 			raise RuntimeError("RemoteOperation has no yield list operand")
 		for executionResult in self._executeUntilSuccess(maxTries):
-			for value in self._yieldListOperand.localValue:
+			for value in self._yieldListOperand.localValue:  # noqa: UP028
 				yield value

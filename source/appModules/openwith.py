@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from NVDAObjects.UIA import UIA
 from NVDAObjects.behaviors import Dialog
@@ -42,7 +42,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, ImmersiveOpenWithFlyout)
 
 	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
-		if winUser.getClassName(hwnd) in (
+		if winUser.getClassName(hwnd) in (  # noqa: SIM103
 			# #11335: Open With dialog isn't read in Windows 10 Version 2004 (May 2020 Update).
 			# Note that treating the below window as a UIA window will make NVDA no longer announce "pane".
 			"Shell_Flyout",

@@ -5,7 +5,7 @@
 
 """Helper module to ease communication to and from liblouis."""
 
-import os
+import os  # noqa: I001
 from collections.abc import Sequence
 from ctypes import (
 	WINFUNCTYPE,
@@ -160,7 +160,7 @@ def louis_log(level, message):
 	if not log.isEnabledFor(NVDALevel):
 		return
 	message = message.decode("ASCII")
-	codepath = "liblouis at internal log level %d" % level
+	codepath = "liblouis at internal log level %d" % level  # noqa: UP031
 	log._log(NVDALevel, message, [], codepath=codepath)
 
 

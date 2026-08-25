@@ -6,7 +6,7 @@
 
 """NVDAObjects for Microsoft HTML Help."""
 
-import IAccessibleHandler
+import IAccessibleHandler  # noqa: I001
 from . import IAccessible
 
 

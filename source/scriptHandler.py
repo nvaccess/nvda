@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections.abc import Callable, Generator, Iterator
+from collections.abc import Callable, Generator, Iterator  # noqa: I001
 import time
 import weakref
 import types
@@ -45,7 +45,7 @@ def _makeKbEmulateScript(scriptName):
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
 	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
-	func.__name__ = "script_%s" % scriptName
+	func.__name__ = "script_%s" % scriptName  # noqa: UP031
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
@@ -70,7 +70,7 @@ def _getObjScript(
 				# Emulate a key press.
 				return _makeKbEmulateScript(scriptName)
 			try:
-				return getattr(obj, "script_%s" % scriptName)
+				return getattr(obj, "script_%s" % scriptName)  # noqa: UP031
 			except AttributeError:
 				pass
 
@@ -224,7 +224,7 @@ def getScriptLocation(script):
 	name = script.__name__
 	for cls in instance.__class__.__mro__:
 		if name in cls.__dict__:
-			return "%s.%s" % (cls.__module__, cls.__name__)
+			return "%s.%s" % (cls.__module__, cls.__name__)  # noqa: UP031
 
 
 def _isInterceptedCommandScript(script):
@@ -292,7 +292,7 @@ def executeScript(script, gesture):
 		_lastScriptTime = scriptTime
 		script(gesture)
 	except:  # noqa: E722
-		log.exception("error executing script: %s with gesture %r" % (script, gesture.displayName))
+		log.exception("error executing script: %s with gesture %r" % (script, gesture.displayName))  # noqa: UP031
 	finally:
 		_isScriptRunning = False
 		if resumeSayAllMode is not None:
@@ -371,13 +371,13 @@ def script(
 		# Decoratable scripts are functions, not bound instance methods.
 		if not isinstance(decoratedScript, types.FunctionType):
 			log.warning(
-				"Using the script decorator is unsupported for %r" % decoratedScript,
+				"Using the script decorator is unsupported for %r" % decoratedScript,  # noqa: UP031
 				stack_info=True,
 			)
 			return decoratedScript
 		if not decoratedScript.__name__.startswith("script_"):
 			log.warning(
-				"Can't apply  script decorator to %r which name does not start with 'script_'"
+				"Can't apply  script decorator to %r which name does not start with 'script_'"  # noqa: UP031
 				% decoratedScript.__name__,
 				stack_info=True,
 			)

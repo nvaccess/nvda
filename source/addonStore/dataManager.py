@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from copy import deepcopy
+from copy import deepcopy  # noqa: I001
 import json
 import os
 import pathlib
@@ -46,7 +46,7 @@ from .settings import _AddonStoreSettings
 
 
 if TYPE_CHECKING:
-	from addonHandler import Addon as AddonHandlerModel
+	from addonHandler import Addon as AddonHandlerModel  # noqa: I001
 
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
 	from .models.addon import AddonGUICollectionT, _AddonGUIModel, _AddonStoreModel
@@ -80,8 +80,8 @@ def terminate():
 class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
-	_downloadsPendingInstall: set[tuple["AddonListItemVM[_AddonStoreModel]", os.PathLike]] = set()
-	_downloadsPendingCompletion: set["AddonListItemVM[_AddonStoreModel]"] = set()
+	_downloadsPendingInstall: set[tuple["AddonListItemVM[_AddonStoreModel]", os.PathLike]] = set()  # noqa: RUF012
+	_downloadsPendingCompletion: set["AddonListItemVM[_AddonStoreModel]"] = set()  # noqa: RUF012
 
 	def __init__(self):
 		self._lang = languageHandler.getLanguage()

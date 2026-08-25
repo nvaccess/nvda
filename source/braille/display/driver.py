@@ -35,20 +35,20 @@ from ..constants import (
 def _getDisplayDriver(moduleName: str, caseSensitive: bool = True) -> type[BrailleDisplayDriver]:
 	try:
 		return importlib.import_module(
-			"brailleDisplayDrivers.%s" % moduleName,
+			"brailleDisplayDrivers.%s" % moduleName,  # noqa: UP031
 			package="brailleDisplayDrivers",
 		).BrailleDisplayDriver
 	except ImportError as initialException:
 		if caseSensitive:
-			raise initialException
+			raise initialException  # noqa: TRY201
 		for loader, name, isPkg in pkgutil.iter_modules(brailleDisplayDrivers.__path__):
 			if name.startswith("_") or name.lower() != moduleName.lower():
 				continue
 			return importlib.import_module(
-				"brailleDisplayDrivers.%s" % name,
+				"brailleDisplayDrivers.%s" % name,  # noqa: UP031
 				package="brailleDisplayDrivers",
 			).BrailleDisplayDriver
-		raise initialException
+		raise initialException  # noqa: TRY201
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
@@ -171,7 +171,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			self.display([0] * self.numCells)
 		except Exception:
 			# The display driver seems to be failing, but we're terminating anyway, so just ignore it.
-			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)
+			log.error(f"Display driver {self} failed to display while terminating.", exc_info=True)  # noqa: G201
 
 	#: typing information for autoproperty _get_numCells
 	numCells: int
@@ -266,7 +266,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 			iters.append(bdDetect.getPossibleBluetoothDevicesForDriver(cls.name))
 
 		try:
-			for match in itertools.chain(*iters):
+			for match in itertools.chain(*iters):  # noqa: UP028
 				yield match
 		except LookupError:
 			pass
@@ -309,7 +309,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 						portInfo,
 					)
 			else:
-				for match in cls._getAutoPorts(usb=isUsb, bluetooth=isBluetooth):
+				for match in cls._getAutoPorts(usb=isUsb, bluetooth=isBluetooth):  # noqa: UP028
 					yield match
 
 	#: Global input gesture map for this display driver.

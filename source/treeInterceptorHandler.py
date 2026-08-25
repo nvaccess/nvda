@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
+from typing import (  # noqa: I001
 	TYPE_CHECKING,
 )
 
@@ -70,7 +70,7 @@ def update(obj, force=False):
 		if not ti.isAlive:
 			return None
 		runningTable.add(ti)
-		log.debug("Adding new treeInterceptor to runningTable: %s" % ti)
+		log.debug("Adding new treeInterceptor to runningTable: %s" % ti)  # noqa: UP031
 	if ti.shouldPrepare:
 		ti.prepare()
 	return ti
@@ -89,7 +89,7 @@ def killTreeInterceptor(treeInterceptorObject):
 	except KeyError:
 		return
 	treeInterceptorObject.terminate()
-	log.debug("Killed treeInterceptor: %s" % treeInterceptorObject)
+	log.debug("Killed treeInterceptor: %s" % treeInterceptorObject)  # noqa: UP031
 
 
 def terminate():
@@ -165,7 +165,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 			vision.handler.handleGainFocus(focusObj)
 		else:
 			obj = api.getNavigatorObject()
-			if config.conf["reviewCursor"]["followCaret"] and self is obj.treeInterceptor:
+			if config.conf["reviewCursor"]["followCaret"] and self is obj.treeInterceptor:  # noqa: SIM102
 				if review.getCurrentMode() == "object":
 					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review
 					review.setCurrentMode("document", True)

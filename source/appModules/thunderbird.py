@@ -6,7 +6,7 @@
 
 """App module for Thunderbird email client."""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 import api
 import speech

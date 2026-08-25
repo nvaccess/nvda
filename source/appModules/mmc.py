@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import api
+import api  # noqa: I001
 import appModuleHandler
 import controlTypes
 import eventHandler
@@ -71,7 +71,7 @@ class AppModule(appModuleHandler.AppModule):
 	def isBadUIAWindow(self, hwnd):
 		windowClassName = winUser.getClassName(hwnd)
 		normalizedClassName = NVDAObjects.window.Window.normalizeWindowClassName(windowClassName)
-		if normalizedClassName in (
+		if normalizedClassName in (  # noqa: SIM103
 			# #15333: SysListView32 controls in mmc are known to have an incomplete UIA implementation.
 			# Revert back to the MSAA implementation instead.
 			"SysListView32"

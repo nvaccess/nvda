@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-from time import (
+from time import (  # noqa: I001
 	perf_counter as timer,
 	sleep,
 )

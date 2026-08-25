@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
+from typing import (  # noqa: I001
 	NamedTuple,
 	Protocol,
 )
@@ -50,7 +50,7 @@ class SupportsVersionCheck(Protocol):
 	@property
 	def _hasOverriddenCompat(self) -> bool:
 		"""If True, this add-on has been manually overriden. The affects of override may be pending restart"""
-		import addonHandler
+		import addonHandler  # noqa: I001
 		from addonStore.models.status import AddonStateCategory
 
 		return (

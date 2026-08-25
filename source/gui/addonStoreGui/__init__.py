@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from utils.schedule import scheduleThread, ThreadTarget
+from utils.schedule import scheduleThread, ThreadTarget  # noqa: I001
 
 from .controls.storeDialog import AddonStoreDialog
 from .controls.messageDialogs import UpdatableAddonsDialog

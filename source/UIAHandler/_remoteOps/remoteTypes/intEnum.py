@@ -4,7 +4,7 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import (
 	Any,
 	Self,
@@ -69,7 +69,7 @@ def _makeRemoteEnum(enumType: type[enum.IntEnum]) -> type[RemoteInt]:
 _RemoteIntEnum_LocalTypeVar = TypeVar("_RemoteIntEnum_LocalTypeVar", bound=enum.IntEnum)
 
 
-class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
+class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):  # noqa: UP046
 	localType = enum.IntEnum
 	_enumType: _RemoteIntEnum_LocalTypeVar
 

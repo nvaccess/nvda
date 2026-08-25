@@ -8,7 +8,7 @@ This module assists in NVDA going global through language services
 such as converting Windows locale ID's to friendly names and presenting available languages.
 """
 
-import os
+import os  # noqa: I001
 import ctypes
 
 import weakref
@@ -89,7 +89,7 @@ def isNormalizedWin32Locale(localeName: str) -> bool:
 	underscoresCount = localeName.count("_")
 	if not hyphensCount and not underscoresCount:
 		return True
-	if hyphensCount:
+	if hyphensCount:  # noqa: SIM103
 		return True
 	return False
 

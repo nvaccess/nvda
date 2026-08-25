@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import os
+import os  # noqa: I001
 import importlib
 import fnmatch
 from glob import glob
@@ -25,7 +25,7 @@ runtimeDestDir = args.dest_dir
 
 sys.path.insert(0, nvdaSourceDir)
 
-import gettext
+import gettext  # noqa: I001
 from buildVersion import (
 	formatBuildVersionString,
 	name,
@@ -43,7 +43,7 @@ gettext.install("nvda")
 
 # versionInfo names must be imported after Gettext
 # Suppress E402 (module level import not at top of file)
-from versionInfo import (
+from versionInfo import (  # noqa: I001
 	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
 )

@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import bdDetect
+import bdDetect  # noqa: I001
 import braille
 import braille.display
 import braille.display.driver
@@ -216,7 +216,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		self._rawKeyboardInput = False
 		self._deviceId = None
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
@@ -371,7 +371,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
 		try:
-			displayDateTime = datetime.datetime(
+			displayDateTime = datetime.datetime(  # noqa: DTZ001
 				year=year,
 				month=time[2],
 				day=time[3],
@@ -380,14 +380,14 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 				second=time[6],
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of ALVA display: %r" % time)
+			log.debugWarning("Invalid time/date of ALVA display: %r" % time)  # noqa: UP031
 			return
-		localDateTime = datetime.datetime.today()
+		localDateTime = datetime.datetime.today()  # noqa: DTZ002
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
-			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())
+			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())  # noqa: UP031
 			self._syncTime(localDateTime)
 		else:
-			log.debug("Time not synchronized. Display time %s" % displayDateTime.isoformat())
+			log.debug("Time not synchronized. Display time %s" % displayDateTime.isoformat())  # noqa: UP031
 
 	def _syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
@@ -461,7 +461,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	# Translators: Description of the script that toggles HID keyboard simulation.
 	script_toggleHidKeyboardInput.__doc__ = _("Toggles HID keyboard simulation")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(alva):t1+spEnter": "toggleHidKeyboardInput",
 	}
 
@@ -536,7 +536,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 				try:
 					keyName = ALVA_KEYS[group][number]
 				except (KeyError, IndexError):
-					log.debugWarning("Unknown key with group %d and number %d" % (group, number))
+					log.debugWarning("Unknown key with group %d and number %d" % (group, number))  # noqa: UP031
 					return
 				names.append(keyName)
 				if isNoBC640:

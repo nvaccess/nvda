@@ -8,7 +8,7 @@
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import itertools
 import ctypes
 import ctypes.wintypes
@@ -73,7 +73,7 @@ _getAppModuleLock = threading.RLock()
 post_appSwitch = extensionPoints.Action()
 
 
-_executableNamesToAppModsAddons: dict[str, str] = dict()
+_executableNamesToAppModsAddons: dict[str, str] = dict()  # noqa: C408
 """AppModules registered with a given binary by add-ons are placed here.
 We cannot use l{appModules.EXECUTABLE_NAMES_TO_APP_MODS} for modules included in add-ons,
 since appModules in add-ons should take precedence over the one bundled in NVDA.
@@ -122,7 +122,7 @@ def doesAppModuleExist(name: str) -> bool:
 		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
 	except ImportError:
 		modSpec = None
-	if modSpec is None:
+	if modSpec is None:  # noqa: SIM103
 		return False
 	return True
 
@@ -272,9 +272,9 @@ def update(processID, helperLocalBindingHandle=None, inprocRegistrationHandle=No
 def cleanup():
 	"""Removes any appModules from the cache whose process has died."""
 	for deadMod in [mod for mod in runningTable.values() if not mod.isAlive]:
-		log.debug("application %s closed" % deadMod.appName)
+		log.debug("application %s closed" % deadMod.appName)  # noqa: UP031
 		del runningTable[deadMod.processID]
-		if deadMod in set(
+		if deadMod in set(  # noqa: C401, SIM102
 			o.appModule for o in api.getFocusAncestors() + [api.getFocusObject()] if o and o.appModule
 		):
 			if hasattr(deadMod, "event_appLoseFocus"):
@@ -285,7 +285,7 @@ def cleanup():
 		try:
 			deadMod.terminate()
 		except:  # noqa: E722
-			log.exception("Error terminating app module %r" % deadMod)
+			log.exception("Error terminating app module %r" % deadMod)  # noqa: UP031
 
 
 def fetchAppModule(processID: int, appName: str) -> AppModule:
@@ -304,7 +304,7 @@ def fetchAppModule(processID: int, appName: str) -> AppModule:
 		# what exceptions may be thrown during import / construction of the App Module.
 	except Exception:
 		log.exception(f"error in appModule {modName!r}")
-		import ui
+		import ui  # noqa: I001
 		import speech.priorities
 
 		ui.message(
@@ -368,7 +368,7 @@ def reloadAppModules():
 		except AttributeError:
 			continue
 		# Fetch and cache right away; the process could die any time.
-		obj.appModule
+		obj.appModule  # noqa: B018
 
 
 def initialize():
@@ -381,11 +381,11 @@ initialize._alreadyInitialized = False
 
 
 def terminate():
-	for processID, app in runningTable.items():
+	for processID, app in runningTable.items():  # noqa: PERF102
 		try:
 			app.terminate()
 		except:  # noqa: E722
-			log.exception("Error terminating app module %r" % app)
+			log.exception("Error terminating app module %r" % app)  # noqa: UP031
 	runningTable.clear()
 
 
@@ -729,7 +729,7 @@ class AppModule(baseObject.ScriptableObject):
 				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
 			)
 		except OSError:
-			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)  # noqa: G201
 			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
 
@@ -850,13 +850,13 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		path = os.path.join(
 			tempfile.gettempdir(),
-			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID),
+			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID),  # noqa: UP031
 		)
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle,
 			path,
 		)
-		print("Dump path: %s" % path)
+		print("Dump path: %s" % path)  # noqa: UP031
 
 	def _get_statusBar(self):
 		"""Retrieve the status bar object of the application.
@@ -898,27 +898,27 @@ class AppModule(baseObject.ScriptableObject):
 		info = []
 		try:
 			ret = repr(self)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule: {ret}")
 		try:
 			ret = repr(self.productName)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.productName: {ret}")
 		try:
 			ret = repr(self.productVersion)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.productVersion: {ret}")
 		try:
 			ret = repr(self.helperLocalBindingHandle)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.helperLocalBindingHandle: {ret}")
 		try:
 			ret = repr(self.appArchitecture)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.appArchitecture: {ret}")
 		return info
@@ -928,7 +928,7 @@ class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus."""
 
 	def __init__(self, appName):
-		self.spec = "app:%s" % appName
+		self.spec = "app:%s" % appName  # noqa: UP031
 
 
 def getWmiProcessInfo(processId):
@@ -943,7 +943,7 @@ def getWmiProcessInfo(processId):
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
 		results = wmi.ExecQuery(
-			"select * from Win32_Process where ProcessId = %d" % processId,
+			"select * from Win32_Process where ProcessId = %d" % processId,  # noqa: UP031
 		)
 		for result in results:
 			return result

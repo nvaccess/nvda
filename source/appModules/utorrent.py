@@ -7,7 +7,7 @@
 
 """App module for µTorrent"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import api
 import controlTypes
 import displayModel

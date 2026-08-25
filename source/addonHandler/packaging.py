@@ -5,7 +5,7 @@
 
 """Functions to add python modules within addon directories to python module paths."""
 
-import os.path
+import os.path  # noqa: I001
 from types import ModuleType
 import globalVars
 import config

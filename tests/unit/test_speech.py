@@ -5,7 +5,7 @@
 
 """Unit tests for the speech module."""
 
-import gettext
+import gettext  # noqa: I001
 import unittest
 
 import config

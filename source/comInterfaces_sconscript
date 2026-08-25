@@ -12,7 +12,7 @@
 # This license can be found at:
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 import re
 from SCons.Node.FS import File
 

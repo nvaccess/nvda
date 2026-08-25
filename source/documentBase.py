@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 from enum import Enum
 from typing import Any, Union
 from baseObject import AutoPropertyObject, ScriptableObject
@@ -12,7 +12,7 @@ import textInfos
 import controlTypes
 from speech import sayAll
 
-_TableID = Union[int, tuple, Any]
+_TableID = Union[int, tuple, Any]  # noqa: UP007
 """
 A variety of types can be used for a tableID.
 Known to be a tuple for UIA, an integer for virtual buffers.
@@ -362,7 +362,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 			# Translators: The message reported when a user attempts to use a table movement command
 			# when the cursor is not within a table.
 			ui.message(_("Not in a table cell"))
-			raise e
+			raise e  # noqa: TRY201
 
 		try:
 			if movement in {_Movement.PREVIOUS, _Movement.NEXT}:
@@ -386,7 +386,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 			newCell = self._getTableCellCoords(info)
 		except LookupError as e:
 			if raiseOnEdge:
-				raise e
+				raise e  # noqa: TRY201
 			# Translators: The message reported when a user attempts to use a table movement command
 			# but the cursor can't be moved in that direction because it is at the edge of the table.
 			ui.message(_("Edge of table"))
@@ -591,7 +591,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 		"Toggles on and off the inclusion of layout tables in browse mode",
 	)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",

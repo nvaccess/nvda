@@ -8,7 +8,7 @@
 This module provides functions for drawing Braille cells on a TactileGraphicsBuffer.
 """
 
-from . import TactileGraphicsBuffer
+from . import TactileGraphicsBuffer  # noqa: I001
 
 
 CELL_WIDTH = 2

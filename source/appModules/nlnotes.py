@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2011-2012 NV Access Limited
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import DisplayModelEditableText

@@ -5,7 +5,7 @@
 
 """Gesture handling for Tivomatic Caiku Albatross 46 and 80 display driver."""
 
-from logHandler import log
+from logHandler import log  # noqa: I001
 
 import braille
 import braille.display.gesture

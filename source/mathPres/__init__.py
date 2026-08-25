@@ -10,9 +10,9 @@ Plugins can register their own implementation for any or all of these
 using ``registerProvider``.
 """
 
-import re
+import re  # noqa: I001
 import typing
-from typing import List, Optional, Union
+from typing import List, Optional, Union  # noqa: F401, UP035
 
 from NVDAObjects.window import Window
 import controlTypes
@@ -177,7 +177,7 @@ class MathInteractionNVDAObject(Window):
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Exit math interaction")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:escape": "exit",
 	}
 
@@ -254,4 +254,4 @@ RE_MATH_APPEND = re.compile(r"(<math[^>]*)>")
 
 def insertLanguageIntoMath(mathMl, language):
 	"""Insert the specified language into a math tag."""
-	return RE_MATH_APPEND.sub(r'\1 xml:lang="%s">' % language, mathMl, count=1)
+	return RE_MATH_APPEND.sub(r'\1 xml:lang="%s">' % language, mathMl, count=1)  # noqa: UP031

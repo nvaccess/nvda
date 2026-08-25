@@ -476,7 +476,7 @@ class NVDAHighlighterGuiPanel(
 
 
 class NVDAHighlighter(providerBase.VisionEnhancementProvider):
-	_ContextStyles = {
+	_ContextStyles = {  # noqa: RUF012
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,

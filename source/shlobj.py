@@ -11,7 +11,7 @@ or location on any given system. For example, the system folder may be "C:\Windo
 and "C:\Winnt" on another.
 """
 
-import comtypes
+import comtypes  # noqa: I001
 import ctypes
 from enum import Enum
 import functools

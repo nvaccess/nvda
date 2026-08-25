@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2018-2021 NV Access Limited, Leonard de Ruijter
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import winVersion
 import UIAHandler
 import UIAHandler.constants
@@ -383,7 +383,7 @@ class ExcelCell(ExcelObject):
 			except COMError:
 				# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
 				annotationTypes = None
-			if annotationTypes:
+			if annotationTypes:  # noqa: SIM102
 				if self._UIAExcelCustomAnnotationTypes.note.id in annotationTypes:
 					states.add(controlTypes.State.HASNOTE)
 		return states

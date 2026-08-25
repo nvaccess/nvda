@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
+import time  # noqa: I001
 
 import serial
 import braille
@@ -163,7 +163,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		super().__init__()
 		self.numCells = 0
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
@@ -262,7 +262,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def _serOnReceive(self, data: bytes):
 		if data != HEADER:
-			log.debugWarning("Ignoring byte before header: %r" % data)
+			log.debugWarning("Ignoring byte before header: %r" % data)  # noqa: UP031
 			return
 		msgId = self._dev.read(1)
 		length = ord(self._dev.read(1))
@@ -273,7 +273,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		if msgId == MSG_INIT_RESP:
 			if payload[0] != 0:
 				# Communication not allowed.
-				log.debugWarning("Display at %r reports communication not allowed" % self._dev.port)
+				log.debugWarning("Display at %r reports communication not allowed" % self._dev.port)  # noqa: UP031
 				return
 			self.numCells = payload[2]
 
@@ -309,7 +309,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		elif rId == HR_POWEROFF:
 			log.debug("Powering off")
 		else:
-			log.debugWarning("Unknown report: %r" % data)
+			log.debugWarning("Unknown report: %r" % data)  # noqa: UP031
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -406,7 +406,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 				try:
 					names.append(KEY_NAMES[key])
 				except KeyError:
-					log.debugWarning("Unknown key with id %d" % key)
+					log.debugWarning("Unknown key with id %d" % key)  # noqa: UP031
 		if routingIndexes:
 			routingIndexes.sort()
 			self.cellIndexes = routingIndexes

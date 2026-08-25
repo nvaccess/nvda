@@ -9,7 +9,7 @@ Utilities for working with windows (HWNDs).
 When working on this file, consider moving to winAPI.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 import ctypes.wintypes
 import weakref
 import winBindings.kernel32
@@ -270,7 +270,7 @@ class CustomWindow(AutoPropertyObject):
 		try:
 			inst = CustomWindow._hwndsToInstances[hwnd]
 		except KeyError:
-			log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)
+			log.debug("CustomWindow rawWindowProc called for unknown window %d" % hwnd)  # noqa: UP031
 			return user32.DefWindowProc(hwnd, msg, wParam, lParam)
 		try:
 			res = inst.windowProc(hwnd, msg, wParam, lParam)

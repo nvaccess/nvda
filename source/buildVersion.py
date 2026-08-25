@@ -22,14 +22,14 @@ def _updateVersionFromVCS():
 			head = f.read().rstrip()
 		if not head.startswith("ref: "):
 			# Detached head.
-			version = "source-DETACHED-%s" % head[:7]
+			version = "source-DETACHED-%s" % head[:7]  # noqa: UP031
 			return
 		# Strip the "ref: " prefix to get the ref.
 		ref = head[5:]
 		with open(os.path.join(gitDir, ref), "r") as f:
 			commit = f.read().rstrip()
 		version = f"source-{os.path.basename(ref)}-{commit[:7]}"
-	except:  # noqa: E722
+	except:  # noqa: E722, S110
 		pass
 
 
@@ -73,7 +73,7 @@ copyrightYears = "2006-2026"
 url = "https://www.nvaccess.org"
 updateVersionType = None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401
+	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource]  # noqa: F401, I001
 except ImportError:
 	_updateVersionFromVCS()
 

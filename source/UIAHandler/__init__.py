@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes
+import ctypes  # noqa: I001
 import ctypes.wintypes
 from ctypes import (
 	POINTER,
@@ -51,7 +51,7 @@ from comInterfaces import UIAutomationClient as UIA
 # F403: unable to detect undefined names
 from comInterfaces.UIAutomationClient import *
 import textInfos
-from typing import Dict
+from typing import Dict  # noqa: F401, UP035
 from queue import Queue
 import aria
 import NVDAHelper
@@ -316,7 +316,7 @@ def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
 		return False
 	try:
 		officeVersion = tuple(int(x) for x in appModule.productVersion.split(".")[:3])
-	except Exception:
+	except Exception:  # noqa: BLE001
 		log.debugWarning(f"Unable to parse office version: {appModule.productVersion}", exc_info=True)
 		return False
 	if officeVersion < (16, 0, 15000):
@@ -327,7 +327,7 @@ def shouldUseUIAInMSWord(appModule: appModuleHandler.AppModule) -> bool:
 
 
 class UIAHandler(COMObject):
-	_com_interfaces_ = [
+	_com_interfaces_ = [  # noqa: RUF012
 		UIA.IUIAutomationEventHandler,
 		UIA.IUIAutomationFocusChangedEventHandler,
 		UIA.IUIAutomationPropertyChangedEventHandler,
@@ -337,7 +337,7 @@ class UIAHandler(COMObject):
 	_rateLimitedEventHandler: IUnknown | None = None
 
 	#: A cache of UIA notification kinds to friendly names for logging
-	_notificationKindsToNamesCache = {
+	_notificationKindsToNamesCache = {  # noqa: RUF012
 		v: k[len("NotificationKind_") :] for k, v in vars(UIA).items() if k.startswith("NotificationKind_")
 	}
 
@@ -356,7 +356,7 @@ class UIAHandler(COMObject):
 		return name
 
 	#: A cache of UIA notification processing values  to friendly names for logging
-	_notificationProcessingValuesToNamesCache = {
+	_notificationProcessingValuesToNamesCache = {  # noqa: RUF012
 		v: k[len("NotificationProcessing_") :]
 		for k, v in vars(UIA).items()
 		if k.startswith("NotificationProcessing_")
@@ -394,7 +394,7 @@ class UIAHandler(COMObject):
 		return name
 
 	#: A cache of UIA event IDs to friendly names for logging
-	_eventIDsToNamesCache = {
+	_eventIDsToNamesCache = {  # noqa: RUF012
 		v: k[len("UIA_") : -len("EventId")] for k, v in vars(UIA).items() if k.endswith("EventId")
 	}
 
@@ -472,7 +472,7 @@ class UIAHandler(COMObject):
 		# Terminate the rate limited event handler if it exists.
 		# We must do this from the main thread to totally ensure that the thread is terminated,
 		# As this is a c++ thread so Python cannot kill it off at process exit.
-		if config.conf["UIA"]["enhancedEventProcessing"]:
+		if config.conf["UIA"]["enhancedEventProcessing"]:  # noqa: SIM102
 			if self._rateLimitedEventHandler:
 				log.debug("UIAHandler: Terminating enhanced event processing")
 				NVDAHelper.localLib.rateLimitedUIAEventHandler_terminate(self._rateLimitedEventHandler)
@@ -568,7 +568,7 @@ class UIAHandler(COMObject):
 			self._registerGlobalEventHandlers(handler)
 			if winVersion.getWinVer() >= winVersion.WIN11:
 				UIARemote.initialize(True, self.clientObject)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			self.MTAThreadInitException = e
 		finally:
 			self.MTAThreadInitEvent.set()
@@ -578,7 +578,7 @@ class UIAHandler(COMObject):
 				try:
 					func()
 				except Exception:
-					log.error("Exception in function queued to UIA MTA thread", exc_info=True)
+					log.error("Exception in function queued to UIA MTA thread", exc_info=True)  # noqa: G201
 			else:
 				break
 		self.clientObject.RemoveAllEventHandlers()
@@ -732,7 +732,7 @@ class UIAHandler(COMObject):
 					)
 				self.addEventHandlerGroup(element, group)
 			except COMError:
-				log.error("Could not register for UIA events for element", exc_info=True)
+				log.error("Could not register for UIA events for element", exc_info=True)  # noqa: G201
 			else:
 				self._localEventHandlerGroupElements.add(element)
 
@@ -838,7 +838,7 @@ class UIAHandler(COMObject):
 		if not obj:
 			try:
 				obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
-			except Exception:
+			except Exception:  # noqa: BLE001
 				if _isDebug():
 					log.debugWarning(
 						f"HandleAutomationEvent: Exception while creating object for event {NVDAEventName}",
@@ -930,7 +930,7 @@ class UIAHandler(COMObject):
 			return
 		try:
 			obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if _isDebug():
 				log.debugWarning(
 					"HandleFocusChangedEvent: Exception while creating NVDAObject ",
@@ -1039,7 +1039,7 @@ class UIAHandler(COMObject):
 		if not obj:
 			try:
 				obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
-			except Exception:
+			except Exception:  # noqa: BLE001
 				if _isDebug():
 					log.debugWarning(
 						f"HandlePropertyChangedEvent: Exception while creating object for event {NVDAEventName}",
@@ -1122,7 +1122,7 @@ class UIAHandler(COMObject):
 
 		try:
 			obj = NVDAObjects.UIA.UIA(UIAElement=sender, windowHandle=window)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if _isDebug():
 				log.debugWarning(
 					"HandleNotificationEvent: Exception while creating object: "
@@ -1180,7 +1180,7 @@ class UIAHandler(COMObject):
 
 		try:
 			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if _isDebug():
 				log.debugWarning(
 					"HandleActiveTextPositionChangedEvent: Exception while creating object: ",
@@ -1326,7 +1326,7 @@ class UIAHandler(COMObject):
 				# 'brchrome' is part of HP SureClick, a chromium-based browser which runs webpages to run in separate
 				# virtual machines - it supports UIA remoting but not IAccessible2 remoting.
 				hasAccessToIA2 = (
-					not appModule.isRunningUnderDifferentLogonSession and not appModule.appName == "brchrome"
+					not appModule.isRunningUnderDifferentLogonSession and not appModule.appName == "brchrome"  # noqa: SIM201
 				)
 				if (
 					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO

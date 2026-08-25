@@ -5,7 +5,7 @@
 
 """Unit tests for SpeechWithoutPauses"""
 
-import unittest
+import unittest  # noqa: I001
 
 from speech.types import SpeechSequence
 from speech.commands import EndUtteranceCommand, LangChangeCommand, CallbackCommand

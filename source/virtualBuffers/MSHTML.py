@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2009-2024 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
 from controlTypes import TextPosition, TextAlign
@@ -162,7 +162,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 								NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode),
 							).text
 						)
-					except:  # noqa: E722
+					except:  # noqa: E722, S110
 						pass
 		ariaSort = attrs.get("HTMLAttrib::aria-sort")
 		state = aria.ariaSortValuesToNVDAStates.get(ariaSort)
@@ -252,7 +252,7 @@ class MSHTML(VirtualBuffer):
 		try:
 			url = getattr(self.rootNVDAObject.HTMLNode.document, "url", "").split("#")
 		except COMError as e:
-			log.debugWarning("Error getting URL from document: %s" % e)
+			log.debugWarning("Error getting URL from document: %s" % e)  # noqa: UP031
 			return None
 		if not url or len(url) != 2:
 			return None
@@ -299,14 +299,14 @@ class MSHTML(VirtualBuffer):
 			# Otherwise, we'll keep querying it on every focus change and freezing.
 			return False
 		states = root.states
-		if controlTypes.State.EDITABLE in states:
+		if controlTypes.State.EDITABLE in states:  # noqa: SIM103
 			return False
 		return True
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		HTMLNode = NVDAObjects.IAccessible.MSHTML.locateHTMLElementByID(
 			self.rootNVDAObject.HTMLNode.document,
-			"ms__id%d" % ID,
+			"ms__id%d" % ID,  # noqa: UP031
 		)
 		if not HTMLNode:
 			return self.rootNVDAObject
@@ -314,7 +314,7 @@ class MSHTML(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self, obj):
 		if not isinstance(obj, NVDAObjects.IAccessible.MSHTML.MSHTML):
-			raise LookupError
+			raise LookupError  # noqa: TRY004
 		docHandle = obj.windowHandle
 		ID = obj.HTMLNodeUniqueNumber
 		return docHandle, ID
@@ -323,18 +323,18 @@ class MSHTML(VirtualBuffer):
 		if nodeType == "link":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
 			}
 		elif nodeType == "visitedLink":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],  # noqa: UP031
 			}
 		elif nodeType == "unvisitedLink":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],  # noqa: UP031
 			}
 		elif nodeType == "formField":
 			attrs = [
@@ -369,7 +369,7 @@ class MSHTML(VirtualBuffer):
 				# Focusable edit fields (input type=text, including readonly ones)
 				{
 					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
-					"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+					"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],  # noqa: UP031
 				},
 				# Any top-most content editable element (E.g. an editable div for rhich text editing)
 				{
@@ -380,17 +380,17 @@ class MSHTML(VirtualBuffer):
 		elif nodeType == "radioButton":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_RADIOBUTTON],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],  # noqa: UP031
 			}
 		elif nodeType == "comboBox":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_COMBOBOX],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],  # noqa: UP031
 			}
 		elif nodeType == "checkBox":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],  # noqa: UP031
 			}
 		elif nodeType == "slider":
 			attrs = [
@@ -410,7 +410,7 @@ class MSHTML(VirtualBuffer):
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = [
 				# the correct heading level tag, with no overriding aria-level.
-				{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]], "HTMLAttrib::aria-level": ["0", None]},
+				{"IHTMLDOMNode::nodeName": ["H%s" % nodeType[7:]], "HTMLAttrib::aria-level": ["0", None]},  # noqa: UP031
 				# any tag with a role of heading, and the correct aria-level
 				{"HTMLAttrib::role": ["heading"], "HTMLAttrib::aria-level": [nodeType[7:]]},
 				# Any heading level tag, with a correct overriding aria-level
@@ -437,7 +437,7 @@ class MSHTML(VirtualBuffer):
 		elif nodeType == "frame":
 			attrs = {"IHTMLDOMNode::nodeName": ["FRAME", "IFRAME"]}
 		elif nodeType == "focusable":
-			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}  # noqa: UP031
 		elif nodeType == "landmark":
 			attrs = [
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
@@ -522,7 +522,7 @@ class MSHTML(VirtualBuffer):
 		# #4134: could be name or ID, document.all.item supports both
 		HTMLNode = HTMLDocument.all.item(name)
 		if not HTMLNode:
-			log.debugWarning("GetElementById can't find node with ID %s" % name)
+			log.debugWarning("GetElementById can't find node with ID %s" % name)  # noqa: UP031
 			return None
 		obj = NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=HTMLNode)
 		return obj

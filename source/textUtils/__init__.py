@@ -7,13 +7,13 @@
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 import encodings
 import locale
 import unicodedata
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
-from typing import Optional, Tuple, Type
+from typing import Optional, Tuple, Type  # noqa: F401, UP035
 from collections.abc import Generator
 
 from logHandler import log
@@ -66,12 +66,12 @@ class OffsetConverter(metaclass=ABCMeta):
 		"""
 		if strEnd is not None and strEnd < strStart:
 			raise ValueError(
-				"strEnd=%d must be greater than or equal to strStart=%d" % (strEnd, strStart),
+				"strEnd=%d must be greater than or equal to strStart=%d" % (strEnd, strStart),  # noqa: UP031
 			)
-		if strStart < 0 or strStart > self.strLength:
+		if strStart < 0 or strStart > self.strLength:  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("str start index out of range")
-		if strEnd is not None and (strEnd < 0 or strEnd > self.strLength):
+		if strEnd is not None and (strEnd < 0 or strEnd > self.strLength):  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("str end index out of range")
 
@@ -97,10 +97,10 @@ class OffsetConverter(metaclass=ABCMeta):
 			raise ValueError(
 				f"{encodedEnd=} must be greater than or equal to {encodedStart=}",
 			)
-		if encodedStart < 0 or encodedStart > self.encodedStringLength:
+		if encodedStart < 0 or encodedStart > self.encodedStringLength:  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("Wide string start index out of range")
-		if encodedEnd is not None and (encodedEnd < 0 or encodedEnd > self.encodedStringLength):
+		if encodedEnd is not None and (encodedEnd < 0 or encodedEnd > self.encodedStringLength):  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("Wide string end index out of range")
 
@@ -282,7 +282,7 @@ def getTextFromRawBytes(
 		text = rawText.decode(encoding, errors="surrogatepass")
 	except UnicodeDecodeError:
 		log.debugWarning(
-			"Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf,
+			"Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf,  # noqa: UP031
 		)
 		text = rawText.decode(encoding, errors=errorsFallback)
 	return text

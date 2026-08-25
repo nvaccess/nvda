@@ -126,13 +126,13 @@ class IndexCommand(SynthCommand):
 		@type index: integer
 		"""
 		if not isinstance(index, int):
-			raise ValueError("index must be int, not %s" % type(index))
+			raise ValueError("index must be int, not %s" % type(index))  # noqa: TRY004, UP031
 		self.index = index
 
 	def __repr__(self):
-		return "IndexCommand(%r)" % self.index
+		return "IndexCommand(%r)" % self.index  # noqa: UP031
 
-	def __eq__(self, __o: object) -> bool:
+	def __eq__(self, __o: object) -> bool:  # noqa: PYI063
 		if __o is self:
 			return True
 		if type(self) is not type(__o):
@@ -159,14 +159,14 @@ class CharacterModeCommand(SynthParamCommand):
 		@type state: boolean
 		"""
 		if not isinstance(state, bool):
-			raise ValueError("state must be boolean, not %s" % type(state))
+			raise ValueError("state must be boolean, not %s" % type(state))  # noqa: TRY004, UP031
 		self.state = state
 		self.isDefault = not state
 
 	def __repr__(self):
-		return "CharacterModeCommand(%r)" % self.state
+		return "CharacterModeCommand(%r)" % self.state  # noqa: UP031
 
-	def __eq__(self, __o: object) -> bool:
+	def __eq__(self, __o: object) -> bool:  # noqa: PYI063
 		if __o is self:
 			return True
 		if type(self) is not type(__o):
@@ -185,9 +185,9 @@ class LangChangeCommand(SynthParamCommand):
 		self.isDefault = not lang
 
 	def __repr__(self):
-		return "LangChangeCommand (%r)" % self.lang
+		return "LangChangeCommand (%r)" % self.lang  # noqa: UP031
 
-	def __eq__(self, __o: object) -> bool:
+	def __eq__(self, __o: object) -> bool:  # noqa: PYI063
 		if __o is self:
 			# __o is a reference to the same object.
 			# Check performed first for performance reasons.
@@ -210,7 +210,7 @@ class BreakCommand(SynthCommand):
 	def __repr__(self):
 		return f"BreakCommand(time={self.time})"
 
-	def __eq__(self, __o: object) -> bool:
+	def __eq__(self, __o: object) -> bool:  # noqa: PYI063
 		if __o is self:
 			return True
 		if type(self) is not type(__o):
@@ -322,21 +322,21 @@ class BaseProsodyCommand(SynthParamCommand):
 
 	def __repr__(self):
 		if self._offset != 0:
-			param = "offset=%d" % self._offset
+			param = "offset=%d" % self._offset  # noqa: UP031
 		elif self._multiplier != 1:
-			param = "multiplier=%g" % self._multiplier
+			param = "multiplier=%g" % self._multiplier  # noqa: UP031
 		else:
 			param = ""
 		return f"{type(self).__name__}({param})"
 
-	def __eq__(self, __o: object) -> bool:
+	def __eq__(self, __o: object) -> bool:  # noqa: PYI063
 		if __o is self:
 			return True
 		if type(self) is not type(__o):
 			return super().__eq__(__o)
 		return self._offset == __o._offset and self._multiplier == __o._multiplier
 
-	def __ne__(self, __o) -> bool:
+	def __ne__(self, __o) -> bool:  # noqa: PYI063
 		if __o is self:
 			return False
 		if type(self) is not type(__o):
@@ -381,12 +381,12 @@ class PhonemeCommand(SynthCommand):
 		self.text = text
 
 	def __repr__(self):
-		out = "PhonemeCommand(%r" % self.ipa
+		out = "PhonemeCommand(%r" % self.ipa  # noqa: UP031
 		if self.text:
-			out += ", text=%r" % self.text
+			out += ", text=%r" % self.text  # noqa: UP031
 		return out + ")"
 
-	def __eq__(self, __o: object) -> bool:
+	def __eq__(self, __o: object) -> bool:  # noqa: PYI063
 		if __o is self:
 			return True
 		if type(self) is not type(__o):
@@ -467,7 +467,7 @@ class WaveFileCommand(BaseCallbackCommand):
 		nvwave.playWaveFile(self.fileName, asynchronous=True, isSpeechWaveFileCommand=True)
 
 	def __repr__(self):
-		return "WaveFileCommand(%r)" % self.fileName
+		return "WaveFileCommand(%r)" % self.fileName  # noqa: UP031
 
 
 class ConfigProfileTriggerCommand(SpeechCommand):

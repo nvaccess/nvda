@@ -6,7 +6,7 @@
 """App module for Windows 10 Calculator.
 This is also the base app module for Windows 11 Calculator."""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import api
 import config
 from NVDAObjects.UIA import UIA

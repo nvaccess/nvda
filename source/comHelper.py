@@ -6,7 +6,7 @@
 
 """Utilities to help with issues related to COM."""
 
-import subprocess
+import subprocess  # noqa: I001
 import ctypes
 import comtypes.client.dynamic
 from comtypes import IUnknown
@@ -56,7 +56,7 @@ def getActiveObject(progid, dynamic=False, appModule=None):
 			# This isn't related to privileges.
 			raise
 	p = subprocess.Popen(
-		(config.SLAVE_FILENAME, "comGetActiveObject", progid, "%d" % dynamic),
+		(config.SLAVE_FILENAME, "comGetActiveObject", progid, "%d" % dynamic),  # noqa: UP031
 		stdin=subprocess.PIPE,
 		stdout=subprocess.PIPE,
 		stderr=subprocess.STDOUT,

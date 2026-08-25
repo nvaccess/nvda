@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import os as _os
+import os as _os  # noqa: I001
 import re as _re
 import shutil as _shutil
 import tempfile as _tempfile
@@ -95,7 +95,7 @@ class VSCodeLib:
 						ensure_ascii=False,
 						indent=2,
 					)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			_builtIn.log(
 				f"Failed to prepare Visual Studio Code settings to skip welcome screen: {e!r}",
 				level="WARN",
@@ -158,11 +158,11 @@ class VSCodeLib:
 			_builtIn.log("Window still present after WM_CLOSE, trying Alt+F4.", level="WARN")
 			try:
 				_SetForegroundWindow(window, lambda m: _builtIn.log(m, level="DEBUG"))
-			except Exception:
+			except Exception:  # noqa: BLE001, S110
 				pass
 			try:
 				_NvdaLib.getSpyLib().emulateKeyPress("alt+F4")
-			except Exception:
+			except Exception:  # noqa: BLE001, S110
 				pass
 			# Now wait again, failing the test if the window is still present.
 			_blockUntilConditionMet(
@@ -188,7 +188,7 @@ class VSCodeLib:
 					level="DEBUG",
 				)
 				_shutil.rmtree(VSCodeLib._testTempDir)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			_builtIn.log(
 				f"Failed to remove temp dir '{VSCodeLib._testTempDir}': {e!r}",
 				level="WARN",

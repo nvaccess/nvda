@@ -12,9 +12,9 @@ Recognizers take an image and produce text.
 They are implemented using the L{ContentRecognizer} class.
 """
 
-from collections import namedtuple
+from collections import namedtuple  # noqa: I001
 import ctypes
-from typing import Dict, List, Union
+from typing import Dict, List, Union  # noqa: F401, UP035
 from collections.abc import Callable
 import garbageHandler
 from baseObject import AutoPropertyObject

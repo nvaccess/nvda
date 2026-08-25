@@ -1,4 +1,4 @@
-import oleacc
+import oleacc  # noqa: I001
 import queueHandler
 import eventHandler
 import controlTypes
@@ -148,7 +148,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 		if oldItem and isinstance(oldItem.candidateNumber, int) and oldItem.name:
 			reportSelectedCandidate(oldItem, allowDuplicate=True, newList=True)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:downArrow": "nextItem",
 		"kb:upArrow": "previousItem",
 		"kb:pageDown": "changePage",
@@ -196,7 +196,7 @@ class MSCandUIWindow_candidateListItem(MSCandUI_candidateListItem):
 		if self.IAccessibleRole != oleacc.ROLE_SYSTEM_LISTITEM:
 			return False
 		name = super(BaseCandidateItem, self).name
-		if not name:
+		if not name:  # noqa: SIM103
 			return False
 		return True
 

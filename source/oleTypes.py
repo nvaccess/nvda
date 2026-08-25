@@ -6,7 +6,7 @@ WSTRING = c_wchar_p
 from comtypes import IUnknown
 
 LONG_PTR = c_int
-from comtypes import GUID
+from comtypes import GUID  # noqa: I001
 from ctypes import HRESULT
 from comtypes import COMMETHOD
 from comtypes import wireHWND
@@ -149,7 +149,7 @@ wireASYNC_STGMEDIUM = POINTER(_userSTGMEDIUM)
 class IEnumOLEVERB(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{00000104-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 class tagOLEVERB(Structure):
@@ -184,7 +184,7 @@ IEnumOLEVERB._methods_ = [
 class IEnumUnknown(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{00000100-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 IEnumUnknown._methods_ = [
@@ -301,13 +301,13 @@ assert alignment(__MIDL_IWinTypes_0007) == 8, alignment(__MIDL_IWinTypes_0007)
 class IParseDisplayName(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{0000011A-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 class IOleContainer(IParseDisplayName):
 	_case_insensitive_ = True
 	_iid_ = GUID("{0000011B-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 IParseDisplayName._methods_ = [
@@ -341,19 +341,19 @@ IOleContainer._methods_ = [
 class IOleObject(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{00000112-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 class IOleClientSite(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{00000118-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 class IDataObject(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{0000010E-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 class tagMSG(Structure):
@@ -367,13 +367,13 @@ class tagSIZEL(Structure):
 class IAdviseSink(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{0000010F-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 class IEnumSTATDATA(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{00000105-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 IOleObject._methods_ = [
@@ -665,7 +665,7 @@ wireFLAG_STGMEDIUM = POINTER(_userFLAG_STGMEDIUM)
 class IEnumFORMATETC(IUnknown):
 	_case_insensitive_ = True
 	_iid_ = GUID("{00000103-0000-0000-C000-000000000046}")
-	_idlflags_ = []
+	_idlflags_ = []  # noqa: RUF012
 
 
 IDataObject._methods_ = [

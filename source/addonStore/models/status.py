@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import enum
+import enum  # noqa: I001
 import os
 from pathlib import Path
 from typing import (
@@ -20,7 +20,7 @@ from utils.displayString import DisplayStringEnum
 from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel
+	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel  # noqa: I001
 	from addonHandler import AddonsState
 
 
@@ -211,7 +211,7 @@ class _StatusFilterKey(DisplayStringEnum):
 			return self._displayStringLabelsWithAccelerators[self]
 		except KeyError as e:
 			log.error(f"No translation mapping for: {self}")
-			raise e
+			raise e  # noqa: TRY201
 
 
 def _getDownloadableStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
@@ -250,7 +250,7 @@ def _canUpdateAddon(
 	:return: True if the add-on can be updated, False if it cannot,
 	None if it is unknown (e.g. cannot parse current version string).
 	"""
-	from .addon import _AddonStoreModel
+	from .addon import _AddonStoreModel  # noqa: I001
 	from addonHandler import Addon as AddonHandlerModel
 	from ..dataManager import addonDataManager
 
@@ -330,7 +330,7 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 
 
 def _getInstalledStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
-	from addonHandler import state as addonHandlerState
+	from addonHandler import state as addonHandlerState  # noqa: I001
 	from ..dataManager import addonDataManager
 
 	assert addonDataManager is not None

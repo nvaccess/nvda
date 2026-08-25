@@ -8,7 +8,7 @@
 Functions should mostly refer to getting an object (NVDAObject) or a position (TextInfo).
 """
 
-import typing
+import typing  # noqa: I001
 
 import config
 import textInfos
@@ -119,7 +119,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:
 					f" window class {tempObj.windowClassName if isinstance(tempObj, Window) else type(tempObj)}, "
 					f"application name {tempObj.appModule.appName}",
 				)
-			except:  # noqa: E722
+			except:  # noqa: E722, S110
 				pass
 			tempObj = getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
@@ -163,7 +163,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:
 		try:
 			treeInterceptorObject = treeInterceptorHandler.update(o)
 		except:  # noqa: E722
-			log.error("Error updating tree interceptor", exc_info=True)
+			log.error("Error updating tree interceptor", exc_info=True)  # noqa: G201
 	# Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	# This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:
@@ -360,7 +360,7 @@ def isTypingProtected():
 	@rtype: boolean
 	"""
 	focusObject = getFocusObject()
-	if focusObject and focusObject.isProtected:
+	if focusObject and focusObject.isProtected:  # noqa: SIM103
 		return True
 	else:
 		return False
@@ -380,7 +380,7 @@ def moveMouseToNVDAObject(obj):
 
 def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
-	import IAccessibleHandler
+	import IAccessibleHandler  # noqa: I001
 	import JABHandler
 	import wx
 	import queueHandler
@@ -449,12 +449,12 @@ def getStatusBar() -> NVDAObjects.NVDAObject | None:
 	location = foreground.location
 	if not location:
 		return None
-	left, top, width, height = location
+	left, top, width, height = location  # noqa: RUF059
 	bottom = top + height - 1
 	obj = getDesktopObject().objectFromPoint(left, bottom)
 
 	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
-	while obj and not obj.role == controlTypes.Role.STATUSBAR:
+	while obj and not obj.role == controlTypes.Role.STATUSBAR:  # noqa: SIM201
 		obj = obj.parent
 
 	return obj

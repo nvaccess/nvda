@@ -5,7 +5,7 @@
 
 """Unit tests for the orderedWinEventLimiter module."""
 
-import inspect
+import inspect  # noqa: I001
 import re
 import unittest
 from collections.abc import Iterator, Callable

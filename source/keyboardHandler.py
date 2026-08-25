@@ -5,7 +5,7 @@
 
 """Keyboard support"""
 
-import ctypes
+import ctypes  # noqa: I001
 import time
 import re
 import typing
@@ -44,7 +44,7 @@ _watchdogObserver: typing.Optional["WatchdogObserver"] = None
 ignoreInjected = False
 _lastInjectedKeyUp: tuple[int, int] | None = None
 _injectionDoneEvent: int | None = None
-type _ModifierT = tuple[int, bool]
+type _ModifierT = tuple[int, bool]  # noqa: PYI043
 _TO_UNICODE_EX_FLAG_NO_STATE_CHANGE = 0x04
 _TO_UNICODE_EX_BUFFER_LENGTH = 5
 _KEY_PRESSED_STATE = 0x80
@@ -133,7 +133,7 @@ def passNextKeyThrough():
 
 
 def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
-	if (
+	if (  # noqa: SIM103
 		(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
 		and vkCode == winUser.VK_INSERT
 		and not extended
@@ -173,7 +173,7 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 	"Returns whether to use ToUnicodeEx to determine typed characters."
 	if not focus:
 		focus = api.getFocusObject()
-	from NVDAObjects.window import Window
+	from NVDAObjects.window import Window  # noqa: I001
 	from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 
 	return (
@@ -216,7 +216,7 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 			currentModifiers, \
 			keyCounter, \
 			stickyNVDAModifier, \
-			stickyNVDAModifierLocked
+			stickyNVDAModifierLocked  # noqa: PLW0602
 		# Injected keys should be ignored in some cases.
 		if injected and (ignoreInjected or not config.conf["keyboard"]["handleInjectedKeys"]):
 			return True
@@ -314,10 +314,10 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 				trappedKeys.add(keyCode)
 				return False
 	except:  # noqa: E722
-		log.error("internal_keyDownEvent", exc_info=True)
+		log.error("internal_keyDownEvent", exc_info=True)  # noqa: G201
 	finally:
 		if _watchdogObserver.isAttemptingRecovery:
-			return True
+			return True  # noqa: B012
 		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process
 		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
 		focus = api.getFocusObject()
@@ -367,7 +367,7 @@ def internal_keyUpEvent(vkCode, scanCode, extended, injected):
 			bypassNVDAModifier, \
 			passKeyThroughCount, \
 			lastPassThroughKeyDown, \
-			currentModifiers
+			currentModifiers  # noqa: PLW0602
 		keyCode = (vkCode, extended)
 		# Injected keys should be ignored in some cases.
 		if injected:
@@ -405,7 +405,7 @@ def internal_keyUpEvent(vkCode, scanCode, extended, injected):
 			trappedKeys.remove(keyCode)
 			return False
 	except:  # noqa: E722
-		log.error("", exc_info=True)
+		log.error("", exc_info=True)  # noqa: G201
 	return True
 
 
@@ -455,7 +455,7 @@ def canModifiersPerformAction(modifiers):
 		elif (vk, ext) not in trappedKeys:
 			# Trapped modifiers aren't relevant.
 			other = True
-	if control and shift and not other:
+	if control and shift and not other:  # noqa: SIM103
 		# Shift+control switches keyboard layouts.
 		return True
 	return False
@@ -467,7 +467,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	#: All normal modifier keys, where modifier vk codes are mapped to a more general modifier vk code
 	# or C{None} if not applicable.
 	#: @type: dict
-	NORMAL_MODIFIER_KEYS = {
+	NORMAL_MODIFIER_KEYS = {  # noqa: RUF012
 		winUser.VK_LCONTROL: winUser.VK_CONTROL,
 		winUser.VK_RCONTROL: winUser.VK_CONTROL,
 		winUser.VK_CONTROL: None,
@@ -488,7 +488,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	#: All possible keyboard layouts, where layout names are mapped to localised layout names.
 	#: @type: dict
-	LAYOUTS = {
+	LAYOUTS = {  # noqa: RUF012
 		# Translators: One of the keyboard layouts for NVDA.
 		"desktop": _("desktop"),
 		# Translators: One of the keyboard layouts for NVDA.
@@ -534,7 +534,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		:param modifiers: Set of (vkCode, extended) tuples.
 		:return: A copy of the input set with the specific modifiers replaced with their general equivalents.
 		"""
-		return set((cls.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers)
+		return set((cls.NORMAL_MODIFIER_KEYS.get(mod) or mod, extended) for mod, extended in modifiers)  # noqa: C401
 
 	def _get_bypassInputHelp(self):
 		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
@@ -572,7 +572,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# #3468: This key is unknown to Windows.
 			# GetKeyNameText often returns something inappropriate in these cases
 			# due to disregarding the extended flag.
-			return "unknown_%02x" % self.scanCode
+			return "unknown_%02x" % self.scanCode  # noqa: UP031
 		return winUser.getKeyNameText(self.scanCode, self.isExtended)
 
 	def _get_modifierNames(self):
@@ -705,7 +705,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			return False
 		# If this key has modifiers other than shift, it is a command and not a character; e.g. shift+f is a character, but control+f is a command.
 		modifiers = self.generalizedModifiers
-		if modifiers and (len(modifiers) > 1 or tuple(modifiers)[0][0] != winUser.VK_SHIFT):
+		if modifiers and (len(modifiers) > 1 or tuple(modifiers)[0][0] != winUser.VK_SHIFT):  # noqa: RUF015, SIM103
 			return False
 		return True
 

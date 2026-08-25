@@ -16,7 +16,7 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
-from .base import Region
+from .base import Region  # noqa: I001
 from ..constants import TEXT_SEPARATOR
 from .properties import getPropertiesBraille
 from ._routing import _routingShouldMoveSystemCaret
@@ -35,7 +35,7 @@ def NVDAObjectHasUsefulText(obj: NVDAObject) -> bool:
 	if issubclass(obj.TextInfo, displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
 		return True
-	if obj._hasNavigableText or isinstance(obj, EditableText):
+	if obj._hasNavigableText or isinstance(obj, EditableText):  # noqa: SIM103
 		return True
 	return False
 

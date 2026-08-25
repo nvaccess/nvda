@@ -5,7 +5,7 @@
 
 """Unit tests for the contentRecog.recogUi module."""
 
-from types import SimpleNamespace
+from types import SimpleNamespace  # noqa: I001
 import unittest
 from unittest.mock import Mock, patch
 

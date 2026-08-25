@@ -2,7 +2,7 @@
 # Copyright (C) 2014-2023 NV Access Limited, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-import enum
+import enum  # noqa: I001
 import time
 from collections.abc import Callable
 

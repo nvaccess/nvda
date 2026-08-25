@@ -10,7 +10,7 @@ Other features include reporting candidates for misspellings if suggestions for 
 and managing cloud clipboard paste.
 This is applicable on Windows 10 Fall Creators Update and later."""
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 import appModuleHandler
 import api
 import eventHandler
@@ -321,7 +321,7 @@ class AppModule(appModuleHandler.AppModule):
 	def event_nameChange(self, obj, nextHandler):
 		# Logic for IME candidate items is handled all within its own object
 		# Therefore pass these events straight on.
-		if isinstance(obj, ImeCandidateItem) or isinstance(obj, ImeCandidateUI):
+		if isinstance(obj, ImeCandidateItem) or isinstance(obj, ImeCandidateUI):  # noqa: SIM101
 			return nextHandler()
 
 		if (

@@ -178,8 +178,8 @@ def processAndLabelStates(
 	reason: OutputReason,
 	positiveStates: set[State] | None = None,
 	negativeStates: set[State] | None = None,
-	positiveStateLabelDict: dict[State, str] = {},
-	negativeStateLabelDict: dict[State, str] = {},
+	positiveStateLabelDict: dict[State, str] = {},  # noqa: B006
+	negativeStateLabelDict: dict[State, str] = {},  # noqa: B006
 ) -> list[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and
 	negative states.

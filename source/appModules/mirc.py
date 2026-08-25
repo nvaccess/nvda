@@ -6,7 +6,7 @@
 
 """App module for mIRC"""
 
-import controlTypes
+import controlTypes  # noqa: I001
 from NVDAObjects.window import Window, DisplayModelLiveText
 from NVDAObjects.IAccessible import StaticText
 import appModuleHandler

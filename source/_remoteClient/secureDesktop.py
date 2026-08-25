@@ -19,7 +19,7 @@ Note:
     to exchange connection information between sessions.
 """
 
-import json
+import json  # noqa: I001
 import socket
 import threading
 import uuid
@@ -126,10 +126,10 @@ class SecureDesktopHandler:
 			log.debugWarning(f"Error closing handle to IPC event. {GetLastError()}: {FormatError()}")
 		# We shouldn't be in a situation where we have shared IPC data,
 		# but it's still good to check and clean it up if we do.
-		if self._bufferAddress is not None:
+		if self._bufferAddress is not None:  # noqa: SIM102
 			if not UnmapViewOfFile(self._bufferAddress):
 				log.debugWarning(f"Error unmapping IPC shared memory. {GetLastError()}: {FormatError()}")
-		if self._mapFile is not None:
+		if self._mapFile is not None:  # noqa: SIM102
 			if not closeHandle(self._mapFile):
 				log.debugWarning(
 					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}",
@@ -224,7 +224,7 @@ class SecureDesktopHandler:
 			if buffer[-1] != "\x00":
 				raise ValueError("Insufficient length for null terminator.")
 		except ValueError:
-			log.exception("Failed to write IPC data.", exc_info=True)
+			log.exception("Failed to write IPC data.", exc_info=True)  # noqa: G202
 			if not UnmapViewOfFile(bufferAddress):
 				log.debugWarning(f"Error unmapping IPC shared memory. {GetLastError()}: {FormatError()}")
 			if not closeHandle(mapFile):

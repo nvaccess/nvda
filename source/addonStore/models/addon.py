@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Generator
+from collections.abc import Generator  # noqa: I001
 import dataclasses
 import json
 import os
@@ -29,7 +29,7 @@ from .version import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import (
+	from addonHandler import (  # noqa: I001
 		Addon as AddonHandlerModel,
 		AddonBase as AddonHandlerBaseModel,
 		AddonManifest,
@@ -194,7 +194,7 @@ class _AddonStoreModel(_AddonGUIModel):
 		if self.submissionTime is None:
 			return None
 		# Convert `self.submissionTime` to seconds.
-		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")
+		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")  # noqa: DTZ006
 
 
 class _AddonManifestModel(_AddonGUIModel):
@@ -234,7 +234,7 @@ class _AddonManifestModel(_AddonGUIModel):
 	@property
 	def installDate(self) -> datetime | None:
 		try:
-			return datetime.fromtimestamp(os.path.getctime(self.installPath))
+			return datetime.fromtimestamp(os.path.getctime(self.installPath))  # noqa: DTZ006
 		except FileNotFoundError:
 			# When add-ons are "pending install", they are not yet at their final path.
 			return None

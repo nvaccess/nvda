@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2009-2016 NV Access Limited, Joseph Lee
 
-import speech
+import speech  # noqa: I001
 import api
 import braille
 import braille.regions.focus
@@ -85,7 +85,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 
-		if UIAHandler.handler:
+		if UIAHandler.handler:  # noqa: SIM102
 			if (
 				isinstance(obj, UIA)
 				and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox")

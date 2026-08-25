@@ -63,7 +63,7 @@ See Also:
 	local_machine.py: NVDA interface
 """
 
-from collections.abc import Collection
+from collections.abc import Collection  # noqa: I001
 import hashlib
 from collections import defaultdict
 from typing import Any, Final
@@ -433,7 +433,7 @@ class FollowerSession(RemoteSession):
 		Returns:
 				Filtered sequence containing only supported speech commands
 		"""
-		return list([item for item in speechSequence if not isinstance(item, EXCLUDED_SPEECH_COMMANDS)])
+		return list([item for item in speechSequence if not isinstance(item, EXCLUDED_SPEECH_COMMANDS)])  # noqa: C411
 
 	def sendSpeech(self, speechSequence: list[Any], priority: str | None) -> None:
 		"""Forward speech output to connected leader instances.

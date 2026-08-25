@@ -7,7 +7,7 @@
 Provides a non-threaded (limited by GIL) Windows Event Hook and processing.
 """
 
-from ctypes import c_int
+from ctypes import c_int  # noqa: I001
 
 from collections.abc import Callable
 
@@ -192,7 +192,7 @@ def winEventCallback(
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
 			core.requestPump(immediate=eventID == winUser.EVENT_OBJECT_FOCUS)
 	except Exception:
-		log.error("winEventCallback", exc_info=True)
+		log.error("winEventCallback", exc_info=True)  # noqa: G201
 
 
 # Register internal object event with IAccessible
@@ -213,7 +213,7 @@ def initialize(
 ):
 	global _processDestroyWinEvent
 	_processDestroyWinEvent = processDestroyWinEventFunc
-	for eventType in winEventIDsToNVDAEventNames:
+	for eventType in winEventIDsToNVDAEventNames:  # noqa: PLC0206
 		hookID = winUser.setWinEventHook(eventType, eventType, 0, cWinEventCallback, 0, 0, 0)
 		if hookID:
 			winEventHookIDs.append(hookID)

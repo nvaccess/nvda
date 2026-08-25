@@ -9,7 +9,7 @@ A submodule for NVDA's message window, used for handling Window Messages.
 Message windows can be used to handle communications from other processes, new NVDA instances and Windows.
 """
 
-from enum import IntEnum
+from enum import IntEnum  # noqa: I001
 
 
 from . import (

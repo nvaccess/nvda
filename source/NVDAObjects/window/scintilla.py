@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import ctypes
+import ctypes  # noqa: I001
 import textInfos.offsets
 import winKernel
 import winUser

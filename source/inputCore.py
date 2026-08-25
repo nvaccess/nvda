@@ -10,7 +10,7 @@ The singleton L{InputManager} (L{manager}) manages functionality related to inpu
 For example, it is used to execute gestures and handle input help.
 """
 
-import sys
+import sys  # noqa: I001
 import os
 import weakref
 import time
@@ -346,7 +346,7 @@ class GlobalGestureMap:
 		try:
 			conf = configobj.ConfigObj(filename, file_error=True, encoding="UTF-8")
 		except (configobj.ConfigObjError, UnicodeDecodeError) as e:
-			log.warning("Error in gesture map '%s': %s" % (filename, e))
+			log.warning("Error in gesture map '%s': %s" % (filename, e))  # noqa: UP031
 			self.lastUpdateContainedError = True
 			return
 		self.update(conf)
@@ -374,7 +374,7 @@ class GlobalGestureMap:
 			try:
 				module, className = locationName.rsplit(".", 1)
 			except:  # noqa: E722
-				log.error("Invalid module/class specification: %s" % locationName)
+				log.error("Invalid module/class specification: %s" % locationName)  # noqa: UP031
 				self.lastUpdateContainedError = True
 				continue
 			for script, gestures in location.items():
@@ -388,7 +388,7 @@ class GlobalGestureMap:
 					try:
 						self.add(gesture, module, className, script)
 					except:  # noqa: E722
-						log.error("Invalid gesture: %s" % gesture)
+						log.error("Invalid gesture: %s" % gesture)  # noqa: UP031
 						self.lastUpdateContainedError = True
 						continue
 
@@ -614,14 +614,14 @@ class InputManager(baseObject.AutoPropertyObject):
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			self._lastInputTime = time.time()
-			log.io("Input: %s" % gesture.identifiers[0])
+			log.io("Input: %s" % gesture.identifiers[0])  # noqa: UP031
 
 		if self._captureFunc:
 			try:
 				if self._captureFunc(gesture) is False:
 					return
 			except:  # noqa: E722
-				log.error("Error in capture function, disabling", exc_info=True)
+				log.error("Error in capture function, disabling", exc_info=True)  # noqa: G201
 				self._captureFunc = None
 
 		if gesture.isModifier:
@@ -683,13 +683,13 @@ class InputManager(baseObject.AutoPropertyObject):
 		script = gesture.script
 		scriptDescription = None
 		runScript = False
-		logMsg = "Input help: gesture %s" % gesture.identifiers[0]
+		logMsg = "Input help: gesture %s" % gesture.identifiers[0]  # noqa: UP031
 		if script:
 			scriptName = scriptHandler.getScriptName(script)
-			logMsg += ", bound to script %s" % scriptName
+			logMsg += ", bound to script %s" % scriptName  # noqa: UP031
 			scriptLocation = scriptHandler.getScriptLocation(script)
 			if scriptLocation:
-				logMsg += " on %s" % scriptLocation
+				logMsg += " on %s" % scriptLocation  # noqa: UP031
 			if scriptName == "toggleInputHelp":
 				runScript = True
 			else:
@@ -760,7 +760,7 @@ class InputManager(baseObject.AutoPropertyObject):
 					os.path.join(globalVars.appDir, "locale", lang.split("_")[0], "gestures.ini"),
 				)
 			except OSError:
-				log.debugWarning("No locale gesture map for language %s" % lang)
+				log.debugWarning("No locale gesture map for language %s" % lang)  # noqa: UP031
 
 	def emulateGesture(self, gesture):
 		"""Convenience method to emulate a gesture.
@@ -874,7 +874,7 @@ class _AllGestureMappingsRetriever:
 					scriptInfo = self.makeKbEmuScriptInfo(cls, kbGestureIdentifier=scriptName)
 				else:
 					try:
-						script = getattr(cls, "script_%s" % scriptName)
+						script = getattr(cls, "script_%s" % scriptName)  # noqa: UP031
 					except AttributeError:
 						log.debugWarning(
 							f"Unable to bind gesture: script '{scriptName}' not found in class {cls}.",
@@ -1024,7 +1024,7 @@ def _getGestureClsForIdentifier(identifier):
 			return gestureSources[genSource]
 		except KeyError:
 			pass
-	raise LookupError("Gesture source not registered: %s" % source)
+	raise LookupError("Gesture source not registered: %s" % source)  # noqa: UP031
 
 
 def getDisplayTextForGestureIdentifier(identifier):
@@ -1041,9 +1041,9 @@ def getDisplayTextForGestureIdentifier(identifier):
 	gcls = _getGestureClsForIdentifier(identifier)
 	try:
 		return gcls.getDisplayTextForIdentifier(identifier)
-	except:
+	except:  # noqa: TRY203
 		raise
-		raise LookupError("Couldn't get display text for identifier: %s" % identifier)
+		raise LookupError("Couldn't get display text for identifier: %s" % identifier)  # noqa: UP031
 
 
 #: The singleton input manager instance.

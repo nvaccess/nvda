@@ -11,7 +11,7 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
 # "annotations" Needed to provide the inner type for weakref.ReferenceType.
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import functools
 import sys
 import ctypes
@@ -162,13 +162,13 @@ class IoBase:
 		if not isinstance(data, bytes):
 			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
-			log.debug("Write: %r" % data)
+			log.debug("Write: %r" % data)  # noqa: UP031
 
 		size, data = self._prepareWriteBuffer(data)
 		if not winBindings.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
 				if _isDebug():
-					log.debug("Write failed: %s" % ctypes.WinError())
+					log.debug("Write failed: %s" % ctypes.WinError())  # noqa: UP031
 				raise ctypes.WinError()
 			byteData = DWORD()
 			winBindings.kernel32.GetOverlappedResult(
@@ -235,11 +235,11 @@ class IoBase:
 		if not isinstance(data, bytes):
 			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
-			log.debug("Read: %r" % data)
+			log.debug("Read: %r" % data)  # noqa: UP031
 		try:
 			self._onReceive(data)
 		except:  # noqa: E722
-			log.error("", exc_info=True)
+			log.error("", exc_info=True)  # noqa: G201
 
 
 class Serial(IoBase):
@@ -270,12 +270,12 @@ class Serial(IoBase):
 		self._ser = None
 		self.port = args[0] if len(args) >= 1 else kwargs["port"]
 		if _isDebug():
-			log.debug("Opening port %s" % self.port)
+			log.debug("Opening port %s" % self.port)  # noqa: UP031
 		try:
 			self._ser = serial.Serial(*args, **kwargs)
 		except Exception as e:
 			if _isDebug():
-				log.debug("Open failed: %s" % e)
+				log.debug("Open failed: %s" % e)  # noqa: UP031
 			raise
 		self._origTimeout = self._ser.timeout
 		# We don't want a timeout while we're waiting for data.
@@ -290,12 +290,12 @@ class Serial(IoBase):
 	def read(self, size=1) -> bytes:
 		data = self._ser.read(size)
 		if _isDebug():
-			log.debug("Read: %r" % data)
+			log.debug("Read: %r" % data)  # noqa: UP031
 		return data
 
 	def write(self, data: bytes):
 		if _isDebug():
-			log.debug("Write: %r" % data)
+			log.debug("Write: %r" % data)  # noqa: UP031
 		self._ser.write(data)
 
 	def close(self):
@@ -358,7 +358,7 @@ class Bulk(IoBase):
 			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		if _isDebug():
-			log.debug("Opening device %s" % path)
+			log.debug("Opening device %s" % path)  # noqa: UP031
 		readPath = f"{path}\\{epIn}"
 		writePath = f"{path}\\{epOut}"
 		readHandle = CreateFile(
@@ -372,7 +372,7 @@ class Bulk(IoBase):
 		)
 		if readHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
-				log.debug("Open read handle failed: %s" % ctypes.WinError())
+				log.debug("Open read handle failed: %s" % ctypes.WinError())  # noqa: UP031
 			raise ctypes.WinError()
 		writeHandle = CreateFile(
 			writePath,
@@ -385,7 +385,7 @@ class Bulk(IoBase):
 		)
 		if writeHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
-				log.debug("Open write handle failed: %s" % ctypes.WinError())
+				log.debug("Open write handle failed: %s" % ctypes.WinError())  # noqa: UP031
 			err = ctypes.WinError()
 			# readHandle already succeeded above; close it before raising so it isn't
 			# leaked. At this point super().__init__() hasn't run yet, so readHandle

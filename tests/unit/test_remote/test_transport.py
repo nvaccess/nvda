@@ -16,7 +16,7 @@ This test suite covers:
  - clearQueue utility
 """
 
-import ast
+import ast  # noqa: I001
 import socket
 import ssl
 import threading
@@ -56,7 +56,7 @@ class FakeSerializer:
 		if not s.startswith("type="):
 			return {}
 		rest = s[len("type=") :]
-		typePart, sep, kwargPart = rest.partition("|")
+		typePart, sep, kwargPart = rest.partition("|")  # noqa: RUF059
 		kwargs = ast.literal_eval(kwargPart) if kwargPart else {}
 		kwargs["type"] = typePart
 		return kwargs

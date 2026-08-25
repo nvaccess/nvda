@@ -5,7 +5,7 @@
 
 """Synth driver for Windows OneCore voices."""
 
-import os
+import os  # noqa: I001
 from typing import (
 	Any,
 )
@@ -81,7 +81,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			# Multiplication isn't supported, only addition/subtraction.
 			# The final value must therefore be relative to the synthesizer's default.
 			val = base * command.multiplier - default
-			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)
+			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)  # noqa: UP031
 
 	def convertRateCommand(self, command):
 		return self._convertProsody(command, "rate", 50)
@@ -150,7 +150,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		yield self.convertRateCommand(RateCommand(multiplier=1))
 		yield self.convertVolumeCommand(VolumeCommand(multiplier=1))
 		yield self.convertPitchCommand(PitchCommand(multiplier=1))
-		for command in commands:
+		for command in commands:  # noqa: UP028
 			yield command
 
 	def convertRateCommand(self, command):
@@ -174,7 +174,7 @@ class OneCoreSynthDriver(SynthDriver):
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
-	supportedCommands = {
+	supportedCommands = {  # noqa: RUF012
 		IndexCommand,
 		CharacterModeCommand,
 		LangChangeCommand,
@@ -184,7 +184,7 @@ class OneCoreSynthDriver(SynthDriver):
 		VolumeCommand,
 		PhonemeCommand,
 	}
-	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
 	@classmethod
 	def check(cls):
@@ -471,7 +471,7 @@ class OneCoreSynthDriver(SynthDriver):
 			self._consecutiveSpeechFailures = 0
 		# This gets called in a background thread.
 		stream = io.BytesIO(ctypes.string_at(bytes, WAVE_HEADER_LENGTH))
-		wav = wave.open(stream, "r")
+		wav = wave.open(stream, "r")  # noqa: SIM115
 		self._maybeInitPlayer(wav)
 		data = bytes + WAVE_HEADER_LENGTH
 		dataLen = wav.getnframes() * wav.getnchannels() * wav.getsampwidth()
@@ -566,29 +566,29 @@ class OneCoreSynthDriver(SynthDriver):
 		try:
 			hkey = winreg.OpenKey(rootKey, subkey)
 		except OSError as e:
-			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
+			log.debugWarning("Could not open registry key %s, %r" % (ID, e))  # noqa: UP031
 			return False
 		try:
 			langDataPath = winreg.QueryValueEx(hkey, "langDataPath")
 		except OSError as e:
-			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
+			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)  # noqa: UP031
 			return False
 		if not langDataPath or not isinstance(langDataPath[0], str):
 			log.debugWarning("Invalid langDataPath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(langDataPath[0])):
-			log.debugWarning("Missing language data file: %s" % langDataPath[0])
+			log.debugWarning("Missing language data file: %s" % langDataPath[0])  # noqa: UP031
 			return False
 		try:
 			voicePath = winreg.QueryValueEx(hkey, "voicePath")
 		except OSError as e:
-			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
+			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)  # noqa: UP031
 			return False
 		if not voicePath or not isinstance(voicePath[0], str):
 			log.debugWarning("Invalid voicePath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(voicePath[0] + ".apm")):
-			log.debugWarning("Missing voice file: %s" % voicePath[0] + ".apm")
+			log.debugWarning("Missing voice file: %s" % voicePath[0] + ".apm")  # noqa: UP031
 			return False
 		return True
 
@@ -602,7 +602,7 @@ class OneCoreSynthDriver(SynthDriver):
 			if voice.id == id:
 				self._dll.ocSpeech_setVoice(self._ocSpeechToken, voice.onecoreIndex)
 				return
-		raise LookupError("No such voice: %s" % id)
+		raise LookupError("No such voice: %s" % id)  # noqa: UP031
 
 	def _getDefaultVoice(self, pickAny: bool = True) -> str:
 		"""

@@ -6,7 +6,7 @@
 
 """App module for Adobe Digital Editions"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from textInfos import DocumentWithPageTurns
 from NVDAObjects.UIA import UIA, UIATextInfo

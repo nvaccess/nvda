@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2011-2026 NV Access Limited
 
-import ctypes.wintypes
+import ctypes.wintypes  # noqa: I001
 import enum
 import os
 import ctypes
@@ -1006,7 +1006,7 @@ def espeak_compileDict_buildAction(
 		exit status to indicate an unsuccessful build."
 	"""
 	if len(target) != 1:
-		targetStrings = list(str(t) for t in target)
+		targetStrings = list(str(t) for t in target)  # noqa: C400
 		raise ValueError(f"Unexpected number of targets: {targetStrings}")
 	target = target[0]
 
@@ -1167,7 +1167,7 @@ for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 
 	dictFile = env.Command(
 		target=dictFilePath,
-		source=list(dictSourcePath.File(f) for f in inputFiles),
+		source=list(dictSourcePath.File(f) for f in inputFiles),  # noqa: C400
 		action=espeak_compileDict_buildAction,
 	)
 

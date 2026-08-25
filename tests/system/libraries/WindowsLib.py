@@ -8,7 +8,7 @@ features.
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-import typing as _typing
+import typing as _typing  # noqa: I001
 from typing import (
 	Optional as _Optional,
 )
@@ -146,7 +146,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 		nextIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress("enter")
 		if not spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex, errorMessage=None):
-			AssertionError(
+			AssertionError(  # noqa: PLW0133
 				"Expected some speech after enter press."
 				f" Speech at index: {nextIndex}"
 				f", nextIndex: {spy.get_next_speech_index()}"

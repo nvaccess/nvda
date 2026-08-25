@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections import OrderedDict
+from collections import OrderedDict  # noqa: I001
 import colors
 
 # XlBordersIndex Enumeration

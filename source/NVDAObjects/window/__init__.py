@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import re
+import re  # noqa: I001
 import ctypes
 import ctypes.wintypes
 from winBindings import user32
@@ -37,7 +37,7 @@ def isUsableWindow(windowHandle):
 	# (which otherwise freeze the core until the watchdog cancels them ~6s later),
 	# and so child windows of the hung app (which have no ghost of their own) are
 	# also covered.
-	if winUser.isHungAppWindow(windowHandle):
+	if winUser.isHungAppWindow(windowHandle):  # noqa: SIM103
 		return False
 	return True
 
@@ -288,7 +288,7 @@ class Window(NVDAObject):
 		parentHandle = winUser.getAncestor(self.windowHandle, winUser.GA_PARENT)
 		if parentHandle:
 			# Because we, we need to get the APIclass manually need to  set the relation as parent
-			kwargs = dict(windowHandle=parentHandle)
+			kwargs = dict(windowHandle=parentHandle)  # noqa: C408
 			APIClass = Window.findBestAPIClass(kwargs, relation="parent")
 			return APIClass(**kwargs) if APIClass else None
 
@@ -322,7 +322,7 @@ class Window(NVDAObject):
 		newWindowHandle = obj.windowHandle
 		oldWindowHandle = self.windowHandle
 		if newWindowHandle and oldWindowHandle and newWindowHandle != oldWindowHandle:
-			kwargs = dict(windowHandle=newWindowHandle)
+			kwargs = dict(windowHandle=newWindowHandle)  # noqa: C408
 			newAPIClass = Window.findBestAPIClass(kwargs, relation=relation)
 			oldAPIClass = self.APIClass
 			if newAPIClass and newAPIClass != oldAPIClass:
@@ -361,48 +361,48 @@ class Window(NVDAObject):
 		cls.normalizedWindowClassNameCache[name] = newName
 		return newName
 
-	normalizedWindowClassNameCache = {}
+	normalizedWindowClassNameCache = {}  # noqa: RUF012
 
 	def _get_devInfo(self):
 		info = super().devInfo
-		info.append("windowHandle: %r" % self.windowHandle)
+		info.append("windowHandle: %r" % self.windowHandle)  # noqa: UP031
 		try:
 			ret = repr(self.windowClassName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowClassName: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowClassName: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.windowControlID)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowControlID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowControlID: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.windowStyle)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowStyle: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowStyle: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.extendedWindowStyle)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("extendedWindowStyle: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("extendedWindowStyle: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.windowThreadID)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowThreadID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowThreadID: %s" % ret)  # noqa: UP031
 		formatLong = self._formatLongDevInfoString
 		try:
 			ret = formatLong(self.windowText)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowText: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowText: %s" % ret)  # noqa: UP031
 		try:
 			self.redraw()
 			ret = formatLong(self.displayText)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("displayText: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("displayText: %s" % ret)  # noqa: UP031
 		return info
 
 

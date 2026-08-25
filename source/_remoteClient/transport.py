@@ -24,7 +24,7 @@ All network operations run in background threads, while message handlers
 are called on the main wxPython thread for thread-safety.
 """
 
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod  # noqa: I001
 import hashlib
 import select
 import socket
@@ -339,7 +339,7 @@ class TCPTransport(Transport):
 			fingerprint = None
 			try:
 				fingerprint = self.getHostFingerprint()
-			except Exception:
+			except Exception:  # noqa: BLE001, S110
 				pass
 			if self.isFingerprintTrusted(fingerprint):
 				self._trustedFingerprint = fingerprint
@@ -410,7 +410,7 @@ class TCPTransport(Transport):
 		"""Main loop for reading data from the server socket."""
 		while self.serverSock is not None:
 			try:
-				readers, writers, error = select.select(
+				readers, writers, error = select.select(  # noqa: RUF059
 					[self.serverSock],
 					[],
 					[self.serverSock],
@@ -520,7 +520,7 @@ class TCPTransport(Transport):
 			self.buffer += data
 			return
 		while b"\n" in data:
-			line, sep, data = data.partition(b"\n")
+			line, sep, data = data.partition(b"\n")  # noqa: RUF059
 			self.parse(line)
 		self.buffer += data
 
@@ -755,5 +755,5 @@ def clearQueue(queue: Queue[bytes | None]) -> None:
 	try:
 		while True:
 			queue.get_nowait()
-	except Exception:
+	except Exception:  # noqa: BLE001, S110
 		pass

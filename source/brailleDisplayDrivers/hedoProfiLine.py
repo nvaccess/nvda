@@ -11,7 +11,7 @@
 # see www.hedo.de for more details
 
 
-import wx
+import wx  # noqa: I001
 import serial
 import braille
 import braille.display.driver
@@ -140,7 +140,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def handleResponses(self, wait=False):
 		while wait or self._ser.in_waiting:
 			data: bytes = self._ser.read(1)
-			if data:
+			if data:  # noqa: SIM102
 				# do not handle acknowledge bytes
 				if data != HEDO_ACK:
 					self.handleData(ord(data))
@@ -164,7 +164,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			self._keysDown.add(HEDO_KEYMAP[data])
 			self._ignoreKeyReleases = False
 
-		elif data > HEDO_RELEASE_OFFSET and (data - HEDO_RELEASE_OFFSET) in HEDO_KEYMAP:
+		elif data > HEDO_RELEASE_OFFSET and (data - HEDO_RELEASE_OFFSET) in HEDO_KEYMAP:  # noqa: SIM102
 			# A key is released
 			# log.debug("Key " + str(self._keysDown) + " released")
 			if not self._ignoreKeyReleases:

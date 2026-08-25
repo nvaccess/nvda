@@ -31,7 +31,7 @@ import monkeyPatches.comtypesMonkeyPatches
 
 monkeyPatches.comtypesMonkeyPatches.replace_check_version()
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
-import globalVars
+import globalVars  # noqa: I001
 
 
 # Tell NvDA where its application directory is
@@ -54,7 +54,7 @@ os.chdir(SOURCE_DIR)
 __path__[0] = UNIT_DIR
 # We don't want logging for now,
 # though we may optionally want this in future; see #7045.
-import logging
+import logging  # noqa: I001
 from logHandler import log
 
 log.addHandler(logging.NullHandler())
@@ -134,13 +134,13 @@ braille.input.initialize()
 config.conf["braille"]["cursorBlink"] = False
 
 # textutils tests need uniscribe in NVDAHelper local lib
-import ctypes
+import ctypes  # noqa: I001
 import NVDAHelper
 import NVDAState
 
 NVDAHelper.localLib = ctypes.cdll.LoadLibrary(NVDAState.ReadPaths.nvdaHelperLocalDll)
 # The focus and navigator objects need to be initialized to something.
-from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole  # noqa: F401
+from .objectProvider import PlaceholderNVDAObject, NVDAObjectWithRole  # noqa: F401, I001
 
 phObj = PlaceholderNVDAObject()
 import api

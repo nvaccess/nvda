@@ -102,10 +102,10 @@ reviewPositionObj: Optional["NVDAObjects.NVDAObject"] = None
 
 
 # unused, should eventually get removed.
-mouseOldX: Literal[None] = None
+mouseOldX: Literal[None] = None  # noqa: PYI061
 """Deprecated, this is unused and not set by NVDA core"""
 
-mouseOldY: Literal[None] = None
+mouseOldY: Literal[None] = None  # noqa: PYI061
 """Deprecated, this is unused and not set by NVDA core"""
 
 lastProgressValue: Literal[0] = 0

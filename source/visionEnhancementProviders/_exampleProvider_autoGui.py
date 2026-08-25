@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited
 
-from vision import providerBase
+from vision import providerBase  # noqa: I001
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
 import gui
 from autoSettingsUtils.utils import StringParameterInfo
@@ -23,7 +23,7 @@ This might be because the provider must interface with an external application o
 
 class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 	#: dictionary of the setting id's available when provider is running.
-	_availableRuntimeSettings = []
+	_availableRuntimeSettings = []  # noqa: RUF012
 
 	# The following settings can be configured prior to runtime in this example
 	shouldDoX: bool
@@ -31,7 +31,7 @@ class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 	amountOfZ: int
 	nameOfSomething: str
 
-	availableNameofsomethings = {
+	availableNameofsomethings = {  # noqa: RUF012
 		"n1": StringParameterInfo(id="n1", displayName="name one"),
 		"n2": StringParameterInfo(id="n2", displayName="name two"),
 		"n3": StringParameterInfo(id="n3", displayName="name three"),

@@ -8,7 +8,7 @@ This module is designed to construct and install the speechSpyGlobalPlugin, spee
 NVDA config before NVDA is started by the system tests.
 """
 
-from os.path import join as _pJoin
+from os.path import join as _pJoin  # noqa: I001
 from .getLib import _getLib
 import sys
 

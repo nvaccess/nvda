@@ -2,7 +2,7 @@
 # Copyright (C) 2019 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import List
+from typing import List  # noqa: F401, I001, UP035
 import globalVars
 from logHandler import log
 import os
@@ -19,7 +19,7 @@ fontsDir = os.path.join(globalVars.appDir, "fonts")
 
 
 def _isSupportedFontPath(f: str) -> bool:
-	return os.path.isfile(f) and (f.endswith(".otf") or f.endswith(".ttf"))
+	return os.path.isfile(f) and (f.endswith(".otf") or f.endswith(".ttf"))  # noqa: PIE810
 
 
 def addFonts(_fontSearchPath) -> list[str]:

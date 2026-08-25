@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import os
+import os  # noqa: I001
 import re
 import typing
 from SCons.Environment import Environment
@@ -16,8 +16,8 @@ Import(
 		"sourceDir",
 	],
 )
-sourceDir: Base = sourceDir
-thirdPartyEnv: Environment = thirdPartyEnv
+sourceDir: Base = sourceDir  # noqa: PLW0127
+thirdPartyEnv: Environment = thirdPartyEnv  # noqa: PLW0127
 env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 louisRootDir = env.Dir("#include/liblouis")
@@ -69,7 +69,7 @@ env.Append(
 		# reserved ISO C names (like strdup) in favour of non-portable conforming
 		# variants that start with an '_'. This removes those deprecation warnings. */
 		"_CRT_NONSTDC_NO_DEPRECATE",
-		("PACKAGE_VERSION", r"\"%s\"" % getLouisVersion()),
+		("PACKAGE_VERSION", r"\"%s\"" % getLouisVersion()),  # noqa: UP031
 		"WIDECHARS_ARE_UCS4",
 		# Tell liblouis.h that we're exporting liblouis dll functions, not importing them.
 		"_EXPORTING",
@@ -96,7 +96,7 @@ sourceFiles = [
 	"metadata.c",
 	"utils.c",
 ]
-objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]
+objs = [env.Object("%s.obj" % f, louisSourceDir.File(f)) for f in sourceFiles]  # noqa: UP031
 louisLib = env.SharedLibrary("liblouis", objs)
 if signExec:
 	env.AddPostAction(louisLib[0], [signExec])

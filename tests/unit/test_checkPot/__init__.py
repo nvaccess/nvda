@@ -5,11 +5,11 @@
 
 """Unit tests for the checkPot test."""
 
-from contextlib import redirect_stdout, redirect_stderr
+from contextlib import redirect_stdout, redirect_stderr  # noqa: I001
 from io import StringIO
 import os.path
 import unittest
-from typing import Tuple
+from typing import Tuple  # noqa: F401, UP035
 
 
 class TestCheckPot(unittest.TestCase):

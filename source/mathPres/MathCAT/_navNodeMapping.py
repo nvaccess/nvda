@@ -5,7 +5,7 @@
 
 """Map MathCAT NavNode ids to source MathML rectangles."""
 
-from xml.etree import ElementTree
+from xml.etree import ElementTree  # noqa: I001
 from collections.abc import Generator
 from typing import TYPE_CHECKING
 

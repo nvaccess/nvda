@@ -8,7 +8,7 @@ Communication with display is done here. See class L{BrailleDisplayDriver}
 for description of most important functions.
 """
 
-import serial
+import serial  # noqa: I001
 import time
 
 from collections import deque
@@ -417,7 +417,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# Only one try to open port when called from "albatross_read" thread.
 			# This is indicated by _dev is not None.
 			# ReadThread run function calls _readHandling again if needed.
-			if self._dev:
+			if self._dev:  # noqa: SIM102
 				if not self._openPort():
 					return
 			if not self._initConnection():
@@ -483,7 +483,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					return False
 			self._readQueue.append(iAsByte)
 			log.debug(f"Read: enqueued {iAsByte}")
-		if settingsByte is not None:
+		if settingsByte is not None:  # noqa: SIM102
 			# Ensuring connection is established also after exit internal menu.
 			if not len(self._readQueue):
 				self._readQueue.append(INIT_START_BYTE)
@@ -694,7 +694,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		"""
 		for i, key in enumerate(data):
 			if self._keyLayout == KeyLayout.switched:
-				if key in LEFT_RIGHT_KEY_CODES.keys():
+				if key in LEFT_RIGHT_KEY_CODES.keys():  # noqa: SIM118
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				elif key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
@@ -705,10 +705,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					)[j]
 				continue
 			if self._keyLayout == KeyLayout.bothSidesAsRight:
-				if key in LEFT_RIGHT_KEY_CODES.keys():
+				if key in LEFT_RIGHT_KEY_CODES.keys():  # noqa: SIM118
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				continue
-			if self._keyLayout == KeyLayout.bothSidesAsLeft:
+			if self._keyLayout == KeyLayout.bothSidesAsLeft:  # noqa: SIM102
 				if key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
 						LEFT_RIGHT_KEY_CODES.values(),

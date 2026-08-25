@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from datetime import datetime
+from datetime import datetime  # noqa: I001
 import re
 from typing import (
 	NamedTuple,
@@ -80,7 +80,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> timedelta | None:
 	if outputFormat is None:
 		return None
 	try:
-		parsedTime = datetime.strptime(
+		parsedTime = datetime.strptime(  # noqa: DTZ007
 			timeStr,
 			_timeOutputToParsingFormats[outputFormat],
 		)

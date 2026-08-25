@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
@@ -209,17 +209,17 @@ def locateHTMLElementByID(document, ID):
 			try:
 				element = document.getElementByID(ID)
 			except COMError as e:
-				log.debugWarning("document.getElementByID failed with COMError %s" % e)
+				log.debugWarning("document.getElementByID failed with COMError %s" % e)  # noqa: UP031
 				element = None
 	except COMError as e:
-		log.debugWarning("document.getElementsByName failed with COMError %s" % e)
+		log.debugWarning("document.getElementsByName failed with COMError %s" % e)  # noqa: UP031
 		element = None
 	if element:
 		return element
 	try:
 		nodeName = document.body.nodeName
 	except COMError as e:
-		log.debugWarning("document.body.nodeName failed with COMError %s" % e)
+		log.debugWarning("document.body.nodeName failed with COMError %s" % e)  # noqa: UP031
 		return None
 	if nodeName:
 		nodeName = nodeName.upper()
@@ -230,7 +230,7 @@ def locateHTMLElementByID(document, ID):
 	try:
 		frames = document.getElementsByTagName(tag)
 	except COMError as e:
-		log.debugWarning("document.getElementsByTagName failed with COMError %s" % e)
+		log.debugWarning("document.getElementsByTagName failed with COMError %s" % e)  # noqa: UP031
 		return None
 	if not frames:  # frames can be None in IE 10
 		return None
@@ -342,11 +342,11 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 				self._rangeObj.moveToBookmark(position.data)
 			else:
 				raise TypeError(
-					"Bookmark was for %s type, not for %s type"
+					"Bookmark was for %s type, not for %s type"  # noqa: UP031
 					% (position.infoClass.__name__, self.__class__.__name__),
 				)
 		else:
-			raise NotImplementedError("position: %s" % (position,))
+			raise NotImplementedError("position: %s" % (position,))  # noqa: UP031
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_PARAGRAPH:
@@ -372,10 +372,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		elif unit == textInfos.UNIT_STORY:
 			self._rangeObj.expand("textedit")
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 
 	def _get_isCollapsed(self):
-		if self._rangeObj.compareEndPoints("startToEnd", self._rangeObj) == 0:
+		if self._rangeObj.compareEndPoints("startToEnd", self._rangeObj) == 0:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -453,8 +453,8 @@ class MSHTML(IAccessible):
 			return self._UIAControl.makeTextInfo(position)
 		return super().makeTextInfo(position)
 
-	HTMLNodeNameNavSkipList = ["#comment", "SCRIPT", "HEAD", "HTML", "PARAM", "STYLE"]
-	HTMLNodeNameEmbedList = ["OBJECT", "EMBED", "APPLET", "FRAME", "IFRAME"]
+	HTMLNodeNameNavSkipList = ["#comment", "SCRIPT", "HEAD", "HTML", "PARAM", "STYLE"]  # noqa: RUF012
+	HTMLNodeNameEmbedList = ["OBJECT", "EMBED", "APPLET", "FRAME", "IFRAME"]  # noqa: RUF012
 
 	_ignoreCaretEvents = (
 		False  #:Set to true when moving the caret to calculate lines, event_caret will be disabled.
@@ -799,7 +799,7 @@ class MSHTML(IAccessible):
 		return super().description
 
 	def _get_basicText(self):
-		if self.HTMLNode and not self.HTMLNodeName == "SELECT":
+		if self.HTMLNode and not self.HTMLNodeName == "SELECT":  # noqa: SIM201
 			try:
 				return self.HTMLNode.data or ""
 			except (COMError, AttributeError, NameError):
@@ -1001,7 +1001,7 @@ class MSHTML(IAccessible):
 		while HTMLNode:
 			try:
 				return HTMLNode.rowIndex + 1
-			except:  # noqa: E722
+			except:  # noqa: E722, S110
 				pass
 			HTMLNode = HTMLNode.parentNode
 		raise NotImplementedError
@@ -1093,13 +1093,13 @@ class MSHTML(IAccessible):
 
 	def _get_devInfo(self):
 		info = super().devInfo
-		info.append("MSHTML node has ancestor IAccessible: %r" % self.HTMLNodeHasAncestorIAccessible)
+		info.append("MSHTML node has ancestor IAccessible: %r" % self.HTMLNodeHasAncestorIAccessible)  # noqa: UP031
 		htmlNode = self.HTMLNode
 		try:
 			ret = repr(htmlNode.nodeName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("MSHTML nodeName: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("MSHTML nodeName: %s" % ret)  # noqa: UP031
 		return info
 
 	def _get_language(self):
@@ -1118,8 +1118,8 @@ class MSHTML(IAccessible):
 		try:
 			return aria.AriaLivePoliteness(politeness.lower())
 		except ValueError:
-			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
-			super().liveRegionPoliteness
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)  # noqa: G201
+			super().liveRegionPoliteness  # noqa: B018
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process

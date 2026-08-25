@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
-import winConsoleHandler
+import winConsoleHandler  # noqa: I001
 from . import Window
 from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
 import api
@@ -113,6 +113,6 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		gesture.send()
 		speech.clearTypedWordBuffer()
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:alt+f4": "close",
 	}

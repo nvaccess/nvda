@@ -132,7 +132,7 @@ def _doEspeakDictUpgrade():
 	synthName = "espeak"
 
 	def getNextVoice():
-		for ID, (oldName, newName) in espeakNameChanges.items():
+		for ID, (oldName, newName) in espeakNameChanges.items():  # noqa: PERF102
 			yield (
 				createVoiceDictFileName(synthName, oldName),
 				createVoiceDictFileName(synthName, newName),

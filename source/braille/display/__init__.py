@@ -3,18 +3,18 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 
 import pkgutil
 import typing
 from locale import strxfrm
-from typing import (
+from typing import (  # noqa: UP035
 	Any,
-	List,
+	List,  # noqa: F401
 	NamedTuple,
-	Optional,
-	Tuple,
-	Type,
+	Optional,  # noqa: F401
+	Tuple,  # noqa: F401
+	Type,  # noqa: F401
 )
 from collections.abc import Callable, Generator
 
@@ -53,7 +53,7 @@ def getDisplayList(excludeNegativeChecks=True) -> list[tuple[str, str]]:
 			else:
 				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
 		except:  # noqa: E722
-			log.error("", exc_info=True)
+			log.error("", exc_info=True)  # noqa: G201
 	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
@@ -113,7 +113,7 @@ def getDisplayDrivers(
 		try:
 			display = _getDisplayDriver(name)
 		except Exception:
-			log.error(
+			log.error(  # noqa: G201
 				f"Error while importing braille display driver {name}",
 				exc_info=True,
 			)

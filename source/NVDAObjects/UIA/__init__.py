@@ -6,13 +6,13 @@
 
 """Support for UI Automation (UIA) controls."""
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import typing
-from typing import (
-	List,
-	Optional,
-	Dict,
-	Tuple,
+from typing import (  # noqa: UP035
+	List,  # noqa: F401
+	Optional,  # noqa: F401
+	Dict,  # noqa: F401
+	Tuple,  # noqa: F401
 	Any,
 )
 from collections.abc import Generator, Callable
@@ -102,7 +102,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return UIA
 
 	# UIA property IDs that should be automatically cached for control fields
-	_controlFieldUIACachedPropertyIDs = {
+	_controlFieldUIACachedPropertyIDs = {  # noqa: RUF012
 		UIAHandler.UIA_IsValuePatternAvailablePropertyId,
 		UIAHandler.UIA_NamePropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
@@ -153,7 +153,7 @@ class UIATextInfo(textInfos.TextInfo):
 		return cacheRequest
 
 	#: The UI Automation text units (in order of resolution) that should be used when fetching formatting.
-	UIAFormatUnits = [
+	UIAFormatUnits = [  # noqa: RUF012
 		UIAHandler.TextUnit_Format,
 		UIAHandler.TextUnit_Word,
 		UIAHandler.TextUnit_Character,
@@ -289,13 +289,13 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def _getFormatFieldLineSpacing(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_LineSpacingAttributeId)
-		if val != UIAHandler.handler.reservedNotSupportedValue:
+		if val != UIAHandler.handler.reservedNotSupportedValue:  # noqa: SIM102
 			if val:
 				formatField["line-spacing"] = val
 
 	def _getFormatFieldLinks(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_LinkAttributeId)
-		if val != UIAHandler.handler.reservedNotSupportedValue:
+		if val != UIAHandler.handler.reservedNotSupportedValue:  # noqa: SIM102
 			if val:
 				formatField["link"] = True
 
@@ -372,7 +372,7 @@ class UIATextInfo(textInfos.TextInfo):
 		@return: The formatting for the given text range.
 		"""
 		if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-			raise ValueError("%s is not a text range" % textRange)
+			raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 		fetchAnnotationTypes = (
 			formatConfig["reportSpellingErrors2"] != ReportSpellingErrors.OFF.value
 			or formatConfig["reportComments"]
@@ -510,7 +510,7 @@ class UIATextInfo(textInfos.TextInfo):
 			self.collapse(True)
 		elif position == textInfos.POSITION_ALL or position == self.obj:
 			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.documentRange
-		elif isinstance(position, UIA) or isinstance(position, UIAHandler.IUIAutomationElement):
+		elif isinstance(position, UIA) or isinstance(position, UIAHandler.IUIAutomationElement):  # noqa: SIM101
 			if isinstance(position, UIA):
 				position = position.UIAElement
 			try:
@@ -530,7 +530,7 @@ class UIATextInfo(textInfos.TextInfo):
 			position = typing.cast(IUIAutomationTextRangeT, position)
 			self._rangeObj = position.clone()
 		else:
-			raise ValueError("Unknown position %s" % position)
+			raise ValueError("Unknown position %s" % position)  # noqa: UP031
 
 	def __eq__(self, other: UIATextInfo):
 		if self is other:
@@ -564,7 +564,7 @@ class UIATextInfo(textInfos.TextInfo):
 		try:
 			children = getChildrenWithCacheFromUIATextRange(tempRange, UIAHandler.handler.baseCacheRequest)
 		except COMError as e:
-			log.debugWarning("Could not get children from UIA text range, %s" % e)
+			log.debugWarning("Could not get children from UIA text range, %s" % e)  # noqa: UP031
 			children = None
 		if children and children.length == 1:
 			child = children.getElement(0)
@@ -578,7 +578,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def _get_bookmark(self):
 		return self.copy()
 
-	UIAControlTypesWhereNameIsContent = {
+	UIAControlTypesWhereNameIsContent = {  # noqa: RUF012
 		UIAHandler.UIA_ButtonControlTypeId,
 		UIAHandler.UIA_HyperlinkControlTypeId,
 		UIAHandler.UIA_ImageControlTypeId,
@@ -702,7 +702,7 @@ class UIATextInfo(textInfos.TextInfo):
 				except UIAMixedAttributeError:
 					if debug:
 						log.debug("Mixed formatting. Trying higher resolution unit")
-					for subfield in self._getTextWithFields_text(
+					for subfield in self._getTextWithFields_text(  # noqa: UP028
 						tempRange,
 						formatConfig,
 						UIAFormatUnits=furtherUIAFormatUnits,
@@ -749,8 +749,8 @@ class UIATextInfo(textInfos.TextInfo):
 		debug = UIAHandler._isDebug() and log.isEnabledFor(log.DEBUG)
 		if debug:
 			log.debug("_getTextWithFieldsForUIARange")
-			log.debug("rootElement: %s" % rootElement.currentLocalizedControlType if rootElement else None)
-			log.debug("full text: %s" % textRange.getText(-1))
+			log.debug("rootElement: %s" % rootElement.currentLocalizedControlType if rootElement else None)  # noqa: UP031
+			log.debug("full text: %s" % textRange.getText(-1))  # noqa: UP031
 		if recurseChildren:
 			childElements = getChildrenWithCacheFromUIATextRange(textRange, self._controlFieldUIACacheRequest)
 			# Specific check for embedded elements (checkboxes etc)
@@ -831,7 +831,7 @@ class UIATextInfo(textInfos.TextInfo):
 		controlFieldNVDAObjectClass = self.controlFieldNVDAObjectClass
 		for index, (parentElement, parentClipped) in enumerate(parentElements):
 			if debug:
-				log.debug("parentElement: %s" % parentElement.currentLocalizedControlType)
+				log.debug("parentElement: %s" % parentElement.currentLocalizedControlType)  # noqa: UP031
 			startOfNode = not parentClipped[0]
 			endOfNode = not parentClipped[1]
 			try:
@@ -875,7 +875,7 @@ class UIATextInfo(textInfos.TextInfo):
 				UIAHandler.TextPatternRangeEndpoint_Start,
 			)
 			if debug:
-				log.debug("Child count: %s" % childElements.length)
+				log.debug("Child count: %s" % childElements.length)  # noqa: UP031
 				log.debug("Walking children")
 			lastChildIndex = childCount - 1
 			lastChildEndDelta = 0
@@ -897,7 +897,7 @@ class UIATextInfo(textInfos.TextInfo):
 					if childAutomationID.startswith("UIA_AutomationId_Word_Page_"):
 						continue
 				if debug:
-					log.debug("Fetched child %s (%s)" % (index, childElement.currentLocalizedControlType))
+					log.debug("Fetched child %s (%s)" % (index, childElement.currentLocalizedControlType))  # noqa: UP031
 				try:
 					childRange = documentTextPattern.rangeFromChild(childElement)
 				except COMError as e:
@@ -1204,13 +1204,13 @@ class UIA(Window):
 				cacheRequest.addProperty(ID)
 			except COMError:
 				log.debug(
-					"Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"
+					"Couldn't add property ID %d to cache request, most likely unsupported on this version of Windows"  # noqa: UP031
 					% ID,
 				)
 		try:
 			cacheElement = self.UIAElement.buildUpdatedCache(cacheRequest)
 		except COMError:
-			log.debugWarning("IUIAutomationElement.buildUpdatedCache failed given IDs of %s" % IDs)
+			log.debugWarning("IUIAutomationElement.buildUpdatedCache failed given IDs of %s" % IDs)  # noqa: UP031
 			return
 		for ID in IDs:
 			elementCache[ID] = cacheElement
@@ -1293,7 +1293,7 @@ class UIA(Window):
 		elif (
 			self.UIAElement.cachedFrameworkID in ("InternetExplorer", "MicrosoftEdge")
 			# But not for Internet Explorer
-			and not self.appModule.appName == "iexplore"
+			and not self.appModule.appName == "iexplore"  # noqa: SIM201
 		):
 			from . import spartanEdge
 
@@ -1327,7 +1327,7 @@ class UIA(Window):
 			self.windowClassName == "Chrome_RenderWidgetHostHWND"
 			or self.UIAElement.cachedFrameworkID == "Chrome"
 		):
-			from . import chromium
+			from . import chromium  # noqa: I001
 			from . import web
 
 			if (
@@ -1645,7 +1645,7 @@ class UIA(Window):
 		newText = self.name
 		newTime = time.time()
 		self.__class__._lastLiveRegionChangeInfo = (newText, newTime)
-		if newText == oldText and oldTime is not None and (newTime - oldTime) < 0.5:
+		if newText == oldText and oldTime is not None and (newTime - oldTime) < 0.5:  # noqa: SIM103
 			return False
 		return True
 
@@ -1817,35 +1817,35 @@ class UIA(Window):
 
 	def _get_devInfo(self):
 		info = super().devInfo
-		info.append("UIAElement: %r" % self.UIAElement)
+		info.append("UIAElement: %r" % self.UIAElement)  # noqa: UP031
 		# #11445: allow exceptions to be recorded when presenting Automation Id.
 		try:
 			ret = self.UIAElement.currentAutomationID
-		except Exception as e:
-			ret = "Exception: %s" % e
-		info.append("UIA automationID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "Exception: %s" % e  # noqa: UP031
+		info.append("UIA automationID: %s" % ret)  # noqa: UP031
 		try:
 			ret = self.UIAElement.cachedFrameworkID
-		except Exception as e:
-			ret = "Exception: %s" % e
-		info.append("UIA frameworkID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "Exception: %s" % e  # noqa: UP031
+		info.append("UIA frameworkID: %s" % ret)  # noqa: UP031
 		try:
 			ret = str(self.UIAElement.getRuntimeID())
-		except Exception as e:
-			ret = "Exception: %s" % e
-		info.append("UIA runtimeID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "Exception: %s" % e  # noqa: UP031
+		info.append("UIA runtimeID: %s" % ret)  # noqa: UP031
 		try:
 			ret = self.UIAElement.cachedProviderDescription
-		except Exception as e:
-			ret = "Exception: %s" % e
-		info.append("UIA providerDescription: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "Exception: %s" % e  # noqa: UP031
+		info.append("UIA providerDescription: %s" % ret)  # noqa: UP031
 		try:
 			ret = self.UIAElement.currentClassName
-		except Exception as e:
-			ret = "Exception: %s" % e
-		info.append("UIA className: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "Exception: %s" % e  # noqa: UP031
+		info.append("UIA className: %s" % ret)  # noqa: UP031
 		patternsAvailable = []
-		patternAvailableConsts = dict(
+		patternAvailableConsts = dict(  # noqa: C402
 			(const, name)
 			for name, const in UIAHandler.__dict__.items()
 			if name.startswith("UIA_Is") and name.endswith("PatternAvailablePropertyId")
@@ -1859,7 +1859,7 @@ class UIA(Window):
 			if res:
 				# Every name has the same format, so the string indexes can be safely hardcoded here.
 				patternsAvailable.append(name[6:-19])
-		info.append("UIA patterns available: %s" % ", ".join(patternsAvailable))
+		info.append("UIA patterns available: %s" % ", ".join(patternsAvailable))  # noqa: UP031
 		return info
 
 	def _get_UIAAutomationId(self):
@@ -1945,7 +1945,7 @@ class UIA(Window):
 		# #6790: Do not add two spaces unless both access key and accelerator are present in order to not waste string real estate.
 		return "  ".join(shortcuts) if shortcuts else ""
 
-	_UIAStatesPropertyIDs = {
+	_UIAStatesPropertyIDs = {  # noqa: RUF012
 		UIAHandler.UIA_HasKeyboardFocusPropertyId,
 		UIAHandler.UIA.UIA_SelectionCanSelectMultiplePropertyId,
 		UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
@@ -1963,7 +1963,7 @@ class UIA(Window):
 		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
-	_focusPrefetchUIAPropertyIDs = {
+	_focusPrefetchUIAPropertyIDs = {  # noqa: RUF012
 		UIAHandler.UIA_FullDescriptionPropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
@@ -2089,7 +2089,7 @@ class UIA(Window):
 			onError=None,
 		)
 
-		if annotationTypes:
+		if annotationTypes:  # noqa: SIM102
 			if UIAHandler.AnnotationType_Comment in annotationTypes:
 				states.add(controlTypes.State.HASCOMMENT)
 		# Drag "is grabbed" property was added in Windows 8.
@@ -2213,8 +2213,8 @@ class UIA(Window):
 		try:
 			return self.UIAElement.buildUpdatedCache(childrenCacheRequest).getCachedChildren()
 		except COMError as e:
-			log.debugWarning("Could not fetch cached children from UIA element: %s" % e)
-			raise e
+			log.debugWarning("Could not fetch cached children from UIA element: %s" % e)  # noqa: UP031
+			raise e  # noqa: TRY201
 
 	def _get_children(self):
 		try:

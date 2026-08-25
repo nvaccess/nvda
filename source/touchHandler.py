@@ -18,7 +18,7 @@ from typing import (
 if TYPE_CHECKING:
 	import browseMode
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	byref,
 	Structure,
 	c_void_p,
@@ -321,9 +321,9 @@ class TouchInputGesture(inputCore.InputGesture):
 	See touchHandler.MultitouchTracker for definitions of the available properties.
 	"""
 
-	counterNames = ["single", "double", "triple", "quadruple"]
+	counterNames = ["single", "double", "triple", "quadruple"]  # noqa: RUF012
 
-	pluralActionLabels = {
+	pluralActionLabels = {  # noqa: RUF012
 		# Translators: a touch screen action performed once
 		"single": _("single {action}"),
 		# Translators: a touch screen action performed twice
@@ -355,18 +355,18 @@ class TouchInputGesture(inputCore.InputGesture):
 		for includeHeldFingers in [True, False] if self.preheldTracker else [False]:
 			ID = ""
 			if self.preheldTracker:
-				ID += ("%dfinger_hold+" % self.preheldTracker.numFingers) if includeHeldFingers else "hold+"
+				ID += ("%dfinger_hold+" % self.preheldTracker.numFingers) if includeHeldFingers else "hold+"  # noqa: UP031
 			if self.tracker.numFingers > 1:
-				ID += "%dfinger_" % self.tracker.numFingers
+				ID += "%dfinger_" % self.tracker.numFingers  # noqa: UP031
 			if self.tracker.actionCount > 1:
-				ID += "%s_" % self.counterNames[min(self.tracker.actionCount, 4) - 1]
+				ID += "%s_" % self.counterNames[min(self.tracker.actionCount, 4) - 1]  # noqa: UP031
 			edge = _getEdge(self.tracker.x, self.tracker.y)
 			if edge:
 				ID += edge + "_"
 			ID += self.tracker.action
 			# "ts" is the gesture identifier source prefix for "touch screen".
-			IDs.append("ts(%s):%s" % (self.mode, ID))
-			IDs.append("ts:%s" % ID)
+			IDs.append("ts(%s):%s" % (self.mode, ID))  # noqa: UP031
+			IDs.append("ts:%s" % ID)  # noqa: UP031
 		return IDs
 
 	RE_IDENTIFIER = re.compile(r"^ts(?:\((.+?)\))?:(.*)$")
@@ -422,7 +422,7 @@ class TouchInputGesture(inputCore.InputGesture):
 		# Because touch may produce a hover gesture for every pump, an immediate pump
 		# can result in exhaustion of the window message queue. Thus, don't do
 		# immediate pumps for hover gestures.
-		return not self.tracker.action == TouchAction.HOVER
+		return not self.tracker.action == TouchAction.HOVER  # noqa: SIM201
 
 
 inputCore.registerGestureSource("ts", TouchInputGesture)
@@ -479,7 +479,7 @@ class TouchHandler(threading.Thread):
 			self.trackerManager = touchTracker.TrackerManager()
 			self.screenExplorer = screenExplorer.ScreenExplorer()
 			self.screenExplorer.updateReview = True
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			self.threadExc = e
 		finally:
 			self.initializedEvent.set()
@@ -511,7 +511,7 @@ class TouchHandler(threading.Thread):
 
 	def setMode(self, mode: TouchMode | str) -> None:
 		if mode not in availableTouchModes:
-			raise ValueError("Unknown mode %s" % mode)
+			raise ValueError("Unknown mode %s" % mode)  # noqa: UP031
 		self._curTouchMode = mode
 
 	def _executeGesture(self, gesture: "TouchInputGesture") -> None:
@@ -643,11 +643,11 @@ def handlePostConfigProfileSwitch():
 
 
 def initialize():
-	global handler
+	global handler  # noqa: PLW0602
 	if not touchSupported(debugLog=True):
 		raise NotImplementedError
 	log.debug(
-		"Touchscreen detected, maximum touch inputs: %d"
+		"Touchscreen detected, maximum touch inputs: %d"  # noqa: UP031
 		% user32.GetSystemMetrics(SystemMetrics.MAXIMUM_TOUCHES),
 	)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)

@@ -5,7 +5,7 @@
 
 """Unit tests for the addonVersionCheck module."""
 
-import unittest
+import unittest  # noqa: I001
 
 import addonAPIVersion
 from addonHandler.addonVersionCheck import (

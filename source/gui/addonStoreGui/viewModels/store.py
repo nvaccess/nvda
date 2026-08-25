@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from os import (
+from os import (  # noqa: I001
 	PathLike,
 	startfile,
 )
@@ -724,7 +724,7 @@ class AddonStoreVM:
 					os.remove(fileDownloaded)
 				except FileNotFoundError:
 					log.debugWarning(f"File already removed {fileDownloaded}")
-				except Exception as e:
+				except Exception as e:  # noqa: BLE001
 					log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
 
 	def cancelInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):

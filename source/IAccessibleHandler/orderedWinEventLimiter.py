@@ -1,4 +1,4 @@
-import heapq
+import heapq  # noqa: I001
 import itertools
 
 import winUser
@@ -100,7 +100,7 @@ class OrderedWinEventLimiter:
 			# Increase the event count for this thread by 1.
 			threadCount = threadCounters.get(k[-1], 0)
 			threadCounters[k[-1]] = threadCount + 1
-			if isMSAADebugLoggingEnabled():
+			if isMSAADebugLoggingEnabled():  # noqa: SIM102
 				if threadCount == MAX_WINEVENTS_PER_THREAD:
 					log.debug(f"winEvent limit for thread {k[-1]} hit for this core cycle")
 			# Find out if this event is for an object whos events are always allowed.

@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2012-2026 NV Access Limited, Kefas Lungu
 
-import math
+import math  # noqa: I001
 import threading
 import time
 from collections import OrderedDict
@@ -372,7 +372,7 @@ class MultiTouchTracker:
 		if self.rawSingleTouchTracker:
 			yield self.rawSingleTouchTracker
 		for child in self.childTrackers:
-			for i in child.iterAllRawSingleTouchTrackers():
+			for i in child.iterAllRawSingleTouchTrackers():  # noqa: UP028
 				yield i
 
 	def __repr__(self):
@@ -381,7 +381,7 @@ class MultiTouchTracker:
 		)
 
 	def getDevInfoString(self):
-		msg = "%s\n" % self
+		msg = "%s\n" % self  # noqa: UP031
 		if self.childTrackers:
 			msg += "--- made of ---\n"
 			for t in self.childTrackers:

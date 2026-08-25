@@ -5,7 +5,7 @@
 
 """Support for apps employing Edge WebView2 runtime interface."""
 
-from typing import Any
+from typing import Any  # noqa: I001
 import appModuleHandler
 
 

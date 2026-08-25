@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes
+import ctypes  # noqa: I001
 from comtypes import BSTR, COMError
 import colors
 import eventHandler
@@ -209,7 +209,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# the control returns -1.
 		if point.x < 0 or point.y < 0:
 			raise LookupError(
-				"Point with client coordinates x=%d, y=%d not within client area of object"
+				"Point with client coordinates x=%d, y=%d not within client area of object"  # noqa: UP031
 				% (point.x, point.y),
 			)
 		return point.toScreen(self.obj.windowHandle)
@@ -899,7 +899,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		elif isinstance(position, textInfos.offsets.Offsets):
 			self._rangeObj = self.obj.ITextDocumentObject.range(position.startOffset, position.endOffset)
 		else:
-			raise NotImplementedError("position: %s" % position)
+			raise NotImplementedError("position: %s" % position)  # noqa: UP031
 
 	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
@@ -938,7 +938,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if unit in NVDAUnitsToITextDocumentUnits:
 			self._rangeObj.Expand(NVDAUnitsToITextDocumentUnits[unit])
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 
 	def compareEndPoints(self, other, which):
 		if which == "startToStart":
@@ -950,7 +950,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		elif which == "endToEnd":
 			diff = self._rangeObj.End - other._rangeObj.End
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 		if diff < 0:
 			diff = -1
 		elif diff > 0:
@@ -967,10 +967,10 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		elif which == "endToEnd":
 			self._rangeObj.End = other._rangeObj.End
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 
 	def _get_isCollapsed(self):
-		if self._rangeObj.Start == self._rangeObj.End:
+		if self._rangeObj.Start == self._rangeObj.End:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -997,7 +997,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		if unit in NVDAUnitsToITextDocumentUnits:
 			unit = NVDAUnitsToITextDocumentUnits[unit]
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 		if endPoint == "start":
 			moveFunc = self._rangeObj.MoveStart
 		elif endPoint == "end":

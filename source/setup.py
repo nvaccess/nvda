@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 
 import argparse
 from ast import NodeTransformer, fix_missing_locations, parse
@@ -19,7 +19,7 @@ from buildVersion import (
 )
 
 gettext.install("nvda")
-from glob import glob
+from glob import glob  # noqa: I001
 import fnmatch
 
 # versionInfo names must be imported after Gettext
@@ -35,7 +35,7 @@ import wx
 import importlib.machinery
 
 if TYPE_CHECKING:
-	from ast import AnnAssign
+	from ast import AnnAssign  # noqa: I001
 	from py2exe.dllfinder import Scanner
 	from py2exe.mf310 import Module
 
@@ -349,10 +349,10 @@ freeze(
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
 		("documentation", ["../copying.txt"]),
-		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),
-		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),
-		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),
-		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),
+		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),  # noqa: UP031
+		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),  # noqa: UP031
+		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),  # noqa: UP031
+		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),  # noqa: UP031
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),

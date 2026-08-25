@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import controlTypes
+import controlTypes  # noqa: I001
 from . import IAccessible
 
 

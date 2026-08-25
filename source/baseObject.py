@@ -5,7 +5,7 @@
 
 """Contains the base classes that many of NVDA's classes such as NVDAObjects, virtualBuffers, appModules, synthDrivers inherit from. These base classes provide such things as auto properties, and methods and properties for scripting and key binding."""
 
-from typing import (
+from typing import (  # noqa: I001
 	Any,
 	Union,
 )
@@ -75,34 +75,34 @@ class AutoPropertyType(ABCMeta):
 		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
 		props = {x[5:] for x in namespace if x[0:5] in ("_get_", "_set_", "_del_")}
 		for x in props:
-			g = namespace.get("_get_%s" % x, None)
-			s = namespace.get("_set_%s" % x, None)
-			d = namespace.get("_del_%s" % x, None)
+			g = namespace.get("_get_%s" % x, None)  # noqa: UP031
+			s = namespace.get("_set_%s" % x, None)  # noqa: UP031
+			d = namespace.get("_del_%s" % x, None)  # noqa: UP031
 			if x in namespace:
 				methodsString = ",".join(str(i) for i in (g, s, d) if i)
 				raise TypeError(
-					"%s is already a class attribute, cannot create descriptor with methods %s"
+					"%s is already a class attribute, cannot create descriptor with methods %s"  # noqa: UP031
 					% (x, methodsString),
 				)
 			if not g:
 				# There's a setter or deleter, but no getter.
 				# This means it could be in one of the base classes.
 				for base in bases:
-					g = getattr(base, "_get_%s" % x, None)
+					g = getattr(base, "_get_%s" % x, None)  # noqa: UP031
 					if g:
 						break
 
-			cache = namespace.get("_cache_%s" % x, None)
+			cache = namespace.get("_cache_%s" % x, None)  # noqa: UP031
 			if cache is None:
 				# The cache setting hasn't been specified in this class, but it could be in one of the bases.
 				for base in bases:
-					cache = getattr(base, "_cache_%s" % x, None)
+					cache = getattr(base, "_cache_%s" % x, None)  # noqa: UP031
 					if cache is not None:
 						break
 				else:
 					cache = cacheByDefault if not isinstance(g, classmethod) else False
 
-			abstract = namespace.get("_abstract_%s" % x, False)
+			abstract = namespace.get("_abstract_%s" % x, False)  # noqa: UP031
 			if g and not (s or d):
 				attr = (CachingGetter if cache else Getter)(g, abstract)
 			else:
@@ -183,7 +183,7 @@ class ScriptableType(AutoPropertyType):
 
 	def __new__(cls, name: str, bases: tuple[type, ...], namespace: dict[str, Any], /, **kwargs: Any):
 		newCls = super().__new__(cls, name, bases, namespace, **kwargs)
-		gesturesDictName = "_%s__gestures" % newCls.__name__
+		gesturesDictName = "_%s__gestures" % newCls.__name__  # noqa: UP031
 		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
 		try:
 			gestures = getattr(newCls, gesturesDictName).copy()
@@ -191,7 +191,7 @@ class ScriptableType(AutoPropertyType):
 			# This class currently has no gestures dictionary,
 			# because no custom __gestures dictionary has been defined.
 			gestures = {}
-		for name, script in namespace.items():
+		for name, script in namespace.items():  # noqa: PLR1704
 			if not name.startswith("script_"):
 				continue
 			scriptName = name[len("script_") :]
@@ -227,7 +227,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 		# This does not include the gestures that are added when creating a DynamicNVDAObjectType.
 		for cls in reversed(self.__class__.__mro__):
 			try:
-				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+				self.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))  # noqa: UP031
 			except AttributeError:
 				pass
 			try:
@@ -244,7 +244,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 		@type scriptName: str
 		@raise LookupError: If there is no script with the provided name.
 		"""
-		scriptAttrName = "script_%s" % scriptName
+		scriptAttrName = "script_%s" % scriptName  # noqa: UP031
 		# Don't store the instance method, as this causes a circular reference
 		# and instance methods are meant to be generated on retrieval anyway.
 		func = getattr(self.__class__, scriptAttrName, None)
@@ -285,7 +285,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 				try:
 					self.bindGesture(gestureIdentifier, scriptName)
 				except LookupError:
-					log.error("Error binding script %s in %r" % (scriptName, self))
+					log.error("Error binding script %s in %r" % (scriptName, self))  # noqa: UP031
 			else:
 				try:
 					self.removeGestureBinding(gestureIdentifier)

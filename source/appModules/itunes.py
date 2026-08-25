@@ -6,7 +6,7 @@
 
 """App module for iTunes"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 from comtypes import COMError
 import controlTypes
 import oleacc

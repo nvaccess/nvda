@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import eventHandler
+import eventHandler  # noqa: I001
 import queueHandler
 import controlTypes
 from config.configFlags import TypingEcho
@@ -61,7 +61,7 @@ class InputComposition(EditableTextWithAutoSelectDetection, Window):
 	previous = None
 	firstChild = None
 	lastChild = None
-	states = set()
+	states = set()  # noqa: RUF012
 	location = None
 	compositionString = ""
 	readingString = ""
@@ -134,7 +134,7 @@ class CandidateList(Window):
 	previous = None
 	firstChild = None
 	lastChild = None
-	states = set()
+	states = set()  # noqa: RUF012
 
 	def __init__(self, parent=None):
 		self.parent = parent
@@ -149,9 +149,9 @@ class CandidateItem(CandidateItemBehavior, Window):
 	role = controlTypes.Role.LISTITEM
 	firstChild = None
 	lastChild = None
-	states = set()
+	states = set()  # noqa: RUF012
 
-	def __init__(self, parent=None, candidateStrings=[], candidateIndex=0, inputMethod=None):
+	def __init__(self, parent=None, candidateStrings=[], candidateIndex=0, inputMethod=None):  # noqa: B006
 		self.parent = parent
 		self.candidateStrings = candidateStrings
 		self.candidateIndex = candidateIndex

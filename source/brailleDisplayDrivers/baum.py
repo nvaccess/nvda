@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from io import BytesIO
+from io import BytesIO  # noqa: I001
 
 import braille
 import braille.display
@@ -163,7 +163,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		self.numCells = 0
 		self._deviceID: str | None = None
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.ProtocolType.HID
@@ -267,7 +267,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			stream = BytesIO(data)
 		else:
 			if data != ESCAPE:
-				log.debugWarning("Ignoring byte before escape: %r" % data)
+				log.debugWarning("Ignoring byte before escape: %r" % data)  # noqa: UP031
 				return
 			# data only contained the escape. Read the rest from the device.
 			stream = self._dev

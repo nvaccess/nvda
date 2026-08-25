@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING  # noqa: I001
 
 import wx
 
@@ -391,7 +391,7 @@ class AddonDetails(
 							details.reviewURL,
 						)
 
-				if isinstance(details, _AddonManifestModel):
+				if isinstance(details, _AddonManifestModel):  # noqa: SIM102
 					if details.installDate is not None:
 						# Installed add-ons with a manifest only
 						self._appendDetailsLabelValue(
@@ -400,7 +400,7 @@ class AddonDetails(
 							details.installDate.strftime("%x"),
 						)
 
-				if isinstance(details, _AddonStoreModel):
+				if isinstance(details, _AddonStoreModel):  # noqa: SIM102
 					if details.publicationDate is not None:
 						self._appendDetailsLabelValue(
 							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
@@ -408,7 +408,7 @@ class AddonDetails(
 							details.publicationDate,
 						)
 
-				if isinstance(details, _AddonStoreModel):
+				if isinstance(details, _AddonStoreModel):  # noqa: SIM102
 					if details.scanResults is not None:
 						malicious = details.scanResults.totalFlagged
 						self._appendDetailsLabelValue(

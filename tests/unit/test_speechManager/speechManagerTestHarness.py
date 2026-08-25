@@ -5,7 +5,7 @@
 
 """A test harness for interacting with the SpeechManager class."""
 
-import typing
+import typing  # noqa: I001
 import unittest
 from contextlib import contextmanager
 from collections.abc import Callable
@@ -211,7 +211,7 @@ class SpeechManagerInteractions:
 		"""Handle EndUtteranceCommands
 		Sequence gets split after the EndUtteranceCommand and two sequence numbers are returned.
 		"""
-		startOfUtteranceIndexes = set(
+		startOfUtteranceIndexes = set(  # noqa: C401
 			i + 1 for i, item in enumerate(seq) if isinstance(item, EndUtteranceCommand)
 		)
 		startOfUtteranceIndexes.add(len(seq))  # ensure the last index is included
@@ -388,7 +388,7 @@ class SpeechManagerInteractions:
 		self._assertSpeechManagerKnowsAboutIndex(forIndex)
 
 	def _assertSpeechManagerKnowsAboutIndex(self, index):
-		if index not in self._speechManagerIndexes.keys():
+		if index not in self._speechManagerIndexes.keys():  # noqa: SIM118
 			self._testCase.fail(f"Index {index} is not one of the index commands sent to speech manager.")
 		seqNumber = self._speechManagerIndexes[index]
 		if seqNumber not in self.expectedState_speak:  # ensure the index has been sent to the synth

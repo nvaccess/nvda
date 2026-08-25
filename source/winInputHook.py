@@ -7,7 +7,7 @@
 When working on this file, consider moving to winAPI.
 """
 
-import threading
+import threading  # noqa: I001
 from ctypes import (
 	Structure,
 	byref,
@@ -76,7 +76,7 @@ def keyboardHook(code, wParam, lParam):
 			bool(kbd.flags & LLKHF_INJECTED),
 		):
 			return 1
-	elif keyDownCallback:
+	elif keyDownCallback:  # noqa: SIM102
 		if not keyDownCallback(
 			kbd.vkCode,
 			kbd.scanCode,
@@ -92,7 +92,7 @@ def mouseHook(code, wParam, lParam):
 	if watchdog.isAttemptingRecovery or code != HC_ACTION:
 		return user32.CallNextHookEx(0, code, wParam, lParam)
 	msll = MSLLHOOKSTRUCT.from_address(lParam)
-	if mouseCallback:
+	if mouseCallback:  # noqa: SIM102
 		if not mouseCallback(wParam, msll.pt.x, msll.pt.y, msll.flags & LLMHF_INJECTED):
 			return 1
 	return user32.CallNextHookEx(0, code, wParam, lParam)
@@ -123,9 +123,9 @@ def hookThreadFunc():
 	while winBindings.user32.GetMessage(byref(msg), None, 0, 0):
 		pass
 	if user32.UnhookWindowsHookEx(keyHookID) == 0:
-		raise OSError("could not unregister key hook %s" % keyHookID)
+		raise OSError("could not unregister key hook %s" % keyHookID)  # noqa: UP031
 	if user32.UnhookWindowsHookEx(mouseHookID) == 0:
-		raise OSError("could not unregister mouse hook %s" % mouseHookID)
+		raise OSError("could not unregister mouse hook %s" % mouseHookID)  # noqa: UP031
 
 
 def initialize():

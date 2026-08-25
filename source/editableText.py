@@ -8,7 +8,7 @@
 	you should use the EditableText classes in L{NVDAObjects.behaviors}.
 """
 
-import time
+import time  # noqa: I001
 from numbers import Real
 from speech import sayAll
 import api
@@ -95,7 +95,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 				return (False, None)
 			api.processPendingEvents(processEventQueue=False)
 			if eventHandler.isPendingEvents("gainFocus"):
-				log.debug("Focus event. Elapsed %g sec" % elapsed)
+				log.debug("Focus event. Elapsed %g sec" % elapsed)  # noqa: UP031
 				return (True, None)
 			# Caret events are unreliable in some controls.
 			# Only use them if we consider them safe to rely on for a particular control,
@@ -107,7 +107,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 				and (eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
 			):
 				log.debug(
-					"Caret move detected using event. Elapsed %g sec, retries %d" % (elapsed, retries),
+					"Caret move detected using event. Elapsed %g sec, retries %d" % (elapsed, retries),  # noqa: UP031
 				)
 				# We must fetch the caret here rather than above the isPendingEvents check
 				# to avoid a race condition where an event is queued from a background
@@ -133,7 +133,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 					pass
 			if newBookmark and newBookmark != bookmark:
 				log.debug(
-					"Caret move detected using bookmarks. Elapsed %g sec, retries %d" % (elapsed, retries),
+					"Caret move detected using bookmarks. Elapsed %g sec, retries %d" % (elapsed, retries),  # noqa: UP031
 				)
 				return (True, newInfo)
 			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutSec:
@@ -145,7 +145,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 				wordInfo.expand(textInfos.UNIT_WORD)
 				word = wordInfo.text
 				if word != origWord:
-					log.debug("Word at caret changed. Elapsed: %g sec" % elapsed)
+					log.debug("Word at caret changed. Elapsed: %g sec" % elapsed)  # noqa: UP031
 					return (True, newInfo)
 			elapsed = time.time() - start
 			if elapsed >= timeout:
@@ -159,7 +159,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 				# already lost.
 				time.sleep(retryInterval)
 			retries += 1
-		log.debug("Caret didn't move before timeout. Elapsed: %g sec" % elapsed)
+		log.debug("Caret didn't move before timeout. Elapsed: %g sec" % elapsed)  # noqa: UP031
 		return (False, newInfo)
 
 	def _caretScriptPostMovedHelper(self, speakUnit, gesture, info=None):
@@ -337,7 +337,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 		word = info.text
 		gesture.send()
 		# We'll try waiting for the caret to move, but we don't care if it doesn't.
-		caretMoved, newInfo = self._hasCaretMoved(bookmark, origWord=word)
+		caretMoved, newInfo = self._hasCaretMoved(bookmark, origWord=word)  # noqa: RUF059
 		self._caretScriptPostMovedHelper(unit, gesture, newInfo)
 		braille.handler.handleCaretMove(self)
 
@@ -365,7 +365,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 		elif flag.calculated() == ParagraphNavigationFlag.MULTI_LINE_BREAK:
 			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
 
-			passKey, moved = moveToMultiLineBreakParagraph(
+			passKey, moved = moveToMultiLineBreakParagraph(  # noqa: RUF059
 				nextParagraph=nextParagraph,
 				speakNew=not willSayAllResume(gesture),
 			)
@@ -384,7 +384,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 
 	script_caret_nextParagraph.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:upArrow": "caret_moveByLine",
 		"kb:downArrow": "caret_moveByLine",
 		"kb:leftArrow": "caret_moveByCharacter",

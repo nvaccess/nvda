@@ -9,7 +9,7 @@ Tests cover the buffered-receive logic that handles both byte-at-a-time
 delivery (Serial) and packet-based delivery (BLE).
 """
 
-import functools
+import functools  # noqa: I001
 import operator
 import struct
 import unittest

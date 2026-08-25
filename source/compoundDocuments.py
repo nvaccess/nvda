@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (
+from typing import (  # noqa: I001
 	Self,
 )
 
@@ -96,7 +96,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 			self._end = other._end.copy()
 			self._endObj = other._endObj
 		else:
-			raise ValueError("which=%s" % which)
+			raise ValueError("which=%s" % which)  # noqa: UP031
 		self._normalizeStartAndEnd()
 
 	def collapse(self, end=False):
@@ -176,7 +176,7 @@ class CompoundTextInfo(textInfos.TextInfo):
 		field["description"] = obj.description
 		field["_description-from"] = obj.descriptionFrom
 		field["hasDetails"] = bool(obj.annotations)
-		field["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
+		field["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()  # noqa: C408
 		# The user doesn't care about certain states, as they are obvious.
 		states.discard(controlTypes.State.EDITABLE)
 		states.discard(controlTypes.State.MULTILINE)

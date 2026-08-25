@@ -9,7 +9,7 @@ Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
 """
 
-import weakref
+import weakref  # noqa: I001
 
 import wx
 import core
@@ -193,7 +193,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	_lastFindText = ""
 	_lastCaseSensitivity = False
 
-	_searchEntries: list[str] = []
+	_searchEntries: list[str] = []  # noqa: RUF012
 	"""In-memory history of search terms, most-recent first. Cleared on restart."""
 
 	@classmethod
@@ -680,7 +680,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		speech.speakSelectionChange(oldTextInfo, newInfo)
 		braille.handler.handleCaretMove(self)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:pageUp": "moveByPage_back",
 		"kb:pageDown": "moveByPage_forward",
 		"kb:upArrow": "moveByLine_back",
@@ -746,7 +746,7 @@ class ReviewCursorManager(CursorManager):
 		super().initCursorManager()
 		realTI = self.TextInfo
 		self.TextInfo = type(
-			"ReviewCursorManager_%s" % realTI.__name__,
+			"ReviewCursorManager_%s" % realTI.__name__,  # noqa: UP031
 			(_ReviewCursorManagerTextInfo, realTI),
 			{},
 		)

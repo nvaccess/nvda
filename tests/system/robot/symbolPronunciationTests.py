@@ -29,7 +29,7 @@ By line symbol expectations:
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-import enum as _enum
+import enum as _enum  # noqa: I001
 
 from SystemTestSpy import (
 	_getLib,
@@ -377,7 +377,7 @@ def test_selByWord():
 		navKey=Move.SEL_CARET_WORD,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list(
+		expectedSpeech=list(  # noqa: C400
 			
 				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
 				for i in [
@@ -422,7 +422,7 @@ def test_selByWord():
 		navKey=Move.SEL_CARET_WORD,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=list(
+		expectedSpeech=list(  # noqa: C400
 			
 				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
 				for i in [
@@ -472,7 +472,7 @@ def test_selByLine():
 		navKey=Move.SEL_CARET_LINE,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list(
+		expectedSpeech=list(  # noqa: C400
 			
 				i + ("   " if i else "") + "selected"
 				for i in [
@@ -504,7 +504,7 @@ def test_selByLine():
 		navKey=Move.SEL_CARET_LINE,
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.NONE,
-		expectedSpeech=list(
+		expectedSpeech=list(  # noqa: C400
 			
 				i + (" " if i else "") + "selected"
 				for i in [
@@ -539,7 +539,7 @@ def test_selByChar():
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list(
+		expectedSpeech=list(  # noqa: C400
 			
 				i + ("  " if i else "") + "selected"
 				for i in [
@@ -567,7 +567,7 @@ def test_selByChar():
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=list(
+		expectedSpeech=list(  # noqa: C400
 			
 				i + ("  " if i else "") + "selected"
 				for i in [
@@ -609,7 +609,7 @@ def test_symbolInSpeechUI():
 		# This can be a major issue in languages other than English.
 		[
 			# todo: 'tick' is a bug
-			"shouldn tick t sub tick symbol"  # intentionally concatenate strings
+			"shouldn tick t sub tick symbol"  # intentionally concatenate strings  # noqa: ISC004
 			f"\n{character}",
 		],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
@@ -707,7 +707,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# into the table, describe first column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"table",  # enter table context
 				"with 2 rows and 3 columns",  # details of the table context
@@ -721,7 +721,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# describe second column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"column 2",  # enter column 2 context, still in row 1, still in table
 				"right-pointing arrow   t-shirt",  # the contents of the cell
@@ -732,7 +732,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"column 3",  # enter column 3 context, still in row 1, still in table
 				"Don tick t",  # the contents of the cell
@@ -744,7 +744,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"row 2",  # enter row 2 context, still in table
 				"First dash-name",  # reminder of the column name
@@ -783,7 +783,7 @@ def test_tableHeaders():
 def test_ignoreBlankLinesForReportLineIndentation():
 	"""Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on"""
 	_notepad.prepareNotepad(
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"",  # blank line
 				"def foo",

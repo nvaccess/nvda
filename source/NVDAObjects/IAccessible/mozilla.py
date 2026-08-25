@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
-from collections.abc import Generator
+from collections.abc import Generator  # noqa: I001
 
 from annotation import (
 	_AnnotationRolesT,
@@ -87,7 +87,7 @@ class MozAnnotation(AnnotationOrigin):
 			try:
 				yield target.role
 			except ValueError:
-				log.error("Error getting role.", exc_info=True)
+				log.error("Error getting role.", exc_info=True)  # noqa: G201
 
 
 class Mozilla(ia2Web.Ia2Web):
@@ -126,7 +126,7 @@ class Mozilla(ia2Web.Ia2Web):
 
 	def _get_presentationType(self):
 		presType = super().presentationType
-		if presType == self.presType_content:
+		if presType == self.presType_content:  # noqa: SIM102
 			if self.role == controlTypes.Role.TABLE and self.IA2Attributes.get("layout-guess") == "true" or self.table and self.table.presentationType == self.presType_layout:
 				presType = self.presType_layout
 		return presType
@@ -220,7 +220,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 				if controlTypes.State.OFFSCREEN not in obj.states:
 					return obj
 				else:
-					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)  # noqa: UP031
 			else:
 				log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
 		else:
@@ -248,7 +248,7 @@ def findExtraOverlayClasses(obj, clsList):
 		iaStates = obj.IAccessibleStates
 		# Text leaves are never focusable.
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
-		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
+		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):  # noqa: SIM102
 			# This excludes a non-focusable @role="textbox".
 			if not (obj.IA2States & IA2.IA2_STATE_EDITABLE):
 				cls = TextLeaf

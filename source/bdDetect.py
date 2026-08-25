@@ -12,7 +12,7 @@ Drivers distributed with NVDA do this at the bottom of this module.
 For drivers in add-ons, this must be done in a global plugin.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field  # noqa: I001
 from functools import partial
 import itertools
 import threading
@@ -65,7 +65,7 @@ class CommunicationType(StrEnum):
 
 class _DeviceTypeMeta(type):
 	# Mapping old attributes to the new enums
-	_mapping = {
+	_mapping = {  # noqa: RUF012
 		"HID": ProtocolType.HID,
 		"SERIAL": ProtocolType.SERIAL,
 		"CUSTOM": ProtocolType.CUSTOM,
@@ -322,7 +322,7 @@ def getDriversForPossibleBluetoothDevices(
 			yield (hidName, match)
 
 
-type btDevsCacheT = list[DriverAndDeviceMatch] | None
+type btDevsCacheT = list[DriverAndDeviceMatch] | None  # noqa: PYI042
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):

@@ -6,7 +6,7 @@
 
 """Module for native UIA implementations of SysListView32, e.g. in Windows Forms."""
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import config
 from logHandler import log
 from config.configFlags import ReportTableHeaders

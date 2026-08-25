@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import nvwave
+import nvwave  # noqa: I001
 import threading
 import queue
 from ctypes import cdll, CFUNCTYPE, c_int, c_void_p, POINTER, sizeof, c_short
@@ -89,7 +89,7 @@ espeakINITIALIZE_DONT_EXIT = 0x8000
 
 
 class espeak_EVENT_id(Union):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("number", c_int),
 		("name", c_char_p),
 		("string", c_char * 8),
@@ -97,7 +97,7 @@ class espeak_EVENT_id(Union):
 
 
 class espeak_EVENT(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("type", c_int),
 		("unique_identifier", c_uint),
 		("text_position", c_int),
@@ -110,7 +110,7 @@ class espeak_EVENT(Structure):
 
 
 class espeak_VOICE(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("name", c_char_p),
 		("languages", c_char_p),
 		("identifier", c_char_p),
@@ -150,7 +150,7 @@ t_espeak_callback = CFUNCTYPE(c_int, c_void_p, c_int, POINTER(espeak_EVENT))
 @t_espeak_callback
 def callback(wav, numsamples, event):
 	try:
-		global player, isSpeaking, _numBytesPushed
+		global player, isSpeaking, _numBytesPushed  # noqa: PLW0602
 		if not isSpeaking:
 			return CALLBACK_ABORT_SYNTHESIS
 		indexes = []
@@ -194,7 +194,7 @@ def callback(wav, numsamples, event):
 		_numBytesPushed += length
 		return CALLBACK_CONTINUE_SYNTHESIS
 	except:  # noqa: E722
-		log.error("callback", exc_info=True)
+		log.error("callback", exc_info=True)  # noqa: G201
 
 
 class BgThread(threading.Thread):
@@ -203,7 +203,7 @@ class BgThread(threading.Thread):
 		self.daemon = True
 
 	def run(self):
-		global isSpeaking
+		global isSpeaking  # noqa: PLW0602
 		while True:
 			func, args, kwargs = bgQueue.get()
 			if not func:
@@ -211,12 +211,12 @@ class BgThread(threading.Thread):
 			try:
 				func(*args, **kwargs)
 			except:  # noqa: E722
-				log.error("Error running function from queue", exc_info=True)
+				log.error("Error running function from queue", exc_info=True)  # noqa: G201
 			bgQueue.task_done()
 
 
 def _execWhenDone(func, *args, mustBeAsync=False, **kwargs):
-	global bgQueue
+	global bgQueue  # noqa: PLW0602
 	if mustBeAsync or bgQueue.unfinished_tasks != 0:
 		# Either this operation must be asynchronous or There is still an operation in progress.
 		# Therefore, run this asynchronously in the background thread.
@@ -242,12 +242,12 @@ def _speak(text):
 
 
 def speak(text):
-	global bgQueue
+	global bgQueue  # noqa: PLW0602
 	_execWhenDone(_speak, text, mustBeAsync=True)
 
 
 def stop():
-	global isSpeaking, bgQueue
+	global isSpeaking, bgQueue  # noqa: PLW0602
 	# Kill all speech from now.
 	# We still want parameter changes to occur, so requeue them.
 	params = []
@@ -267,7 +267,7 @@ def stop():
 
 
 def pause(switch):
-	global player
+	global player  # noqa: PLW0602
 	player.pause(switch)
 
 
@@ -320,7 +320,7 @@ def _setVoiceAndVariant(voice=None, variant=None):
 		espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 	else:
 		try:
-			espeakDLL.espeak_SetVoiceByName(encodeEspeakString("%s+%s" % (voice, variant)))
+			espeakDLL.espeak_SetVoiceByName(encodeEspeakString("%s+%s" % (voice, variant)))  # noqa: UP031
 		except:  # noqa: E722
 			espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 
@@ -346,7 +346,7 @@ def setVoiceByLanguage(lang):
 
 def espeak_errcheck(res, func, args):
 	if res != EE_OK:
-		raise RuntimeError("%s: code %d" % (func.__name__, res))
+		raise RuntimeError("%s: code %d" % (func.__name__, res))  # noqa: UP031
 	return res
 
 
@@ -431,7 +431,7 @@ def getVariantDict():
 								break
 						name = None
 			except:  # noqa: E722
-				log.error("Couldn't parse espeak variant file %s" % fileName, exc_info=True)
+				log.error("Couldn't parse espeak variant file %s" % fileName, exc_info=True)  # noqa: G201, UP031
 				continue
 		if name is not None:
 			variantDict[fileName] = name

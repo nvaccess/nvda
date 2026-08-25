@@ -11,7 +11,7 @@
 # see www.hedo.de for more details
 
 
-import wx
+import wx  # noqa: I001
 import serial
 import braille
 import braille.display.driver
@@ -116,7 +116,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def handleResponses(self, wait=False):
 		while wait or self._ser.in_waiting:
 			data: bytes = self._ser.read(1)
-			if data:
+			if data:  # noqa: SIM102
 				# do not handle acknowledge bytes
 				if data != HEDO_MOBIL_ACK:
 					self.handleData(ord(data))

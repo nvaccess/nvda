@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., Joseph Lee
 
-import threading
+import threading  # noqa: I001
 import typing
 from comtypes import COMError
 
@@ -138,7 +138,7 @@ class _EventExecuter(garbageHandler.TrackedObject):
 			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
-		funcName = "event_%s" % eventName
+		funcName = "event_%s" % eventName  # noqa: UP031
 
 		# Global plugin level.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -527,7 +527,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
 	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread.
 	gi = winUser.getGUIThreadInfo(0)
-	if wClass.startswith("Windows.UI.Core"):
+	if wClass.startswith("Windows.UI.Core"):  # noqa: SIM102
 		if winUser.isDescendantWindow(gi.hwndActive, windowHandle):
 			return True
 
@@ -560,7 +560,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		return True
 	# This may be an event for a windowless embedded Chrome document
 	# (E.g. Microsoft Loop component).
-	if wClass == "Chrome_RenderWidgetHostHWND":
+	if wClass == "Chrome_RenderWidgetHostHWND":  # noqa: SIM102
 		# The event is for a Chromium document
 		if winUser.getClassName(gi.hwndFocus) == "Chrome_WidgetWin_0":
 			# The real win32 focus is on a Chrome embedding window.

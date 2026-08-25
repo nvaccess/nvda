@@ -10,7 +10,7 @@ https://github.com/microsoft/win32metadata/blob/main/generation/WinSDK/Recompile
 This file refers to this header with the convention `WtsApi32.h#L36` meaning line 36 of the above link.
 """
 
-from enum import (
+from enum import (  # noqa: I001
 	IntEnum,
 )
 from collections.abc import Callable

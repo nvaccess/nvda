@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import abc
 import ctypes
 import enum
@@ -550,7 +550,7 @@ class ExcelSheetQuickNavItem(ExcelQuickNavItem):
 	@property
 	def isAfterSelection(self):
 		activeSheet = self.document.Application.ActiveSheet
-		if self.sheetObject.Index <= activeSheet.Index:
+		if self.sheetObject.Index <= activeSheet.Index:  # noqa: SIM103
 			return False
 		else:
 			return True
@@ -846,7 +846,7 @@ class ExcelBase(Window):
 		except (COMError, NameError):
 			numCells = 0
 
-		isChartActive = True if self.excelWindowObject.ActiveChart else False
+		isChartActive = True if self.excelWindowObject.ActiveChart else False  # noqa: SIM210
 		obj = None
 		if not isMerged and numCells > 1:
 			obj = ExcelSelection(
@@ -1023,7 +1023,7 @@ class ExcelWorksheet(ExcelBase):
 			raise ValueError("One or both of isColumnHeader or isRowHeader must be True")
 		name += uuid.uuid4().hex
 		relativeName = name
-		name = "%s!%s" % (cell.excelRangeObject.worksheet.name, name)
+		name = "%s!%s" % (cell.excelRangeObject.worksheet.name, name)  # noqa: UP031
 		if oldInfo:
 			self.excelWorksheetObject.parent.names(oldInfo.name).delete()
 			oldInfo.name = name
@@ -1138,7 +1138,7 @@ class ExcelWorksheet(ExcelBase):
 		canPropagate=True,
 	)
 	def script_changeActiveCell(self, gesture: inputCore.InputGesture) -> None:
-		isChartActive = True if self.excelWindowObject.ActiveChart else False
+		isChartActive = True if self.excelWindowObject.ActiveChart else False  # noqa: SIM210
 		if isChartActive:
 			objGetter = self._getSelection
 		else:
@@ -1371,7 +1371,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 			formatField["italic"] = fontObj.italic
 			underline = fontObj.underline
 			formatField["underline"] = (
-				False if underline is None or underline == xlUnderlineStyleNone else True
+				False if underline is None or underline == xlUnderlineStyleNone else True  # noqa: SIM211
 			)
 			formatField["strikethrough"] = fontObj.strikethrough
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
@@ -1514,13 +1514,13 @@ class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 
 	@property
 	def label(self):
-		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.text)
+		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.text)  # noqa: UP031
 
 
 class CommentExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	@property
 	def label(self):
-		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.comments)
+		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.comments)  # noqa: UP031
 
 
 def convertAddressToLocal(application: comtypes.client.lazybind.Dispatch, address: str) -> str:
@@ -1536,7 +1536,7 @@ def convertAddressToLocal(application: comtypes.client.lazybind.Dispatch, addres
 class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	@property
 	def label(self):
-		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.formula)
+		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.formula)  # noqa: UP031
 
 
 class ExcelCellInfoQuicknavIterator(metaclass=abc.ABCMeta):
@@ -1586,7 +1586,7 @@ class ExcelCellInfoQuicknavIterator(metaclass=abc.ABCMeta):
 		for index in range(numCellsFetched.value):
 			ci = cellInfos[index]
 			if not ci.address:
-				log.debugWarning("cellInfo at index %s has no address" % index)
+				log.debugWarning("cellInfo at index %s has no address" % index)  # noqa: UP031
 				break
 			yield self.QuickNavItemClass(self, ci)
 
@@ -2068,7 +2068,7 @@ class ExcelSelection(ExcelBase):
 class ExcelDropdownItem(Window):
 	firstChild = None
 	lastChild = None
-	children = []
+	children = []  # noqa: RUF012
 	role = controlTypes.Role.LISTITEM
 
 	def __init__(self, parent=None, name=None, states=None, index=None):
@@ -2115,7 +2115,7 @@ class ExcelDropdown(Window):
 		states = set()
 		for item in DisplayModelTextInfo(self, textInfos.POSITION_ALL).getTextWithFields():
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
-				states = set([controlTypes.State.SELECTABLE])
+				states = set([controlTypes.State.SELECTABLE])  # noqa: C405
 				foreground = item.field.get("color", None)
 				background = item.field.get("background-color", None)
 				if (background, foreground) == self._highlightColors:
@@ -2180,7 +2180,7 @@ class ExcelMergedCell(ExcelCell):
 
 class ExcelFormControl(ExcelBase):
 	isFocusable = True
-	_roleMap = {
+	_roleMap = {  # noqa: RUF012
 		xlButtonControl: controlTypes.Role.BUTTON,
 		xlCheckBox: controlTypes.Role.CHECKBOX,
 		xlDropDown: controlTypes.Role.COMBOBOX,
@@ -2391,7 +2391,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 		return self.formControlObjectIndex < other.formControlObjectIndex
 
 	def moveTo(self):
-		self.excelItemObject.TopLeftCell.Select
+		self.excelItemObject.TopLeftCell.Select  # noqa: B018
 		self.excelItemObject.TopLeftCell.Activate()
 		if self.treeInterceptorObj.passThrough:
 			self.treeInterceptorObj.passThrough = False
@@ -2486,7 +2486,7 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 
 	def filter(self, shape):
 		if shape.Type == msoFormControl:
-			if shape.FormControlType == xlGroupBox or shape.Visible != msoTrue:
+			if shape.FormControlType == xlGroupBox or shape.Visible != msoTrue:  # noqa: SIM103
 				return False
 			else:
 				return True
@@ -2516,7 +2516,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 
 	def getChildAtIndex(self, index):
 		name = str(self.excelOLEFormatObject.List(index + 1))
-		states = set([controlTypes.State.SELECTABLE])
+		states = set([controlTypes.State.SELECTABLE])  # noqa: C405
 		if self.excelOLEFormatObject.Selected[index + 1] == True:
 			states.add(controlTypes.State.SELECTED)
 		return ExcelDropdownItem(parent=self, name=name, states=states, index=index)
@@ -2539,7 +2539,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			if not self.isMultiSelectable:
 				try:
 					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
-				except:  # noqa: E722
+				except:  # noqa: E722, S110
 					pass
 			child = self.getChildAtIndex(self.selectedItemIndex - 1)
 			if child:
@@ -2552,7 +2552,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			if not self.isMultiSelectable:
 				try:
 					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
-				except:  # noqa: E722
+				except:  # noqa: E722, S110
 					pass
 			child = self.getChildAtIndex(self.selectedItemIndex - 1)
 			if child:

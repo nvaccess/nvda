@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 import enum
 import itertools
 import braille
@@ -96,7 +96,7 @@ class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 		self.numRows = 1
 		self.numCols = 0
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			if portType != bdDetect.ProtocolType.HID:
 				continue
 			# Try talking to the display.

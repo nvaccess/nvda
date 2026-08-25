@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
-import config
+import config  # noqa: I001
 
 from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 from winVersion import getWinVer, WIN10_1607

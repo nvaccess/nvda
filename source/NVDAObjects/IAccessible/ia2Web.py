@@ -5,7 +5,7 @@
 
 """Base classes with common support for browsers exposing IAccessible2."""
 
-from typing import (
+from typing import (  # noqa: I001
 	TYPE_CHECKING,
 )
 from collections.abc import Generator
@@ -250,8 +250,8 @@ class Ia2Web(IAccessible):
 		try:
 			return aria.AriaLivePoliteness(politeness.lower())
 		except ValueError:
-			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
-			super().liveRegionPoliteness
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)  # noqa: G201
+			super().liveRegionPoliteness  # noqa: B018
 
 
 class Document(Ia2Web):
@@ -430,10 +430,10 @@ class Math(Ia2Web):
 				# This isn't MathML
 				raise LookupError
 			if self.language:
-				attrs = ' xml:lang="%s"' % self.language
+				attrs = ' xml:lang="%s"' % self.language  # noqa: UP031
 			else:
 				attrs = ""
-			return "<math%s>%s</math>" % (attrs, node.innerHTML)
+			return "<math%s>%s</math>" % (attrs, node.innerHTML)  # noqa: UP031
 		except COMError:
 			log.debugWarning(
 				"Error retrieving math. "
@@ -523,7 +523,7 @@ def findExtraOverlayClasses(obj, clsList, baseClass=Ia2Web, documentClass=None):
 		else:
 			clsList.append(EditorChunk)
 
-	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG, oleacc.ROLE_SYSTEM_PROPERTYPAGE):
+	if iaRole in (oleacc.ROLE_SYSTEM_DIALOG, oleacc.ROLE_SYSTEM_PROPERTYPAGE):  # noqa: SIM102
 		if "dialog" in xmlRoles or "tabpanel" in xmlRoles:
 			# #2390: Don't try to calculate text for ARIA dialogs.
 			# #4638: Don't try to calculate text for ARIA tab panels.

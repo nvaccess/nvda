@@ -6,7 +6,7 @@
 
 """Provides a simple Python interface to playing audio using the Windows Audio Session API (WASAPI), as well as other useful utilities."""
 
-import threading
+import threading  # noqa: I001
 import typing
 from enum import Enum, auto
 from ctypes import (
@@ -90,9 +90,9 @@ def playWaveFile(
 	:param isSpeechWaveFileCommand: whether this wave is played as part of a speech sequence.
 	"""
 	global fileWavePlayer, fileWavePlayerThread
-	f = wave.open(fileName, "r")
+	f = wave.open(fileName, "r")  # noqa: SIM115
 	if f is None:
-		raise RuntimeError("can not open file %s" % fileName)
+		raise RuntimeError("can not open file %s" % fileName)  # noqa: UP031
 	if fileWavePlayer is not None:
 		# There are several race conditions where the background thread might feed
 		# audio after we call stop here in the main thread. Some of these are
@@ -571,5 +571,5 @@ def playErrorSound() -> None:
 		return
 	try:
 		playWaveFile(os.path.join(globalVars.appDir, "waves", "error.wav"))
-	except Exception:
+	except Exception:  # noqa: BLE001, S110
 		pass

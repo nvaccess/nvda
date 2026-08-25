@@ -8,7 +8,7 @@
 See the L{BasicTextProvider} class.
 """
 
-from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects import NVDAObjectTextInfo  # noqa: I001
 from .objectProvider import PlaceholderNVDAObject
 import textInfos
 from textInfos.offsets import Offsets

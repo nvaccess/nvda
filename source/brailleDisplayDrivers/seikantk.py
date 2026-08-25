@@ -8,7 +8,7 @@ Braille display driver for Seika Notetaker, a product from Nippon Telesoft
 see www.seika-braille.com for more details
 """
 
-import re
+import re  # noqa: I001
 from io import BytesIO
 import typing
 
@@ -202,7 +202,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		finally:
 			if self._dev is None:
 				log.debugWarning("Seika Notetaker driver not initialized when attempting to terminate")
-				return
+				return  # noqa: B012
 			self._dev.close()
 
 	def display(self, cells: list[int]):

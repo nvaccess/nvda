@@ -4,8 +4,8 @@
 # Copyright (C) 2023-2025 NV Access Limited
 
 
-from __future__ import annotations
-from typing import (
+from __future__ import annotations  # noqa: I001
+from typing import (  # noqa: UP035
 	Type,
 	Self,
 	Generic,
@@ -41,7 +41,7 @@ from .. import operation
 LocalTypeVar = TypeVar("LocalTypeVar")
 
 
-class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
+class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):  # noqa: UP046
 	_IsTypeInstruction: type[builder.InstructionBase]
 	LocalType: type[LocalTypeVar] | None = None
 	_initialValue: LocalTypeVar | None = None
@@ -277,7 +277,7 @@ class RemoteNull(RemoteBaseObject):
 		)
 
 
-class RemoteIntegral(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
+class RemoteIntegral(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):  # noqa: UP046
 	_NewInstruction: type[builder.InstructionBase]
 	_ctype: type[_SimpleCData]
 
@@ -355,7 +355,7 @@ class RemoteBool(RemoteIntegral[bool]):
 		return result
 
 
-class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
+class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):  # noqa: UP046
 	@remoteMethod
 	def __gt__(self, other: Self | LocalTypeVar) -> RemoteBool:
 		return self._doCompare(lowLevel.ComparisonType.GreaterThan, other)
@@ -616,7 +616,7 @@ class RemoteString(RemoteBaseObject[str]):
 
 
 class RemoteArray(RemoteBaseObject):
-	_LOCAL_COM_INTERFACES = [
+	_LOCAL_COM_INTERFACES = [  # noqa: RUF012
 		UIA.IUIAutomationElement,
 		UIA.IUIAutomationTextRange,
 	]
@@ -738,7 +738,7 @@ def getRemoteTypeForLocalType(LocalType: type[object]) -> type[RemoteBaseObject]
 
 # Import some more complex types after defining the base classes to avoid circular imports
 # flake8: noqa: F401
-from .intEnum import RemoteIntEnum
+from .intEnum import RemoteIntEnum  # noqa: I001
 from .extensionTarget import RemoteExtensionTarget
 from .cacheRequest import RemoteCacheRequest
 from .element import RemoteElement

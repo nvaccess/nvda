@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from concurrent.futures import (
+from concurrent.futures import (  # noqa: I001
 	Future,
 	ThreadPoolExecutor,
 )
@@ -36,7 +36,7 @@ from .models.channel import Channel
 
 
 if TYPE_CHECKING:
-	from gui.message import DisplayableError
+	from gui.message import DisplayableError  # noqa: I001
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 
 
@@ -136,7 +136,7 @@ class AddonFileDownloader:
 				try:
 					shutil.rmtree(WritePaths.addonStoreDownloadDir)
 				except OSError:
-					log.error(
+					log.error(  # noqa: G201
 						f"Failed to remove addon store download directory: {WritePaths.addonStoreDownloadDir}",
 						exc_info=True,
 					)
@@ -279,7 +279,7 @@ class AddonFileDownloader:
 				try:
 					shutil.rmtree(WritePaths.addonStoreDownloadDir)
 				except OSError:
-					log.error(
+					log.error(  # noqa: G201
 						f"Failed to remove addon store download directory: {WritePaths.addonStoreDownloadDir}",
 						exc_info=True,
 					)
@@ -300,7 +300,7 @@ class AddonFileDownloader:
 		# Some add-ons are quite large, so we need to allow for a long download time.
 		# 1GB at 0.5 MB/s takes 4.5hr to download.
 		MAX_ADDON_DOWNLOAD_TIME = 60 * 60 * 6  # 6 hours
-		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:
+		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:  # noqa: SIM117
 			with open(tempDownloadPath, "wb") as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 				# interrupting the download. This is particularly important on a slow connection, to provide

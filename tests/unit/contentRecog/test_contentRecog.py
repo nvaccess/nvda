@@ -6,7 +6,7 @@
 
 """Unit tests for the contentRecog module."""
 
-import unittest
+import unittest  # noqa: I001
 import contentRecog
 import textInfos
 from locationHelper import RectLTWH
@@ -69,7 +69,7 @@ class TestLinesWordsResult(unittest.TestCase):
 	correctly parse and process the JSON from a recognizer.
 	"""
 
-	DATA = [
+	DATA = [  # noqa: RUF012
 		[
 			{"x": 100, "y": 200, "width": 10, "height": 20, "text": "word1"},
 			{"x": 110, "y": 200, "width": 10, "height": 20, "text": "word2"},

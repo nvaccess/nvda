@@ -5,7 +5,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-import typing
+import typing  # noqa: I001
 
 import appModuleHandler
 import api
@@ -226,7 +226,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowHandle = obj.windowHandle
 		from gui.settingsDialogs import NvdaSettingsDialogWindowHandle
 
-		if windowHandle == NvdaSettingsDialogWindowHandle:
+		if windowHandle == NvdaSettingsDialogWindowHandle:  # noqa: SIM103
 			return True
 		return False
 

@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import api
+import api  # noqa: I001
 import controlTypes
 import eventHandler
 import winUser

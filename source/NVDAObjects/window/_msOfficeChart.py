@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import eventHandler
+import eventHandler  # noqa: I001
 import ui
 from . import Window
 import ctypes
@@ -430,7 +430,7 @@ class OfficeChartElementBase(Window):
 		ui.message(self._getChartElementText(self.elementID, self.arg1, self.arg2, True))
 
 	def script_reportCurrentChartElementColor(self, gesture):
-		if self.elementID == xlSeries:
+		if self.elementID == xlSeries:  # noqa: SIM102
 			if self.arg2 == -1:
 				ui.message(
 					# Translators: Message to be spoken to report Series Color
@@ -441,7 +441,7 @@ class OfficeChartElementBase(Window):
 					),
 				)
 
-	ELEMENT_IDS = {
+	ELEMENT_IDS = {  # noqa: RUF012
 		# Translators: A type of element in a Microsoft Office chart.
 		xlDisplayUnitLabel: _("Display Unit Label"),
 		# Translators: A type of element in a Microsoft Office chart.
@@ -489,7 +489,7 @@ class OfficeChartElementBase(Window):
 	def _getChartElementText(self, ElementID, arg1, arg2, reportExtraInfo=False):
 		return self.ELEMENT_IDS[ElementID]
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:NVDA+d": "reportCurrentChartElementWithExtraInfo",
 		"kb:NVDA+f": "reportCurrentChartElementColor",
 	}
@@ -538,7 +538,7 @@ class OfficeChartElementList(Window):
 
 	script_nextElement.canPropagate = True
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb(laptop):leftArrow": "previousElement",
 		"kb(desktop):leftArrow": "previousElement",
 		"kb(laptop):rightArrow": "nextElement",
@@ -579,7 +579,7 @@ class OfficeChart(OfficeChartElementList):
 		)
 		try:
 			self.officeChartObject.Select()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def _get_name(self):
@@ -651,7 +651,7 @@ class OfficeChart(OfficeChartElementList):
 
 	script_disablePassThrough.canPropagate = True
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:upArrow": "previousElement",
 		"kb:downArrow": "nextElement",
 		"kb:escape": "disablePassThrough",
@@ -809,7 +809,7 @@ class OfficeChartElementSeries(OfficeChartElementList):
 				),
 			)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:NVDA+5": "reportColor",
 	}
 
@@ -850,7 +850,7 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 					chartSeriesXValue = self.officeChartObject.SeriesCollection(arg1).XValues[arg2 - 1]
 
 				output = ""
-				if self.officeChartObject.ChartType in (
+				if self.officeChartObject.ChartType in (  # noqa: SIM102
 					xlLine,
 					xlLineMarkers,
 					xlLineMarkersStacked,
@@ -940,7 +940,7 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 
 
 class OfficeChartElementAxis(OfficeChartElementBase):
-	_axisMap = {
+	_axisMap = {  # noqa: RUF012
 		xlCategory: {
 			# Translators: Indicates Primary Category Axis
 			xlPrimary: _("Primary Category Axis"),
@@ -1031,7 +1031,7 @@ class OfficeChartElementAxisTitle(OfficeChartElementAxis):
 
 
 class OfficeChartElementTrendline(OfficeChartElementBase):
-	_trendlineTypeMap = {
+	_trendlineTypeMap = {  # noqa: RUF012
 		# Translators: Indicates that trendline type is Exponential
 		xlExponential: _("Exponential"),
 		# Translators: Indicates that trendline type is Linear

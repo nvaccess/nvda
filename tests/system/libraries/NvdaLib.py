@@ -14,7 +14,7 @@ which provide library functions related to monitoring NVDA and asserting NVDA ou
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from datetime import datetime as _datetime
+from datetime import datetime as _datetime  # noqa: I001
 from os.path import (
 	join as _pJoin,
 	abspath as _abspath,
@@ -266,7 +266,7 @@ class NvdaLib:
 		return remoteLib
 
 	def start_NVDAInstaller(self, settingsFileName):
-		self.lastNVDAStart = _datetime.utcnow()
+		self.lastNVDAStart = _datetime.utcnow()  # noqa: DTZ003
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName)
 		nvdaProcessHandle = self._startNVDAInstallerProcess()
@@ -291,7 +291,7 @@ class NvdaLib:
 			)
 
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: str | None = None):
-		self.lastNVDAStart = _datetime.utcnow()
+		self.lastNVDAStart = _datetime.utcnow()  # noqa: DTZ003
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
@@ -356,7 +356,7 @@ class NvdaLib:
 				shell=True,
 			)
 			process.wait_for_process(self.nvdaHandle)
-		except Exception:
+		except Exception:  # noqa: TRY203
 			raise
 		finally:
 			self._quitNVDAProcessCleanup()
@@ -369,7 +369,7 @@ class NvdaLib:
 		builtIn.sleep(1)
 		try:
 			_stopRemoteServer(self._spyServerURI, log=False)
-		except Exception:
+		except Exception:  # noqa: TRY203
 			raise
 		finally:
 			self._quitNVDAProcessCleanup()
@@ -385,9 +385,9 @@ class NvdaLib:
 		crashPath = overridePath or _pJoin(_dirname(_locations.logPath), "nvda_crash.dmp")
 		try:
 			opSys.file_should_not_exist(crashPath)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			crashTime = opSys.get_modified_time(crashPath, format="epoch")
-			crashTime = _datetime.fromtimestamp(crashTime)
+			crashTime = _datetime.fromtimestamp(crashTime)  # noqa: DTZ006
 			since = since.replace(microsecond=0)  # get_modified_time only reports seconds, not microseconds
 			if crashTime >= since:
 				return crashPath

@@ -8,7 +8,7 @@ Windows Notepad with a text sample and assert NVDA interacts with it in the expe
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from os.path import join as _pJoin
+from os.path import join as _pJoin  # noqa: I001
 import datetime as _datetime
 import tempfile as _tempfile
 from SystemTestSpy import (
@@ -159,7 +159,7 @@ class NotepadLib:
 		@param testCase - The plaintext sample to test.
 		"""
 		spy = _NvdaLib.getSpyLib()
-		_testCaseHash = hash(testCase + _datetime.datetime.now().isoformat())
+		_testCaseHash = hash(testCase + _datetime.datetime.now().isoformat())  # noqa: DTZ005
 		uniqueTitleRegex = NotepadLib.getUniqueTestCaseTitleRegex(_testCaseHash)
 		path = self._writeTestFile(testCase, self.getUniqueTestCaseTitle(_testCaseHash))
 

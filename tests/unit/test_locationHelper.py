@@ -5,7 +5,7 @@
 
 """Unit tests for the locationHelper module."""
 
-import unittest
+import unittest  # noqa: I001
 from locationHelper import Point, RectLTRB, RectLTWH
 from ctypes.wintypes import RECT, POINT
 

@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019-2023 Bill Dengler, Leonard de Ruijter
 
-import api
+import api  # noqa: I001
 import braille
 import config
 import controlTypes

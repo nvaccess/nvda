@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import *
+from ctypes import *  # noqa: I001
 from ctypes.wintypes import *
 import winKernel
 import winUser
@@ -37,7 +37,7 @@ IPC_PE_GETINDEXTITLE = 200  #  lParam = pointer to fileinfo2 structure
 
 
 class fileinfo2(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("fileindex", c_int),
 		("filetitle", c_char * 256),
 		("filelength", c_char * 16),
@@ -48,12 +48,12 @@ hwndWinamp = 0
 
 
 def getShuffle():
-	global hwndWinamp
+	global hwndWinamp  # noqa: PLW0602
 	return watchdog.cancellableSendMessage(hwndWinamp, WM_WA_IPC, 0, IPC_GET_SHUFFLE)
 
 
 def getRepeat():
-	global hwndWinamp
+	global hwndWinamp  # noqa: PLW0602
 	return watchdog.cancellableSendMessage(hwndWinamp, WM_WA_IPC, 0, IPC_GET_REPEAT)
 
 
@@ -98,7 +98,7 @@ class winampMainWindow(IAccessible):
 				onOff = pgettext("repeat", "off")
 			ui.message(onOff)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:s": "shuffleToggle",
 		"kb:r": "repeatToggle",
 	}
@@ -128,7 +128,7 @@ class winampPlaylistEditor(winampMainWindow):
 		# We need to decode it to unicode first.
 		encoding = textUtils.USER_ANSI_CODE_PAGE
 		fileTitle = info.filetitle.decode(encoding, errors="replace")
-		return "%d.\t%s\t%s" % (curIndex + 1, fileTitle, info.filelength)
+		return "%d.\t%s\t%s" % (curIndex + 1, fileTitle, info.filelength)  # noqa: UP031
 
 	def _get_role(self):
 		return controlTypes.Role.LISTITEM

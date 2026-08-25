@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import operator
+import operator  # noqa: I001
 from comtypes import COMError
 import config
 from config.featureFlagEnums import WindowsTerminalStrategyFlag
@@ -106,7 +106,7 @@ def getUIATextAttributeValueFromRange(rangeObj, attrib, ignoreMixedValues=False)
 		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
-	if val == UIAHandler.handler.ReservedMixedAttributeValue:
+	if val == UIAHandler.handler.ReservedMixedAttributeValue:  # noqa: SIM102
 		if not ignoreMixedValues:
 			raise UIAMixedAttributeError
 	return val
@@ -175,7 +175,7 @@ def iterUIARangeByUnit(rangeObj, unit, reverse=False):
 def getEnclosingElementWithCacheFromUIATextRange(textRange, cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getEnclosingElementBuildCache if it exists, otherwise IUIAutomationTextRange::getEnclosingElement and then IUIAutomationElement::buildUpdatedCache."""
 	if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-		raise ValueError("%s is not a text range" % textRange)
+		raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 	try:
 		textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 	except (COMError, AttributeError):
@@ -205,7 +205,7 @@ class CacheableUIAElementArray:
 def getChildrenWithCacheFromUIATextRange(textRange, cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getChildrenBuildCache if it exists, otherwise IUIAutomationTextRange::getChildren but wraps the result in an object that automatically calls IUIAutomationElement::buildUpdateCache on any element retreaved."""
 	if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-		raise ValueError("%s is not a text range" % textRange)
+		raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 	try:
 		textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 	except (COMError, AttributeError):
@@ -296,7 +296,7 @@ class FakeEventHandlerGroup:
 
 	def AddNotificationEventHandler(self, scope, cacheRequest, handler):
 		if not isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
-			raise RuntimeError
+			raise RuntimeError  # noqa: TRY004
 		self._notificationEventHandlers[(scope, cacheRequest)] = handler
 
 	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
@@ -323,7 +323,7 @@ class FakeEventHandlerGroup:
 				self.unregisterFromClientObject(element)
 			except COMError:
 				pass
-			raise e
+			raise e  # noqa: TRY201
 
 	def unregisterFromClientObject(self, element):
 		for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():

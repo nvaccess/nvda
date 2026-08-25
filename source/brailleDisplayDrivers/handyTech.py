@@ -8,7 +8,7 @@
 Braille display driver for Handy Tech braille displays.
 """
 
-from collections import OrderedDict
+from collections import OrderedDict  # noqa: I001
 
 from io import BytesIO
 import serial
@@ -333,7 +333,7 @@ class TimeSyncFirmnessMixin:
 
 	def handleTime(self, timeBytes: bytes):
 		try:
-			displayDateTime = datetime.datetime(
+			displayDateTime = datetime.datetime(  # noqa: DTZ001
 				year=timeBytes[0] << 8 | timeBytes[1],
 				month=timeBytes[2],
 				day=timeBytes[3],
@@ -342,14 +342,14 @@ class TimeSyncFirmnessMixin:
 				second=timeBytes[6],
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of Handy Tech display: %r" % timeBytes)
+			log.debugWarning("Invalid time/date of Handy Tech display: %r" % timeBytes)  # noqa: UP031
 			return
-		localDateTime = datetime.datetime.today()
+		localDateTime = datetime.datetime.today()  # noqa: DTZ002
 		if abs((displayDateTime - localDateTime).total_seconds()) >= 5:
-			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())
+			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())  # noqa: UP031
 			self.syncTime(localDateTime)
 		else:
-			log.debug("Time in sync. Display time %s" % displayDateTime.isoformat())
+			log.debug("Time in sync. Display time %s" % displayDateTime.isoformat())  # noqa: UP031
 
 	def syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
@@ -876,7 +876,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		self._hidSerialBuffer = b""
 		self._atc = False
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.ProtocolType.HID
@@ -1021,7 +1021,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		if isinstance(self._model, AtcMixin):
 			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, boolToByte(state))
 		else:
-			log.debugWarning("Changing ATC setting for unsupported device %s" % self._model.name)
+			log.debugWarning("Changing ATC setting for unsupported device %s" % self._model.name)  # noqa: UP031
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._atc = state
 
@@ -1034,7 +1034,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		if isinstance(self._model, TimeSyncFirmnessMixin):
 			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, intToByte(value))
 		else:
-			log.debugWarning("Changing dot firmness setting for unsupported device %s" % self._model.name)
+			log.debugWarning("Changing dot firmness setting for unsupported device %s" % self._model.name)  # noqa: UP031
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._dotFirmness = value
 
@@ -1141,9 +1141,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			modelId: bytes = stream.read(1)
 			if not self._model:
 				if modelId not in MODELS:
-					log.debugWarning("Unknown model: %r" % modelId)
+					log.debugWarning("Unknown model: %r" % modelId)  # noqa: UP031
 					raise RuntimeError(
-						"The model with ID %r is not supported by this driver" % modelId,
+						"The model with ID %r is not supported by this driver" % modelId,  # noqa: UP031
 					)
 				self._model = MODELS.get(modelId)(self)
 				if htPacketType == HT_PKT_OK_WITH_LENGTH:
@@ -1192,7 +1192,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning(
-					"Unhandled extended packet of type %r: %r" % (extPacketType, packet),
+					"Unhandled extended packet of type %r: %r" % (extPacketType, packet),  # noqa: UP031
 				)
 		else:
 			serPacketOrd = ord(htPacketType)
@@ -1202,7 +1202,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 				self._handleInput(serPacketOrd)
 			else:
 				# Unknown packet type, log it
-				log.debugWarning("Unhandled packet of type %r" % htPacketType)
+				log.debugWarning("Unhandled packet of type %r" % htPacketType)  # noqa: UP031
 
 	def _handleInput(self, key: int):
 		release = (key & KEY_RELEASE_MASK) != 0
@@ -1234,7 +1234,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	# Translators: description of the script to toggle braille input
 	script_toggleBrailleInput.__doc__ = _("Toggle braille input")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(handytech):space+b1+b3+b4": "toggleBrailleInput",
 		"br(handytech):leftSpace+b1+b3+b4": "toggleBrailleInput",
 		"br(handytech):rightSpace+b1+b3+b4": "toggleBrailleInput",
@@ -1322,14 +1322,14 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 				self.space = True
 				names.append("space")
 			elif isBrailleInput and key in KEY_DOTS:
-				names.append("dot%d" % KEY_DOTS[key])
+				names.append("dot%d" % KEY_DOTS[key])  # noqa: UP031
 			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
 				routingIndexes.append(key - KEY_ROUTING)
 			else:
 				try:
 					names.append(model.keys[key])
 				except KeyError:
-					log.debugWarning("Unknown key %d" % key)
+					log.debugWarning("Unknown key %d" % key)  # noqa: UP031
 		if routingIndexes:
 			routingIndexes.sort()
 			self.cellIndexes = routingIndexes

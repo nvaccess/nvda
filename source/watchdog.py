@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import sys
+import sys  # noqa: I001
 import time
 from time import perf_counter as _timer
 import threading
@@ -235,7 +235,7 @@ def _shouldRecoverAfterMinTimeout():
 def _recoverAttempt():
 	try:
 		winBindings.ole32.CoCancelCall(core.mainThreadId, 0)
-	except:  # noqa: E722
+	except:  # noqa: E722, S110
 		pass
 
 
@@ -394,7 +394,7 @@ class CancellableCallThread(threading.Thread):
 			self._executeEvent.clear()
 			try:
 				self._result = self._func(*self._args, **self._kwargs)
-			except Exception as e:
+			except Exception as e:  # noqa: BLE001
 				self._exc_info = e
 			winBindings.kernel32.SetEvent(self._executionDoneEvent)
 		winBindings.kernel32.CloseHandle(self._executionDoneEvent)
@@ -448,5 +448,5 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 class WatchdogObserver:
 	@property
 	def isAttemptingRecovery(self) -> bool:
-		global isAttemptingRecovery
+		global isAttemptingRecovery  # noqa: PLW0602
 		return isAttemptingRecovery

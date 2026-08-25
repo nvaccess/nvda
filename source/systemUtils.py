@@ -5,7 +5,7 @@
 
 """System related functions."""
 
-from contextlib import contextmanager
+from contextlib import contextmanager  # noqa: I001
 import ctypes
 import time
 import threading
@@ -248,7 +248,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 	def run(self):
 		try:
 			self.funcRes = self.func(*self.args, **self.kwargs)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			self.threadExc = e
 			log.debugWarning("task had errors", exc_info=True)
 

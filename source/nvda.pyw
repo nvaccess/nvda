@@ -10,7 +10,7 @@ It can handle some command-line arguments (including help).
 It sets up logging, and then starts the core.
 """
 
-import logging
+import logging  # noqa: I001
 import sys
 import os
 
@@ -33,7 +33,7 @@ monkeyPatches.applyMonkeyPatches()
 #: logger to use before the true NVDA log is initialised.
 # Ideally, all logging would be captured by the NVDA log, however this would introduce contention
 # when multiple NVDA processes run simultaneously.
-_log = logging.Logger(name="preStartup", level=logging.INFO)
+_log = logging.Logger(name="preStartup", level=logging.INFO)  # noqa: LOG001
 _log.addHandler(logging.NullHandler(level=logging.INFO))
 
 if NVDAState.isRunningAsSource():
@@ -60,7 +60,7 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import config
+import config  # noqa: I001
 import logHandler
 from logHandler import log
 import winKernel
@@ -121,7 +121,7 @@ for name in pathAppArgs:
 
 
 def terminateRunningNVDA(window):
-	processID, threadID = winUser.getWindowThreadProcessID(window)
+	processID, threadID = winUser.getWindowThreadProcessID(window)  # noqa: RUF059
 	winUser.PostMessage(window, winUser.WM_QUIT, 0, 0)
 	h = winKernel.openProcess(winKernel.SYNCHRONIZE, False, processID)
 	if not h:
@@ -166,7 +166,7 @@ if oldAppWindowHandle and not globalVars.appArgs.easeOfAccess:
 	try:
 		_log.debug(f"Terminating oldAppWindowHandle: {oldAppWindowHandle}")
 		terminateRunningNVDA(oldAppWindowHandle)
-	except Exception as e:
+	except Exception as e:  # noqa: BLE001
 		winUser.MessageBox(
 			0,
 			f"Couldn't terminate existing NVDA process, abandoning start:\nException: {e}",
@@ -185,7 +185,7 @@ elif globalVars.appArgs.check_running:
 
 
 # Suppress E402 (module level import not at top of file)
-from utils.security import isRunningOnSecureDesktop
+from utils.security import isRunningOnSecureDesktop  # noqa: I001
 from systemUtils import _getDesktopName
 
 # Ensure multiple instances are not fully started by using a mutex
@@ -258,7 +258,7 @@ def _acquireMutex(_desktopName: str) -> wintypes.HANDLE | None:
 
 try:
 	mutex = _acquireMutex(desktopName)
-except Exception as e:
+except Exception as e:  # noqa: BLE001
 	_log.error(f"Unable to acquire mutex: {e}")
 	sys.exit(1)
 if mutex is None:

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import Enum
+from enum import Enum  # noqa: I001
 import controlTypes
 
 

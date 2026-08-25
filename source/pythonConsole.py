@@ -7,7 +7,7 @@
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
 
-import watchdog
+import watchdog  # noqa: I001
 import builtins
 import os
 from collections.abc import Sequence
@@ -79,7 +79,7 @@ class Completer(rlcompleter.Completer):
 		expr, attr = m.group(1, 3)
 		try:
 			thisobject = eval(expr, self.namespace)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			return []
 
 		# get the content of the object, except __builtins__
@@ -103,7 +103,7 @@ class Completer(rlcompleter.Completer):
 					match = f"{expr}.{word}"
 					try:
 						val = getattr(thisobject, word)
-					except Exception:
+					except Exception:  # noqa: BLE001, S110
 						pass  # Include even if attribute not set
 					else:
 						match = self._callable_postfix(val, match)
@@ -183,7 +183,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 
 	def push(self, line):
 		if self._echo:
-			self._echo("%s %s\n" % (self.prompt, line))
+			self._echo("%s %s\n" % (self.prompt, line))  # noqa: UP031
 		# Capture stdout/stderr output as well as code interaction.
 		stdout, stderr = sys.stdout, sys.stderr
 		sys.stdout = sys.stderr = self
@@ -277,7 +277,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			try:
 				value = getter()
 			except Exception:
-				log.error(f"Unable to set {name} snapshot variable for python console.", exc_info=True)
+				log.error(f"Unable to set {name} snapshot variable for python console.", exc_info=True)  # noqa: G201
 				value = None
 			self._namespaceSnapshotVars[name] = value
 		self.namespace.update(self._namespaceSnapshotVars)
@@ -578,7 +578,7 @@ def activate():
 	This shows the GUI and brings it to the foreground if possible.
 	@precondition: L{initialize} has been called.
 	"""
-	global consoleUI
+	global consoleUI  # noqa: PLW0602
 	consoleUI.Raise()
 	# There is a MAXIMIZE style which can be used on the frame at construction, but it doesn't seem to work the first time it is shown,
 	# probably because it was in the background.

@@ -5,7 +5,7 @@
 
 """Unit tests for braille cursor routing."""
 
-import config
+import config  # noqa: I001
 import braille
 import braille.regions.base
 import braille.regions.textInfo

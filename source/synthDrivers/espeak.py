@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import os
+import os  # noqa: I001
 from collections import OrderedDict
 
 from . import _espeak
@@ -41,7 +41,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),
 	)
-	supportedCommands = {
+	supportedCommands = {  # noqa: RUF012
 		IndexCommand,
 		CharacterModeCommand,
 		LangChangeCommand,
@@ -51,13 +51,13 @@ class SynthDriver(SynthDriver):
 		VolumeCommand,
 		PhonemeCommand,
 	}
-	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
 	# A mapping of commonly used language codes to eSpeak languages.
 	# Introduced due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
 	# These are used when eSpeak doesn't support a given language code
 	# but a default alias is appropriate.
-	_defaultLangToLocale = {
+	_defaultLangToLocale = {  # noqa: RUF012
 		# Languages without locale that aren't supported in eSpeak 7e5457f91e10,
 		# with a language with locale that is supported.
 		# Found via:
@@ -76,7 +76,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		_espeak.initialize(self._onIndexReached)
-		log.info("Using eSpeak NG version %s" % _espeak.info())
+		log.info("Using eSpeak NG version %s" % _espeak.info())  # noqa: UP031
 		lang = getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._language = lang
@@ -89,13 +89,13 @@ class SynthDriver(SynthDriver):
 	def _get_language(self):
 		return self._language
 
-	PROSODY_ATTRS = {
+	PROSODY_ATTRS = {  # noqa: RUF012
 		PitchCommand: "pitch",
 		VolumeCommand: "volume",
 		RateCommand: "rate",
 	}
 
-	IPA_TO_ESPEAK = {
+	IPA_TO_ESPEAK = {  # noqa: RUF012
 		"θ": "T",
 		"s": "s",
 		"ˈ": "'",
@@ -119,7 +119,7 @@ class SynthDriver(SynthDriver):
 		Otherwise, finds a language of a different dialect exists (e.g. ru-ru to ru).
 		Returns an eSpeak compatible LangChangeCommand.
 		"""
-		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)
+		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)  # noqa: C401
 		# Use default language if no command.lang is supplied
 		langWithLocale = command.lang if command.lang else self._language
 		langWithLocale = toXmlLang(langWithLocale.lower())
@@ -194,7 +194,7 @@ class SynthDriver(SynthDriver):
 			if isinstance(item, str):
 				textList.append(self._processText(item))
 			elif isinstance(item, IndexCommand):
-				textList.append('<mark name="%d" />' % item.index)
+				textList.append('<mark name="%d" />' % item.index)  # noqa: UP031
 			elif isinstance(item, CharacterModeCommand):
 				textList.append('<say-as interpret-as="characters">' if item.state else "</say-as>")
 			elif isinstance(item, LangChangeCommand):
@@ -220,7 +220,7 @@ class SynthDriver(SynthDriver):
 					continue
 				textList.append("<prosody")
 				for attr, val in prosody.items():
-					textList.append(' %s="%d%%"' % (attr, val))
+					textList.append(' %s="%d%%"' % (attr, val))  # noqa: UP031
 				textList.append(">")
 			elif isinstance(item, PhonemeCommand):
 				# We can't use str.translate because we want to reject unknown characters.
@@ -228,13 +228,13 @@ class SynthDriver(SynthDriver):
 					phonemes = "".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
 					# There needs to be a space after the phoneme command.
 					# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
-					textList.append("[[%s]] " % phonemes)
+					textList.append("[[%s]] " % phonemes)  # noqa: UP031
 				except KeyError:
-					log.debugWarning("Unknown character in IPA string: %s" % item.ipa)
+					log.debugWarning("Unknown character in IPA string: %s" % item.ipa)  # noqa: UP031
 					if item.text:
 						textList.append(self._processText(item.text))
 			else:
-				log.error("Unknown speech: %s" % item)
+				log.error("Unknown speech: %s" % item)  # noqa: UP031
 		# Close any open tags.
 		if langChanged:
 			textList.append("</voice>")

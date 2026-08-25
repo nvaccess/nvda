@@ -5,7 +5,7 @@
 
 """Unit tests for the bdDetect module."""
 
-import unittest
+import unittest  # noqa: I001
 import bdDetect
 from .extensionPointTestHelpers import chainTester
 import braille
@@ -16,7 +16,7 @@ class TestBdDetectExtensionPoints(unittest.TestCase):
 	"""A test for the extension points on the bdDetect module."""
 
 	def test_scanForDevices(self):
-		kwargs = dict(usb=False, bluetooth=False, limitToDevices=["noBraille"])
+		kwargs = dict(usb=False, bluetooth=False, limitToDevices=["noBraille"])  # noqa: C408
 		with chainTester(
 			self,
 			bdDetect.scanForDevices,

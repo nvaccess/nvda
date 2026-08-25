@@ -5,7 +5,7 @@
 
 """Provides functionality to view the NVDA log."""
 
-import wx
+import wx  # noqa: I001
 import globalVars
 import gui
 import gui.contextHelp
@@ -73,7 +73,7 @@ class LogViewer(
 		pos = self.outputCtrl.GetInsertionPoint()
 		# Append new text to the output control which has been written to the log file since the last refresh.
 		try:
-			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")
+			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")  # noqa: SIM115
 			f.seek(self._lastFilePos)
 			self.outputCtrl.AppendText(f.read())
 			self._lastFilePos = f.tell()

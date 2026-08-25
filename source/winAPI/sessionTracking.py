@@ -14,7 +14,7 @@ Used to:
 - ensure object navigation cannot occur outside of the lockscreen
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import ctypes
 from contextlib import contextmanager
 from ctypes.wintypes import (

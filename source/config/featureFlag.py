@@ -7,7 +7,7 @@
 Provides utility classes to make handling featureFlags easier.
 """
 
-import enum
+import enum  # noqa: I001
 import typing
 
 from . import featureFlagEnums

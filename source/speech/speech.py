@@ -6,7 +6,7 @@
 
 """High-level functions to speak information."""
 
-import itertools
+import itertools  # noqa: I001
 import typing
 import weakref
 import unicodedata
@@ -281,7 +281,7 @@ def _getSpeakSsmlSpeech(
 
 	parser = SsmlParser(markCallback)
 	sequence = parser.convertFromXml(ssml)
-	if sequence:
+	if sequence:  # noqa: SIM102
 		if _prefixSpeechCommand is not None:
 			sequence.insert(0, _prefixSpeechCommand)
 	return sequence
@@ -487,7 +487,7 @@ def _getSpellingSpeechWithoutCharMode(
 			# Normalization of a composition
 			text = normalized
 			textIsNormalized = True
-	localeHasConjuncts = True if locale.split("_", 1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
+	localeHasConjuncts = True if locale.split("_", 1)[0] in LANGS_WITH_CONJUNCT_CHARS else False  # noqa: SIM210
 	if localeHasConjuncts:
 		charDescList = getCharDescListFromText(text, locale)
 	elif not textIsNormalized and unicodeNormalization:
@@ -561,7 +561,7 @@ def getSingleCharDescription(
 	followed by the character description.
 	"""
 	# This should only be used for single chars.
-	if not len(text) == 1:
+	if not len(text) == 1:  # noqa: SIM201
 		return
 	synth = getSynth()
 	synthConfig = config.conf["speech"][synth.name]
@@ -709,7 +709,7 @@ def getObjectPropertiesSpeech(
 		elif value and name == "hasDetails":
 			newPropertyValues["hasDetails"] = bool(obj.annotations)
 		elif value and name == "detailsRoles":
-			newPropertyValues["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
+			newPropertyValues["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()  # noqa: C408
 		elif (
 			value
 			and name == "descriptionFrom"
@@ -793,7 +793,7 @@ def getObjectPropertiesSpeech(
 	# This is because that one item will be the focused object, and saying selected is redundant.
 	# Rather, 'unselected' will be spoken for an unselected object if 1 or more items are selected.
 	states = newPropertyValues.get("states")
-	if states is not None and reason == OutputReason.FOCUS:
+	if states is not None and reason == OutputReason.FOCUS:  # noqa: SIM102
 		if (
 			controlTypes.State.SELECTABLE in states
 			and controlTypes.State.FOCUSABLE in states
@@ -903,7 +903,7 @@ def getObjectSpeech(
 			if not info:
 				info = obj.makeTextInfo(textInfos.POSITION_FIRST)
 			info.expand(textInfos.UNIT_LINE)
-			textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)
+			textEmpty, placeholderSeq = _getPlaceholderSpeechIfTextEmpty(obj, reason)  # noqa: RUF059
 			sequence.extend(placeholderSeq)
 			speechGen = getTextInfoSpeech(
 				info,
@@ -961,7 +961,7 @@ def _objectSpeech_calculateAllowedProps(
 		# #15826: For containers, there are cases where the shortcut key can be defined but not working (e.g.
 		# GROUPING). The safest strategy is then to remove the shortcut keys of containers except in the known
 		# cases where it is working and useful. The only such known case is the one of LIST.
-		if not objRole == controlTypes.Role.LIST:
+		if not objRole == controlTypes.Role.LIST:  # noqa: SIM201
 			allowProperties["keyboardShortcut"] = False
 		allowProperties["positionInfo_level"] = False
 	if reason == OutputReason.MOUSE:
@@ -1143,7 +1143,7 @@ def speak(
 	if _speechState.isPaused:
 		cancelSpeech()
 	if _speechState.speechMode == SpeechMode.onDemand:
-		import inputCore
+		import inputCore  # noqa: I001
 		from scriptHandler import getCurrentScript
 		from .sayAll import SayAllHandler
 
@@ -1192,7 +1192,7 @@ def speak(
 	import inputCore
 
 	inputCore.logTimeSinceInput()
-	log.io("Speaking %r" % speechSequence)
+	log.io("Speaking %r" % speechSequence)  # noqa: UP031
 	if symbolLevel in (characterProcessing.SymbolLevel.UNCHANGED, None):
 		symbolLevel = characterProcessing.SymbolLevel(config.conf["speech"]["symbolLevel"])
 	curLanguage = defaultLanguage
@@ -1448,9 +1448,9 @@ def speakTypedCharacters(ch: str):
 		typedWord = "".join(_curWordChars)
 		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
-			log.io("typed word: %s" % typedWord)
+			log.io("typed word: %s" % typedWord)  # noqa: UP031
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
-		if typingEchoMode != TypingEcho.OFF.value and not typingIsProtected:
+		if typingEchoMode != TypingEcho.OFF.value and not typingIsProtected:  # noqa: SIM102
 			if typingEchoMode == TypingEcho.ALWAYS.value or (
 				typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
 			):
@@ -1468,7 +1468,7 @@ def speakTypedCharacters(ch: str):
 		suppress = False
 
 	typingEchoMode = config.conf["keyboard"]["speakTypedCharacters"]
-	if not suppress and typingEchoMode != TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
+	if not suppress and typingEchoMode != TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:  # noqa: SIM102
 		if typingEchoMode == TypingEcho.ALWAYS.value or (
 			typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
 		):
@@ -1523,7 +1523,7 @@ def _extendSpeechSequence_addMathForTextInfo(
 def speakTextInfo(
 	info: textInfos.TextInfo,
 	useCache: bool | SpeakTextInfoState = True,
-	formatConfig: dict[str, bool] = None,
+	formatConfig: dict[str, bool] = None,  # noqa: RUF013
 	unit: str | None = None,
 	reason: OutputReason = OutputReason.QUERY,
 	_prefixSpeechCommand: SpeechCommand | None = None,
@@ -1626,7 +1626,7 @@ def getTextInfoSpeech(
 		elif isinstance(field, textInfos.FormatField):
 			newFormatField.update(field)
 		else:
-			raise ValueError("unknown field: %s" % field)
+			raise ValueError("unknown field: %s" % field)  # noqa: TRY004, UP031
 	# Calculate how many fields in the old and new controlFieldStacks are the same
 	commonFieldCount = 0
 	for count in range(min(len(newControlFieldStack), len(controlFieldStackCache))):
@@ -2145,7 +2145,7 @@ def getPropertiesSpeech(
 	# are there further details
 	hasDetails = propertyValues.get("hasDetails", False)
 	if hasDetails:
-		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
+		detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())  # noqa: C408
 		if detailsRoles:
 			roleStrings = (role.displayString if role else _("details") for role in detailsRoles)
 			for roleString in roleStrings:
@@ -2300,7 +2300,7 @@ def getControlFieldSpeech(
 	keyboardShortcut = attrs.get("keyboardShortcut", "")
 	isCurrent = attrs.get("current", controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get("hasDetails", False)
-	detailsRoles: _AnnotationRolesT = attrs.get("detailsRoles", tuple())
+	detailsRoles: _AnnotationRolesT = attrs.get("detailsRoles", tuple())  # noqa: C408
 	placeholderValue = attrs.get("placeholder", None)
 	errorMessage = None
 	if State.INVALID_ENTRY in states:
@@ -3008,7 +3008,7 @@ def getFormatFieldSpeech(
 			oldVal = attrsCache.get(attr) if attrsCache else None
 			if (newVal or oldVal is not None) and newVal != oldVal:
 				if newVal:
-					textList.append("%s %s" % (label, newVal))
+					textList.append("%s %s" % (label, newVal))  # noqa: UP031
 				else:
 					textList.append(noVal)
 	if formatConfig["reportLineSpacing"]:

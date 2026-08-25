@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections import namedtuple
+from collections import namedtuple  # noqa: I001
 import colorsys
 from ctypes.wintypes import COLORREF
 import re
@@ -67,9 +67,9 @@ class RGB(namedtuple("RGB", ("red", "green", "blue"))):
 
 	@staticmethod
 	def _RGBStringValToInt(s):
-		val = int(round(int(s[:-1]) * 2.55)) if s.endswith("%") else int(s)
+		val = int(round(int(s[:-1]) * 2.55)) if s.endswith("%") else int(s)  # noqa: RUF046
 		if val < 0 or val > 255:
-			raise ValueError("%s out of range" % val)
+			raise ValueError("%s out of range" % val)  # noqa: UP031
 		return val
 
 	@classmethod
@@ -104,7 +104,7 @@ class RGB(namedtuple("RGB", ("red", "green", "blue"))):
 					g = ((val >> 4) & 0xF) + (((val >> 4) & 0xF) << 4)
 					b = (val & 0xF) + ((val & 0xF) << 4)
 					return RGB(r, g, b)
-		raise ValueError("invalid RGB string: %s" % s)
+		raise ValueError("invalid RGB string: %s" % s)  # noqa: UP031
 
 	def toCOLORREF(self) -> COLORREF:
 		"""Returns a COLORREF ctypes instance"""

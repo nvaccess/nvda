@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from ctypes import FormatError, GetLastError, byref, sizeof
+from ctypes import FormatError, GetLastError, byref, sizeof  # noqa: I001
 from ctypes.wintypes import DWORD
 import hashlib
 from typing import (
@@ -26,7 +26,7 @@ from winBindings.advapi32 import (
 import winUser
 
 if TYPE_CHECKING:
-	import scriptHandler
+	import scriptHandler  # noqa: I001
 	import NVDAObjects
 	import treeInterceptorHandler
 
@@ -221,7 +221,7 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	An object below the lockscreen should only be accessible when Windows is unlocked,
 	as it may contain sensitive information.
 	"""
-	from NVDAObjects.IAccessible import TaskListIcon
+	from NVDAObjects.IAccessible import TaskListIcon  # noqa: I001
 	import systemUtils
 
 	if not systemUtils.hasUiAccess():
@@ -347,7 +347,7 @@ def _isWindowBelowWindowMatchesCond(
 			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
 			f" - window 2 index: {window2Index}\n",
 		)
-	if window1Indexes[0] >= window2Index:
+	if window1Indexes[0] >= window2Index:  # noqa: SIM103
 		return False
 	else:
 		return True
@@ -388,7 +388,7 @@ def warnSessionLockStateUnknown() -> None:
 		" If this error is ongoing then disabling the Windows lock screen is recommended.",
 	)
 
-	import wx  # Late import to prevent circular dependency.
+	import wx  # Late import to prevent circular dependency.  # noqa: I001
 	import gui  # Late import to prevent circular dependency.
 
 	log.debug("Presenting session lock tracking failure warning.")

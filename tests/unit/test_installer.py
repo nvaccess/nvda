@@ -5,7 +5,7 @@
 
 """Unit tests for the installer module."""
 
-import pathlib
+import pathlib  # noqa: I001
 import tempfile
 from typing import NamedTuple
 import unittest
@@ -45,7 +45,7 @@ class Test_BatchDeletion(unittest.TestCase):
 			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
 
 	def test_deleteFilesFailure(self):
-		with self.assertRaises(installer.RetriableFailure):
+		with self.assertRaises(installer.RetriableFailure):  # noqa: SIM117
 			with open(pathlib.Path(self._originalTempDir, self._sampleFiles[1]), "r"):
 				installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 

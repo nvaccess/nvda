@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import comtypes.client
 import oleacc
 import time
@@ -454,7 +454,7 @@ class SymphonyDocument(CompoundDocument):
 	# variables used for handling announcements resulting from gestures
 	GESTURE_ANNOUNCEMENT_TIMEOUT: float = 2.0  # Seconds
 	announceFormattingGestureChange: bool = False
-	formattingGestureObjectIds: list[str] = []
+	formattingGestureObjectIds: list[str] = []  # noqa: RUF012
 	lastFormattingGestureEventTime: float = 0
 
 	@staticmethod
@@ -476,7 +476,7 @@ class SymphonyDocument(CompoundDocument):
 		# object or its parent has an ID that matches.
 		# (For editable comboboxes, the value change event is triggered for the edit
 		# that's a child of the combobox which has the corresponding ID.)
-		if (
+		if (  # noqa: SIM103
 			SymphonyDocument.formattingGestureObjectIds
 			and (SymphonyUtils.get_id(obj) not in SymphonyDocument.formattingGestureObjectIds)
 			and (SymphonyUtils.get_id(obj.parent) not in SymphonyDocument.formattingGestureObjectIds)

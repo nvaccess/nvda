@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
+import time  # noqa: I001
 from ctypes import *
 import ctypes
 from ctypes.wintypes import *
@@ -130,7 +130,7 @@ HDM_GETITEMCOUNT = HDM_FIRST
 
 
 class LVITEM(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("mask", c_uint),
 		("iItem", c_int),
 		("iSubItem", c_int),
@@ -153,7 +153,7 @@ class LVITEM(Structure):
 
 
 class LVITEM64(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("mask", c_uint),
 		("iItem", c_int),
 		("iSubItem", c_int),
@@ -173,7 +173,7 @@ class LVITEM64(Structure):
 
 
 class LVCOLUMN(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("mask", c_uint),
 		("fmt", c_int),
 		("cx", c_int),
@@ -192,7 +192,7 @@ class LVCOLUMN(Structure):
 
 
 class LVCOLUMN64(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("mask", c_uint),
 		("fmt", c_int),
 		("cx", c_int),
@@ -243,7 +243,7 @@ class List(List):
 			!= 0
 		):
 			return None
-		return dict(header=header.value, footer=footer.value, state=state.value, groupIndex=groupIndex)
+		return dict(header=header.value, footer=footer.value, state=state.value, groupIndex=groupIndex)  # noqa: C408
 
 	def _get_name(self):
 		name = super()._get_name()
@@ -463,7 +463,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 	def _get_positionInfo(self):
 		index = self.IAccessibleChildID
 		totalCount = watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
-		return dict(indexInGroup=index, similarItemsInGroup=totalCount)
+		return dict(indexInGroup=index, similarItemsInGroup=totalCount)  # noqa: C408
 
 	def event_stateChange(self):
 		if self.hasFocus:
@@ -816,7 +816,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			else:
 				header = None
 			if header:
-				textList.append("%s: %s" % (header, content))
+				textList.append("%s: %s" % (header, content))  # noqa: UP031
 			else:
 				textList.append(content)
 		name = "; ".join(textList)

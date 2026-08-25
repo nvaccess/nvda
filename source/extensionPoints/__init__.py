@@ -11,11 +11,11 @@ or allow modification of spoken messages before they are passed to the synthesiz
 See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 
-from logHandler import log
+from logHandler import log  # noqa: I001
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref  # noqa: F401
-from typing import (
+from typing import (  # noqa: UP035
 	Generic,
-	Set,
+	Set,  # noqa: F401
 	TypeVar,
 	Union,
 )
@@ -53,7 +53,7 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 			try:
 				callWithSupportedKwargs(handler, **kwargs)
 			except:  # noqa: E722
-				log.exception("Error running handler %r for %r" % (handler, self))
+				log.exception("Error running handler %r for %r" % (handler, self))  # noqa: UP031
 
 	def notifyOnce(self, **kwargs):
 		"""Notify all registered handlers that the action has occurred.
@@ -65,15 +65,15 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 				callWithSupportedKwargs(handler, **kwargs)
 				self.unregister(handler)
 			except Exception as e:
-				log.exception(f"Error running handler {handler} for {self}. Exception {e}")
+				log.exception(f"Error running handler {handler} for {self}. Exception {e}")  # noqa: TRY401
 
 
 FilterValueT = TypeVar("FilterValueT")
 
 
 class Filter(
-	HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
-	Generic[FilterValueT],
+	HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],  # noqa: UP007
+	Generic[FilterValueT],  # noqa: UP046
 ):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
@@ -113,7 +113,7 @@ class Filter(
 			try:
 				value = callWithSupportedKwargs(handler, value, **kwargs)
 			except:  # noqa: E722
-				log.exception("Error running handler %r for %r" % (handler, self))
+				log.exception("Error running handler %r for %r" % (handler, self))  # noqa: UP031
 		return value
 
 
@@ -161,7 +161,7 @@ class Decider(HandlerRegistrar[Callable[..., bool]]):
 			try:
 				decision = callWithSupportedKwargs(handler, **kwargs)
 			except:  # noqa: E722
-				log.exception("Error running handler %r for %r" % (handler, self))
+				log.exception("Error running handler %r for %r" % (handler, self))  # noqa: UP031
 				continue
 			if not decision:
 				return False
@@ -217,7 +217,7 @@ class AccumulatingDecider(HandlerRegistrar[Callable[..., bool]]):
 			try:
 				decisions.add(callWithSupportedKwargs(handler, **kwargs))
 			except Exception:
-				log.exception("Error running handler %r for %r" % (handler, self))
+				log.exception("Error running handler %r for %r" % (handler, self))  # noqa: UP031
 				continue
 		if (not self.defaultDecision) in decisions:
 			return not self.defaultDecision
@@ -227,7 +227,7 @@ class AccumulatingDecider(HandlerRegistrar[Callable[..., bool]]):
 ChainValueTypeT = TypeVar("ChainValueTypeT")
 
 
-class Chain(HandlerRegistrar[Callable[..., Iterable[ChainValueTypeT]]], Generic[ChainValueTypeT]):
+class Chain(HandlerRegistrar[Callable[..., Iterable[ChainValueTypeT]]], Generic[ChainValueTypeT]):  # noqa: UP046
 	"""Allows creating a chain of registered handlers.
 	The handlers should return an iterable, e.g. they are usually generator functions,
 	but returning a list is also supported.
@@ -269,7 +269,7 @@ class Chain(HandlerRegistrar[Callable[..., Iterable[ChainValueTypeT]]], Generic[
 				if not isinstance(iterable, Iterable):
 					log.exception(f"The handler {handler!r} on {self!r} didn't return an iterable")
 					continue
-				for value in iterable:
+				for value in iterable:  # noqa: UP028
 					yield value
 			except Exception:
 				log.exception(f"Error yielding value from handler {handler!r} for {self!r}")

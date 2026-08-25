@@ -91,4 +91,4 @@ class _AnnotationNavigation:
 	"""
 
 	lastReported: _AnnotationNavigationNode | None = None
-	priorOrigins: list["NVDAObject"] = []
+	priorOrigins: list["NVDAObject"] = []  # noqa: RUF012

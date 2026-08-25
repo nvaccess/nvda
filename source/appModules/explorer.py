@@ -7,7 +7,7 @@
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import time
 from collections.abc import Callable
 import appModuleHandler
@@ -63,7 +63,7 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 		if not res:
 			return False
 		focus = eventHandler.lastQueuedFocusObject
-		if type(focus) is not type(self) or (
+		if type(focus) is not type(self) or (  # noqa: SIM103
 			self.event_windowHandle,
 			self.event_objectID,
 			self.event_childID,
@@ -79,7 +79,7 @@ class NotificationArea(IAccessible):
 
 	def event_gainFocus(self):
 		NotificationArea.lastKnownLocation = self.location
-		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
+		if mouseHandler.lastMouseEventTime < time.time() - 0.2:  # noqa: SIM102
 			# This focus change was not caused by a mouse event.
 			# If the mouse is on another systray control, the notification area toolbar will rudely
 			# bounce the focus back to the object under the mouse after a brief pause.
@@ -144,7 +144,7 @@ class ExplorerToolTip(ToolTip):
 			return True
 
 		# Report is the next are different
-		if focus.name != self.name:
+		if focus.name != self.name:  # noqa: SIM103
 			return True
 
 		# Do not report otherwise
@@ -459,7 +459,7 @@ class AppModule(appModuleHandler.AppModule):
 		# letting NVDA announce shell elements when navigating with mouse and/or touch,
 		# notably when interacting with windows labeled "DesktopWindowXamlSource".
 		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
-		if (
+		if (  # noqa: SIM103
 			currentWinVer >= winVersion.WIN11
 			# Traverse parents until arriving at the top-level window with the below class names.
 			# This is more so for the shell root (first class name), and for others, class name check would work

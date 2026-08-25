@@ -3,13 +3,13 @@
 # Copyright (C) 2018-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Any, Union
+from typing import Any, Union  # noqa: I001
 from collections.abc import Callable
 
 
-_FloatInt = Union[int, float]
-_Size = Union[tuple[_FloatInt, _FloatInt], _FloatInt]
-_ScaledSize = Union[tuple[int, int], int]
+_FloatInt = Union[int, float]  # noqa: UP007
+_Size = Union[tuple[_FloatInt, _FloatInt], _FloatInt]  # noqa: UP007
+_ScaledSize = Union[tuple[int, int], int]  # noqa: UP007
 
 
 def scaleSize(scaleFactor: float, size: _Size) -> _ScaledSize:

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import collections
+import collections  # noqa: I001
 from ctypes import addressof
 import enum
 import typing
@@ -220,7 +220,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 
 	def SetCheckedItems(self, indexes):
 		for i in indexes:
-			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i
+			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i  # noqa: UP031
 		for i in range(self.ItemCount):
 			self.CheckItem(i, i in indexes)
 
@@ -503,7 +503,7 @@ class FeatureFlagCombo(wx.Choice):
 	def _getConfSpecDefaultValue(self) -> FeatureFlagEnumT:
 		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
 		if not isinstance(defaultValueFromSpec, FeatureFlag):
-			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")
+			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")  # noqa: TRY004
 		return defaultValueFromSpec.value
 
 	def _getConfigValue(self) -> FeatureFlag:
@@ -516,7 +516,7 @@ class FeatureFlagCombo(wx.Choice):
 			conf = conf[nextKey]
 
 		if not isinstance(conf, FeatureFlag):
-			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")
+			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")  # noqa: TRY004
 		return conf
 
 	def isValueConfigSpecDefault(self) -> bool:

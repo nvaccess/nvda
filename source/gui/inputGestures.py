@@ -7,7 +7,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import itertools
+import itertools  # noqa: I001
 import re
 from typing import Union
 
@@ -171,7 +171,7 @@ class _EmulatedGestureVM(_ScriptVM):
 
 	def __init__(self, emuGestureInfo: inputCore.AllGesturesScriptInfo):
 		if not isinstance(emuGestureInfo, inputCore.KbEmuScriptInfo):
-			raise ValueError("Unexpected script type.")
+			raise ValueError("Unexpected script type.")  # noqa: TRY004
 		# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 		# will be replaced by the gesture that can be triggered by a mapped gesture.
 		# E.G. Emulate key press: NVDA+b
@@ -272,9 +272,9 @@ class _EmuCategoryVM:
 
 
 # convenience types.
-_CategoryVMTypes = Union[_CategoryVM, _EmuCategoryVM]
-_ScriptVMTypes = Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]
-_GestureVMTypes = Union[_GestureVM, _PendingGesture]
+_CategoryVMTypes = Union[_CategoryVM, _EmuCategoryVM]  # noqa: UP007
+_ScriptVMTypes = Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]  # noqa: UP007
+_GestureVMTypes = Union[_GestureVM, _PendingGesture]  # noqa: UP007
 
 _VmSelection = tuple[
 	_CategoryVMTypes,
@@ -347,7 +347,7 @@ class _InputGesturesViewModel:
 			for gestureVM in scriptVM.removedGestures.values()
 		]
 
-		gesturesForRemovedKbEmu = list(
+		gesturesForRemovedKbEmu = list(  # noqa: C411
 			[
 				(gestureVM, scriptVM.scriptInfo)
 				for catVM in self.allGestures
@@ -409,7 +409,7 @@ class _InputGesturesViewModel:
 			# Only save if there is something to save.
 			try:
 				inputCore.manager.userGestureMap.save()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning("", exc_info=True)
 				return False
 		return True
@@ -573,7 +573,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 						self.Expand(self.GetItemByIndex((index,)))
 			if focus:
 				log.debug(f"expanding: {focus}")
-				catVM, scriptVM, gestureVM = focus
+				catVM, scriptVM, gestureVM = focus  # noqa: RUF059
 				catIndex = self.gesturesVM.filteredGestures.index(catVM)
 				self.Expand(self.GetItemByIndex((catIndex,)))
 				if scriptVM is not None:
@@ -660,7 +660,7 @@ class InputGesturesDialog(SettingsDialog):
 			item = next((item for item in reversed(selectedItems) if item is not None), None)
 		# Check if an add operation is already in progress to prevent conflicts.
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
-		if item and not pendingAdd:
+		if item and not pendingAdd:  # noqa: SIM102
 			if key == wx.WXK_DELETE and item.canRemove:
 				self.onRemove(None)
 		evt.Skip()
@@ -898,7 +898,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager.userGestureMap.clear()
 		try:
 			inputCore.manager.userGestureMap.save()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving user defined input gestures fails.
 			gui.messageBox(

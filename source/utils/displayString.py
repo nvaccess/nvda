@@ -61,7 +61,7 @@ class _DisplayStringEnumMixin(ABC):
 			return self._displayStringLabels[self]
 		except KeyError as e:
 			log.error(f"No translation mapping for: {self}")
-			raise e
+			raise e  # noqa: TRY201
 
 
 class DisplayStringEnum(_DisplayStringEnumMixin, Enum, metaclass=_DisplayStringEnumMixinMeta):

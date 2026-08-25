@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from itertools import chain, filterfalse
+from itertools import chain, filterfalse  # noqa: I001
 import os.path
 import sys
 import threading
@@ -462,7 +462,7 @@ class UpdatableAddonsDialog(
 		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
 
 	def _createAddonsPanel(self, sHelper: BoxSizerHelper):
-		from .actions import _MonoActionsContextMenu
+		from .actions import _MonoActionsContextMenu  # noqa: I001
 		from .addonList import AddonVirtualList
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
 
@@ -513,7 +513,7 @@ class UpdatableAddonsDialog(
 		self.Close()
 
 	def onClose(self, evt: wx.CloseEvent):
-		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+		from gui.addonStoreGui.viewModels.store import AddonStoreVM  # noqa: I001
 		from .storeDialog import AddonStoreDialog
 
 		evt.Veto()
@@ -840,7 +840,7 @@ class _CopyAddonsDialog(
 		# _showAddonInfo takes an _AddonGUIModel, but all we have is an AddonTemplate.
 		# The most direct way to create an _AddonGUIModel from an AddonTemplate is to use _createGUIModelFromManifest, but it takes an AddonBase.
 		# Since we want to avoid the side effects of Addon, and this isn't an AddonBundle, dynamically create an AddonBase subclass that wraps this manifest.
-		addon = type("TempAddon", (AddonBase,), dict(manifest=manifest))()
+		addon = type("TempAddon", (AddonBase,), dict(manifest=manifest))()  # noqa: C408
 		_showAddonInfo(addon._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):

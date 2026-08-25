@@ -9,7 +9,7 @@ It is copied into the (system test specific) NVDA profile directory. It becomes 
 of a package.
 """
 
-import gettext
+import gettext  # noqa: I001
 import typing
 from typing import (
 	Optional,
@@ -93,12 +93,12 @@ class NVDASpyLib:
 		from synthDrivers.speechSpySynthDriver import post_speech  # type: ignore[reportMissingImports]
 
 		if typing.TYPE_CHECKING:
-			from .speechSpySynthDriver import post_speech
+			from .speechSpySynthDriver import post_speech  # noqa: TC004
 
 		post_speech.register(self._onNvdaSpeech)
 
 	ConfKeyPath = list[str]
-	ConfKeyVal = typing.Union[str, bool, int]
+	ConfKeyVal = typing.Union[str, bool, int]  # noqa: UP007
 	NVDAConfMods = list[tuple[ConfKeyPath, ConfKeyVal]]
 
 	def modifyNVDAConfig(self, confMods: NVDAConfMods):
@@ -178,7 +178,7 @@ class NVDASpyLib:
 		return langDesc
 
 	def queueNVDAMainThreadCrash(self):
-		from queueHandler import queueFunction, eventQueue
+		from queueHandler import queueFunction, eventQueue  # noqa: I001
 
 		queueFunction(eventQueue, _crashNVDA)
 
@@ -303,7 +303,7 @@ class NVDASpyLib:
 
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
-			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))
+			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))  # noqa: UP031
 		else:
 			log.info("No developer info for navigator object")
 
@@ -315,11 +315,11 @@ class NVDASpyLib:
 		with self._speechLock:
 			try:
 				self._devInfoToLog()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.error("Unable to log dev info")
 			try:
 				log.debug(f"All speech:\n{self._nvdaSpeech_requiresLock!r}")
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.error("Unable to log speech")
 
 	def _dump_braille_to_log(self):
@@ -330,7 +330,7 @@ class NVDASpyLib:
 		with self._brailleLock:
 			try:
 				log.debug(f"All braille:\n{self._nvdaBraille_requiresLock!r}")
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.error("Unable to log braille")
 
 	def dump_speech_to_log(self):

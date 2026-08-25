@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 import config
 from config.configFlags import BrailleMode
 from dataclasses import dataclass

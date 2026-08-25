@@ -8,7 +8,7 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-import datetime as _datetime
+import datetime as _datetime  # noqa: I001
 from os.path import join as _pJoin
 import tempfile as _tempfile
 from SystemTestSpy import (
@@ -236,7 +236,7 @@ class ChromeLib:
 			"\n<!-- "  # new line, start a HTML comment
 			"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
 			" this test case string: \n"
-			f"{_datetime.datetime.now().isoformat()} "
+			f"{_datetime.datetime.now().isoformat()} "  # noqa: DTZ005
 			f" -->"  # end HTML comment
 		)
 		spy = _NvdaLib.getSpyLib()

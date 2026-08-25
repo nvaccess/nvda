@@ -6,7 +6,7 @@
 
 """Support for app specific modules for Java apps hosted by javaw.exe."""
 
-import os
+import os  # noqa: I001
 import shlex
 import appModuleHandler
 

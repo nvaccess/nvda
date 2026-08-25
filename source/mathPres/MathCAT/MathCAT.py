@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import re
+import re  # noqa: I001
 from collections.abc import Generator
 from ctypes import (
 	Array,
@@ -78,7 +78,7 @@ def _callMathCAT(func, /, *args, **kwargs):
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	"""An NVDA object used to interact with MathML."""
 
-	__gestures = {}
+	__gestures = {}  # noqa: RUF012
 
 	# Put MathML or other formats on the clipboard.
 	# MathML is put on the clipboard using the two formats below (defined by MathML spec)
@@ -145,7 +145,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			return None
 		try:
 			nodeId = libmathcat.GetNavigationMathMLId()[0]
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
 			return None
 		if nodeId in self._mathNodeRectsById:
@@ -280,7 +280,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 					savedMathML: str = self._mathMlForNavigation
 					savedTTS: str = libmathcat.GetPreference("TTS")
 					if savedMathML == "":  # shouldn't happen
-						raise Exception("Internal error -- MathML not set for copy")
+						raise Exception("Internal error -- MathML not set for copy")  # noqa: TRY002
 					libmathcat.SetPreference("TTS", "None")
 					libmathcat.SetMathML(mathml)
 					# get the speech text and collapse the whitespace

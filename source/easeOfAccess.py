@@ -5,7 +5,7 @@
 
 """Utilities for working with the Windows Ease of Access Center."""
 
-from enum import Enum, IntEnum
+from enum import Enum, IntEnum  # noqa: I001
 from typing import Any
 
 from config.registry import RegistryKey as _RegistryKey, EASE_OF_ACCESS_APP_KEY_NAME
@@ -61,7 +61,7 @@ def isRegistered() -> bool:
 	except FileNotFoundError:
 		log.debug("Unable to find AT registry key")
 	except OSError:
-		log.error("Unable to open AT registry key", exc_info=True)
+		log.error("Unable to open AT registry key", exc_info=True)  # noqa: G201
 	return False
 
 
@@ -122,7 +122,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
 		return []
 	except OSError:
-		log.error(
+		log.error(  # noqa: G201
 			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
 			exc_info=True,
 		)
@@ -133,7 +133,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	except FileNotFoundError:
 		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
 	except OSError:
-		log.error(
+		log.error(  # noqa: G201
 			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
 			exc_info=True,
 		)

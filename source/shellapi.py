@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import *
+from ctypes import *  # noqa: I001
 from ctypes.wintypes import *
 import winBindings.shell32
 from utils import _deprecate
@@ -48,7 +48,7 @@ FOF_NOCONFIRMMKDIR = 0x200
 
 
 class SHFILEOPSTRUCT(Structure):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("hwnd", HWND),
 		("wFunc", c_uint),
 		("pFrom", c_wchar_p),

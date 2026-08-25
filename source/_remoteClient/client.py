@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import threading
+import threading  # noqa: I001
 
 import api
 import braille
@@ -79,7 +79,7 @@ class RemoteClient:
 		try:
 			self.sdHandler = SecureDesktopHandler()
 		except RuntimeError:
-			log.error("Failed to initialise the secure desktop handler.", exc_info=True)
+			log.error("Failed to initialise the secure desktop handler.", exc_info=True)  # noqa: G201
 			self.sdHandler = None
 		else:
 			if isRunningOnSecureDesktop():
@@ -258,7 +258,7 @@ class RemoteClient:
 						log.info("Remote disconnection cancelled by user.")
 						return
 				except Exception:
-					log.error("Error showing disconnect confirmation dialog", exc_info=True)
+					log.error("Error showing disconnect confirmation dialog", exc_info=True)  # noqa: G201
 					return
 				finally:
 					self._disconnectConfirmationDialog = None
@@ -501,7 +501,7 @@ class RemoteClient:
 				)
 			if a == wx.ID_YES or a == wx.ID_NO:
 				return True
-		except Exception as ex:
+		except Exception as ex:  # noqa: BLE001
 			log.error(ex)
 		return False
 

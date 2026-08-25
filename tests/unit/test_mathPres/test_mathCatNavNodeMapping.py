@@ -5,7 +5,7 @@
 
 """Unit tests for MathCAT NavNode mapping helpers."""
 
-import sys
+import sys  # noqa: I001
 import unittest
 from xml.etree import ElementTree
 from types import ModuleType

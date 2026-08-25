@@ -10,7 +10,7 @@ Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
 When working on this file, consider moving to winAPI.
 """
 
-import contextlib
+import contextlib  # noqa: I001
 import ctypes
 import ctypes.wintypes
 from ctypes import byref, sizeof, Structure, WinError
@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 	from winAPI._powerTracking import SystemPowerStatus
 
 
-import winBindings.advapi32
+import winBindings.advapi32  # noqa: I001
 import winBindings.kernel32
 from winBindings.kernel32 import (
 	FILETIME as _FILETIME,
@@ -216,7 +216,7 @@ def setWaitableTimer(
 def openProcess(*args) -> int:
 	try:
 		return winBindings.kernel32.OpenProcess(*args) or 0
-	except Exception:
+	except Exception:  # noqa: BLE001
 		# Compatibility: error should just be a handle of 0.
 		return 0
 
@@ -259,7 +259,7 @@ def suspendWow64Redirection():
 	try:
 		yield
 	finally:
-		if redirectionDisabled:
+		if redirectionDisabled:  # noqa: SIM102
 			if winBindings.kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
 				raise WinError()
 

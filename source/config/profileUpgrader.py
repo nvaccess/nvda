@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from logHandler import log
+from logHandler import log  # noqa: I001
 from .configSpec import latestSchemaVersion, confspec
 from configobj import flatten_errors
 from copy import deepcopy
@@ -65,7 +65,7 @@ def _doValidation(profile, validator):
 				+ "Full result: (value of false means the key was not present)\n"
 				+ "{2}"
 			).format(key, value, flatResult)
-			raise ValueError(errorString)
+			raise ValueError(errorString)  # noqa: TRY004
 
 
 def _ensureVersionProperty(profile):

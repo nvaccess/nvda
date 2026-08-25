@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2020 NV Access Limited
 
-import api
+import api  # noqa: I001
 import controlTypes
 import speech
 import UIAHandler
@@ -250,7 +250,7 @@ class BrokenCommctrl5Item(IAccessible):
 					UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
 					self._uiaObj = UIA(**kwargs)
 				except Exception:
-					log.error("Retrieving UIA focus failed", exc_info=True)
+					log.error("Retrieving UIA focus failed", exc_info=True)  # noqa: G201
 
 	def _get_role(self):
 		return self._uiaObj.role if self._uiaObj else controlTypes.Role.UNKNOWN

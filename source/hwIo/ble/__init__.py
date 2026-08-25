@@ -12,7 +12,7 @@ Only use this if you need access to a device that only implements BLE and not Bl
 Bluetooth Classic devices should be paired through Windows' Bluetooth settings and accessed through the related serial/HID device.
 """
 
-import time
+import time  # noqa: I001
 from bleak.exc import BleakError
 from bleak.backends.device import BLEDevice
 from logHandler import log
@@ -73,7 +73,7 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 		try:
 			scanner.start()  # Start in background mode
 		except (BleakError, OSError):
-			log.error(f"Failed to start BLE scanner while searching for device {address}", exc_info=True)
+			log.error(f"Failed to start BLE scanner while searching for device {address}", exc_info=True)  # noqa: G201
 			return None
 
 	startTime = time.time()

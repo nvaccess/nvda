@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from datetime import datetime
+from datetime import datetime  # noqa: I001
 from enum import Enum, auto
 import threading
 import time
@@ -89,7 +89,7 @@ class ScheduleThread(threading.Thread):
 			time.sleep(cls.SLEEP_INTERVAL_SECS)
 
 	def _calculateDailyTimeOffset(self) -> str:
-		startTime = datetime.fromtimestamp(NVDAState.getStartTime())
+		startTime = datetime.fromtimestamp(NVDAState.getStartTime())  # noqa: DTZ006
 		# Schedule jobs so that they occur offset by a regular period to avoid overlapping jobs.
 		# Start with a delay to give time for NVDA to start up.
 		startTimeMinuteOffset = (

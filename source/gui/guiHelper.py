@@ -43,7 +43,7 @@ class myDialog(wx.Dialog):
 	...
 """
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from contextlib import contextmanager
 from functools import wraps
 import sys
@@ -147,11 +147,11 @@ _HorizontalCtrlT = TypeVar(
 
 
 @overload
-def associateElements(firstElement: wx.StaticText, secondElement: _HorizontalCtrlT) -> wx.BoxSizer: ...
+def associateElements(firstElement: wx.StaticText, secondElement: _HorizontalCtrlT) -> wx.BoxSizer: ...  # noqa: UP047
 @overload
 def associateElements(firstElement: wx.StaticText, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
 @overload
-def associateElements(firstElement: wx.StaticText, secondElement: _VerticalCtrlT) -> wx.BoxSizer: ...
+def associateElements(firstElement: wx.StaticText, secondElement: _VerticalCtrlT) -> wx.BoxSizer: ...  # noqa: UP047
 @overload
 def associateElements(firstElement: wx.Button, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
 @overload
@@ -217,7 +217,7 @@ def associateElements(firstElement, secondElement) -> wx.BoxSizer:
 _LabeledControlT = TypeVar("_LabeledControlT", bound=wx.Control)
 
 
-class LabeledControlHelper(Generic[_LabeledControlT]):
+class LabeledControlHelper(Generic[_LabeledControlT]):  # noqa: UP046
 	"""Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
 	the two controls together.
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
@@ -511,7 +511,7 @@ def wxCallOnMain[**P, T](
 		nonlocal result, exception
 		try:
 			result = function(*args, **kwargs)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			exception = sys.exception()
 		event.set()
 

@@ -5,7 +5,7 @@
 
 """Functionality to capture and work with bitmaps of the screen."""
 
-import ctypes
+import ctypes  # noqa: I001
 import winGDI
 import winBindings.gdi32
 from winBindings import user32 as _user32

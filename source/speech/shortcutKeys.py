@@ -5,7 +5,7 @@
 
 """Functions to create speech sequences for shortcut keys."""
 
-import re
+import re  # noqa: I001
 
 import characterProcessing
 from logHandler import log

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import config
+import config  # noqa: I001
 import fast_diff_match_patch
 from abc import abstractmethod
 from baseObject import AutoPropertyObject

@@ -47,7 +47,7 @@ if TYPE_CHECKING:
 	from speech.types import SpeechSequence
 
 
-from .buffers import (
+from .buffers import (  # noqa: I001
 	BrailleBuffer,
 )
 from .constants import (
@@ -103,7 +103,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	TETHER_AUTO = TetherTo.AUTO.value
 	TETHER_FOCUS = TetherTo.FOCUS.value
 	TETHER_REVIEW = TetherTo.REVIEW.value
-	tetherValues = [(v.value, v.displayString) for v in TetherTo]
+	tetherValues = [(v.value, v.displayString) for v in TetherTo]  # noqa: RUF012
 
 	queuedWrite: list[int] | None = None
 	queuedWriteLock: threading.Lock
@@ -257,7 +257,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 	# The list containing the regions that will be shown in braille when the speak function is called
 	# and the braille mode is set to speech output
-	_showSpeechInBrailleRegions: list[TextRegion] = []
+	_showSpeechInBrailleRegions: list[TextRegion] = []  # noqa: RUF012
 
 	def _showSpeechInBraille(self, speechSequence: SpeechSequence):
 		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value or not self.enabled:
@@ -477,7 +477,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		except Exception:
 			# For auto display detection, logging an error for every failure is too obnoxious.
 			if not detected:
-				log.error(f"Error initializing display driver {name!r}", exc_info=True)
+				log.error(f"Error initializing display driver {name!r}", exc_info=True)  # noqa: G201
 			elif bdDetect._isDebug():
 				log.debugWarning(f"Couldn't initialize display driver {name!r}", exc_info=True)
 			fallbackDisplayClass = _getDisplayDriver(NO_BRAILLE_DISPLAY_NAME)
@@ -501,13 +501,13 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		else:
 			newDisplay = newDisplayClass.__new__(newDisplayClass)
 		extensionPoints.callWithSupportedKwargs(newDisplay.__init__, **kwargs)
-		if not sameDisplayReInit:
+		if not sameDisplayReInit:  # noqa: SIM102
 			if oldDisplay:
 				log.debug(f"Switching braille display from {oldDisplay.name!r} to {newDisplay.name!r}")
 				try:
 					oldDisplay.terminate()
 				except Exception:
-					log.error("Error terminating previous display driver", exc_info=True)
+					log.error("Error terminating previous display driver", exc_info=True)  # noqa: G201
 		newDisplay.initSettings()
 		return newDisplay
 
@@ -615,7 +615,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			try:
 				self.display.display(cells)
 			except:  # noqa: E722
-				log.error("Error displaying cells. Disabling display", exc_info=True)
+				log.error("Error displaying cells. Disabling display", exc_info=True)  # noqa: G201
 				self.handleDisplayUnavailable()
 			return
 		with self.queuedWriteLock:
@@ -652,7 +652,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		cells = self.buffer.windowBrailleCells
 		self._rawText = self.buffer.windowRawText
 		if log.isEnabledFor(log.IO):
-			log.io("Braille window dots: %s" % formatCellsForLog(cells))
+			log.io("Braille window dots: %s" % formatCellsForLog(cells))  # noqa: UP031
 		# cells might not be the full length of the display.
 		# Therefore, pad it with spaces to fill the display.
 		self._cells = cells + [0] * (self.displaySize - len(cells))
@@ -862,7 +862,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 					continue
 				try:
 					region.update()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning(
 						f"Region update failed for {region}, object probably died",
 						exc_info=True,
@@ -910,7 +910,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Fetching dialog text is expensive, so update at most once a second.
 			return
 		self._lastProgressBarUpdateTime = newTime
-		for obj in reversed(api.getFocusAncestors()[:-1]):
+		for obj in reversed(api.getFocusAncestors()[:-1]):  # noqa: PLR1704
 			if obj.role == controlTypes.Role.DIALOG:
 				self.handleUpdate(obj)
 				return
@@ -969,7 +969,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self.handleGainFocus(api.getFocusObject(), shouldAutoTether=False)
 			else:
 				self.handleReviewMove(shouldAutoTether=False)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# #8877: initialDisplay might fail because NVDA tries to focus
 			# an object for which property fetching raises an exception.
 			log.debugWarning("Error in initial display", exc_info=True)
@@ -1033,7 +1033,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		This is called when displaying cells raises an exception,
 		but drivers can also call it themselves if appropriate.
 		"""
-		log.error("Braille display unavailable. Disabling", exc_info=True)
+		log.error("Braille display unavailable. Disabling", exc_info=True)  # noqa: LOG014
 		newDisplay = (
 			AUTO_DISPLAY_NAME
 			if config.conf["braille"]["display"] == AUTO_DISPLAY_NAME
@@ -1103,7 +1103,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		try:
 			self.display.display(data)
 		except:  # noqa: E722
-			log.error("Error displaying cells. Disabling display", exc_info=True)
+			log.error("Error displaying cells. Disabling display", exc_info=True)  # noqa: G201
 			self.handleDisplayUnavailable()
 		else:
 			if self.display.receivesAckPackets:

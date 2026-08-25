@@ -5,7 +5,7 @@
 
 """Logic for NVDA + Google Chrome tests"""
 
-import typing
+import typing  # noqa: I001
 import os
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -253,7 +253,7 @@ def test_mark_aria_details_role():
 	_asserts.braille_matches(
 		message="Browse mode braille: Read line with different aria details roles.",
 		actual=actualBraille,
-		expected=" ".join(
+		expected=" ".join(  # noqa: FLY002
 			[
 				"mln",
 				"edt ",
@@ -314,7 +314,7 @@ def test_mark_aria_details_role():
 	_asserts.braille_matches(
 		message="Focus mode braille: Read line with different aria details roles",
 		actual=actualBraille,
-		expected=" ".join(
+		expected=" ".join(  # noqa: FLY002
 			[
 				# no "mln edt"
 				# the role doc-endnote is unsupported as an IA2 role
@@ -1690,9 +1690,9 @@ def test_ensureNoBrowseModeDescription():
 	does not result in description in browse mode.
 	"""
 	_chrome.prepareChrome(
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
-				r"<button>something for focus</button>"
+				r"<button>something for focus</button>"  # noqa: ISC004
 				r'<a href="#" style="display:block" title="Cat">Apple</a>',
 				# second link to make testing second focus mode tab easier
 				r'<a href="#" style="display:block" title="Fish">Banana</a>',
@@ -2158,7 +2158,7 @@ def test_tableSayAllCommands():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+downArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"B 2",
 				"row 3  column 1  through 2  A 3 plus B 3",
@@ -2177,7 +2177,7 @@ def test_tableSayAllCommands():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"B 2",
 				"row 1  through 2  column 3  C 1 plus C 2",
@@ -2202,7 +2202,7 @@ def test_tableSayAllCommands():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+rightArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"A 3 plus B 3",
 				"column 3  C 3",
@@ -2227,7 +2227,7 @@ def test_tableSpeakAllCommands():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("NVDA+control+alt+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"row 1  B 1",
 				"row 2  B 2",
@@ -2251,7 +2251,7 @@ def test_tableSpeakAllCommands():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+leftArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"column 1  A 2",
 				"column 2  B 2",
@@ -2289,7 +2289,7 @@ def test_tableSayAllAxisCachingForMergedCells():
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+control+alt+upArrow")
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"row 1  column 4  D 1",
 				"row 2  column 3  D 2",
@@ -2756,7 +2756,7 @@ def test_styleNav():
 	_asserts.strings_match(actualSpeech, "highlighted  highlighted")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+s")
 	_asserts.strings_match(actualSpeech, "No previous same style text")
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
+	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")  # noqa: RUF059
 	_asserts.strings_match(actualSpeech, "No next same style text")
 
 

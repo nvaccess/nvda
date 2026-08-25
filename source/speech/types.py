@@ -8,7 +8,7 @@
 Kept here so they can be re-used without having to worry about circular imports.
 """
 
-from collections.abc import Sequence
+from collections.abc import Sequence  # noqa: I001
 from typing import (
 	Union,
 	Any,
@@ -19,7 +19,7 @@ import config
 from logHandler import log
 from .commands import SpeechCommand
 
-SequenceItemT = Union[SpeechCommand, str]
+SequenceItemT = Union[SpeechCommand, str]  # noqa: UP007
 SpeechSequence = list[SequenceItemT]
 SpeechIterable = Iterable[SequenceItemT]
 

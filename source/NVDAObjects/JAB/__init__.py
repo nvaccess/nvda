@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import ctypes
+import ctypes  # noqa: I001
 import re
 from typing import (
 	Any,
@@ -329,7 +329,7 @@ class JAB(Window):
 		self.jabContext = jabContext
 		super().__init__(windowHandle=windowHandle)
 		try:
-			self._JABAccContextInfo
+			self._JABAccContextInfo  # noqa: B018
 		except RuntimeError:
 			raise InvalidNVDAObject("Could not get accessible context info")
 
@@ -407,7 +407,7 @@ class JAB(Window):
 		return self._JABAccContextInfo.states_en_US
 
 	def _get_states(self):
-		log.debug("states: %s" % self.JABStates)
+		log.debug("states: %s" % self.JABStates)  # noqa: UP031
 		stateSet = set()
 		stateString = self.JABStates
 		stateStrings = stateString.split(",")
@@ -458,7 +458,7 @@ class JAB(Window):
 		)
 
 	def _get_hasFocus(self) -> bool:
-		if controlTypes.State.FOCUSED in self.states:
+		if controlTypes.State.FOCUSED in self.states:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -475,7 +475,7 @@ class JAB(Window):
 					selfDepth = self.jabContext.getObjectDepth()
 					if selfDepth > treeDepth:
 						info["level"] = selfDepth - treeDepth
-			except:  # noqa: E722
+			except:  # noqa: E722, S110
 				pass
 
 		targets = self._getJABRelationTargets("memberOf")
@@ -700,7 +700,7 @@ class JAB(Window):
 class ComboBox(JAB):
 	def _get_states(self):
 		states = super().states
-		if controlTypes.State.COLLAPSED not in states and controlTypes.State.EXPANDED not in states:
+		if controlTypes.State.COLLAPSED not in states and controlTypes.State.EXPANDED not in states:  # noqa: SIM102
 			if (
 				self.childCount == 1
 				and self.firstChild

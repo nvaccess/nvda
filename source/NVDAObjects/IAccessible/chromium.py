@@ -5,7 +5,7 @@
 
 """NVDAObjects for the Chromium browser project"""
 
-import typing
+import typing  # noqa: I001
 from comtypes import COMError
 
 import config

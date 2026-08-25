@@ -5,7 +5,7 @@
 
 """App module for Tween"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from NVDAObjects.window import Window
 import winUser

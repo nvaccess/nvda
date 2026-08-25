@@ -8,7 +8,7 @@ Spotlight manager module for full-screen magnifier.
 Manages the spotlight effect, including zooming in on focus and zooming back.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING  # noqa: I001
 from collections.abc import Callable
 import ui
 from .types import Coordinates, ZoomHistory, FullScreenMode
@@ -126,7 +126,7 @@ class SpotlightManager:
 				self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
 				self._fullscreenMagnifier._fullscreenMagnifier(coords)
 			except Exception:
-				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)
+				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)  # noqa: G201
 				self._stopSpotlight()
 				return
 			self._currentZoomLevel = zoomLevel

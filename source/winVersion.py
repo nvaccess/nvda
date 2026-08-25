@@ -10,7 +10,7 @@ making sure NVDA can run on a minimum supported version of Windows.
 When working on this file, consider moving to winAPI.
 """
 
-from typing import Any
+from typing import Any  # noqa: I001
 import sys
 import os
 import functools

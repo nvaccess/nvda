@@ -4,7 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
-import re
+import re  # noqa: I001
 
 from .commands import (
 	# Commands that are used in this file.

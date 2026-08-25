@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import operator
 import uuid
 from logHandler import log
@@ -54,7 +54,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		curSelectionPos = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		lastSelectionPos = getattr(self, "_lastSelectionPos", None)
 		self._lastSelectionPos = curSelectionPos
-		if lastSelectionPos:
+		if lastSelectionPos:  # noqa: SIM102
 			if curSelectionPos._rangeObj.isEqual(lastSelectionPos._rangeObj):
 				if self._fromUpdateBrailleAndReviewPosition:
 					super().event_caret()

@@ -7,7 +7,7 @@
 # minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 # used braille port selection code from braillenote driver
 
-from collections import OrderedDict
+from collections import OrderedDict  # noqa: I001
 import time
 
 import wx
@@ -165,7 +165,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			self._offsetHorizontal = 0
 			self.numCells = 20
 		else:
-			raise Exception("No or unknown braille display found")
+			raise Exception("No or unknown braille display found")  # noqa: TRY002
 		# initialize display
 		self.initTable()
 		# start keyCheckTimer
@@ -182,7 +182,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 				self._dev = None
 				self._keyCheckTimer.Stop()
 				self._keyCheckTimer = None
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def display(self, cells: list[int]):

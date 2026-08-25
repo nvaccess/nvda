@@ -10,7 +10,7 @@ and present the result to the user so they can read it with cursor keys, etc.
 NVDA scripts or GUI call the L{recognizeNavigatorObject} function with the recognizer they wish to use.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 from typing import TYPE_CHECKING
 import api
 import ui
@@ -166,7 +166,7 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 		# Translators: Reported when a user tries to use a find command when it isn't supported.
 		ui.message(_("Not supported in this document"))
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:enter": "activatePosition",
 		"kb:space": "activatePosition",
 		"kb:escape": "exit",
@@ -308,7 +308,7 @@ def recognizeNavigatorObject(recognizer: ContentRecognizer):
 	try:
 		left, top, width, height = nav.location
 	except TypeError:
-		log.debugWarning("Object returned location %r" % nav.location)
+		log.debugWarning("Object returned location %r" % nav.location)  # noqa: UP031
 		ui.message(notVisibleMsg)
 		return
 	if not recognizer.validateCaptureBounds(nav.location):

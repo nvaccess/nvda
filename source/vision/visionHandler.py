@@ -10,7 +10,7 @@ The vision handler is the core of the vision framework.
 See the documentation of L{VisionHandler} for more details about what it does.
 """
 
-from . import providerInfo
+from . import providerInfo  # noqa: I001
 from .constants import Context
 from locationHelper import RectLTRB
 from .providerBase import VisionEnhancementProvider
@@ -33,20 +33,20 @@ def _getProviderClass(
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
 		return importlib.import_module(
-			"visionEnhancementProviders.%s" % moduleName,
+			"visionEnhancementProviders.%s" % moduleName,  # noqa: UP031
 			package="visionEnhancementProviders",
 		).VisionEnhancementProvider
 	except ImportError as initialException:
 		if caseSensitive:
-			raise initialException
+			raise initialException  # noqa: TRY201
 		for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
 			if name.startswith("_") or name.lower() != moduleName.lower():
 				continue
 			return importlib.import_module(
-				"visionEnhancementProviders.%s" % name,
+				"visionEnhancementProviders.%s" % name,  # noqa: UP031
 				package="visionEnhancementProviders",
 			).VisionEnhancementProvider
-		raise initialException
+		raise initialException  # noqa: TRY201
 
 
 def _getProvidersFromFileSystem():
@@ -66,7 +66,7 @@ def _getProvidersFromFileSystem():
 				providerClass=provider,
 			)
 		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
-			log.error(
+			log.error(  # noqa: G201
 				f"Error while importing vision enhancement provider module {moduleName}",
 				exc_info=True,
 			)
@@ -84,7 +84,7 @@ class VisionHandler(AutoPropertyObject):
 	"""
 
 	def __init__(self):
-		self._providers: dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()
+		self._providers: dict[providerInfo.ProviderIdT, VisionEnhancementProvider] = dict()  # noqa: C408
 		self.extensionPoints: EventExtensionPoints = EventExtensionPoints()
 		queueHandler.queueFunction(queueHandler.eventQueue, self.postGuiInit)
 
@@ -97,7 +97,7 @@ class VisionHandler(AutoPropertyObject):
 		self.handleConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
-	_allProviders: list[providerInfo.ProviderInfo] = []
+	_allProviders: list[providerInfo.ProviderInfo] = []  # noqa: RUF012
 
 	def _getBuiltInProviderIds(self):
 		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
@@ -141,7 +141,7 @@ class VisionHandler(AutoPropertyObject):
 			try:
 				providerCanStart = provider.providerClass.canStart()
 			except Exception:  # Purposely catch everything as we don't know what a provider might raise.
-				log.error(f"Error calling canStart for provider {provider.moduleName}", exc_info=True)
+				log.error(f"Error calling canStart for provider {provider.moduleName}", exc_info=True)  # noqa: G201
 			else:
 				if not onlyStartable or providerCanStart:
 					providerList.append(provider)
@@ -199,11 +199,11 @@ class VisionHandler(AutoPropertyObject):
 		if saveSettings:
 			try:
 				providerInstance.getSettings().saveSettings()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.error(f"Error while saving settings during termination of {providerId}")
 		try:
 			providerInstance.terminate()
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			# Purposely catch everything.
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
@@ -216,7 +216,7 @@ class VisionHandler(AutoPropertyObject):
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception:
-				log.error(
+				log.error(  # noqa: G201
 					f"Error while registering to extension points for provider {providerId}",
 					exc_info=True,
 				)
@@ -243,7 +243,7 @@ class VisionHandler(AutoPropertyObject):
 				providerInst.reinitialize()
 			except Exception as e:
 				log.error(f"Error while re-initialising {providerId}")
-				raise e
+				raise e  # noqa: TRY201
 		else:
 			providerCls = provider.providerClass
 			if not providerCls.canStart():
@@ -257,7 +257,7 @@ class VisionHandler(AutoPropertyObject):
 				# Disable the provider, so that it does not error every startup.
 				providerCls.enableInConfig(False)
 				log.warning(f"Error initialising {providerId}. Disabling in config.")
-				raise e
+				raise e  # noqa: TRY201
 			# Register extension points.
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
@@ -268,17 +268,17 @@ class VisionHandler(AutoPropertyObject):
 				try:
 					providerInst.terminate()
 				except Exception:
-					log.error(
+					log.error(  # noqa: G201
 						f"Error terminating provider {providerId} after registering to extension points",
 						exc_info=True,
 					)
-				raise registerEventExtensionPointsException
+				raise registerEventExtensionPointsException  # noqa: TRY201
 		if not temporary:
 			providerInst.enableInConfig(True)
 		self._providers[providerId] = providerInst
 		try:
 			self.initialFocus()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# #8877: initialFocus might fail because NVDA tries to focus
 			# an object for which property fetching raises an exception.
 			# We should handle this more gracefully, since this is no reason
@@ -286,7 +286,7 @@ class VisionHandler(AutoPropertyObject):
 			log.debugWarning("Error in initial focus after provider load", exc_info=True)
 		try:
 			self.initialNavigatorObject()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# initialNavigatorObject might fail in case NVDA's current navigator object is an object
 			# for which property fetching raises an exception.
 			# We should handle this more gracefully, since this is no reason
@@ -334,7 +334,7 @@ class VisionHandler(AutoPropertyObject):
 		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
 	def handleConfigProfileSwitch(self) -> None:
-		configuredProviders: set[providerInfo.ProviderIdT] = set(
+		configuredProviders: set[providerInfo.ProviderIdT] = set(  # noqa: C401
 			info.providerId for info in self.getConfiguredProviderInfos()
 		)
 		curProviders: set[providerInfo.ProviderIdT] = set(self._providers)
@@ -345,7 +345,7 @@ class VisionHandler(AutoPropertyObject):
 				info = self.getProviderInfo(providerId)
 				self.terminateProvider(info)
 			except Exception:
-				log.error(
+				log.error(  # noqa: G201
 					f"Could not terminate the {providerId} vision enhancement provider",
 					exc_info=True,
 				)
@@ -354,7 +354,7 @@ class VisionHandler(AutoPropertyObject):
 				info = self.getProviderInfo(providerId)
 				self.initializeProvider(info)
 			except Exception:
-				log.error(
+				log.error(  # noqa: G201
 					f"Could not initialize the {providerId} vision enhancement provider",
 					exc_info=True,
 				)

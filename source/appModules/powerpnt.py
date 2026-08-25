@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
+from typing import (  # noqa: I001
 	Any,
 )
 
@@ -48,7 +48,7 @@ SCRCAT_POWERPOINT = _("PowerPoint")
 
 # Window classes where PowerPoint's object model should be used
 # These also all request to have their (incomplete) UI Automation implementations  disabled. [MS Office 2013]
-objectModelWindowClasses = set(["paneClassDC", "mdiClass", "screenClass"])
+objectModelWindowClasses = set(["paneClassDC", "mdiClass", "screenClass"])  # noqa: C405
 
 MATHTYPE_PROGID = "Equation.DSMT"
 
@@ -56,8 +56,8 @@ MATHTYPE_PROGID = "Equation.DSMT"
 # comtypes COM interface definition for Powerpoint application object's events
 class EApplication(IDispatch):
 	_iid_ = comtypes.GUID("{914934C2-5A91-11CF-8700-00AA0060263B}")
-	_methods_ = []
-	_disp_methods_ = [
+	_methods_ = []  # noqa: RUF012
+	_disp_methods_ = [  # noqa: RUF012
 		comtypes.DISPMETHOD(
 			[comtypes.dispid(2001)],
 			None,
@@ -75,7 +75,7 @@ class EApplication(IDispatch):
 
 # Our implementation of the EApplication COM interface to receive application events
 class ppEApplicationSink(comtypes.COMObject):
-	_com_interfaces_ = [EApplication, IDispatch]
+	_com_interfaces_ = [EApplication, IDispatch]  # noqa: RUF012
 
 	def SlideShowNextSlide(self, slideShowWindow=None):
 		i = winUser.getGUIThreadInfo(0)
@@ -264,7 +264,7 @@ ppActionHyperlink = 7
 def getBulletText(ppBulletFormat):
 	t = ppBulletFormat.type
 	if t == ppBulletNumbered:
-		return "%d." % ppBulletFormat.number  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))
+		return "%d." % ppBulletFormat.number  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))  # noqa: UP031
 	elif t:
 		return chr(ppBulletFormat.character)
 
@@ -272,7 +272,7 @@ def getBulletText(ppBulletFormat):
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
 		if ppShape.type == msoGroup:
-			for ppChildShape in walkPpShapeRange(ppShape.groupItems):
+			for ppChildShape in walkPpShapeRange(ppShape.groupItems):  # noqa: UP028
 				yield ppChildShape
 		else:
 			yield ppShape
@@ -329,7 +329,7 @@ class DocumentWindow(PaneClassDC):
 			return super(PaneClassDC, self).name
 		slide = self.currentSlide
 		if slide:
-			label = " - ".join([slide.name, label])
+			label = " - ".join([slide.name, label])  # noqa: FLY002
 		return label
 
 	def _get_currentSlide(self):
@@ -347,7 +347,7 @@ class DocumentWindow(PaneClassDC):
 		sel = self.ppSelection
 		selType = sel.type
 		# MS Powerpoint 2007 and below does not correctly indecate text selection in the notes page when in normal view
-		if selType == 0 and self.ppVersionMajor <= 12:
+		if selType == 0 and self.ppVersionMajor <= 12:  # noqa: SIM102
 			if self.ppActivePaneViewType == ppViewNotesPage and self.ppDocumentViewType == ppViewNormal:
 				selType = ppSelectionText
 		if selType == ppSelectionShapes:  # Shape
@@ -471,7 +471,7 @@ class DocumentWindow(PaneClassDC):
 
 	script_selectionChange.canPropagate = True
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		k: "selectionChange"
 		for k in (
 			"kb:tab",
@@ -527,7 +527,7 @@ class PpObject(Window):
 	def script_selectionChange(self, gesture):
 		return self.documentWindow.script_selectionChange(gesture)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:escape": "selectionChange",
 	}
 
@@ -569,7 +569,7 @@ class Slide(SlideBase):
 		# Translators: the label for a slide in Microsoft PowerPoint.
 		name = _("Slide {slideNumber}").format(slideNumber=number)
 		if title:
-			name += " (%s)" % title
+			name += " (%s)" % title  # noqa: UP031
 		return name
 
 	def _get_positionInfo(self):
@@ -590,7 +590,7 @@ class Shape(PpObject):
 
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
-		if self.role == controlTypes.Role.EMBEDDEDOBJECT:
+		if self.role == controlTypes.Role.EMBEDDEDOBJECT:  # noqa: SIM102
 			if self.ppObject.OLEFormat.ProgID.startswith(MATHTYPE_PROGID):
 				self.role = controlTypes.Role.MATH
 
@@ -1008,7 +1008,7 @@ class Shape(PpObject):
 			)
 			return None
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:leftArrow": "moveHorizontal",
 		"kb:rightArrow": "moveHorizontal",
 		"kb:upArrow": "moveVertical",
@@ -1051,7 +1051,7 @@ class ChartShape(Shape):
 	def script_enterChart(self, gesture):
 		eventHandler.executeEvent("gainFocus", self.chart)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:enter": "enterChart",
 		"kb:space": "enterChart",
 	}
@@ -1321,7 +1321,7 @@ class TextFrame(EditableTextWithoutAutoSelectDetection, PpObject):
 
 	name = None
 	role = controlTypes.Role.EDITABLETEXT
-	states = {controlTypes.State.MULTILINE}
+	states = {controlTypes.State.MULTILINE}  # noqa: RUF012
 
 	def _get_parent(self):
 		parent = self.ppObject.parent
@@ -1341,7 +1341,7 @@ class TableCellTextFrame(TextFrame):
 	def _isEqual(self, other):
 		return self.parent == other.parent
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": "selectionChange",
 		"kb:shift+tab": "selectionChange",
 	}
@@ -1474,7 +1474,7 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 class ReviewableSlideshowTreeInterceptor(ReviewCursorManager, SlideShowTreeInterceptor):
 	"""A TreeInterceptor for Slide show content but with caret navigation via ReviewCursorManager."""
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:space": "slideChange",
 		"kb:enter": "slideChange",
 		"kb:backspace": "slideChange",
@@ -1548,7 +1548,7 @@ class SlideShowWindow(PaneClassDC):
 		if label:
 			typeName = " ".join(shape.name.split(" ")[:-1])
 			if typeName and not typeName.isspace():
-				yield "%s %s" % (typeName, label)
+				yield "%s %s" % (typeName, label)  # noqa: UP031
 			else:
 				yield label
 
@@ -1616,7 +1616,7 @@ class AppModule(appModuleHandler.AppModule):
 		return super().isBadUIAWindow(hwnd)
 
 	def _registerCOMWithFocusJuggle(self):
-		import wx
+		import wx  # noqa: I001
 		import gui
 
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
@@ -1703,7 +1703,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not m and not self.hasTriedPpAppSwitch:
 			self._registerCOMWithFocusJuggle()
 			m = self._fetchPpObjectModelHelper(windowHandle=windowHandle)
-		if m:
+		if m:  # noqa: SIM102
 			if windowHandle != self._ppApplicationWindow or not self._ppApplication:
 				self._ppApplicationWindow = windowHandle
 				self._ppApplication = m.application

@@ -7,7 +7,7 @@
 # Seika3/5 V1.x/2.0, Seika80, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
 
-import wx
+import wx  # noqa: I001
 import serial
 import braille
 import braille.display.driver

@@ -8,7 +8,7 @@
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
 """
 
-import os
+import os  # noqa: I001
 import time
 import threading
 import math
@@ -41,7 +41,7 @@ from speech.extensions import pre_speechCanceled
 
 
 class ProgressBar(NVDAObject):
-	progressValueCache = {}  # key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage
+	progressValueCache = {}  # key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage  # noqa: RUF012
 
 	def event_valueChange(self):
 		pbConf = config.conf["presentation"]["progressBarUpdates"]
@@ -56,7 +56,7 @@ class ProgressBar(NVDAObject):
 		try:
 			percentage = min(max(0.0, float(val.strip("%\0"))), 100.0)
 		except (AttributeError, ValueError):
-			log.debugWarning("Invalid value: %r" % val)
+			log.debugWarning("Invalid value: %r" % val)  # noqa: UP031
 			return super().event_valueChange()
 		braille.handler.handleUpdate(self)
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
@@ -67,14 +67,14 @@ class ProgressBar(NVDAObject):
 			left = top = width = height = 0
 		x = left + (width // 2)
 		y = top + (height // 2)
-		lastBeepProgressValue = self.progressValueCache.get("beep,%d,%d" % (x, y), None)
+		lastBeepProgressValue = self.progressValueCache.get("beep,%d,%d" % (x, y), None)  # noqa: UP031
 		if pbConf["progressBarOutputMode"] in ("beep", "both") and (
 			lastBeepProgressValue is None
 			or abs(percentage - lastBeepProgressValue) >= pbConf["beepPercentageInterval"]
 		):
 			tones.beep(pbConf["beepMinHZ"] * 2 ** (percentage / 25.0), 40)
-			self.progressValueCache["beep,%d,%d" % (x, y)] = percentage
-		lastSpeechProgressValue = self.progressValueCache.get("speech,%d,%d" % (x, y), None)
+			self.progressValueCache["beep,%d,%d" % (x, y)] = percentage  # noqa: UP031
+		lastSpeechProgressValue = self.progressValueCache.get("speech,%d,%d" % (x, y), None)  # noqa: UP031
 		if pbConf["progressBarOutputMode"] in ("speak", "both") and (
 			lastSpeechProgressValue is None
 			or abs(percentage - lastSpeechProgressValue) >= pbConf["speechPercentageInterval"]
@@ -85,7 +85,7 @@ class ProgressBar(NVDAObject):
 				# Translators: This is presented to inform the user of a progress bar percentage.
 				ngettext("%d percent", "%d percent", percentage) % percentage,
 			)
-			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage
+			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage  # noqa: UP031
 
 
 class Dialog(NVDAObject):
@@ -180,7 +180,7 @@ class Dialog(NVDAObject):
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText = child.basicText
 				isNameIncluded = True
-			if not isNameIncluded:
+			if not isNameIncluded:  # noqa: SIM102
 				# The label isn't in the text, so explicitly include it first.
 				if childName:
 					textList.append(childName)
@@ -269,7 +269,7 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 			# The one before that is the last of the word, which is what we want.
 			info.move(textInfos.UNIT_CHARACTER, -2)
 			info.expand(textInfos.UNIT_CHARACTER)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# Focus probably moved.
 			log.debugWarning("Error fetching last character of previous word", exc_info=True)
 			return
@@ -281,7 +281,7 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 		def _delayedDetection():
 			try:
 				fields = info.getTextWithFields()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning(
 					"Error fetching formatting for last character of previous word",
 					exc_info=True,
@@ -599,7 +599,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
-	_queuedChars = []
+	_queuedChars = []  # noqa: RUF012
 	#: Whether the last typed character is a tab.
 	#: If so, we should temporarily disable filtering as completions may
 	#: be short.
@@ -1074,6 +1074,6 @@ class WebDialog(NVDAObject):
 	"""
 
 	def _get_shouldCreateTreeInterceptor(self):
-		if self.parent.treeInterceptor:
+		if self.parent.treeInterceptor:  # noqa: SIM103
 			return True
 		return False

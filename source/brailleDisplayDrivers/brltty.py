@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2023 NV Access Limited, Babbage B.V, Bram Duvigneau
 
-import os
+import os  # noqa: I001
 import time
 import wx
 import braille
@@ -75,13 +75,13 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		try:
 			# Give BRLTTY a chance to write the last piece of data to the display.
 			time.sleep(0.05)
 			self._con.leaveTtyMode()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def _get_numCols(self) -> int:
@@ -105,7 +105,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			try:
 				key = self._con.readKey(False)
 			except:  # noqa: E722
-				log.error("Error reading key press from brlapi", exc_info=True)
+				log.error("Error reading key press from brlapi", exc_info=True)  # noqa: G201
 				return
 			if not key:
 				break

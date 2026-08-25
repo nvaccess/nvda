@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Iterable
+from collections.abc import Iterable  # noqa: I001
 import json
 import comtypes.client
 import ctypes
@@ -190,7 +190,7 @@ def getDocFilePath(fileName: str, installDir: str):
 		tryLangs.append(lang.split("_")[0])
 	# If all else fails, use English.
 	tryLangs.append("en")
-	fileName, fileExt = os.path.splitext(fileName)
+	fileName, fileExt = os.path.splitext(fileName)  # noqa: RUF059
 	for tryLang in tryLangs:
 		tryDir = os.path.join(rootPath, tryLang)
 		if not os.path.isdir(tryDir):
@@ -246,7 +246,7 @@ def removeOldLibFiles(destPath: str, rebootOK: bool = False):
 				[os.path.abspath(parent), os.path.abspath(currentLibPath)],
 			) == os.path.abspath(currentLibPath):
 				# We are in the lib dir for current installation. Don't touch this!
-				log.debug("Skipping current install lib path: %r" % parent)
+				log.debug("Skipping current install lib path: %r" % parent)  # noqa: UP031
 				continue
 			for d in subdirs:
 				path = os.path.join(parent, d)
@@ -262,12 +262,12 @@ def removeOldLibFiles(destPath: str, rebootOK: bool = False):
 						)
 			for f in files:
 				path = os.path.join(parent, f)
-				log.debug("Removing old lib file: %r" % path)
+				log.debug("Removing old lib file: %r" % path)  # noqa: UP031
 				try:
 					tryRemoveFile(path, numRetries=2, rebootOK=rebootOK)
 				except RetriableFailure:
 					log.warning(
-						"A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"
+						"A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"  # noqa: UP031
 						% path,
 					)
 
@@ -327,7 +327,7 @@ def getUninstallerRegInfo(installDir: str) -> dict[str, str | int]:
 	Constructs a dictionary that is written to the registry for NVDA to show up
 	in the Windows "Apps and Features" overview.
 	"""
-	return dict(
+	return dict(  # noqa: C408
 		DisplayName=f"{buildVersion.name} {buildVersion.version}",
 		DisplayVersion=buildVersion.version_detailed,
 		DisplayIcon=os.path.join(installDir, "images", "nvda.ico"),
@@ -420,7 +420,7 @@ def registerInstallation(
 	try:
 		_updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder)
 	except Exception:
-		log.error("Error while creating shortcuts", exc_info=True)
+		log.error("Error while creating shortcuts", exc_info=True)  # noqa: G201
 	registerAddonFileAssociation(slaveExe)
 
 
@@ -449,7 +449,7 @@ def _createShortcutWithFallback(
 			hotkey,
 			prependSpecialFolder,
 		)
-	except Exception:
+	except Exception:  # noqa: BLE001
 		if hotkey is not None and fallbackHotkey is not None:
 			log.error(
 				f"Error creating {path}. With hotkey ({hotkey}). Trying fallback hotkey: {fallbackHotkey}",
@@ -744,7 +744,7 @@ def registerAddonFileAssociation(slaveExe: str):
 		# Notify the shell that a file association has changed:
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
 	except OSError:
-		log.error("Can not create addon file association.", exc_info=True)
+		log.error("Can not create addon file association.", exc_info=True)  # noqa: G201
 
 
 def unregisterAddonFileAssociation() -> None:
@@ -791,7 +791,7 @@ def tryRemoveFile(
 	try:
 		os.replace(path, tempPath)
 	except OSError:
-		raise RetriableFailure("Failed to rename file %s before  remove" % path)
+		raise RetriableFailure("Failed to rename file %s before  remove" % path)  # noqa: UP031
 	for count in range(numRetries):
 		try:
 			if os.path.isdir(tempPath):
@@ -803,7 +803,7 @@ def tryRemoveFile(
 			log.debugWarning(f"Failed to delete file {tempPath}, attempt {count}/{numRetries}", exc_info=True)
 		time.sleep(retryInterval)
 	if rebootOK:
-		log.debugWarning("Failed to delete file %s, marking for delete on reboot" % tempPath)
+		log.debugWarning("Failed to delete file %s, marking for delete on reboot" % tempPath)  # noqa: UP031
 		try:
 			# Use escapes in a unicode string instead of raw.
 			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
@@ -818,7 +818,7 @@ def tryRemoveFile(
 		os.replace(tempPath, path)
 	except Exception:
 		log.exception(f"Unable to rename back to {path} before retriable failure")
-	raise RetriableFailure("File %s could not be removed" % path)
+	raise RetriableFailure("File %s could not be removed" % path)  # noqa: UP031
 
 
 def tryCopyFile(sourceFilePath: str, destFilePath: str):
@@ -828,20 +828,20 @@ def tryCopyFile(sourceFilePath: str, destFilePath: str):
 		destFilePath = "\\\\?\\" + destFilePath
 	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 		errorCode = ctypes.GetLastError()
-		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))
+		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))  # noqa: UP031
 		if not os.path.exists(destFilePath):
-			raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))
+			raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))  # noqa: UP031
 		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
 		try:
 			os.replace(destFilePath, tempPath)
 		except OSError:
-			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
-			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
+			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)  # noqa: G201, UP031
+			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)  # noqa: UP031
 		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 			errorCode = ctypes.GetLastError()
 			raise OSError(
-				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),
+				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),  # noqa: UP031
 			)
 
 
@@ -1013,25 +1013,25 @@ def _migratePickledAddonsStateToJson(configPath: str) -> None:
 
 		jsonState = _getAddonsStateDictFromPickle(pickledPath)
 	except Exception:
-		log.error("Failed to load pickled add-ons state.", exc_info=True)
+		log.error("Failed to load pickled add-ons state.", exc_info=True)  # noqa: G201
 	else:
 		jsonPath = os.path.join(configPath, addonHandler.STATE_FILENAME)
 		try:
 			if os.path.exists(jsonPath):
 				tryRemoveFile(jsonPath)
 		except Exception:
-			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)
+			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)  # noqa: G201
 		else:
 			try:
 				with open(jsonPath, "wt", encoding="utf-8") as file:
 					json.dump(jsonState, file)
 			except Exception:
-				log.error("Failed to dump JSON add-ons state.", exc_info=True)
+				log.error("Failed to dump JSON add-ons state.", exc_info=True)  # noqa: G201
 	finally:
 		try:
 			os.replace(pickledPath, pickledPath + ".bak")
 		except Exception:
-			log.error("Failed to back up pickled add-ons state.", exc_info=True)
+			log.error("Failed to back up pickled add-ons state.", exc_info=True)  # noqa: G201
 
 
 def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):

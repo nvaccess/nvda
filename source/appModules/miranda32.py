@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import ui
+import ui  # noqa: I001
 import config
 from ctypes import *
 from ctypes.wintypes import *
@@ -84,8 +84,8 @@ MESSAGEVIEWERS = (1001, 1005, 3011, 5005)
 
 
 class AppModule(appModuleHandler.AppModule):
-	lastTextLengths = {}
-	lastMessages = []
+	lastTextLengths = {}  # noqa: RUF012
+	lastMessages = []  # noqa: RUF012
 	# Must not be > 9.
 	MessageHistoryLength = 3
 
@@ -155,7 +155,7 @@ class mirandaIMContactList(IAccessible):
 			if statusMsgPtr > 0:
 				buf2 = create_unicode_buffer(MAXSTATUSMSGLEN)
 				winKernel.readProcessMemory(self.processHandle, statusMsgPtr, buf2, MAXSTATUSMSGLEN, None)
-				text = "%s %s" % (text, buf2.value)
+				text = "%s %s" % (text, buf2.value)  # noqa: UP031
 		finally:
 			winKernel.virtualFreeEx(self.processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
 		return text

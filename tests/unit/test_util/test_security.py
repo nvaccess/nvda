@@ -5,7 +5,7 @@
 
 """Unit tests for the blockUntilConditionMet submodule."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 import unittest
 from unittest.mock import patch
 

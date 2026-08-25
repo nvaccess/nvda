@@ -16,7 +16,7 @@ import textInfos
 
 
 class _FakeObj:
-	_brailleFormatFieldAttributesCache: dict = {}
+	_brailleFormatFieldAttributesCache: dict = {}  # noqa: RUF012
 
 
 class _FakeInfo:

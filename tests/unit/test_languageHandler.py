@@ -5,7 +5,7 @@
 
 """Unit tests for the languageHandler module."""
 
-import unittest
+import unittest  # noqa: I001
 import winBindings.kernel32
 import languageHandler
 from languageHandler import LCID_NONE
@@ -29,7 +29,7 @@ def generateUnsupportedWindowsLocales():
 	Uses `localesData.LANG_NAMES_TO_LOCALIZED_DESCS` as a base but filters further
 	since unsupported languages are different under different systems."""
 	unsupportedLangs = set()
-	for localeName in LANG_NAMES_TO_LOCALIZED_DESCS.keys():
+	for localeName in LANG_NAMES_TO_LOCALIZED_DESCS.keys():  # noqa: SIM118
 		# `languageHandler.englishCountryNameFromNVDALocale` returns `None` for locale unknown to Windows.
 		if not languageHandler.englishCountryNameFromNVDALocale(localeName):
 			unsupportedLangs.add(localeName)
@@ -41,7 +41,7 @@ LCID_CENTRAL_KURDISH = 0x0492
 LCID_KHMER_CAMBODIA = 0x0453
 LCID_INVALID = 0xFFFF
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
-TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
+TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}  # noqa: C401
 WINDOWS_LANGS = generateWindowsLocales()
 
 
@@ -111,7 +111,7 @@ class Test_Normalization_For_Win32(unittest.TestCase):
 class Test_GetLocaleInfoEx_Wrappers(unittest.TestCase):
 	"""Set of tests for wrappers around `GetLocaleInfoEx` from `languageHandler`"""
 
-	POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES = {
+	POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES = {  # noqa: RUF012
 		str(winBindings.kernel32.GetACP()),
 		"65001",
 	}
@@ -186,7 +186,7 @@ class Test_GetLocaleInfoEx_Wrappers(unittest.TestCase):
 class Test_languageHandler_setLocale(unittest.TestCase):
 	"""Tests for the function languageHandler.setLocale"""
 
-	SUPPORTED_LOCALES = [
+	SUPPORTED_LOCALES = [  # noqa: RUF012
 		("en", "English_United States.1252"),
 		("fa-IR", "Persian_Iran.1256"),
 		("pl_PL", "Polish_Poland.1250"),

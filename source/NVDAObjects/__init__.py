@@ -7,10 +7,10 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
-import time
+import time  # noqa: I001
 import typing
-from typing import (
-	Dict,
+from typing import (  # noqa: UP035
+	Dict,  # noqa: F401
 	Optional,
 	TYPE_CHECKING,
 )
@@ -87,7 +87,7 @@ class InvalidNVDAObject(RuntimeError):
 
 
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
-	_dynamicClassCache = {}
+	_dynamicClassCache = {}  # noqa: RUF012
 
 	def __call__(self, chooseBestAPI=True, **kwargs):
 		if chooseBestAPI:
@@ -104,7 +104,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if isinstance(obj, self):
 				obj.__init__(**kwargs)
 		except InvalidNVDAObject as e:
-			log.debugWarning("Invalid NVDAObject: %s" % e, exc_info=True)
+			log.debugWarning("Invalid NVDAObject: %s" % e, exc_info=True)  # noqa: UP031
 			return None
 
 		clsList = []
@@ -151,7 +151,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			bases = tuple(bases)
 			newCls = self._dynamicClassCache.get(bases, None)
 			if not newCls:
-				name = "Dynamic_%s" % "".join([x.__name__ for x in clsList])
+				name = "Dynamic_%s" % "".join([x.__name__ for x in clsList])  # noqa: UP031
 				newCls = type(name, bases, {"__module__": __name__})
 				self._dynamicClassCache[bases] = newCls
 
@@ -173,7 +173,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					continue
 			# Bind gestures specified on the class.
 			try:
-				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))  # noqa: UP031
 			except AttributeError:
 				pass
 
@@ -263,7 +263,7 @@ class NVDAObject(
 		if "getPossibleAPIClasses" in newAPIClass.__dict__:
 			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs, relation=relation):
 				if "kwargsFromSuper" not in possibleAPIClass.__dict__:
-					log.error("possible API class %s does not implement kwargsFromSuper" % possibleAPIClass)
+					log.error("possible API class %s does not implement kwargsFromSuper" % possibleAPIClass)  # noqa: UP031
 					continue
 				if possibleAPIClass.kwargsFromSuper(kwargs, relation=relation):
 					return possibleAPIClass.findBestAPIClass(kwargs, relation=relation)
@@ -900,7 +900,7 @@ class NVDAObject(
 		"""
 		for child in self.children:
 			yield child
-			for recursiveChild in child.recursiveDescendants:
+			for recursiveChild in child.recursiveDescendants:  # noqa: UP028
 				yield recursiveChild
 
 	presType_unavailable = "unavailable"
@@ -1168,7 +1168,7 @@ class NVDAObject(
 		"""
 		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
-		if self.role in (
+		if self.role in (  # noqa: SIM103
 			controlTypes.Role.TREEVIEWITEM,
 			controlTypes.Role.LISTITEM,
 			controlTypes.Role.PROGRESSBAR,
@@ -1215,7 +1215,7 @@ class NVDAObject(
 		@return: the placeholder text else None
 		@rtype: String or None
 		"""
-		log.debug("Potential unimplemented child class: %r" % self)
+		log.debug("Potential unimplemented child class: %r" % self)  # noqa: UP031
 
 	landmark: str | None
 	"""Typing information for auto property _get_landmark
@@ -1484,7 +1484,7 @@ class NVDAObject(
 		@rtype: str
 		"""
 		if isinstance(string, str) and len(string) > truncateLen:
-			return "%r (truncated)" % string[:truncateLen]
+			return "%r (truncated)" % string[:truncateLen]  # noqa: UP031
 		return repr(string)
 
 	devInfo: list[str]
@@ -1501,62 +1501,62 @@ class NVDAObject(
 		info = []
 		try:
 			ret = repr(self.name)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("name: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("name: %s" % ret)  # noqa: UP031
 		info.append(f"role: {self.role.name}")
 		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
 			ret = ", ".join(state.name for state in self.states)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("states: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("states: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.isFocusable)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("isFocusable: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("isFocusable: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.hasFocus)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("hasFocus: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("hasFocus: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("Python object: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("Python object: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.__class__.__mro__)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("Python class mro: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("Python class mro: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.description)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("description: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("description: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.location)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("location: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("location: %s" % ret)  # noqa: UP031
 		formatLong = self._formatLongDevInfoString
 		try:
 			ret = formatLong(self.value)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("value: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("value: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.TextInfo)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("TextInfo: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("TextInfo: %s" % ret)  # noqa: UP031
 		info.extend(self.appModule.devInfo)
 		return info
 
@@ -1596,7 +1596,7 @@ class NVDAObject(
 		if role in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.TERMINAL, controlTypes.Role.DOCUMENT):
 			# Edit fields, terminals and documents  are always navigable
 			return True
-		elif controlTypes.State.EDITABLE in states:
+		elif controlTypes.State.EDITABLE in states:  # noqa: SIM103
 			# Anything that is specifically editable is navigable
 			return True
 		else:

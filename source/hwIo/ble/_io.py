@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
+import time  # noqa: I001
 from itertools import count, takewhile
 from queue import Empty, Queue
 from threading import Event, Thread
@@ -57,12 +57,12 @@ def queueReader(
 			continue
 
 		def apc(_x: int = 0):
-			return onReceive(data)
+			return onReceive(data)  # noqa: B023
 
 		try:
 			ioThread.queueAsApc(apc)
 		except OSError:
-			log.error("Reader thread failed to queue APC", exc_info=True)
+			log.error("Reader thread failed to queue APC", exc_info=True)  # noqa: G201
 		queue.task_done()
 
 

@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 from collections.abc import Iterable
 import typing
 from ctypes import byref
@@ -56,7 +56,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				self.obj.clearAppSelection()
 
 	def _getBoundingRectFromOffset(self, offset):
-		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)  # noqa: RUF059
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart + 1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
@@ -273,7 +273,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 	def _get_location(self) -> locationHelper.RectLTWH:
 		document = self.obj.rootNVDAObject.IAccessibleObject
-		docHandle, ID = self._getFieldIdentifierFromOffset(self._startOffset)
+		docHandle, ID = self._getFieldIdentifierFromOffset(self._startOffset)  # noqa: RUF059
 		location = document.accLocation(ID)
 		return locationHelper.RectLTWH(*location)
 
@@ -403,18 +403,18 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType == "link":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
 			}
 		elif nodeType == "visitedLink":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],  # noqa: UP031
 			}
 		elif nodeType == "unvisitedLink":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],  # noqa: UP031
 			}
 		elif nodeType == "formField":
 			attrs = [
@@ -497,7 +497,7 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible::role": [IA2.IA2_ROLE_BLOCK_QUOTE]},
 			]
 		elif nodeType == "focusable":
-			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}  # noqa: UP031
 		elif nodeType == "landmark":
 			attrs = [
 				{"IAccessible::role": [IA2.IA2_ROLE_LANDMARK]},
@@ -642,7 +642,7 @@ class Gecko_ia2(VirtualBuffer):
 		# Where we have not included its inner text attribute run
 		# as the content was overridden by an ARIA label or similar.
 		for field in selFields:
-			if isinstance(field, textInfos.FieldCommand):
+			if isinstance(field, textInfos.FieldCommand):  # noqa: SIM102
 				if field.command in ("controlStart", "formatChange"):
 					hwnd = field.field.get("ia2TextWindowHandle")
 					if hwnd is not None:

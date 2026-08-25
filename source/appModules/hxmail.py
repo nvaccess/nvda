@@ -5,7 +5,7 @@
 
 """An appModule for the Windows Mail app, for Windows 10 and 11."""
 
-import controlTypes
+import controlTypes  # noqa: I001
 import appModuleHandler
 from comtypes import COMError
 import UIAHandler

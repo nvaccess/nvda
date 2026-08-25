@@ -3,11 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import typing
-from typing import (
+import typing  # noqa: I001
+from typing import (  # noqa: UP035
 	Optional,
-	Tuple,
-	Union,
+	Tuple,  # noqa: F401
+	Union,  # noqa: F401
 )
 from collections.abc import Generator
 
@@ -413,7 +413,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_WORD)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_WORD)  # noqa: RUF059
 		except COMError:
 			return super()._getWordOffsets(offset)
 		if start > offset or offset > end:
@@ -423,7 +423,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getLineOffsets(self, offset):
 		try:
-			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_LINE)
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(offset, IA2.IA2_TEXT_BOUNDARY_LINE)  # noqa: RUF059
 			return start, end
 		except COMError:
 			log.debugWarning("IAccessibleText::textAtOffset failed", exc_info=True)
@@ -436,7 +436,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(  # noqa: RUF059
 				offset,
 				IA2.IA2_TEXT_BOUNDARY_SENTENCE,
 			)
@@ -453,7 +453,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		except COMError:
 			pass
 		try:
-			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(
+			start, end, text = self.obj.IAccessibleTextObject.TextAtOffset(  # noqa: RUF059
 				offset,
 				IA2.IA2_TEXT_BOUNDARY_PARAGRAPH,
 			)
@@ -589,7 +589,7 @@ class IAccessible(Window):
 			# because of higher API classes; e.g. MSHTML.
 			clsList.insert(0, FocusableUnfocusableContainer)
 
-		if hasattr(self, "IAccessibleTextObject"):
+		if hasattr(self, "IAccessibleTextObject"):  # noqa: SIM102
 			if role == oleacc.ROLE_SYSTEM_TEXT or controlTypes.State.EDITABLE in self.states:
 				clsList.append(EditableTextWithAutoSelectDetection)
 
@@ -607,7 +607,7 @@ class IAccessible(Window):
 				classString = classString[1:]
 				# #8712: Python 3 wants a dot (.) when loading a module from the same folder via relative imports, and this is done via package argument.
 				mod = importlib.import_module(
-					"NVDAObjects.IAccessible.%s" % modString,
+					"NVDAObjects.IAccessible.%s" % modString,  # noqa: UP031
 					package="NVDAObjects.IAccessible",
 				)
 				newCls = getattr(mod, classString)
@@ -810,10 +810,10 @@ class IAccessible(Window):
 		if not windowHandle:
 			log.debugWarning("Resorting to WindowFromPoint on accLocation")
 			try:
-				left, top, width, height = IAccessibleObject.accLocation(0)
+				left, top, width, height = IAccessibleObject.accLocation(0)  # noqa: RUF059
 				windowHandle = user32.WindowFromPoint(winUser.POINT(left, top))
 			except COMError as e:
-				log.debugWarning("accLocation failed: %s" % e)
+				log.debugWarning("accLocation failed: %s" % e)  # noqa: UP031
 		if not windowHandle:
 			raise InvalidNVDAObject("Can't get a window handle from IAccessible")
 
@@ -951,7 +951,7 @@ class IAccessible(Window):
 			return False
 		if self.IAccessibleRole != other.IAccessibleRole:
 			return False
-		if self.name != other.name:
+		if self.name != other.name:  # noqa: SIM103
 			return False
 		return True
 
@@ -1050,7 +1050,7 @@ class IAccessible(Window):
 			try:
 				role = self.IAccessibleObject.accRole(self.IAccessibleChildID)
 			except COMError as e:
-				log.debugWarning("accRole failed: %s" % e)
+				log.debugWarning("accRole failed: %s" % e)  # noqa: UP031
 				role = 0
 		return role
 
@@ -1062,7 +1062,7 @@ class IAccessible(Window):
 				return superRole
 		if isinstance(IARole, str):  # todo: when can this be a string?
 			IARole = IARole.split(",")[0].lower()
-			log.debug("IARole: %s" % IARole)
+			log.debug("IARole: %s" % IARole)  # noqa: UP031
 		# must not create interdependence between role and states properties. Use IARole / IAStates.
 		NVDARole = IAccessibleHandler.calculateNvdaRole(IARole, self.IAccessibleStates)
 		return NVDARole
@@ -1199,7 +1199,7 @@ class IAccessible(Window):
 		if self.windowHandle and not super().isPointInObject(x, y):
 			return False
 		res = IAccessibleHandler.accHitTest(self.IAccessibleObject, self.IAccessibleChildID, x, y)
-		if not res or res[0] != self.IAccessibleObject or res[1] != self.IAccessibleChildID:
+		if not res or res[0] != self.IAccessibleObject or res[1] != self.IAccessibleChildID:  # noqa: SIM103
 			return False
 		return True
 
@@ -1239,7 +1239,7 @@ class IAccessible(Window):
 		res = IAccessibleHandler.accParent(self.IAccessibleObject, self.IAccessibleChildID)
 		if res:
 			parentObj = IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
-			if parentObj:
+			if parentObj:  # noqa: SIM102
 				# Hack around bad MSAA implementations that deliberately skip the window root IAccessible in the ancestry (Skype, iTunes)
 				if (
 					parentObj.windowHandle != self.windowHandle
@@ -1402,7 +1402,7 @@ class IAccessible(Window):
 			if identity and identity.get("objectID", None) == 0 and identity.get("childID", None) == 0:
 				windowHandle = identity.get("windowHandle", None)
 				if windowHandle:
-					kwargs = dict(windowHandle=windowHandle)
+					kwargs = dict(windowHandle=windowHandle)  # noqa: C408
 					APIClass = Window.findBestAPIClass(
 						kwargs,
 						relation="parent",
@@ -1447,7 +1447,7 @@ class IAccessible(Window):
 		try:
 			attribs = self.IAccessibleObject.attributes
 		except COMError as e:
-			log.debugWarning("IAccessibleObject.attributes COMError %s" % e)
+			log.debugWarning("IAccessibleObject.attributes COMError %s" % e)  # noqa: UP031
 			attribs = None
 		if attribs:
 			return IAccessibleHandler.splitIA2Attribs(attribs)
@@ -1486,7 +1486,7 @@ class IAccessible(Window):
 		try:
 			index = int(index)
 		except (ValueError, TypeError):
-			log.debugWarning("value %s is not an int" % index, exc_info=True)
+			log.debugWarning("value %s is not an int" % index, exc_info=True)  # noqa: UP031
 			raise NotImplementedError
 		return index
 
@@ -1526,7 +1526,7 @@ class IAccessible(Window):
 			colText = self.columnNumber
 		if not rowText:
 			rowText = self.rowNumber
-		return "%s %s" % (colText, rowText)
+		return "%s %s" % (colText, rowText)  # noqa: UP031
 
 	def _get_presentationalColumnNumber(self):
 		index = self.IA2Attributes.get("colindex")
@@ -1535,7 +1535,7 @@ class IAccessible(Window):
 		try:
 			index = int(index)
 		except (ValueError, TypeError):
-			log.debugWarning("value %s is not an int" % index, exc_info=True)
+			log.debugWarning("value %s is not an int" % index, exc_info=True)  # noqa: UP031
 			raise NotImplementedError
 		return index
 
@@ -1564,7 +1564,7 @@ class IAccessible(Window):
 		try:
 			count = int(count)
 		except (ValueError, TypeError):
-			log.debugWarning("value %s is not an int" % count, exc_info=True)
+			log.debugWarning("value %s is not an int" % count, exc_info=True)  # noqa: UP031
 			raise NotImplementedError
 		return count
 
@@ -1588,7 +1588,7 @@ class IAccessible(Window):
 		try:
 			count = int(count)
 		except (ValueError, TypeError):
-			log.debugWarning("value %s is not an int" % count, exc_info=True)
+			log.debugWarning("value %s is not an int" % count, exc_info=True)  # noqa: UP031
 			raise NotImplementedError
 		return count
 
@@ -1692,7 +1692,7 @@ class IAccessible(Window):
 		try:
 			return self._getSelectedItemsCount_accSelection(maxCount)
 		except (COMError, NotImplementedError) as e:
-			log.debug("Cannot fetch selected items count using accSelection, %s" % e)
+			log.debug("Cannot fetch selected items count using accSelection, %s" % e)  # noqa: UP031
 		if hasattr(self, "IAccessibleTable2Object"):
 			try:
 				return self.IAccessibleTable2Object.nSelectedCells
@@ -1754,7 +1754,7 @@ class IAccessible(Window):
 				return IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
 
 	def _get_hasFocus(self):
-		if self.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSED:
+		if self.IAccessibleStates & oleacc.STATE_SYSTEM_FOCUSED:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -1809,7 +1809,7 @@ class IAccessible(Window):
 			parent = self.parent
 			if parent:
 				similarItemsInGroup = parent.childCount
-				return dict(indexInGroup=indexInGroup, similarItemsInGroup=similarItemsInGroup)
+				return dict(indexInGroup=indexInGroup, similarItemsInGroup=similarItemsInGroup)  # noqa: C408
 		return {}
 
 	def _get_indexInParent(self):
@@ -1827,7 +1827,7 @@ class IAccessible(Window):
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
 			log.debug("Not an IA2.IAccessible2")
 			raise NotImplementedError
-		import ctypes
+		import ctypes  # noqa: I001
 		import comtypes.hresult
 
 		try:
@@ -1836,7 +1836,7 @@ class IAccessible(Window):
 			log.debug("Unable to get nRelations")
 			raise NotImplementedError
 		if size <= 0:
-			return list()
+			return list()  # noqa: C408
 		relations = (ctypes.POINTER(IA2.IAccessibleRelation) * size)()
 		count = ctypes.c_int()
 		# The client allocated relations array is an [out] parameter instead of [in, out], so we need to use the raw COM method.
@@ -2105,19 +2105,19 @@ class IAccessible(Window):
 	def _get_devInfo(self):
 		info = super().devInfo
 		iaObj = self.IAccessibleObject
-		info.append("IAccessibleObject: %r" % iaObj)
+		info.append("IAccessibleObject: %r" % iaObj)  # noqa: UP031
 		childID = self.IAccessibleChildID
-		info.append("IAccessibleChildID: %r" % childID)
+		info.append("IAccessibleChildID: %r" % childID)  # noqa: UP031
 		info.append(
-			"IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r"
+			"IAccessible event parameters: windowHandle=%r, objectID=%r, childID=%r"  # noqa: UP031
 			% (self.event_windowHandle, self.event_objectID, self.event_childID),
 		)
 		formatLong = self._formatLongDevInfoString
 		try:
 			ret = formatLong(iaObj.accName(childID))
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("IAccessible accName: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("IAccessible accName: %s" % ret)  # noqa: UP031
 		try:
 			ret = iaObj.accRole(childID)
 			for name, const in oleacc.__dict__.items():
@@ -2128,9 +2128,9 @@ class IAccessible(Window):
 					break
 			else:
 				ret = repr(ret)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("IAccessible accRole: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("IAccessible accRole: %s" % ret)  # noqa: UP031
 		try:
 			temp = iaObj.accState(childID)
 			ret = (
@@ -2139,32 +2139,32 @@ class IAccessible(Window):
 					for name, const in oleacc.__dict__.items()
 					if name.startswith("STATE_") and temp & const
 				)
-				+ " (%d)" % temp
+				+ " (%d)" % temp  # noqa: UP031
 			)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("IAccessible accState: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("IAccessible accState: %s" % ret)  # noqa: UP031
 		try:
 			ret = formatLong(iaObj.accDescription(childID))
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("IAccessible accDescription: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("IAccessible accDescription: %s" % ret)  # noqa: UP031
 		try:
 			ret = formatLong(iaObj.accValue(childID))
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("IAccessible accValue: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("IAccessible accValue: %s" % ret)  # noqa: UP031
 		if isinstance(iaObj, IA2.IAccessible2):
 			try:
 				ret = iaObj.windowHandle
-			except Exception as e:
-				ret = "exception: %s" % e
-			info.append("IAccessible2 windowHandle: %s" % ret)
+			except Exception as e:  # noqa: BLE001
+				ret = "exception: %s" % e  # noqa: UP031
+			info.append("IAccessible2 windowHandle: %s" % ret)  # noqa: UP031
 			try:
 				ret = iaObj.uniqueID
-			except Exception as e:
-				ret = "exception: %s" % e
-			info.append("IAccessible2 uniqueID: %s" % ret)
+			except Exception as e:  # noqa: BLE001
+				ret = "exception: %s" % e  # noqa: UP031
+			info.append("IAccessible2 uniqueID: %s" % ret)  # noqa: UP031
 			try:
 				ret = iaObj.role()
 				for name, const in itertools.chain(oleacc.__dict__.items(), IA2.__dict__.items()):
@@ -2175,9 +2175,9 @@ class IAccessible(Window):
 						break
 				else:
 					ret = repr(ret)
-			except Exception as e:
-				ret = "exception: %s" % e
-			info.append("IAccessible2 role: %s" % ret)
+			except Exception as e:  # noqa: BLE001
+				ret = "exception: %s" % e  # noqa: UP031
+			info.append("IAccessible2 role: %s" % ret)  # noqa: UP031
 			try:
 				temp = iaObj.states
 				ret = (
@@ -2186,19 +2186,19 @@ class IAccessible(Window):
 						for name, const in IA2.__dict__.items()
 						if name.startswith("IA2_STATE_") and temp & const
 					)
-					+ " (%d)" % temp
+					+ " (%d)" % temp  # noqa: UP031
 				)
-			except Exception as e:
-				ret = "exception: %s" % e
-			info.append("IAccessible2 states: %s" % ret)
+			except Exception as e:  # noqa: BLE001
+				ret = "exception: %s" % e  # noqa: UP031
+			info.append("IAccessible2 states: %s" % ret)  # noqa: UP031
 			try:
 				ret = repr(iaObj.attributes)
-			except Exception as e:
-				ret = "exception: %s" % e
-			info.append("IAccessible2 attributes: %s" % ret)
+			except Exception as e:  # noqa: BLE001
+				ret = "exception: %s" % e  # noqa: UP031
+			info.append("IAccessible2 attributes: %s" % ret)  # noqa: UP031
 			try:
 				ret = ", ".join(f"{r.RelationType} * {r.nTargets}" for r in self._IA2Relations)
-			except Exception as e:
+			except Exception as e:  # noqa: BLE001
 				ret = f"exception: {e}"
 			info.append(f"IAccessible2 relations: {ret}")
 		return info
@@ -2209,7 +2209,7 @@ class IAccessible(Window):
 		except (AttributeError, COMError):
 			return None
 		if ia2Locale.language and ia2Locale.country:
-			return "%s_%s" % (ia2Locale.language, ia2Locale.country)
+			return "%s_%s" % (ia2Locale.language, ia2Locale.country)  # noqa: UP031
 		elif ia2Locale.language:
 			return ia2Locale.language
 		return None
@@ -2225,7 +2225,7 @@ class IAccessible(Window):
 			try:
 				window = self.IAccessibleObject.windowHandle
 			except COMError as e:
-				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)
+				log.debugWarning("IAccessible2::windowHandle failed: %s" % e)  # noqa: UP031
 		self.IA2WindowHandle = window  # Cache forever.
 		return window
 
@@ -2291,7 +2291,7 @@ class ContentGenericClient(IAccessible):
 		val = self.displayText
 		truncate = len(val) > 200
 		if truncate:
-			return "%s\u2026" % val[:200]
+			return "%s\u2026" % val[:200]  # noqa: UP031
 		return val
 
 

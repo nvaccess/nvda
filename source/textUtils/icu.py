@@ -8,7 +8,7 @@
 Requires Windows 10 version 1703 (Creators Update) or later.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 from collections.abc import Callable
 from contextlib import contextmanager
 

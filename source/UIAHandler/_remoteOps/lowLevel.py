@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2025 NV Access Limited
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from ctypes import (
 	oledll,
 	byref,

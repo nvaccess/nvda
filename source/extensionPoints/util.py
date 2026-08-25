@@ -8,7 +8,7 @@ used, however for more advanced requirements these utilities can be used directl
 """
 
 # "annotations" Needed to reference BoundMethodWeakref in one of the init params of itself.
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import weakref
 import inspect
 from typing import (
@@ -24,16 +24,16 @@ import NVDAState
 from logHandler import log
 
 HandlerT = TypeVar("HandlerT", bound=Callable)
-HandlerKeyT = Union[int, tuple[int, int]]
+HandlerKeyT = Union[int, tuple[int, int]]  # noqa: UP007
 
 
-class AnnotatableWeakref(weakref.ref, Generic[HandlerT]):
+class AnnotatableWeakref(weakref.ref, Generic[HandlerT]):  # noqa: UP046
 	"""A weakref.ref which allows annotation with custom attributes."""
 
 	handlerKey: int
 
 
-class BoundMethodWeakref(Generic[HandlerT]):
+class BoundMethodWeakref(Generic[HandlerT]):  # noqa: UP046
 	"""Weakly references a bound instance method.
 	Instance methods are bound dynamically each time they are fetched.
 	weakref.ref on a bound instance method doesn't work because
@@ -84,7 +84,7 @@ def _getHandlerKey(handler: Callable) -> HandlerKeyT:
 	return id(handler)
 
 
-class HandlerRegistrar(Generic[HandlerT]):
+class HandlerRegistrar(Generic[HandlerT]):  # noqa: UP046
 	"""Base class to Facilitate registration and unregistration of handler functions.
 	The handlers are stored using weak references and are automatically unregistered
 	if the handler dies.
@@ -119,7 +119,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		"""
 		if inspect.isfunction(handler):
 			sig = inspect.signature(handler)
-			if sig.parameters and list(sig.parameters)[0] == "self":
+			if sig.parameters and list(sig.parameters)[0] == "self":  # noqa: RUF015
 				raise TypeError("Registering unbound instance methods not supported.")
 		if self._deprecationMessage:
 			if NVDAState._allowDeprecatedAPI():
@@ -214,7 +214,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 	"""
 	sig = inspect.signature(func)
 
-	if inspect.isfunction(func) and sig.parameters and list(sig.parameters)[0] == "self":
+	if inspect.isfunction(func) and sig.parameters and list(sig.parameters)[0] == "self":  # noqa: RUF015
 		raise TypeError("Unbound instance methods are not handled.")
 
 	# Check whether func has a catch-all for kwargs (**kwargs)

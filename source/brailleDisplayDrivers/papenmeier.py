@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
+import time  # noqa: I001
 
 import wx
 import braille
@@ -22,7 +22,7 @@ except:  # noqa: E722
 	log.debug("Failed to import ftdi2.", exc_info=True)
 	ftdi2 = None
 # for bluetooth
-import hwPortUtils
+import hwPortUtils  # noqa: I001
 import serial
 
 
@@ -152,7 +152,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 				key=lambda item: "bluetoothName" in item,
 			):
 				port = portInfo["port"]
-				if "bluetoothName" in portInfo:
+				if "bluetoothName" in portInfo:  # noqa: SIM102
 					if (
 						portInfo["bluetoothName"][0:14] == "braillex trio "
 						or portInfo["bluetoothName"][0:13] == "braillex live"
@@ -309,7 +309,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			except:  # noqa: E722
 				log.debugWarning("BROKEN PIPE - THIS SHOULD NEVER HAPPEN", exc_info=True)
 		if self.numCells == 0:
-			raise Exception("no device found")
+			raise Exception("no device found")  # noqa: TRY002
 
 		# start keycheck timer
 		self.startTimer()
@@ -329,7 +329,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		try:
 			self._keyCheckTimer.Stop()
 			self._bluetoothTimer.Stop()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 		self._keyCheckTimer = None
@@ -589,7 +589,7 @@ def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> list[str]:
 	for key in driver.decodedkeys:
 		try:
 			dec.append(driver._keynamesrepeat[key])
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 	return dec
 
@@ -601,7 +601,7 @@ def brl_decode_key_names(driver: BrailleDisplayDriver) -> list[str]:
 	for key in keys:
 		try:
 			dec.append(driver._keynames[key])
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 	return dec
 

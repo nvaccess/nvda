@@ -5,7 +5,7 @@
 
 """Unit tests for the message dialog API."""
 
-from copy import deepcopy
+from copy import deepcopy  # noqa: I001
 import unittest
 from unittest.mock import ANY, MagicMock, Mock, PropertyMock, patch, sentinel
 
@@ -71,8 +71,8 @@ class AddDefaultButtonHelpersArgList(NamedTuple):
 
 class MethodCall(NamedTuple):
 	name: str
-	args: tuple[Any, ...] = tuple()
-	kwargs: dict[str, Any] = dict()
+	args: tuple[Any, ...] = tuple()  # noqa: C408
+	kwargs: dict[str, Any] = dict()  # noqa: C408, RUF012
 
 
 class FocusBlockingInstancesDialogs(NamedTuple):
@@ -754,7 +754,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		(
 			BlockingInstancesExistArgList(
 				label="noInstances",
-				instances=tuple(),
+				instances=tuple(),  # noqa: C408
 				expectedBlockingInstancesExist=False,
 			),
 			BlockingInstancesExistArgList(

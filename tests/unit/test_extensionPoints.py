@@ -5,7 +5,7 @@
 
 """Unit tests for the extensionPoints module."""
 
-import unittest
+import unittest  # noqa: I001
 import extensionPoints
 from functools import partial
 
@@ -530,7 +530,7 @@ class TestAction(unittest.TestCase):
 		called = []
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			called.append(handler2)
@@ -727,7 +727,7 @@ class TestFilter(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1(value):
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2(value):
 			return 2
@@ -861,7 +861,7 @@ class TestDecider(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			return False
@@ -990,7 +990,7 @@ class TestAccumulatingDecider(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			return False
@@ -1216,7 +1216,7 @@ class TestChain(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			yield 2

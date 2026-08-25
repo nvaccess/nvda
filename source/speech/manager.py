@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2025 NV Access Limited
-import typing
+import typing  # noqa: I001
 
 import queueHandler
 import synthDriverHandler
@@ -214,7 +214,7 @@ class SpeechManager:
 		in the same or previous utterance.
 		"""
 		while True:
-			for index in range(1, self.MAX_INDEX + 1):
+			for index in range(1, self.MAX_INDEX + 1):  # noqa: UP028
 				yield index
 
 	def _reset(self):
@@ -285,7 +285,7 @@ class SpeechManager:
 			)
 		first = len(queue.pendingSequences) == 0
 		queue.pendingSequences.extend(outSeq)
-		if priority is Spri.NOW and first:
+		if priority is Spri.NOW and first:  # noqa: SIM103
 			# If this is the first sequence at Spri.NOW, interrupt speech.
 			return True
 		return False
@@ -345,12 +345,12 @@ class SpeechManager:
 					continue
 				if command.enter and command.trigger in enteredTriggers:
 					log.debugWarning(
-						"Request to enter trigger which has already been entered: %r" % command.trigger.spec,
+						"Request to enter trigger which has already been entered: %r" % command.trigger.spec,  # noqa: UP031
 					)
 					continue
 				if not command.enter and command.trigger not in enteredTriggers:
 					log.debugWarning(
-						"Request to exit trigger which wasn't entered: %r" % command.trigger.spec,
+						"Request to exit trigger which wasn't entered: %r" % command.trigger.spec,  # noqa: UP031
 					)
 					continue
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
@@ -465,7 +465,7 @@ class SpeechManager:
 		try:
 			utteranceValid = len(utterance) == 0 or self._checkForCancellations(utterance)
 		except IndexError:
-			log.error(
+			log.error(  # noqa: G201
 				f"Checking for cancellations failed, cancelling sequence: {utterance}",
 				exc_info=True,
 			)
@@ -493,7 +493,7 @@ class SpeechManager:
 			raise IndexError(
 				f"no utterance index({utterance}), can't save cancellable commands",
 			)
-		cancellableItems = list(
+		cancellableItems = list(  # noqa: C400
 			item for item in reversed(utterance) if isinstance(item, _CancellableSpeechCommand)
 		)
 		for item in cancellableItems:
@@ -637,7 +637,7 @@ class SpeechManager:
 		else:
 			# Keep track of parameters changed so far.
 			# This is necessary in case this utterance is preempted by higher priority speech.
-			for seqIndex in range(seqIndex + 1):
+			for seqIndex in range(seqIndex + 1):  # noqa: B020
 				seq = self._curPriQueue.pendingSequences[seqIndex]
 				for command in seq:
 					if isinstance(command, SynthParamCommand):
@@ -660,7 +660,7 @@ class SpeechManager:
 					# Debug logging for cancelling expired focus events.
 					log._speechManagerDebug(
 						f"Item is in _cancelCommandsForUtteranceBeingSpokenBySynth: "
-						f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}",
+						f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}",  # noqa: SIM118
 					)
 				self._cancelCommandsForUtteranceBeingSpokenBySynth.pop(item, None)
 		del self._curPriQueue.pendingSequences[: seqIndex + 1]
@@ -675,7 +675,7 @@ class SpeechManager:
 		handleIndexes = []
 		for oldIndex in list(self._indexesSpeaking):
 			if self._isIndexABeforeIndexB(oldIndex, index):
-				log.debugWarning("Handling skipped index %s" % oldIndex)
+				log.debugWarning("Handling skipped index %s" % oldIndex)  # noqa: UP031
 				handleIndexes.append(oldIndex)
 		handleIndexes.append(index)
 		valid, endOfUtterance = False, False
@@ -683,10 +683,10 @@ class SpeechManager:
 			try:
 				self._indexesSpeaking.remove(i)
 			except ValueError:
-				log.debug("Unknown index %s, speech probably cancelled from main thread." % i)
+				log.debug("Unknown index %s, speech probably cancelled from main thread." % i)  # noqa: UP031
 				break  # try the rest, this is a very unexpected path.
 			if i != index:
-				log.debugWarning("Handling skipped index %s" % i)
+				log.debugWarning("Handling skipped index %s" % i)  # noqa: UP031
 			# we must do the following for each index, any/all of them may be end of utterance, which must
 			# trigger _pushNextSpeech
 			_valid, _endOfUtterance = self._removeCompletedFromQueue(i)
@@ -739,13 +739,13 @@ class SpeechManager:
 			try:
 				command.trigger.enter()
 			except:  # noqa: E722
-				log.exception("Error entering new trigger %r" % command.trigger.spec)
+				log.exception("Error entering new trigger %r" % command.trigger.spec)  # noqa: UP031
 			self._curPriQueue.enteredProfileTriggers.append(command.trigger)
 		else:
 			try:
 				command.trigger.exit()
 			except:  # noqa: E722
-				log.exception("Error exiting active trigger %r" % command.trigger.spec)
+				log.exception("Error exiting active trigger %r" % command.trigger.spec)  # noqa: UP031
 			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
@@ -754,7 +754,7 @@ class SpeechManager:
 			try:
 				trigger.exit()
 			except:  # noqa: E722
-				log.exception("Error exiting profile trigger %r" % trigger.spec)
+				log.exception("Error exiting profile trigger %r" % trigger.spec)  # noqa: UP031
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _restoreProfileTriggers(self, triggers):
@@ -762,7 +762,7 @@ class SpeechManager:
 			try:
 				trigger.enter()
 			except:  # noqa: E722
-				log.exception("Error entering profile trigger %r" % trigger.spec)
+				log.exception("Error entering profile trigger %r" % trigger.spec)  # noqa: UP031
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def cancel(self):

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import typing
+import typing  # noqa: I001
 
 from winBindings import user32
 
@@ -13,12 +13,12 @@ from .types import RelationType  # noqa: F401
 
 import re
 import struct
-from typing import (
-	Optional,
-	Tuple,
-	Dict,
-	Union,
-	Set,
+from typing import (  # noqa: UP035
+	Optional,  # noqa: F401
+	Tuple,  # noqa: F401
+	Dict,  # noqa: F401
+	Union,  # noqa: F401
+	Set,  # noqa: F401
 )
 import weakref
 from ctypes import (
@@ -255,7 +255,7 @@ State = controlTypes.State
 def _getStatesSetFromIAccessibleStates(
 	IAccessibleStates: int,
 ) -> set[controlTypes.State]:
-	return set(
+	return set(  # noqa: C401
 		IAccessibleStatesToNVDAStates[IAState]
 		for IAState in IAccessibleStatesToNVDAStates
 		if IAState & IAccessibleStates
@@ -263,7 +263,7 @@ def _getStatesSetFromIAccessibleStates(
 
 
 def getStatesSetFromIAccessible2States(IAccessible2States: int) -> set[State]:
-	return set(
+	return set(  # noqa: C401
 		IAccessible2StatesToNVDAStates[IA2State]
 		for IA2State in IAccessible2StatesToNVDAStates
 		if IA2State & IAccessible2States
@@ -276,7 +276,7 @@ def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> set[Sta
 	# The attribute value is always 1.
 	# EG IAccessible::state_40="1"
 	IAccessibleStateAttrName = "IAccessible::state_{}"
-	return set(
+	return set(  # noqa: C401
 		IAccessibleStatesToNVDAStates[IAState]
 		for IAState in IAccessibleStatesToNVDAStates
 		if int(attrs.get(IAccessibleStateAttrName.format(IAState), 0))
@@ -289,7 +289,7 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> set[St
 	# The attribute value is always 1.
 	# EG IAccessible2::state_40="1"
 	IAccessible2StateAttrName = "IAccessible2::state_{}"
-	return set(
+	return set(  # noqa: C401
 		IAccessible2StatesToNVDAStates[IA2State]
 		for IA2State in IAccessible2StatesToNVDAStates
 		if int(attrs.get(IAccessible2StateAttrName.format(IA2State), 0))
@@ -331,7 +331,7 @@ def normalizeIAccessible(
 		try:
 			pacc = pacc.QueryInterface(IA.IAccessible)
 		except COMError:
-			raise RuntimeError("%s Not an IAccessible" % pacc)
+			raise RuntimeError("%s Not an IAccessible" % pacc)  # noqa: UP031
 	# #2558: IAccessible2 doesn't support simple children.
 	# Therefore, it doesn't make sense to use IA2 if the child ID is non-0.
 	if childID == 0 and not isinstance(pacc, IA2.IAccessible2):
@@ -343,7 +343,7 @@ def normalizeIAccessible(
 				# and return a null COM pointer. Treat this as if QueryService failed.
 				raise ValueError
 			pacc = pacc2
-		except:  # noqa: E722 Bare except
+		except:  # noqa: E722, S110
 			pass
 	return pacc
 
@@ -351,7 +351,7 @@ def normalizeIAccessible(
 def accessibleObjectFromEvent(window, objectID, childID):
 	try:
 		pacc, childID = oleacc.AccessibleObjectFromEvent(window, objectID, childID)
-	except Exception as e:
+	except Exception as e:  # noqa: BLE001
 		if isMSAADebugLoggingEnabled():
 			log.debugWarning(
 				f"oleacc.AccessibleObjectFromEvent failed with {e}."
@@ -392,7 +392,7 @@ def accessibleChildren(ia, startIndex, numChildren):
 			# Filtering these out here makes life easier for the caller.
 			continue
 		elif (
-			isinstance(child, comtypes.client.lazybind.Dispatch)
+			isinstance(child, comtypes.client.lazybind.Dispatch)  # noqa: SIM101
 			or isinstance(child, comtypes.client.dynamic._Dispatch)
 			or isinstance(child, IUnknown)
 		):
@@ -407,7 +407,7 @@ def accFocus(ia):
 	try:
 		res = ia.accFocus
 		if (
-			isinstance(res, comtypes.client.lazybind.Dispatch)
+			isinstance(res, comtypes.client.lazybind.Dispatch)  # noqa: SIM101
 			or isinstance(res, comtypes.client.dynamic._Dispatch)
 			or isinstance(res, IUnknown)
 		):
@@ -443,7 +443,7 @@ def accHitTest(ia, x, y):
 	except COMError:
 		return None
 	if (
-		isinstance(res, comtypes.client.lazybind.Dispatch)
+		isinstance(res, comtypes.client.lazybind.Dispatch)  # noqa: SIM101
 		or isinstance(res, comtypes.client.dynamic._Dispatch)
 		or isinstance(res, IUnknown)
 	):
@@ -459,12 +459,12 @@ def accChild(ia, child):
 		if not res:
 			return (ia, child)
 		elif (
-			isinstance(res, comtypes.client.lazybind.Dispatch)
+			isinstance(res, comtypes.client.lazybind.Dispatch)  # noqa: SIM101
 			or isinstance(res, comtypes.client.dynamic._Dispatch)
 			or isinstance(res, IUnknown)
 		):
 			return normalizeIAccessible(res), 0
-	except:  # noqa: E722 Bare except
+	except:  # noqa: E722, S110
 		pass
 	return None
 
@@ -474,7 +474,7 @@ def accParent(ia, child):
 		if not child:
 			res = ia.accParent
 			if (
-				isinstance(res, comtypes.client.lazybind.Dispatch)
+				isinstance(res, comtypes.client.lazybind.Dispatch)  # noqa: SIM101
 				or isinstance(res, comtypes.client.dynamic._Dispatch)
 				or isinstance(res, IUnknown)
 			):
@@ -505,13 +505,13 @@ def accNavigate(pacc, childID, direction):
 			pacc = parentRes[0]
 		return pacc, res
 	elif (
-		isinstance(res, comtypes.client.lazybind.Dispatch)
+		isinstance(res, comtypes.client.lazybind.Dispatch)  # noqa: SIM101
 		or isinstance(res, comtypes.client.dynamic._Dispatch)
 		or isinstance(res, IUnknown)
 	):
 		return normalizeIAccessible(res, 0), 0
 	else:
-		log.debugWarning("Unknown IAccessible type: %s" % res, stack_info=True)
+		log.debugWarning("Unknown IAccessible type: %s" % res, stack_info=True)  # noqa: UP031
 		return None
 
 
@@ -737,7 +737,7 @@ def processFocusWinEvent(window: int, objectID: int, childID: int, force: bool =
 	NVDAEvent = winEventToNVDAEvent(winUser.EVENT_OBJECT_FOCUS, window, objectID, childID, useCache=False)
 	if not NVDAEvent:
 		return False
-	eventName, obj = NVDAEvent
+	eventName, obj = NVDAEvent  # noqa: RUF059
 	if (childID == 0 and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_LIST) or (
 		objectID == winUser.OBJID_CLIENT and "SysListView32" in obj.windowClassName
 	):
@@ -959,7 +959,7 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 	NVDAEvent = winEventToNVDAEvent(eventID, window, objectID, childID)
 	if not NVDAEvent:
 		return
-	eventName, obj = NVDAEvent
+	eventName, obj = NVDAEvent  # noqa: RUF059
 	if obj.IAccessibleRole != oleacc.ROLE_SYSTEM_MENUPOPUP:
 		# menuStart on anything other than a menu is silly.
 		return
@@ -1011,7 +1011,7 @@ def initialize():
 	try:
 		accPropServices = comtypes.client.CreateObject(IA.CAccPropServices)
 	except (OSError, COMError) as e:
-		log.debugWarning("AccPropServices is not available: %s" % e)
+		log.debugWarning("AccPropServices is not available: %s" % e)  # noqa: UP031
 	internalWinEventHandler.initialize(processDestroyWinEvent)
 
 
@@ -1114,12 +1114,12 @@ def getIAccIdentity(pacc, childID):
 		if accPropServices:
 			try:
 				hwnd, objectID, childID = accPropServices.DecomposeHwndIdentityString(stringPtr, stringSize)
-				return dict(windowHandle=hwnd, objectID=c_int(objectID).value, childID=childID)
+				return dict(windowHandle=hwnd, objectID=c_int(objectID).value, childID=childID)  # noqa: C408
 			except COMError:
 				hmenu, childID = accPropServices.DecomposeHmenuIdentityString(stringPtr, stringSize)
 				# hmenu is a wireHMENU, but it seems we can just treat this as a number.
 				# comtypes transparently does this for wireHWND.
-				return dict(menuHandle=cast(hmenu, wintypes.HMENU).value, childID=childID)
+				return dict(menuHandle=cast(hmenu, wintypes.HMENU).value, childID=childID)  # noqa: C408
 		stringPtr = cast(stringPtr, POINTER(c_char * stringSize))
 		fields = struct.unpack("IIiI", stringPtr.contents.raw)
 		d = {}
@@ -1208,8 +1208,8 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 			try:
 				index = hypertextObject.hyperlinkIndex(i + startOffset)
 				childTextObject = hypertextObject.hyperlink(index).QueryInterface(IA.IAccessible)
-				t = " %s " % getRecursiveTextFromIAccessibleTextObject(childTextObject)
-			except:  # noqa: E722 Bare except
+				t = " %s " % getRecursiveTextFromIAccessibleTextObject(childTextObject)  # noqa: UP031
+			except:  # noqa: E722, S110
 				pass
 		textList.append(t)
 	return "".join(textList).replace("  ", " ")
@@ -1303,7 +1303,7 @@ def isMarshalledIAccessible(IAccessibleObject):
 	see if it was implemented in oleacc.dll (its local) or ole32.dll (its marshalled).
 	"""
 	if not isinstance(IAccessibleObject, IA.IAccessible):
-		raise TypeError("object should be of type IAccessible, not %s" % IAccessibleObject)
+		raise TypeError("object should be of type IAccessible, not %s" % IAccessibleObject)  # noqa: UP031
 	buf = create_unicode_buffer(1024)
 	addr = (
 		POINTER(c_void_p)

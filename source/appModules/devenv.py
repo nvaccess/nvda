@@ -6,7 +6,7 @@
 
 """App module for Microsoft Visual Studio and Microsoft SQL Server Management Studio."""
 
-import os.path
+import os.path  # noqa: I001
 import objbase
 import comtypes
 from locationHelper import RectLTWH
@@ -52,7 +52,7 @@ class AppModule(appModuleHandler.AppModule):
 			productVersion = fileinfo["ProductVersion"]
 		else:
 			productVersion = self.productVersion
-		vsMajor, vsMinor, rest = productVersion.split(".", 2)
+		vsMajor, vsMinor, rest = productVersion.split(".", 2)  # noqa: RUF059
 		self.vsMajor, self.vsMinor = int(vsMajor), int(vsMinor)
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -209,7 +209,7 @@ class VsTextEditPane(EditableText, Window):
 				log.debugWarning(
 					f"Retrieved Visual Studio window object, but unknown type: {self._window.Type}",
 				)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("Couldn't retrieve Visual Studio window object", exc_info=True)
 		return super().TextInfo
 

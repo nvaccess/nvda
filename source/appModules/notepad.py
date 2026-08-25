@@ -7,7 +7,7 @@
 While this app module also covers older Notepad releases,
 this module provides workarounds for Windows 11 Notepad."""
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import appModuleHandler
 import api
 import braille

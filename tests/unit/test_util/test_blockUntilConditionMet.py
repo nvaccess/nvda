@@ -5,7 +5,7 @@
 
 """Unit tests for the blockUntilConditionMet submodule."""
 
-from typing import (
+from typing import (  # noqa: I001
 	Any,
 )
 from collections.abc import Callable

@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
-from collections.abc import Callable, Generator
+from collections.abc import Callable, Generator  # noqa: I001
 import enum
 import typing
 import unittest
@@ -929,7 +929,7 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		self.assertEqual(self.profile, {"someBool": False})
 
 
-_DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[AudioOutputDevice]]
+_DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[AudioOutputDevice]]  # noqa: PYI043, UP040
 
 
 def getOutputDevicesFactory(
@@ -944,7 +944,7 @@ def getOutputDevicesFactory(
 
 
 class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
-	DEFAULT_DEVICES: _DevicesT = {
+	DEFAULT_DEVICES: _DevicesT = {  # noqa: RUF012
 		DEVICE_STATE.ACTIVE: [AudioOutputDevice("id1", "Device 1")],
 		DEVICE_STATE.UNPLUGGED: [AudioOutputDevice("id2", "Device 2")],
 		DEVICE_STATE.DISABLED: [AudioOutputDevice("id3", "Device 3")],
@@ -1319,7 +1319,7 @@ class Config_loadCustomSections(unittest.TestCase):
 
 	def _callWithYamlData(self, data):
 		"""Call _loadCustomSections with yaml.safe_load returning data."""
-		with patch("builtins.open", mock_open()):
+		with patch("builtins.open", mock_open()):  # noqa: SIM117
 			with patch("config.configSections.yaml.safe_load", return_value=data):
 				_loadCustomSections()
 
@@ -1331,7 +1331,7 @@ class Config_loadCustomSections(unittest.TestCase):
 
 	def test_osError_logsAndReturnsWithoutAdding(self):
 		"""OSError is logged and customSections remains empty."""
-		with patch("builtins.open", side_effect=OSError):
+		with patch("builtins.open", side_effect=OSError):  # noqa: SIM117
 			with patch("config.configSections.log.exception") as mockLog:
 				_loadCustomSections()
 		mockLog.assert_called_once()
@@ -1340,7 +1340,7 @@ class Config_loadCustomSections(unittest.TestCase):
 	def test_yamlError_logsAndReturnsWithoutAdding(self):
 		"""yaml.YAMLError is logged and customSections remains empty."""
 
-		with patch("builtins.open", mock_open()):
+		with patch("builtins.open", mock_open()):  # noqa: SIM117
 			with patch("config.configSections.yaml.safe_load", side_effect=yaml.YAMLError):
 				with patch("config.configSections.log.exception") as mockLog:
 					_loadCustomSections()
@@ -1354,7 +1354,7 @@ class Config_loadCustomSections(unittest.TestCase):
 
 	def test_nonDictContent_logsErrorAndReturnsWithoutAdding(self):
 		"""Non-dict YAML content logs an error and nothing is added."""
-		with patch("builtins.open", mock_open()):
+		with patch("builtins.open", mock_open()):  # noqa: SIM117
 			with patch("config.configSections.yaml.safe_load", return_value=["notADict"]):
 				with patch("config.configSections.log.error") as mockLog:
 					_loadCustomSections()
@@ -1364,7 +1364,7 @@ class Config_loadCustomSections(unittest.TestCase):
 	def test_nonStringName_skipped(self):
 		"""Entries with non-string section names are skipped with a debug warning."""
 		data = {42: {"spec": {"key": "string(default='val')"}}}
-		with patch("builtins.open", mock_open()):
+		with patch("builtins.open", mock_open()):  # noqa: SIM117
 			with patch("config.configSections.yaml.safe_load", return_value=data):
 				with patch("config.configSections.log.debugWarning") as mockLog:
 					_loadCustomSections()

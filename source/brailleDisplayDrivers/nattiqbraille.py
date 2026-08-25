@@ -4,7 +4,7 @@
 # Copyright (C) 2020-2023 NV Access Limited, Mohammed Noman - Nattiq Technologies
 
 
-import serial
+import serial  # noqa: I001
 import bdDetect
 import braille
 import braille.display
@@ -55,7 +55,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super().__init__()
 		self._serial = None
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			log.debug("Checking port %s for a Nattiq nBraille", port)
 			try:
 				self._serial = hwIo.Serial(
@@ -76,7 +76,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			else:
 				self._serial.close()
 		else:
-			raise RuntimeError("Can't find a Nattiq nBraille device (port = %s)" % port)
+			raise RuntimeError("Can't find a Nattiq nBraille device (port = %s)" % port)  # noqa: UP031
 
 	def terminate(self):
 		try:

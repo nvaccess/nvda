@@ -5,7 +5,7 @@
 
 """Unit tests for Java Access Bridge"""
 
-import queue
+import queue  # noqa: I001
 import unittest
 from unittest.mock import call, MagicMock, patch
 

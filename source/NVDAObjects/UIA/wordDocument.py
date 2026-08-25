@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Generator
+from collections.abc import Generator  # noqa: I001
 
 import enum
 from comtypes import COMError
@@ -78,7 +78,7 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 
 class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {
+	wantedAttribValues = {  # noqa: RUF012
 		UIAHandler.AnnotationType_InsertionChange,
 		UIAHandler.AnnotationType_DeletionChange,
 		UIAHandler.AnnotationType_TrackChanges,
@@ -123,7 +123,7 @@ def getReferenceFromPosition(position: "WordDocumentTextInfo") -> UIA | None:
 
 class ReferenceUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {UIAHandler.AnnotationType_Footnote, UIAHandler.AnnotationType_Endnote}
+	wantedAttribValues = {UIAHandler.AnnotationType_Footnote, UIAHandler.AnnotationType_Endnote}  # noqa: RUF012
 
 	@property
 	def label(self) -> str:
@@ -171,7 +171,7 @@ def getCommentInfoFromPosition(position):
 			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
 			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
-			return dict(comment=comment, author=author, date=date)
+			return dict(comment=comment, author=author, date=date)  # noqa: C408
 		else:
 			obj = UIA(UIAElement=UIAElement)
 			if (
@@ -187,10 +187,10 @@ def getCommentInfoFromPosition(position):
 			authorObj = tempObj or obj.previous
 			author = authorObj.name
 			if not tempObj:
-				return dict(comment=comment, author=author)
+				return dict(comment=comment, author=author)  # noqa: C408
 			dateObj = obj.previous
 			date = dateObj.name
-			return dict(comment=comment, author=author, date=date)
+			return dict(comment=comment, author=author, date=date)  # noqa: C408
 
 
 def getPresentableCommentInfoFromPosition(commentInfo):
@@ -203,7 +203,7 @@ def getPresentableCommentInfoFromPosition(commentInfo):
 
 class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {UIAHandler.AnnotationType_Comment}
+	wantedAttribValues = {UIAHandler.AnnotationType_Comment}  # noqa: RUF012
 
 	@property
 	def label(self):
@@ -341,7 +341,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		t = super()._getTextForCodepointMovement()
 		if not t:
 			return t
-		return "".join(f for f in self.getTextWithFields(formatConfig=dict()) if isinstance(f, str))
+		return "".join(f for f in self.getTextWithFields(formatConfig=dict()) if isinstance(f, str))  # noqa: C408
 
 	def _isEndOfRow(self):
 		"""Is this textInfo positioned on an end-of-row mark?"""
@@ -436,7 +436,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
 		# Therefore work around this by detecting if the expand to line failed, and moving the end of the range to the end of the document manually.
-		if self.isCollapsed:
+		if self.isCollapsed:  # noqa: SIM102
 			if self.move(unit, 1, endPoint="end") == 0:
 				docInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
 				self.setEndPoint(docInfo, "endToEnd")
@@ -474,7 +474,7 @@ class WordDocumentTextInfo(UIATextInfo):
 		# MS Word tries to produce speakable math content within equations.
 		# However, using math presentation providers with the exposed mathml property on the equation is much nicer.
 		# But, we therefore need to remove the inner math content if reading by line
-		if not formatConfig or not formatConfig.get("extraDetail"):
+		if not formatConfig or not formatConfig.get("extraDetail"):  # noqa: SIM102
 			# We really only want to remove content if we can guarantee that a math presentation provider is available.
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
@@ -563,7 +563,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			# This serves as a fallback when the Custom Attributes API returns invalid values,
 			# particularly when navigating backwards to the first line of a page.
 			for field in fields:
-				if isinstance(field, textInfos.FieldCommand) and isinstance(
+				if isinstance(field, textInfos.FieldCommand) and isinstance(  # noqa: SIM102
 					field.field,
 					textInfos.FormatField,
 				):
@@ -649,7 +649,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			try:
 				officeVersion = tuple(int(x) for x in self.obj.appModule.productVersion.split(".")[:3])
 			except Exception:
-				log.error("Unable to parse Office version", exc_info=True)
+				log.error("Unable to parse Office version", exc_info=True)  # noqa: G201
 				officeVersion = (0, 0, 0)
 			if officeVersion >= (16, 0, 18226):
 				expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
@@ -708,7 +708,7 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 	def script_tab(self, gesture):
 		oldBookmark = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
 		gesture.send()
-		noTimeout, newInfo = self.rootNVDAObject._hasCaretMoved(oldBookmark, timeout=1)
+		noTimeout, newInfo = self.rootNVDAObject._hasCaretMoved(oldBookmark, timeout=1)  # noqa: RUF059
 		if not newInfo:
 			return
 		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -793,7 +793,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		if not eventHandler.isPendingEvents("caret", self):
 			eventHandler.queueEvent("caret", self)
 
-	suppressedActivityIds = [
+	suppressedActivityIds = [  # noqa: RUF012
 		"AccSN1",  # #10950: font attributes
 		"AccSN2",  # #10851: delete activity ID
 	]
@@ -842,7 +842,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 			caretInfo.updateCaret()
 		except NotImplementedError:
 			pass
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning(
 				"Failed to move caret by sentence via remote sentence navigation",
 				exc_info=True,

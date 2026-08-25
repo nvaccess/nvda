@@ -22,7 +22,7 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
-import braille
+import braille  # noqa: I001
 
 from .base import Region
 from ..constants import (

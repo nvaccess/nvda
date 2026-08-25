@@ -232,8 +232,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		unknownDisplayDescription = _("Unknown braille display")
 		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
-			log.error("Invalid braille gesture identifier: %s" % identifier)
-			return unknownDisplayDescription, "malformed:%s" % identifier
+			log.error("Invalid braille gesture identifier: %s" % identifier)  # noqa: UP031
+			return unknownDisplayDescription, "malformed:%s" % identifier  # noqa: UP031
 		source, modelName, key = idParts.groups()
 		# Optimisation: Do not try to get the braille display class if this identifier belongs to the current driver.
 		if braille.handler.display.name.lower() == source.lower():

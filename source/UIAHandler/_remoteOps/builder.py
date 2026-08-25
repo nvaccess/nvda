@@ -4,7 +4,7 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from abc import ABCMeta, abstractproperty
 from typing import (
 	Self,
@@ -62,7 +62,7 @@ class _RemoteBase:
 		otherBuilder = other._robRef() if other._robRef is not None else None
 		if rob != otherBuilder:
 			return False
-		if self._mutable != other._mutable:
+		if self._mutable != other._mutable:  # noqa: SIM103
 			return False
 		return True
 
@@ -91,7 +91,7 @@ class Operand(_RemoteBase):
 			return False
 		if type(other) is not Operand:
 			return False
-		if self._operandId != other._operandId:
+		if self._operandId != other._operandId:  # noqa: SIM103
 			return False
 		return True
 
@@ -234,7 +234,7 @@ class InstructionList:
 
 class RemoteOperationBuilder:
 	_versionBytes: bytes = struct.pack("l", 0)
-	_sectionNames = ["static", "const", "main"]
+	_sectionNames = ["static", "const", "main"]  # noqa: RUF012
 	_lastOperandIdRequested = OperandId(1)
 	_defaultSection: str = "main"
 

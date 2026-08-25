@@ -5,7 +5,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2014-2015 ONCE-CIDAT <cidat.id@once.es>
 
-import inputCore
+import inputCore  # noqa: I001
 import braille
 import braille.display.driver
 import braille.display.gesture
@@ -78,7 +78,7 @@ def eco_in_init(dev: serial.Serial) -> int:
 	# 0x10 0x02 TT AA BB CC DD 0x10 0x03
 	# where TT can be 0xF1 (identification message) or 0x88 (command pressed in the line)
 	# If TT = 0xF1, then the next byte (AA) give us the type of EcoBraille line (ECO 80, 40 or 20)
-	if (msg[0] == 0x10) and (msg[1] == 0x02) and (msg[7] == 0x10) and (msg[8] == 0x03):
+	if (msg[0] == 0x10) and (msg[1] == 0x02) and (msg[7] == 0x10) and (msg[8] == 0x03):  # noqa: SIM102
 		if msg[2] == 0xF1:  # Initial message
 			if msg[3] == 0x80:
 				return ecoTypes.TECO_80

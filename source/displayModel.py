@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import byref, c_short, c_long
+from ctypes import byref, c_short, c_long  # noqa: I001
 import unicodedata
 import math
 from NVDAHelper import localLib
@@ -416,7 +416,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		)
 		if not text:
 			return [], [], [], []
-		text = "<control>%s</control>" % text
+		text = "<control>%s</control>" % text  # noqa: UP031
 		commandList = XMLFormatting.XMLTextParser().parse(text)
 		curFormatField = None
 		lastEndOffset = 0
@@ -538,12 +538,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return self._getFieldsInRange(start, end)
 
 	def _normalizeFormatField(self, field):
-		field["bold"] = True if field.get("bold") == "true" else False
+		field["bold"] = True if field.get("bold") == "true" else False  # noqa: SIM210
 		field["hwnd"] = int(field.get("hwnd", "0"), 16)
 		field["baseline"] = int(field.get("baseline", "-1"))
 		field["direction"] = int(field.get("direction", "0"))
-		field["italic"] = True if field.get("italic") == "true" else False
-		field["underline"] = True if field.get("underline") == "true" else False
+		field["italic"] = True if field.get("italic") == "true" else False  # noqa: SIM210
+		field["underline"] = True if field.get("underline") == "true" else False  # noqa: SIM210
 		color = field.get("color")
 		if color is not None:
 			field["color"] = colors.RGB.fromDisplayModelFormatColor_t(int(color))
@@ -667,7 +667,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				if lineEndOffset >= self._endOffset:
 					return
 			return
-		for chunk in super().getTextInChunks(unit):
+		for chunk in super().getTextInChunks(unit):  # noqa: UP028
 			yield chunk
 
 	def _get_boundingRects(self):

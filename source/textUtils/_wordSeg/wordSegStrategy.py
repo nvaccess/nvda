@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	ArgumentError,
 	CDLL,
 	c_bool,
@@ -53,7 +53,7 @@ def iterInitializers() -> Iterator[_InitializerEntry]:
 	return iter(_initializerList)
 
 
-def initializerRegistry(func: Callable[_P, _R]) -> Callable[_P, _R]:
+def initializerRegistry(func: Callable[_P, _R]) -> Callable[_P, _R]:  # noqa: UP047
 	"""
 	A decorator to register an initializer function.
 	We save (func.__module__, func.__qualname__, func) so that during package initialize()

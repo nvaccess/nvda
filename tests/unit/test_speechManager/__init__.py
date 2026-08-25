@@ -5,8 +5,8 @@
 
 """Unit tests for speech/manager module"""
 
-import unittest
-from typing import Optional
+import unittest  # noqa: I001
+from typing import Optional  # noqa: F401
 from collections.abc import Callable
 
 import config

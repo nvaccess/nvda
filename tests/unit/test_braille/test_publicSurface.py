@@ -12,7 +12,7 @@ are served via ``__getattr__`` with a log warning.
 The same applies to the ``brailleInput`` module, which became the ``braille.input`` package.
 """
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import patch
 
 import braille

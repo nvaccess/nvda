@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 from dataclasses import dataclass
 from enum import Enum
 
@@ -132,7 +132,7 @@ class AddonListField(_AddonListFieldData, Enum):
 _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
 
-class AddonListItemVM(Generic[_AddonModelT]):
+class AddonListItemVM(Generic[_AddonModelT]):  # noqa: UP046
 	def __init__(
 		self,
 		model: _AddonModelT,
@@ -222,7 +222,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		)
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def searchableText(self) -> str:
 		"""Extract searchable text from addon."""
 		model = self.model
@@ -431,7 +431,7 @@ class AddonListVM:
 		if selectionIndex is not None:
 			assert 0 <= selectionIndex < len(self._addonsFilteredOrdered)
 		if selectionId is not None:
-			assert selectionId in self._addons.keys()
+			assert selectionId in self._addons.keys()  # noqa: SIM118
 
 	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
@@ -482,7 +482,7 @@ class AddonListVM:
 				if getattr(listItemVM.model, "installDate", None):
 					listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
 					return listItemVM.model.installDate
-				return datetime.max
+				return datetime.max  # noqa: DTZ901
 			if self._sortByModelField == AddonListField.searchRank:
 				return listItemVM.searchRank(self._filterString or "")
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
@@ -493,7 +493,7 @@ class AddonListVM:
 			if self._filterString is None
 			or vm.searchRank(self._filterString) >= self.MINIMUM_SEARCH_RANK_THRESHOLD
 		)
-		filteredSorted = list(
+		filteredSorted = list(  # noqa: C411
 			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
 		)
 		return filteredSorted

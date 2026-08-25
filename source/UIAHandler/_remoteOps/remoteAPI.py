@@ -4,7 +4,7 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import (
 	Any,
 	TypeVar,
@@ -208,7 +208,7 @@ class RemoteAPI(builder._RemoteBase):
 	def elseBlock(self, silent: bool = False):
 		scopeInstructionJustExited = self._scopeInstructionJustExited
 		if not isinstance(scopeInstructionJustExited, instructions.ForkIfFalse):
-			raise RuntimeError("Else block not directly preceded by If block")
+			raise RuntimeError("Else block not directly preceded by If block")  # noqa: TRY004
 		instructionList = self.rob.getDefaultInstructionList()
 		ifConditionInstruction = scopeInstructionJustExited
 		# add a final jump instruction to the previous if block to skip over the else block.
@@ -319,7 +319,7 @@ class RemoteAPI(builder._RemoteBase):
 	def catchBlock(self, silent: bool = False):
 		scopeInstructionJustExited = self._scopeInstructionJustExited
 		if not isinstance(scopeInstructionJustExited, instructions.NewTryBlock):
-			raise RuntimeError("Catch block not directly preceded by Try block")
+			raise RuntimeError("Catch block not directly preceded by Try block")  # noqa: TRY004
 		instructionList = self.rob.getDefaultInstructionList()
 		tryBlockInstruction = scopeInstructionJustExited
 		# add a final jump instruction to the previous try block to skip over the catch block.

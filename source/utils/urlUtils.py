@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2024 NV Access Limited, Noelia Ruiz Martínez, Leonard de Ruijter
 
-import controlTypes
+import controlTypes  # noqa: I001
 from urllib.parse import ParseResult, urlparse, urlunparse
 from dataclasses import dataclass
 from logHandler import log

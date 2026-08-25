@@ -10,18 +10,18 @@ In order to access text content for a widget, a L{TextInfo} implementation is re
 A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
 """
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 from enum import Enum
 import weakref
 import re
 import typing
-from typing import (
+from typing import (  # noqa: UP035
 	Any,
 	Union,
-	List,
-	Optional,
-	Dict,
-	Tuple,
+	List,  # noqa: F401
+	Optional,  # noqa: F401
+	Dict,  # noqa: F401
+	Tuple,  # noqa: F401
 	Self,
 )
 
@@ -257,16 +257,16 @@ class FieldCommand:
 		@param field: The field associated with this command; may be C{None} for controlEnd.
 		"""
 		if command not in ("controlStart", "controlEnd", "formatChange"):
-			raise ValueError("Unknown command: %s" % command)
+			raise ValueError("Unknown command: %s" % command)  # noqa: UP031
 		elif command == "controlStart" and not isinstance(field, ControlField):
-			raise ValueError("command: %s needs a controlField" % command)
+			raise ValueError("command: %s needs a controlField" % command)  # noqa: UP031
 		elif command == "formatChange" and not isinstance(field, FormatField):
-			raise ValueError("command: %s needs a formatField" % command)
+			raise ValueError("command: %s needs a formatField" % command)  # noqa: UP031
 		self.command = command
 		self.field = field
 
 	def __repr__(self):
-		return "FieldCommand %s with %s" % (self.command, self.field)
+		return "FieldCommand %s with %s" % (self.command, self.field)  # noqa: UP031
 
 
 # Position constants
@@ -443,7 +443,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	TextOrFieldsT = Union[str, FieldCommand]
+	TextOrFieldsT = Union[str, FieldCommand]  # noqa: UP007
 	TextWithFieldsT = list[TextOrFieldsT]
 
 	def getTextWithFields(self, formatConfig: dict | None = None) -> "TextInfo.TextWithFieldsT":
@@ -1022,7 +1022,7 @@ class TextInfoEndpoint:
 	< <= == != >= >
 	"""
 
-	_whichMap: dict[tuple[bool, bool], str] = {
+	_whichMap: dict[tuple[bool, bool], str] = {  # noqa: RUF012
 		(True, True): "startToStart",
 		(True, False): "startToEnd",
 		(False, True): "endToStart",
@@ -1035,7 +1035,7 @@ class TextInfoEndpoint:
 		-1 for less than, 0 for equal and 1 for greater than.
 		"""
 		if not isinstance(other, TextInfoEndpoint) or not isinstance(other.textInfo, type(self.textInfo)):
-			raise ValueError(f"Cannot compare endpoint with different type: {other}")
+			raise ValueError(f"Cannot compare endpoint with different type: {other}")  # noqa: TRY004
 		return self.textInfo.compareEndPoints(other.textInfo, self._whichMap[self.isStart, other.isStart])
 
 	def __init__(
@@ -1073,7 +1073,7 @@ class TextInfoEndpoint:
 		Moves the end of the TextInfo this endpoint represents to the position of the given endpoint.
 		"""
 		if not isinstance(other, TextInfoEndpoint) or not isinstance(other.textInfo, type(self.textInfo)):
-			raise ValueError(f"Cannot move endpoint to different type: {other}")
+			raise ValueError(f"Cannot move endpoint to different type: {other}")  # noqa: TRY004
 		self.textInfo.setEndPoint(other.textInfo, self._whichMap[(self.isStart, other.isStart)])
 
 	def __repr__(self):

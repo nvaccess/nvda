@@ -36,7 +36,7 @@ def _getAnnotationProperty(
 ) -> str:
 	# Translators: Braille when there are further details/annotations that can be fetched manually.
 	genericDetailsRole = _("details")
-	detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())
+	detailsRoles: _AnnotationRolesT = propertyValues.get("detailsRoles", tuple())  # noqa: C408
 	if not detailsRoles:
 		log.debugWarning(
 			"There should always be detailsRoles (at least a single None value) when hasDetails is true.",
@@ -46,7 +46,7 @@ def _getAnnotationProperty(
 		# Translators: Braille when there are further details/annotations that can be fetched manually.
 		# %s specifies the type of details (e.g. "has comment suggestion")
 		hasDetailsRoleTemplate = _("has %s")
-		rolesLabels = list(
+		rolesLabels = list(  # noqa: C400
 			
 				hasDetailsRoleTemplate % roleLabels.get(role, role.displayString)
 				for role in detailsRoles
@@ -165,7 +165,7 @@ def getPropertiesBraille(**propertyValues) -> str:
 			# %s is replaced with the level.
 			textList.append(_("lv %s") % positionInfo["level"])
 
-	if rowNumber:
+	if rowNumber:  # noqa: SIM102
 		if includeTableCellCoords and not cellCoordsText:
 			if rowSpan > 1:
 				# Translators: Displayed in braille for the table cell row numbers when a cell spans multiple rows.
@@ -462,7 +462,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:
-				textList.append("%s" % lineNumber)
+				textList.append("%s" % lineNumber)  # noqa: UP031
 		linePrefix = field.get("line-prefix")
 		if linePrefix:
 			textList.append(linePrefix)
@@ -483,7 +483,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	if formatConfig["reportComments"]:
 		comment = field.get("comment")
 		oldComment = fieldCache.get("comment") if fieldCache is not None else None
-		if (comment or oldComment is not None) and comment != oldComment:
+		if (comment or oldComment is not None) and comment != oldComment:  # noqa: SIM102
 			if comment:
 				if comment is textInfos.CommentType.DRAFT:
 					# Translators: Brailled when text contains a draft comment.
@@ -498,7 +498,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	if formatConfig["reportBookmarks"]:
 		bookmark = field.get("bookmark")
 		oldBookmark = fieldCache.get("bookmark") if fieldCache is not None else None
-		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:
+		if (bookmark or oldBookmark is not None) and bookmark != oldBookmark:  # noqa: SIM102
 			if bookmark:
 				# Translators: brailled when text contains a bookmark
 				text = _("bkmk")

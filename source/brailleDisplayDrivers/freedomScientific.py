@@ -180,7 +180,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	receivesAckPackets = True
 	timeout = 0.2
 
-	wizWheelActions = [
+	wizWheelActions = [  # noqa: RUF012
 		(
 			# Translators: The name of a key on a braille display, that scrolls the display
 			# to show previous/next part of a long line.
@@ -243,7 +243,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		self.gestureMap.add("br(freedomScientific):rightWizWheelUp", *action[1])
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2])
 		super().__init__()
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			self.isUsb = portType == bdDetect.ProtocolType.CUSTOM
 			# Try talking to the display.
 			try:
@@ -637,7 +637,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2], replace=True)
 		braille.handler.message(action[0])
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(freedomScientific):leftWizWheelPress": "toggleLeftWizWheelAction",
 		"br(freedomScientific):rightWizWheelPress": "toggleRightWizWheelAction",
 	}
@@ -719,7 +719,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 class KeyGesture(InputGesture, braille.input.gesture.BrailleInputGesture):
 	"""Handle keys and braille input for Freedom Scientific braille displays"""
 
-	keyLabels = [
+	keyLabels = [  # noqa: RUF012
 		# Braille keys (byte 1)
 		"dot1",
 		"dot2",
@@ -748,7 +748,7 @@ class KeyGesture(InputGesture, braille.input.gesture.BrailleInputGesture):
 		"rightBumperBarUp",
 		"rightBumperBarDown",
 	]
-	extendedKeyLabels = [
+	extendedKeyLabels = [  # noqa: RUF012
 		# Rocker bar keys.
 		"leftRockerBarUp",
 		"leftRockerBarDown",

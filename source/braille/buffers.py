@@ -87,7 +87,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if self.regions[-1].hidePreviousRegions:
 			yield self.regions[-1]
 			return
-		for region in self.regions:
+		for region in self.regions:  # noqa: UP028
 			yield region
 
 	def _get_regionsWithPositions(self):
@@ -328,7 +328,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			# Search from 1 cell before in case startPos is just after a space.
 			startPos = self.brailleCells.index(0, startPos - 1, endPos)
 			# Skip past spaces.
-			for startPos in range(startPos, endPos):
+			for startPos in range(startPos, endPos):  # noqa: B020
 				if self.brailleCells[startPos] != 0:
 					break
 		except ValueError:
@@ -339,7 +339,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if paragraphStartMarker and self.regions[-1].rawText.startswith(
 			paragraphStartMarker + TEXT_SEPARATOR,
 		):
-			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
+			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]  # noqa: RUF059
 			# Show paragraph start indicator if it is now at the left of the current braille window
 			if startPos <= len(paragraphStartMarker) + 1:
 				startPos = self.regionPosToBufferPos(region, regionStart)
@@ -420,7 +420,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				self.cursorPos = start + region.brailleCursorPos
 			start += len(cells)
 		if log.isEnabledFor(log.IO):
-			log.io("Braille regions text: %r" % logRegions)
+			log.io("Braille regions text: %r" % logRegions)  # noqa: UP031
 		self._calculateWindowRowBufferOffsets(self.windowStartPos)
 
 	def updateDisplay(self):

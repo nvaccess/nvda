@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 from comtypes.hresult import S_OK
 import comtypes.client
 import comtypes.automation
@@ -94,10 +94,10 @@ def getReceivedMessageString(obj):
 
 	text = ", ".join(nameList)
 	if obj.unread:
-		text = "%s %s" % (_("unread"), text)
+		text = "%s %s" % (_("unread"), text)  # noqa: UP031
 	if obj.attachments.count > 0:
 		# Translators: This is presented in outlook or live mail, indicating email attachments
-		text = "%s %s" % (_("attachment"), text)
+		text = "%s %s" % (_("attachment"), text)  # noqa: UP031
 	return text
 
 
@@ -114,7 +114,7 @@ class AppModule(appModuleHandler.AppModule):
 	def isGoodUIAWindow(self, hwnd: int) -> bool:
 		windowClass = winUser.getClassName(hwnd)
 		versionMajor = int(self.productVersion.split(".")[0])
-		if versionMajor >= 16 and windowClass == "RICHEDIT60W":
+		if versionMajor >= 16 and windowClass == "RICHEDIT60W":  # noqa: SIM103
 			# #12726: RICHEDIT60W In Outlook 2016+ on Windows 10+
 			# has a very good UI Automation implementation,
 			# Though oddly IsServerSideProvider returns false for these windows.
@@ -131,7 +131,7 @@ class AppModule(appModuleHandler.AppModule):
 	_hasTriedoutlookAppSwitch = False
 
 	def _registerCOMWithFocusJuggle(self):
-		import wx
+		import wx  # noqa: I001
 		import gui
 
 		# Translators: The title for the dialog shown while Microsoft Outlook initializes.
@@ -154,7 +154,7 @@ class AppModule(appModuleHandler.AppModule):
 			nativeOm = comHelper.getActiveObject("outlook.application", dynamic=True)
 		except (OSError, COMError, RuntimeError):
 			if self._hasTriedoutlookAppSwitch:
-				log.error("Failed to get native object model", exc_info=True)
+				log.error("Failed to get native object model", exc_info=True)  # noqa: G201
 			nativeOm = None
 		if not nativeOm and not self._hasTriedoutlookAppSwitch:
 			self._registerCOMWithFocusJuggle()
@@ -179,7 +179,7 @@ class AppModule(appModuleHandler.AppModule):
 				versionMajor = int(self.productVersion.split(".")[0])
 				if versionMajor < 16:
 					return True
-		if windowClass in ("WeekViewWnd", "DayViewWnd"):
+		if windowClass in ("WeekViewWnd", "DayViewWnd"):  # noqa: SIM103
 			return True
 		return False
 
@@ -228,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 		# AutoComplete listItems.
 		# This class is abstract enough to  support both UIA and MSAA
 		if role == controlTypes.Role.LISTITEM and (
-			windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")
+			windowClassName.startswith("REListBox") or windowClassName.startswith("NetUIHWND")  # noqa: PIE810
 		):
 			clsList.insert(0, AutoCompleteListItem)
 		if role == controlTypes.Role.EDITABLETEXT and windowClassName.startswith("RichEdit20W"):
@@ -278,7 +278,7 @@ class REListBox20W_CheckBox(IAccessible):
 		gesture.send()
 		self.event_stateChange()
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:space": "checkbox",
 	}
 
@@ -303,7 +303,7 @@ class SuperGridClient2010(IAccessible):
 			UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False)
 			obj = UIA(**kwargs)
 		except Exception:
-			log.error("Retrieving UIA focus failed", exc_info=True)
+			log.error("Retrieving UIA focus failed", exc_info=True)  # noqa: G201
 			return super().event_gainFocus()
 		if not isinstance(obj, UIAGridRow):
 			return super().event_gainFocus()
@@ -400,7 +400,7 @@ class CalendarView(IAccessible):
 				startTime,
 				None,
 			)
-			startText = "%s %s" % (startDateText, startText)
+			startText = "%s %s" % (startDateText, startText)  # noqa: UP031
 		CalendarView._lastStartDate = startDate
 		if endDate != startDate:
 			if (startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and (
@@ -408,7 +408,7 @@ class CalendarView(IAccessible):
 			).total_seconds() == SECONDS_PER_DAY:
 				# Translators: a message reporting the date of a all day Outlook calendar entry
 				return _("{date} (all day)").format(date=startDateText)
-			endText = "%s %s" % (
+			endText = "%s %s" % (  # noqa: UP031
 				winKernel.GetDateFormatEx(
 					winKernel.LOCALE_NAME_USER_DEFAULT,
 					winKernel.DATE_LONGDATE,
@@ -720,7 +720,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 	) -> Generator[browseMode.TextInfoQuickNavItem]:
 		raise NotImplementedError("Outlook is not supported due to performance - #16408")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": "tab",
 		"kb:shift+tab": "tab",
 	}
@@ -731,7 +731,7 @@ class BaseOutlookWordDocument(BaseWordDocument):
 	def script_tab(self, gesture):
 		bookmark = self.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
 		gesture.send()
-		info, caretMoved = self._hasCaretMoved(bookmark)
+		info, caretMoved = self._hasCaretMoved(bookmark)  # noqa: RUF059
 		if not caretMoved:
 			return
 		self.reportTab()
@@ -761,7 +761,7 @@ class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 		True  # This includes page sections, and page columns. None of which are appropriate for outlook.
 	)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:control+shift+a": "changeCase",
 	}
 

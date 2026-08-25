@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import oleacc
+import oleacc  # noqa: I001
 import IAccessibleHandler
 import controlTypes
 import winUser
@@ -191,7 +191,7 @@ class SDMSymbols(SDM):
 		gesture.send()
 		eventHandler.queueEvent("valueChange", self)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:downArrow": "selectGraphic",
 		"kb:upArrow": "selectGraphic",
 		"kb:home": "selectGraphic",

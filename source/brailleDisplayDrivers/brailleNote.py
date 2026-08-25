@@ -10,7 +10,7 @@ See Brailliant B module for BrailleNote Touch support routines.
 """
 
 
-import serial
+import serial  # noqa: I001
 import bdDetect
 import braille
 import braille.display
@@ -86,8 +86,8 @@ _scrWheel = ("wCounterclockwise", "wClockwise", "wUp", "wDown", "wLeft", "wRight
 # Backspace is dot7 and enter dot8
 _dotNames = {}
 for i in range(1, 9):
-	key = globals()["DOT_%d" % i]
-	_dotNames[key] = "d%d" % i
+	key = globals()["DOT_%d" % i]  # noqa: UP031
+	_dotNames[key] = "d%d" % i  # noqa: UP031
 
 # QT keys
 _qtKeyNames = {
@@ -156,7 +156,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def __init__(self, port="auto"):
 		super().__init__()
 		self._serial = None
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			log.debug("Checking port %s for a BrailleNote", port)
 			try:
 				self._serial = hwIo.Serial(
@@ -177,7 +177,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			else:
 				self._serial.close()
 		else:
-			raise RuntimeError("Can't find a braillenote device (port = %s)" % port)
+			raise RuntimeError("Can't find a braillenote device (port = %s)" % port)  # noqa: UP031
 
 	def terminate(self):
 		try:
@@ -206,7 +206,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			return
 		arg = self._serial.read(1)
 		if not arg:
-			log.debugWarning("Timeout reading argument for command 0x%X" % command)
+			log.debugWarning("Timeout reading argument for command 0x%X" % command)  # noqa: UP031
 			return
 		# #5993: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
 		if command == QT_MOD_TAG:

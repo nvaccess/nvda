@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
 
-import os
+import os  # noqa: I001
 import globalVars
 from logHandler import log
 from ctypes import windll
@@ -131,7 +131,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		lilliDll.Close408USB()
 

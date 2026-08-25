@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import dataclasses
+import dataclasses  # noqa: I001
 from enum import IntEnum, StrEnum
 from functools import cached_property
 import glob
@@ -29,7 +29,7 @@ from NVDAState import WritePaths
 _LocaleDataT = TypeVar("_LocaleDataT")
 
 
-class LocaleDataMap(Generic[_LocaleDataT]):
+class LocaleDataMap(Generic[_LocaleDataT]):  # noqa: UP046
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
 	def __init__(
@@ -106,7 +106,7 @@ class CharacterDescriptions:
 		fileName = os.path.join(globalVars.appDir, "locale", locale, "characterDescriptions.dic")
 		if not os.path.isfile(fileName):
 			raise LookupError(fileName)
-		f = codecs.open(fileName, "r", "utf_8_sig", errors="replace")
+		f = codecs.open(fileName, "r", "utf_8_sig", errors="replace")  # noqa: SIM115
 		for line in f:
 			if line.isspace() or line.startswith("#"):
 				continue
@@ -116,8 +116,8 @@ class CharacterDescriptions:
 				key = temp.pop(0)
 				self._entries[key] = temp
 			else:
-				log.warning("can't parse line '%s'" % line)
-		log.debug("Loaded %d entries." % len(self._entries))
+				log.warning("can't parse line '%s'" % line)  # noqa: UP031
+		log.debug("Loaded %d entries." % len(self._entries))  # noqa: UP031
 		f.close()
 
 	def getCharacterDescription(self, character: str) -> list[str] | None:
@@ -222,7 +222,7 @@ class SpeechSymbol:
 			attrs.append(
 				f"{attr}={getattr(self, attr)!r}",
 			)
-		return "SpeechSymbol(%s)" % ", ".join(attrs)
+		return "SpeechSymbol(%s)" % ", ".join(attrs)  # noqa: UP031
 
 
 class SpeechSymbols:
@@ -285,7 +285,7 @@ class SpeechSymbols:
 		except KeyError:
 			raise ValueError
 
-	IDENTIFIER_ESCAPES_INPUT = {
+	IDENTIFIER_ESCAPES_INPUT = {  # noqa: RUF012
 		"0": "\0",
 		"t": "\t",
 		"n": "\n",
@@ -295,21 +295,21 @@ class SpeechSymbols:
 		"#": "#",
 		"\\": "\\",
 	}
-	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.items()}
-	LEVEL_INPUT = {
+	IDENTIFIER_ESCAPES_OUTPUT = {v: k for k, v in IDENTIFIER_ESCAPES_INPUT.items()}  # noqa: RUF012
+	LEVEL_INPUT = {  # noqa: RUF012
 		"none": SymbolLevel.NONE,
 		"some": SymbolLevel.SOME,
 		"most": SymbolLevel.MOST,
 		"all": SymbolLevel.ALL,
 		"char": SymbolLevel.CHAR,
 	}
-	LEVEL_OUTPUT = {v: k for k, v in LEVEL_INPUT.items()}
-	PRESERVE_INPUT = {
+	LEVEL_OUTPUT = {v: k for k, v in LEVEL_INPUT.items()}  # noqa: RUF012
+	PRESERVE_INPUT = {  # noqa: RUF012
 		"never": SYMPRES_NEVER,
 		"always": SYMPRES_ALWAYS,
 		"norep": SYMPRES_NOREP,
 	}
-	PRESERVE_OUTPUT = {v: k for k, v in PRESERVE_INPUT.items()}
+	PRESERVE_OUTPUT = {v: k for k, v in PRESERVE_INPUT.items()}  # noqa: RUF012
 
 	def _loadSymbol(self, line):
 		line = line.split("\t")
@@ -362,13 +362,13 @@ class SpeechSymbols:
 			if self.complexSymbols:
 				f.write("complexSymbols:\r\n")
 				for identifier, pattern in self.complexSymbols.items():
-					f.write("%s\t%s\r\n" % (identifier, pattern))
+					f.write("%s\t%s\r\n" % (identifier, pattern))  # noqa: UP031
 				f.write("\r\n")
 
 			if self.symbols:
 				f.write("symbols:\r\n")
 				for symbol in self.symbols.values():
-					f.write("%s\r\n" % self._saveSymbol(symbol))
+					f.write("%s\r\n" % self._saveSymbol(symbol))  # noqa: UP031
 
 	def _saveSymbolField(self, output, outputMap=None):
 		if output is None:
@@ -383,7 +383,7 @@ class SpeechSymbols:
 	def _saveSymbol(self, symbol):
 		identifier = symbol.identifier
 		try:
-			identifier = "\\%s%s" % (
+			identifier = "\\%s%s" % (  # noqa: UP031
 				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]],
 				identifier[1:],
 			)
@@ -403,7 +403,7 @@ class SpeechSymbols:
 				# This field specifies a value, so no more fields can be stripped.
 				break
 		if symbol.displayName:
-			fields.append("# %s" % symbol.displayName)
+			fields.append("# %s" % symbol.displayName)  # noqa: UP031
 		return "\t".join(fields)
 
 
@@ -531,7 +531,7 @@ class SpeechSymbolProcessor:
 				symbol.displayName = symbol.identifier
 
 		# Make characters into a regexp character set.
-		characters = "[%s]" % re.escape("".join(characters))
+		characters = "[%s]" % re.escape("".join(characters))  # noqa: UP031
 		# The simple symbols must be ordered longest first so that the longer symbols will match.
 		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
 
@@ -548,7 +548,7 @@ class SpeechSymbolProcessor:
 				# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 				r"(?P<rstripSpace>  +$)",
 				# Repeated characters: more than 3 repeats.
-				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters,
+				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters,  # noqa: UP031
 			],
 		)
 		# Simple symbols.
@@ -564,7 +564,7 @@ class SpeechSymbolProcessor:
 		try:
 			self._regexp = re.compile(pattern, re.UNICODE)
 		except re.error as e:
-			log.error("Invalid complex symbol regular expression in locale %s: %s" % (locale, e))
+			log.error("Invalid complex symbol regular expression in locale %s: %s" % (locale, e))  # noqa: UP031
 			raise LookupError
 
 	def _replaceGroups(self, m: re.Match, string: str) -> str:
@@ -588,7 +588,7 @@ class SpeechSymbolProcessor:
 				elif char >= "0" and char <= "9":
 					result += m.group(m.lastindex + ord(char) - ord("0"))
 				else:
-					log.error("Invalid reference \\%string" % char)
+					log.error("Invalid reference \\%string" % char)  # noqa: UP031
 					raise LookupError
 				in_escape = False
 		if in_escape:
@@ -830,7 +830,7 @@ class SymbolDictionaryDefinition:
 			except OSError:
 				if raiseOnError:
 					raise
-				log.error(f"Error loading {self.name!r} data for locale {locale!r}", exc_info=True)
+				log.error(f"Error loading {self.name!r} data for locale {locale!r}", exc_info=True)  # noqa: G201
 		return symbols
 
 	@cached_property

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import api
+import api  # noqa: I001
 import controlTypes
 import textInfos
 import locationHelper
@@ -43,7 +43,7 @@ class ScreenExplorer:
 		if obj != self._obj:
 			self._obj = obj
 			hasNewObj = True
-			if self.updateReview:
+			if self.updateReview:  # noqa: SIM102
 				if not api.setNavigatorObject(obj):
 					return
 		else:

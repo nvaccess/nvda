@@ -183,4 +183,4 @@ def rindex(seq, item, start, end):
 	for index in range(end - 1, start - 1, -1):
 		if seq[index] == item:
 			return index
-	raise ValueError("%r is not in sequence" % item)
+	raise ValueError("%r is not in sequence" % item)  # noqa: UP031

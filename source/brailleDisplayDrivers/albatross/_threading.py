@@ -12,7 +12,7 @@ to display to keep connection. If display gets nothing within approximately
 2 seconds, it falls back to "wait for connection" state.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 import serial
 
 from ctypes import byref
