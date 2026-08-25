@@ -99,10 +99,10 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Updated dependencies:
-  * ruff to 0.16.3. (#)
-  * prek to 0.4.14. (#)
-  * pyright[nodejs] to 1.1.411. (#)
-  * ty to 0.0.73. (#)
+  * ruff to 0.16.3. (#20732)
+  * prek to 0.4.14. (#20732)
+  * pyright[nodejs] to 1.1.411. (#20732)
+  * ty to 0.0.73. (#20732)
 * The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.

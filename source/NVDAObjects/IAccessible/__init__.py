@@ -66,7 +66,7 @@ from NVDAObjects.behaviors import (
 	FocusableUnfocusableContainer,
 	ToolTip,  # noqa: F401
 	Notification,  # noqa: F401
-)  # noqa: F401
+)
 import locationHelper
 from locationHelper import RectLTRB, RectLTWH
 import NVDAHelper
