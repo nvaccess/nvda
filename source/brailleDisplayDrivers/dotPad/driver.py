@@ -113,8 +113,8 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		A BLE device is only known once a scan has run, and the braille display
 		selection dialog is what starts one. The driver therefore has to be offered
 		while no device is known, so that the user can reach that dialog at all.
-		Machines without BLE hardware are no exception: the scanner runs there too
-		and simply returns no results.
+		That includes machines with no usable Bluetooth hardware, where the scan is
+		refused and the port list simply stays empty.
 		"""
 		return True
 

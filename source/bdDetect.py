@@ -26,6 +26,7 @@ from collections import OrderedDict
 from collections.abc import Callable, Generator, Iterable, Iterator
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
+from bleak.exc import BleakError
 import hwIo
 import hwIo.ble
 import hwPortUtils
@@ -201,7 +202,11 @@ def _stopBleScanner() -> None:
 	if scanner is not None and scanner.isScanning:
 		if _isDebug():
 			log.debug("Stopping BLE scanner")
-		scanner.stop()
+		try:
+			scanner.stop()
+		except (BleakError, OSError):
+			# Detection has to carry on regardless of what the Bluetooth stack is doing.
+			log.debugWarning("Failed to stop BLE scanner", exc_info=True)
 
 
 def _hasBleDrivers(limitToDevices: list[str] | None = None) -> bool:
@@ -629,7 +634,12 @@ class _Detector:
 		):
 			if _isDebug():
 				log.debug("Starting BLE scanner for background scan")
-			hwIo.ble.scanner.start()
+			try:
+				hwIo.ble.scanner.start()
+			except (BleakError, OSError):
+				# Bleak refuses to scan without a usable adapter. Only BLE is lost here,
+				# so the USB and Bluetooth parts of this scan must still run.
+				log.debugWarning("Could not start BLE scanner", exc_info=True)
 			# A scanner that was just started has no results yet, so the BLE part of the
 			# scan below finds nothing. Devices that advertise afterwards reach us through
 			# the scanner's deviceDiscovered action, which queues a scan for them.

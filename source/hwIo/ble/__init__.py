@@ -43,7 +43,11 @@ def terminate() -> None:
 	global scanner
 	if scanner is not None:
 		if scanner.isScanning:
-			scanner.stop()
+			try:
+				scanner.stop()
+			except (BleakError, OSError):
+				# NVDA is shutting down, so there is nothing left to salvage.
+				log.debugWarning("Failed to stop BLE scanner", exc_info=True)
 		scanner = None
 
 
