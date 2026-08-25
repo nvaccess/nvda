@@ -265,8 +265,8 @@ def getBulletText(ppBulletFormat):
 	t = ppBulletFormat.type
 	if t == ppBulletNumbered:
 		return (
-			"%d." % ppBulletFormat.number
-		)  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))  # noqa: UP031
+			"%d." % ppBulletFormat.number  # noqa: UP031
+		)  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
 		return chr(ppBulletFormat.character)
 

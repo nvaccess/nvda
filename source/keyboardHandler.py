@@ -133,8 +133,8 @@ def passNextKeyThrough():
 
 
 def isNVDAModifierKey(vkCode: int, extended: bool) -> bool:
-	if (
-		(  # noqa: SIM103
+	if (  # noqa: SIM103
+		(
 			(config.conf["keyboard"]["NVDAModifierKeys"] & NVDAKey.NUMPAD_INSERT)
 			and vkCode == winUser.VK_INSERT
 			and not extended

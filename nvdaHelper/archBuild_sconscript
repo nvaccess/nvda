@@ -23,8 +23,8 @@ def clsidStringToCLSIDDefine(clsidString):
 	"""
 	d = clsidString[1:-1].replace("-", "")
 	return (
-		"{%s,%s,%s,%s}"
-		% (  # noqa: UP031
+		"{%s,%s,%s,%s}"  # noqa: UP031
+		% (
 			"0x" + d[0:8],
 			"0x" + d[8:12],
 			"0x" + d[12:16],

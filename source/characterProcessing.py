@@ -384,8 +384,8 @@ class SpeechSymbols:
 		identifier = symbol.identifier
 		try:
 			identifier = (
-				"\\%s%s"
-				% (  # noqa: UP031
+				"\\%s%s"  # noqa: UP031
+				% (
 					self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]],
 					identifier[1:],
 				)
