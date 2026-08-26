@@ -648,12 +648,7 @@ class _Detector:
 
 		# Scanning occupies the Bluetooth radio continuously,
 		# so only do so when a driver in scope can actually match a BLE device.
-		if (
-			ble
-			and _hasBleDrivers(limitToDevices)
-			and hwIo.ble.scanner is not None
-			and not hwIo.ble.scanner.isScanning
-		):
+		if ble and _hasBleDrivers(limitToDevices) and not hwIo.ble.scanner.isScanning:
 			if _isDebug():
 				log.debug("Starting BLE scanner for background scan")
 			try:
@@ -891,9 +886,6 @@ def getDriversForBleDevices(
 		return
 
 	scanner = hwIo.ble.scanner
-	if scanner is None:
-		# BLE is not initialized outside a running NVDA, such as in unit tests.
-		return
 	if not scanner.isScanning:
 		if _isDebug():
 			log.debugWarning("BLE scanner not running, results may be incomplete")
