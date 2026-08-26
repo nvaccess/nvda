@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2026 NV Access Limited, Rui Batista, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
 # Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations  # Avoids quoting of forward references
 
@@ -888,9 +888,11 @@ class Addon(AddonBase):
 			log.debug(f"removing imported add-on module {modName}")
 			del sys.modules[modName]
 		self._importedAddonModules.clear()
+		addonPathPrefix = os.path.join(os.path.normcase(self.path), "")
 		for modName in set(sys.modules.keys()) - self._modulesBeforeInstall:
 			module = sys.modules[modName]
-			if module.__name__ and module.__name__.startswith(self.path):
+			moduleFile = getattr(module, "__file__", None)
+			if moduleFile and os.path.normcase(moduleFile).startswith(addonPathPrefix):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
