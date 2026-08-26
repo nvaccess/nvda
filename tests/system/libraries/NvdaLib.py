@@ -168,7 +168,7 @@ class NvdaLib:
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		_locations.ensurePathsExist()
-		langStr = "" if language is None else f" --lang {language}"
+		langStr = "" if language is None else f' --lang="{language}"'
 		command = (
 			f"{_locations.baseNVDACommandline}"
 			f" --debug-logging"

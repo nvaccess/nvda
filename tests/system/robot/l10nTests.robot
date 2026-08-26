@@ -10,6 +10,8 @@ Force Tags	NVDA	smoke test	l10n
 Library	NvdaLib.py
 Library	l10nTests.py
 
+Test Teardown	Run Keyword And Ignore Error	quit NVDA
+
 *** Test Cases ***
 
 Starts with every source locale
