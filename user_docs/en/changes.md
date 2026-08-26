@@ -121,6 +121,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * sphinx-rtd-theme to 3.1.0. (#20707)
   * robotframework to 7.4.2. (#20707)
   * unittest-xml-reporting to 4.0.0. (#20707)
+  * setuptools to 84.0.0. (#20744)
 * The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
