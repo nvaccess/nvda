@@ -11,7 +11,6 @@ import NvdaLib as _NvdaLib
 
 
 _builtIn: BuiltIn = BuiltIn()
-_nvdaRobot = _builtIn.get_library_instance("NvdaLib")
 
 
 def _getSourceLocaleCodes() -> list[str]:
