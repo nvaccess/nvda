@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,15 +163,17 @@ class NvdaLib:
 	_spyServerURI = f"http://127.0.0.1:{_spyServerPort}"
 	_spyAlias = _nvdaSpyAlias
 
-	def _startNVDAProcess(self):
+	def _startNVDAProcess(self, language: str | None = None):
 		"""Start NVDA.
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		_locations.ensurePathsExist()
+		langStr = "" if language is None else f" --lang {language}"
 		command = (
 			f"{_locations.baseNVDACommandline}"
 			f" --debug-logging"
 			f" -r"
+			f"{langStr}"
 			f' -c "{_locations.profileDir}"'
 			f' --log-file "{_locations.logPath}"'
 		)
@@ -294,12 +296,19 @@ class NvdaLib:
 				],
 			)
 
-	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
+	def start_NVDA(
+		self,
+		settingsFileName: str,
+		gesturesFileName: str | None = None,
+		language: str = "en",
+	):
 		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
+		if language:
+			builtIn.log(f"Overriding startup language via command line: {language}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
-		nvdaProcessHandle = self._startNVDAProcess()
+		nvdaProcessHandle = self._startNVDAProcess(language)
 		builtIn.log("Started NVDA process", level="DEBUG")  # observe timing of the startup
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
