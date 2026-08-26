@@ -19,6 +19,6 @@ def get_source_locale_codes() -> list[str]:
 	if not nvdaPoFiles:
 		raise AssertionError("Unable to find locale directory under source/locale")
 
-	localeCodes = sorted(Path(path).parents[2].name for path in nvdaPoFiles if Path(path).is_file())
+	localeCodes = sorted(Path(path).parents[1].name for path in nvdaPoFiles if Path(path).is_file())
 	_builtIn.should_be_true(bool(localeCodes), msg="No locale directories found under source/locale")
 	return localeCodes
