@@ -501,7 +501,6 @@ This can be enabled using the "Report when objects support multiple selection" s
 * Dot Pad displays can now be connected via Bluetooth Low Energy (BLE) in addition to USB. (#19122, @bramd)
   * When automatic detection is enabled, Dot Pad devices will be discovered and connected automatically when in range.
   * No Bluetooth pairing in Windows settings is required.
-  * Bluetooth Low Energy support requires Windows 10 version 1703 (Creators Update) or later.
 
 ### Changes
 
