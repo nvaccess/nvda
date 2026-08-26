@@ -6,7 +6,7 @@
 """Unit tests for the bdDetect module."""
 
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 import bdDetect
 from .extensionPointTestHelpers import chainTester
 import braille
@@ -217,3 +217,56 @@ class TestBleDeviceDiscovery(unittest.TestCase):
 		detector._onBleDeviceDiscovered(self._device("DotPad320"), MagicMock(), True)
 
 		detector._queueBgScan.assert_not_called()
+
+
+class TestBleDriverMatching(unittest.TestCase):
+	"""Tests for matching discovered BLE devices against the registered drivers."""
+
+	def tearDown(self) -> None:
+		# Registration writes into the global registry; keep tests isolated.
+		bdDetect._driverDevices.clear()
+
+	def _registerDriver(self, driver: str, prefix: str) -> None:
+		"""Register a driver claiming any device whose name starts with the given prefix."""
+		registrar = bdDetect.DriverRegistrar(driver)
+		registrar.addBleDevices(lambda match, prefix=prefix: match.id.startswith(prefix))
+
+	def _scannerWith(self, *names: str):
+		"""Make the shared scanner report devices with the given names."""
+		devices = []
+		for i, name in enumerate(names):
+			device = MagicMock()
+			device.name = name
+			device.address = f"AA:BB:CC:DD:EE:{i:02X}"
+			devices.append(device)
+		scanner = MagicMock()
+		scanner.isScanning = True
+		scanner.results.return_value = devices
+		return patch("hwIo.ble.scanner", scanner)
+
+	def test_devicesAreOfferedInDiscoveryOrder(self):
+		"""The device discovered first is offered first, whichever driver claims it.
+
+		Driver registration order is import order, so ordering by driver would let that
+		decide which display is connected when several are in range.
+		"""
+		self._registerDriver("driverA", "Alpha")
+		self._registerDriver("driverB", "Beta")
+		with self._scannerWith("Beta1", "Alpha1"):
+			result = list(bdDetect.getDriversForBleDevices())
+		self.assertEqual([driver for driver, match in result], ["driverB", "driverA"])
+		self.assertEqual([match.id for driver, match in result], ["Beta1", "Alpha1"])
+
+	def test_limitToDevicesExcludesDrivers(self):
+		"""A driver outside the limit never sees the devices."""
+		self._registerDriver("driverA", "Alpha")
+		self._registerDriver("driverB", "Beta")
+		with self._scannerWith("Beta1", "Alpha1"):
+			result = list(bdDetect.getDriversForBleDevices(limitToDevices=["driverA"]))
+		self.assertEqual([(driver, match.id) for driver, match in result], [("driverA", "Alpha1")])
+
+	def test_noBleDriversYieldsNothing(self):
+		"""Without a driver that can match BLE devices the scan results are not inspected."""
+		with self._scannerWith("Alpha1") as scanner:
+			self.assertEqual(list(bdDetect.getDriversForBleDevices()), [])
+		scanner.results.assert_not_called()

@@ -213,6 +213,28 @@ def _stopBleScanner() -> None:
 			log.debugWarning("Failed to stop BLE scanner", exc_info=True)
 
 
+def _getBleMatchers(limitToDevices: list[str] | None = None) -> list[tuple[str, MatchFuncT]]:
+	"""Get the BLE match functions of the drivers in scope.
+
+	Resolving these once keeps the work out of the loop over discovered devices,
+	which would otherwise repeat it for every device.
+
+	:param limitToDevices: Drivers to which detection should be limited.
+		``None`` if no driver filtering should occur.
+	:return: Pairs of driver name and the function deciding whether a device is theirs.
+	"""
+	matchers: list[tuple[str, MatchFuncT]] = []
+	for driver, devs in _driverDevices.items():
+		if limitToDevices and driver not in limitToDevices:
+			continue
+		# The driver dict is a defaultdict, so subscripting would add an empty entry
+		# for every driver without BLE support.
+		matchFunc = devs.get(CommunicationType.BLE)
+		if callable(matchFunc):
+			matchers.append((driver, matchFunc))
+	return matchers
+
+
 def _hasBleDrivers(limitToDevices: list[str] | None = None) -> bool:
 	"""Determine whether any driver in scope has registered BLE devices.
 
@@ -220,11 +242,7 @@ def _hasBleDrivers(limitToDevices: list[str] | None = None) -> bool:
 		``None`` if no driver filtering should occur.
 	:return: ``True`` if at least one driver in scope can match BLE devices.
 	"""
-	return any(
-		callable(devs.get(CommunicationType.BLE))
-		for driver, devs in _driverDevices.items()
-		if not limitToDevices or driver in limitToDevices
-	)
+	return bool(_getBleMatchers(limitToDevices))
 
 
 def _bleDeviceToMatch(device: BLEDevice) -> DeviceMatch:
@@ -866,7 +884,8 @@ def getDriversForBleDevices(
 	if limitToDevices and _isDebug():
 		log.debug("Limiting BLE device detection to drivers: %r", limitToDevices)
 
-	if not _hasBleDrivers(limitToDevices):
+	matchers = _getBleMatchers(limitToDevices)
+	if not matchers:
 		if _isDebug():
 			log.debug("No drivers with BLE support registered, skipping BLE scan")
 		return
@@ -879,22 +898,11 @@ def getDriversForBleDevices(
 		if _isDebug():
 			log.debugWarning("BLE scanner not running, results may be incomplete")
 
-	scanResults = scanner.results()
-	for device in scanResults:
+	# Devices are the outer loop, as in the USB and Bluetooth equivalents above, so that
+	# the device discovered first is offered first rather than whichever driver registered first.
+	for device in scanner.results():
 		match = _bleDeviceToMatch(device)
-
-		for driver, devs in _driverDevices.items():
-			if limitToDevices and driver not in limitToDevices:
-				if _isDebug():
-					log.debug("Skipping excluded driver %r for BLE device match: %r", driver, match)
-				continue
-
-			# The driver dict is a defaultdict, so subscripting would add an empty entry
-			# for every driver without BLE support.
-			matchFunc = devs.get(CommunicationType.BLE)
-			if not callable(matchFunc):
-				continue
-
+		for driver, matchFunc in matchers:
 			if matchFunc(match):
 				if _isDebug():
 					log.debug("Found BLE device match: %r for driver %r", match, driver)
