@@ -18,7 +18,9 @@ def runCoroutine(coro: Coroutine) -> asyncio.Future:
 
 	:param coro: The coroutine to run.
 	"""
-	if _state.asyncioThread is None or not _state.asyncioThread.is_alive():
+	from . import isRunning
+
+	if not isRunning():
 		raise RuntimeError("Asyncio event loop thread is not running")
 	return asyncio.run_coroutine_threadsafe(coro, _state.eventLoop)
 

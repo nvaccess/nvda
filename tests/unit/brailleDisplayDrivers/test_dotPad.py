@@ -230,9 +230,27 @@ class TestDotPadBle(unittest.TestCase):
 		"""_isBleDotPad returns False for an unrelated device."""
 		self.assertFalse(BrailleDisplayDriver._isBleDotPad(self._bleMatch("SomeOtherDevice")))
 
-	def test_check_returnsTrue(self) -> None:
-		"""check() returns True so DotPad always appears in the display list."""
-		self.assertTrue(BrailleDisplayDriver.check())
+	def test_check_bluetoothAvailable(self) -> None:
+		"""Usable Bluetooth is enough on its own, as a device may be switched on later."""
+		with patch("hwIo.ble.isAvailable", return_value=True):
+			self.assertTrue(BrailleDisplayDriver.check())
+
+	def test_check_noBluetoothButDeviceReachable(self) -> None:
+		"""Without Bluetooth the driver still stands on its other connections."""
+		with (
+			patch("hwIo.ble.isAvailable", return_value=False),
+			patch("bdDetect.driverHasPossibleDevices", return_value=True),
+		):
+			self.assertTrue(BrailleDisplayDriver.check())
+
+	def test_check_nothingReachable(self) -> None:
+		"""With no Bluetooth and nothing connected there is nothing to offer."""
+		with (
+			patch("hwIo.ble.isAvailable", return_value=False),
+			patch("bdDetect.driverHasPossibleDevices", return_value=False),
+			patch.object(BrailleDisplayDriver, "getManualPorts", classmethod(lambda cls: iter(()))),
+		):
+			self.assertFalse(BrailleDisplayDriver.check())
 
 	def test_addBleDevices_registration(self) -> None:
 		"""registerAutomaticDetection registers _isBleDotPad as the BLE match function."""

@@ -8,15 +8,26 @@
 These tests cover the BLE scanner, BLE I/O, and device discovery functionality.
 """
 
+import asyncio
 import unittest
 from unittest.mock import MagicMock, patch
 
 from bleak.backends.device import BLEDevice
+from winrt.windows.devices.radios import RadioState
 from bleak.backends.scanner import AdvertisementData
 from bleak.exc import BleakBluetoothNotAvailableError, BleakBluetoothNotAvailableReason
 from hwIo.ble._scanner import Scanner, SCAN_CONTROL_TIMEOUT_SECONDS
 from hwIo.ble._io import Ble, LINK_TIMEOUT_SECONDS
-from hwIo.ble import findDeviceByAddress, getDiscoveredDevice
+from hwIo.ble import findDeviceByAddress, getDiscoveredDevice, isAvailable
+
+
+def _runCoroutineHere(coro, timeout=None):
+	"""Run a coroutine to completion here, standing in for the asyncio event loop."""
+	loop = asyncio.new_event_loop()
+	try:
+		return loop.run_until_complete(coro)
+	finally:
+		loop.close()
 
 
 class TestScanner(unittest.TestCase):
@@ -478,6 +489,75 @@ class TestBle(unittest.TestCase):
 
 		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
 		self.assertIsNone(ble._onReceive)
+
+
+class TestIsAvailable(unittest.TestCase):
+	"""Tests for hwIo.ble.isAvailable"""
+
+	def _bluetooth(self, adapter: object):
+		"""Make Windows report the given Bluetooth adapter, and run the query here."""
+
+		async def getDefault():
+			return adapter
+
+		adapterClass = MagicMock()
+		adapterClass.get_default_async = getDefault
+		return (
+			patch("_asyncioEventLoop.isRunning", return_value=True),
+			patch("hwIo.ble.BluetoothAdapter", adapterClass),
+			patch("hwIo.ble.runCoroutineSync", new=_runCoroutineHere),
+		)
+
+	def _adapter(self, radioState: object, centralRole: bool = True) -> MagicMock:
+		"""Build an adapter reporting the given radio state and central role support."""
+		radio = MagicMock()
+		radio.state = radioState
+
+		async def getRadio():
+			return radio
+
+		adapter = MagicMock()
+		adapter.is_central_role_supported = centralRole
+		adapter.get_radio_async = getRadio
+		return adapter
+
+	def _availableWith(self, adapter: object) -> bool:
+		loopPatch, adapterPatch, runPatch = self._bluetooth(adapter)
+		with loopPatch, adapterPatch, runPatch:
+			return isAvailable()
+
+	def test_noEventLoop(self):
+		"""Without an event loop to ask on, availability is assumed.
+
+		Hiding a driver on a machine that may well support BLE is worse than
+		offering one that cannot connect.
+		"""
+		with patch("_asyncioEventLoop.isRunning", return_value=False):
+			self.assertTrue(isAvailable())
+
+	def test_noAdapter(self):
+		"""A machine without a Bluetooth adapter cannot reach BLE devices."""
+		self.assertFalse(self._availableWith(None))
+
+	def test_radioOff(self):
+		"""A switched off radio cannot reach BLE devices."""
+		self.assertFalse(self._availableWith(self._adapter(RadioState.OFF)))
+
+	def test_radioOn(self):
+		"""A powered adapter able to act as a central can reach BLE devices."""
+		self.assertTrue(self._availableWith(self._adapter(RadioState.ON)))
+
+	def test_noCentralRole(self):
+		"""An adapter that cannot act as a central is of no use for BLE."""
+		self.assertFalse(self._availableWith(self._adapter(RadioState.ON, centralRole=False)))
+
+	def test_failureToAsk(self):
+		"""A question that cannot be answered does not hide the driver."""
+		with (
+			patch("_asyncioEventLoop.isRunning", return_value=True),
+			patch("hwIo.ble.runCoroutineSync", side_effect=TimeoutError("timed out")),
+		):
+			self.assertTrue(isAvailable())
 
 
 class TestGetDiscoveredDevice(unittest.TestCase):

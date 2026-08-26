@@ -13,7 +13,7 @@ from threading import Thread
 TERMINATE_TIMEOUT_SECONDS = 5
 """Time to wait for tasks to finish while terminating the event loop."""
 
-eventLoop: asyncio.BaseEventLoop
-"""The asyncio event loop used by NVDA."""
-asyncioThread: Thread
-"""Thread running the asyncio event loop."""
+eventLoop: asyncio.BaseEventLoop | None = None
+"""The asyncio event loop used by NVDA, or ``None`` before it is initialized."""
+asyncioThread: Thread | None = None
+"""Thread running the asyncio event loop, or ``None`` while it is not running."""

@@ -107,15 +107,20 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	@classmethod
 	def check(cls) -> bool:
-		"""Always report DotPad as available.
+		"""Determine whether a Dot Pad could be connected.
 
 		A BLE device is only known once a scan has run, and the braille display
-		selection dialog is what starts one. The driver therefore has to be offered
-		while no device is known, so that the user can reach that dialog at all.
-		That includes machines with no usable Bluetooth hardware, where the scan is
-		refused and the port list simply stays empty.
+		selection dialog is what starts one, so the driver cannot wait for a device
+		to be detected before offering itself. Reporting on the Bluetooth hardware
+		instead keeps it off machines that could never reach a device, without
+		hiding it on those that simply have nothing switched on yet.
+
+		:return: ``True`` if this machine has usable Bluetooth, or a Dot Pad is
+			otherwise reachable.
 		"""
-		return True
+		# Asking about the hardware is cheaper than enumerating ports, and on a machine
+		# with Bluetooth it settles the question on its own.
+		return hwIo.ble.isAvailable() or super().check()
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):

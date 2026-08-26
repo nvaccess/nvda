@@ -28,6 +28,14 @@ def initialize():
 	_state.asyncioThread.start()
 
 
+def isRunning() -> bool:
+	"""Determine whether the asyncio event loop is running.
+
+	:return: ``True`` if coroutines can be scheduled on it.
+	"""
+	return _state.asyncioThread is not None and _state.asyncioThread.is_alive()
+
+
 def terminate():
 	"""Terminate the asyncio event loop and cancel all running tasks."""
 	log.info("Terminating asyncio event loop")
