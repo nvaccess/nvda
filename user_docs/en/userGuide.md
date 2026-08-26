@@ -3170,7 +3170,9 @@ The available options are:
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
-If on, this option will cause speech to be interrupted each time a character is typed. This is on by default. This option affects all NVDA speech, including in browse and focus modes, and say all.
+If on, this option will cause speech to be interrupted each time a character is typed.
+This option is enabled by default.
+This option affects all NVDA speech, including in browse and focus modes, and say all.
 
 ##### Speech interrupt for Enter key {#KeyboardSettingsSpeechInteruptForEnter}
 
