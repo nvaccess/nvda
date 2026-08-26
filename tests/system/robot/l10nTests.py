@@ -5,6 +5,7 @@
 
 """Localization startup test helpers."""
 
+from glob import glob
 from pathlib import Path
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -14,10 +15,10 @@ _builtIn: BuiltIn = BuiltIn()
 
 def get_source_locale_codes() -> list[str]:
 	"""Return source locale codes from source/locale."""
-	localesDir = Path("source") / "locale"
-	if not localesDir.is_dir():
-		raise AssertionError(f"Unable to find locale directory: {localesDir}")
+	nvdaPoFiles = glob("source/locale/*/LC_MESSAGES/nvda.po")
+	if not nvdaPoFiles:
+		raise AssertionError("Unable to find locale directory under source/locale")
 
-	localeCodes = sorted(path.name for path in localesDir.iterdir() if path.is_dir())
+	localeCodes = sorted(Path(path).parents[2].name for path in nvdaPoFiles if Path(path).is_file())
 	_builtIn.should_be_true(bool(localeCodes), msg="No locale directories found under source/locale")
 	return localeCodes

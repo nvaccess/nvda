@@ -17,6 +17,9 @@ Starts with every source locale
 	@{localeCodes}=	Get Source Locale Codes
 	FOR	${localeCode}	IN	@{localeCodes}
 		Log	Testing NVDA startup with language: ${localeCode}
-		start NVDA	standard-dontShowWelcomeDialog.ini	language=${localeCode}
+		${startStatus}=	${startMessage}=	Run Keyword And Ignore Error	start NVDA	standard-dontShowWelcomeDialog.ini	language=${localeCode}
+		Run Keyword If	"${startStatus}"=="FAIL"	Run Keyword And Ignore Error	quit NVDA
+		Run Keyword If	"${startStatus}"=="FAIL"	Log	NVDA failed to start for locale: ${localeCode}. Error: ${startMessage}	ERROR
+		Run Keyword If	"${startStatus}"=="FAIL"	Fail	NVDA failed to start for locale: ${localeCode}
 		quit NVDA
 	END
