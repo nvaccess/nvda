@@ -3170,11 +3170,11 @@ The available options are:
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
-If on, this option will cause speech to be interrupted each time a character is typed. This is on by default.
+If on, this option will cause speech to be interrupted each time a character is typed. This is on by default. This option affects all NVDA speech, including in browse and focus modes, and say all.
 
 ##### Speech interrupt for Enter key {#KeyboardSettingsSpeechInteruptForEnter}
 
-If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
+If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default. This option affects all NVDA speech, including in browse and focus modes, and say all.
 
 ##### Allow skim reading in Say All {#KeyboardSettingsSkimReading}
 
