@@ -7,6 +7,7 @@
 
 from pathlib import Path
 from robot.libraries.BuiltIn import BuiltIn
+import NvdaLib as _NvdaLib
 
 
 _builtIn: BuiltIn = BuiltIn()
@@ -26,16 +27,17 @@ def NVDA_starts_for_all_locales():
 	"""Start NVDA with each source locale and ensure startup succeeds."""
 	localeCodes = _getSourceLocaleCodes()
 	_builtIn.should_be_true(bool(localeCodes), msg="No locale directories found under source/locale")
+	spy = _NvdaLib.getSpyLib()
 
 	for localeCode in localeCodes:
 		_builtIn.log(f"Testing NVDA startup with language: {localeCode}")
 		started = False
 		try:
-			_nvdaRobot.start_NVDA(
+			spy.start_NVDA(
 				"standard-dontShowWelcomeDialog.ini",
 				language=localeCode,
 			)
 			started = True
 		finally:
 			if started:
-				_nvdaRobot.quit_NVDA()
+				spy.quit_NVDA()
