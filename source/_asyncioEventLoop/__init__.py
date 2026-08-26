@@ -12,7 +12,7 @@ from threading import Thread
 
 from logHandler import log
 
-from .utils import runCoroutineSync
+from .utils import isRunning, runCoroutineSync  # noqa: F401 - re-exported
 
 from . import _state
 
@@ -26,14 +26,6 @@ def initialize():
 	asyncio.set_event_loop(_state.eventLoop)
 	_state.asyncioThread = Thread(target=_state.eventLoop.run_forever, daemon=True)
 	_state.asyncioThread.start()
-
-
-def isRunning() -> bool:
-	"""Determine whether the asyncio event loop is running.
-
-	:return: ``True`` if coroutines can be scheduled on it.
-	"""
-	return _state.asyncioThread is not None and _state.asyncioThread.is_alive()
 
 
 def terminate():
