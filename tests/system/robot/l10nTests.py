@@ -15,7 +15,9 @@ _builtIn: BuiltIn = BuiltIn()
 
 def get_source_locale_codes() -> list[str]:
 	"""Return source locale codes from source/locale."""
-	nvdaPoFiles = glob(str(Path(__file__).resolve().parents[3] / "source" / "locale" / "*" / "LC_MESSAGES" / "nvda.po"))
+	nvdaPoFiles = glob(
+		str(Path(__file__).resolve().parents[3] / "source" / "locale" / "*" / "LC_MESSAGES" / "nvda.po")
+	)
 	if not nvdaPoFiles:
 		raise AssertionError("Unable to find locale directory under source/locale")
 
