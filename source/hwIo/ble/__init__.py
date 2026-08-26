@@ -62,10 +62,7 @@ def getDiscoveredDevice(address: str) -> BLEDevice | None:
 	"""
 	if scanner is None:
 		return None
-	for device in scanner.results():
-		if device.address == address:
-			return device
-	return None
+	return next((device for device in scanner.results() if device.address == address), None)
 
 
 @requiresBackgroundThread

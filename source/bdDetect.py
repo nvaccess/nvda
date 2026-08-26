@@ -180,10 +180,14 @@ Registered handlers should yield a tuple containing a driver name as str and Dev
 Handlers are called with these keyword arguments:
 
 :param usb: Whether the handler is expected to yield USB devices.
+:type usb: bool
 :param bluetooth: Whether the handler is expected to yield Bluetooth devices.
+:type bluetooth: bool
 :param ble: Whether the handler is expected to yield BLE devices.
+:type ble: bool
 :param limitToDevices: Drivers to which detection should be limited.
 	``None`` if no driver filtering should occur.
+:type limitToDevices: list[str] | None
 """
 
 
@@ -234,10 +238,10 @@ def _bleDeviceToMatch(device: BLEDevice) -> DeviceMatch:
 	:return: The device match describing the given device.
 	"""
 	return DeviceMatch(
-		ProtocolType.BLE,
-		device.name or device.address,
-		device.address,
-		{
+		type=ProtocolType.BLE,
+		id=device.name or device.address,
+		port=device.address,
+		deviceInfo={
 			"name": device.name or "",
 			"address": device.address,
 			"provider": CommunicationType.BLE,
@@ -472,7 +476,7 @@ class _Detector:
 		self._detectBluetooth = True
 		self._detectBle = True
 		self._limitToDevices: list[str] | None = None
-		# The scanner is None outside a running NVDA, such as in unit tests.
+		# Unit tests reach detection without initialising hwIo, leaving no scanner.
 		if hwIo.ble.scanner is not None:
 			hwIo.ble.scanner.deviceDiscovered.register(self._onBleDeviceDiscovered)
 
@@ -649,7 +653,7 @@ class _Detector:
 			if braille.handler.setDisplayByName(preferredDevice[0], detected=preferredDevice[1]):
 				if _isDebug():
 					log.debug("Switched to preferred device: %r", preferredDevice[0])
-				# Connected, so the radio is no longer needed.
+				# Connected, so the scanner is no longer needed.
 				_stopBleScanner()
 				return
 			elif _isDebug():
@@ -672,7 +676,7 @@ class _Detector:
 			if braille.handler.setDisplayByName(driver, detected=match):
 				if _isDebug():
 					log.debug("Switched to driver %r, match %r", driver, match)
-				# Connected, so the radio is no longer needed.
+				# Connected, so the scanner is no longer needed.
 				_stopBleScanner()
 				return
 			elif _isDebug():
@@ -762,6 +766,11 @@ class _Detector:
 		Immediately attempts to connect when a new BLE device matching
 		a registered driver is discovered, providing much faster connection
 		than waiting for periodic app-switch polling.
+
+		Bleak reports advertisements on the asyncio event loop thread, so this runs
+		there rather than on the main thread. Every BLE operation shares that thread,
+		which is why the work is handed to the detector's executor rather than done
+		here.
 
 		:param device: The BLE device that was discovered
 		:param advertisementData: Advertisement data from the device

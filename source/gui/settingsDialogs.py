@@ -5128,8 +5128,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	displayNames = []
 	possiblePorts = []
 
-	#: Interval in milliseconds at which the port list is checked for newly discovered BLE devices.
 	_BLE_REFRESH_INTERVAL = 1000
+	"""Interval in milliseconds at which the port list is checked for newly discovered BLE devices."""
 
 	def makeSettings(self, settingsSizer):
 		# BLE devices only appear in the port list once the scanner has discovered them,
