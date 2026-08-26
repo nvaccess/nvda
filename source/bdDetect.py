@@ -57,10 +57,10 @@ class ProtocolType(StrEnum):
 	"""HID devices"""
 	SERIAL = "serial"
 	"""Serial devices (COM ports)"""
-	CUSTOM = "custom"
-	"""Devices with a manufacturer specific protocol"""
 	BLE = "ble"
 	"""Bluetooth Low Energy devices using BLE commands and notifications"""
+	CUSTOM = "custom"
+	"""Devices with a manufacturer specific protocol"""
 
 
 class CommunicationType(StrEnum):

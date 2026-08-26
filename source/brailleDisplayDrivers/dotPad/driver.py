@@ -16,7 +16,6 @@ import braille.display
 import braille.display.driver
 import braille.display.gesture
 import winBindings.kernel32
-import hwIo
 import hwIo.ble
 import bdDetect
 from logHandler import log
