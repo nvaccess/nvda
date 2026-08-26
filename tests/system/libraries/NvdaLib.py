@@ -300,7 +300,7 @@ class NvdaLib:
 		self,
 		settingsFileName: str,
 		gesturesFileName: str | None = None,
-		language: str = "en",
+		language: str | None = None,
 	):
 		self.lastNVDAStart = _datetime.utcnow()
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
