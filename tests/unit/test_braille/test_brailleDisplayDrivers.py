@@ -384,6 +384,30 @@ class TestBleDisplayPorts(unittest.TestCase):
 		with patch("bdDetect.getBleDevicesForDriver", side_effect=RuntimeError("scan failed")):
 			self.assertEqual(list(_FakeBleDriver._getBlePorts()), [])
 
+	def test_getPossiblePorts_bleDevicesBringTheAutomaticPort(self):
+		"""A discovered BLE device never leaves the automatic port on its own.
+
+		The braille display selection dialog disables the port control when the
+		automatic port is the only entry, so a BLE device that arrives while the
+		dialog is open has to bring a second entry with it to be selectable.
+		"""
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", side_effect=LookupError),
+			patch("bdDetect.getPossibleBluetoothDevicesForDriver", side_effect=LookupError),
+			self._patchBleDevices(_bleMatch("DotPad320", self._ADDRESS)),
+		):
+			ports = list(_FakeBleDriver.getPossiblePorts())
+		self.assertEqual(ports, ["auto", f"ble:DotPad320@{self._ADDRESS}"])
+
+	def test_getPossiblePorts_noDevicesGivesNoPorts(self):
+		"""With nothing discovered there is nothing to offer."""
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", side_effect=LookupError),
+			patch("bdDetect.getPossibleBluetoothDevicesForDriver", side_effect=LookupError),
+			self._patchBleDevices(),
+		):
+			self.assertEqual(list(_FakeBleDriver.getPossiblePorts()), [])
+
 	def test_getBleTryPorts_deviceInScanResults(self):
 		"""A port matching a scanned device resolves to that device match."""
 		match = _bleMatch("DotPad320", self._ADDRESS)
