@@ -14,4 +14,9 @@ Library	l10nTests.py
 
 Starts with every source locale
 	[Documentation]	Ensure NVDA starts successfully with each language found under source/locale.
-	NVDA starts for all locales
+	@{localeCodes}=	Get Source Locale Codes
+	FOR	${localeCode}	IN	@{localeCodes}
+		Log	Testing NVDA startup with language: ${localeCode}
+		start NVDA	standard-dontShowWelcomeDialog.ini	language=${localeCode}
+		quit NVDA
+	END
