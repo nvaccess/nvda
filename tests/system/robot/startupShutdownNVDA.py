@@ -5,7 +5,7 @@
 
 """Logic for startupShutdownNVDA tests."""
 
-from datetime import datetime as _datetime
+from datetime import datetime as _datetime  # noqa: I001
 from collections.abc import Callable as _Callable
 from robot.libraries.BuiltIn import BuiltIn
 
@@ -79,7 +79,7 @@ def quits_from_menu(showExitDialog=True):
 
 		_asserts.strings_match(
 			actualSpeech,
-			"\n".join(
+			"\n".join(  # noqa: FLY002
 				[
 					"Exit NVDA  dialog",
 					"What would you like to do?  combo box  Exit  collapsed  Alt plus  d",
@@ -110,7 +110,7 @@ def quits_from_keyboard():
 
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"Exit NVDA  dialog",
 				"What would you like to do?  combo box  Exit  collapsed  Alt plus  d",
@@ -161,7 +161,7 @@ def read_welcome_dialog():
 
 	_asserts.strings_match(
 		actualSpeech,
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				(
 					"Welcome to NVDA  dialog  Welcome to NVDA! Most commands for controlling NVDA require you to hold "
@@ -214,7 +214,7 @@ def _attemptFileRemove(filePath: str) -> bool:
 
 
 def _ensureRestartWithCrashDump(crashFunction: _Callable[[], None]):
-	startTime = _datetime.utcnow()
+	startTime = _datetime.utcnow()  # noqa: DTZ003
 	spy = _nvdaLib.getSpyLib()
 	spy.wait_for_specific_speech("Welcome to NVDA")  # ensure the dialog is present
 	spy.emulateKeyPress("enter")  # close the dialog so we can check for it after the crash

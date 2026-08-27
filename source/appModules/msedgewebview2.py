@@ -5,7 +5,7 @@
 
 """Support for apps employing Edge WebView2 runtime interface."""
 
-from typing import Any
+from typing import Any  # noqa: I001
 import appModuleHandler
 
 
@@ -22,4 +22,4 @@ def getAppNameFromHost(processId: int) -> str:
 def __getattr__(attrName: str) -> Any:
 	if attrName == "AppModule":
 		return appModuleHandler.AppModule
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")

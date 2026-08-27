@@ -10,7 +10,7 @@ import UIAHandler
 
 class AppModule(appModuleHandler.AppModule):
 	def shouldProcessUIAPropertyChangedEvent(self, sender, propertyId):
-		if propertyId in (
+		if propertyId in (  # noqa: SIM103
 			UIAHandler.UIA_NamePropertyId,
 			UIAHandler.UIA_ItemStatusPropertyId,
 			UIAHandler.UIA_IsEnabledPropertyId,

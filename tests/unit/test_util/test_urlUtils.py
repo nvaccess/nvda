@@ -5,7 +5,7 @@
 
 """Unit tests for the urlUtils submodule."""
 
-import unittest
+import unittest  # noqa: I001
 from source.utils.urlUtils import isSamePageURL
 
 

@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2024 NV Access Limited
 
-from typing import Any
+from typing import Any  # noqa: I001
 
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, NumericDriverSetting
 import baseObject
@@ -97,7 +97,7 @@ class StringSynthSetting(SynthSetting):
 			# Voice parameters may change when the voice changes, so update the config.
 			self.synth.saveSettings()
 		else:
-			super(StringSynthSetting, self)._set_value(id)
+			super()._set_value(id)
 
 	def _getReportValue(self, val):
 		return self._values[val].displayName
@@ -105,13 +105,13 @@ class StringSynthSetting(SynthSetting):
 
 class BooleanSynthSetting(SynthSetting):
 	def __init__(self, synth, setting):
-		super(BooleanSynthSetting, self).__init__(synth, setting, 0, 1)
+		super().__init__(synth, setting, 0, 1)
 
 	def _get_value(self):
-		return int(super(BooleanSynthSetting, self).value)
+		return int(super().value)
 
 	def _set_value(self, val):
-		super(BooleanSynthSetting, self)._set_value(bool(val))
+		super()._set_value(bool(val))
 
 	def _getReportValue(self, val):
 		return _("on") if val else _("off")
@@ -204,24 +204,24 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if self._current is not None and hasattr(self, "settings")
 			else None
 		)
-		list: list[SynthSetting] = []  # noqa: F823
+		settings: list[SynthSetting] = []
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing:
 				continue
 			if prevID == s.id:  # restore the last setting
-				self._current = len(list)
+				self._current = len(settings)
 			if isinstance(s, NumericDriverSetting):
 				cls = SynthSetting
 			elif isinstance(s, BooleanDriverSetting):
 				cls = BooleanSynthSetting
 			else:
 				cls = StringSynthSetting
-			list.append(cls(synth, s))
-		if len(list) == 0:
+			settings.append(cls(synth, s))
+		if len(settings) == 0:
 			self._current = None
 			self.settings = None
 		else:
-			self.settings = list
+			self.settings = settings
 		if (
 			not prevID
 			or not self.settings
@@ -236,5 +236,5 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 				queueHandler.queueFunction(
 					queueHandler.eventQueue,
 					ui.message,
-					"%s %s" % (self.currentSettingName, self.currentSettingValue),
+					"%s %s" % (self.currentSettingName, self.currentSettingValue),  # noqa: UP031
 				)

@@ -5,7 +5,7 @@
 
 """Unit tests for the speechXml module."""
 
-import unittest
+import unittest  # noqa: I001
 import speechXml
 from speechXml import REPLACEMENT_CHAR
 

@@ -8,10 +8,9 @@ Google Chrome with a HTML sample and assert NVDA interacts with it in the expect
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-import datetime as _datetime
+import datetime as _datetime  # noqa: I001
 from os.path import join as _pJoin
 import tempfile as _tempfile
-from typing import Optional as _Optional
 from SystemTestSpy import (
 	_blockUntilConditionMet,
 	_getLib,
@@ -45,9 +44,9 @@ class ChromeLib:
 
 	# Use class variables for state that should be tied to the RF library instance.
 	# These variables will be available in the teardown
-	_chromeWindow: _Optional[Window] = None
+	_chromeWindow: Window | None = None
 	"""Chrome Hwnd used to control Chrome via Windows functions."""
-	_processRFHandleForStart: _Optional[int] = None
+	_processRFHandleForStart: int | None = None
 	"""RF process handle, will wait for the chrome process to exit."""
 
 	@staticmethod
@@ -237,11 +236,11 @@ class ChromeLib:
 			"\n<!-- "  # new line, start a HTML comment
 			"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
 			" this test case string: \n"
-			f"{_datetime.datetime.now().isoformat()} "
+			f"{_datetime.datetime.now().isoformat()} "  # noqa: DTZ005
 			f" -->"  # end HTML comment
 		)
 		spy = _NvdaLib.getSpyLib()
-		_chromeLib: "ChromeLib" = _getLib("ChromeLib")  # using the lib gives automatic 'keyword' logging.
+		_chromeLib: ChromeLib = _getLib("ChromeLib")  # using the lib gives automatic 'keyword' logging.
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()

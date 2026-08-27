@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import yaml
+import yaml  # noqa: I001
 from typing import Any
 
 from .configSpec import confspec

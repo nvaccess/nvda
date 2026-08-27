@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import subprocess
+import subprocess  # noqa: I001
 import buildVersion
 import versionInfo
 import os
@@ -41,7 +41,7 @@ def getCertPublisher(env):
 
 
 packageName = "NVAccessLimited.NVDANonVisualDesktopAccess"
-packageVersion = "%s.%s.%s.%s" % (
+packageVersion = "%s.%s.%s.%s" % (  # noqa: UP031
 	buildVersion.version_year,
 	buildVersion.version_major,
 	env["version_build"],
@@ -99,7 +99,7 @@ appxContent = env.Command(
 		Copy("${TARGET}\\appx_images", "${SOURCES[1]}"),
 		Copy("${TARGET}\\AppxManifest.xml", "${SOURCES[2]}"),
 	]
-	+ [Delete("${TARGET}/%s" % excludeFile) for excludeFile in excludedDistFiles],
+	+ [Delete("${TARGET}/%s" % excludeFile) for excludeFile in excludedDistFiles],  # noqa: UP031
 )
 # Ensure that it is always copied as we can't tell if dist changed
 env.AlwaysBuild(appxContent)

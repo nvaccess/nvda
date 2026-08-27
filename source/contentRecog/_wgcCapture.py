@@ -5,7 +5,7 @@
 
 """Windows Graphics Capture support for content recognition."""
 
-import ctypes
+import ctypes  # noqa: I001
 from ctypes import POINTER, cast
 
 from NVDAHelper.localWin10 import _wgcCapture_captureScreenRegion, _wgcCapture_isSupported

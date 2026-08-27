@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import atexit
+import atexit  # noqa: I001
 import config
 from enum import IntEnum, unique
 import globalVars

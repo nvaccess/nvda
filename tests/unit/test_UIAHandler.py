@@ -11,7 +11,7 @@ These cover the mechanism that drops UIA events from a not-responding
 application so it cannot freeze NVDA or flood the log.
 """
 
-from unittest import TestCase
+from unittest import TestCase  # noqa: I001
 from unittest.mock import patch
 
 from comtypes import COMError

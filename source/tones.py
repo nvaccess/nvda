@@ -67,7 +67,7 @@ def beep(
 	@param right: volume of the right channel (0 to 100)
 	@param isSpeechBeepCommand: whether this beep is created as part of a speech sequence
 	"""
-	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s" % (hz, length, left, right))
+	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s" % (hz, length, left, right))  # noqa: UP031
 	if not decide_beep.decide(
 		hz=hz,
 		length=length,

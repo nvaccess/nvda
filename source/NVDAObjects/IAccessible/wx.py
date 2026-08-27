@@ -5,7 +5,7 @@
 
 """Improvements for wxWidgets objects."""
 
-import api
+import api  # noqa: I001
 import eventHandler
 import winUser
 

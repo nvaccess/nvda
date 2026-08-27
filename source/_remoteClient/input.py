@@ -97,7 +97,7 @@ class BrailleInputGesture(
 
 		# Vision enhancement provider level
 		for provider in vision.handler.getActiveProviderInstances():
-			if isinstance(provider, baseObject.ScriptableObject):
+			if isinstance(provider, baseObject.ScriptableObject):  # noqa: SIM102
 				if cls == "VisionEnhancementProvider" and module == provider.__module__:
 					func = getattr(app, "script_{scriptName}", None)
 					if func:
@@ -115,7 +115,7 @@ class BrailleInputGesture(
 		if func:
 			return func
 		for obj in reversed(api.getFocusAncestors()):
-			func = getattr(obj, "script_%s" % scriptName, None)
+			func = getattr(obj, "script_%s" % scriptName, None)  # noqa: UP031
 			if func and getattr(func, "canPropagate", False):
 				return func
 

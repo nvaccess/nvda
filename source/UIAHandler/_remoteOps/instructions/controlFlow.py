@@ -8,7 +8,7 @@ This module contains the instructions that control the flow of execution.
 Including to halt execution, fork execution, and manage loops and try blocks.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 from .. import lowLevel
 from .. import builder

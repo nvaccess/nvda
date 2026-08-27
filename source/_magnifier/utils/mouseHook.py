@@ -10,7 +10,7 @@ busy (e.g. at high Windows display scale factors), which is the root cause of
 the DPI-related lag compared to the built-in Windows Magnifier.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 import threading
 from collections.abc import Callable
 from ctypes import byref

@@ -5,7 +5,7 @@
 
 """Handler for braille input."""
 
-import struct
+import struct  # noqa: I001
 import time
 
 import api

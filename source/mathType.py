@@ -8,7 +8,7 @@
 
 """Utilities for working with MathType."""
 
-import winreg
+import winreg  # noqa: I001
 import ctypes
 import mathPres
 

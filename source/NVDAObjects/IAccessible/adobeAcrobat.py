@@ -3,9 +3,8 @@
 # Copyright (C) 2008-2014 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-import typing
 
-import api
+import api  # noqa: I001
 import controlTypes
 import eventHandler
 import winUser
@@ -41,7 +40,7 @@ stdNamesToRoles = {
 }
 
 
-def normalizeStdName(stdName: str) -> typing.Tuple[controlTypes.Role, typing.Optional[str]]:
+def normalizeStdName(stdName: str) -> tuple[controlTypes.Role, str | None]:
 	"""
 	@param stdName:
 	@return: Tuple with the NVDA role and optionally the level number of the heading as a string, E.G.:
@@ -103,7 +102,7 @@ class AcrobatNode(IAccessible):
 		except (AttributeError, LookupError, COMError):
 			pass
 
-		role = super(AcrobatNode, self).role
+		role = super().role
 		if role == controlTypes.Role.PANE:
 			# Pane doesn't make sense for nodes in a document.
 			role = controlTypes.Role.TEXTFRAME
@@ -118,7 +117,7 @@ class AcrobatNode(IAccessible):
 	def _isEqual(self, other):
 		if self.windowHandle == other.windowHandle and self.accID and other.accID:
 			return self.accID == other.accID
-		return super(AcrobatNode, self)._isEqual(other)
+		return super()._isEqual(other)
 
 	@staticmethod
 	def getMathMLAttributes(node: IPDDomElement, attrList: list) -> str:
@@ -267,7 +266,7 @@ class Document(RootNode):
 				return self.IAccessibleObject.accFocus in (None, 0)
 			except COMError:
 				pass
-		return super(Document, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 
 class RootTextNode(RootNode):
@@ -322,7 +321,7 @@ class BadFocusStates(AcrobatNode):
 	"""An object which reports focus states when it shouldn't."""
 
 	def _get_states(self):
-		states = super(BadFocusStates, self).states
+		states = super().states
 		states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
 		return states
 

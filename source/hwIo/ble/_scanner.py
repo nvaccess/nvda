@@ -3,9 +3,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
+import time  # noqa: I001
 from threading import Event
-from typing import Callable
+from collections.abc import Callable
 
 from _asyncioEventLoop.utils import runCoroutine
 import extensionPoints

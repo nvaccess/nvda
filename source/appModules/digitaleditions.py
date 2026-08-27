@@ -6,7 +6,7 @@
 
 """App module for Adobe Digital Editions"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from textInfos import DocumentWithPageTurns
 from NVDAObjects.UIA import UIA, UIATextInfo
@@ -22,7 +22,7 @@ class BookContentTextInfo(UIATextInfo):
 
 class BookContent(DocumentWithPageTurns, UIA):
 	def _get_TextInfo(self):
-		TextInfo = super(BookContent, self).TextInfo
+		TextInfo = super().TextInfo
 		if TextInfo is UIATextInfo:
 			TextInfo = BookContentTextInfo
 		return TextInfo

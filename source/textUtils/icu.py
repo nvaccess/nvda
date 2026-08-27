@@ -8,12 +8,12 @@
 Requires Windows 10 version 1703 (Creators Update) or later.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 from collections.abc import Callable
 from contextlib import contextmanager
 
 import textUtils
-import winBindings.icu as icu
+from winBindings import icu
 from logHandler import log
 
 _ROOT_LOCALE: bytes = b""

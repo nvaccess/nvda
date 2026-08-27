@@ -6,12 +6,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import itertools
+import itertools  # noqa: I001
 from typing import (
 	TYPE_CHECKING,
-	Optional,
-	Tuple,
-	Union,
 )
 from comtypes import COMError
 from annotation import (
@@ -201,7 +198,7 @@ class GlobalCommands(ScriptableObject):
 	def __init__(self) -> None:
 		super().__init__()
 		self._reviewCopyStartMarker: textInfos.TextInfo | None = None
-		self._reviewCopyStartMarkerObj: "documentBase.TextContainerObject | None" = None
+		self._reviewCopyStartMarkerObj: documentBase.TextContainerObject | None = None
 		self._reviewSelectThenCopyRange: textInfos.TextInfo | None = None
 
 	def _clearReviewCopyStartMarker(self) -> None:
@@ -516,7 +513,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.first()
-		ui.message("%s %s" % (settingName, settingValue))
+		ui.message("%s %s" % (settingName, settingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for set the last value in the synth ring settings.
@@ -529,7 +526,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.last()
-		ui.message("%s %s" % (settingName, settingValue))
+		ui.message("%s %s" % (settingName, settingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for increase synth setting value command.
@@ -543,7 +540,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.increase()
-		ui.message("%s %s" % (settingName, settingValue))
+		ui.message("%s %s" % (settingName, settingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for increasing synth setting value command in larger steps.
@@ -557,7 +554,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.increaseLarge()
-		ui.message("%s %s" % (settingName, settingValue))
+		ui.message("%s %s" % (settingName, settingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for decrease synth setting value command.
@@ -571,7 +568,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.decrease()
-		ui.message("%s %s" % (settingName, settingValue))
+		ui.message("%s %s" % (settingName, settingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for decreasing synth setting value command in larger steps.
@@ -585,7 +582,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		settingValue = globalVars.settingsRing.decreaseLarge()
-		ui.message("%s %s" % (settingName, settingValue))
+		ui.message("%s %s" % (settingName, settingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for next synth setting command.
@@ -599,7 +596,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		nextSettingValue = globalVars.settingsRing.currentSettingValue
-		ui.message("%s %s" % (nextSettingName, nextSettingValue))
+		ui.message("%s %s" % (nextSettingName, nextSettingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for previous synth setting command.
@@ -613,7 +610,7 @@ class GlobalCommands(ScriptableObject):
 			ui.message(NO_SETTINGS_MSG)
 			return
 		previousSettingValue = globalVars.settingsRing.currentSettingValue
-		ui.message("%s %s" % (previousSettingName, previousSettingValue))
+		ui.message("%s %s" % (previousSettingName, previousSettingValue))  # noqa: UP031
 
 	@script(
 		# Translators: Input help mode message for toggling keyboard layout.
@@ -1558,7 +1555,7 @@ class GlobalCommands(ScriptableObject):
 			braille.handler.message(text)
 
 	@staticmethod
-	def _reportLocationText(objs: Tuple[Union[None, NVDAObject, textInfos.TextInfo], ...]) -> None:
+	def _reportLocationText(objs: tuple[None | NVDAObject | textInfos.TextInfo, ...]) -> None:
 		for obj in objs:
 			if obj is not None and obj.locationText:
 				ui.message(obj.locationText)
@@ -1883,7 +1880,7 @@ class GlobalCommands(ScriptableObject):
 			realActionName = actionName
 			try:
 				realActionName = obj.getActionName()
-			except:  # noqa: E722
+			except:  # noqa: E722, S110
 				pass
 			try:
 				obj.doAction()
@@ -2322,13 +2319,13 @@ class GlobalCommands(ScriptableObject):
 				c = None
 			if cList:
 				for c in cList:
-					speech.speakMessage("%d," % c)
+					speech.speakMessage("%d," % c)  # noqa: UP031
 					# Report hex along with decimal only when there is one character; else, it's confusing.
 					if len(cList) == 1:
 						speech.speakSpelling(hex(c))
 				braille.handler.message("; ".join(f"{c}, {hex(c)}" for c in cList))
 			else:
-				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)
+				log.debugWarning("Couldn't calculate ordinal for character %r" % info.text)  # noqa: UP031
 				speech.speakTextInfo(
 					info,
 					unit=textInfos.UNIT_CHARACTER,
@@ -2522,7 +2519,7 @@ class GlobalCommands(ScriptableObject):
 		# relative ordering of elements for which key function returns the same value is preserved.
 		# Sorting uses `<=` since when sorting booleans they are handled as integers,
 		# so `False` (0) sorts before `True` (1).
-		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]
+		newModeIndex = sorted(possibleIndexes, key=lambda i: i <= currModeIndex)[0]  # noqa: FURB192
 		newMode = modesList[newModeIndex]
 		speech.cancelSpeech()
 		# Translators: Announced when user switches to another speech mode.
@@ -2573,8 +2570,8 @@ class GlobalCommands(ScriptableObject):
 		if not vbuf:
 			for obj in itertools.chain((api.getFocusObject(),), reversed(api.getFocusAncestors())):
 				try:
-					obj.treeInterceptorClass
-				except:  # noqa: E722
+					obj.treeInterceptorClass  # noqa: B018
+				except:  # noqa: E722, S112
 					continue
 				break
 			else:
@@ -2681,7 +2678,7 @@ class GlobalCommands(ScriptableObject):
 
 		# Create a dictionary to replace the config section that would normally be
 		# passed to getFormatFieldsSpeech / getFormatFieldsBraille
-		formatConfig = dict()
+		formatConfig = dict()  # noqa: C408
 		from config import conf
 
 		for i in conf["documentFormatting"]:
@@ -2691,7 +2688,7 @@ class GlobalCommands(ScriptableObject):
 		# First, fetch indentation.
 		line = info.copy()
 		line.expand(textInfos.UNIT_LINE)
-		indentation, content = speech.splitTextIndentation(line.text)
+		indentation, content = speech.splitTextIndentation(line.text)  # noqa: RUF059
 		if indentation:
 			textList.extend(speech.getIndentationSpeech(indentation, formatConfig))
 
@@ -2738,7 +2735,7 @@ class GlobalCommands(ScriptableObject):
 	def _getTIAtCaret(
 		fallbackToPOSITION_FIRST: bool = False,
 		reportFailure: bool = True,
-	) -> Optional[textInfos.TextInfo]:
+	) -> textInfos.TextInfo | None:
 		# Returns text info at the caret position if there is a caret in the current control, None otherwise.
 		# Note that if there is no caret this fact is announced in speech and braille
 		# unless reportFailure is set to C{False}
@@ -2827,7 +2824,7 @@ class GlobalCommands(ScriptableObject):
 		elif repeats == 1:
 			self.script_showFormattingAtCaret(gesture)
 
-	def _getNvdaObjWithAnnotationUnderCaret(self) -> Optional[NVDAObject]:
+	def _getNvdaObjWithAnnotationUnderCaret(self) -> NVDAObject | None:
 		"""If it has an annotation, get the NVDA object for the single character under the caret or the object
 		with system focus.
 		@note: It is tempting to try to report any annotation details that exists in the range formed by prior
@@ -2974,7 +2971,7 @@ class GlobalCommands(ScriptableObject):
 			speech.speakSpelling(focusObject.name, useCharacterDescriptions=repeatCount > 1)
 
 	@staticmethod
-	def _getStatusBarText(setReviewCursor: bool = False) -> Optional[str]:
+	def _getStatusBarText(setReviewCursor: bool = False) -> str | None:
 		"""Returns text of the current status bar and optionally sets review cursor to it.
 		If no status bar has been found `None` is returned and this fact is announced in speech and braille.
 		"""
@@ -2988,7 +2985,7 @@ class GlobalCommands(ScriptableObject):
 			and not objectBelowLockScreenAndWindowsIsLocked(obj)
 		):
 			text = api.getStatusBarText(obj)
-			if setReviewCursor:
+			if setReviewCursor:  # noqa: SIM102
 				if not api.setNavigatorObject(obj):
 					return None
 			found = True
@@ -3279,7 +3276,7 @@ class GlobalCommands(ScriptableObject):
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
 			log.info(
-				"Developer info for navigator object:\n%s" % "\n".join(obj.devInfo),
+				"Developer info for navigator object:\n%s" % "\n".join(obj.devInfo),  # noqa: UP031
 				activateLogViewer=True,
 			)
 		else:
@@ -3851,7 +3848,7 @@ class GlobalCommands(ScriptableObject):
 		curMode = BrailleMode(config.conf["braille"]["mode"])
 		modeList = list(BrailleMode)
 		index = modeList.index(curMode)
-		index = index + 1 if not index == len(modeList) - 1 else 0
+		index = index + 1 if not index == len(modeList) - 1 else 0  # noqa: SIM201
 		newMode = modeList[index]
 		config.conf["braille"]["mode"] = newMode.value
 		if braille.handler.buffer == braille.handler.messageBuffer:
@@ -4222,22 +4219,21 @@ class GlobalCommands(ScriptableObject):
 			try:
 				# old selection info must be saved so that its possible to report on the changes to the selection.
 				oldInfo = pos.obj.makeTextInfo(textInfos.POSITION_SELECTION)
-			except Exception as e:
-				log.debug("Error trying to get initial selection information %s" % e)
-				pass
+			except Exception as e:  # noqa: BLE001
+				log.debug("Error trying to get initial selection information %s" % e)  # noqa: UP031
 			try:
 				copyMarker.updateSelection()
 				if hasattr(pos.obj, "reportSelectionChange"):
 					# wait for applications such as word to update their selection so that we can detect it
 					try:
 						pos.obj.reportSelectionChange(oldInfo)
-					except Exception as e:
-						log.debug("Error trying to report the updated selection: %s" % e)
+					except Exception as e:  # noqa: BLE001
+						log.debug("Error trying to report the updated selection: %s" % e)  # noqa: UP031
 			except NotImplementedError as e:
 				# we are unable to select the text, leave the _copyStartMarker in place in case the user wishes to copy the text.
 				# Translators: Presented when unable to select the marked text.
 				ui.message(_("Can't select text, press twice to copy"))
-				log.debug("Error trying to update selection: %s" % e)
+				log.debug("Error trying to update selection: %s" % e)  # noqa: UP031
 				return
 		elif getLastScriptRepeatCount() == 1:  # the second call, try to copy the text
 			copyMarker = self._reviewSelectThenCopyRange
@@ -4855,7 +4851,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Reported when Windows OCR is not available.
 			ui.message(_("Windows OCR not available"))
 			return
-		from contentRecog import uwpOcr, recogUi
+		from contentRecog import uwpOcr, recogUi  # noqa: I001
 
 		recog = uwpOcr.UwpOcr()
 		recogUi.recognizeNavigatorObject(recog)
@@ -5024,13 +5020,13 @@ class GlobalCommands(ScriptableObject):
 				screenCurtain.screenCurtain.disable()
 			except Exception:
 				# If the screen curtain was enabled, we do not expect exceptions.
-				log.error("Screen curtain termination error", exc_info=True)
+				log.error("Screen curtain termination error", exc_info=True)  # noqa: G201
 				# Translators: Reported when the screen curtain could not be enabled.
 				message = _("Could not disable screen curtain")
 			finally:
 				self._toggleScreenCurtainMessage = message
 				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-				return
+				return  # noqa: B012
 		elif (  # enable it
 			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
 		):
@@ -5060,7 +5056,7 @@ class GlobalCommands(ScriptableObject):
 					else:
 						screenCurtain.screenCurtain.enable(persist=not tempEnable)
 				except Exception:
-					log.error("Screen curtain initialization error", exc_info=True)
+					log.error("Screen curtain initialization error", exc_info=True)  # noqa: G201
 					enableMessage = screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE
 				finally:
 					self._toggleScreenCurtainMessage = enableMessage
@@ -5608,7 +5604,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		# Iterate through the available profiles, creating scripts for them.
 		for profile in config.conf.listProfiles():
 			cls.addScriptForProfile(profile)
-		return super(ConfigProfileActivationCommands, cls).__new__(cls)
+		return super().__new__(cls)
 
 	@classmethod
 	def _getScriptNameForProfile(cls, name):
@@ -5618,7 +5614,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 				invalidChars.add(c)
 		for c in invalidChars:
 			name = name.replace(c, b16encode(c.encode()).decode("ascii"))
-		return "profile_%s" % name
+		return "profile_%s" % name  # noqa: UP031
 
 	@classmethod
 	def _profileScript(cls, name):
@@ -5645,8 +5641,8 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param name: The name of the profile to add a script for.
 		@type name: str
 		"""
-		script = lambda self, gesture: cls._profileScript(name)  # noqa: E731
-		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)
+		script = lambda self, gesture: cls._profileScript(name)
+		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)  # noqa: UP031
 		# Just set the doc string of the script, using the decorator is overkill here.
 		# Translators: The description shown in input help for a script that
 		# activates or deactivates a config profile.
@@ -5664,7 +5660,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		"""
 		scriptName = cls._getScriptNameForProfile(name)
 		cls._moveGesturesForProfileActivationScript(scriptName)
-		delattr(cls, "script_%s" % scriptName)
+		delattr(cls, "script_%s" % scriptName)  # noqa: UP031
 
 	@classmethod
 	def _moveGesturesForProfileActivationScript(cls, oldScriptName, newScriptName=None):
@@ -5702,7 +5698,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		oldScriptName = cls._getScriptNameForProfile(oldName)
 		newScriptName = cls._getScriptNameForProfile(newName)
 		cls._moveGesturesForProfileActivationScript(oldScriptName, newScriptName)
-		delattr(cls, "script_%s" % oldScriptName)
+		delattr(cls, "script_%s" % oldScriptName)  # noqa: UP031
 		cls.addScriptForProfile(newName)
 
 

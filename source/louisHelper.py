@@ -5,7 +5,7 @@
 
 """Helper module to ease communication to and from liblouis."""
 
-import os
+import os  # noqa: I001
 from collections.abc import Sequence
 from ctypes import (
 	WINFUNCTYPE,
@@ -14,7 +14,7 @@ from ctypes import (
 	c_void_p,
 )
 from enum import IntFlag
-from typing import Generator
+from collections.abc import Generator
 
 import brailleTables
 import config
@@ -74,7 +74,7 @@ class Typeform(IntFlag):
 	BOLD = louis.bold
 
 
-def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[str, None, None]:
+def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[str]:
 	"""Helper function to resolve braille table file names to file paths.
 	This is used by the L{_resolveTable} function to abstract the inner workings
 	from the ctypes related conversion of input and output.
@@ -160,7 +160,7 @@ def louis_log(level, message):
 	if not log.isEnabledFor(NVDALevel):
 		return
 	message = message.decode("ASCII")
-	codepath = "liblouis at internal log level %d" % level
+	codepath = "liblouis at internal log level %d" % level  # noqa: UP031
 	log._log(NVDALevel, message, [], codepath=codepath)
 
 

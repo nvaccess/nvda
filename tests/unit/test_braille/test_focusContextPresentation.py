@@ -5,7 +5,7 @@
 
 """Unit tests for braille focus context presentation."""
 
-import api
+import api  # noqa: I001
 import braille
 import braille.constants
 import braille.regions.focus
