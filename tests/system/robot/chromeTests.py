@@ -1477,6 +1477,7 @@ def test_ariaDescription_sayAll():
 	Settings which may affect this:
 	- speech.reportObjectDescriptions default:True
 	- annotations.reportAriaDescription default:True
+	- speech.sayAllReadingUnit default:sentence
 	"""
 	_chrome.prepareChrome(_getAriaDescriptionSample())
 	actualSpeech = _chrome.getSpeechAfterKey("NVDA+downArrow")
@@ -1493,9 +1494,9 @@ def test_ariaDescription_sayAll():
 					[
 						"User nearby, Aaron",  # annotation
 						"Here is a sentence that is being edited by someone else.",  # span text
-						"Multiple can edit this.",  # bold paragraph text
 					],
 				),
+				"Multiple can edit this.",  # bold paragraph text
 				SPEECH_SEP.join(
 					[  # two space separator
 						"An element with a role, follow",  # paragraph text
