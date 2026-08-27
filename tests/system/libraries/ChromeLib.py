@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2022 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2020-2026 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,7 +83,7 @@ class ChromeLib:
 		spy.emulateKeyPress("control+w")
 		process.wait_for_process(
 			ChromeLib._processRFHandleForStart,
-			timeout="10 seconds",
+			timeout=_datetime.timedelta(seconds=10),
 			on_timeout="continue",
 		)
 		builtIn.log(

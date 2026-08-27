@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2021-2025 NV Access Limited
+# Copyright (C) 2021-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.plaintext
 
@@ -65,7 +65,7 @@ class NotepadLib:
 			spy.emulateKeyPress("alt+f4")
 			process.wait_for_process(
 				NotepadLib.processRFHandleForStart,
-				timeout="10 seconds",
+				timeout=_datetime.timedelta(seconds=10),
 				on_timeout="continue",
 			)
 		else:

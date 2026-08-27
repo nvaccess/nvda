@@ -1,8 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 Bill Dengler
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2025-2026 NV Access Limited, Bill Dengler
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.plaintext
 
+import datetime as _datetime
 import os as _os
 import re as _re
 import shutil as _shutil
@@ -176,7 +177,7 @@ class VSCodeLib:
 		if VSCodeLib._processRFHandleForStart:
 			_process.wait_for_process(
 				VSCodeLib._processRFHandleForStart,
-				timeout="10 seconds",
+				timeout=_datetime.timedelta(seconds=10),
 				on_timeout="continue",
 			)
 			VSCodeLib._processRFHandleForStart = None
