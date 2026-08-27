@@ -17,11 +17,14 @@ Test Teardown	Run Keyword And Ignore Error	quit NVDA
 Starts with every source locale
 	[Documentation]	Ensure NVDA starts successfully with each language found under source/locale.
 	@{localeCodes}=	Get Source Locale Codes
+	@{failedLocales}=	Create List
 	FOR	${localeCode}	IN	@{localeCodes}
 		Log	Testing NVDA startup with language: ${localeCode}
 		${startStatus}	${startMessage}=	Run Keyword And Ignore Error	start NVDA	standard-dontShowWelcomeDialog.ini	language=${localeCode}
 		Run Keyword If	"${startStatus}"=="FAIL"	Run Keyword And Ignore Error	quit NVDA
+		Run Keyword If	"${startStatus}"=="FAIL"	Append To List	${failedLocales}	${localeCode}: ${startMessage}
 		Run Keyword If	"${startStatus}"=="FAIL"	Log	NVDA failed to start for locale: ${localeCode}. Error: ${startMessage}	ERROR
-		Run Keyword If	"${startStatus}"=="FAIL"	Fail	NVDA failed to start for locale: ${localeCode}
 		quit NVDA
 	END
+	${failedCount}=	Get Length	${failedLocales}
+	Run Keyword If	${failedCount} > 0	Fail	NVDA failed to start for the following locales:\n${failedLocales}
