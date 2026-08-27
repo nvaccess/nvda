@@ -38,7 +38,7 @@ class Driver(AutoSettings):
 		@raise Exception: If an error occurs.
 		@postcondition: This driver can be used.
 		"""
-		super(Driver, self).__init__()
+		super().__init__()
 
 	def terminate(self):
 		"""Save settings and terminate this driver.

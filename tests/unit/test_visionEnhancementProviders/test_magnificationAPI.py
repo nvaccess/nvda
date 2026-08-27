@@ -42,7 +42,6 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 				f"{resultEffect=}, should be identity matrix. "
 				"Full screen colour effect set external to tests. ",
 			)
-		return
 
 	def test_setAndConfirmBlackFullscreenColorEffect(self):
 		result = magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)

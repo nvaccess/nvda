@@ -49,7 +49,7 @@ def initialize() -> None:
 			for part in qualname.split("."):
 				obj = getattr(obj, part)
 			callableToCall = obj
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning(
 				f"Could not resolve initializer {moduleName}.{qualname}; falling back to the registered function",
 				exc_info=True,

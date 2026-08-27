@@ -5,7 +5,7 @@
 
 """Unit tests for word segmentation utilities."""
 
-import unittest
+import unittest  # noqa: I001
 from collections.abc import Callable
 from types import SimpleNamespace
 from typing import Any
@@ -204,7 +204,7 @@ class TestWordSegmenter(unittest.TestCase):
 
 	def test_getSegmentForOffsetPropagatesUnexpectedError(self) -> None:
 		segmenter = WordSegmenter("hello world", wordSegFlag=WordSegFlag.UNISCRIBE)
-		with patch.object(segmenter.strategy, "getSegmentForOffset", side_effect=RuntimeError("unexpected")):
+		with patch.object(segmenter.strategy, "getSegmentForOffset", side_effect=RuntimeError("unexpected")):  # noqa: SIM117
 			with self.assertRaises(RuntimeError):
 				segmenter.getSegmentForOffset(0)
 

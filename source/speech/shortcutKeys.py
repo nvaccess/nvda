@@ -5,7 +5,7 @@
 
 """Functions to create speech sequences for shortcut keys."""
 
-import re
+import re  # noqa: I001
 
 import characterProcessing
 from logHandler import log
@@ -14,20 +14,15 @@ import config
 
 from .commands import CharacterModeCommand
 from .types import SpeechSequence
-from typing import (
-	Optional,
-	List,
-	Tuple,
-)
 
 
-def speakKeyboardShortcuts(keyboardShortcutsStr: Optional[str]) -> None:
+def speakKeyboardShortcuts(keyboardShortcutsStr: str | None) -> None:
 	from .speech import speak
 
 	speak(getKeyboardShortcutsSpeech(keyboardShortcutsStr))
 
 
-def getKeyboardShortcutsSpeech(keyboardShortcutsStr: Optional[str]) -> SpeechSequence:
+def getKeyboardShortcutsSpeech(keyboardShortcutsStr: str | None) -> SpeechSequence:
 	"""Gets the speech sequence for a shortcuts string containing one or more shortcuts.
 	@param keyboardShortcutsStr: the shortcuts string.
 	"""
@@ -107,7 +102,7 @@ def _getKeySpeech(key: str) -> SpeechSequence:
 	]
 
 
-def _splitShortcut(shortcut: str) -> Tuple[List[str], str]:
+def _splitShortcut(shortcut: str) -> tuple[list[str], str]:
 	"""Splits a string representing a shortcut key combination.
 	@param shortcut: the shortcut to split.
 		It may be of the form "NVDA+R" or "NVDA + R", i.e. key names separated by "+" symbol with or without
@@ -130,7 +125,7 @@ def _splitShortcut(shortcut: str) -> Tuple[List[str], str]:
 	return keyList, separator
 
 
-def _splitSequentialShortcut(shortcut: str) -> Tuple[List[str], List[str]]:
+def _splitSequentialShortcut(shortcut: str) -> tuple[list[str], list[str]]:
 	"""Splits a string representing a sequantial shortcut key combination (the ones found in ribbons).
 	@param shortcut: the shortcut to split.
 		It should be of the form "Alt, F, L, Y 1" i.e. key names separated by comma symbol or space.

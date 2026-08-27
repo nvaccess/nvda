@@ -3,8 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from io import BytesIO
-from typing import Union, List, Optional
+from io import BytesIO  # noqa: I001
 
 import braille
 import braille.display
@@ -160,11 +159,11 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
-		self._deviceID: Optional[str] = None
+		self._deviceID: str | None = None
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.ProtocolType.HID
@@ -179,14 +178,14 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 						writeTimeout=TIMEOUT,
 						onReceive=self._onReceive,
 					)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			if self.isHid:
 				try:
 					# It's essential to send protocol on for the Orbit Reader 20.
 					self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
-				except EnvironmentError:
+				except OSError:
 					# Pronto! and VarioUltra don't support BAUM_PROTOCOL_ONOFF.
 					pass
 				# Explicitly request device info.
@@ -208,11 +207,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if self.numCells:
 				# A display responded.
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self._deviceID,
-						type=portType,
-						port=port,
-					),
+					f"Found {self._deviceID} connected via {portType} ({port})",
 				)
 				break
 			self._dev.close()
@@ -225,10 +220,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 			try:
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, boolToByte(False))
-			except EnvironmentError:
+			except OSError:
 				# Some displays don't support BAUM_PROTOCOL_ONOFF.
 				pass
 		finally:
@@ -236,7 +231,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendRequest(self, command: bytes, arg: Union[bytes, bool, int] = b""):
+	def _sendRequest(self, command: bytes, arg: bytes | bool | int = b""):
 		"""
 		:type command: bytes
 		:type arg: bytes | bool | int
@@ -272,7 +267,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			stream = BytesIO(data)
 		else:
 			if data != ESCAPE:
-				log.debugWarning("Ignoring byte before escape: %r" % data)
+				log.debugWarning("Ignoring byte before escape: %r" % data)  # noqa: UP031
 				return
 			# data only contained the escape. Read the rest from the device.
 			stream = self._dev
@@ -333,9 +328,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			pass
 
 		else:
-			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
+			log.debugWarning(f"Unknown command {command!r}, arg {arg!r}")
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		arg = bytes(cells)
 		self._sendRequest(BAUM_DISPLAY_DATA, arg)
@@ -399,7 +394,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		# Model identifiers should not contain spaces.
 		if model:
 			self.model = model.replace(" ", "")

@@ -5,16 +5,10 @@
 
 """A test harness for interacting with the SpeechManager class."""
 
-import typing
+import typing  # noqa: I001
 import unittest
 from contextlib import contextmanager
-from typing import (
-	Callable,
-	Tuple,
-	Union,
-	Optional,
-	List,
-)
+from collections.abc import Callable
 from unittest import mock
 from unittest.mock import (
 	MagicMock,
@@ -65,14 +59,10 @@ class ExpectedProsody:
 	commands that are sent to the synth. This may be as a result of resuming a previous utterance.
 	"""
 
-	expectedProsody: Union[
-		PitchCommand,
-		RateCommand,
-		VolumeCommand,
-	]
+	expectedProsody: PitchCommand | RateCommand | VolumeCommand
 
 	def __eq__(self, other):
-		if type(self.expectedProsody) != type(other):  # noqa: E721
+		if type(self.expectedProsody) != type(other):
 			return False
 		if isinstance(other, BaseProsodyCommand):
 			return repr(other) == repr(self.expectedProsody)
@@ -117,23 +107,23 @@ class SpeechManagerInteractions:
 		self._indexReachedCallback.side_effect = self._sideEffect_callbackCommand
 
 		#: SequenceIndexes we are awaiting to be sent to the synth
-		self._awaitingSpeakCalls: List[_SentSequenceIndex] = []
+		self._awaitingSpeakCalls: list[_SentSequenceIndex] = []
 		#: Number of cancel calls we are waiting for
 		self._awaitingCancelCalls: int = 0
 		#: Index and Callbacks for callback commands
-		self._awaitingCallbackForIndex: List[Tuple[_IndexT, Optional[Callable[[], None]]]] = []
+		self._awaitingCallbackForIndex: list[tuple[_IndexT, Callable[[], None] | None]] = []
 		#: Map of mocks to the number of times that we expect for them get called in this expect block.
-		self._awaitingMockCalls: typing.Dict[MagicMock, int] = {}
+		self._awaitingMockCalls: dict[MagicMock, int] = {}
 
 		#: All sequence indexes already expected to be sent to the synth
-		self.expectedState_speak: List[_SentSequenceIndex] = []
+		self.expectedState_speak: list[_SentSequenceIndex] = []
 		#: Number of calls to cancel
 		self.expectedState_cancelCallCount: int = 0
 		#: Indexes that have been reached
-		self.expectedState_indexReached: List[_IndexT] = []
+		self.expectedState_indexReached: list[_IndexT] = []
 
 		#: map mocks with the number of times we expect them to be called useful for extending this class
-		self._expectedMockCallCount: typing.Dict[MagicMock, int] = {}
+		self._expectedMockCallCount: dict[MagicMock, int] = {}
 
 		self._unexpectedSideEffectFailureMessages = []
 
@@ -149,7 +139,7 @@ class SpeechManagerInteractions:
 
 		self._indexCommandIndexes = iter(range(1, 1000))
 		self._lastCommandIndex = 0
-		self._testDebug_IndexReached: List[int] = []
+		self._testDebug_IndexReached: list[int] = []
 
 		self.sManager = speech.manager.SpeechManager()
 
@@ -216,13 +206,12 @@ class SpeechManagerInteractions:
 		self._assertIndexCallbackState()
 		self._assertCancelState()
 		self._assertMockCallsState()
-		pass
 
-	def _updateKnownSequences(self, seq) -> List[_SentSequenceIndex]:
+	def _updateKnownSequences(self, seq) -> list[_SentSequenceIndex]:
 		"""Handle EndUtteranceCommands
 		Sequence gets split after the EndUtteranceCommand and two sequence numbers are returned.
 		"""
-		startOfUtteranceIndexes = set(
+		startOfUtteranceIndexes = set(  # noqa: C401
 			i + 1 for i, item in enumerate(seq) if isinstance(item, EndUtteranceCommand)
 		)
 		startOfUtteranceIndexes.add(len(seq))  # ensure the last index is included
@@ -249,9 +238,9 @@ class SpeechManagerInteractions:
 
 	def speak(
 		self,
-		seq: List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex, EndUtteranceCommand]],
+		seq: list[speech.types.SequenceItemT | ExpectedProsody | ExpectedIndex | EndUtteranceCommand],
 		priority=speech.Spri.NORMAL,
-	) -> Union[_SentSequenceIndex, List[_SentSequenceIndex]]:
+	) -> _SentSequenceIndex | list[_SentSequenceIndex]:
 		"""Call SpeechManager.speak and track sequences used."""
 		sequenceNumbers = self._updateKnownSequences(seq)
 		self._filterAndSendSpeech(seq, priority)
@@ -375,7 +364,7 @@ class SpeechManagerInteractions:
 	def expect_indexReachedCallback(
 		self,
 		forIndex: _IndexT,
-		sideEffect: Optional[Callable[[], None]] = None,
+		sideEffect: Callable[[], None] | None = None,
 	):
 		"""Expect that upon exiting the expectation block, forIndex will have been reached.
 		If a side effect is required (such as speaking more text) this must be called before
@@ -399,7 +388,7 @@ class SpeechManagerInteractions:
 		self._assertSpeechManagerKnowsAboutIndex(forIndex)
 
 	def _assertSpeechManagerKnowsAboutIndex(self, index):
-		if index not in self._speechManagerIndexes.keys():
+		if index not in self._speechManagerIndexes.keys():  # noqa: SIM118
 			self._testCase.fail(f"Index {index} is not one of the index commands sent to speech manager.")
 		seqNumber = self._speechManagerIndexes[index]
 		if seqNumber not in self.expectedState_speak:  # ensure the index has been sent to the synth
@@ -412,7 +401,7 @@ class SpeechManagerInteractions:
 			self._testCase.fail("Expectations should be set in a with expectation() block")
 		self._awaitingCancelCalls = 1 + self._awaitingCancelCalls
 
-	def addMockCallMonitoring(self, monitorMocks: typing.List[mock.Mock]):
+	def addMockCallMonitoring(self, monitorMocks: list[mock.Mock]):
 		"""Allows the call count state for other arbitrary mock objects to be tracked.
 		@param monitorMocks: Mock objects to track the number of calls to
 		"""
@@ -429,8 +418,8 @@ class SpeechManagerInteractions:
 
 	def expect_synthSpeak(
 		self,
-		sequenceNumbers: Optional[Union[int, typing.Iterable[int]]] = None,
-		sequence: Optional[List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex]]] = None,
+		sequenceNumbers: int | typing.Iterable[int] | None = None,
+		sequence: list[speech.types.SequenceItemT | ExpectedProsody | ExpectedIndex] | None = None,
 	):
 		isSpeechSpecified = sequence is not None
 		areNumbersSpecified = sequenceNumbers is not None
@@ -544,7 +533,7 @@ class SpeechManagerInteractions:
 	def pumpAllAndSendSpeechOnCallback(
 		self,
 		expectCallbackForIndex: int,
-		expectedSendSequenceNumber: Union[int, List[int]],
+		expectedSendSequenceNumber: int | list[int],
 		seq,
 		priority=speech.Spri.NORMAL,
 	):

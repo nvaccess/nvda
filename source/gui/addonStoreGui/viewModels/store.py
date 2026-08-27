@@ -3,17 +3,15 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from os import (
+from os import (  # noqa: I001
 	PathLike,
 	startfile,
 )
 import os
 from typing import (
-	Iterable,
-	List,
-	Optional,
 	cast,
 )
+from collections.abc import Iterable
 import threading
 
 import addonHandler
@@ -112,7 +110,7 @@ class AddonStoreVM:
 			action.actionTarget = selectedVM
 
 	def _makeActionsList(self):
-		selectedListItem: Optional[AddonListItemVM] = self.listVM.getSelection()
+		selectedListItem: AddonListItemVM | None = self.listVM.getSelection()
 		return [
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
@@ -600,7 +598,7 @@ class AddonStoreVM:
 	def _downloadComplete(
 		cls,
 		listItemVM: AddonListItemVM[_AddonStoreModel],
-		fileDownloaded: Optional[PathLike],
+		fileDownloaded: PathLike | None,
 	):
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
@@ -726,7 +724,7 @@ class AddonStoreVM:
 					os.remove(fileDownloaded)
 				except FileNotFoundError:
 					log.debugWarning(f"File already removed {fileDownloaded}")
-				except Exception as e:
+				except Exception as e:  # noqa: BLE001
 					log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
 
 	def cancelInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
@@ -770,7 +768,7 @@ class AddonStoreVM:
 
 		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
 
-	def _createListItemVMs(self) -> List[AddonListItemVM]:
+	def _createListItemVMs(self) -> list[AddonListItemVM]:
 		if self._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,

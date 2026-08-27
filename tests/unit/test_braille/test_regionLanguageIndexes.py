@@ -16,7 +16,7 @@ import textInfos
 
 
 class _FakeObj:
-	_brailleFormatFieldAttributesCache: dict = {}
+	_brailleFormatFieldAttributesCache: dict = {}  # noqa: RUF012
 
 
 class _FakeInfo:
@@ -132,7 +132,7 @@ class TestLanguageIndexes(unittest.TestCase):
 				"_getSelection",
 				side_effect=RuntimeError("stop-after-reset"),
 			),
+			self.assertRaises(RuntimeError),
 		):
-			with self.assertRaises(RuntimeError):
-				region.update()
+			region.update()
 		self.assertEqual(region._languageIndexes, {0: "en"})

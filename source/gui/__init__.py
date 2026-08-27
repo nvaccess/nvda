@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 import os
 import warnings
 import wx
@@ -136,7 +136,7 @@ def __getattr__(attrName: str) -> Any:
 		import systemUtils
 
 		return systemUtils.ExecAndPump
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class MainFrame(wx.Frame):
@@ -252,7 +252,7 @@ class MainFrame(wx.Frame):
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			messageBox(
 				# Translators: Message shown when current configuration cannot be saved, for an unknown reason.
 				_("Could not save configuration; see the log for more details."),
@@ -513,7 +513,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreUpdatableCommand(self, evt: wx.MenuEvent | None):
-		from .addonStoreGui import AddonStoreDialog
+		from .addonStoreGui import AddonStoreDialog  # noqa: I001
 		from .addonStoreGui.viewModels.store import AddonStoreVM
 		from addonStore.models.status import _StatusFilterKey
 
@@ -598,18 +598,18 @@ class MainFrame(wx.Frame):
 		error: str | None = None
 		try:
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
-		except WindowsError as e:
+		except OSError as e:
 			# 1223 is "The operation was canceled by the user."
 			if e.winerror == 1223:
 				# Same as if the user selected "no" in the initial dialog.
 				log.debug("Run of System Accessibility Repair Tool canceled during UAC.")
 				return
 			else:
-				log.error("Could not execute fixCOMRegistrations command", exc_info=True)
+				log.error("Could not execute fixCOMRegistrations command", exc_info=True)  # noqa: G201
 				error = e  # Hold for later display to the user
 				return  # Safe because of finally block
 		except Exception:
-			log.error("Could not execute fixCOMRegistrations command", exc_info=True)
+			log.error("Could not execute fixCOMRegistrations command", exc_info=True)  # noqa: G201
 			return  # Safe because of finally block
 		finally:  # Clean up the progress dialog, and display any important error to the user before returning
 			progressDialog.done()
@@ -649,7 +649,7 @@ class MainFrame(wx.Frame):
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 	def __init__(self, frame: MainFrame):
-		super(SysTrayIcon, self).__init__()
+		super().__init__()
 		icon = wx.Icon(ICON_PATH, wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, buildVersion.name)
 
@@ -978,7 +978,7 @@ class IndeterminateProgressDialog(wx.ProgressDialog):
 		self.Raise()
 
 	def Pulse(self):
-		super(IndeterminateProgressDialog, self).Pulse()
+		super().Pulse()
 		# We want progress to be spoken on the first pulse and every 10 pulses thereafter.
 		# Therefore, cycle from 0 to 9 inclusive.
 		self._speechCounter = (self._speechCounter + 1) % 10
@@ -1040,7 +1040,7 @@ class NonReEntrantTimer(wx.Timer):
 		if run is not None:
 			self.run = run
 		self._inNotify = False
-		super(NonReEntrantTimer, self).__init__()
+		super().__init__()
 
 	def run(self):
 		"""Subclasses can override or specify in constructor."""

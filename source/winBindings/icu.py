@@ -15,7 +15,7 @@ The ``ubrk_*`` function bindings are only defined when :data:`ICU_AVAILABLE` is 
 	https://learn.microsoft.com/windows/win32/intl/international-components-for-unicode--icu-
 """
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	WINFUNCTYPE,
 	windll,
 	c_int32,

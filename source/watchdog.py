@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import sys
+import sys  # noqa: I001
 import time
 from time import perf_counter as _timer
 import threading
@@ -41,7 +41,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return logHandler.getFormattedStacksForAllThreads
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 MIN_CORE_ALIVE_TIMEOUT = 0.5
@@ -235,7 +235,7 @@ def _shouldRecoverAfterMinTimeout():
 def _recoverAttempt():
 	try:
 		winBindings.ole32.CoCancelCall(core.mainThreadId, 0)
-	except:  # noqa: E722
+	except:  # noqa: E722, S110
 		pass
 
 
@@ -313,7 +313,7 @@ def terminate():
 	_watcherThread.join()
 
 
-class Suspender(object):
+class Suspender:
 	"""A context manager to temporarily suspend the watchdog for a block of code."""
 
 	def __enter__(self):
@@ -333,7 +333,7 @@ class CancellableCallThread(threading.Thread):
 	"""
 
 	def __init__(self):
-		super(CancellableCallThread, self).__init__()
+		super().__init__()
 		self.daemon = True
 		self._executeEvent = threading.Event()
 		self._executionDoneEvent = winBindings.kernel32.CreateEvent(None, False, False, None)
@@ -394,7 +394,7 @@ class CancellableCallThread(threading.Thread):
 			self._executeEvent.clear()
 			try:
 				self._result = self._func(*self._args, **self._kwargs)
-			except Exception as e:
+			except Exception as e:  # noqa: BLE001
 				self._exc_info = e
 			winBindings.kernel32.SetEvent(self._executionDoneEvent)
 		winBindings.kernel32.CloseHandle(self._executionDoneEvent)
@@ -448,5 +448,5 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 class WatchdogObserver:
 	@property
 	def isAttemptingRecovery(self) -> bool:
-		global isAttemptingRecovery
+		global isAttemptingRecovery  # noqa: PLW0602
 		return isAttemptingRecovery

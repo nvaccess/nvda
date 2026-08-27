@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import time
+import time  # noqa: I001
 import config
 import eventHandler
 import core
@@ -80,7 +80,7 @@ class BrokenDataValidationSysListView32(UIA):
 	@classmethod
 	def matchesNVDAObject(cls, obj: NVDAObject) -> bool:
 		"""Identifies if the given NVDAObject is a broken data validation SysListView32 control."""
-		if isinstance(obj, UIA) and obj.UIAIsWindowElement and cls.windowMatches(obj.windowHandle):
+		if isinstance(obj, UIA) and obj.UIAIsWindowElement and cls.windowMatches(obj.windowHandle):  # noqa: SIM103
 			return True
 		return False
 
@@ -110,7 +110,7 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		windowClass = winUser.getClassName(hwnd)
 		versionMajor = int(self.productVersion.split(".")[0])
-		if versionMajor >= 16 and windowClass == "RICHEDIT60W":
+		if versionMajor >= 16 and windowClass == "RICHEDIT60W":  # noqa: SIM103
 			# RICHEDIT60W In Excel 2016+ on Windows 10+
 			# has a very good UI Automation implementation,
 			# Though oddly IsServerSideProvider returns false for these windows.

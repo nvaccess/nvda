@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import oleacc
+import oleacc  # noqa: I001
 import IAccessibleHandler
 import controlTypes
 import winUser
@@ -22,10 +22,10 @@ class SDM(IAccessible):
 		# E.g. File recovery pane, clipboard manager pane
 		if winUser.getGUIThreadInfo(0).hwndFocus != self.windowHandle:
 			return False
-		return super(SDM, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
-		name = super(SDM, self).name
+		name = super().name
 		if not name and self.role == controlTypes.Role.LISTITEM:
 			name = self.displayText
 		return name
@@ -33,7 +33,7 @@ class SDM(IAccessible):
 	def _get_positionInfo(self):
 		if self.role != controlTypes.Role.LISTITEM:
 			return {}
-		return super(SDM, self).positionInfo
+		return super().positionInfo
 
 	def _get_parent(self):
 		if self.IAccessibleChildID == 0 and self.role not in (
@@ -44,22 +44,22 @@ class SDM(IAccessible):
 			# SDM child IAccessible objects have a broken accParent.
 			# The parent should be the dialog.
 			return getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
-		return super(SDM, self).parent
+		return super().parent
 
 	def _get_presentationType(self):
-		t = super(SDM, self).presentationType
+		t = super().presentationType
 		if t == self.presType_content and self.SDMChild:
 			t = self.presType_layout
 		return t
 
 	def _get_firstChild(self):
-		child = super(SDM, self).firstChild
+		child = super().firstChild
 		if not child:
 			child = self.SDMChild
 		return child
 
 	def _get_lastChild(self):
-		child = super(SDM, self).lastChild
+		child = super().lastChild
 		if not child:
 			child = self.SDMChild
 		return child
@@ -95,10 +95,10 @@ class MsoCommandBarToolBar(IAccessible):
 		# Therefore suppress reporting of these toolbars in focus ancestry if they only have one child.
 		if self.childCount == 1:
 			return False
-		return super(MsoCommandBarToolBar, self).isPresentableFocusAncestor
+		return super().isPresentableFocusAncestor
 
 	def _get_name(self):
-		name = super(MsoCommandBarToolBar, self).name
+		name = super().name
 		# #3407: overly verbose and programmatic toolbar label
 		if name and name.startswith("MSO Generic Control Container"):
 			name = ""
@@ -135,7 +135,7 @@ class BrokenMsoCommandBar(IAccessible):
 	description = None
 
 	def _get_name(self):
-		name = super(BrokenMsoCommandBar, self).name
+		name = super().name
 		if name == "MSO Generic Control Container":
 			return None
 		return name
@@ -144,10 +144,10 @@ class BrokenMsoCommandBar(IAccessible):
 class CommandBarListItem(IAccessible):
 	"""A list item in an MSO commandbar, that may be part of a color palet."""
 
-	COMPILED_RE = re.compile(r"RGB\(\d+, \d+, \d+\)", re.I)
+	COMPILED_RE = re.compile(r"RGB\(\d+, \d+, \d+\)", re.IGNORECASE)
 
 	def _get_rgbNameAndMatch(self):
-		name = super(CommandBarListItem, self).name
+		name = super().name
 		if self.COMPILED_RE.match(name):
 			matchRGB = True
 		else:
@@ -173,7 +173,7 @@ class CommandBarListItem(IAccessible):
 				rgb=colors.RGB.fromString(name),
 			)
 		else:
-			return super(CommandBarListItem, self).description
+			return super().description
 
 
 class SDMSymbols(SDM):
@@ -191,7 +191,7 @@ class SDMSymbols(SDM):
 		gesture.send()
 		eventHandler.queueEvent("valueChange", self)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:downArrow": "selectGraphic",
 		"kb:upArrow": "selectGraphic",
 		"kb:home": "selectGraphic",

@@ -8,7 +8,7 @@ Shell Experience Host is home to a number of things, including Action Center and
 In Windows 11 24H2 (2024 Update and Server 2025), quick settings component is part of ShellHost.exe.
 """
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.UIA import UIA
 from UIAHandler import IUIAutomationElement, UIA_NamePropertyId
@@ -48,7 +48,7 @@ class ActionCenterToggleButton(UIA):
 
 class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
-		if isinstance(obj, UIA):
+		if isinstance(obj, UIA):  # noqa: SIM102
 			# #8845: Brightness button in Action Center is a button, not a toggle button.
 			# Brightness control is now a slider in build 18277.
 			if obj.UIAAutomationId == "Microsoft.QuickAction.Brightness":
@@ -78,6 +78,6 @@ class AppModule(appModuleHandler.AppModule):
 
 	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
 		# #16348: reclassify Windows 11 24H2 control center window as UIA to allow mouse/touch interaction.
-		if winUser.getClassName(hwnd) == "ControlCenterWindow":
+		if winUser.getClassName(hwnd) == "ControlCenterWindow":  # noqa: SIM103
 			return True
 		return False

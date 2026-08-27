@@ -3,11 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (
-	Callable,
+from typing import (  # noqa: I001
 	Any,
 	TypeAlias,
 )
+from collections.abc import Callable
 import json
 import rpyc
 from logHandler import log
@@ -69,9 +69,9 @@ class SynthDriverService(Service):
 		self._synthDoneSpeakingCallback = localCallback_synthDoneSpeaking
 		synthDoneSpeaking.register(localCallback_synthDoneSpeaking)
 
-	_SerializedSettingKV: TypeAlias = tuple[str, Any]
-	_SerializedSettingData: TypeAlias = tuple[str, tuple[_SerializedSettingKV, ...]]
-	_SerializedSupportedSettings: TypeAlias = tuple[_SerializedSettingData, ...]
+	_SerializedSettingKV: TypeAlias = tuple[str, Any]  # noqa: UP040
+	_SerializedSettingData: TypeAlias = tuple[str, tuple[_SerializedSettingKV, ...]]  # noqa: UP040
+	_SerializedSupportedSettings: TypeAlias = tuple[_SerializedSettingData, ...]  # noqa: UP040
 
 	@Service.exposed
 	def getSupportedSettings(self) -> _SerializedSupportedSettings:

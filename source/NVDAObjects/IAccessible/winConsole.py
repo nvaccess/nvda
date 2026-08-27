@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
-import config
+import config  # noqa: I001
 
 from NVDAObjects.behaviors import KeyboardHandlerBasedTypedCharSupport
 from winVersion import getWinVer, WIN10_1607
@@ -28,8 +28,6 @@ class LegacyWinConsole(winConsole.WinConsole, IAccessible):
 	NVDA's original console support, used by default on Windows versions
 	before 1607.
 	"""
-
-	pass
 
 
 def findExtraOverlayClasses(obj, clsList):

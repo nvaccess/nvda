@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 import time
 import wx
 import gui
@@ -122,7 +122,7 @@ def internal_mouseEvent(msg, x, y, injected):
 		elif msg in (WM_LBUTTONDOWN, WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.eventQueue, speech.cancelSpeech)
 	except:  # noqa: E722
-		log.error("", exc_info=True)
+		log.error("", exc_info=True)  # noqa: G201
 	return True
 
 
@@ -170,13 +170,13 @@ def getMouseRestrictedToScreens(x, y, displays):
 		)
 		edgeToMouse = mpos - mouseLimitedToScreen
 		distFromRectToMouseSqd = abs(edgeToMouse.x) + abs(edgeToMouse.y)
-		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:  # noqa: E711
+		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:
 			closestDistValue = distFromRectToMouseSqd
 			newXY = mouseLimitedToScreen
 
 	# drop any partial position information. Even the 99% of the way to the edge of a
 	# pixel is still in the pixel.
-	return (int(floor(newXY.x)), int(floor(newXY.y)))
+	return (int(floor(newXY.x)), int(floor(newXY.y)))  # noqa: RUF046
 
 
 def getMinMaxPoints(screenRect: wx.Rect) -> tuple[wx.Point, wx.Point]:
@@ -196,13 +196,13 @@ def getTotalWidthAndHeightAndMinimumPosition(displays: list[wx.Rect]) -> tuple[i
 	smallestX, smallestY, largestX, largestY = (None, None, None, None)
 	for screenRect in displays:
 		(screenMin, screenMax) = getMinMaxPoints(screenRect)
-		if smallestX == None or screenMin.x < smallestX:  # noqa: E711
+		if smallestX == None or screenMin.x < smallestX:
 			smallestX = screenMin.x
-		if smallestY == None or screenMin.y < smallestY:  # noqa: E711
+		if smallestY == None or screenMin.y < smallestY:
 			smallestY = screenMin.y
-		if largestX == None or screenMax.x > largestX:  # noqa: E711
+		if largestX == None or screenMax.x > largestX:
 			largestX = screenMax.x
-		if largestY == None or screenMax.y > largestY:  # noqa: E711
+		if largestY == None or screenMax.y > largestY:
 			largestY = screenMax.y
 
 	# get full range, including any "blank space" between monitors
@@ -244,7 +244,7 @@ def executeMouseMoveEvent(x, y):
 		eventHandler.executeEvent("mouseMove", mouseObject, x=x, y=y)
 		oldMouseObject = mouseObject
 	except:  # noqa: E722
-		log.error("api.notifyMouseMoved", exc_info=True)
+		log.error("api.notifyMouseMoved", exc_info=True)  # noqa: G201
 
 
 # Register internal mouse event
@@ -275,7 +275,7 @@ def _reportShape():
 
 
 def pumpAll():
-	global mouseMoved, curMousePos
+	global mouseMoved, curMousePos  # noqa: PLW0602
 	if mouseMoved:
 		mouseMoved = False
 		(x, y) = curMousePos

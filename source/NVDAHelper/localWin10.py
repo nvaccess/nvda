@@ -5,7 +5,7 @@
 
 """Functions exported by nvdaHelperLocalWin10.dll, and supporting definitions."""
 
-from ctypes import CFUNCTYPE, POINTER, c_bool, c_int, c_uint, c_void_p, c_wchar_p, windll
+from ctypes import CFUNCTYPE, POINTER, c_bool, c_int, c_uint, c_void_p, c_wchar_p, windll  # noqa: I001
 from comtypes import BSTR
 
 import NVDAState

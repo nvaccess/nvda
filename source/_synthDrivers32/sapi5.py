@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import sys
+import sys  # noqa: I001
 import os
 import comtypes.client
 
@@ -14,10 +14,10 @@ sys.modules["comInterfaces.SpeechLib"] = comtypes.client.GetModule(
 )
 
 # Point the sonic module to the 32 bit build of its dll
-from . import _sonic  # noqa: E402
+from . import _sonic
 
 _sonic.SONIC_DLL_PATH = os.path.join(os.path.dirname(__file__), "sonic.dll")
 
-from ._sapi5 import SynthDriver  # noqa: E402
+from ._sapi5 import SynthDriver
 
 __all__ = ["SynthDriver"]

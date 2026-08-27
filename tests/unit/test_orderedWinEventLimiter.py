@@ -5,16 +5,16 @@
 
 """Unit tests for the orderedWinEventLimiter module."""
 
-import inspect
+import inspect  # noqa: I001
 import re
 import unittest
-from typing import List, Iterator, Callable
+from collections.abc import Iterator, Callable
 import winUser
 from IAccessibleHandler import orderedWinEventLimiter
 from IAccessibleHandler.orderedWinEventLimiter import OrderedWinEventLimiter
 
 
-def softAssert(errorList: List[AssertionError], method: Callable, *args, **kwargs):
+def softAssert(errorList: list[AssertionError], method: Callable, *args, **kwargs):
 	try:
 		method(*args, **kwargs)
 	except AssertionError as e:
@@ -40,7 +40,7 @@ def _getNonSpecialCaseEvents() -> Iterator[int]:
 			yield value
 
 
-nonSpecialCaseEvents: List[int] = list(_getNonSpecialCaseEvents())
+nonSpecialCaseEvents: list[int] = list(_getNonSpecialCaseEvents())
 
 
 class TestOrderedWinEventLimiter(unittest.TestCase):
@@ -50,7 +50,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 
 	def test_maxFocusEvents(self):
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
-		for n in range(0, 5):
+		for n in range(5):
 			limiter.addEvent(
 				eventID=winUser.EVENT_OBJECT_FOCUS,
 				window=n,

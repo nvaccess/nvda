@@ -5,7 +5,7 @@
 
 """Unit tests for the cursorManager module."""
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import Mock, patch
 
 import wx

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from . import wxMonkeyPatches
+from . import wxMonkeyPatches  # noqa: I001
 
 
 applyWxMonkeyPatches = wxMonkeyPatches.apply

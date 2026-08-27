@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import wx
+import wx  # noqa: I001
 import NVDAState
 import config
 import api
@@ -25,7 +25,7 @@ class ProfilesDialog(
 	def __new__(cls, *args, **kwargs):
 		# Make this a singleton.
 		if ProfilesDialog._instance is None:
-			return super(ProfilesDialog, cls).__new__(cls, *args, **kwargs)
+			return super().__new__(cls, *args, **kwargs)
 		return ProfilesDialog._instance
 
 	def __init__(self, parent):
@@ -156,7 +156,7 @@ class ProfilesDialog(
 				# in the Configuration Profiles dialog.
 				states.append(_("triggered"))
 		if states:
-			return " (%s)" % ", ".join(states)
+			return " (%s)" % ", ".join(states)  # noqa: UP031
 		return ""
 
 	def isProfileManual(self, name):
@@ -346,7 +346,7 @@ class ProfilesDialog(
 	def getSimpleTriggers(self):
 		# Yields (spec, display, manualEdit)
 		yield (
-			"app:%s" % self.currentAppName,
+			"app:%s" % self.currentAppName,  # noqa: UP031
 			# Translators: Displayed for the configuration profile trigger for the current application.
 			# %s is replaced by the application executable name.
 			_("Current application (%s)") % self.currentAppName,
@@ -379,8 +379,8 @@ class ProfilesDialog(
 			)
 
 
-class TriggerInfo(object):
-	__slots__ = ("spec", "display", "profile")
+class TriggerInfo:
+	__slots__ = ("display", "profile", "spec")
 
 	def __init__(self, spec, display, profile):
 		self.spec = spec
@@ -455,7 +455,7 @@ class TriggersDialog(
 			self.profileList.Selection = self.Parent.profileNames.index(trig.profile)
 		except ValueError:
 			log.error(
-				"Trigger %s: invalid profile %s" % (trig.spec, trig.profile),
+				"Trigger %s: invalid profile %s" % (trig.spec, trig.profile),  # noqa: UP031
 			)
 			self.profileList.Selection = 0
 			trig.profile = None
@@ -525,7 +525,7 @@ class NewProfileDialog(
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles
-		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]
+		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]  # noqa: RUF059
 		if (
 			spec in confTrigs
 			and gui.messageBox(
@@ -631,7 +631,7 @@ class NewProfileDialog(
 		self.Destroy()
 
 	def onTriggerChoice(self, evt):
-		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]
+		spec, disp, manualEdit = self.triggers[self.triggerChoice.Selection]  # noqa: RUF059
 		if not spec:
 			# Manual activation shouldn't guess a name.
 			name = ""

@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 import mouseHandler
 import api
@@ -30,7 +30,7 @@ class AzardiTreeViewItem(TreeViewItem):
 		api.setMouseObject(self)
 		mouseHandler.doSecondaryClick()
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:enter": "enter",
 		"kb:applications": "contextMenu",
 	}

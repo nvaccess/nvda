@@ -102,6 +102,10 @@ This could cause errors in the updated add-on on the first start of NVDA after t
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Updated dependencies:
+  * ruff to 0.16.3. (#20732)
+  * prek to 0.4.14. (#20732)
+  * pyright to 1.1.411. (#20732)
+  * ty to 0.0.73. (#20732)
   * comtypes to 1.4.16. (#20707)
   * cryptography to 50.0.0. (#20707)
   * requests to 2.34.2. (#20707)

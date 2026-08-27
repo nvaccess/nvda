@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2021 NV Access Limited, Babbage B.V.
 
-import winVersion
+import winVersion  # noqa: I001
 from logHandler import log
 import eventHandler
 import controlTypes
@@ -96,7 +96,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 	# C901 '_getTextWithFieldsForUIARange' is too complex
 	# Note: when working here look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _getTextWithFieldsForUIARange(  # noqa: C901
+	def _getTextWithFieldsForUIARange(
 		self,
 		rootElement,
 		textRange,
@@ -296,7 +296,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 					UIAHandler.TextPatternRangeEndpoint_Start,
 				):
 					log.debug("Recursing endRange")
-					for endField in self._getTextWithFieldsForUIARange(
+					for endField in self._getTextWithFieldsForUIARange(  # noqa: UP028
 						parentElement,
 						tempRange,
 						formatConfig,
@@ -363,7 +363,7 @@ class EdgeNode(web.UIAWeb):
 		numberOfCharacters = 2
 		text = ti._rangeObj.getText(numberOfCharacters)
 		# Edge can report newline for empty fields:
-		if text == "\n":
+		if text == "\n":  # noqa: SIM103
 			return True
 		return False
 

@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import argparse
+import argparse  # noqa: I001
 import sys
 import winUser
 
@@ -44,7 +44,7 @@ class NoConsoleOptionParser(argparse.ArgumentParser):
 
 def stringToBool(string):
 	"""Wrapper for configobj.validate.is_boolean to raise the proper exception for wrong values."""
-	from configobj.validate import is_boolean, ValidateError
+	from configobj.validate import is_boolean, ValidateError  # noqa: I001
 
 	try:
 		return is_boolean(string)

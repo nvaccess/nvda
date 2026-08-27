@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 import re
 import ctypes
 import unicodedata
@@ -23,11 +23,7 @@ from winBindings.icu import ICU_AVAILABLE
 from dataclasses import dataclass
 from typing import (
 	Any,
-	Dict,
-	List,
-	Optional,
 	Self,
-	Tuple,
 )
 from logHandler import log
 
@@ -137,7 +133,7 @@ def findEndOfLine(text, offset, lineLength=None):
 	end = offset
 	if text[end] != "\n":
 		end = text.find("\n", offset)
-	if end < 0:
+	if end < 0:  # noqa: SIM102
 		if text[offset] != "\r":
 			end = text.find("\r", offset)
 	if end < 0:
@@ -275,10 +271,10 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		return None
 
 	#: The encoding internal to the underlying text info implementation.
-	encoding: Optional[str] = textUtils.WCHAR_ENCODING
+	encoding: str | None = textUtils.WCHAR_ENCODING
 
 	def __eq__(self, other):
-		if self is other or (
+		if self is other or (  # noqa: SIM103
 			isinstance(other, OffsetsTextInfo)
 			and self._startOffset == other._startOffset
 			and self._endOffset == other._endOffset
@@ -310,7 +306,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 	# C901 '_get_boundingRects' is too complex
 	# Note: when working on _get_boundingRects, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _get_boundingRects(self) -> List[locationHelper.RectLTWH]:  # noqa: C901
+	def _get_boundingRects(self) -> list[locationHelper.RectLTWH]:
 		if self.isCollapsed:
 			return []
 		startOffset = self._startOffset
@@ -351,11 +347,10 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			offset = startOffset
 			while offset <= inclusiveEndOffset:
 				lineStart, lineEnd = self._getLineOffsets(offset)
-				if lineStart < startOffset:
-					lineStart = startOffset
+				lineStart = max(lineStart, startOffset)
 				# Line offsets are exclusive, so the end offset is at the start of the next line, if any.
 				inclusiveLineEnd = lineEnd - 1
-				if inclusiveLineEnd > inclusiveEndOffset:
+				if inclusiveLineEnd > inclusiveEndOffset:  # noqa: PLR1730
 					# The end offset is in this line
 					inclusiveLineEnd = inclusiveEndOffset
 				rects.append(
@@ -443,7 +438,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		lineText: str,
 		unit: str,
 		relOffset: int,
-	) -> Optional[Tuple[int, int]]:
+	) -> tuple[int, int] | None:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
@@ -628,7 +623,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		"""Constructor.
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
-		super(OffsetsTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		self.wordSegConf: FeatureFlag = config.conf["documentNavigation"]["wordSegmentationStandard"]
 
 		from NVDAObjects import NVDAObject
@@ -662,7 +657,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			self._startOffset = max(min(position.startOffset, self._getStoryLength()), 0)
 			self._endOffset = max(min(position.endOffset, self._getStoryLength()), 0)
 		else:
-			raise NotImplementedError("position: %s not supported" % position)
+			raise NotImplementedError("position: %s not supported" % position)  # noqa: UP031
 
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
@@ -705,7 +700,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			return self._getPointFromOffset(self._startOffset)
 
 	def _get_isCollapsed(self):
-		if self._startOffset == self._endOffset:
+		if self._startOffset == self._endOffset:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -739,7 +734,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		elif which == "endToEnd":
 			diff = self._endOffset - other._endOffset
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 		if diff < 0:
 			diff = -1
 		elif diff > 0:
@@ -756,7 +751,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 		elif which == "endToEnd":
 			self._endOffset = other._endOffset
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 		if self._startOffset > self._endOffset:
 			# start should never be after end.
 			if which in ("startToStart", "startToEnd"):
@@ -764,7 +759,7 @@ class OffsetsTextInfo(textInfos.TextInfo, metaclass=_OffsetsTextInfoMeta):
 			else:
 				self._startOffset = self._endOffset
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
 		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig["detectFormatAfterCursor"]:

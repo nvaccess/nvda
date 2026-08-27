@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
 
-from typing import OrderedDict, Dict
+from collections import OrderedDict
 
 name = "eurobraille"
 # Translators: Names of braille displays.
@@ -46,7 +46,7 @@ EB_CONNECTION_NAME = b"n"
 EB_FALSE = b"0"  # 0x30
 EB_TRUE = b"1"  # 0x31
 
-KEYS_STICK: Dict[int, str] = OrderedDict(
+KEYS_STICK: dict[int, str] = OrderedDict(
 	{
 		0x10000: "joystick1Up",
 		0x20000: "joystick1Down",
@@ -60,7 +60,7 @@ KEYS_STICK: Dict[int, str] = OrderedDict(
 		0x10000000: "joystick2Center",
 	},
 )
-KEYS_ESYS: Dict[int, str] = OrderedDict(
+KEYS_ESYS: dict[int, str] = OrderedDict(
 	{
 		0x01: "switch1Right",
 		0x02: "switch1Left",
@@ -77,7 +77,7 @@ KEYS_ESYS: Dict[int, str] = OrderedDict(
 	},
 )
 KEYS_ESYS.update(KEYS_STICK)
-KEYS_IRIS: Dict[int, str] = OrderedDict(
+KEYS_IRIS: dict[int, str] = OrderedDict(
 	{
 		0x01: "l1",
 		0x02: "l2",
@@ -94,7 +94,7 @@ KEYS_IRIS: Dict[int, str] = OrderedDict(
 	},
 )
 
-KEYS_ESITIME: Dict[int, str] = OrderedDict(
+KEYS_ESITIME: dict[int, str] = OrderedDict(
 	{
 		0x01: "l1",
 		0x02: "l2",
@@ -111,7 +111,7 @@ KEYS_ESITIME.update(KEYS_STICK)
 KEYS_BNOTE = KEYS_ESYS
 KEYS_BBOOK = KEYS_ESITIME
 
-DEVICE_TYPES: Dict[int, str] = {
+DEVICE_TYPES: dict[int, str] = {
 	0x01: "Iris 20",
 	0x02: "Iris 40",
 	0x03: "Iris S20",
