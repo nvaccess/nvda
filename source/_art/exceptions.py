@@ -29,14 +29,14 @@ class CapabilityDeniedError(CapabilityUnavailableError):
 	"""A capability is unavailable for a policy reason."""
 
 
-class PermissionNotGrantedError(PermissionError):
+class PermissionNotGrantedError(CapabilityDeniedError):
 	"""The permission has never been held.
 
 	Covers ``Denied``, ``Prompt``, and permissions absent from the add-on's manifest.
 	"""
 
 
-class PermissionRevokedError(PermissionError):
+class PermissionRevokedError(CapabilityDeniedError):
 	"""The permission was granted earlier in this session, and has since been revoked."""
 
 
