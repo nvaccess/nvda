@@ -13,8 +13,12 @@ from robot.libraries.BuiltIn import BuiltIn as _BuiltIn
 _builtIn: _BuiltIn = _BuiltIn()
 
 
+def append_failed_locale(failed_locales: list[str], locale_code: str, start_message: str) -> list[str]:
+	"""Return the failed-locale list with a new entry appended."""
+	return [*failed_locales, f"{locale_code}: {start_message}"]
+
+
 def get_source_locale_codes() -> list[str]:
-	"""Return source locale codes from source/locale."""
 	"""Return source locale codes from source/locale."""
 
 	nvdaPoFiles = _glob(

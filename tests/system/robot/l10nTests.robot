@@ -22,9 +22,9 @@ Starts with every source locale
 		Log	Testing NVDA startup with language: ${localeCode}
 		${startStatus}	${startMessage}=	Run Keyword And Ignore Error	start NVDA	standard-dontShowWelcomeDialog.ini	language=${localeCode}
 		Run Keyword If	"${startStatus}"=="FAIL"	Run Keyword And Ignore Error	quit NVDA
-		Run Keyword If	"${startStatus}"=="FAIL"	Append To List	${failedLocales}	${localeCode}: ${startMessage}
+		@{failedLocales}=	Run Keyword If	"${startStatus}"=="FAIL"	Append Failed Locale	${failedLocales}	${localeCode}	${startMessage}	ELSE	Set Variable	${failedLocales}
 		Run Keyword If	"${startStatus}"=="FAIL"	Log	NVDA failed to start for locale: ${localeCode}. Error: ${startMessage}	ERROR
 		quit NVDA
 	END
 	${failedCount}=	Get Length	${failedLocales}
-	Run Keyword If	${failedCount} > 0	Fail	NVDA failed to start for the following locales:\n${failedLocales}
+	Run Keyword If	${failedCount} > 0	Fail	NVDA failed to start for the following locales: ${failedLocales}
