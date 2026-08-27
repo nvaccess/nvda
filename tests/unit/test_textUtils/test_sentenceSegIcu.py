@@ -11,6 +11,7 @@ invariant that ``move``/``expand`` rely on.  Tests that require ICU are skipped 
 the ICU library is not present on the system.
 """
 
+import itertools
 import unittest
 from unittest.mock import patch
 
@@ -125,7 +126,7 @@ class TestSentenceIterationTiling(unittest.TestCase):
 		"""Assert the spans tile [0, length) gap-free, in order, with no overlaps."""
 		self.assertEqual(spans[0][0], 0, f"first sentence does not start at 0: {spans}")
 		self.assertEqual(spans[-1][1], length, f"last sentence does not reach {length}: {spans}")
-		for (_, prevEnd), (nextStart, _) in zip(spans, spans[1:]):
+		for (_, prevEnd), (nextStart, _) in itertools.pairwise(spans, spans[1:]):
 			self.assertEqual(prevEnd, nextStart, f"gap/overlap between sentences: {spans}")
 
 	def test_single_paragraph_tiles_both_directions(self):
@@ -161,6 +162,8 @@ class TestSentenceOffsetsWithoutIcu(unittest.TestCase):
 	def test_not_implemented_when_icu_unavailable(self):
 		obj = BasicTextProvider(text="Hello world. Goodbye now.")
 		info = obj.makeTextInfo(Offsets(0, 0))
-		with patch.object(offsetsModule, "ICU_AVAILABLE", False):
-			with self.assertRaises(NotImplementedError):
-				info._getSentenceOffsets(0)
+		with (
+			patch.object(offsetsModule, "ICU_AVAILABLE", False),
+			self.assertRaises(NotImplementedError),
+		):
+			info._getSentenceOffsets(0)
