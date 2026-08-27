@@ -13,11 +13,12 @@ It controls the host process, not the add-on running inside it.
 
 from __future__ import annotations
 
-from typing import Protocol
+from typing import Protocol, runtime_checkable
 
 from rpyc.core.stream import Stream
 
 
+@runtime_checkable
 class HostController[HostPipeEnd](Protocol):
 	"""Starts a host, watches it, and stops it."""
 
