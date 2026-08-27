@@ -8,14 +8,26 @@
 These tests cover the BLE scanner, BLE I/O, and device discovery functionality.
 """
 
+import asyncio
 import unittest
 from unittest.mock import MagicMock, patch
 
 from bleak.backends.device import BLEDevice
+from winrt.windows.devices.radios import RadioState
 from bleak.backends.scanner import AdvertisementData
-from hwIo.ble._scanner import Scanner
-from hwIo.ble._io import Ble
-from hwIo.ble import findDeviceByAddress
+from bleak.exc import BleakBluetoothNotAvailableError, BleakBluetoothNotAvailableReason
+from hwIo.ble._scanner import Scanner, SCAN_CONTROL_TIMEOUT_SECONDS
+from hwIo.ble._io import Ble, LINK_TIMEOUT_SECONDS
+from hwIo.ble import findDeviceByAddress, getDiscoveredDevice, isAvailable
+
+
+def _runCoroutineHere(coro, timeout=None):
+	"""Run a coroutine to completion here, standing in for the asyncio event loop."""
+	loop = asyncio.new_event_loop()
+	try:
+		return loop.run_until_complete(coro)
+	finally:
+		loop.close()
 
 
 class TestScanner(unittest.TestCase):
@@ -27,18 +39,14 @@ class TestScanner(unittest.TestCase):
 		self.bleakScannerPatcher = patch("hwIo.ble._scanner.bleak.BleakScanner")
 		self.mockBleakScannerClass = self.bleakScannerPatcher.start()
 
-		mockFuture = MagicMock()
-		mockFuture.result.return_value = None
-		mockFuture.exception.return_value = None
-
-		def fakeRunCoroutine(coro: object) -> MagicMock:
+		def fakeRunCoroutineSync(coro: object, timeout: float | None = None) -> None:
 			if hasattr(coro, "close"):
 				coro.close()
-			return mockFuture
+			return None
 
 		self.runCoroutinePatcher = patch(
-			"hwIo.ble._scanner.runCoroutine",
-			side_effect=fakeRunCoroutine,
+			"hwIo.ble._scanner.runCoroutineSync",
+			side_effect=fakeRunCoroutineSync,
 		)
 		self.mockRunCoroutine = self.runCoroutinePatcher.start()
 
@@ -66,6 +74,51 @@ class TestScanner(unittest.TestCase):
 
 		self.mockScannerInstance.start.assert_called_once()
 		self.assertTrue(scanner.isScanning)
+
+	def _makeStartFail(self, error: Exception) -> None:
+		"""Make the next call into Bleak fail with the given error."""
+
+		def fail(coro: object, timeout: float | None = None) -> None:
+			if hasattr(coro, "close"):
+				coro.close()
+			raise error
+
+		self.mockRunCoroutine.side_effect = fail
+
+	def test_startRefusedIsReported(self):
+		"""A start Bleak refuses reaches the caller rather than being swallowed."""
+		scanner = self.Scanner()
+		self._makeStartFail(
+			BleakBluetoothNotAvailableError(
+				"No Bluetooth adapter found",
+				BleakBluetoothNotAvailableReason.NO_BLUETOOTH,
+			),
+		)
+		with self.assertRaises(BleakBluetoothNotAvailableError):
+			scanner.start()
+
+	def test_startRefusedLeavesScannerIdle(self):
+		"""A scan that never started is not recorded as running.
+
+		Otherwise every later attempt is skipped as redundant, and callers wait for
+		results that cannot arrive.
+		"""
+		scanner = self.Scanner()
+		self._makeStartFail(
+			BleakBluetoothNotAvailableError(
+				"Bluetooth radio is not powered on",
+				BleakBluetoothNotAvailableReason.POWERED_OFF,
+			),
+		)
+		with self.assertRaises(BleakBluetoothNotAvailableError):
+			scanner.start()
+		self.assertFalse(scanner.isScanning)
+
+	def test_startIsBounded(self):
+		"""Talking to the Bluetooth stack is given a timeout."""
+		scanner = self.Scanner()
+		scanner.start()
+		self.assertEqual(self.mockRunCoroutine.call_args.args[1], SCAN_CONTROL_TIMEOUT_SECONDS)
 
 	def test_stopScanning(self):
 		"""Test that stopping scan calls Bleak scanner and clears isScanning flag."""
@@ -275,6 +328,64 @@ class TestBle(unittest.TestCase):
 		self.mockRunCoroutineSync.assert_called()
 		self.assertTrue(ble.isConnected())
 
+	def _bleKwargs(self, **overrides) -> dict:
+		"""Build the constructor arguments for a Ble instance."""
+		mockDevice = MagicMock(spec=BLEDevice)
+		mockDevice.address = "AA:BB:CC:DD:EE:FF"
+		mockDevice.name = "TestDevice"
+		kwargs = dict(
+			device=mockDevice,
+			writeServiceUuid="service-uuid",
+			writeCharacteristicUuid="write-char-uuid",
+			readServiceUuid="service-uuid",
+			readCharacteristicUuid="read-char-uuid",
+			onReceive=lambda data: None,
+			ioThread=MagicMock(),
+		)
+		kwargs.update(overrides)
+		return kwargs
+
+	def test_connectIsBounded(self):
+		"""The connection attempt is given a timeout, so a missing device cannot block forever."""
+		self._makeBle(**self._bleKwargs())
+		timeouts = [call.args[1] for call in self.mockRunCoroutineSync.call_args_list if len(call.args) > 1]
+		self.assertIn(LINK_TIMEOUT_SECONDS, timeouts)
+
+	def _makeConnectTimeOut(self) -> None:
+		"""Make the next connection attempt time out.
+
+		The coroutine is still closed, as the setUp fake does, so that Python does not
+		warn that it was never awaited.
+		"""
+
+		failed: list[bool] = []
+
+		def timeOut(coro: object, timeout: float | None = None) -> None:
+			if hasattr(coro, "close"):
+				coro.close()
+			# Only the connection attempt fails; the clean-up that follows must still work.
+			if not failed:
+				failed.append(True)
+				raise TimeoutError("timed out")
+			return None
+
+		self.mockRunCoroutineSync.side_effect = timeOut
+
+	def test_connectTimeoutPropagates(self):
+		"""A connection attempt that times out fails the constructor."""
+		self._makeConnectTimeOut()
+		with self.assertRaises(TimeoutError):
+			self.Ble(**self._bleKwargs())
+
+	def test_connectTimeoutStopsReaderThread(self):
+		"""A failed constructor leaves no reader thread behind, as nothing owns the instance."""
+		self._makeConnectTimeOut()
+		with patch("hwIo.ble._io.Thread") as mockThread:
+			with self.assertRaises(TimeoutError):
+				self.Ble(**self._bleKwargs())
+		stopEvent = mockThread.call_args.kwargs["args"][2]
+		self.assertTrue(stopEvent.is_set())
+
 	def test_writeData(self):
 		"""Test writing data to BLE characteristic."""
 		mockDevice = MagicMock(spec=BLEDevice)
@@ -378,6 +489,110 @@ class TestBle(unittest.TestCase):
 
 		self.assertGreater(self.mockRunCoroutineSync.call_count, 1)
 		self.assertIsNone(ble._onReceive)
+
+
+class TestIsAvailable(unittest.TestCase):
+	"""Tests for hwIo.ble.isAvailable"""
+
+	def _bluetooth(self, adapter: object):
+		"""Make Windows report the given Bluetooth adapter, and run the query here."""
+
+		async def getDefault():
+			return adapter
+
+		adapterClass = MagicMock()
+		adapterClass.get_default_async = getDefault
+		return (
+			patch("_asyncioEventLoop.isRunning", return_value=True),
+			patch("hwIo.ble.BluetoothAdapter", adapterClass),
+			patch("hwIo.ble.runCoroutineSync", new=_runCoroutineHere),
+		)
+
+	def _adapter(self, radioState: object, centralRole: bool = True) -> MagicMock:
+		"""Build an adapter reporting the given radio state and central role support."""
+		radio = MagicMock()
+		radio.state = radioState
+
+		async def getRadio():
+			return radio
+
+		adapter = MagicMock()
+		adapter.is_central_role_supported = centralRole
+		adapter.get_radio_async = getRadio
+		return adapter
+
+	def _availableWith(self, adapter: object) -> bool:
+		loopPatch, adapterPatch, runPatch = self._bluetooth(adapter)
+		with loopPatch, adapterPatch, runPatch:
+			return isAvailable()
+
+	def test_noEventLoop(self):
+		"""Without an event loop to ask on, availability is assumed.
+
+		Hiding a driver on a machine that may well support BLE is worse than
+		offering one that cannot connect.
+		"""
+		with patch("_asyncioEventLoop.isRunning", return_value=False):
+			self.assertTrue(isAvailable())
+
+	def test_noAdapter(self):
+		"""A machine without a Bluetooth adapter cannot reach BLE devices."""
+		self.assertFalse(self._availableWith(None))
+
+	def test_radioOff(self):
+		"""A switched off radio cannot reach BLE devices."""
+		self.assertFalse(self._availableWith(self._adapter(RadioState.OFF)))
+
+	def test_radioOn(self):
+		"""A powered adapter able to act as a central can reach BLE devices."""
+		self.assertTrue(self._availableWith(self._adapter(RadioState.ON)))
+
+	def test_noCentralRole(self):
+		"""An adapter that cannot act as a central is of no use for BLE."""
+		self.assertFalse(self._availableWith(self._adapter(RadioState.ON, centralRole=False)))
+
+	def test_failureToAsk(self):
+		"""A question that cannot be answered does not hide the driver."""
+		with (
+			patch("_asyncioEventLoop.isRunning", return_value=True),
+			patch("hwIo.ble.runCoroutineSync", side_effect=TimeoutError("timed out")),
+		):
+			self.assertTrue(isAvailable())
+
+
+class TestGetDiscoveredDevice(unittest.TestCase):
+	"""Tests for hwIo.ble.getDiscoveredDevice
+
+	Unlike findDeviceByAddress this must be callable on the main thread,
+	which is where a braille display chosen in the settings dialog is connected.
+	These tests therefore deliberately do not patch out the main-thread check.
+	"""
+
+	def _fakeDevice(self, address: str) -> MagicMock:
+		device = MagicMock(spec=BLEDevice)
+		device.address = address
+		return device
+
+	def test_deviceInResults(self):
+		"""The device with the requested address is returned."""
+		wanted = self._fakeDevice("AA:BB:CC:DD:EE:FF")
+		other = self._fakeDevice("11:22:33:44:55:66")
+		with patch("hwIo.ble.scanner") as mockScanner:
+			mockScanner.results.return_value = [other, wanted]
+			self.assertIs(getDiscoveredDevice("AA:BB:CC:DD:EE:FF"), wanted)
+			mockScanner.start.assert_not_called()
+
+	def test_deviceNotInResults(self):
+		"""None is returned without starting a scan."""
+		with patch("hwIo.ble.scanner") as mockScanner:
+			mockScanner.results.return_value = [self._fakeDevice("11:22:33:44:55:66")]
+			self.assertIsNone(getDiscoveredDevice("AA:BB:CC:DD:EE:FF"))
+			mockScanner.start.assert_not_called()
+
+	def test_noScanner(self):
+		"""None is returned when BLE was never initialized."""
+		with patch("hwIo.ble.scanner", None):
+			self.assertIsNone(getDiscoveredDevice("AA:BB:CC:DD:EE:FF"))
 
 
 class TestFindDeviceByAddress(unittest.TestCase):

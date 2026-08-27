@@ -7,13 +7,21 @@ import time
 from threading import Event
 from typing import Callable
 
-from _asyncioEventLoop.utils import runCoroutine
+from _asyncioEventLoop.utils import runCoroutineSync
 import extensionPoints
 from logHandler import log
 
 import bleak
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
+
+SCAN_CONTROL_TIMEOUT_SECONDS: int = 10
+"""How long to wait for a scan to start or stop.
+
+Both reach the Bluetooth stack, which can be slow to answer when the adapter is
+busy, so the wait is bounded while staying generous enough not to give up on a
+stack that is merely slow.
+"""
 
 
 class Scanner:
@@ -54,21 +62,31 @@ class Scanner:
 
 		:param duration: If 0 (default), scan continues in background until stop() is called.
 			If > 0, scan for specified duration in seconds then stop automatically.
+		:raises bleak.exc.BleakError: If scanning could not be started, for example because
+			the machine has no Bluetooth adapter or its radio is switched off.
 		"""
 		log.debug("Scanning for devices")
 		# Clear device cache only on first start to allow multiple callers to share results
 		if not self._isScanning.is_set():
 			self._discoveredDevices.clear()
+		# Waiting for the result lets a refused start reach the caller. Bleak refuses
+		# when the machine has no Bluetooth adapter or its radio is off, and a scan that
+		# never started must not be recorded as running: that would suppress every later
+		# attempt and leave callers waiting for results that cannot arrive.
+		runCoroutineSync(self._scanner.start(), SCAN_CONTROL_TIMEOUT_SECONDS)
 		self._isScanning.set()
-		runCoroutine(self._scanner.start())
 		if duration > 0:
 			time.sleep(duration)
-			runCoroutine(self._scanner.stop())
-			self._isScanning.clear()
+			self.stop()
 
 	def stop(self):
-		"""Stop scanning"""
-		runCoroutine(self._scanner.stop())
+		"""Stop scanning.
+
+		:raises bleak.exc.BleakError: If the scan could not be stopped.
+		"""
+		# Waiting means the watcher has really stopped before this returns. Starting a
+		# new scan while the old one is still running is refused by Bleak.
+		runCoroutineSync(self._scanner.stop(), SCAN_CONTROL_TIMEOUT_SECONDS)
 		self._isScanning.clear()
 
 	def results(self, filterFunc: Callable[[BLEDevice], bool] | None = None) -> list[BLEDevice]:

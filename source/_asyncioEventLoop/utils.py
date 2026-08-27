@@ -13,12 +13,20 @@ from collections.abc import Coroutine
 from . import _state
 
 
+def isRunning() -> bool:
+	"""Determine whether the asyncio event loop is running.
+
+	:return: ``True`` if coroutines can be scheduled on it.
+	"""
+	return _state.asyncioThread is not None and _state.asyncioThread.is_alive()
+
+
 def runCoroutine(coro: Coroutine) -> asyncio.Future:
 	"""Schedule a coroutine to be run on the asyncio event loop.
 
 	:param coro: The coroutine to run.
 	"""
-	if _state.asyncioThread is None or not _state.asyncioThread.is_alive():
+	if not isRunning():
 		raise RuntimeError("Asyncio event loop thread is not running")
 	return asyncio.run_coroutine_threadsafe(coro, _state.eventLoop)
 

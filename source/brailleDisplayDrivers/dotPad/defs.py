@@ -145,3 +145,12 @@ A 4-byte header (2 sync bytes + 2-byte length) plus the 5-byte minimum body:
 destination + 2-byte command + sequence number + checksum. A declared length
 below this signals a desync or false header.
 """
+
+BLE_SERVICE_UUID = "49535343-fe7d-4ae5-8fa9-9fafd205e455"
+"""UUID of the BLE service carrying the DotPad protocol."""
+
+BLE_READ_CHARACTERISTIC_UUID = "49535343-1e4d-4bd9-ba61-23c647249616"
+"""UUID of the characteristic the display sends notifications on."""
+
+BLE_WRITE_CHARACTERISTIC_UUID = "49535343-8841-43f4-a8d4-ecbe34729bb3"
+"""UUID of the characteristic that accepts DotPad commands."""

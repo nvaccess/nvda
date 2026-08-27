@@ -12,7 +12,7 @@ from threading import Thread
 
 from logHandler import log
 
-from .utils import runCoroutineSync
+from .utils import isRunning, runCoroutineSync  # noqa: F401 - re-exported
 
 from . import _state
 

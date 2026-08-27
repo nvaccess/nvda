@@ -5206,6 +5206,7 @@ The following displays support this automatic detection functionality.
 * Nattiq nBraille displays
 * Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
 * Tivomatic Caiku Albatross 46/80 displays
+* Dot Pad displays (USB and Bluetooth)
 * NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
 
@@ -6464,11 +6465,14 @@ The Dot Pad has left and right panning keys and four function keys (f1 through f
 Multiple buttons can be pressed simultaneously to create combination gestures (e.g., `f1+panLeft`), which can be assigned via the Input Gestures dialog.
 Apart from panning, no other commands are assigned by default.
 
-The Dot Pad driver supports automatic detection of USB-connected devices.
+The Dot Pad driver supports automatic detection of devices connected over USB or Bluetooth.
 However, automatic detection is disabled by default due to the device using generic USB identifiers that could conflict with other devices.
 To enable automatic detection, go to NVDA's Braille settings and check "Dot Pad" in the automatic detection list.
 When automatic detection is enabled and a compatible device is detected, NVDA will automatically connect to it.
-You can also manually select a specific USB or Bluetooth virtual serial port if needed.
+Connecting over Bluetooth does not require pairing the device in Windows' Bluetooth settings first.
+
+You can also select a specific Bluetooth device as the port for this display.
+The port list is updated as devices are discovered while the braille display selection dialog is open.
 
 Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
 Make sure to lift your hand entirely off the device when navigating with NVDA, and only start reading again once it has fully updated.

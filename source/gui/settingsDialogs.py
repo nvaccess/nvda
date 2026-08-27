@@ -6,7 +6,8 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Dot Incorporated,
+# Bram Duvigneau.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -37,6 +38,7 @@ import characterProcessing
 import config
 import core
 import globalVars
+import hwIo.ble
 import installer
 import keyboardHandler
 import languageHandler
@@ -5126,7 +5128,15 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	displayNames = []
 	possiblePorts = []
 
+	_BLE_REFRESH_INTERVAL = 1000
+	"""Interval in milliseconds at which the port list is checked for newly discovered BLE devices."""
+
 	def makeSettings(self, settingsSizer):
+		# BLE devices only appear in the port list once the scanner has discovered them,
+		# so start scanning before the list is built for the first time.
+		self._startBleScanner()
+		self._portRefreshTimer: wx.CallLater | None = None
+		"""Timer that polls for BLE devices discovered after the port list was built."""
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 
 		# Translators: The label for a setting in braille settings to choose a braille display.
@@ -5153,8 +5163,67 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 		self.updateStateDependentControls()
 
 	def postInit(self):
+		# Discovering a BLE device takes a moment, so the port list built in makeSettings
+		# is usually still incomplete. Keep looking while the dialog is open.
+		self._portRefreshTimer = wx.CallLater(self._BLE_REFRESH_INTERVAL, self._refreshBlePorts)
 		# Finally, ensure that focus is on the list of displays.
 		self.displayList.SetFocus()
+
+	def _startBleScanner(self):
+		"""Start the shared BLE scanner, so that BLE devices can be offered as ports."""
+		if not hwIo.ble.scanner.isScanning:
+			try:
+				hwIo.ble.scanner.start()
+				log.debug("Started BLE scanner for braille display selection")
+			except Exception:
+				log.error("Failed to start BLE scanner", exc_info=True)
+
+	def _refreshBlePorts(self):
+		"""Offer the BLE devices discovered since the port list was built.
+
+		New devices are appended to the list rather than the list being rebuilt,
+		so that neither the existing entries nor the selection move under the user.
+		This means a port that disappears while the dialog is open stays listed,
+		which matches the rest of the list being a snapshot taken when it opened.
+		"""
+		self._portRefreshTimer = wx.CallLater(self._BLE_REFRESH_INTERVAL, self._refreshBlePorts)
+		displayName = self.displayNames[self.displayList.GetSelection()]
+		if displayName == braille.constants.AUTO_DISPLAY_NAME:
+			# Ports are irrelevant when displays are detected automatically.
+			return
+		displayCls = braille.display._getDisplayDriver(displayName)
+		knownPorts = {port for port, description in self.possiblePorts}
+		newPorts = [
+			(port, description) for port, description in displayCls._getBlePorts() if port not in knownPorts
+		]
+		if not newPorts:
+			return
+		if not self.possiblePorts:
+			# With no selection to preserve, a full rebuild is safe,
+			# and it also offers the automatic port.
+			self.updateStateDependentControls()
+		else:
+			self.possiblePorts.extend(newPorts)
+			# Appending leaves the existing entries, and therefore the selection, in place.
+			selection = self.portsList.GetSelection()
+			self.portsList.SetItems([description for port, description in self.possiblePorts])
+			self.portsList.SetSelection(selection)
+			self.portsList.Enable(True)
+		ui.message(
+			ngettext(
+				# Translators: Reported when a braille display is discovered over Bluetooth
+				# while the braille display selection dialog is open.
+				"{count} new Bluetooth device found",
+				"{count} new Bluetooth devices found",
+				len(newPorts),
+			).format(count=len(newPorts)),
+		)
+
+	def _stopPortRefresh(self):
+		"""Stop looking for newly discovered BLE devices."""
+		if self._portRefreshTimer is not None:
+			self._portRefreshTimer.Stop()
+			self._portRefreshTimer = None
 
 	@staticmethod
 	def getCurrentAutoDisplayDescription():
@@ -5216,6 +5285,9 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 				# Display name not in config or port not valid
 				selection = 0
 			self.portsList.SetSelection(selection)
+		else:
+			# Ports from the previously selected display would otherwise stay on screen.
+			self.portsList.SetItems([])
 		# If no port selection is possible or only automatic selection is available, disable the port selection control
 		enable = len(self.possiblePorts) > 0 and not (
 			len(self.possiblePorts) == 1 and self.possiblePorts[0][0] == "auto"
@@ -5265,7 +5337,26 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			# Hack: we need to update the display in our parent window before closing.
 			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
 			self.Parent.updateCurrentDisplay()
+		self._stopPortRefresh()
+		self._stopBleScanner()
 		super(BrailleDisplaySelectionDialog, self).onOk(evt)
+
+	def onCancel(self, evt):
+		self._stopPortRefresh()
+		self._stopBleScanner()
+		super().onCancel(evt)
+
+	def _stopBleScanner(self):
+		"""Stop the shared BLE scanner, unless automatic detection owns it."""
+		if (
+			hwIo.ble.scanner.isScanning
+			and config.conf["braille"]["display"] != braille.constants.AUTO_DISPLAY_NAME
+		):
+			try:
+				hwIo.ble.scanner.stop()
+				log.debug("Stopped BLE scanner after braille display selection dialog closed")
+			except Exception:
+				log.error("Failed to stop BLE scanner", exc_info=True)
 
 
 class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):

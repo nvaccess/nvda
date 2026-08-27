@@ -1,12 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2017-2026 NV Access Limited, Leonard de Ruijter, Dot Incorporated, Bram Duvigneau
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for braille display drivers."""
 
 from brailleDisplayDrivers import seikantk
 import unittest
+from unittest.mock import patch
+import bdDetect
 import braille
 import braille.display
 import braille.display.gesture
@@ -337,3 +339,145 @@ class TestBRLTTY(unittest.TestCase):
 			import brlapi  # noqa: F401
 		except Exception:
 			self.fail("Couldn't import the brlapi module")
+
+
+class _FakeBleDriver(braille.display.BrailleDisplayDriver):
+	"""A driver that only exists to exercise the BLE port helpers."""
+
+	name = "fakeBleDisplay"
+	description = "Fake BLE display"
+
+
+def _bleMatch(deviceName: str, address: str) -> bdDetect.DeviceMatch:
+	"""Build a BLE device match as :func:`bdDetect.getBleDevicesForDriver` would yield it."""
+	return bdDetect.DeviceMatch(
+		bdDetect.ProtocolType.BLE,
+		deviceName,
+		address,
+		{"name": deviceName, "address": address, "provider": bdDetect.CommunicationType.BLE},
+	)
+
+
+class TestBleDisplayPorts(unittest.TestCase):
+	"""Tests for the BLE ports offered and resolved by :class:`braille.display.BrailleDisplayDriver`."""
+
+	_ADDRESS = "AA:BB:CC:DD:EE:FF"
+
+	def _patchBleDevices(self, *devices: bdDetect.DeviceMatch):
+		"""Make :func:`bdDetect.getBleDevicesForDriver` report the given devices."""
+		return patch("bdDetect.getBleDevicesForDriver", return_value=iter(devices))
+
+	def test_getBlePorts_formatsPortAndDescription(self):
+		with self._patchBleDevices(_bleMatch("DotPad320", self._ADDRESS)):
+			ports = list(_FakeBleDriver._getBlePorts())
+		self.assertEqual(len(ports), 1)
+		port, description = ports[0]
+		self.assertEqual(port, f"ble:DotPad320@{self._ADDRESS}")
+		self.assertIn("DotPad320", description)
+
+	def test_getBlePorts_noDevices(self):
+		with self._patchBleDevices():
+			self.assertEqual(list(_FakeBleDriver._getBlePorts()), [])
+
+	def test_getBlePorts_enumerationFailureIsContained(self):
+		"""A failing scan yields no ports rather than propagating."""
+		with patch("bdDetect.getBleDevicesForDriver", side_effect=RuntimeError("scan failed")):
+			self.assertEqual(list(_FakeBleDriver._getBlePorts()), [])
+
+	def test_getPossiblePorts_bleDevicesBringTheAutomaticPort(self):
+		"""A discovered BLE device never leaves the automatic port on its own.
+
+		The braille display selection dialog disables the port control when the
+		automatic port is the only entry, so a BLE device that arrives while the
+		dialog is open has to bring a second entry with it to be selectable.
+		"""
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", side_effect=LookupError),
+			patch("bdDetect.getPossibleBluetoothDevicesForDriver", side_effect=LookupError),
+			self._patchBleDevices(_bleMatch("DotPad320", self._ADDRESS)),
+		):
+			ports = list(_FakeBleDriver.getPossiblePorts())
+		self.assertEqual(ports, ["auto", f"ble:DotPad320@{self._ADDRESS}"])
+
+	def test_getPossiblePorts_noDevicesGivesNoPorts(self):
+		"""With nothing discovered there is nothing to offer."""
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", side_effect=LookupError),
+			patch("bdDetect.getPossibleBluetoothDevicesForDriver", side_effect=LookupError),
+			self._patchBleDevices(),
+		):
+			self.assertEqual(list(_FakeBleDriver.getPossiblePorts()), [])
+
+	def test_getBleTryPorts_deviceInScanResults(self):
+		"""A port matching a scanned device resolves to that device match."""
+		match = _bleMatch("DotPad320", self._ADDRESS)
+		with self._patchBleDevices(_bleMatch("SomethingElse", "11:22:33:44:55:66"), match):
+			result = list(_FakeBleDriver._getBleTryPorts(f"ble:DotPad320@{self._ADDRESS}"))
+		self.assertEqual(result, [match])
+
+	def test_getBleTryPorts_matchesOnAddressWhenNameChanged(self):
+		"""A renamed device is still found by its address."""
+		match = _bleMatch("DotPad320 renamed", self._ADDRESS)
+		with self._patchBleDevices(match):
+			result = list(_FakeBleDriver._getBleTryPorts(f"ble:DotPad320@{self._ADDRESS}"))
+		self.assertEqual(result, [match])
+
+	def test_getBleTryPorts_fallsBackToConfiguredAddress(self):
+		"""A device that is not advertising is still offered for connection by address."""
+		with self._patchBleDevices():
+			result = list(_FakeBleDriver._getBleTryPorts(f"ble:DotPad320@{self._ADDRESS}"))
+		self.assertEqual(len(result), 1)
+		match = result[0]
+		self.assertEqual(match.type, bdDetect.ProtocolType.BLE)
+		self.assertEqual(match.id, "DotPad320")
+		self.assertEqual(match.port, self._ADDRESS)
+		self.assertEqual(match.deviceInfo["address"], self._ADDRESS)
+
+	def test_getBleTryPorts_addressContainingSeparator(self):
+		"""The port is split on the last separator, so a name containing one is preserved."""
+		with self._patchBleDevices():
+			result = list(_FakeBleDriver._getBleTryPorts(f"ble:Dot@Pad@{self._ADDRESS}"))
+		self.assertEqual(len(result), 1)
+		self.assertEqual(result[0].id, "Dot@Pad")
+		self.assertEqual(result[0].port, self._ADDRESS)
+
+	def test_getBleTryPorts_malformedPortYieldsNothing(self):
+		"""A port without an address is rejected rather than half-parsed."""
+		with self._patchBleDevices(_bleMatch("DotPad320", self._ADDRESS)):
+			self.assertEqual(list(_FakeBleDriver._getBleTryPorts("ble:DotPad320")), [])
+
+	def test_getBleTryPorts_addressWinsOverName(self):
+		"""The address disambiguates two devices sharing a name, whatever the scan order."""
+		byName = _bleMatch("DotPad320", "11:22:33:44:55:66")
+		byAddress = _bleMatch("DotPad320", self._ADDRESS)
+		with self._patchBleDevices(byName, byAddress):
+			result = list(_FakeBleDriver._getBleTryPorts(f"ble:DotPad320@{self._ADDRESS}"))
+		self.assertEqual(result, [byAddress])
+
+	def test_getTryPorts_automaticPortYieldsBleDevices(self):
+		"""The automatic port tries BLE devices, as it is offered when only those are known."""
+		match = _bleMatch("DotPad320", self._ADDRESS)
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", return_value=iter(())),
+			patch("bdDetect.getPossibleBluetoothDevicesForDriver", return_value=iter(())),
+			self._patchBleDevices(match),
+		):
+			result = list(_FakeBleDriver._getTryPorts("auto"))
+		self.assertEqual(result, [match])
+
+	def test_getTryPorts_usbPortDoesNotYieldBleDevices(self):
+		"""Explicitly asking for USB must not fall back to BLE devices."""
+		with (
+			patch("bdDetect.getConnectedUsbDevicesForDriver", return_value=iter(())),
+			patch("bdDetect.getBleDevicesForDriver") as mockBle,
+		):
+			result = list(_FakeBleDriver._getTryPorts("usb"))
+		self.assertEqual(result, [])
+		mockBle.assert_not_called()
+
+	def test_getTryPorts_routesBlePortToHelper(self):
+		"""A BLE port reaches _getBleTryPorts rather than the serial port handling."""
+		match = _bleMatch("DotPad320", self._ADDRESS)
+		with self._patchBleDevices(match):
+			result = list(_FakeBleDriver._getTryPorts(f"ble:DotPad320@{self._ADDRESS}"))
+		self.assertEqual(result, [match])

@@ -16,7 +16,7 @@ import braille.display
 import braille.display.driver
 import braille.display.gesture
 import winBindings.kernel32
-import hwIo
+import hwIo.ble
 import bdDetect
 from logHandler import log
 from autoSettingsUtils.driverSetting import DriverSetting
@@ -35,6 +35,9 @@ from .defs import (
 	DP_BoardInformation,
 	DP_CHECKSUM_BASE,
 	DP_KeyGroup,
+	BLE_SERVICE_UUID,
+	BLE_READ_CHARACTERISTIC_UUID,
+	BLE_WRITE_CHARACTERISTIC_UUID,
 )
 
 
@@ -103,6 +106,23 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	@classmethod
+	def check(cls) -> bool:
+		"""Determine whether a Dot Pad could be connected.
+
+		A BLE device is only known once a scan has run, and the braille display
+		selection dialog is what starts one, so the driver cannot wait for a device
+		to be detected before offering itself. Reporting on the Bluetooth hardware
+		instead keeps it off machines that could never reach a device, without
+		hiding it on those that simply have nothing switched on yet.
+
+		:return: ``True`` if this machine has usable Bluetooth, or a Dot Pad is
+			otherwise reachable.
+		"""
+		# Asking about the hardware is cheaper than enumerating ports, and on a machine
+		# with Bluetooth it settles the question on its own.
+		return hwIo.ble.isAvailable() or super().check()
+
+	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
 			bdDetect.ProtocolType.SERIAL,
@@ -110,6 +130,16 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				"VID_0403&PID_6010",  # FTDI Dual RS232 as used in DotPad320A
 			},
 		)
+		driverRegistrar.addBleDevices(cls._isBleDotPad)
+
+	@staticmethod
+	def _isBleDotPad(match: bdDetect.DeviceMatch) -> bool:
+		"""Check if a BLE device is a DotPad display.
+
+		:param match: DeviceMatch object containing BLE device information.
+		:return: True if device ID (name or address) starts with "DotPad".
+		"""
+		return match.id.startswith("DotPad")
 
 	supportedSettings = [
 		DriverSetting(
@@ -314,17 +344,11 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def __init__(self, port: str = "auto"):
 		self._receiveBuffer: bytearray = bytearray()
-		if port == "auto":
-			# Try autodetection
-			for portType, portId, port, portInfo in self._getTryPorts(port):
-				if self._tryConnect(port):
-					break
-			else:
-				raise RuntimeError("No DotPad device found")
+		for match in self._getTryPorts(port):
+			if self._tryConnect(match.port, match.type, match.deviceInfo):
+				break
 		else:
-			# Direct port connection
-			if not self._tryConnect(port):
-				raise RuntimeError(f"Could not connect to DotPad on port {port}")
+			raise RuntimeError(f"No DotPad device found for port {port!r}")
 
 		super().__init__()
 
@@ -336,34 +360,54 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		for group in DP_KeyGroup:
 			self._keyGroupsReleased[group] = True
 
-	def _tryConnect(self, port: str) -> bool:
+	def _tryConnect(self, port: str, portType: str, portInfo: dict) -> bool:
 		"""Try to connect to a DotPad device on the given port.
 
-		Attempts to open a serial connection to the specified port and verifies that
-		the connected device is a DotPad. Updates internal state with device model,
-		board information, and braille destination if successful.
+		Attempts to open a serial or BLE connection and verifies that the connected
+		device is a DotPad. Updates internal state with device model, board
+		information, and braille destination if successful.
 
 		Side effects:
-			- Sets self._dev to the opened serial device on success.
+			- Sets self._dev to the opened device on success.
 			- Sets self.model and self._boardInformation based on the connected device.
 			- Sets self._brailleDestination depending on device features.
 			- Closes self._dev and resets related attributes on failure.
 
-		:param port: The port to connect to.
+		:param port: The port to connect to (COM port or BLE address).
+		:param portType: The protocol type (from bdDetect.ProtocolType).
+		:param portInfo: Additional port information dictionary.
 		:return: True if connection successful, False otherwise.
 		"""
 		# Start each probe with a clean buffer so stray bytes from a previously
 		# probed (non-DotPad) port can't corrupt this device's first response.
 		self._receiveBuffer.clear()
 		try:
-			self._dev = hwIo.Serial(
-				port=port,
-				baudrate=self.SERIAL_BAUD_RATE,
-				parity=self.SERIAL_PARITY,
-				timeout=self.timeout,
-				writeTimeout=self.timeout,
-				onReceive=self._onReceive,
-			)
+			if portType == bdDetect.ProtocolType.BLE:
+				address = portInfo.get("address") or port
+				# A device from the scanner can be connected to without implicit discovery.
+				# The lookup must not block: a display picked in the settings dialog is
+				# connected on the main thread.
+				device = hwIo.ble.getDiscoveredDevice(address)
+				if device is None:
+					log.debug(f"BLE device {address} not in scan results, using address for connection")
+					device = address
+				self._dev = hwIo.ble.Ble(
+					device=device,
+					writeServiceUuid=BLE_SERVICE_UUID,
+					writeCharacteristicUuid=BLE_WRITE_CHARACTERISTIC_UUID,
+					readServiceUuid=BLE_SERVICE_UUID,
+					readCharacteristicUuid=BLE_READ_CHARACTERISTIC_UUID,
+					onReceive=self._onReceive,
+				)
+			else:
+				self._dev = hwIo.Serial(
+					port=port,
+					baudrate=self.SERIAL_BAUD_RATE,
+					parity=self.SERIAL_PARITY,
+					timeout=self.timeout,
+					writeTimeout=self.timeout,
+					onReceive=self._onReceive,
+				)
 			# Verify this is actually a DotPad device
 			self.model = self._requestDeviceName()
 			self._boardInformation = self._requestBoardInformation()
@@ -376,6 +420,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			return True
 		except Exception:
 			# Clean up on failure
+			log.debugWarning("Failed to connect", exc_info=True)
 			try:
 				self._dev.close()
 			except Exception:
