@@ -50,7 +50,6 @@ class RemoteCacheRequest(RemoteBaseObject):
 			instructions.CacheRequestAddPattern(
 				target=self,
 				patternId=RemoteIntEnum.ensureRemote(self.rob, patternId),
-				propertyId=RemoteIntEnum[lowLevel.PropertyId].ensureRemote(self.rob, propertyId)
 			),
 		)
 
