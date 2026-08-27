@@ -35,14 +35,13 @@ from ctypes import WinError, byref
 from ctypes.wintypes import HANDLE
 from typing import Final, Protocol, runtime_checkable
 
-import win32con
-import win32pipe
 from rpyc.core.stream import PipeStream
 
 import globalVars
 import NVDAState
+import winKernel
 from logHandler import log
-from winBindings.kernel32 import DuplicateHandle, GetCurrentProcess
+from winBindings.kernel32 import CloseHandle, CreatePipe, DuplicateHandle, GetCurrentProcess
 
 
 #: The module run to boot a host process.
@@ -215,27 +214,39 @@ class SubprocessHostController:
 		process, and their values handed over for it to rebuild a stream from.
 
 		:raises RuntimeError: If the host process is not running.
+		:raises OSError: If pipe creation or handle duplication fails.
 		"""
 		if self._process is None:
 			raise RuntimeError("Cannot create a pipe pair before the host has started")
 		targetProcess = self._process._handle
 		# One pipe per direction, since an anonymous pipe is one-way.
-		hostReadEnd, coreWriteEnd = win32pipe.CreatePipe(None, _PIPE_BUFFER_SIZE)
-		coreReadEnd, hostWriteEnd = win32pipe.CreatePipe(None, _PIPE_BUFFER_SIZE)
+		hostReadLocal, coreWrite, coreRead, hostWriteLocal = HANDLE(), HANDLE(), HANDLE(), HANDLE()
+		openHandles: list[HANDLE] = []
 		try:
-			hostRead = _duplicateHandleIntoProcess(hostReadEnd, win32con.GENERIC_READ, targetProcess)
-			hostWrite = _duplicateHandleIntoProcess(hostWriteEnd, win32con.GENERIC_WRITE, targetProcess)
-		finally:
-			# The host has its own copies now; ours would otherwise hold the pipes open, so the
-			# host would never see end-of-file when core goes away.
-			hostReadEnd.Close()
-			hostWriteEnd.Close()
-		# Detached, so the stream is the sole owner of core's ends.
-		# Closing a stream closes the underlying handle without marking the ``PyHANDLE`` wrapper
-		# closed, so leaving these wrapped would close each handle a second time on garbage
-		# collection, by which point Windows may have reissued the value to someone else.
+			if not CreatePipe(byref(hostReadLocal), byref(coreWrite), None, _PIPE_BUFFER_SIZE):
+				raise WinError()
+			openHandles += hostReadLocal, coreWrite
+			if not CreatePipe(byref(coreRead), byref(hostWriteLocal), None, _PIPE_BUFFER_SIZE):
+				raise WinError()
+			openHandles += coreRead, hostWriteLocal
+			# The host's read and write handles are not valid in this process,
+			# so we can't close them on failure.
+			# Failure to duplicate `hostWriteLocal` into the host process most likely means that it died,
+			# in which case `hostRead` will already have been freed, anyway.
+			hostRead = _duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
+			hostWrite = _duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
+		except Exception:
+			for handle in openHandles:
+				CloseHandle(handle)
+			raise
+		# The host has its own copies now; ours would otherwise hold the pipes open, so the
+		# host would never see end-of-file when core goes away.
+		CloseHandle(hostReadLocal)
+		CloseHandle(hostWriteLocal)
 		return (
-			PipeStream(coreReadEnd.Detach(), coreWriteEnd.Detach()),
+			# PipeStream takes ownership of the handles it's constructed with,
+			# so closing them when done is its responsibility.
+			PipeStream(coreRead.value, coreWrite.value),
 			(hostRead.value, hostWrite.value),
 		)
 
@@ -254,6 +265,8 @@ def claimProcessControlStream(process: subprocess.Popen) -> Stream:
 
 	:param process: The child process whose standard streams carry the control connection.
 	:returns: A stream over the child's standard input and output.
+	:raises RuntimeError: If ``process`` was created without one or both of stdin or stdout piped.
+	:raises OSError: If pipe handle duplication fails.
 	"""
 	stdout = process.stdout
 	stdin = process.stdin
@@ -274,7 +287,7 @@ def _duplicateHandleForSelf(handle: int) -> int:
 
 	:param handle: Handle to duplicate.
 	:returns: The value of an independent handle to the same object.
-	:raises RuntimeError: If duplication fails.
+	:raises OSError: If duplication fails.
 	"""
 	duplicate = HANDLE()
 	currentProcess = GetCurrentProcess()
@@ -287,11 +300,11 @@ def _duplicateHandleForSelf(handle: int) -> int:
 		False,
 		_DUPLICATE_SAME_ACCESS,
 	):
-		raise RuntimeError(f"Failed to duplicate handle, {WinError()}")
+		raise WinError()
 	return duplicate.value
 
 
-def _duplicateHandleIntoProcess(handle: int, accessMask: int, targetProcess: int) -> HANDLE:
+def _duplicateHandleIntoProcess(handle: HANDLE, accessMask: int, targetProcess: int) -> HANDLE:
 	"""Duplicate a handle so it is valid in another process.
 
 	The target process is a parameter rather than state on the caller, so that wire ends stay
@@ -301,17 +314,17 @@ def _duplicateHandleIntoProcess(handle: int, accessMask: int, targetProcess: int
 	:param accessMask: Desired access for the duplicate.
 	:param targetProcess: Handle of the process to duplicate into.
 	:returns: A handle valid in ``targetProcess``.
-	:raises RuntimeError: If duplication fails.
+	:raises OSError: If duplication fails.
 	"""
 	duplicate = HANDLE()
 	if not DuplicateHandle(
 		GetCurrentProcess(),
-		HANDLE(int(handle)),
+		handle,
 		targetProcess,
 		byref(duplicate),
 		accessMask,
 		False,
 		0,
 	):
-		raise RuntimeError(f"Failed to duplicate handle into host process, {WinError()}")
+		raise WinError()
 	return duplicate
