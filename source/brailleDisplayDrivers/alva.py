@@ -3,9 +3,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import List, Union
 
-import bdDetect
+import bdDetect  # noqa: I001
 import braille
 import braille.display
 import braille.display.driver
@@ -148,7 +147,7 @@ ALVA_KEYS = {
 
 
 class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
-	_dev: Union[hwIo.Serial, hwIo.Hid]
+	_dev: hwIo.Serial | hwIo.Hid
 	name = "alva"
 	# Translators: The name of a braille display.
 	description = _("Optelec ALVA 6 series/protocol converter")
@@ -212,12 +211,12 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			self._ser6SendMessage(b"r", b"?")
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._rawKeyboardInput = False
 		self._deviceId = None
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
@@ -239,18 +238,14 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 							break
 					else:  # No response from display
 						continue
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			self._updateSettings()
 			if self.numCells:
 				# A display responded.
 				log.info(
-					"Found display with {cells} cells connected via {type} ({port})".format(
-						cells=self.numCells,
-						type=portType,
-						port=port,
-					),
+					f"Found display with {self.numCells} cells connected via {portType} ({port})",
 				)
 				break
 			self._dev.close()
@@ -263,7 +258,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
@@ -359,7 +354,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		)
 		self._ser6SendMessage(b"B", value)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = bytes(cells)
 		if self.isHid:
@@ -376,7 +371,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
 		try:
-			displayDateTime = datetime.datetime(
+			displayDateTime = datetime.datetime(  # noqa: DTZ001
 				year=year,
 				month=time[2],
 				day=time[3],
@@ -385,18 +380,18 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 				second=time[6],
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of ALVA display: %r" % time)
+			log.debugWarning("Invalid time/date of ALVA display: %r" % time)  # noqa: UP031
 			return
-		localDateTime = datetime.datetime.today()
+		localDateTime = datetime.datetime.today()  # noqa: DTZ002
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
-			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())
+			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())  # noqa: UP031
 			self._syncTime(localDateTime)
 		else:
-			log.debug("Time not synchronized. Display time %s" % displayDateTime.isoformat())
+			log.debug("Time not synchronized. Display time %s" % displayDateTime.isoformat())  # noqa: UP031
 
 	def _syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
-		timeList: List[int] = [
+		timeList: list[int] = [
 			dt.year & 0xFF,
 			dt.year >> 8,
 			dt.month,
@@ -466,7 +461,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	# Translators: Description of the script that toggles HID keyboard simulation.
 	script_toggleHidKeyboardInput.__doc__ = _("Toggles HID keyboard simulation")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(alva):t1+spEnter": "toggleHidKeyboardInput",
 	}
 
@@ -517,7 +512,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, brailleInput=False):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		isNoBC640 = model != ALVA_MODEL_IDS[ALVA_MODEL_BC640]
 		# Model identifiers should not contain spaces.
 		self.model = model.replace(" ", "")
@@ -541,7 +536,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 				try:
 					keyName = ALVA_KEYS[group][number]
 				except (KeyError, IndexError):
-					log.debugWarning("Unknown key with group %d and number %d" % (group, number))
+					log.debugWarning("Unknown key with group %d and number %d" % (group, number))  # noqa: UP031
 					return
 				names.append(keyName)
 				if isNoBC640:
@@ -580,8 +575,8 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 
 	def _get_identifiers(self):
 		ids = [
-			"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
-			"br({source}):{id}".format(source=self.source, id=self.id),
+			f"br({self.source}.{self.model}):{self.secondaryId}",
+			f"br({self.source}):{self.id}",
 		]
 		ids.extend(braille.input.gesture.BrailleInputGesture._get_identifiers(self))
 		return ids

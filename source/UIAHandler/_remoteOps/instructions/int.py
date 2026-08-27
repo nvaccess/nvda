@@ -9,7 +9,7 @@ Including to create new integers, and check if an object is an integer.
 Both signed and unsigned integers are supported.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 import ctypes
 from .. import lowLevel

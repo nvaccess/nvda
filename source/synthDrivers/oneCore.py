@@ -5,17 +5,11 @@
 
 """Synth driver for Windows OneCore voices."""
 
-import os
+import os  # noqa: I001
 from typing import (
 	Any,
-	Callable,
-	Generator,
-	List,
-	Optional,
-	Set,
-	Tuple,
-	Union,
 )
+from collections.abc import Callable, Generator
 from collections import OrderedDict
 import ctypes
 from ctypes.wintypes import HANDLE
@@ -61,7 +55,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 	def __init__(
 		self,
 		defaultLanguage: str,
-		availableLanguages: Set[str],
+		availableLanguages: set[str],
 	):
 		"""
 		Used for newer OneCore installations (OneCore API > 5)
@@ -87,7 +81,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			# Multiplication isn't supported, only addition/subtraction.
 			# The final value must therefore be relative to the synthesizer's default.
 			val = base * command.multiplier - default
-			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)
+			return speechXml.SetAttrCommand("prosody", attr, "%d%%" % val)  # noqa: UP031
 
 	def convertRateCommand(self, command):
 		return self._convertProsody(command, "rate", 50)
@@ -103,7 +97,7 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# Therefore, we don't use it.
 		return None
 
-	def convertLangChangeCommand(self, command: LangChangeCommand) -> Optional[speechXml.SetAttrCommand]:
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> speechXml.SetAttrCommand | None:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
 			log.debugWarning(f"Invalid language: {command.lang}")
@@ -125,7 +119,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 	def __init__(
 		self,
 		defaultLanguage: str,
-		availableLanguages: Set[str],
+		availableLanguages: set[str],
 		rate: float,
 		pitch: float,
 		volume: float,
@@ -147,7 +141,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		self._pitch = pitch
 		self._volume = volume
 
-	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any, None, None]:
+	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any]:
 		commands = super().generateBalancerCommands(speechSequence)
 		# The EncloseAllCommand from SSML must be first.
 		yield next(commands)
@@ -156,7 +150,7 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 		yield self.convertRateCommand(RateCommand(multiplier=1))
 		yield self.convertVolumeCommand(VolumeCommand(multiplier=1))
 		yield self.convertPitchCommand(PitchCommand(multiplier=1))
-		for command in commands:
+		for command in commands:  # noqa: UP028
 			yield command
 
 	def convertRateCommand(self, command):
@@ -180,7 +174,7 @@ class OneCoreSynthDriver(SynthDriver):
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
 	description = _("Windows OneCore voices")
-	supportedCommands = {
+	supportedCommands = {  # noqa: RUF012
 		IndexCommand,
 		CharacterModeCommand,
 		LangChangeCommand,
@@ -190,7 +184,7 @@ class OneCoreSynthDriver(SynthDriver):
 		VolumeCommand,
 		PhonemeCommand,
 	}
-	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
 	@classmethod
 	def check(cls):
@@ -256,7 +250,7 @@ class OneCoreSynthDriver(SynthDriver):
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = None
 		# Initialize state.
-		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []
+		self._queuedSpeech: list[str | tuple[Callable[[ctypes.POINTER, float], None], float]] = []
 
 		self._wasCancelled = False
 		self._isProcessing = False
@@ -477,7 +471,7 @@ class OneCoreSynthDriver(SynthDriver):
 			self._consecutiveSpeechFailures = 0
 		# This gets called in a background thread.
 		stream = io.BytesIO(ctypes.string_at(bytes, WAVE_HEADER_LENGTH))
-		wav = wave.open(stream, "r")
+		wav = wave.open(stream, "r")  # noqa: SIM115
 		self._maybeInitPlayer(wav)
 		data = bytes + WAVE_HEADER_LENGTH
 		dataLen = wav.getnframes() * wav.getnchannels() * wav.getsampwidth()
@@ -571,30 +565,30 @@ class OneCoreSynthDriver(SynthDriver):
 		subkey = "\\".join(IDParts[1:])
 		try:
 			hkey = winreg.OpenKey(rootKey, subkey)
-		except WindowsError as e:
-			log.debugWarning("Could not open registry key %s, %r" % (ID, e))
+		except OSError as e:
+			log.debugWarning("Could not open registry key %s, %r" % (ID, e))  # noqa: UP031
 			return False
 		try:
 			langDataPath = winreg.QueryValueEx(hkey, "langDataPath")
-		except WindowsError as e:
-			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
+		except OSError as e:
+			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)  # noqa: UP031
 			return False
 		if not langDataPath or not isinstance(langDataPath[0], str):
 			log.debugWarning("Invalid langDataPath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(langDataPath[0])):
-			log.debugWarning("Missing language data file: %s" % langDataPath[0])
+			log.debugWarning("Missing language data file: %s" % langDataPath[0])  # noqa: UP031
 			return False
 		try:
 			voicePath = winreg.QueryValueEx(hkey, "voicePath")
-		except WindowsError as e:
-			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)
+		except OSError as e:
+			log.debugWarning("Could not open registry value 'langDataPath', %r" % e)  # noqa: UP031
 			return False
 		if not voicePath or not isinstance(voicePath[0], str):
 			log.debugWarning("Invalid voicePath value")
 			return False
 		if not os.path.isfile(os.path.expandvars(voicePath[0] + ".apm")):
-			log.debugWarning("Missing voice file: %s" % voicePath[0] + ".apm")
+			log.debugWarning("Missing voice file: %s" % voicePath[0] + ".apm")  # noqa: UP031
 			return False
 		return True
 
@@ -608,7 +602,7 @@ class OneCoreSynthDriver(SynthDriver):
 			if voice.id == id:
 				self._dll.ocSpeech_setVoice(self._ocSpeechToken, voice.onecoreIndex)
 				return
-		raise LookupError("No such voice: %s" % id)
+		raise LookupError("No such voice: %s" % id)  # noqa: UP031
 
 	def _getDefaultVoice(self, pickAny: bool = True) -> str:
 		"""

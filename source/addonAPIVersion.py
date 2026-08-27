@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-import buildVersion
+import buildVersion  # noqa: I001
 import re
 
 
@@ -85,5 +85,5 @@ def formatForGUI(versionTuple: AddonApiVersionT) -> str:
 		default = _("unknown")
 		from logHandler import log
 
-		log.error("Unable to format versionTuple: {}".format(repr(versionTuple)), exc_info=True)
+		log.error(f"Unable to format versionTuple: {versionTuple!r}", exc_info=True)  # noqa: G201
 		return default

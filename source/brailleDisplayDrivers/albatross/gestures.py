@@ -5,12 +5,7 @@
 
 """Gesture handling for Tivomatic Caiku Albatross 46 and 80 display driver."""
 
-from logHandler import log
-from typing import (
-	Optional,
-	Set,
-	Tuple,
-)
+from logHandler import log  # noqa: I001
 
 import braille
 import braille.display.gesture
@@ -88,7 +83,7 @@ _gestureMap = inputCore.GlobalGestureMap(
 class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	"""Changes display key presses to gestures for NVDA input system."""
 
-	def __init__(self, keys: Set[int], name: str):
+	def __init__(self, keys: set[int], name: str):
 		"""Constructor.
 		@param key: set of pressed keys
 		@param name: identifies gestures from this display
@@ -120,7 +115,7 @@ class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 		if self.id and not self.script:
 			self.script = self._get_script()
 
-	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
+	def _getRoutingIndex(self, key: int) -> tuple[str, int] | None:
 		"""Get the routing index, if the key is in a routing index range,
 		returns the name of the range and the index within that range.
 		See L{ROUTING_KEY_RANGES}.

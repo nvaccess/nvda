@@ -21,7 +21,7 @@ Import(
 
 
 # Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-env = env.Clone()  # noqa: F821
+env = env.Clone()
 
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
@@ -38,7 +38,7 @@ localWin10Lib = env.SharedLibrary(
 		"WindowsApp",
 		# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
 		localLib[2],
-	],  # noqa: F821
+	],
 )
 
 Return(["localWin10Lib"])

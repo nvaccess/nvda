@@ -5,7 +5,7 @@
 
 """Unit tests for the inputCore module."""
 
-import unittest
+import unittest  # noqa: I001
 import inputCore
 import keyboardHandler
 from .extensionPointTestHelpers import deciderTester

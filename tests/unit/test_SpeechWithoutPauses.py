@@ -5,8 +5,7 @@
 
 """Unit tests for SpeechWithoutPauses"""
 
-import unittest
-from typing import List
+import unittest  # noqa: I001
 
 from speech.types import SpeechSequence
 from speech.commands import EndUtteranceCommand, LangChangeCommand, CallbackCommand
@@ -17,7 +16,7 @@ from logHandler import log
 class SpeechSpy:
 	"""Simple class to collect SpeechSequences as they are 'spoken'"""
 
-	spokenSequences: List[SpeechSequence]
+	spokenSequences: list[SpeechSequence]
 
 	def __init__(self):
 		self.spokenSequences = []
@@ -29,7 +28,7 @@ class SpeechSpy:
 		self.spokenSequences.append(speechSeqence)
 
 
-_spokenSequences: List[SpeechSequence] = []
+_spokenSequences: list[SpeechSequence] = []
 
 
 def speak(seq: SpeechSequence):
@@ -45,7 +44,7 @@ def resetSpeakDest():
 	return _spokenSequences
 
 
-def old_speakWithoutPauses(  # noqa: C901
+def old_speakWithoutPauses(
 	speechSequence: SpeechSequence,
 	detectBreaks: bool = True,
 ) -> bool:

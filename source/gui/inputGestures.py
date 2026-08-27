@@ -7,9 +7,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import itertools
+import itertools  # noqa: I001
 import re
-from typing import Tuple, Union, Dict
+from typing import Union
 
 import wx
 from wx.lib.mixins.treemixin import VirtualTree
@@ -17,7 +17,6 @@ import wx.lib.newevent
 import gui
 from logHandler import log
 
-from typing import List, Optional
 import keyboardHandler
 from . import guiHelper
 import inputCore
@@ -27,13 +26,13 @@ from .settingsDialogs import SettingsDialog
 
 
 #: Type for structure returned by inputCore
-_ScriptsModel = Dict[
+_ScriptsModel = dict[
 	str,  # script display name
-	Union[inputCore.AllGesturesScriptInfo, inputCore.KbEmuScriptInfo],
+	inputCore.AllGesturesScriptInfo | inputCore.KbEmuScriptInfo,
 ]
 
 #: Type for structure returned by inputCore
-_GesturesModel = Dict[
+_GesturesModel = dict[
 	str,  # category name
 	_ScriptsModel,
 ]
@@ -89,18 +88,18 @@ class _PendingGesture:
 class _ScriptVM:
 	displayName: str  #: Translated display name for the script
 	scriptInfo: inputCore.AllGesturesScriptInfo
-	gestures: List[Union[_GestureVM, _PendingGesture]]
+	gestures: list[_GestureVM | _PendingGesture]
 	canAdd = True  #: able to add gestures that trigger this script
 	canChange = False  #: Scripts can not be changed
 	canRemove = False  #: Scripts can not be removed
-	addedGestures: List[_GestureVM]  #: These will also be in self.gestures
+	addedGestures: list[_GestureVM]  #: These will also be in self.gestures
 	#: These will not be in self.gestures anymore. Key is the normalized Gesture Identifier.
-	removedGestures: Dict[str, _GestureVM]
+	removedGestures: dict[str, _GestureVM]
 
 	def __init__(self, displayName: str, scriptInfo: inputCore.AllGesturesScriptInfo):
 		self.displayName = displayName
 		self.scriptInfo = scriptInfo
-		self.pending: Optional[_PendingGesture] = None
+		self.pending: _PendingGesture | None = None
 		self.addedGestures = []
 		self.removedGestures = {}
 		self.gestures = []
@@ -144,7 +143,7 @@ class _ScriptVM:
 
 class _CategoryVM:
 	displayName: str  #: Translated display name for the category
-	scripts: List[_ScriptVM]
+	scripts: list[_ScriptVM]
 	canAdd = False  #: not able to add Scripts
 	canChange = False  #: categories can not be changed
 	canRemove = False  #: categories can not be removed
@@ -168,18 +167,18 @@ class _CategoryVM:
 class _EmulatedGestureVM(_ScriptVM):
 	displayName: str  #: Display name for the gesture to be emulated
 	canAdd = True  #: able to add gestures that trigger this emulation
-	scriptInfo: Union[inputCore.AllGesturesScriptInfo, inputCore.KbEmuScriptInfo]
+	scriptInfo: inputCore.AllGesturesScriptInfo | inputCore.KbEmuScriptInfo
 
 	def __init__(self, emuGestureInfo: inputCore.AllGesturesScriptInfo):
 		if not isinstance(emuGestureInfo, inputCore.KbEmuScriptInfo):
-			raise ValueError("Unexpected script type.")
+			raise ValueError("Unexpected script type.")  # noqa: TRY004
 		# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 		# will be replaced by the gesture that can be triggered by a mapped gesture.
 		# E.G. Emulate key press: NVDA+b
 		emuGestureDisplayName = _("Emulate key press: {emulateGesture}").format(
 			emulateGesture=emuGestureInfo.displayName,
 		)
-		super(_EmulatedGestureVM, self).__init__(displayName=emuGestureDisplayName, scriptInfo=emuGestureInfo)
+		super().__init__(displayName=emuGestureDisplayName, scriptInfo=emuGestureInfo)
 
 	@property
 	def canChange(self) -> bool:
@@ -206,13 +205,13 @@ class _PendingEmulatedGestureVM:
 
 class _EmuCategoryVM:
 	displayName = inputCore.SCRCAT_KBEMU  #: Translated display name for the gesture emulation category
-	scripts: List[Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]]
+	scripts: list[_ScriptVM | _EmulatedGestureVM | _PendingEmulatedGestureVM]
 	canAdd = True  #: Can add new emulated gestures
 	canChange = False  #: categories can not be changed
 	canRemove = False  #: categories can not be removed
-	addedKbEmulation: List[_EmulatedGestureVM]  #: These will also be in self.scripts
+	addedKbEmulation: list[_EmulatedGestureVM]  #: These will also be in self.scripts
 	#: These will not be in self.scripts anymore. Key is the scriptInfo display name.
-	removedKbEmulation: Dict[str, _EmulatedGestureVM]
+	removedKbEmulation: dict[str, _EmulatedGestureVM]
 
 	def __repr__(self):
 		return "KB emulation category"
@@ -223,7 +222,7 @@ class _EmuCategoryVM:
 		self.addedKbEmulation = []
 		self.removedKbEmulation = {}
 		self.scripts = []
-		self.pending: Optional[_PendingEmulatedGestureVM] = None
+		self.pending: _PendingEmulatedGestureVM | None = None
 		for scriptName in sorted(emuGestures, key=strxfrm):
 			emuG = emuGestures[scriptName]
 			if isinstance(emuG, inputCore.KbEmuScriptInfo):
@@ -273,22 +272,22 @@ class _EmuCategoryVM:
 
 
 # convenience types.
-_CategoryVMTypes = Union[_CategoryVM, _EmuCategoryVM]
-_ScriptVMTypes = Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]
-_GestureVMTypes = Union[_GestureVM, _PendingGesture]
+_CategoryVMTypes = Union[_CategoryVM, _EmuCategoryVM]  # noqa: UP007
+_ScriptVMTypes = Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]  # noqa: UP007
+_GestureVMTypes = Union[_GestureVM, _PendingGesture]  # noqa: UP007
 
-_VmSelection = Tuple[
+_VmSelection = tuple[
 	_CategoryVMTypes,
-	Optional[_ScriptVMTypes],
-	Optional[_GestureVMTypes],
+	_ScriptVMTypes | None,
+	_GestureVMTypes | None,
 ]
 
 
 class _InputGesturesViewModel:
-	allGestures: List[_CategoryVMTypes]
-	filteredGestures: List[_CategoryVMTypes]
-	isExpectingNewEmuGesture: Optional[_EmuCategoryVM] = None
-	isExpectingNewGesture: Optional[_ScriptVM] = None
+	allGestures: list[_CategoryVMTypes]
+	filteredGestures: list[_CategoryVMTypes]
+	isExpectingNewEmuGesture: _EmuCategoryVM | None = None
+	isExpectingNewGesture: _ScriptVM | None = None
 
 	def __init__(self):
 		self.reset()
@@ -348,7 +347,7 @@ class _InputGesturesViewModel:
 			for gestureVM in scriptVM.removedGestures.values()
 		]
 
-		gesturesForRemovedKbEmu = list(
+		gesturesForRemovedKbEmu = list(  # noqa: C411
 			[
 				(gestureVM, scriptVM.scriptInfo)
 				for catVM in self.allGestures
@@ -410,7 +409,7 @@ class _InputGesturesViewModel:
 			# Only save if there is something to save.
 			try:
 				inputCore.manager.userGestureMap.save()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning("", exc_info=True)
 				return False
 		return True
@@ -427,13 +426,13 @@ class _InputGesturesViewModel:
 		filterText = re.escape(filterText)
 		pattern = re.compile(
 			r"(?=.*?" + r")(?=.*?".join(filterText.split(r"\ ")) + r")",
-			re.U | re.IGNORECASE,
+			re.UNICODE | re.IGNORECASE,
 		)
 		for catVM in self.allGestures:
 			filteredScripts = [scriptVM for scriptVM in catVM.scripts if pattern.match(scriptVM.displayName)]
 			if filteredScripts:
 				# clone the catVM, but start empty.
-				filteredCat: Union[_CategoryVM, _EmuCategoryVM] = type(catVM)(catVM.displayName, {})
+				filteredCat: _CategoryVM | _EmuCategoryVM = type(catVM)(catVM.displayName, {})
 				filteredCat.scripts = filteredScripts
 				filteredGestures.append(filteredCat)
 		self.filteredGestures = filteredGestures
@@ -448,26 +447,26 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE,
 		)
 
-	def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
+	def OnGetChildrenCount(self, index: tuple[int, ...]) -> int:
 		filteredGesturesVM = self.gesturesVM.filteredGestures
 		if not index or not len(filteredGesturesVM):  # An empty index indicates the root node is requested
 			return len(filteredGesturesVM)
 		catIndex = index[0]
 		categoryVM = filteredGesturesVM[catIndex]
-		scriptsVM: List[_ScriptVMTypes] = categoryVM.scripts
+		scriptsVM: list[_ScriptVMTypes] = categoryVM.scripts
 		if len(index) == 1:  # Get number of children of Category, IE the number of scripts
 			scriptCount = len(scriptsVM)
 			return scriptCount
 		if len(index) == 2:  # Get number of children of scripts , IE the number of gestures
 			scriptIndex = index[1]
-			scriptVM: Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM] = scriptsVM[scriptIndex]
+			scriptVM: _ScriptVM | _EmulatedGestureVM | _PendingEmulatedGestureVM = scriptsVM[scriptIndex]
 			gestures = [] if isinstance(scriptVM, _PendingEmulatedGestureVM) else scriptVM.gestures
 			return len(gestures)
 
 		assert len(index) == 3  # Get number of children for gesture, always 0
 		return 0  # Gestures have no children
 
-	def OnGetItemText(self, index: Tuple[int, ...], column: int = 0) -> str:
+	def OnGetItemText(self, index: tuple[int, ...], column: int = 0) -> str:
 		filteredGesturesVM = self.gesturesVM.filteredGestures
 
 		assert len(index) >= 1 and len(filteredGesturesVM) >= 1
@@ -495,10 +494,10 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		gesture = scriptVm.gestures[gestureIndex]
 		return gesture.displayName
 
-	def getSelectedItemData(self) -> Optional[_VmSelection]:
+	def getSelectedItemData(self) -> _VmSelection | None:
 		selection = self.GetSelection()
 		try:
-			selIdx: Tuple[int, ...] = self.GetIndexOfItem(selection)
+			selIdx: tuple[int, ...] = self.GetIndexOfItem(selection)
 		except AssertionError:
 			# If item.IsOK() fails on this item or any parents indexed, an assertion error is thrown. (#12673)
 			log.debugWarning(
@@ -508,13 +507,13 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			return None
 		# ensure that the length of tuple is 3, missing elements replaced with None
 		nonesForMissingElements = (None,) * (3 - len(selIdx))
-		selIdx: Tuple[int, Optional[int], Optional[int]] = selIdx + nonesForMissingElements
+		selIdx: tuple[int, int | None, int | None] = selIdx + nonesForMissingElements
 		return self.getData(selIdx)
 
 	def getData(
 		self,
-		index: Tuple[int, Optional[int], Optional[int]],
-	) -> Optional[_VmSelection]:
+		index: tuple[int, int | None, int | None],
+	) -> _VmSelection | None:
 		assert 3 == len(index) and index[0] is not None
 		if len(self.gesturesVM.filteredGestures) == 0:
 			log.debug("No filtered gestures available.")
@@ -534,7 +533,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 		if scriptIndex is None:
 			return (catVM, None, None)
 		try:
-			scriptVM: Optional[_ScriptVMTypes] = catVM.scripts[scriptIndex]
+			scriptVM: _ScriptVMTypes | None = catVM.scripts[scriptIndex]
 		except IndexError:
 			log.error(
 				"Exceeded expected script bounds, use _PendingEmulatedGestureVM as a placeholder."
@@ -562,7 +561,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			raise
 		return (catVM, scriptVM, gestureVM)
 
-	def doRefresh(self, postFilter=False, focus: Optional[_VmSelection] = None):
+	def doRefresh(self, postFilter=False, focus: _VmSelection | None = None):
 		with guiHelper.autoThaw(self):
 			self.RefreshItems()
 			if postFilter:
@@ -574,7 +573,7 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 						self.Expand(self.GetItemByIndex((index,)))
 			if focus:
 				log.debug(f"expanding: {focus}")
-				catVM, scriptVM, gestureVM = focus
+				catVM, scriptVM, gestureVM = focus  # noqa: RUF059
 				catIndex = self.gesturesVM.filteredGestures.index(catVM)
 				self.Expand(self.GetItemByIndex((catIndex,)))
 				if scriptVM is not None:
@@ -661,7 +660,7 @@ class InputGesturesDialog(SettingsDialog):
 			item = next((item for item in reversed(selectedItems) if item is not None), None)
 		# Check if an add operation is already in progress to prevent conflicts.
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
-		if item and not pendingAdd:
+		if item and not pendingAdd:  # noqa: SIM102
 			if key == wx.WXK_DELETE and item.canRemove:
 				self.onRemove(None)
 		evt.Skip()
@@ -899,7 +898,7 @@ class InputGesturesDialog(SettingsDialog):
 		inputCore.manager.userGestureMap.clear()
 		try:
 			inputCore.manager.userGestureMap.save()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving user defined input gestures fails.
 			gui.messageBox(
@@ -922,7 +921,7 @@ class InputGesturesDialog(SettingsDialog):
 				wx.OK | wx.ICON_ERROR,
 			)
 
-		super(InputGesturesDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def _onDestroyTree(self, evt: wx.WindowDestroyEvent):
 		# #7077: Remove the binding when the tree is destroyed so that it can not be called during destruction

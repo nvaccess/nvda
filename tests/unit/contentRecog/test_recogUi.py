@@ -5,7 +5,7 @@
 
 """Unit tests for the contentRecog.recogUi module."""
 
-from types import SimpleNamespace
+from types import SimpleNamespace  # noqa: I001
 import unittest
 from unittest.mock import Mock, patch
 
@@ -43,9 +43,9 @@ class TestCaptureImage(unittest.TestCase):
 			patch.object(recogUi, "_isScreenCurtainActive", return_value=True),
 			patch.object(recogUi, "_captureWithWgc", side_effect=captureError) as captureWithWgc,
 			patch.object(recogUi, "_captureWithGdi") as captureWithGdi,
+			self.assertRaises(RuntimeError) as cm,
 		):
-			with self.assertRaises(RuntimeError) as cm:
-				recogUi._captureImage(self.imageInfo)
+			recogUi._captureImage(self.imageInfo)
 
 		self.assertIs(cm.exception, captureError)
 		captureWithWgc.assert_called_once_with(self.imageInfo)

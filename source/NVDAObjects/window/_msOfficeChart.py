@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import eventHandler
+import eventHandler  # noqa: I001
 import ui
 from . import Window
 import ctypes
@@ -382,7 +382,7 @@ class OfficeChartElementBase(Window):
 		self.elementID = elementID
 		self.arg1 = arg1
 		self.arg2 = arg2
-		super(OfficeChartElementBase, self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 	def GetChartSegment(self):
 		chartType = self.officeChartObject.ChartType
@@ -430,7 +430,7 @@ class OfficeChartElementBase(Window):
 		ui.message(self._getChartElementText(self.elementID, self.arg1, self.arg2, True))
 
 	def script_reportCurrentChartElementColor(self, gesture):
-		if self.elementID == xlSeries:
+		if self.elementID == xlSeries:  # noqa: SIM102
 			if self.arg2 == -1:
 				ui.message(
 					# Translators: Message to be spoken to report Series Color
@@ -441,7 +441,7 @@ class OfficeChartElementBase(Window):
 					),
 				)
 
-	ELEMENT_IDS = {
+	ELEMENT_IDS = {  # noqa: RUF012
 		# Translators: A type of element in a Microsoft Office chart.
 		xlDisplayUnitLabel: _("Display Unit Label"),
 		# Translators: A type of element in a Microsoft Office chart.
@@ -489,7 +489,7 @@ class OfficeChartElementBase(Window):
 	def _getChartElementText(self, ElementID, arg1, arg2, reportExtraInfo=False):
 		return self.ELEMENT_IDS[ElementID]
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:NVDA+d": "reportCurrentChartElementWithExtraInfo",
 		"kb:NVDA+f": "reportCurrentChartElementColor",
 	}
@@ -500,7 +500,7 @@ class OfficeChartElementList(Window):
 		self.officeChartObject = officeChartObject
 		self.elementList = []
 		self.activeElement = None
-		super(OfficeChartElementList, self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 
 	def addElement(self, element, parent):
 		element.parent = parent
@@ -518,7 +518,7 @@ class OfficeChartElementList(Window):
 		if len(self.elementList) == 0:
 			ui.message(self.name)
 		else:
-			if self.activeElement == None:  # noqa: E711
+			if self.activeElement == None:
 				self.activeElement = self.elementList[0]
 			else:
 				if direction == "previous":
@@ -538,7 +538,7 @@ class OfficeChartElementList(Window):
 
 	script_nextElement.canPropagate = True
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb(laptop):leftArrow": "previousElement",
 		"kb(desktop):leftArrow": "previousElement",
 		"kb(laptop):rightArrow": "nextElement",
@@ -550,7 +550,7 @@ class OfficeChart(OfficeChartElementList):
 	role = controlTypes.Role.CHART
 
 	def __init__(self, windowHandle, officeApplicationObject, officeChartObject, initialDocument, keyIndex=0):
-		super(OfficeChart, self).__init__(windowHandle=windowHandle, officeChartObject=officeChartObject)
+		super().__init__(windowHandle=windowHandle, officeChartObject=officeChartObject)
 		self.initialDocument = initialDocument
 		self.parent = initialDocument
 		self.officeApplicationObject = officeApplicationObject
@@ -579,7 +579,7 @@ class OfficeChart(OfficeChartElementList):
 		)
 		try:
 			self.officeChartObject.Select()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def _get_name(self):
@@ -651,7 +651,7 @@ class OfficeChart(OfficeChartElementList):
 
 	script_disablePassThrough.canPropagate = True
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:upArrow": "previousElement",
 		"kb:downArrow": "nextElement",
 		"kb:escape": "disablePassThrough",
@@ -663,7 +663,7 @@ class OfficeChartElementCollection(OfficeChartElementList):
 	description = None
 
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementCollection, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -736,7 +736,7 @@ class OfficeChartElementSeries(OfficeChartElementList):
 	role = controlTypes.Role.CHARTELEMENT
 
 	def __init__(self, windowHandle, officeChartObject, elementID, arg1=None, arg2=None):
-		super(OfficeChartElementSeries, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 		)
@@ -809,14 +809,14 @@ class OfficeChartElementSeries(OfficeChartElementList):
 				),
 			)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:NVDA+5": "reportColor",
 	}
 
 
 class OfficeChartElementPoint(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementPoint, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -850,7 +850,7 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 					chartSeriesXValue = self.officeChartObject.SeriesCollection(arg1).XValues[arg2 - 1]
 
 				output = ""
-				if self.officeChartObject.ChartType in (
+				if self.officeChartObject.ChartType in (  # noqa: SIM102
 					xlLine,
 					xlLineMarkers,
 					xlLineMarkersStacked,
@@ -940,7 +940,7 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 
 
 class OfficeChartElementAxis(OfficeChartElementBase):
-	_axisMap = {
+	_axisMap = {  # noqa: RUF012
 		xlCategory: {
 			# Translators: Indicates Primary Category Axis
 			xlPrimary: _("Primary Category Axis"),
@@ -991,7 +991,7 @@ class OfficeChartElementAxis(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
 		self.axisGroup = arg1
 		self.axisType = arg2
-		super(OfficeChartElementAxis, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1008,7 +1008,7 @@ class OfficeChartElementAxis(OfficeChartElementBase):
 
 class OfficeChartElementAxisTitle(OfficeChartElementAxis):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementAxisTitle, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1018,7 +1018,7 @@ class OfficeChartElementAxisTitle(OfficeChartElementAxis):
 
 	def _getChartElementText(self, ElementID, arg1, arg2, reportExtraInfo=False):
 		# Translators: Indicates a chart axis title in Microsoft Office.
-		axisTitle = super(OfficeChartElementAxisTitle, self)._getChartElementText(ElementID, arg1, arg2)
+		axisTitle = super()._getChartElementText(ElementID, arg1, arg2)
 		if self.officeChartObject.HasAxis(arg2, arg1) and self.officeChartObject.Axes(arg2, arg1).HasTitle:
 			# Translators: the title of a chart axis
 			axisTitle += _(" title: {axisTitle}").format(
@@ -1031,7 +1031,7 @@ class OfficeChartElementAxisTitle(OfficeChartElementAxis):
 
 
 class OfficeChartElementTrendline(OfficeChartElementBase):
-	_trendlineTypeMap = {
+	_trendlineTypeMap = {  # noqa: RUF012
 		# Translators: Indicates that trendline type is Exponential
 		xlExponential: _("Exponential"),
 		# Translators: Indicates that trendline type is Linear
@@ -1052,7 +1052,7 @@ class OfficeChartElementTrendline(OfficeChartElementBase):
 		self.currentTrendline = officeChartObject.SeriesCollection(self.seriesIndex).Trendlines(
 			self.trendlineIndex,
 		)
-		super(OfficeChartElementTrendline, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1094,7 +1094,7 @@ class OfficeChartElementTrendline(OfficeChartElementBase):
 
 class OfficeChartElementChartTitle(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementChartTitle, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1116,7 +1116,7 @@ class OfficeChartElementChartTitle(OfficeChartElementBase):
 
 class OfficeChartElementChartArea(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementChartArea, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1146,7 +1146,7 @@ class OfficeChartElementChartArea(OfficeChartElementBase):
 
 class OfficeChartElementPlotArea(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementPlotArea, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1180,7 +1180,7 @@ class OfficeChartElementPlotArea(OfficeChartElementBase):
 class OfficeChartElementLegend(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
 		self.chartLegend = officeChartObject.Legend
-		super(OfficeChartElementLegend, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1201,7 +1201,7 @@ class OfficeChartElementLegendEntry(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
 		if self.eventDriven:
 			self.legendEntry = officeChartObject.Legend.LegendEntries(arg1)
-		super(OfficeChartElementLegendEntry, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
@@ -1233,7 +1233,7 @@ class OfficeChartElementLegendEntry(OfficeChartElementBase):
 
 class OfficeChartElementLegendKey(OfficeChartElementBase):
 	def __init__(self, windowHandle=None, officeChartObject=None, elementID=None, arg1=None, arg2=None):
-		super(OfficeChartElementLegendKey, self).__init__(
+		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,

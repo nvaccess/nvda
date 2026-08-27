@@ -11,7 +11,7 @@ from NVDAObjects.UIA import UIA, ProgressBar
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if isinstance(obj, UIA):
+		if isinstance(obj, UIA):  # noqa: SIM102
 			# #10411: In build 17035, Settings/System/Sound has been added, but has an anoying volume meter.
 			if obj.UIAElement.cachedClassName == "ProgressBar" and isinstance(obj.next, UIA):
 				# Due to Storage Sense UI redesign in build 18277,

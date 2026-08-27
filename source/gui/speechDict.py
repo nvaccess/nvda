@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 from re import error as RegexpError
 
 import globalVars
@@ -38,7 +38,7 @@ class DictionaryEntryDialog(
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
-	def __init__(self, parent, title=_("Edit Dictionary Entry")):
+	def __init__(self, parent, title=_("Edit Dictionary Entry")):  # noqa: B008
 		super().__init__(parent, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -110,7 +110,7 @@ class DictionaryEntryDialog(
 		except RegexpError as e:
 			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
 			if entryType != EntryType.REGEXP:
-				raise e
+				raise e  # noqa: TRY201
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 				_('Regular Expression error in the pattern field: "{error}".').format(error=e),
@@ -128,7 +128,7 @@ class DictionaryEntryDialog(
 				f"Could not add dictionary entry due to regex error in the replacement field : {e}",
 			)
 			if entryType != EntryType.REGEXP:
-				raise e
+				raise e  # noqa: TRY201
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 				_('Regular Expression error in the replacement field: "{error}".').format(error=e),
@@ -155,7 +155,7 @@ class DictionaryDialog(
 	To use this dialog, override L{__init__} calling super().__init__.
 	"""
 
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}  # noqa: E741
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}  # noqa: RUF012
 	helpId = "SpeechDictionaries"
 
 	@abstractmethod

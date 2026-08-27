@@ -5,9 +5,9 @@
 
 """Unit tests for MathCAT NavNode mapping helpers."""
 
-import sys
+import sys  # noqa: I001
 import unittest
-import xml.etree.ElementTree as ElementTree
+from xml.etree import ElementTree
 from types import ModuleType
 from typing import TYPE_CHECKING, cast
 from unittest.mock import patch
@@ -91,7 +91,7 @@ class TestMathCatNavNodeMapping(unittest.TestCase):
 
 		sourceObj = cast("NVDAObject", FakeIa2WebMath())
 		fakeIa2WebModule = ModuleType("NVDAObjects.IAccessible.ia2Web")
-		setattr(fakeIa2WebModule, "Math", FakeIa2WebMath)
+		fakeIa2WebModule.Math = FakeIa2WebMath
 		with patch.dict(sys.modules, {"NVDAObjects.IAccessible.ia2Web": fakeIa2WebModule}):
 			result, rectsById = navNodeMapping.prepareMathMlForNavigation(
 				"<math><mrow><mi>x</mi></mrow></math>",

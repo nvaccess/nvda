@@ -7,7 +7,7 @@
 Provide an asyncio event loop running on a background thread for use by NVDA components.
 """
 
-import asyncio
+import asyncio  # noqa: I001
 from threading import Thread
 
 from logHandler import log

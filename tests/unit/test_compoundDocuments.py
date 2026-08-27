@@ -5,7 +5,7 @@
 
 """Unit tests for the compoundDocuments module."""
 
-import unittest
+import unittest  # noqa: I001
 
 import compoundDocuments
 import controlTypes
@@ -20,7 +20,7 @@ class BasicCompoundTextLeafTextInfo(compoundDocuments.CompoundTextLeafTextInfo, 
 class BasicCompoundTextLeaf(BasicTextProvider):
 	TextInfo = BasicCompoundTextLeafTextInfo
 	windowHandle = 0
-	states = {controlTypes.State.FOCUSABLE}
+	states = {controlTypes.State.FOCUSABLE}  # noqa: RUF012
 	flowsFrom = None
 	flowsTo = None
 

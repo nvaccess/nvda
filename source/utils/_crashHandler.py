@@ -5,7 +5,7 @@
 
 """Crash handling helpers shared by watchdog and the rest of NVDA."""
 
-import ctypes
+import ctypes  # noqa: I001
 import json
 import os
 import time
@@ -72,14 +72,14 @@ def _getCurrentCrashFingerprint() -> tuple[str, str]:
 		import buildVersion
 
 		version = buildVersion.version
-	except Exception:
+	except Exception:  # noqa: BLE001
 		log.debugWarning("Failed to determine NVDA version for crash stats", exc_info=True)
 		version = "unknown"
 
 	installType = "unknown"
 	try:
 		import config
-	except Exception:
+	except Exception:  # noqa: BLE001
 		log.debugWarning("Failed to import config for crash stats", exc_info=True)
 	else:
 		try:
@@ -87,7 +87,7 @@ def _getCurrentCrashFingerprint() -> tuple[str, str]:
 				installType = "installed"
 			else:
 				installType = "portable"
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("Failed to determine install type for crash stats", exc_info=True)
 
 	return version, installType
@@ -103,8 +103,7 @@ def _writeCrashStats(path: str, events: list[CrashEvent]) -> None:
 		return
 	try:
 		with open(path, "w", encoding="utf-8") as f:
-			for event in events:
-				f.write(f"{event.json()}\n")
+			f.writelines(f"{event.json()}\n" for event in events)
 	except OSError:
 		log.debugWarning("Failed to update crash stats file", exc_info=True)
 
@@ -180,7 +179,7 @@ def crashHandler(exceptionInfo):
 	elif (logFileName := globalVars.appArgs.logFileName) is not None:
 		dumpPath = os.path.join(os.path.dirname(logFileName), "nvda_crash.dmp")
 		if not NVDAHelper.localLib.writeCrashDump(dumpPath, exceptionInfo):
-			log.critical("NVDA crashed! Error writing minidump", exc_info=True)
+			log.critical("NVDA crashed! Error writing minidump", exc_info=True)  # noqa: LOG014
 		else:
 			log.critical(f"NVDA crashed! Minidump written to {dumpPath}")
 	else:

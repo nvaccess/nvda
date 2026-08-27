@@ -4,7 +4,7 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 
-from .speech import (
+from .speech import (  # noqa: I001
 	_extendSpeechSequence_addMathForTextInfo,
 	_getSpellingSpeechAddCharMode,
 	_getSpellingCharAddCapNotification,
@@ -77,7 +77,7 @@ from .types import (
 	_flattenNestedSequences,
 )
 
-__all__ = [
+__all__ = [  # noqa: RUF022
 	# from .priorities
 	"Spri",
 	# from .types
@@ -150,7 +150,7 @@ __all__ = [
 	"pre_speechQueued",
 ]
 
-import synthDriverHandler
+import synthDriverHandler  # noqa: I001
 import config
 from .speech import initialize as speechInitialize
 from .sayAll import initialize as sayAllInitialize

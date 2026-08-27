@@ -1,4 +1,4 @@
-from NVDAObjects import behaviors
+from NVDAObjects import behaviors  # noqa: I001
 import controlTypes
 from . import IAccessible
 

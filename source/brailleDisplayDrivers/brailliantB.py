@@ -3,8 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
-from typing import List, Union
+import time  # noqa: I001
 
 import serial
 import braille
@@ -83,7 +82,7 @@ SPACE_KEY = 10
 
 
 class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
-	_dev: Union[hwIo.Serial, hwIo.Hid]
+	_dev: hwIo.Serial | hwIo.Hid
 	name = "brailliantB"
 	# Translators: The name of a series of braille displays.
 	description = _("HumanWare Brailliant BI/B series / BrailleNote Touch")
@@ -161,10 +160,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
@@ -179,7 +178,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 						writeTimeout=TIMEOUT,
 						onReceive=self._serOnReceive,
 					)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue  # Couldn't connect.
 			# The Brailliant can fail to init if you try immediately after connecting.
@@ -194,11 +193,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if self.numCells:
 				# A display responded.
 				log.info(
-					"Found display with {cells} cells connected via {type} ({port})".format(
-						cells=self.numCells,
-						type=portType,
-						port=port,
-					),
+					f"Found display with {self.numCells} cells connected via {portType} ({port})",
 				)
 				break
 			# This device can't be initialized. Move on to the next (if any).
@@ -230,7 +225,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					numCells = reportedNumCells
 				else:
 					log.debugWarning("Could not get number of cells from HID device using HR_CAPS")
-			except WindowsError:
+			except OSError:
 				return  # Fail!
 			self.numCells = numCells
 		else:
@@ -241,13 +236,13 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _serSendMessage(self, msgId: bytes, payload: Union[bytes, int, bool] = b""):
+	def _serSendMessage(self, msgId: bytes, payload: bytes | int | bool = b""):
 		if not isinstance(payload, bytes):
 			if isinstance(payload, int):
 				payload: bytes = intToByte(payload)
@@ -267,7 +262,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def _serOnReceive(self, data: bytes):
 		if data != HEADER:
-			log.debugWarning("Ignoring byte before header: %r" % data)
+			log.debugWarning("Ignoring byte before header: %r" % data)  # noqa: UP031
 			return
 		msgId = self._dev.read(1)
 		length = ord(self._dev.read(1))
@@ -278,7 +273,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		if msgId == MSG_INIT_RESP:
 			if payload[0] != 0:
 				# Communication not allowed.
-				log.debugWarning("Display at %r reports communication not allowed" % self._dev.port)
+				log.debugWarning("Display at %r reports communication not allowed" % self._dev.port)  # noqa: UP031
 				return
 			self.numCells = payload[2]
 
@@ -295,7 +290,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 		else:
 			log.debugWarning(
-				"Unknown message: id {id!r}, payload {payload!r}".format(id=msgId, payload=payload),
+				f"Unknown message: id {msgId!r}, payload {payload!r}",
 			)
 
 	def _hidOnReceive(self, data: bytes):
@@ -314,7 +309,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		elif rId == HR_POWEROFF:
 			log.debug("Powering off")
 		else:
-			log.debugWarning("Unknown report: %r" % data)
+			log.debugWarning("Unknown report: %r" % data)  # noqa: UP031
 
 	def _handleKeyRelease(self):
 		if self._ignoreKeyReleases or not self._keysDown:
@@ -327,7 +322,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# so they should be ignored.
 		self._ignoreKeyReleases = True
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = b"".join(intToByte(cell) for cell in cells)
 		if self.isHid:
@@ -388,7 +383,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.keyCodes = set(keys)
 
 		self.keyNames = names = []
@@ -411,7 +406,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 				try:
 					names.append(KEY_NAMES[key])
 				except KeyError:
-					log.debugWarning("Unknown key with id %d" % key)
+					log.debugWarning("Unknown key with id %d" % key)  # noqa: UP031
 		if routingIndexes:
 			routingIndexes.sort()
 			self.cellIndexes = routingIndexes

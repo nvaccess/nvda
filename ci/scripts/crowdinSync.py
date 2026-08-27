@@ -5,7 +5,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-import argparse
+import argparse  # noqa: I001
 import os
 
 import requests

@@ -4,11 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2022 NV Access Limited, Peter Vágner
 
-from typing import (
-	Generator,
-	Optional,
-	Tuple,
-)
+from collections.abc import Generator  # noqa: I001
 
 from annotation import (
 	_AnnotationRolesT,
@@ -36,7 +32,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		return self._target.summarizeInProcess()
 
 	@property
-	def role(self) -> Optional[controlTypes.Role]:
+	def role(self) -> controlTypes.Role | None:
 		# details-roles is currently only defined in Chromium
 		# this may diverge in Firefox in the future.
 		from .chromium import supportedAriaDetailsRoles
@@ -46,7 +42,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		)
 		# return a supported details role
 		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"detailsRole: {repr(detailsRole)}")
+			log.debug(f"detailsRole: {detailsRole!r}")
 		if detailsRole in supportedAriaDetailsRoles.values():
 			return detailsRole
 
@@ -75,7 +71,7 @@ class MozAnnotation(AnnotationOrigin):
 		)
 
 	@property
-	def targets(self) -> Tuple[MozAnnotationTarget]:
+	def targets(self) -> tuple[MozAnnotationTarget]:
 		return tuple(MozAnnotationTarget(rel) for rel in self._originObj.detailsRelations)
 
 	@property
@@ -83,7 +79,7 @@ class MozAnnotation(AnnotationOrigin):
 		return tuple(self._rolesGenerator)
 
 	@property
-	def _rolesGenerator(self) -> Generator[Optional[controlTypes.Role], None, None]:
+	def _rolesGenerator(self) -> Generator[controlTypes.Role | None]:
 		# Unlike base Ia2Web implementation, the details-roles
 		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
@@ -91,12 +87,12 @@ class MozAnnotation(AnnotationOrigin):
 			try:
 				yield target.role
 			except ValueError:
-				log.error("Error getting role.", exc_info=True)
+				log.error("Error getting role.", exc_info=True)  # noqa: G201
 
 
 class Mozilla(ia2Web.Ia2Web):
 	def _get_states(self):
-		states = super(Mozilla, self).states
+		states = super().states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
 			states.add(controlTypes.State.CHECKABLE)
 		return states
@@ -129,11 +125,14 @@ class Mozilla(ia2Web.Ia2Web):
 			return controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 
 	def _get_presentationType(self):
-		presType = super(Mozilla, self).presentationType
-		if presType == self.presType_content:
-			if self.role == controlTypes.Role.TABLE and self.IA2Attributes.get("layout-guess") == "true":
-				presType = self.presType_layout
-			elif self.table and self.table.presentationType == self.presType_layout:
+		presType = super().presentationType
+		if presType == self.presType_content:  # noqa: SIM102
+			if (
+				self.role == controlTypes.Role.TABLE
+				and self.IA2Attributes.get("layout-guess") == "true"
+				or self.table
+				and self.table.presentationType == self.presType_layout
+			):
 				presType = self.presType_layout
 		return presType
 
@@ -145,7 +144,7 @@ class Mozilla(ia2Web.Ia2Web):
 		annotationOrigin = MozAnnotation(self)
 		return annotationOrigin
 
-	def _get_detailsSummary(self) -> Optional[str]:
+	def _get_detailsSummary(self) -> str | None:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -153,7 +152,7 @@ class Mozilla(ia2Web.Ia2Web):
 		# just take the first for now.
 		return self.annotations.targets[0].summary
 
-	def _get_detailsRole(self) -> Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> controlTypes.Role | None:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -193,7 +192,7 @@ class Document(ia2Web.Document):
 			import virtualBuffers.gecko_ia2
 
 			return virtualBuffers.gecko_ia2.Gecko_ia2
-		return super(Document, self).treeInterceptorClass
+		return super().treeInterceptorClass
 
 
 class EmbeddedObject(Mozilla):
@@ -203,14 +202,14 @@ class EmbeddedObject(Mozilla):
 			# This window doesn't have the focus, which means the embedded object's window probably already has the focus.
 			# We don't want to override the focus event fired by the embedded object.
 			return False
-		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 
 class GeckoPluginWindowRoot(WindowRoot):
 	parentUsesSuperOnWindowRootIAccessible = False
 
 	def _get_parent(self):
-		parent = super(GeckoPluginWindowRoot, self).parent
+		parent = super().parent
 		if parent.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			# Skip the window wrapping the plugin window,
 			# which doesn't expose a Gecko accessible in Gecko >= 11.
@@ -226,7 +225,7 @@ class GeckoPluginWindowRoot(WindowRoot):
 				if controlTypes.State.OFFSCREEN not in obj.states:
 					return obj
 				else:
-					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)
+					log.debugWarning("NAVRELATION_EMBEDS returned an offscreen document, name %r" % obj.name)  # noqa: UP031
 			else:
 				log.debugWarning("NAVRELATION_EMBEDS returned an invalid object")
 		else:
@@ -254,7 +253,7 @@ def findExtraOverlayClasses(obj, clsList):
 		iaStates = obj.IAccessibleStates
 		# Text leaves are never focusable.
 		# Not unavailable excludes disabled editable text fields (which also aren't focusable).
-		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):
+		if not (iaStates & oleacc.STATE_SYSTEM_FOCUSABLE or iaStates & oleacc.STATE_SYSTEM_UNAVAILABLE):  # noqa: SIM102
 			# This excludes a non-focusable @role="textbox".
 			if not (obj.IA2States & IA2.IA2_STATE_EDITABLE):
 				cls = TextLeaf
@@ -263,9 +262,11 @@ def findExtraOverlayClasses(obj, clsList):
 	if cls:
 		clsList.append(cls)
 
-	if iaRole == oleacc.ROLE_SYSTEM_ROW:
-		clsList.append(RowWithFakeNavigation)
-	elif iaRole == oleacc.ROLE_SYSTEM_LISTITEM and hasattr(obj.parent, "IAccessibleTableObject"):
+	if (
+		iaRole == oleacc.ROLE_SYSTEM_ROW
+		or iaRole == oleacc.ROLE_SYSTEM_LISTITEM
+		and hasattr(obj.parent, "IAccessibleTableObject")
+	):
 		clsList.append(RowWithFakeNavigation)
 	elif iaRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
 		# Check if the tree view is a table.

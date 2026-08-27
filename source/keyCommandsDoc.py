@@ -13,7 +13,7 @@ Refer to user guide standards for more information on syntax rules:
 https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/userGuideStandards.md
 """
 
-from enum import auto, Enum, IntEnum, StrEnum
+from enum import auto, Enum, IntEnum, StrEnum  # noqa: I001
 import re
 from collections.abc import Iterator
 
@@ -175,7 +175,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 	def _writeHeadings(self):
 		level = self._kcLastHeadingLevel + 1
 		# Only write headings we haven't yet written.
-		for level, heading in enumerate(self._headings[level:], level):
+		for level, heading in enumerate(self._headings[level:], level):  # noqa: B020
 			self._kcLines.append(heading.group(0))
 		self._kcLastHeadingLevel = level
 
@@ -195,7 +195,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 	def _handleSetting(self):
 		if not self._settingsHeaderRow:
 			raise KeyCommandsError(
-				"%d, setting command cannot be used before settingsSection command" % self._lineNum,
+				"%d, setting command cannot be used before settingsSection command" % self._lineNum,  # noqa: UP031
 			)
 
 		tableHeadersRequired = False

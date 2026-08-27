@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import enum
+import enum  # noqa: I001
 import os
 
 import winVersion

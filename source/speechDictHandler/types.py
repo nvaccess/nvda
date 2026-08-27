@@ -5,7 +5,7 @@
 
 """Types used for the speech dictionary system."""
 
-import fnmatch
+import fnmatch  # noqa: I001
 import os
 import re
 from dataclasses import dataclass, field

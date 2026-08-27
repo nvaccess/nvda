@@ -6,7 +6,7 @@
 # See the file COPYING for more details.
 
 
-import config
+import config  # noqa: I001
 import core
 from enum import auto, unique
 import globalVars
@@ -135,7 +135,7 @@ class ExitDialog(wx.Dialog):
 		self.CentreOnScreen()
 
 	def onOk(self, evt):
-		action = [a for a in _ExitAction if a.displayString == self.actionsList.GetStringSelection()][0]
+		action = [a for a in _ExitAction if a.displayString == self.actionsList.GetStringSelection()][0]  # noqa: RUF015
 		if action == _ExitAction.EXIT:
 			WelcomeDialog.closeInstances()
 			if core.triggerNVDAExit():
@@ -172,7 +172,7 @@ class ExitDialog(wx.Dialog):
 				):
 					return
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
-				from addonHandler import getIncompatibleAddons
+				from addonHandler import getIncompatibleAddons  # noqa: I001
 				from gui import mainFrame
 
 				if any(

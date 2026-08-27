@@ -2,12 +2,8 @@
 # Copyright (C) 2015-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
-from typing import (
-	Optional,
-	Dict,
-)
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 from comtypes.automation import VARIANT
 from ctypes import byref
 
@@ -268,9 +264,9 @@ class UIAWebTextInfo(UIATextInfo):
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(  # noqa: C901
+	def getTextWithFields(
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
@@ -365,7 +361,7 @@ class UIAWeb(UIA):
 		ariaRole = self._getUIACacheablePropertyValue(UIAHandler.UIA_AriaRolePropertyId).lower()
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# The role used is the first role in the list that has an associated NVDA role in aria.ariaRolesToNVDARoles
-		for ariaRole in ariaRole.split():
+		for ariaRole in ariaRole.split():  # noqa: B020
 			newRole = aria.ariaRolesToNVDARoles.get(ariaRole)
 			if newRole:
 				return newRole
@@ -518,7 +514,7 @@ class UIAWebTreeInterceptor(cursorManager.ReviewCursorManager, UIABrowseModeDocu
 				info = self.makeTextInfo(textInfos.POSITION_FIRST)
 				self._selection = info
 				return info
-			raise e
+			raise e  # noqa: TRY201
 
 	def shouldPassThrough(self, obj, reason=None):
 		# Enter focus mode for selectable list items (<select> and role=listbox)
