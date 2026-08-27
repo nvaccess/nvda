@@ -5,18 +5,32 @@
 
 """Unit tests for the ART host entry point, root services, and host controllers."""
 
+import io
+import os
+import subprocess
+import sys
 import unittest
+from unittest.mock import MagicMock, patch
 
 from rpyc.core.stream import PipeStream
 
+import globalVars
+import NVDAState
+
 from _art.exceptions import CapabilityDeniedError, CapabilityUnavailableError, PermissionNotGrantedError
+from _art.host.entrypoint import CONTROL_CONNECTION_NAME
 from _art.host.rootService import HostRootService
 from _art.session.hostController import (
 	HostController,
+	SubprocessHostController,
+	claimProcessControlStream,
 )
 from _art.session.rootService import CoreRootService
 from _art.transport import Connection
 from .threadHostController import ThreadHostController
+
+#: Bound on anything involving a real process, in seconds.
+_PROCESS_TIMEOUT: float = 30.0
 
 
 class TestRootServices(unittest.TestCase):
@@ -130,14 +144,14 @@ class HostControllerConformanceMixin:
 		conn = self.startHost()
 		self.assertEqual(conn.remoteService.ping(), "pong")
 		self.controller.terminate()
-		self.controller.wait(10)
+		self.assertIsNotNone(self.controller.wait(_PROCESS_TIMEOUT))
 		self.assertIsNotNone(self.controller.poll())
 
 	def test_terminateIsSafeOnAStoppedHost(self):
 		"""Terminating twice is not an error."""
 		self.startHost()
 		self.controller.terminate()
-		self.controller.wait(10)
+		self.controller.wait(_PROCESS_TIMEOUT)
 		self.controller.terminate()
 
 	def test_startingTwiceIsRefused(self):
@@ -161,3 +175,104 @@ class TestThreadHostController(HostControllerConformanceMixin, unittest.TestCase
 		self.assertIsNotNone(hostEnd)
 		coreEnd.close()
 		hostEnd.close()
+
+
+@unittest.skipUnless(
+	NVDAState.isRunningAsSource(),
+	"The ART host runs on the interpreter path; there is no host executable yet",
+)
+class TestSubprocessHostController(HostControllerConformanceMixin, unittest.TestCase):
+	"""The real implementation, driving a genuine child process.
+
+	These are the tests a thread cannot stand in for.
+	"""
+
+	def makeController(self) -> HostController:
+		return SubprocessHostController()
+
+	def test_hostRunsInADifferentProcess(self):
+		"""The ping is answered by another process, not this one."""
+		self.startHost()
+		self.assertIsNotNone(self.controller._process)
+		self.assertNotEqual(self.controller._process.pid, os.getpid())
+
+	def test_createPipePairRequiresARunningHost(self):
+		"""There is nothing to duplicate handles into before the host starts."""
+		with self.assertRaises(RuntimeError):
+			self.controller.createPipePair()
+
+	def test_createPipePairDuplicatesHandlesIntoTheHost(self):
+		"""Core gets a stream, and the host gets two handle values valid in its own process.
+
+		The host does not consume these until dependent connections exist, so this checks only
+		that the ends are manufactured, not that traffic flows over them.
+		"""
+		self.startHost()
+		coreEnd, hostEnd = self.controller.createPipePair()
+		readHandle, writeHandle = hostEnd
+		self.assertIsInstance(readHandle, int)
+		self.assertIsInstance(writeHandle, int)
+		self.assertNotEqual(readHandle, 0)
+		self.assertNotEqual(writeHandle, 0)
+		coreEnd.close()
+
+
+@unittest.skipUnless(
+	NVDAState.isRunningAsSource(),
+	"The ART host runs on the interpreter path; there is no host executable yet",
+)
+class TestHostStandardStreams(unittest.TestCase):
+	"""The entry point's defence of the control connection, and its diagnostic channel."""
+
+	def test_strayStdoutDoesNotCorruptTheControlStream(self):
+		"""Output written to standard output after boot must not reach the wire.
+
+		The control connection is carried on the host's standard output, so a stray ``print`` is
+		enough to desynchronise rpyc's framing. The entry point folds standard output into
+		standard error to prevent exactly this, and this is the test that says so.
+		"""
+		script = (
+			"import _art.host.entrypoint as entrypoint\n"
+			"stream = entrypoint._claimControlStream()\n"
+			"print('stray stdout that would otherwise corrupt the wire')\n"
+			"entrypoint.run(stream)\n"
+		)
+		process = subprocess.Popen(
+			[sys.executable, "-c", script],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.wait)
+		self.addCleanup(process.kill)
+		conn = Connection(
+			claimProcessControlStream(process),
+			CoreRootService(),
+			name=f"test {CONTROL_CONNECTION_NAME}",
+		)
+		self.addCleanup(conn.close)
+		conn.bgEventLoop(daemon=True)
+		# If the print had reached the wire, this would fail to deserialize rather than answer.
+		self.assertEqual(conn.remoteService.ping(), "pong")
+
+	def test_stderrIsForwardedToTheLog(self):
+		"""Whatever the host writes to standard error is surfaced in NVDA's log.
+
+		Leaving the host's standard error unconnected is what makes an unhandled traceback vanish
+		in the 32-bit synth driver host; this is the drain that stops that happening here.
+		"""
+		stderr = io.BytesIO(b"Traceback (most recent call last):\nValueError: boom\n")
+		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
+			SubprocessHostController._drainStderr(stderr)
+		logged = " ".join(str(call) for call in mockLog.warning.call_args_list)
+		self.assertIn("ValueError: boom", logged)
+		self.assertIn("Traceback", logged)
+
+	def test_drainSurvivesUndecodableOutput(self):
+		"""A host writing non-UTF-8 bytes must not kill the drain thread."""
+		stderr = io.BytesIO(b"\xff\xfe not valid utf-8\n")
+		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
+			SubprocessHostController._drainStderr(stderr)
+		self.assertTrue(mockLog.warning.called)
