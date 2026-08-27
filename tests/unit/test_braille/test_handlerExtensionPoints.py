@@ -5,7 +5,7 @@
 
 """Unit tests for the extension points in the braille module."""
 
-import braille
+import braille  # noqa: I001
 import braille.display
 import braille.extensions
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
@@ -18,7 +18,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 	def test_pre_writeCells(self):
 		cells = [0] * braille.handler.displaySize
 		braille.handler._rawText = " " * braille.handler.displaySize
-		expectedKwargs = dict(
+		expectedKwargs = dict(  # noqa: C408
 			cells=cells,
 			rawText=braille.handler._rawText,
 			currentCellCount=braille.handler.displaySize,
@@ -28,7 +28,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler._writeCells(cells)
 
 	def test_displaySizeChanged(self):
-		expectedKwargs = dict(
+		expectedKwargs = dict(  # noqa: C408
 			displaySize=braille.handler.displaySize,
 			numRows=1,
 			numCols=braille.handler.displaySize,
@@ -41,7 +41,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler._get_displaySize()
 
 	def test_displayChanged(self):
-		expectedKwargs = dict(
+		expectedKwargs = dict(  # noqa: C408
 			isFallback=False,
 			detected=None,
 		)

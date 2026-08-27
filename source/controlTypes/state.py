@@ -6,7 +6,6 @@
 from enum import (
 	unique,
 )
-from typing import Dict
 
 from utils.displayString import DisplayStringIntEnum
 
@@ -111,7 +110,7 @@ STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DE
 STATES_LINK_TYPE = frozenset([State.INTERNAL_LINK])
 
 
-_stateLabels: Dict[State, str] = {
+_stateLabels: dict[State, str] = {
 	# Translators: This is presented when a control or document is unavailable.
 	State.UNAVAILABLE: _("unavailable"),
 	# Translators: This is presented when a control has focus.
@@ -217,7 +216,7 @@ _stateLabels: Dict[State, str] = {
 }
 
 
-_negativeStateLabels: Dict[State, str] = {
+_negativeStateLabels: dict[State, str] = {
 	# Translators: This is presented when a selectable object (e.g. a list item) is not selected.
 	State.SELECTED: _("not selected"),
 	# Translators: This is presented when a button is not pressed.

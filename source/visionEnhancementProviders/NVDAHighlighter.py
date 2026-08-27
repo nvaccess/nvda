@@ -228,20 +228,19 @@ class HighlightWindow(CustomWindow):
 		if not contextRects:
 			return
 
-		with winUser.paint(self.handle) as hdc:
-			with winGDI.GDIPlusGraphicsContext(hdc) as graphicsContext:
-				for context, rect in contextRects.items():
-					HighlightStyle = highlighter._ContextStyles[context]
-					rect = self._mapRectToClient(rect, HighlightStyle)
-					if not rect:
-						continue
+		with winUser.paint(self.handle) as hdc, winGDI.GDIPlusGraphicsContext(hdc) as graphicsContext:
+			for context, rect in contextRects.items():
+				HighlightStyle = highlighter._ContextStyles[context]
+				rect = self._mapRectToClient(rect, HighlightStyle)
+				if not rect:
+					continue
 
-					with winGDI.GDIPlusPen(
-						HighlightStyle.color.toGDIPlusARGB(),
-						HighlightStyle.width,
-						HighlightStyle.style,
-					) as pen:
-						winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
+				with winGDI.GDIPlusPen(
+					HighlightStyle.color.toGDIPlusARGB(),
+					HighlightStyle.width,
+					HighlightStyle.style,
+				) as pen:
+					winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
 
 	def _invalidateContextRect(self, rect: RectLTRB, style: HighlightStyle) -> None:
 		"""
@@ -477,7 +476,7 @@ class NVDAHighlighterGuiPanel(
 
 
 class NVDAHighlighter(providerBase.VisionEnhancementProvider):
-	_ContextStyles = {
+	_ContextStyles = {  # noqa: RUF012
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,

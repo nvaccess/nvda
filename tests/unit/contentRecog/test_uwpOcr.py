@@ -6,12 +6,12 @@
 
 """Unit tests for the contentRecog.uwpOcr module."""
 
-import unittest
+import unittest  # noqa: I001
 from contentRecog import uwpOcr
 
 
 class TestGetInitialLanguage(unittest.TestCase):
-	LANGS = ["de-DE", "en-US"]
+	LANGS = ["de-DE", "en-US"]  # noqa: RUF012
 
 	def test_fullLangFullMatch(self):
 		actual = uwpOcr._getInitialLanguage("en_US", self.LANGS)

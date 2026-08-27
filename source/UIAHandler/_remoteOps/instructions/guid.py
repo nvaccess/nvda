@@ -8,7 +8,7 @@ This module contains the instructions that operate on GUID values.
 Including to create new GUID values, and check if an object is a GUID.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 from comtypes import GUID
 from .. import lowLevel

@@ -8,13 +8,12 @@
 See the L{BasicTextProvider} class.
 """
 
-from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects import NVDAObjectTextInfo  # noqa: I001
 from .objectProvider import PlaceholderNVDAObject
 import textInfos
 from textInfos.offsets import Offsets
 import textUtils
 import cursorManager
-from typing import Tuple
 
 
 class BasicTextInfo(NVDAObjectTextInfo):
@@ -69,12 +68,12 @@ class BasicTextProvider(PlaceholderNVDAObject):
 	"""
 
 	TextInfo = BasicTextInfo
-	selectionOffsets: Tuple[int, int]
+	selectionOffsets: tuple[int, int]
 
 	def __init__(
 		self,
 		text: str = "",
-		selection: Tuple[int, int] = (0, 0),
+		selection: tuple[int, int] = (0, 0),
 		encoding: str = textUtils.WCHAR_ENCODING,
 	):
 		"""
@@ -94,7 +93,7 @@ class BasicTextProvider(PlaceholderNVDAObject):
 		if position in (textInfos.POSITION_CARET, textInfos.POSITION_SELECTION):
 			start, end = self.selectionOffsets
 			position = Offsets(start, end)
-		result = super(BasicTextProvider, self).makeTextInfo(position)
+		result = super().makeTextInfo(position)
 		result.encoding = self.encoding
 		return result
 

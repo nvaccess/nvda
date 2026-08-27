@@ -5,8 +5,9 @@
 
 """Unit tests for speech/manager module"""
 
-import unittest
-from typing import Optional, Callable
+import unittest  # noqa: I001
+from typing import Optional  # noqa: F401
+from collections.abc import Callable
 
 import config
 import speech
@@ -169,8 +170,8 @@ class _CancellableSpeechCommand_withLamda(_CancellableSpeechCommand):
 
 	def __init__(
 		self,
-		checkIfValid: Optional[Callable[[], bool]] = None,
-		getDevInfo: Optional[Callable[[], str]] = None,
+		checkIfValid: Callable[[], bool] | None = None,
+		getDevInfo: Callable[[], str] | None = None,
 	):
 		if checkIfValid is not None:
 			self._checkIfValid = checkIfValid

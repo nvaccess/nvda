@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import api
+import api  # noqa: I001
 import speech
 import controlTypes
 import textInfos
@@ -12,11 +12,7 @@ import config
 from NVDAObjects.window.winword import WordDocumentTextInfo
 from NVDAObjects.window.winword import BrowseModeWordDocumentTextInfo
 from displayModel import EditableTextDisplayModelTextInfo
-from typing import (
-	Tuple,
-	Generator,
-	List,
-)
+from collections.abc import Generator
 from enum import IntEnum
 
 MAX_LINES = 250  # give up after searching this many lines
@@ -55,7 +51,7 @@ def _getTextInfoAtCaret() -> textInfos.TextInfo:
 def _isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 	acceptable = True
 	# disallow if in a Word document and not using UIA, as Word has performance issues
-	if isinstance(ti, WordDocumentTextInfo) or isinstance(ti, BrowseModeWordDocumentTextInfo):
+	if isinstance(ti, WordDocumentTextInfo) or isinstance(ti, BrowseModeWordDocumentTextInfo):  # noqa: SIM101
 		acceptable = False
 	# disallow if EditableTextDisplayModelTextInfo, as has performance issues (TextPad for example)
 	if isinstance(ti, EditableTextDisplayModelTextInfo):
@@ -65,10 +61,10 @@ def _isAcceptableTextInfo(ti: textInfos.TextInfo) -> bool:
 
 def _isLastLineOfParagraph(line: str) -> bool:
 	stripped = line.strip(" \t")
-	return stripped.endswith("\r") or stripped.endswith("\n")
+	return stripped.endswith("\r") or stripped.endswith("\n")  # noqa: PIE810
 
 
-def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
+def _splitParagraphIntoChunks(paragraph: str) -> Generator[str]:
 	"""
 	This function attempts to break large paragraphs into smaller chunks
 	with the goal of improving processing efficiency by some synthesizers.
@@ -81,7 +77,7 @@ def _splitParagraphIntoChunks(paragraph: str) -> Generator[str, None, None]:
 	if paragraphLen <= PREFERRED_CHUNK_SIZE:
 		yield paragraph
 		return
-	sentenceEndPoints: List[int] = []
+	sentenceEndPoints: list[int] = []
 	endPoint = _findNextEndOfSentence(paragraph, 0)
 	while endPoint is not None:
 		sentenceEndPoints.append(endPoint)
@@ -182,7 +178,7 @@ def moveToSingleLineBreakParagraph(
 	nextParagraph: bool,
 	speakNew: bool,
 	ti: textInfos.TextInfo = None,
-) -> Tuple[bool, bool]:
+) -> tuple[bool, bool]:
 	"""
 	Moves to the previous or next paragraph which is delimited by a single line break.
 	@param nextParagraph: bool indicating desired direction of movement,
@@ -272,7 +268,7 @@ def moveToMultiLineBreakParagraph(
 	nextParagraph: bool,
 	speakNew: bool,
 	ti: textInfos.TextInfo = None,
-) -> Tuple[bool, bool]:
+) -> tuple[bool, bool]:
 	"""
 	Moves to the previous or next paragraph delineated by one or more blank lines.
 	@param nextParagraph: bool indicating desired direction of movement,

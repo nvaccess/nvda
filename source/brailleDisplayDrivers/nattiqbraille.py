@@ -4,7 +4,7 @@
 # Copyright (C) 2020-2023 NV Access Limited, Mohammed Noman - Nattiq Technologies
 
 
-import serial
+import serial  # noqa: I001
 import bdDetect
 import braille
 import braille.display
@@ -53,9 +53,9 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self._serial = None
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			log.debug("Checking port %s for a Nattiq nBraille", port)
 			try:
 				self._serial = hwIo.Serial(
@@ -66,7 +66,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					parity=serial.PARITY_NONE,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			# Check for cell information
@@ -76,11 +76,11 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			else:
 				self._serial.close()
 		else:
-			raise RuntimeError("Can't find a Nattiq nBraille device (port = %s)" % port)
+			raise RuntimeError("Can't find a Nattiq nBraille device (port = %s)" % port)  # noqa: UP031
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			self._serial.write(RESET_TAG)
 			self._serial.close()
@@ -142,7 +142,7 @@ class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__()
+		super().__init__()
 		if keys == UP_KEY_PRESS:
 			self.id = "tback"
 		elif keys == DOWN_KEY_PRESS:
@@ -157,6 +157,6 @@ class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, routingIndex):
-		super(RoutingInputGesture, self).__init__()
+		super().__init__()
 		self.cellIndexes = [routingIndex]
 		self.id = "routing"

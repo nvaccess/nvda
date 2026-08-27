@@ -3,18 +3,18 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import typing
+import typing  # noqa: I001
 from xml.parsers import expat
 import textInfos
 import textUtils
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
 
-CommandsT = typing.Union[textInfos.FieldCommand, typing.Optional[str]]
-CommandListT = typing.List[CommandsT]
+CommandsT = typing.Union[textInfos.FieldCommand, str | None]  # noqa: UP007
+CommandListT = list[CommandsT]
 
 
-class XMLTextParser(object):
+class XMLTextParser:
 	def __init__(self) -> None:
 		self._controlFieldStack: list[textInfos.ControlField] = []
 
@@ -36,7 +36,7 @@ class XMLTextParser(object):
 			newAttrs = textInfos.FormatField(attrs)
 			self._commandList.append(textInfos.FieldCommand("formatChange", newAttrs))
 		else:
-			raise ValueError("Unknown tag name: %s" % tagName)
+			raise ValueError("Unknown tag name: %s" % tagName)  # noqa: UP031
 
 		# Normalise attributes common to both field types.
 		try:
@@ -63,9 +63,9 @@ class XMLTextParser(object):
 		elif tagName in ("text", "unich"):
 			pass
 		else:
-			raise ValueError("unknown tag name: %s" % tagName)
+			raise ValueError("unknown tag name: %s" % tagName)  # noqa: UP031
 
-	def _CharacterDataHandler(self, data: typing.Optional[str], processBufferedSurrogates=False):
+	def _CharacterDataHandler(self, data: str | None, processBufferedSurrogates=False):
 		cmdList = self._commandList
 		if not isinstance(data, str):
 			dataStr = repr(data)
@@ -88,5 +88,5 @@ class XMLTextParser(object):
 		try:
 			parser.Parse(XMLText)
 		except Exception:
-			log.error("XML: %s" % XMLText, exc_info=True)
+			log.error("XML: %s" % XMLText, exc_info=True)  # noqa: G201, UP031
 		return self._commandList

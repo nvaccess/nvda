@@ -10,10 +10,10 @@ https://github.com/microsoft/win32metadata/blob/main/generation/WinSDK/Recompile
 This file refers to this header with the convention `WtsApi32.h#L36` meaning line 36 of the above link.
 """
 
-from enum import (
+from enum import (  # noqa: I001
 	IntEnum,
 )
-from typing import Callable
+from collections.abc import Callable
 import ctypes  # Use for ctypes.Union to prevent name collision with typing.Union
 from ctypes import (
 	c_void_p,

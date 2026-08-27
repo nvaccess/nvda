@@ -3,18 +3,15 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from ctypes import FormatError, GetLastError, byref, sizeof
+from ctypes import FormatError, GetLastError, byref, sizeof  # noqa: I001
 from ctypes.wintypes import DWORD
 import hashlib
 from typing import (
 	Any,
 	BinaryIO,
-	Callable,
-	List,
-	Optional,
-	Set,
 	TYPE_CHECKING,
 )
+from collections.abc import Callable
 
 import extensionPoints
 from logHandler import log
@@ -29,9 +26,9 @@ from winBindings.advapi32 import (
 import winUser
 
 if TYPE_CHECKING:
-	import scriptHandler  # noqa: F401, use for typing
-	import NVDAObjects  # noqa: F401, use for typing
-	import treeInterceptorHandler  # noqa: F401, use for typing
+	import scriptHandler  # noqa: I001
+	import NVDAObjects
+	import treeInterceptorHandler
 
 
 def __getattr__(attrName: str) -> Any:
@@ -49,7 +46,7 @@ def __getattr__(attrName: str) -> Any:
 				"postSessionLockStateChanged is deprecated, use post_sessionLockStateChanged instead.",
 			)
 			return post_sessionLockStateChanged
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 post_sessionLockStateChanged = extensionPoints.Action()
@@ -71,7 +68,7 @@ post_sessionLockStateChanged.unregister(onSessionLockStateChange)
 """
 
 
-def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
+def getSafeScripts() -> set["scriptHandler._ScriptFunctionT"]:
 	"""
 	Returns scripts which are safe to use on the Windows lockscreen.
 	Not to be confused with the Windows sign-in screen, a secure screen.
@@ -224,7 +221,7 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	An object below the lockscreen should only be accessible when Windows is unlocked,
 	as it may contain sensitive information.
 	"""
-	from NVDAObjects.IAccessible import TaskListIcon
+	from NVDAObjects.IAccessible import TaskListIcon  # noqa: I001
 	import systemUtils
 
 	if not systemUtils.hasUiAccess():
@@ -298,8 +295,6 @@ class _UnexpectedWindowCountError(Exception):
 	is not found by _isWindowBelowWindowMatchesCond
 	"""
 
-	pass
-
 
 def _isWindowBelowWindowMatchesCond(
 	window: winUser.HWNDVal,
@@ -333,8 +328,8 @@ def _isWindowBelowWindowMatchesCond(
 	bottomWindow = winUser.getWindow(topLevelWindow, winUser.GW_HWNDLAST)
 	currentWindow = bottomWindow
 	currentIndex = 0  # 0 is the last/lowest window
-	window1Indexes: List[int] = []
-	window2Index: Optional[int] = None
+	window1Indexes: list[int] = []
+	window2Index: int | None = None
 	while currentWindow != winUser.GW_RESULT_NOT_FOUND:
 		if currentWindow == window:
 			window1Indexes.append(currentIndex)
@@ -351,7 +346,7 @@ def _isWindowBelowWindowMatchesCond(
 			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
 			f" - window 2 index: {window2Index}\n",
 		)
-	if window1Indexes[0] >= window2Index:
+	if window1Indexes[0] >= window2Index:  # noqa: SIM103
 		return False
 	else:
 		return True
@@ -392,7 +387,7 @@ def warnSessionLockStateUnknown() -> None:
 		" If this error is ongoing then disabling the Windows lock screen is recommended.",
 	)
 
-	import wx  # Late import to prevent circular dependency.
+	import wx  # Late import to prevent circular dependency.  # noqa: I001
 	import gui  # Late import to prevent circular dependency.
 
 	log.debug("Presenting session lock tracking failure warning.")

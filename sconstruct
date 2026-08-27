@@ -6,7 +6,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import multiprocessing
+import multiprocessing  # noqa: I001
 import os
 import platform
 import sys
@@ -23,8 +23,8 @@ if not virtualEnv or not uv or Path.cwd() != Path(virtualEnv).parent:
 	)
 	sys.exit(1)
 
-import time  # noqa: E402
-import importlib.util  # noqa: E402
+import time  # noqa: I001
+import importlib.util
 
 
 def recursiveCopy(env, targetDir, sourceDir):
@@ -43,12 +43,12 @@ def recursiveCopy(env, targetDir, sourceDir):
 
 
 # Import NVDA's versionInfo module.
-import gettext  # noqa: E402
+import gettext
 
 gettext.install("nvda")
 sys.path.append("source")
-import buildVersion  # noqa: E402
-import versionInfo  # noqa: E402
+import buildVersion
+import versionInfo
 
 del sys.path[-1]
 
@@ -156,7 +156,7 @@ env.AddMethod(recursiveCopy)
 # Check for any unknown variables
 unknown = vars.UnknownVariables().keys()
 if len(unknown) > 0:
-	print("Unknown commandline variables: %s" % unknown)
+	print("Unknown commandline variables: %s" % unknown)  # noqa: UP031
 	Exit(1)
 
 env["copyright"] = versionInfo.copyright
@@ -260,7 +260,7 @@ projectRCSubstDict = {
 	"%copyright%": env["copyright"],
 	"%publisher%": env["publisher"],
 	"%version%": env["version"],
-	"%productName%": "%s (%s)" % (buildVersion.name, versionInfo.longName),
+	"%productName%": "%s (%s)" % (buildVersion.name, versionInfo.longName),  # noqa: UP031
 }
 resFile = env.RES(
 	target="build/nvda.res",
@@ -394,16 +394,11 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# Any '\n' characters written are translated to the system default line separator, os.linesep.
 	action = [
 		lambda target, source, env: (
-			open(buildVersionFn, "w", encoding="utf-8").write(
-				"version = {version!r}\n"
-				"publisher = {publisher!r}\n"
-				"updateVersionType = {updateVersionType!r}\n"
-				"version_build = {version_build!r}\n".format(
-					version=version,
-					publisher=publisher,
-					updateVersionType=updateVersionType,
-					version_build=version_build,
-				),
+			open(buildVersionFn, "w", encoding="utf-8").write(  # noqa: SIM115
+				f"version = {version!r}\n"
+				f"publisher = {publisher!r}\n"
+				f"updateVersionType = {updateVersionType!r}\n"
+				f"version_build = {version_build!r}\n",
 			)
 			# In Python 3 write returns the number of characters written,
 			# which scons treats as an error code.
@@ -460,7 +455,7 @@ def ZipArchiveAction(target, source, env):
 				arcName = arcName.replace(".." + os.path.sep, "")
 			return "" if arcName == "." else arcName
 	else:
-		getArcName = lambda origName: "" if origName == "." else origName  # noqa: E731
+		getArcName = lambda origName: "" if origName == "." else origName
 
 	# Nasty hack to make zipfile use best compression, since it isn't configurable.
 	# Tried setting memlevel to 9 as well, but it made compression slightly worse.
@@ -508,7 +503,7 @@ uninstGen = env.Command(
 			'/DVERSION_MAJOR="$version_major"',
 			'/DVERSION_MINOR="$version_minor"',
 			'/DVERSION_BUILD="$version_build"',
-			"/DUNINSTEXE=%s" % uninstFile.abspath,
+			"/DUNINSTEXE=%s" % uninstFile.abspath,  # noqa: UP031
 			"/DINSTEXE=${TARGET.abspath}",
 			"$SOURCE",
 		],
@@ -533,7 +528,7 @@ env.Clean(dist, dist)
 env.Clean([dist], buildDir)
 
 launcher = env.Command(
-	outputDir.File("%s.exe" % outFilePrefix),
+	outputDir.File("%s.exe" % outFilePrefix),  # noqa: UP031
 	["launcher/nvdaLauncher.nsi", dist],
 	[
 		[
@@ -557,7 +552,7 @@ if certFile or apiSigningToken:
 env.Alias("launcher", launcher)
 
 clientArchive = env.ZipArchive(
-	outputDir.File("%s_controllerClient.zip" % outFilePrefix),
+	outputDir.File("%s_controllerClient.zip" % outFilePrefix),  # noqa: UP031
 	clientDir,
 	relativeTo=clientDir,
 )
@@ -575,7 +570,7 @@ outputHeadingStylesFile = env.Command(
 )
 outputLogoFile = env.Command(outputDir.File("favicon.ico"), logo, Copy("$TARGET", "$SOURCE"))
 changesFile = env.Command(
-	outputDir.File("%s_changes.html" % outFilePrefix),
+	outputDir.File("%s_changes.html" % outFilePrefix),  # noqa: UP031
 	userDocsDir.File("en/changes.html"),
 	Copy("$TARGET", "$SOURCE"),
 )
@@ -643,11 +638,11 @@ def makePot(target, source, env):
 
 	# Tweak the headers.
 	potFn = str(target[0])
-	tmpFn = "%s.tmp" % potFn
+	tmpFn = "%s.tmp" % potFn  # noqa: UP031
 	with open(potFn, "rt", encoding="utf-8") as inp, open(tmpFn, "wt", encoding="utf-8") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
-				line = "# %s\n" % versionInfo.copyright
+				line = "# %s\n" % versionInfo.copyright  # noqa: UP031
 			elif lineNum == 2:
 				# Delete line.
 				continue
@@ -673,7 +668,7 @@ potSourceFiles = [
 	if not (
 		# Exclude comInterfaces, since these don't contain translatable strings
 		# and they cause unknown encoding warnings.
-		recurseDirs.startswith(r"source\comInterfaces")
+		recurseDirs.startswith(r"source\comInterfaces")  # noqa: PIE810
 		# Exclude userConfig folder which does not contain NVDA code but may contain gettext call without
 		# translator comments in add-ons or scratchpad, triggering false positive for checkpot script.
 		or recurseDirs.startswith(r"source\userConfig")
@@ -691,7 +686,7 @@ env.Alias("pot", pot)
 symbolsList = []
 symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path, "*.pdb")))
 symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path, "*.pdb")))
-symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
+symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)  # noqa: UP031
 env.Alias("symbolsArchive", symbolsArchive)
 
 appx_storeSubmission = env.SConscript(

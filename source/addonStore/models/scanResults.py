@@ -41,7 +41,7 @@ class VirusTotalScanResults:
 				typeUnsupported=analysisStats["type-unsupported"],
 			)
 		except (KeyError, IndexError, TypeError):
-			log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)
+			log.error(f"Malformed add-on scan results.: {addon!r}", exc_info=True)  # noqa: G201
 			return None
 
 	def toDict(self) -> dict[str, list[dict[str, dict[str, int]]]]:

@@ -3,15 +3,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod  # noqa: I001
 from typing import (
-	Callable,
 	Generic,
-	Iterable,
 	Optional,
 	TypeVar,
 	TYPE_CHECKING,
 )
+from collections.abc import Callable, Iterable
 
 from addonStore.dataManager import addonDataManager
 from addonStore.models.addon import _AddonGUIModel
@@ -26,7 +25,7 @@ if TYPE_CHECKING:
 ActionTargetT = TypeVar("ActionTargetT", Optional["AddonListItemVM"], Iterable["AddonListItemVM"])
 
 
-class _AddonAction(Generic[ActionTargetT], ABC):
+class _AddonAction(Generic[ActionTargetT], ABC):  # noqa: PYI059, UP046
 	def __init__(
 		self,
 		displayName: str,

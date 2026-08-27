@@ -10,7 +10,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import copy
+import copy  # noqa: I001
 import logging
 import math
 import os
@@ -21,9 +21,6 @@ from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
-	List,
-	Optional,
-	Set,
 )
 
 import audio
@@ -168,10 +165,7 @@ class SettingsDialog(
 		if log.isEnabledFor(log.DEBUG):
 			instancesState = dict(SettingsDialog._instances)
 			log.debug(
-				"Creating new settings dialog (multiInstanceAllowed:{}). State of _instances {!r}".format(
-					multiInstanceAllowed,
-					instancesState,
-				),
+				f"Creating new settings dialog (multiInstanceAllowed:{multiInstanceAllowed}). State of _instances {instancesState!r}",
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceErrorWithDialog(
@@ -217,7 +211,7 @@ class SettingsDialog(
 		hasApplyButton: bool = False,
 		settingsSizerOrientation: int = wx.VERTICAL,
 		multiInstanceAllowed: bool = False,
-		buttons: Set[int] = {wx.OK, wx.CANCEL},
+		buttons: set[int] = {wx.OK, wx.CANCEL},  # noqa: B006
 	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
@@ -285,7 +279,7 @@ class SettingsDialog(
 			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
 		if gui._isDebug():
-			log.debug("Loading %s took %.2f seconds" % (self.__class__.__name__, time.time() - startTime))
+			log.debug("Loading %s took %.2f seconds" % (self.__class__.__name__, time.time() - startTime))  # noqa: UP031
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
@@ -456,7 +450,7 @@ class SettingsPanel(
 		self,
 		message: str,
 		option: str,
-		category: Optional[str] = None,
+		category: str | None = None,
 	):
 		if category is None:
 			category = self.title
@@ -525,7 +519,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: list[type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []  # noqa: RUF012
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -539,11 +533,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""
 		if initialCategory and not issubclass(initialCategory, SettingsPanel):
 			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+				log.debug(f"Unable to open category: {initialCategory}", stack_info=True)
 			raise TypeError("initialCategory should be an instance of SettingsPanel")
 		if initialCategory and initialCategory not in self.categoryClasses:
 			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+				log.debug(f"Unable to open category: {initialCategory}", stack_info=True)
 			raise MultiCategorySettingsDialog.CategoryUnavailableError(
 				"The provided initial category is not a part of this dialog",
 			)
@@ -554,7 +548,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Partially filled, check for KeyError
 		self.catIdToInstanceMap: dict[int, SettingsPanel] = {}
 
-		super(MultiCategorySettingsDialog, self).__init__(
+		super().__init__(
 			parent,
 			resizeable=True,
 			settingsSizerOrientation=wx.HORIZONTAL,
@@ -620,8 +614,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		for cls in self.categoryClasses:
 			if not issubclass(cls, SettingsPanel):
-				raise RuntimeError(
-					"Invalid category class %s provided in %s.categoryClasses"
+				raise RuntimeError(  # noqa: TRY004
+					"Invalid category class %s provided in %s.categoryClasses"  # noqa: UP031
 					% (cls.__name__, self.__class__.__name__),
 				)
 			# It's important here that the listItems are added to catListCtrl in the same order that they exist in categoryClasses.
@@ -666,7 +660,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			try:
 				cls = self.categoryClasses[catId]
 			except IndexError:
-				raise ValueError("Unable to create panel for unknown category ID: {}".format(catId))
+				raise ValueError(f"Unable to create panel for unknown category ID: {catId}")
 			panel = cls(parent=self.container)
 			panel.Hide()
 			self.containerSizer.Add(
@@ -743,7 +737,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			newCat = self._getCategoryPanel(newCatId)
 		except ValueError as e:
 			newCatTitle = self.catListCtrl.GetItemText(newCatId)
-			log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
+			log.error(f"Unable to change to category: {newCatTitle}", exc_info=e)
 			return
 		if oldCat:
 			oldCat.onPanelDeactivated()
@@ -768,7 +762,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""
 		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
-				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
+				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)  # noqa: UP031
 
 	def _saveAllPanels(self):
 		for panel in self.catIdToInstanceMap.values():
@@ -795,7 +789,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onCancel(self, evt):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
-		super(MultiCategorySettingsDialog, self).onCancel(evt)
+		super().onCancel(evt)
 
 	def onApply(self, evt):
 		try:
@@ -1070,7 +1064,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if self.startOnLogonScreenCheckBox.IsEnabled():
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-			except (WindowsError, RuntimeError):
+			except (OSError, RuntimeError):
 				gui.messageBox(
 					_("This change requires administrator privileges."),
 					_("Insufficient Privileges"),
@@ -1113,7 +1107,7 @@ class LanguageRestartDialog(
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+		super().__init__(parent, title=_("Language Configuration Change"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		sHelper.addItem(
@@ -1211,11 +1205,11 @@ class SpeechSettingsPanel(SettingsPanel):
 	def onPanelActivated(self):
 		# call super after all panel updates have been completed, we dont want the panel to show until this is complete.
 		self.voicePanel.onPanelActivated()
-		super(SpeechSettingsPanel, self).onPanelActivated()
+		super().onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.voicePanel.onPanelDeactivated()
-		super(SpeechSettingsPanel, self).onPanelDeactivated()
+		super().onPanelDeactivated()
 
 	def onDiscard(self):
 		self.voicePanel.onDiscard()
@@ -1231,7 +1225,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	helpId = "SynthesizerSelection"
-	synthNames: List[str] = []
+	synthNames: list[str] = []  # noqa: RUF012
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -1255,7 +1249,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		try:
 			index = self.synthNames.index(getSynth().name)
 			self.synthList.SetSelection(index)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def onOk(self, evt):
@@ -1278,10 +1272,10 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			# Hack: we need to update the synth in our parent window before closing.
 			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
 			self.Parent.updateCurrentSynth()
-		super(SynthesizerSelectionDialog, self).onOk(evt)
+		super().onOk(evt)
 
 
-class DriverSettingChanger(object):
+class DriverSettingChanger:
 	"""Functor which acts as callback for GUI events."""
 
 	def __init__(self, driver, setting):
@@ -1303,7 +1297,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 
 	def __init__(self, driver, setting, container):
 		self.container = container
-		super(StringDriverSettingChanger, self).__init__(driver, setting)
+		super().__init__(driver, setting)
 
 	def __call__(self, evt):
 		evt.Skip()  # allow other handlers to also process this event.
@@ -1313,14 +1307,14 @@ class StringDriverSettingChanger(DriverSettingChanger):
 			speech.cancelSpeech()
 			changeVoice(
 				self.driver,
-				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,
+				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,  # noqa: UP031
 			)
 			self.container.updateDriverSettings(changedSetting=self.setting.id)
 		else:
 			setattr(
 				self.driver,
 				self.setting.id,
-				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,
+				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,  # noqa: UP031
 			)
 
 
@@ -1348,7 +1342,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		"""
 		self.sizerDict = {}
 		self.lastControl = None
-		super(AutoSettingsMixin, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		# because settings instances can be of type L{Driver} as well, we have to handle
 		# showing settings for non-instances. Because of this, we must reacquire a reference
 		# to the settings class whenever we wish to use it (via L{getSettings}) in case the instance changes.
@@ -1964,7 +1958,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		# continue event propagation to custom control event handler
 		# to guarantee user is notified about checkbox being checked or unchecked
 		evt.Skip()
-		if evt.GetInt() == self._allSpeechModes.index(
+		if evt.GetInt() == self._allSpeechModes.index(  # noqa: SIM102
 			speech.SpeechMode.talk,
 		) and not self.speechModesList.IsChecked(evt.GetInt()):
 			if (
@@ -2789,7 +2783,7 @@ class MathSettingsPanel(SettingsPanel):
 			return list(enumClass)[selectionIndex].value
 		except (IndexError, AttributeError):
 			# If the selection is invalid, return the first option's value
-			return list(enumClass)[0].value
+			return list(enumClass)[0].value  # noqa: RUF015
 
 	def _getPauseFactorSliderValue(
 		self,
@@ -3103,7 +3097,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 	def onSave(self):
-		from mathPres.MathCAT.preferences import MathCATUserPreferences
+		from mathPres.MathCAT.preferences import MathCATUserPreferences  # noqa: I001
 		from mathPres.MathCAT.preferences import (
 			BrailleNavHighlightOption,
 			ChemistryOption,
@@ -4977,7 +4971,7 @@ class AdvancedPanel(SettingsPanel):
 		"have been specifically instructed by NVDA developers.",
 	)
 
-	panelDescription = "{}\n{}".format(warningHeader, warningExplanation)
+	panelDescription = f"{warningHeader}\n{warningExplanation}"
 
 	def makeSettings(self, settingsSizer):
 		"""
@@ -5106,11 +5100,11 @@ class BrailleSettingsPanel(SettingsPanel):
 
 	def onPanelActivated(self):
 		self.brailleSubPanel.onPanelActivated()
-		super(BrailleSettingsPanel, self).onPanelActivated()
+		super().onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.brailleSubPanel.onPanelDeactivated()
-		super(BrailleSettingsPanel, self).onPanelDeactivated()
+		super().onPanelDeactivated()
 
 	def onDiscard(self):
 		self.brailleSubPanel.onDiscard()
@@ -5123,8 +5117,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	# Translators: This is the label for the braille display selection dialog.
 	title = _("Select Braille Display")
 	helpId = "SelectBrailleDisplay"
-	displayNames = []
-	possiblePorts = []
+	displayNames = []  # noqa: RUF012
+	possiblePorts = []  # noqa: RUF012
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -5163,7 +5157,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME
 			and braille.handler.display.name != "noBraille"
 		):
-			description = "%s (%s)" % (description, braille.handler.display.description)
+			description = "%s (%s)" % (description, braille.handler.display.description)  # noqa: UP031
 		return description
 
 	def updateBrailleDisplayLists(self):
@@ -5179,7 +5173,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			else:
 				selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 		import bdDetect
@@ -5265,7 +5259,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			# Hack: we need to update the display in our parent window before closing.
 			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
 			self.Parent.updateCurrentDisplay()
-		super(BrailleDisplaySelectionDialog, self).onOk(evt)
+		super().onOk(evt)
 
 
 class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
@@ -5416,7 +5410,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
 			self.cursorShapeFocusList.SetSelection(selection)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeFocusList.Disable()
@@ -5432,7 +5426,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
 			self.cursorShapeReviewList.SetSelection(selection)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeReviewList.Disable()
@@ -5761,7 +5755,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 def showStartErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5791,7 +5785,7 @@ def showStartErrorForProviders(
 
 def showTerminationErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5837,7 +5831,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
 
-	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
+	def getProviderInstance(self) -> vision.providerBase.VisionEnhancementProvider | None:
 		return vision.handler.getProviderInstance(self._providerInfo)
 
 	def startProvider(
@@ -5874,7 +5868,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			vision.handler.initializeProvider(self._providerInfo)
 			return True
 		except Exception:
-			log.error(
+			log.error(  # noqa: G201
 				f"Could not initialize the {self._providerInfo.providerId} vision enhancement provider",
 				exc_info=True,
 			)
@@ -5892,7 +5886,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			vision.handler.terminateProvider(self._providerInfo, saveSettings=False)
 			return True
 		except Exception:
-			log.error(
+			log.error(  # noqa: G201
 				f"Could not terminate the {self._providerInfo.providerId} vision enhancement provider",
 				exc_info=True,
 			)
@@ -5901,8 +5895,8 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 class VisionSettingsPanel(SettingsPanel):
 	settingsSizerHelper: guiHelper.BoxSizerHelper
-	providerPanelInstances: List[SettingsPanel]
-	initialProviders: List[vision.providerInfo.ProviderInfo]
+	providerPanelInstances: list[SettingsPanel]
+	initialProviders: list[vision.providerInfo.ProviderInfo]
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 	helpId = "VisionSettings"
@@ -5913,7 +5907,7 @@ class VisionSettingsPanel(SettingsPanel):
 	def _createProviderSettingsPanel(
 		self,
 		providerInfo: vision.providerInfo.ProviderInfo,
-	) -> Optional[SettingsPanel]:
+	) -> SettingsPanel | None:
 		settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
 		if not settingsPanelCls:
 			if gui._isDebug():
@@ -5958,12 +5952,12 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeInitProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 	) -> None:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).startProvider(shouldPromptOnError=False)
 			if not success:
@@ -5972,14 +5966,14 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeTerminateProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 		verbose: bool = False,
 	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
 		@verbose: Whether to show a termination error.
 		@returns: Whether termination succeeded for all providers.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).terminateProvider(shouldPromptOnError=False)
 			if not success:
@@ -6072,7 +6066,7 @@ class VisionProviderSubPanel_Wrapper(
 		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
-		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
+		self._providerSettings: VisionProviderSubPanel_Settings | None = None
 		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 
@@ -6126,7 +6120,7 @@ class VisionProviderSubPanel_Wrapper(
 		# Broad except used since we can not know what exceptions a provider might throw.
 		# We should be able to continue despite a buggy provider.
 		except Exception:
-			log.error("unable to create provider settings", exc_info=True)
+			log.error("unable to create provider settings", exc_info=True)  # noqa: G201
 			return False
 		return True
 
@@ -6621,7 +6615,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 					screenCurtain.screenCurtain.enable(persist=False)
 					self._screenCurtainCheckboxChanged = True
 				except Exception:
-					log.error("Error enabling Screen Curtain.", exc_info=True)
+					log.error("Error enabling Screen Curtain.", exc_info=True)  # noqa: G201
 					ui.message(
 						screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE,
 						speechPriority=speech.priorities.Spri.NOW,
@@ -6659,7 +6653,7 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
-	categoryClasses = [
+	categoryClasses = [  # noqa: RUF012
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
 		BrailleSettingsPanel,
@@ -6697,7 +6691,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
-		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
+		super().makeSettings(settingsSizer)
 		self._doOnCategoryChange()
 		global NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogWindowHandle = self.GetHandle()
@@ -6706,7 +6700,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
 		if (
-			not NvdaSettingsDialogActiveConfigProfile
+			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
@@ -6722,11 +6716,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		)
 
 	def _getDialogTitle(self):
-		return "{dialogTitle}: {panelTitle} ({configProfile})".format(
-			dialogTitle=self.title,
-			panelTitle=self.currentCategory.title,
-			configProfile=NvdaSettingsDialogActiveConfigProfile,
-		)
+		return f"{self.title}: {self.currentCategory.title} ({NvdaSettingsDialogActiveConfigProfile})"
 
 	def onCategoryChange(self, evt: wx.ListEvent):
 		super().onCategoryChange(evt)
@@ -6785,7 +6775,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
 		self.title = _("Symbol Pronunciation (%s)") % desc
-		super(SpeechSymbolsDialog, self).__init__(
+		super().__init__(
 			parent,
 			resizeable=True,
 		)
@@ -6943,7 +6933,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		elif column == 3:
 			return characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve]
 		else:
-			raise ValueError("Unknown column: %d" % column)
+			raise ValueError("Unknown column: %d" % column)  # noqa: UP031
 
 	def onSymbolEdited(self):
 		if self.editingItem is not None:
@@ -7046,10 +7036,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
 			self.symbolProcessor.userSymbols.save()
-		except IOError as e:
-			log.error("Error saving user symbols info: %s" % e)
+		except OSError as e:
+			log.error("Error saving user symbols info: %s" % e)  # noqa: UP031
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
-		super(SpeechSymbolsDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def _refreshVisibleItems(self):
 		count = self.symbolsList.GetCountPerPage()
@@ -7077,6 +7067,6 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 def _isResponseUpdateMetadata(response: requests.Response) -> bool:
 	try:
 		updateCheck.UpdateInfo.parseUpdateCheckResponse(response.text)
-	except Exception:
+	except Exception:  # noqa: BLE001
 		return False
 	return True

@@ -5,7 +5,7 @@
 
 """Unit tests for the foobar appModule."""
 
-from datetime import timedelta
+from datetime import timedelta  # noqa: I001
 import unittest
 
 from appModules.foobar2000 import (

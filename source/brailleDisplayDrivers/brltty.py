@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2023 NV Access Limited, Babbage B.V, Bram Duvigneau
 
-import os
+import os  # noqa: I001
 import time
 import wx
 import braille
@@ -11,7 +11,6 @@ import braille.display.driver
 import braille.display.gesture
 from logHandler import log
 import inputCore
-from typing import List
 
 try:
 	import brlapi
@@ -38,10 +37,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	isThreadSafe = True
 
 	# Type info for auto property: _get_brlapi_pipes
-	brlapi_pipes: List[str]
+	brlapi_pipes: list[str]
 
 	@classmethod
-	def _get_brlapi_pipes(cls) -> List[str]:
+	def _get_brlapi_pipes(cls) -> list[str]:
 		"""Get the BrlAPI named pipes
 
 		Every BRLTTY instance with the BrlAPI enabled will have it's own named pipe to accept API connections.
@@ -76,13 +75,13 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		try:
 			# Give BRLTTY a chance to write the last piece of data to the display.
 			time.sleep(0.05)
 			self._con.leaveTtyMode()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def _get_numCols(self) -> int:
@@ -91,7 +90,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def _get_numRows(self) -> int:
 		return self._con.displaySize[1]
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		cells = bytes(cells)
 		# HACK: Temporarily work around a bug which causes brltty to freeze if data is written while there are key presses waiting.
 		# Simply consume and act upon any waiting key presses.
@@ -106,7 +105,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			try:
 				key = self._con.readKey(False)
 			except:  # noqa: E722
-				log.error("Error reading key press from brlapi", exc_info=True)
+				log.error("Error reading key press from brlapi", exc_info=True)  # noqa: G201
 				return
 			if not key:
 				break

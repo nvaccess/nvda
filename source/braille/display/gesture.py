@@ -6,7 +6,6 @@
 from __future__ import annotations
 
 import re
-from typing import Optional
 
 import baseObject
 import config
@@ -51,7 +50,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		and a corresponding display specific gesture identifier might be C{br(alvaBC6.680):etouch1}.
 		@rtype: str; C{None} if model specific gestures are not supported
 		"""
-		return None
+		return
 
 	def _get_id(self):
 		"""The unique, display specific id for this gesture.
@@ -140,7 +139,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		display = braille.handler.display
 		if isinstance(display, baseObject.ScriptableObject):
 			return display
-		return super(BrailleDisplayGesture, self).scriptableObject
+		return super().scriptableObject
 
 	def _get_script(self):
 		# Overrides L{inputCore.InputGesture._get_script} to support modifier keys.
@@ -172,11 +171,11 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		if gestureKeys != set(self.keyNames):
 			# Find a script for L{gestureKeys}.
 			id = "+".join(gestureKeys)
-			fakeGestureIds = ["br({source}):{id}".format(source=self.source, id=id)]
+			fakeGestureIds = [f"br({self.source}):{id}"]
 			if self.model:
 				fakeGestureIds.insert(
 					0,
-					"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=id),
+					f"br({self.source}.{self.model}):{id}",
 				)
 			scriptNames = []
 			globalMaps = [inputCore.manager.userGestureMap, braille.handler.display.gestureMap]
@@ -212,7 +211,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		"""
 		return self.id.split("+")
 
-	def _get_speechEffectWhenExecuted(self) -> Optional[str]:
+	def _get_speechEffectWhenExecuted(self) -> str | None:
 		from globalCommands import commands
 
 		if not config.conf["braille"]["interruptSpeechWhileScrolling"] and self.script in {
@@ -225,7 +224,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 	#: Compiled regular expression to match an identifier including an optional model name
 	#: The model name should be an alphanumeric string without spaces.
 	#: @type: RegexObject
-	ID_PARTS_REGEX = re.compile(r"br\((\w+)(?:\.(\w+))?\):([\w+]+)", re.U)
+	ID_PARTS_REGEX = re.compile(r"br\((\w+)(?:\.(\w+))?\):([\w+]+)", re.UNICODE)
 
 	@classmethod
 	def getDisplayTextForIdentifier(cls, identifier):
@@ -233,8 +232,8 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 		unknownDisplayDescription = _("Unknown braille display")
 		idParts = cls.ID_PARTS_REGEX.match(identifier)
 		if not idParts:
-			log.error("Invalid braille gesture identifier: %s" % identifier)
-			return unknownDisplayDescription, "malformed:%s" % identifier
+			log.error("Invalid braille gesture identifier: %s" % identifier)  # noqa: UP031
+			return unknownDisplayDescription, "malformed:%s" % identifier  # noqa: UP031
 		source, modelName, key = idParts.groups()
 		# Optimisation: Do not try to get the braille display class if this identifier belongs to the current driver.
 		if braille.handler.display.name.lower() == source.lower():
@@ -245,10 +244,7 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			except ImportError:
 				description = unknownDisplayDescription
 		if modelName:  # The identifier contains a model name
-			return description, "{modelName}: {key}".format(
-				modelName=modelName,
-				key=key,
-			)
+			return description, f"{modelName}: {key}"
 		else:
 			return description, key
 

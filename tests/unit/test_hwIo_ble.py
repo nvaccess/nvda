@@ -8,7 +8,7 @@
 These tests cover the BLE scanner, BLE I/O, and device discovery functionality.
 """
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import MagicMock, patch
 
 from bleak.backends.device import BLEDevice
@@ -208,7 +208,6 @@ class TestBle(unittest.TestCase):
 		def fakeRunCoroutineSync(coro: object, timeout: float | None = None) -> None:
 			if hasattr(coro, "close"):
 				coro.close()
-			return None
 
 		self.runCoroutineSyncPatcher = patch(
 			"hwIo.ble._io.runCoroutineSync",
@@ -233,7 +232,7 @@ class TestBle(unittest.TestCase):
 		for ble in self._bleInstances:
 			try:
 				ble.close()
-			except Exception:
+			except Exception:  # noqa: BLE001, S110
 				pass
 		self.runCoroutineSyncPatcher.stop()
 		self.bleakClientPatcher.stop()

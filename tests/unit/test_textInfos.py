@@ -5,7 +5,7 @@
 
 """Unit tests for the textInfos module, its submodules and classes."""
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import patch
 
 import config
@@ -395,13 +395,13 @@ class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 
 
 class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
-	encodings = [
+	encodings = [  # noqa: RUF012
 		textUtils.UTF8_ENCODING,
 		textUtils.WCHAR_ENCODING,
 		"utf_32_le",
 	]
 
-	prefixes = [
+	prefixes = [  # noqa: RUF012
 		"",
 		"a\n",
 		"0123456789",

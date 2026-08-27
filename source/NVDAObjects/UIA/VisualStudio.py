@@ -7,7 +7,7 @@ Object overlay classes for Visual Studio components
 available in Visual Studio and SQL Server Management Studio.
 """
 
-from . import UIA, ToolTip
+from . import UIA, ToolTip  # noqa: I001
 import speech
 import braille
 import braille.regions.properties

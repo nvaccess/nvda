@@ -5,7 +5,7 @@
 
 """Unit tests for the markdownTranslate module."""
 
-import importlib.util
+import importlib.util  # noqa: I001
 import tempfile
 import unittest
 from unittest import mock
