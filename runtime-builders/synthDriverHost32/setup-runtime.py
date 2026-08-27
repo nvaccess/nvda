@@ -54,6 +54,7 @@ from py2exe.dllfinder import DllFinder  # noqa: E402
 
 RT_MANIFEST = 24
 manifestTemplateFilePath = os.path.join(nvdaSourceDir, "manifest.template.xml")
+VC_RUNTIME_DLL = "vcruntime140.dll"
 
 with open(manifestTemplateFilePath, "r", encoding="utf-8") as manifestTemplateFile:
 	_manifestTemplate = manifestTemplateFile.read()
@@ -98,6 +99,14 @@ def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()) -> list[
 				),
 			)
 	return rulesList
+
+
+def _getVCRuntimePath() -> str:
+	for runtimeDir in (sys.base_prefix, sys.base_exec_prefix, os.path.dirname(sys.executable)):
+		dllPath = os.path.join(runtimeDir, VC_RUNTIME_DLL)
+		if os.path.isfile(dllPath):
+			return dllPath
+	raise RuntimeError(f"Could not locate {VC_RUNTIME_DLL} in the active Python runtime")
 
 
 sys.path.insert(0, runtimeSourceDir)
@@ -250,7 +259,7 @@ freeze(
 		],
 	},
 	data_files=[
-		(".", glob("*.dll") + glob("*.manifest")),
+		(".", glob("*.dll") + glob("*.manifest") + [_getVCRuntimePath()]),
 	]
 	+ getRecursiveDataFiles(
 		"synthDrivers",
