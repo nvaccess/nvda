@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools~=80.10.2", "wheel"]
+requires = ["setuptools~=84.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -411,7 +411,7 @@ dev = [
 	"scons==4.11.0",
 	# Packaging NVDA
 	"py2exe==0.14.2.0",
-	"setuptools~=80.10.2",
+	"setuptools~=84.0.0",
 	"nvda-mathcat",
 	"uv==0.12.5",
 ]
