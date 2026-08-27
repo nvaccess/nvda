@@ -102,7 +102,7 @@ Similarly, for if-else blocks:
 
 ```py
 condition = ra.newBool(True)
-with ra.ifblock(condition):
+with ra.ifBlock(condition):
 	# Do stuff if condition is true...
 with ra.elseBlock():
 	# do stuff if condition is false...
@@ -246,6 +246,69 @@ t = ra.newString("world")
 s += t
 ```
 
+#### Arrays
+
+Remote arrays are ordered containers.
+They can be created with `ra.newArray`, populated with remote or literal values, indexed, updated, queried for size and returned from the operation.
+
+```py
+items = ra.newArray()
+items.append("name")
+items.append(42)
+first = items[0]
+items[1] = 43
+count = items.size()
+items.remove(0)
+ra.Return(items, count)
+```
+
+Indexing returns a `RemoteVariant`.
+If you need to call type-specific methods on the returned value, use `asType` after checking or knowing the type:
+
+```py
+item = items[0]
+with ra.ifBlock(item.isString()):
+	text = item.asType(RemoteString)
+	ra.Return(text + "!")
+```
+
+Remote arrays are reference values.
+If one remote array is set to another, both variables refer to the same underlying container.
+
+#### String maps
+
+Remote string maps are dictionaries with string keys.
+They can be created with `ra.newStringMap`, updated with item assignment, queried with `hasKey`, indexed, queried for size and returned from the operation.
+
+```py
+metadata = ra.newStringMap()
+metadata["name"] = "Submit"
+metadata["level"] = 2
+
+with ra.ifBlock(metadata.hasKey("name")):
+	name = metadata["name"].asType(RemoteString)
+metadata.remove("level")
+count = metadata.size()
+ra.Return(metadata, count)
+```
+
+String-map lookups return a `RemoteVariant`.
+Use `asType` when you need a type-specific remote object.
+Like arrays, string maps are reference values.
+
+#### Variants and type checks
+
+Some APIs return a `RemoteVariant` because the value type is only known at execution time.
+Variants support type checks including `isNull`, `isBool`, `isInt`, `isUint`, `isFloat`, `isString`, `isGuid`, `isArray`, `isElement` and `isNotSupported`.
+After checking the type, `asType` can be used to treat the variant as a specific remote type.
+
+```py
+value = element.getPropertyValue(UIA.UIA_NamePropertyId)
+with ra.ifBlock(value.isString()):
+	name = value.asType(RemoteString)
+	ra.Return(name)
+```
+
 ### UIA elements
 
 #### Declaring an element
@@ -267,12 +330,57 @@ controlType = element.getPropertyValue(UIA_ControlTypePropertyId)
 
 Any of the standard UI Automation property IDs can be used here.
 
+`getPropertyValue` also accepts an `ignoreDefault` argument.
+When this is true, an unsupported property returns the reserved UIA "not supported" value, which can be tested with `isNotSupported` on the returned variant:
+
+```py
+value = element.getPropertyValue(UIA.UIA_HelpTextPropertyId, ignoreDefault=True)
+with ra.ifBlock(value.isNotSupported()):
+	ra.Return("No help text")
+with ra.elseBlock():
+	ra.Return(value.asType(RemoteString))
+```
+
+#### Fetching custom properties
+
+Custom UI Automation property IDs are registered at runtime.
+The numeric ID for a custom property can differ between the NVDA process and the remote provider process.
+For custom properties, use the property's GUID rather than a locally registered property ID:
+
+```py
+from comtypes import GUID
+
+customPropertyGuid = GUID("{00000000-0000-0000-0000-000000000000}")
+value = element.getCustomPropertyValue(customPropertyGuid, ignoreDefault=True)
+```
+
+Internally, the GUID is looked up in the remote provider process before the property is fetched.
+If you need to perform this lookup yourself, create or obtain a `RemoteGuid` and call `lookupId`, passing a `lowLevel.AutomationIdentifierType`:
+
+```py
+from UIAHandler._remoteOps import lowLevel
+
+customPropertyGuid = ra.newGuid("{00000000-0000-0000-0000-000000000000}")
+remotePropertyId = customPropertyGuid.lookupId(lowLevel.AutomationIdentifierType.Property)
+```
+
+The inverse lookup is also available with `ra.lookupGuidFromAutomationIdentifier`.
+Given a remote automation identifier and an `AutomationIdentifierType`, it returns a `RemoteGuid`.
+This can be useful when a provider exposes a custom property or annotation ID and you need the stable GUID that identifies it:
+
+```py
+guid = ra.lookupGuidFromAutomationIdentifier(
+	annotationId,
+	lowLevel.AutomationIdentifierType.Annotation,
+)
+```
+
 #### Navigating the element tree
 
 To navigate to other elements in the tree from this element, use the following methods on the element:
 
 * `getParentElement`
-* `getFirstchildElement`
+* `getFirstChildElement`
 * `getLastChildElement`
 * `getPreviousSiblingElement`
 * `getNextSiblingElement`
@@ -287,6 +395,22 @@ element.set(parent)
 ```
 
 This is useful when walking the element tree in a loop.
+
+#### Text patterns
+
+To fetch a UI Automation text pattern from an element, use `getTextPattern`.
+Remote text patterns currently support `rangeFromChild`, which returns a `RemoteTextRange` for a descendant element:
+
+```py
+document = ra.newElement(documentElement)
+child = ra.newElement(childElement)
+textPattern = document.getTextPattern()
+childRange = textPattern.rangeFromChild(child)
+ra.Return(childRange.getText(-1))
+```
+
+If the element does not expose the text pattern, `getTextPattern` returns a null pattern object.
+Operations using the returned pattern will fail in the provider in the same way as UIA calls made on a null or unsupported pattern.
 
 ### UIA cache requests
 
@@ -307,6 +431,15 @@ cacheRequest.addProperty(UIA_NamePropertyId)
 cacheRequest.addProperty(UIA_ControlTypePropertyId)
 cacheRequest.addPattern(UIA_TextPatternId)
 ```
+
+To cache a custom property, use `addCustomProperty` with the property's GUID:
+
+```py
+customPropertyGuid = GUID("{00000000-0000-0000-0000-000000000000}")
+cacheRequest.addCustomProperty(customPropertyGuid)
+```
+
+As with `RemoteElement.getCustomPropertyValue`, the GUID is resolved to the provider process' registered property ID at execution time.
 
 #### Populating the cache of an element
 
@@ -332,7 +465,7 @@ Alternatively, fetch the property explicitly with `getPropertyValue` and `ignore
 To create a new remote text range, call `ra.newTextRange`, giving it an existing IUIAutomationTextRange comtypes pointer as its argument:
 
 ```py
-textRange = ra.newElement(UIATextRange)
+textRange = ra.newTextRange(UIATextRange)
 ```
 
 Note that under the hood the text range is automatically cloned after it has been remoted, so that any manipulation of the remote text range (such as moving its ends) is not reflected in the original IUIAutomationTextRange you gave it.
@@ -343,6 +476,7 @@ The majority of methods found on `IUIAutomationTextRange` are available on remot
 
 * `getText`
 * `compareEndpoints`
+* `move`
 * `moveEndpointByUnit`
 * `moveEndpointByRange`
 * `expandToEnclosingUnit`
@@ -359,10 +493,10 @@ tempRange = textRange.clone()
 # Collapse the range to the start
 tempRange.moveEndpointByRange(TextPatternRangeEndpoint_End, tempRange, TextPatternRangeEndpoint_Start)
 with ra.whileBlock(lambda: tempRange.move(TextUnit_word, 1) == 1):
-	with ra.ifblock(tempRange.compareEndpoints(textPatternRangeEndpoint_Start, textRange, TextPatternRangeEndpoint_End) >= 0):
+	with ra.ifBlock(tempRange.compareEndpoints(TextPatternRangeEndpoint_Start, textRange, TextPatternRangeEndpoint_End) >= 0):
 		ra.breakLoop()
 	wordCount += 1
-ra.Return(wordcount)
+ra.Return(wordCount)
 ```
 
 #### Text range logical adapter to improve logic and readability
@@ -404,6 +538,8 @@ By simply changing the False to True, the algorithm is automatically reversed, a
 As shown above, `start` and `end` properties can be assigned to which moves the endpoint, and they can be moved by a unit with `moveByUnit`.
 They can also be compared with `<`, `<=`, `==`, `>=`, and `>`.
 If you still want the comparison delta (like with `compareEndpoints`), the properties also have a `compareWith` method, which takes another endpoint and gives back a number less than 0, equal to 0 or greater than 0.
+The logical adapter also exposes `move(unit, count)`.
+When `reverse` is true, the count is automatically negated before forwarding to the underlying text range.
 
 ### control flow
 
@@ -419,11 +555,28 @@ An optional `with` statement using `ra.elseBlock` can directly follow the `ifBlo
 ```py
 i = ra.newInt(5)
 j = ra.newInt(6)
-with ra.ifblock(i < j):
+with ra.ifBlock(i < j):
 	# do stuff if true...
 with ra.elseBlock():
 	# do stuff if false...
 ```
+
+`ra.elifBlock` can be used between `ifBlock` and `elseBlock` for ordinary if / elif / else chains:
+
+```py
+controlType = element.getPropertyValue(UIA.UIA_ControlTypePropertyId).asType(RemoteInt)
+
+with ra.ifBlock(controlType == UIA.UIA_ButtonControlTypeId):
+	ra.Return("button")
+with ra.elifBlock(controlType == UIA.UIA_EditControlTypeId):
+	ra.Return("edit")
+with ra.elseBlock():
+	ra.Return("other")
+```
+
+An `elifBlock` must directly follow an `ifBlock` or another `elifBlock`.
+An `elseBlock` must directly follow an `ifBlock` or `elifBlock`.
+Starting another block, such as a `whileBlock`, ends the chain; a later `elseBlock` will raise a `RuntimeError` rather than attaching to the wrong `ifBlock`.
 
 #### While loops
 
@@ -498,7 +651,7 @@ This seems a lot, but once you are dealing with many while loop iterations conta
 If the instruction limit is reached, then `Operation.execute` will raise `InstructionLimitExceededException`.
 Assuming your algorithm was written appropriately, you could then re-execute it, and the remote provider will have had a chance to run its own main loop or do what ever it needs to do between operations.
 
-To aide in writing algorithms that can handle this instruction limit and continue to execute where it left off, there are several features of this Remote Operations library that can be used.
+To aid in writing algorithms that can handle this instruction limit and continue to execute where it left off, there are several features of this Remote Operations library that can be used.
 
 #### Automatic retry
 
@@ -532,14 +685,14 @@ Again, in future the library could be extended to support this, but it would inv
 
 A common use of remote operations is to walk a text range or element tree, and collect data which would be returned in an array.
 However, as arrays can not be marked as `static`, this would involve a lot of extra code to handle execution continuation after the instruction limit is reached.
-Therefore the library supports a `Operation.buildIterableFunction` decorator, which can be used in place of `Operator.buildFunction`.
+Therefore the library supports an `Operation.buildIterableFunction` decorator, which can be used in place of `Operation.buildFunction`.
 Within a function that uses this decorator, rather than using ra.Return to return value and halt, you can use `ra.Yield` which will yield a value and continue to execute (until the instruction limit is reached of course).
 To actually execute an iterable function though, instead of using `Operation.execute`, you use `Operation.iterExecute` as the generator to a `for` loop, which will iterate over the yielded values.
 
 ```py
 op = Operation()
 
-@op.buildIterfunction
+@op.buildIterableFunction
 def code(ra: RemoteAPI):
 	counter = ra.newInt(0, static=True)
 	with ra.whileBlock(lambda: counter < 20000):
@@ -651,10 +804,10 @@ It takes a single argument which is a literal string value.
 
 Setting an Operation's `enableRuntimeLogging` keyword argument to True enables remote logging at execution time.
 `ra.logRuntimeMessage` can be called to log a message at runtime.
-It takes one or more literal strings and or remote values, and concatinates them together remotely.
+It takes one or more literal strings and or remote values, and concatenates them together remotely.
 For remote values that are not strings, `logRuntimeMessage` uses the remote value's `stringify` method to produce a string representation of the value.
 
-After the operation is executed, the remote log is marshalled back and dumped to NvDA's log, thereby giving the ability to trace what is happening during the execution.
+After the operation is executed, the remote log is marshalled back and dumped to NVDA's log, thereby giving the ability to trace what is happening during the execution.
 Though be aware that as remote logging itself involves creating and manipulating remote values, then the number of instructions can change quite significantly with remote logging enabled.
 
 ### Local mode
@@ -664,6 +817,15 @@ This causes all instructions to be executed locally, rather than in a remote pro
 This will of course be significantly slower, as every instruction that manipulates an element or text range will be itself one cross-process call.
 However, it is a useful means of testing and debugging, and much care has been taken to ensure that the results and side-effects are identical to executing it remotely.
 
-This differs some what from Microsoft's original remote operations library which implemented its local mode so that instructions were executed locally at build time, and executing did nothing.
+This differs somewhat from Microsoft's original remote operations library which implemented its local mode so that instructions were executed locally at build time, and executing did nothing.
 This library produces instructions just as it would remotely, but it is these low-level instructions that are executed locally at execution time, following all the same rules and limitations that executing remotely would.
 Thus, it is more suited to debugging / testing, rather than as a means of executing where remote operations is unavailable, as code could be written much more efficiently using comtypes IUIAutomation interfaces directly.
+
+### Low-level backend
+
+The low-level remote operations bridge is implemented as NVDA's `_lowLevel` Python extension module.
+It wraps the C++ UIA remote operations support directly and converts WinRT `IInspectable` values to Python values in the extension.
+This avoids the older marshaling path through OLE variants, SAFEARRAYs and scripting dictionaries, and means callers of the high-level Python API receive native Python values such as lists, dictionaries, strings, numbers, GUIDs and COM interface pointers.
+
+Because this bridge is a Python extension, it is built only for NVDA's core architecture.
+For example, it is not built as an ARM64EC helper component.
