@@ -28,14 +28,12 @@ from ctypes import WinError, byref
 from ctypes.wintypes import HANDLE
 from typing import Final, Protocol
 
-from rpyc.core.stream import PipeStream, Stream
-
 import globalVars
 import NVDAState
 import winKernel
 from logHandler import log
+from rpyc.core.stream import PipeStream, Stream
 from winBindings.kernel32 import CloseHandle, CreatePipe, DuplicateHandle, GetCurrentProcess
-
 
 #: The module run to boot a host process.
 _HOST_ENTRYPOINT_MODULE: Final[str] = "_art.host.entrypoint"
@@ -153,7 +151,7 @@ class SubprocessHostController:
 				text = line.decode("utf-8", errors="replace").rstrip()
 				if text:
 					log.warning(f"ART host: {text}")
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("Error draining ART host stderr", exc_info=True)
 		finally:
 			with contextlib.suppress(Exception):

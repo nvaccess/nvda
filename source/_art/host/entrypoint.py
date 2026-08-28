@@ -23,9 +23,8 @@ import os
 import sys
 from typing import Final
 
-from rpyc.core.stream import PipeStream, Stream
-
 from logHandler import log
+from rpyc.core.stream import PipeStream, Stream
 
 from ..transport import Connection
 from .rootService import HostRootService
@@ -79,7 +78,7 @@ def _claimControlStream() -> Stream:
 		os.dup2(devNullFd, STDIN_FD)
 	finally:
 		os.close(devNullFd)
-	sys.stdin = open(os.devnull)
+	sys.stdin = open(os.devnull)  # noqa: SIM115
 	# make stderr point to stdout
 	try:
 		os.dup2(STDERR_FD, STDOUT_FD)
@@ -90,7 +89,7 @@ def _claimControlStream() -> Stream:
 			os.dup2(devNullFd, STDOUT_FD)
 		finally:
 			os.close(devNullFd)
-	sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")
+	sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")  # noqa: SIM115
 	return PipeStream(
 		io.FileIO(readFd, "rb", closefd=True),
 		io.FileIO(writeFd, "wb", closefd=True),

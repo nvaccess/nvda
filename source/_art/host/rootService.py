@@ -10,7 +10,6 @@ from __future__ import annotations
 from typing import Literal
 
 import rpyc
-
 from logHandler import log
 
 from ..transport import Service

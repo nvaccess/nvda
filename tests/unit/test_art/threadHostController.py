@@ -48,7 +48,7 @@ class ThreadHostController:
 	def _run(self, hostStream: Stream) -> None:
 		try:
 			entrypoint.run(hostStream)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			self._exitStatus = 1
 		else:
 			self._exitStatus = 0
