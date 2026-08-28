@@ -10,13 +10,12 @@ rpyc connection wrapper used by the Add-on Runtime transport.
 from __future__ import annotations
 
 import threading
-from typing import Final
 import weakref
+from typing import Final
 
 import rpyc
-from rpyc.core.stream import Stream
-
 from logHandler import log
+from rpyc.core.stream import Stream
 
 from .config import PROTOCOL_CONFIG
 from .service import Service
@@ -81,7 +80,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 			return
 		try:
 			conn.serve_all()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if self._conn is not None and not self._conn.closed:
 				log.debugWarning(f"Error in event loop for connection {self._name!r}", exc_info=True)
 
@@ -107,7 +106,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 			return
 		try:
 			rawConn.serve_all()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if not rawConn.closed:
 				log.debugWarning(f"Error in event loop for connection {name!r}", exc_info=True)
 
@@ -118,7 +117,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		if isinstance(self._localService, Service) and not self._localService.terminated:
 			try:
 				self._localService.terminate()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning("Error terminating local service", exc_info=True)
 		self._localService = None
 		conn = self._conn
@@ -137,7 +136,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 	def _closeRawConnection(conn: rpyc.Connection, name: str) -> None:
 		try:
 			conn.close()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if not conn.closed:
 				log.debugWarning(f"Error closing connection {name!r}", exc_info=True)
 

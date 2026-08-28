@@ -13,9 +13,8 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 import rpyc
-from rpyc.core.stream import Stream
-
 from logHandler import log
+from rpyc.core.stream import Stream
 
 if TYPE_CHECKING:
 	from .connection import Connection
@@ -101,7 +100,7 @@ class Service(rpyc.Service):
 			if not conn.closed:
 				try:
 					conn.close()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning(f"Error closing dependent connection {conn.name!r}", exc_info=True)
 		self._dependentConnections.clear()
 		for serviceRef in self._dependantServices:
@@ -109,7 +108,7 @@ class Service(rpyc.Service):
 			if service is not None and not service.terminated:
 				try:
 					service.terminate()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning("Error terminating dependant service", exc_info=True)
 		self._dependantServices.clear()
 

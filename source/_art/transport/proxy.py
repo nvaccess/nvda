@@ -9,9 +9,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Final
 
-from rpyc.core.stream import Stream
-
 from logHandler import log
+from rpyc.core.stream import Stream
 
 if TYPE_CHECKING:
 	from .connection import Connection
@@ -68,7 +67,7 @@ class Proxy[Service_t: Service]:
 			if not conn.closed:
 				try:
 					conn.close()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning(f"Error closing held connection {conn.name!r}", exc_info=True)
 		self._heldConnections.clear()
 		# As a mixin we may sit above another class with its own __del__; chain to it.

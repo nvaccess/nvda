@@ -8,9 +8,8 @@
 import unittest
 
 import rpyc
-from rpyc.core.stream import PipeStream
-
 from _art.transport import Connection, Service
+from rpyc.core.stream import PipeStream
 
 
 @rpyc.service

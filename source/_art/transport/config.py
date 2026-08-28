@@ -15,7 +15,6 @@ import builtins
 
 import rpyc.core.vinegar
 
-
 #: The rpyc protocol configuration shared by every ART connection.
 #:
 #: These defaults are deliberately restrictive.
