@@ -317,11 +317,14 @@ class NvdaLib:
 		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
 		builtIn.log("Saving NVDA log")
 		saveToPath = self.create_preserved_test_output_filename("nvda.log")
-		opSys.copy_file(
-			_locations.logPath,
-			saveToPath,
-		)
-		builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
+		try:
+			opSys.copy_file(
+				_locations.logPath,
+				saveToPath,
+			)
+			builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
+		except Exception as e:
+			builtIn.log(f"Failed to save NVDA log: {e}", level="WARN")
 
 	def save_py2exe_boot_log(self):
 		"""If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.
