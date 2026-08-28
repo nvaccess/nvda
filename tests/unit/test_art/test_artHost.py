@@ -93,6 +93,9 @@ class TestRootServices(unittest.TestCase):
 		``instantiate_custom_exceptions`` is set. Without it rpyc rebuilds remote exceptions as
 		opaque stand-ins that keep the name and nothing else, and every ``except`` clause below
 		stops matching while the tests that assert on exact types keep passing.
+
+		This runs in-process, so the taxonomy is already resident and rpyc can always find the real classes.
+		:class:`TestExceptionTaxonomyAcrossProcess` ensures that the taxonomy is imported by the host entry point.
 		"""
 		with self.assertRaises(CapabilityDeniedError):
 			self.hostConn.remoteService.requestCapability("audio")
@@ -326,4 +329,51 @@ class TestControlStreamHandleOwnership(unittest.TestCase):
 			process.returncode,
 			0,
 			f"Host boot kept a claim on its control descriptors: {stderr.decode(errors='replace')}",
+		)
+
+
+class TestExceptionTaxonomyAcrossProcess(unittest.TestCase):
+	"""An ART exception keeps its type when it crosses into a real, freshly booted host.
+
+	``rpyc`` rebuilds a remote exception as its real class
+	only when that class's module is resident in the receiving process.
+	A host process does not import :mod:`_art.exceptions` just by booting,
+	so unless the transport makes the taxonomy resident, a denial raised by core arrives at the host as a ``GenericException`` subclass.
+
+	The check runs in a child process that deliberately avoids importing the taxonomy before the boundary call;
+	see :mod:`.exceptionTaxonomyProbe`.
+	"""
+
+	def test_deniedCapabilityArrivesAsItsRealClass(self):
+		"""A denial raised by core is catchable by its taxonomy classes in a fresh host."""
+		probe = pathlib.Path(__file__).parent / "exceptionTaxonomyProbe.py"
+		process = subprocess.Popen(
+			[sys.executable, str(probe)],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.stderr.close)
+		self.addCleanup(process.kill)
+		conn = Connection(
+			claimProcessControlStream(process),
+			CoreRootService(),
+			name=f"test {CONTROL_CONNECTION_NAME}",
+		)
+		self.addCleanup(conn.close)
+		conn.bgEventLoop(daemon=True)
+		try:
+			process.wait(timeout=_PROCESS_TIMEOUT)
+		except subprocess.TimeoutExpired:
+			process.kill()
+			raise
+		# The probe writes a short diagnostic and never fills the pipe, so reading after it exits
+		# cannot deadlock.
+		diagnostic = process.stderr.read().decode(errors="replace")
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"A denial raised by core reached the host as the wrong type: {diagnostic}",
 		)

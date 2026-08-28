@@ -15,6 +15,11 @@ import builtins
 
 import rpyc.core.vinegar
 
+# ``instantiate_custom_exceptions`` only rebuilds an exception as its real class when that class's module is already resident.
+# Importing the taxonomy here makes it resident on both sides as soon as the transport is,
+# regardless of whether the code that catches an ART exception has imported it first.
+from .. import exceptions  # noqa: F401
+
 #: The rpyc protocol configuration shared by every ART connection.
 #:
 #: These defaults are deliberately restrictive.
