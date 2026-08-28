@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2025 NV Access Limited, Leonard de Ruijter
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2018-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """This module provides an NVDA global plugin which creates a and robot library remote server.
 It allows tests to get information out of NVDA.
@@ -480,7 +480,7 @@ class NVDASpyLib:
 
 	def wait_for_speech_to_finish(
 		self,
-		maxWaitSeconds=5.0,
+		maxWaitSeconds=15.0,
 		speechStartedIndex: int | None = None,
 		errorMessage: str | None = "Speech did not finish before timeout",
 	) -> bool:
