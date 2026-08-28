@@ -13,4 +13,5 @@ This package defines NVDA's out-of-process, sandboxed add-on runtime.
 * :mod:`.session`: The core side of the boundary:
 	host controllers, core-side wire ends, and the root service core exposes to the host.
 * :mod:`.exceptions`: The capability failure taxonomy, shared by both sides.
+* :mod:`.winHandles`: Handle ownership helpers, shared by both sides.
 """

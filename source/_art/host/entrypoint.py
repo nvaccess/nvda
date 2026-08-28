@@ -17,7 +17,6 @@ The work is split in two so that the same boot path can be exercised without a p
 
 from __future__ import annotations
 
-import io
 import logging
 import os
 import sys
@@ -25,8 +24,10 @@ from typing import Final
 
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
+from winBindings.kernel32 import CloseHandle
 
 from ..transport import Connection
+from ..winHandles import claimHandleFromDescriptor
 from .rootService import HostRootService
 
 #: Name of the host's end of the control connection, used in logging.
@@ -60,6 +61,10 @@ def _claimControlStream() -> Stream:
 	* point stdin (descriptor 0) at the null device; and
 	* alias stdout (descriptor 1)  to stderr (descriptor 2).
 
+	The duplicated descriptors are then converted into handles the returned stream solely owns,
+	so that nothing else closes them out from under it
+	(see :func:`_art.winHandles.claimHandleFromDescriptor`).
+
 	Standard error is the host's diagnostic channel,
 	which NVDA drains to its log.
 
@@ -79,7 +84,7 @@ def _claimControlStream() -> Stream:
 	finally:
 		os.close(devNullFd)
 	sys.stdin = open(os.devnull)  # noqa: SIM115
-	# make stderr point to stdout
+	# make stdout point to stderr
 	try:
 		os.dup2(STDERR_FD, STDOUT_FD)
 	except OSError:
@@ -90,10 +95,15 @@ def _claimControlStream() -> Stream:
 		finally:
 			os.close(devNullFd)
 	sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")  # noqa: SIM115
-	return PipeStream(
-		io.FileIO(readFd, "rb", closefd=True),
-		io.FileIO(writeFd, "wb", closefd=True),
-	)
+	# ``PipeStream`` closes the handles it is built from, so it has to be their sole owner:
+	# leaving the descriptors open would hand the C runtime a second claim on them.
+	readHandle = claimHandleFromDescriptor(readFd)
+	try:
+		writeHandle = claimHandleFromDescriptor(writeFd)
+	except OSError:
+		CloseHandle(readHandle)
+		raise
+	return PipeStream(readHandle, writeHandle)
 
 
 def _initializeLogging() -> None:

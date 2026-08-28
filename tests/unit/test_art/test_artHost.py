@@ -6,7 +6,9 @@
 """Unit tests for the ART host entry point, root services, and host controllers."""
 
 import io
+import msvcrt
 import os
+import pathlib
 import subprocess
 import sys
 import unittest
@@ -24,6 +26,7 @@ from _art.session.hostController import (
 )
 from _art.session.rootService import CoreRootService
 from _art.transport import Connection
+from _art.winHandles import claimHandleFromDescriptor
 from rpyc.core.stream import PipeStream
 
 from .threadHostController import ThreadHostController
@@ -271,3 +274,56 @@ class TestHostStandardStreams(unittest.TestCase):
 		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
 			SubprocessHostController._drainStderr(stderr)
 		self.assertTrue(mockLog.warning.called)
+
+
+class TestControlStreamHandleOwnership(unittest.TestCase):
+	"""Exactly one owner of each handle carrying the control connection.
+
+	``PipeStream`` closes the handles it is built from.
+	Anything that owns them as well -- a C runtime descriptor, or a Python file object over one --
+	closes them a second time.
+	Since Windows recycles handle values, that second close may land on an unrelated object rather
+	than failing, so these tests assert on ownership rather than on an error.
+	"""
+
+	def test_claimingADescriptorLeavesOneOwner(self):
+		"""The descriptor is released, and its handle survives for the caller to use."""
+		readFd, writeFd = os.pipe()
+		self.addCleanup(os.close, writeFd)
+		handle = claimHandleFromDescriptor(readFd)
+		with self.assertRaises(OSError):
+			# The descriptor is gone, so it cannot close the handle a second time.
+			os.fstat(readFd)
+		# Ownership moved, rather than the object dying with the descriptor.
+		message = b"still open"
+		os.write(writeFd, message)
+		claimed = msvcrt.open_osfhandle(handle, os.O_RDONLY)
+		self.addCleanup(os.close, claimed)
+		self.assertEqual(os.read(claimed, len(message)), message)
+
+	def test_bootReleasesTheDescriptorsItDuplicates(self):
+		"""``_claimControlStream`` gives its descriptors to the stream and keeps none back.
+
+		Reading a handle out of a descriptor does not transfer ownership.
+		A descriptor left behind holds a second claim, which the system closes at process
+		teardown, long after the stream has closed the handle.
+
+		The check runs in a child process, since ``_claimControlStream`` takes over the standard
+		streams of whichever process calls it.
+		"""
+		probe = pathlib.Path(__file__).parent / "controlStreamProbe.py"
+		process = subprocess.Popen(
+			[sys.executable, str(probe)],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.kill)
+		_stdout, stderr = process.communicate(timeout=_PROCESS_TIMEOUT)
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"Host boot kept a claim on its control descriptors: {stderr.decode(errors='replace')}",
+		)

@@ -33,7 +33,9 @@ import NVDAState
 import winKernel
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
-from winBindings.kernel32 import CloseHandle, CreatePipe, DuplicateHandle, GetCurrentProcess
+from winBindings.kernel32 import CloseHandle, CreatePipe
+
+from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
 #: The module run to boot a host process.
 _HOST_ENTRYPOINT_MODULE: Final[str] = "_art.host.entrypoint"
@@ -219,8 +221,8 @@ class SubprocessHostController:
 			# so we can't close them on failure.
 			# Failure to duplicate `hostWriteLocal` into the host process most likely means that it died,
 			# in which case `hostRead` will already have been freed, anyway.
-			hostRead = _duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
-			hostWrite = _duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
+			hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
+			hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
 		except Exception:
 			for handle in openHandles:
 				CloseHandle(handle)
@@ -254,53 +256,8 @@ def claimProcessControlStream(process: subprocess.Popen) -> Stream:
 	stdin = process.stdin
 	if stdout is None or stdin is None:
 		raise RuntimeError("The host process was not created with its standard streams piped")
-	readHandle = _duplicateHandleForSelf(msvcrt.get_osfhandle(stdout.fileno()))
-	writeHandle = _duplicateHandleForSelf(msvcrt.get_osfhandle(stdin.fileno()))
+	readHandle = duplicateHandleForSelf(msvcrt.get_osfhandle(stdout.fileno()))
+	writeHandle = duplicateHandleForSelf(msvcrt.get_osfhandle(stdin.fileno()))
 	stdout.close()
 	stdin.close()
 	return PipeStream(readHandle, writeHandle)
-
-
-def _duplicateHandleForSelf(handle: int) -> int:
-	"""Duplicate a handle within this process, with the same access as the original.
-
-	:param handle: Handle to duplicate.
-	:returns: The value of an independent handle to the same object.
-	:raises OSError: If duplication fails.
-	"""
-	duplicate = HANDLE()
-	currentProcess = GetCurrentProcess()
-	if not DuplicateHandle(
-		currentProcess,
-		HANDLE(int(handle)),
-		currentProcess,
-		byref(duplicate),
-		0,
-		False,
-		winKernel.DUPLICATE_SAME_ACCESS,
-	):
-		raise WinError()
-	return duplicate.value
-
-
-def _duplicateHandleIntoProcess(handle: HANDLE, accessMask: int, targetProcess: int) -> HANDLE:
-	"""Duplicate a handle so it is valid in another process.
-
-	:param handle: Handle to duplicate.
-	:param accessMask: Desired access for the duplicate.
-	:param targetProcess: Handle of the process to duplicate into.
-	:returns: A handle valid in ``targetProcess``.
-	:raises OSError: If duplication fails.
-	"""
-	duplicate = HANDLE()
-	if not DuplicateHandle(
-		GetCurrentProcess(),
-		handle,
-		targetProcess,
-		byref(duplicate),
-		accessMask,
-		False,
-		0,
-	):
-		raise WinError()
-	return duplicate
