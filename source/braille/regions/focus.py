@@ -3,14 +3,12 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 
 from typing import (
 	TYPE_CHECKING,
-	Generator,
-	List,
-	Optional,
 )
+from collections.abc import Generator
 
 import api
 import config
@@ -20,7 +18,7 @@ if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
 
-from .base import Region
+from .base import Region  # noqa: I001
 from ..constants import CONTEXTPRES_CHANGEDCONTEXT, TEXT_SEPARATOR
 from .NVDAObject import NVDAObjectRegion, NVDAObjectHasUsefulText, ReviewNVDAObjectRegion
 from .textInfo import (
@@ -47,9 +45,9 @@ def invalidateCachedFocusAncestors(index):
 
 
 def getFocusContextRegions(
-	obj: "NVDAObject",
-	oldFocusRegions: Optional[List[Region]] = None,
-) -> Generator[Region, None, None]:
+	obj: NVDAObject,
+	oldFocusRegions: list[Region] | None = None,
+) -> Generator[Region]:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
 	global _cachedFocusAncestorsEnd
@@ -124,9 +122,9 @@ def getFocusContextRegions(
 
 
 def getFocusRegions(
-	obj: "NVDAObject",
+	obj: NVDAObject,
 	review: bool = False,
-) -> Generator[Region, None, None]:
+) -> Generator[Region]:
 	if objectBelowLockScreenAndWindowsIsLocked(obj):
 		return
 	# Allow objects to override normal behaviour.

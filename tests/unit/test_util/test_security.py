@@ -5,12 +5,7 @@
 
 """Unit tests for the blockUntilConditionMet submodule."""
 
-from dataclasses import dataclass
-from typing import (
-	List,
-	Optional,
-	Type,
-)
+from dataclasses import dataclass  # noqa: I001
 import unittest
 from unittest.mock import patch
 
@@ -128,7 +123,7 @@ class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
 		List of fake HWNDs, given an ordered index to make testing easier.
 		Must be 1 indexed as a HWND of 0 is treated an error.
 		"""
-		self._windows: List[winUser.HWNDVal] = list(range(1, 11))
+		self._windows: list[winUser.HWNDVal] = list(range(1, 11))
 
 	def tearDown(self) -> None:
 		self._getWindowPatch.stop()
@@ -169,7 +164,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 	windows will change.
 	"""
 
-	_queuedMove: Optional[_MoveWindow] = None
+	_queuedMove: _MoveWindow | None = None
 
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
 		self._triggerQueuedMove(hwnd)
@@ -195,8 +190,8 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 		move: _MoveWindow,
 		aboveWindow: winUser.HWNDVal,
 		belowWindow: winUser.HWNDVal,
-		aboveRaises: Optional[Type[Exception]] = None,
-		belowRaises: Optional[Type[Exception]] = None,
+		aboveRaises: type[Exception] | None = None,
+		belowRaises: type[Exception] | None = None,
 		aboveExpectFailure: bool = False,
 		belowExpectFailure: bool = False,
 	):

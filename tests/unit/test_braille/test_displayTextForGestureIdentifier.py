@@ -5,7 +5,7 @@
 
 """Unit tests for the BrailleDisplayGesture classes in the braille module."""
 
-import braille
+import braille  # noqa: I001
 import braille.display.gesture
 import unittest
 

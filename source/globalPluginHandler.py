@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
-import sys
+import sys  # noqa: I001
 import pkgutil
 import importlib
 import baseObject
@@ -20,9 +20,9 @@ def listPlugins():
 		if name.startswith("_"):
 			continue
 		try:
-			plugin = importlib.import_module("globalPlugins.%s" % name, package="globalPlugins").GlobalPlugin
+			plugin = importlib.import_module("globalPlugins.%s" % name, package="globalPlugins").GlobalPlugin  # noqa: UP031
 		except:  # noqa: E722
-			log.error("Error importing global plugin %s" % name, exc_info=True)
+			log.error("Error importing global plugin %s" % name, exc_info=True)  # noqa: G201, UP031
 			continue
 		yield plugin
 
@@ -32,7 +32,7 @@ def initialize():
 		try:
 			runningPlugins.add(plugin())
 		except:  # noqa: E722
-			log.error("Error initializing global plugin %r" % plugin, exc_info=True)
+			log.error("Error initializing global plugin %r" % plugin, exc_info=True)  # noqa: G201, UP031
 
 
 def terminate():
@@ -41,7 +41,7 @@ def terminate():
 		try:
 			plugin.terminate()
 		except:  # noqa: E722
-			log.exception("Error terminating global plugin %r" % plugin)
+			log.exception("Error terminating global plugin %r" % plugin)  # noqa: UP031
 
 
 def reloadGlobalPlugins():

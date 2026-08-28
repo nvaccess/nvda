@@ -3,9 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., Joseph Lee
 
-import threading
+import threading  # noqa: I001
 import typing
-from typing import Optional
 from comtypes import COMError
 
 import garbageHandler
@@ -42,7 +41,7 @@ lastQueuedFocusObject = None
 
 
 # Handle virtual desktop switch announcements in Windows 10 and later
-_virtualDesktopName: Optional[str] = None
+_virtualDesktopName: str | None = None
 _canAnnounceVirtualDesktopNames: bool = winVersion.getWinVer() >= winVersion.WIN10_1903
 
 
@@ -139,7 +138,7 @@ class _EventExecuter(garbageHandler.TrackedObject):
 			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
-		funcName = "event_%s" % eventName
+		funcName = "event_%s" % eventName  # noqa: UP031
 
 		# Global plugin level.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -192,7 +191,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 			log.warning("Unhandled object type. Expected all objects to be descendant from NVDAObject")
 			raise TypeError(f"Unhandled object type: {obj!r}")
 		self._obj = obj
-		super(FocusLossCancellableSpeechCommand, self).__init__(reportDevInfo=reportDevInfo)
+		super().__init__(reportDevInfo=reportDevInfo)
 
 		if self.isLastFocusObj():
 			# Objects may be re-used.
@@ -297,7 +296,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 def _getFocusLossCancellableSpeechCommand(
 	obj,
 	reason: controlTypes.OutputReason,
-) -> Optional[_CancellableSpeechCommand]:
+) -> _CancellableSpeechCommand | None:
 	if reason != controlTypes.OutputReason.FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
 	from NVDAObjects import NVDAObject
@@ -346,9 +345,13 @@ def executeEvent(
 
 			_virtualDesktopName = obj.name
 			core.callLater(250, handlePossibleDesktopNameChange)
-		if isGainFocus and not doPreGainFocus(obj, sleepMode=sleepMode):
-			return
-		elif not sleepMode and eventName == "documentLoadComplete" and not doPreDocumentLoadComplete(obj):
+		if (
+			isGainFocus
+			and not doPreGainFocus(obj, sleepMode=sleepMode)
+			or not sleepMode
+			and eventName == "documentLoadComplete"
+			and not doPreDocumentLoadComplete(obj)
+		):
 			return
 		elif not sleepMode:
 			_EventExecuter(eventName, obj, kwargs)
@@ -530,7 +533,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 	# #6713: Edge (and soon all UWP apps) will no longer have windows as descendants of the foreground window.
 	# However, it does look like they are always  equal to or descendants of the "active" window of the input thread.
 	gi = winUser.getGUIThreadInfo(0)
-	if wClass.startswith("Windows.UI.Core"):
+	if wClass.startswith("Windows.UI.Core"):  # noqa: SIM102
 		if winUser.isDescendantWindow(gi.hwndActive, windowHandle):
 			return True
 
@@ -563,7 +566,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		return True
 	# This may be an event for a windowless embedded Chrome document
 	# (E.g. Microsoft Loop component).
-	if wClass == "Chrome_RenderWidgetHostHWND":
+	if wClass == "Chrome_RenderWidgetHostHWND":  # noqa: SIM102
 		# The event is for a Chromium document
 		if winUser.getClassName(gi.hwndFocus) == "Chrome_WidgetWin_0":
 			# The real win32 focus is on a Chrome embedding window.

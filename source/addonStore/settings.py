@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, replace  # noqa: I001
 import json
 import os
 from typing import Any
@@ -74,10 +74,10 @@ class _AddonStoreSettings:
 	def _loadFromSettingsDict(self, settingsDict: dict[str, Any]):
 		try:
 			if not isinstance(settingsDict["addonSettings"], dict):
-				raise ValueError("addonSettings must be a dict")
+				raise ValueError("addonSettings must be a dict")  # noqa: TRY004
 
 			if not isinstance(settingsDict["showWarning"], bool):
-				raise ValueError("showWarning must be a bool")
+				raise ValueError("showWarning must be a bool")  # noqa: TRY004
 
 		except (KeyError, ValueError):
 			log.exception(f"Invalid add-on store cache:\n{settingsDict}")

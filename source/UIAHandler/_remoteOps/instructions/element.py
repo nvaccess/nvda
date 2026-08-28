@@ -10,7 +10,7 @@ get a property value of an element,
 and navigate the UI Automation tree.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import cast
 from dataclasses import dataclass
 from ctypes import POINTER

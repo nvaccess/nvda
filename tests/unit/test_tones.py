@@ -5,7 +5,7 @@
 
 """Unit tests for the tones module."""
 
-import unittest
+import unittest  # noqa: I001
 import tones
 from .extensionPointTestHelpers import deciderTester
 

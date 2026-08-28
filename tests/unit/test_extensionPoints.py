@@ -5,12 +5,12 @@
 
 """Unit tests for the extensionPoints module."""
 
-import unittest
+import unittest  # noqa: I001
 import extensionPoints
 from functools import partial
 
 
-class ExampleClass(object):
+class ExampleClass:
 	def method(self):
 		return 42
 
@@ -504,7 +504,7 @@ class TestAction(unittest.TestCase):
 		Note: the lambda must be kept alive, since register uses a weak reference to it.
 		"""
 		calledKwargs = {}
-		l = lambda a: calledKwargs.update({"a": a})  # noqa: E731, E741
+		l = lambda a: calledKwargs.update({"a": a})
 		self.action.register(l)
 		self.action.notify(a="a value")
 		self.assertEqual(calledKwargs, {"a": "a value"})
@@ -530,7 +530,7 @@ class TestAction(unittest.TestCase):
 		called = []
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			called.append(handler2)
@@ -718,7 +718,7 @@ class TestFilter(unittest.TestCase):
 			calledKwargs.update({"a": a})
 			return "lambda value"
 
-		l = lambda a: recordKwarg(a)  # noqa: E731, E741
+		l = lambda a: recordKwarg(a)
 		self.filter.register(l)
 		self.filter.apply("a value")
 		self.assertEqual(calledKwargs, {"a": "a value"})
@@ -727,7 +727,7 @@ class TestFilter(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1(value):
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2(value):
 			return 2
@@ -828,7 +828,7 @@ class TestDecider(unittest.TestCase):
 		Note: the lambda must be kept alive, since register uses a weak reference to it.
 		"""
 		calledKwargs = {}
-		l = lambda a: calledKwargs.update({"a": a})  # noqa: E731, E741
+		l = lambda a: calledKwargs.update({"a": a})
 		self.decider.register(l)
 		self.decider.decide(a="a value")
 		self.assertEqual(calledKwargs, {"a": "a value"})
@@ -861,7 +861,7 @@ class TestDecider(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			return False
@@ -990,7 +990,7 @@ class TestAccumulatingDecider(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			return False
@@ -1207,7 +1207,7 @@ class TestChain(unittest.TestCase):
 		"""
 		# E731 do not assign a lambda expression, use a def
 		# Ignored because a lambda is used on purpose in this test.
-		la = lambda a: iter([("a", a)])  # NOQA: E731
+		la = lambda a: iter([("a", a)])
 		self.chain.register(la)
 		generator = self.chain.iter(a="a value")
 		self.assertEqual({k: v for k, v in generator}, {"a": "a value"})
@@ -1216,7 +1216,7 @@ class TestChain(unittest.TestCase):
 		"""Test that a handler which raises an exception doesn't affect later handlers."""
 
 		def handler1():
-			raise Exception("barf")
+			raise Exception("barf")  # noqa: TRY002
 
 		def handler2():
 			yield 2

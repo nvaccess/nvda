@@ -19,12 +19,12 @@ Note:
     to exchange connection information between sessions.
 """
 
-import json
+import json  # noqa: I001
 import socket
 import threading
 import uuid
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from ctypes import (
 	FormatError,
 	GetLastError,
@@ -109,10 +109,10 @@ class SecureDesktopHandler:
 			raise RuntimeError(f"Unable to get handle to IPC event. {GetLastError()}: {FormatError()}")
 		log.debug("Initialized SecureDesktopHandler")
 
-		self._followerSession: Optional[FollowerSession] = None
-		self.sdServer: Optional[server.LocalRelayServer] = None
-		self.sdRelay: Optional[RelayTransport] = None
-		self.sdBridge: Optional[bridge.BridgeTransport] = None
+		self._followerSession: FollowerSession | None = None
+		self.sdServer: server.LocalRelayServer | None = None
+		self.sdRelay: RelayTransport | None = None
+		self.sdBridge: bridge.BridgeTransport | None = None
 
 		post_secureDesktopStateChange.register(self._onSecureDesktopChange)
 
@@ -126,10 +126,10 @@ class SecureDesktopHandler:
 			log.debugWarning(f"Error closing handle to IPC event. {GetLastError()}: {FormatError()}")
 		# We shouldn't be in a situation where we have shared IPC data,
 		# but it's still good to check and clean it up if we do.
-		if self._bufferAddress is not None:
+		if self._bufferAddress is not None:  # noqa: SIM102
 			if not UnmapViewOfFile(self._bufferAddress):
 				log.debugWarning(f"Error unmapping IPC shared memory. {GetLastError()}: {FormatError()}")
-		if self._mapFile is not None:
+		if self._mapFile is not None:  # noqa: SIM102
 			if not closeHandle(self._mapFile):
 				log.debugWarning(
 					f"Error closing handle to IPC file mapping. {GetLastError()}: {FormatError()}",
@@ -137,11 +137,11 @@ class SecureDesktopHandler:
 		log.info("Secure desktop cleanup completed")
 
 	@property
-	def followerSession(self) -> Optional[FollowerSession]:
+	def followerSession(self) -> FollowerSession | None:
 		return self._followerSession
 
 	@followerSession.setter
-	def followerSession(self, session: Optional[FollowerSession]) -> None:
+	def followerSession(self, session: FollowerSession | None) -> None:
 		"""Update follower session reference and handle necessary cleanup/setup."""
 		if self._followerSession == session:
 			log.debug("Follower session unchanged, skipping update")
@@ -161,7 +161,7 @@ class SecureDesktopHandler:
 				self._onLeaderDisplayChange,
 			)
 
-	def _onSecureDesktopChange(self, isSecureDesktop: Optional[bool] = None) -> None:
+	def _onSecureDesktopChange(self, isSecureDesktop: bool | None = None) -> None:
 		"""Internal callback for secure desktop state changes.
 
 		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
@@ -224,7 +224,7 @@ class SecureDesktopHandler:
 			if buffer[-1] != "\x00":
 				raise ValueError("Insufficient length for null terminator.")
 		except ValueError:
-			log.exception("Failed to write IPC data.", exc_info=True)
+			log.exception("Failed to write IPC data.", exc_info=True)  # noqa: G202
 			if not UnmapViewOfFile(bufferAddress):
 				log.debugWarning(f"Error unmapping IPC shared memory. {GetLastError()}: {FormatError()}")
 			if not closeHandle(mapFile):
@@ -233,7 +233,7 @@ class SecureDesktopHandler:
 				)
 			self.sdServer.close()
 			self.sdServer = None
-			return None
+			return
 
 		serverThread = threading.Thread(target=self.sdServer.run)
 		serverThread.daemon = True
@@ -305,7 +305,7 @@ class SecureDesktopHandler:
 				)
 			self._mapFile = None
 
-	def initializeSecureDesktop(self) -> Optional[ConnectionInfo]:
+	def initializeSecureDesktop(self) -> ConnectionInfo | None:
 		"""Initialize connection when starting in secure desktop.
 
 		:return: Connection information if successful, None on failure

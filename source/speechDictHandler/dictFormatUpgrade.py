@@ -44,7 +44,7 @@ def __getattr__(attrName: str) -> Any:
 			)
 			return WritePaths.voiceDictsBackupDir
 
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 def createVoiceDictFileName(synthName, voiceName):
@@ -132,7 +132,7 @@ def _doEspeakDictUpgrade():
 	synthName = "espeak"
 
 	def getNextVoice():
-		for ID, (oldName, newName) in espeakNameChanges.items():
+		for ID, (oldName, newName) in espeakNameChanges.items():  # noqa: PERF102
 			yield (
 				createVoiceDictFileName(synthName, oldName),
 				createVoiceDictFileName(synthName, newName),

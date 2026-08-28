@@ -6,7 +6,7 @@
 
 """App module for iTunes"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 from comtypes import COMError
 import controlTypes
 import oleacc
@@ -63,7 +63,7 @@ class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 	value = None
 
 	def _get_next(self):
-		next = super(ITunesItem, self).next
+		next = super().next
 		if next:
 			return next
 		try:
@@ -79,7 +79,7 @@ class ITunesItem(NVDAObjects.IAccessible.IAccessible):
 		return None
 
 	def _get_previous(self):
-		previous = super(ITunesItem, self).previous
+		previous = super().previous
 		if not previous and self.IAccessibleChildID > 1:
 			previous = NVDAObjects.IAccessible.IAccessible(
 				windowHandle=self.windowHandle,
@@ -120,4 +120,4 @@ class TopLevelClient(NVDAObjects.IAccessible.IAccessible):
 		# which in turn causes spurious reporting.
 		if self.IAccessibleIdentity == other.IAccessibleIdentity:
 			return True
-		return super(TopLevelClient, self)._isEqual(other)
+		return super()._isEqual(other)

@@ -9,7 +9,7 @@ Including to create a cache request, add properties and patterns to it,
 and populate the cache of a UI Automation element from it.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import cast
 from dataclasses import dataclass
 from ctypes import POINTER

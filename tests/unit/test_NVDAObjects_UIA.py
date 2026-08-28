@@ -5,7 +5,7 @@
 
 """Unit tests for NVDAObjects.UIA."""
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import Mock, patch
 
 import api
@@ -61,12 +61,12 @@ class TestMenuItemDescription(unittest.TestCase):
 		for frameworkID, providerDescription in (
 			(
 				"WPF",
-				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "
+				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "  # noqa: ISC004
 				"System.Windows.Forms, Version=4.0.0.0",
 			),
 			(
 				"WinForm",
-				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "
+				"managed:System.Windows.Forms.ToolStripMenuItem+ToolStripMenuItemAccessibleObject, "  # noqa: ISC004
 				"System.Windows.Forms, Version=8.0.0.0",
 			),
 			("WinForm", "System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0"),

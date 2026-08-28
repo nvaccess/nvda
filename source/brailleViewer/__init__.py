@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import typing
+import typing  # noqa: I001
 
 import gui
 import extensionPoints

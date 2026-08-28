@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import winUser
+import winUser  # noqa: I001
 import controlTypes
 import displayModel
 import textInfos
@@ -108,7 +108,7 @@ class MessageRuleListItem(sysListView32.ListItem):
 	role = controlTypes.Role.CHECKBOX
 
 	def _get_states(self):
-		states = super(MessageRuleListItem, self).states
+		states = super().states
 		if (
 			watchdog.cancellableSendMessage(
 				self.windowHandle,
@@ -124,7 +124,7 @@ class MessageRuleListItem(sysListView32.ListItem):
 
 class MessageListItem(sysListView32.ListItem):
 	def _getColumnContent(self, column):
-		content = super(MessageListItem, self)._getColumnContent(column)
+		content = super()._getColumnContent(column)
 		if not content:
 			imageID = self._getColumnImageID(column)
 			if imageID > 0:
@@ -159,7 +159,7 @@ class MessageListItem(sysListView32.ListItem):
 		if self.isUnread:
 			# Translators: Displayed in outlook or live mail to indicate an email is unread
 			nameList.append(_("unread"))
-		name = super(MessageListItem, self).name
+		name = super().name
 		if name:
 			nameList.append(name)
 		return " ".join(nameList)

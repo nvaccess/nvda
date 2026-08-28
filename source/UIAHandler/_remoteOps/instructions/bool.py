@@ -9,7 +9,7 @@ Including to create new boolean values, check if an object is a boolean,
 and perform boolean operations such as and, or and not.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 import ctypes
 from .. import lowLevel

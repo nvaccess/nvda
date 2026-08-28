@@ -2320,6 +2320,7 @@ To toggle Unicode normalization from anywhere, please assign a custom gesture us
 This combo box lets you choose the unit of text that say all (continuous reading) advances by.
 This affects how frequently the text caret and view move during say all, and can also affect intonation in long blocks of text.
 When set to "Sentence where possible", NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.
+Sentence boundaries are supported in Microsoft Word and Outlook, in Rich Edit controls, and in browse mode documents such as web pages.
 When set to "Paragraph", NVDA reads paragraph by paragraph.
 When set to "Line", NVDA always reads line by line.
 For example, when set to "Line", say all reads by line in Rich Edit controls such as WordPad or NVDA's log viewer, whereas the default reads these by sentence.
@@ -3170,11 +3171,15 @@ The available options are:
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
-If on, this option will cause speech to be interrupted each time a character is typed. This is on by default.
+If on, this option will cause speech to be interrupted each time a character is typed.
+This option is enabled by default.
+This option affects all NVDA speech, including in browse mode, focus mode, and say all.
 
 ##### Speech interrupt for Enter key {#KeyboardSettingsSpeechInteruptForEnter}
 
-If on, this option will cause speech to be interrupted each time the Enter key is pressed. This is on by default.
+If on, this option will cause speech to be interrupted each time the Enter key is pressed.
+This option is enabled by default.
+This option affects all NVDA speech, including in browse mode, focus mode, and say all.
 
 ##### Allow skim reading in Say All {#KeyboardSettingsSkimReading}
 

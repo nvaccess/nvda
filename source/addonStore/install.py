@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from os import (
+from os import (  # noqa: I001
 	PathLike,
 )
 from typing import (
@@ -20,7 +20,7 @@ from .dataManager import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import AddonBundle, Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler import AddonBundle, Addon as AddonHandlerModel  # noqa: I001
 
 
 def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
@@ -35,7 +35,7 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 	try:
 		bundle = AddonBundle(addonPath)
 	except AddonError:
-		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
+		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)  # noqa: G201, UP031
 		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",
@@ -86,7 +86,7 @@ def installAddon(addonPath: PathLike) -> None:
 	if bundle._installExceptions:
 		log.error(f"Error(s) installing addon bundle from {addonPath}")
 		for e in bundle._installExceptions:
-			log.error(e, exc_info=True)
+			log.error(e, exc_info=True)  # noqa: LOG014
 		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",

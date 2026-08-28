@@ -5,7 +5,7 @@
 
 """Unit tests for resizing a cell array before displaying on device."""
 
-import braille
+import braille  # noqa: I001
 import unittest
 
 

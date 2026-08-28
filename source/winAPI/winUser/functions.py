@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-from winBindings import user32 as _user32
+from winBindings import user32 as _user32  # noqa: I001
 from .constants import SysColorIndex
 from utils import _deprecate
 

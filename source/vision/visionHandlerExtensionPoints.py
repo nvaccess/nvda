@@ -9,7 +9,7 @@
 Consult the documentation of L{EventExtensionPoints} for more details.
 """
 
-from extensionPoints import Action
+from extensionPoints import Action  # noqa: I001
 from dataclasses import dataclass, field
 
 

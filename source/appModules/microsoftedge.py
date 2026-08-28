@@ -6,7 +6,7 @@
 
 """appModule for Microsoft Edge main process"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import api
 import ui
 

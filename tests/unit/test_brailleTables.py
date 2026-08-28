@@ -5,7 +5,7 @@
 
 """Unit tests for the brailleTables module."""
 
-import unittest
+import unittest  # noqa: I001
 import brailleTables
 import louisHelper
 import os.path
@@ -23,7 +23,7 @@ class TestBrailleTables(unittest.TestCase):
 			with self.subTest(table=table.fileName):
 				self.assertTrue(
 					os.path.isfile(os.path.join(brailleTables.TABLES_DIR, table.fileName)),
-					msg="{table} table not found".format(table=table.displayName),
+					msg=f"{table.displayName} table not found",
 				)
 
 	def test_renamedTableExistence(self):
@@ -46,7 +46,7 @@ class TestTranslate(unittest.TestCase):
 			with self.subTest(table=table.fileName):
 				try:
 					louisHelper.translate([table.fileName, "braille-patterns.cti"], "test")
-				except Exception as e:
+				except Exception as e:  # noqa: BLE001
 					self.fail(f"Translation failed for {table.displayName}: {e}")
 
 	def test_backtranslate(self):
@@ -59,5 +59,5 @@ class TestTranslate(unittest.TestCase):
 			with self.subTest(table=table.fileName):
 				try:
 					louisHelper.backTranslate([table.fileName, "braille-patterns.cti"], cells)
-				except Exception as e:
+				except Exception as e:  # noqa: BLE001
 					self.fail(f"Back-translation failed for {table.displayName}: {e}")

@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Eurobraille
 
-from collections import defaultdict
-from typing import Dict, Any, List, Union
+from collections import defaultdict  # noqa: I001
+from typing import Any
 import re
 
 from io import BytesIO
@@ -35,7 +35,7 @@ def bytesToInt(byteData: bytes):
 class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	_dev: hwIo.IoBase
 	# Used to for error checking.
-	_awaitingFrameReceipts: Dict[int, Any]
+	_awaitingFrameReceipts: dict[int, Any]
 	name = constants.name
 	# Translators: Names of braille displays.
 	description = constants.description
@@ -96,7 +96,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		self._hidKeyboardInput = False
 		self._hidInputBuffer = b""
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.ProtocolType.HID
@@ -119,7 +119,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 						writeTimeout=self.timeout,
 						onReceive=self._onReceive,
 					)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning(f"Error while connecting to port {port}", exc_info=True)
 				continue
 
@@ -137,11 +137,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			if self.numCells and self.deviceType:
 				# A display responded.
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self.deviceType,
-						type=portType,
-						port=port,
-					),
+					f"Found {self.deviceType} connected via {portType} ({port})",
 				)
 				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
@@ -175,12 +171,12 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	def _prepFirstByteStreamAndData(
 		self,
 		data: bytes,
-	) -> tuple[bytes, Union[BytesIO, hwIo.IoBase], bytes]:
+	) -> tuple[bytes, BytesIO | hwIo.IoBase, bytes]:
 		if self.isHid:
 			# data contains the entire packet.
 			# HID Packets start with 0x00.
 			byte0 = data[0:1]
-			assert byte0 == b"\x00", "byte 0 is %r" % byte0
+			assert byte0 == b"\x00", "byte 0 is %r" % byte0  # noqa: UP031
 			# Check whether there is an incomplete packet in the buffer
 			if self._hidInputBuffer:
 				data = self._hidInputBuffer + data[1:]
@@ -201,7 +197,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		elif byte1 == constants.STX:
 			length = bytesToInt(stream.read(2)) - 2  # length includes the length itself
 			packet: bytes = stream.read(length)
-			if self.isHid and not stream.read(1) == constants.ETX:
+			if self.isHid and not stream.read(1) == constants.ETX:  # noqa: SIM201
 				# Incomplete packet
 				self._hidInputbuffer = data
 				return
@@ -301,7 +297,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 					pass
 				self._ignoreCommandKeyReleases = not isIris and (
 					group == constants.EB_KEY_COMMAND or self.keysDown[constants.EB_KEY_COMMAND] > 0
-				)  # noqa E501
+				)
 			if not isIris and group == constants.EB_KEY_COMMAND:
 				self.keysDown[group] = arg
 			else:
@@ -350,7 +346,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			)
 			self._dev.write(hidPacket)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		self._sendPacket(
 			packetType=constants.EB_BRAILLE_DISPLAY,
@@ -398,7 +394,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	# Translators: Description of the script that toggles HID keyboard simulation.
 	script_toggleHidKeyboardInput.__doc__ = _("Toggle HID keyboard simulation")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(eurobraille.esytime):l1+joystick1Down": "toggleHidKeyboardInput",
 		"br(eurobraille):switch1Left+joystick1Down": "toggleHidKeyboardInput",
 		"br(eurobraille.esytime):l8+joystick1Down": "toggleHidKeyboardInput",

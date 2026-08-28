@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import struct
+import struct  # noqa: I001
 import functools
 import operator
 import enum
@@ -111,7 +111,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			},
 		)
 
-	supportedSettings = [
+	supportedSettings = [  # noqa: RUF012
 		DriverSetting(
 			"brailleDestination",
 			# Translators: Label for a setting that allows the user to choose the destination for braille output.
@@ -120,7 +120,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		),
 	]
 
-	_lastResponse: dict[int, CommandResponse] = {}
+	_lastResponse: dict[int, CommandResponse] = {}  # noqa: RUF012
 
 	def _sendCommand(
 		self,
@@ -236,7 +236,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		data = self._sendCommand(DP_Command.REQ_BOARD_INFORMATION, rspCmd=DP_Command.RSP_BOARD_INFORMATION)
 		return DP_BoardInformation.from_buffer_copy(data)
 
-	_displayLineCache: dict[int, bytes] = {}
+	_displayLineCache: dict[int, bytes] = {}  # noqa: RUF012
 
 	def _requestDisplayLine(self, dest: int, data: bytes, seqNum: int = 0):
 		oldData = self._displayLineCache.get(dest)
@@ -316,7 +316,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		self._receiveBuffer: bytearray = bytearray()
 		if port == "auto":
 			# Try autodetection
-			for portType, portId, port, portInfo in self._getTryPorts(port):
+			for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 				if self._tryConnect(port):
 					break
 			else:
@@ -374,11 +374,11 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			else:
 				raise RuntimeError("No text or graphics displays")
 			return True
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# Clean up on failure
 			try:
 				self._dev.close()
-			except Exception:
+			except Exception:  # noqa: BLE001, S110
 				pass
 			return False
 
@@ -420,9 +420,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		if (
 			value == BrailleDestination.TEXT
 			and self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY
-		):
-			self._brailleDestination = value
-		elif (
+		) or (
 			value == BrailleDestination.GRAPHIC
 			and self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY
 		):

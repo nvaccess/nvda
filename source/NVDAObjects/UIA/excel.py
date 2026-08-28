@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2018-2021 NV Access Limited, Leonard de Ruijter
 
-from typing import Optional, Tuple
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import winVersion
 import UIAHandler
 import UIAHandler.constants
@@ -133,36 +132,36 @@ class ExcelCell(ExcelObject):
 			return False
 
 	#: Typing information for auto-property: _get_outlineColor
-	outlineColor: Optional[Tuple[colors.RGB]]
+	outlineColor: tuple[colors.RGB] | None
 
-	def _get_outlineColor(self) -> Optional[Tuple[colors.RGB]]:
+	def _get_outlineColor(self) -> tuple[colors.RGB] | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineColorPropertyId, True)
 		if isinstance(val, tuple):
 			return tuple(colors.RGB.fromCOLORREF(v) for v in val)
 		return None
 
 	#: Typing information for auto-property: _get_outlineThickness
-	outlineThickness: Optional[Tuple[float]]
+	outlineThickness: tuple[float] | None
 
-	def _get_outlineThickness(self) -> Optional[Tuple[float]]:
+	def _get_outlineThickness(self) -> tuple[float] | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineThicknessPropertyId, True)
 		if isinstance(val, tuple):
 			return val
 		return None
 
 	#: Typing information for auto-property: _get_fillColor
-	fillColor: Optional[colors.RGB]
+	fillColor: colors.RGB | None
 
-	def _get_fillColor(self) -> Optional[colors.RGB]:
+	def _get_fillColor(self) -> colors.RGB | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillColorPropertyId, True)
 		if isinstance(val, int):
 			return colors.RGB.fromCOLORREF(val)
 		return None
 
 	#: Typing information for auto-property: _get_fillType
-	fillType: Optional[UIAHandler.constants.FillType]
+	fillType: UIAHandler.constants.FillType | None
 
-	def _get_fillType(self) -> Optional[UIAHandler.constants.FillType]:
+	def _get_fillType(self) -> UIAHandler.constants.FillType | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillTypePropertyId, True)
 		if isinstance(val, int):
 			try:
@@ -172,9 +171,9 @@ class ExcelCell(ExcelObject):
 		return None
 
 	#: Typing information for auto-property: _get_rotation
-	rotation: Optional[float]
+	rotation: float | None
 
-	def _get_rotation(self) -> Optional[float]:
+	def _get_rotation(self) -> float | None:
 		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_RotationPropertyId, True)
 		if isinstance(val, float):
 			return val
@@ -384,7 +383,7 @@ class ExcelCell(ExcelObject):
 			except COMError:
 				# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
 				annotationTypes = None
-			if annotationTypes:
+			if annotationTypes:  # noqa: SIM102
 				if self._UIAExcelCustomAnnotationTypes.note.id in annotationTypes:
 					states.add(controlTypes.State.HASNOTE)
 		return states
@@ -397,7 +396,7 @@ class ExcelCell(ExcelObject):
 		for more details about the approach used.
 		"""
 
-		def modGenerator(x: int) -> Tuple[int, int]:
+		def modGenerator(x: int) -> tuple[int, int]:
 			"""Generate digits from L{x} in base alphabet, least significants
 			bits first.
 

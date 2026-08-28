@@ -20,17 +20,17 @@ Supported Data Types
 * Custom message types via the 'type' field
 """
 
-import json
+import json  # noqa: I001
 from abc import ABCMeta, abstractmethod
 from enum import Enum
-from typing import Any, Dict, Optional, Type, TypeVar, Union
+from typing import Any, TypeVar
 
 import speech.commands
 from logHandler import log
 
 
 T = TypeVar("T")
-JSONDict = Dict[str, Any]
+JSONDict = dict[str, Any]
 
 
 class Serializer(metaclass=ABCMeta):
@@ -47,7 +47,7 @@ class Serializer(metaclass=ABCMeta):
 	"""
 
 	@abstractmethod
-	def serialize(self, type: Optional[str] = None, **obj: Any) -> bytes:
+	def serialize(self, type: str | None = None, **obj: Any) -> bytes:
 		"""Convert a message to bytes for transmission.
 
 		:param type: Message type identifier, used for routing
@@ -79,7 +79,7 @@ class JSONSerializer(Serializer):
 	SEP: bytes = b"\n"
 	"""Message separator for streaming protocols"""
 
-	def serialize(self, type: Optional[str] = None, **obj: Any) -> bytes:
+	def serialize(self, type: str | None = None, **obj: Any) -> bytes:
 		"""Serialize a message to JSON bytes.
 
 		Converts message type and payload to JSON format, handling Enum types
@@ -90,7 +90,7 @@ class JSONSerializer(Serializer):
 		:return: UTF-8 encoded JSON with newline separator
 		:rtype: bytes
 		"""
-		if type is not None:
+		if type is not None:  # noqa: SIM102
 			if isinstance(type, Enum) and not isinstance(type, str):
 				type = type.value
 		obj["type"] = type
@@ -137,7 +137,7 @@ class SpeechCommandJSONEncoder(json.JSONEncoder):
 		return super().default(obj)
 
 
-def isSubclassOrInstance(unknown: Any, possible: Union[Type[T], tuple[Type[T], ...]]) -> bool:
+def isSubclassOrInstance(unknown: Any, possible: type[T] | tuple[type[T], ...]) -> bool:  # noqa: UP047
 	"""Check if an object is a subclass or instance of given type(s).
 
 	Safely handles both types and instances, useful for type checking
@@ -186,7 +186,7 @@ def asSequence(dct: JSONDict) -> JSONDict:
 		name, values = item
 		cls = getattr(speech.commands, name, None)
 		if cls is None or not issubclass(cls, SEQUENCE_CLASSES):
-			log.warning("Unknown sequence type received: %r" % name)
+			log.warning("Unknown sequence type received: %r" % name)  # noqa: UP031
 			continue
 		cls = cls.__new__(cls)
 		cls.__dict__.update(values)
