@@ -18,8 +18,9 @@ class ThreadHostController:
 	The default test substrate: no process to schedule, no cold start to wait for, and failures
 	surface as ordinary exceptions.
 
-	What it cannot show you is anything that depends on there being a real process, which is why
-	a handful of tests use :class:`SubprocessHostController` instead.
+	Some things have no in-process analogue:
+	a thread cannot close a pipe by dying, be timed for cold start, or demonstrate handle inheritance.
+	Tests that rely on such behaviour should use :class:`_art.session.hostController.SubprocessHostController` instead.
 	"""
 
 	def __init__(self) -> None:

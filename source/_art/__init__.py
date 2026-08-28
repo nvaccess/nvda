@@ -8,4 +8,9 @@
 This package defines NVDA's out-of-process, sandboxed add-on runtime.
 
 * :mod:`.transport`: Generic transport over anonymous pipes.
+* :mod:`.host`: The add-on side of the boundary:
+	the host entry point and the root service it exposes to core.
+* :mod:`.session`: The core side of the boundary:
+	host controllers, core-side wire ends, and the root service core exposes to the host.
+* :mod:`.exceptions`: The capability failure taxonomy, shared by both sides.
 """

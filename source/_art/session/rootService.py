@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+from typing import Literal
+
 import rpyc
 
 from logHandler import log
@@ -24,7 +26,7 @@ class CoreRootService(Service):
 	"""
 
 	@Service.exposed
-	def ping(self) -> str:
+	def ping(self) -> Literal["pong"]:
 		"""Report that core is serving requests.
 
 		:returns: "pong"

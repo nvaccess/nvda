@@ -123,10 +123,6 @@ class HostControllerConformanceMixin:
 		self.conn.bgEventLoop(daemon=True)
 		return self.conn
 
-	def test_satisfiesTheProtocol(self):
-		"""The implementation is recognisable as a ``HostController``."""
-		self.assertIsInstance(self.controller, HostController)
-
 	def test_pingRoundTrip(self):
 		"""A host started by this controller answers a ping."""
 		conn = self.startHost()

@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+from typing import Literal
 
 import rpyc
 
@@ -46,7 +47,7 @@ class HostRootService(Service):
 		return self._conn.root
 
 	@Service.exposed
-	def ping(self) -> str:
+	def ping(self) -> Literal["pong"]:
 		"""Report that the host process is serving requests.
 
 		Answered by ART itself rather than by add-on code, so it measures the health of the host's

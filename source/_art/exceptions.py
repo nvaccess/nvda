@@ -6,7 +6,7 @@
 """
 Exceptions shared by both sides of the ART boundary.
 
-The hierarchy is shaped to allow add-ons to determine the reason a capability is unabailable
+The hierarchy is designed to allow add-ons to determine the reason a capability is unabailable
 with varying levels of specificity according to their needs:
 
 	CapabilityUnavailableError

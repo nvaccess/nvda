@@ -10,22 +10,15 @@ A :class:`HostController` starts a host, manufactures its wire ends, reports on 
 tears it down.
 It controls the host process, not the add-on running inside it.
 
-Two implementations are provided, and a session is given one at construction time:
+The abstraction is provided primarily to facilitate testing;
+a live copy of NVDA should use :class:`SubprocessHostController`.
 
-* :class:`ThreadHostController` runs the host entry point in a thread of this process.
-	Deterministic and fast, so it is the default substrate for tests.
-* :class:`SubprocessHostController` runs the host entry point in a real child process.
-	Used at runtime, and for the tests that need behaviour a thread cannot imitate.
-
-Some things genuinely have no in-process analogue: a thread cannot close a pipe by dying, cannot
-be timed for cold start, and cannot demonstrate handle inheritance.
-That is the whole reason the real implementation exists this early, rather than the seam being
-designed against a fake alone.
+A thread-backed version for testing is provided at ``tests/unit/test_art/threadHostController.py``.
 """
 
 from __future__ import annotations
 
-from rpyc.core.stream import Stream
+import contextlib
 import io
 import msvcrt
 import subprocess
@@ -33,9 +26,9 @@ import sys
 import threading
 from ctypes import WinError, byref
 from ctypes.wintypes import HANDLE
-from typing import Final, Protocol, runtime_checkable
+from typing import Final, Protocol
 
-from rpyc.core.stream import PipeStream
+from rpyc.core.stream import PipeStream, Stream
 
 import globalVars
 import NVDAState
@@ -53,11 +46,7 @@ _TERMINATE_GRACE_SECONDS: Final[float] = 5.0
 #: Buffer size for pipes backing dependent connections, matching rpyc's own default.
 _PIPE_BUFFER_SIZE: Final[int] = 130000
 
-#: ``DUPLICATE_SAME_ACCESS``, which makes ``DuplicateHandle`` ignore the requested access mask.
-_DUPLICATE_SAME_ACCESS: Final[int] = 0x00000002
 
-
-@runtime_checkable
 class HostController[HostPipeEnd](Protocol):
 	"""Starts a host, watches it, and stops it."""
 
@@ -103,31 +92,28 @@ class HostController[HostPipeEnd](Protocol):
 class SubprocessHostController:
 	"""Runs the host entry point in a real child process.
 
-	The control connection is carried on the child's standard input and output, and its standard
-	error is drained into NVDA's log.
+	The control connection is carried on the child's standard input and output,
+	and its standard error is drained into NVDA's log.
 
-	Not yet sandboxed: swapping :class:`subprocess.Popen` for ``secureProcess.SecurePopen``, and
-	choosing a host executable by architecture, belong to later stages.
-	Until then this runs the host on the interpreter path, which requires NVDA to be running from
-	source.
+	Selecting a pre-built host executable and sandboxing the host are future steps.
+	For now, this runs the host via the interpreter,
+	which requires NVDA to be running from source.
 	"""
 
 	def __init__(self) -> None:
+		"""Initializer."""
 		self._process: subprocess.Popen | None = None
 		self._stderrThread: threading.Thread | None = None
 
 	def start(self) -> Stream:
 		"""Launch the host process and return core's end of the control connection.
 
-		:raises RuntimeError: If NVDA is not running from source, since there is no host executable to fall back on yet.
+		:raises RuntimeError: If NVDA is not running from source, since there is no host executable to use yet.
 		"""
 		if self._process is not None:
 			raise RuntimeError("Host has already been started")
 		if not NVDAState.isRunningAsSource():
-			raise RuntimeError(
-				"The ART host can only be launched on the interpreter path; "
-				"host executables are not built yet",
-			)
+			raise RuntimeError("The ART host can only be launched on the interpreter path; ")
 		log.debug(f"Launching ART host: {sys.executable} -m {_HOST_ENTRYPOINT_MODULE}")
 		self._process = subprocess.Popen(
 			[sys.executable, "-m", _HOST_ENTRYPOINT_MODULE],
@@ -145,12 +131,11 @@ class SubprocessHostController:
 	def _startStderrDrain(self) -> None:
 		"""Forward the host's standard error into NVDA's log.
 
-		Not optional: with standard error piped and nothing reading it, the host deadlocks as soon
-		as it fills the pipe buffer.
+		With standard error piped to a buffered pipe,
+		the host will deadlock as soon as it fills the pipe buffer.
 
-		It is also the only way host diagnostics are visible at all.
-		Leaving the host's standard error unconnected has caused real trouble in the 32-bit synth
-		driver host, where an unhandled traceback goes nowhere.
+		Also currently the only way host diagnostics are visible at all.
+		Without this, unhandled exceptions simply disappear.
 		"""
 		assert self._process is not None
 		self._stderrThread = threading.Thread(
@@ -167,28 +152,28 @@ class SubprocessHostController:
 			for line in iter(stderr.readline, b""):
 				text = line.decode("utf-8", errors="replace").rstrip()
 				if text:
-					# Anything reaching here is unexpected by construction: the host logs at
-					# warning and above, and its standard output is folded in here precisely
-					# because writing to it is a bug. Revisit if the host is ever given a
-					# configurable log level.
 					log.warning(f"ART host: {text}")
 		except Exception:
 			log.debugWarning("Error draining ART host stderr", exc_info=True)
 		finally:
-			# Reaching here means end-of-file, so the host is gone and this is the last reference.
-			try:
+			with contextlib.suppress(Exception):
 				stderr.close()
-			except Exception:
-				pass
 
 	def poll(self) -> int | None:
-		"""Check whether the host process has exited, without blocking."""
+		"""Check whether the host process has exited, without blocking.
+
+		:returns: The exit code of the process, or `None` if the process is till alive.
+		"""
 		if self._process is None:
 			return None
 		return self._process.poll()
 
 	def wait(self, timeout: float | None = None) -> int | None:
-		"""Wait for the host process to exit."""
+		"""Wait for the host process to exit.
+
+		:param timeout: How long to wait, in seconds.
+		:returns: The exit code of the process, or `None` if it was still alive after ``timeout`` had elapsed.
+		"""
 		if self._process is None:
 			return None
 		try:
@@ -213,6 +198,9 @@ class SubprocessHostController:
 		Core keeps a stream over its own ends; the host's ends are duplicated into the host
 		process, and their values handed over for it to rebuild a stream from.
 
+		:returns: A 2-touple:
+			The first member is core's end of the connection;
+			The second member is a (read, write) touple of file handles valid in the host process.
 		:raises RuntimeError: If the host process is not running.
 		:raises OSError: If pipe creation or handle duplication fails.
 		"""
@@ -254,14 +242,10 @@ class SubprocessHostController:
 def claimProcessControlStream(process: subprocess.Popen) -> Stream:
 	"""Take sole ownership of a child's standard input and output as a control stream.
 
-	The obvious ``PipeStream(process.stdout, process.stdin)`` sets up a double free: the stream
-	closes the underlying handles, while the file objects still believe they own the descriptors
-	and close them again when collected.
-	The second close lands on whatever Windows has since reissued the value to, so the damage
-	surfaces as an unrelated pipe failing later, arbitrarily far from the cause.
-
-	Duplicating the handles for the stream and closing the file objects immediately leaves exactly
-	one owner of each.
+	Using ``PipeStream(process.stdout, process.stdin)`` sets up a double free:
+	When closed, the file objects and the ``PipeStream`` both close the underlying handles, but neither is aware of the other's actions.
+	Since handles are reused, this may result in an entirely unrelated handle being closed.
+	Duplicating the handles for the stream and closing the file objects immediately leaves one owner of each.
 
 	:param process: The child process whose standard streams carry the control connection.
 	:returns: A stream over the child's standard input and output.
@@ -282,9 +266,6 @@ def claimProcessControlStream(process: subprocess.Popen) -> Stream:
 def _duplicateHandleForSelf(handle: int) -> int:
 	"""Duplicate a handle within this process, with the same access as the original.
 
-	Used to take ownership of a handle away from a Python file object, so that a stream can be the
-	only thing that closes it.
-
 	:param handle: Handle to duplicate.
 	:returns: The value of an independent handle to the same object.
 	:raises OSError: If duplication fails.
@@ -298,7 +279,7 @@ def _duplicateHandleForSelf(handle: int) -> int:
 		byref(duplicate),
 		0,
 		False,
-		_DUPLICATE_SAME_ACCESS,
+		winKernel.DUPLICATE_SAME_ACCESS,
 	):
 		raise WinError()
 	return duplicate.value
@@ -306,9 +287,6 @@ def _duplicateHandleForSelf(handle: int) -> int:
 
 def _duplicateHandleIntoProcess(handle: HANDLE, accessMask: int, targetProcess: int) -> HANDLE:
 	"""Duplicate a handle so it is valid in another process.
-
-	The target process is a parameter rather than state on the caller, so that wire ends stay
-	manufacturable without a controller having to own the process it duplicates into.
 
 	:param handle: Handle to duplicate.
 	:param accessMask: Desired access for the duplicate.
