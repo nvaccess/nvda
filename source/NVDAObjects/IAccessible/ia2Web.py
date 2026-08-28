@@ -434,7 +434,7 @@ class Math(Ia2Web):
 			if isNativeMath:
 				raise LookupError
 		# This could be an HTML element with role="math" wrapping native MathML.
-		mathObjs: list["NVDAObjects.NVDAObject"] = [
+		mathObjs: list[NVDAObjects.NVDAObject] = [
 			child for child in self.children if child.IA2Attributes.get("tag") == "math"
 		]
 		if len(mathObjs) == 1:
