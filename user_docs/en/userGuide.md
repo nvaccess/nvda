@@ -788,8 +788,8 @@ NVDA provides the following key commands in relation to the system caret:
 |Report language |none |none |Reports text language. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 |Report caret location |NVDA+numpadDelete |NVDA+delete |Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail.|
-|Next sentence |alt+downArrow |alt+downArrow |Moves the caret to the next sentence and announces it. (some documents are not supported)|
-|Previous sentence |alt+upArrow |alt+upArrow |Moves the caret to the previous sentence and announces it. (some documents are not supported)|
+| Next sentence | `alt+downArrow` | `alt+downArrow` | Moves the caret to the next sentence and announces it. Some documents are not supported |
+| Previous sentence | `alt+upArrow` | `alt+upArrow` | Moves the caret to the previous sentence and announces it. Some documents are not supported |
 
 When within a table, the following key commands are also available:
 
