@@ -322,9 +322,10 @@ class NvdaLib:
 				_locations.logPath,
 				saveToPath,
 			)
-			builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
-		except Exception as e:
+		except RuntimeError as e:
 			builtIn.log(f"Failed to save NVDA log: {e}", level="WARN")
+		else:
+			builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
 
 	def save_py2exe_boot_log(self):
 		"""If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.
