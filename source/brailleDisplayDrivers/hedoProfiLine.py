@@ -10,9 +10,8 @@
 # hedo ProfiLine USB, a product from hedo Reha-Technik GmbH
 # see www.hedo.de for more details
 
-from typing import List
 
-import wx
+import wx  # noqa: I001
 import serial
 import braille
 import braille.display.driver
@@ -64,7 +63,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return True
 
 	def __init__(self):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
@@ -106,7 +105,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# Read out the input buffer
 			ackS: bytes = self._ser.read(2)
 			if HEDO_ACK in ackS:
-				log.info("Found hedo ProfiLine connected via {port}".format(port=port))
+				log.info(f"Found hedo ProfiLine connected via {port}")
 				break
 
 		else:
@@ -120,7 +119,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 			self._readTimer.Stop()
 			self._readTimer = None
 		finally:
@@ -128,7 +127,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# If we don't, we won't be able to re-open it later.
 			self._ser.close()
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# every transmitted line consists of the preamble HEDO_INIT, the statusCells and the Cells
 
 		# add padding so total length is 1 + numberOfStatusCells + numberOfRegularCells
@@ -141,7 +140,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	def handleResponses(self, wait=False):
 		while wait or self._ser.in_waiting:
 			data: bytes = self._ser.read(1)
-			if data:
+			if data:  # noqa: SIM102
 				# do not handle acknowledge bytes
 				if data != HEDO_ACK:
 					self.handleData(ord(data))
@@ -154,7 +153,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				inputCore.manager.executeGesture(InputGestureRouting(data - HEDO_CR_BEGIN))
 			except inputCore.NoInputGestureAction:
 				log.debug("No Action for routing command: %d", data)
-				pass
 
 		elif (HEDO_CR_BEGIN + HEDO_RELEASE_OFFSET) <= data <= (HEDO_CR_END + HEDO_RELEASE_OFFSET):
 			# Routing key is released
@@ -166,7 +164,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			self._keysDown.add(HEDO_KEYMAP[data])
 			self._ignoreKeyReleases = False
 
-		elif data > HEDO_RELEASE_OFFSET and (data - HEDO_RELEASE_OFFSET) in HEDO_KEYMAP:
+		elif data > HEDO_RELEASE_OFFSET and (data - HEDO_RELEASE_OFFSET) in HEDO_KEYMAP:  # noqa: SIM102
 			# A key is released
 			# log.debug("Key " + str(self._keysDown) + " released")
 			if not self._ignoreKeyReleases:
@@ -176,8 +174,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				try:
 					inputCore.manager.executeGesture(InputGestureKeys(keys))
 				except inputCore.NoInputGestureAction:
-					log.debug("No Action for keys {keys}".format(keys=keys))
-					pass
+					log.debug(f"No Action for keys {keys}")
 
 		# else:
 		# log.debug("Key " + hex(data) + " not identified")
@@ -201,7 +198,7 @@ class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__()
+		super().__init__()
 
 		self.id = keys
 
@@ -210,7 +207,7 @@ class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
-		super(InputGestureRouting, self).__init__()
+		super().__init__()
 
 		self.id = "routing"
 		self.cellIndexes = [index]

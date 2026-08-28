@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools~=80.10.2", "wheel"]
+requires = ["setuptools~=84.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -43,7 +43,7 @@ required-version = ">=0.7.9"
 dev = [
 	# Packaging NVDA
 	"py2exe==0.14.1.1",
-	"setuptools~=80.10.2",
+	"setuptools~=84.0.0",
 ]
 
 [tool.setuptools.dynamic]

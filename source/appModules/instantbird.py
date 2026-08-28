@@ -6,7 +6,7 @@
 
 """App module for Instantbird"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import NVDAObjects.IAccessible.mozilla
 import controlTypes
 

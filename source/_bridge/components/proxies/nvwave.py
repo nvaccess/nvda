@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import cast
 import collections.abc
 from functools import cached_property
@@ -13,7 +13,7 @@ from ...base import Proxy
 
 if typing.TYPE_CHECKING:
 	from ..services.nvwave import WavePlayerService
-from logHandler import log
+from logHandler import log  # noqa: I001
 from _bridge.components.services.nvwave import WavePlayerFeederService
 
 

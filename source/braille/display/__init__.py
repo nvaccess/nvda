@@ -3,21 +3,20 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 
 import pkgutil
 import typing
 from locale import strxfrm
-from typing import (
+from typing import (  # noqa: UP035
 	Any,
-	Callable,
-	Generator,
-	List,
+	List,  # noqa: F401
 	NamedTuple,
-	Optional,
-	Tuple,
-	Type,
+	Optional,  # noqa: F401
+	Tuple,  # noqa: F401
+	Type,  # noqa: F401
 )
+from collections.abc import Callable, Generator
 
 import brailleDisplayDrivers
 import hwPortUtils
@@ -35,7 +34,7 @@ class DisplayDimensions(NamedTuple):
 		return self.numCols * self.numRows
 
 
-def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
+def getDisplayList(excludeNegativeChecks=True) -> list[tuple[str, str]]:
 	"""Gets a list of available display driver names with their descriptions.
 	@param excludeNegativeChecks: excludes all drivers for which the check method returns C{False}.
 	@type excludeNegativeChecks: bool
@@ -54,7 +53,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 			else:
 				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
 		except:  # noqa: E722
-			log.error("", exc_info=True)
+			log.error("", exc_info=True)  # noqa: G201
 	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
 		displayList.append(lastDisplay)
@@ -72,7 +71,7 @@ RENAMED_DRIVERS = {
 }
 
 
-def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
+def getSerialPorts(filterFunc=None) -> typing.Iterator[tuple[str, str]]:
 	"""Get available serial ports in a format suitable for L{BrailleDisplayDriver.getManualPorts}.
 	@param filterFunc: a function executed on every dictionary retrieved using L{hwPortUtils.listComPorts}.
 		For example, this can be used to filter by USB or Bluetooth com ports.
@@ -101,8 +100,8 @@ def getSerialPorts(filterFunc=None) -> typing.Iterator[typing.Tuple[str, str]]:
 
 
 def getDisplayDrivers(
-	filterFunc: Optional[Callable[[Type[BrailleDisplayDriver]], bool]] = None,
-) -> Generator[Type[BrailleDisplayDriver], Any, Any]:
+	filterFunc: Callable[[type[BrailleDisplayDriver]], bool] | None = None,
+) -> Generator[type[BrailleDisplayDriver], Any, Any]:
 	"""Gets an iterator of braille display drivers meeting the given filter callable.
 	@param filterFunc: an optional callable that receives a driver as its only argument and returns
 		either True or False.
@@ -114,7 +113,7 @@ def getDisplayDrivers(
 		try:
 			display = _getDisplayDriver(name)
 		except Exception:
-			log.error(
+			log.error(  # noqa: G201
 				f"Error while importing braille display driver {name}",
 				exc_info=True,
 			)

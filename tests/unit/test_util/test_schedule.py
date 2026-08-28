@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2024 NV Access Limited.
 
-from datetime import datetime
+from datetime import datetime  # noqa: I001
 import unittest
 from unittest.mock import MagicMock
 
@@ -24,11 +24,11 @@ from utils.schedule import (
 
 
 class ScheduleThreadTests(unittest.TestCase):
-	TODAY_AT_MIDNIGHT = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+	TODAY_AT_MIDNIGHT = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)  # noqa: DTZ005
 
 	def setUp(self):
 		self.oldNVDAStateGetStartTime = NVDAState.getStartTime
-		NVDAState.getStartTime = MagicMock(return_value=datetime.now().timestamp())
+		NVDAState.getStartTime = MagicMock(return_value=datetime.now().timestamp())  # noqa: DTZ005
 		self.assertEqual(len(schedule.jobs), 0, "No jobs should be scheduled at the start of the test.")
 		self.assertIsNone(_sch.scheduleThread, "scheduleThread should be None at the start of the test.")
 		initialize()

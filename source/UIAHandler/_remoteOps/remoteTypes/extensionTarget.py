@@ -4,11 +4,11 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import (
-	Iterable,
 	Generic,
 )
+from collections.abc import Iterable
 from ctypes import (
 	c_ulong,
 )
@@ -29,7 +29,7 @@ from . import (
 )
 
 
-class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
+class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):  # noqa: UP046
 	"""
 	Represents a remote object that supports UI Automation custom extensions.
 	Including checking for the existence of extensions and
@@ -62,7 +62,7 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 	def callExtension(
 		self,
 		extensionId: RemoteGuid | GUID,
-		*params: RemoteBaseObject | int | float | str,
+		*params: RemoteBaseObject | float | str,
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.CallExtension(

@@ -6,7 +6,7 @@
 
 """Unit tests for the contentRecog module."""
 
-import unittest
+import unittest  # noqa: I001
 import contentRecog
 import textInfos
 from locationHelper import RectLTWH
@@ -38,9 +38,8 @@ class TestRecogImageInfo(unittest.TestCase):
 
 	def test_nonPositiveDimensions(self):
 		for width, height in ((0, 100), (100, 0)):
-			with self.subTest(width=width, height=height):
-				with self.assertRaises(ValueError):
-					contentRecog.RecogImageInfo(0, 0, width, height, 1)
+			with self.subTest(width=width, height=height), self.assertRaises(ValueError):
+				contentRecog.RecogImageInfo(0, 0, width, height, 1)
 
 	def test_noOffsetWithResize(self):
 		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 2)
@@ -61,7 +60,7 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.convertHeightToScreen(400), 200)
 
 
-class FakeNVDAObject(object):
+class FakeNVDAObject:
 	pass
 
 
@@ -70,7 +69,7 @@ class TestLinesWordsResult(unittest.TestCase):
 	correctly parse and process the JSON from a recognizer.
 	"""
 
-	DATA = [
+	DATA = [  # noqa: RUF012
 		[
 			{"x": 100, "y": 200, "width": 10, "height": 20, "text": "word1"},
 			{"x": 110, "y": 200, "width": 10, "height": 20, "text": "word2"},

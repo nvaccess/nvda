@@ -10,7 +10,7 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
-from .base import (  # noqa: F401
+from .base import (  # noqa: F401, I001
 	IoBase,
 	Serial,
 	Bulk,

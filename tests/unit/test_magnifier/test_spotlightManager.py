@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch  # noqa: I001
 from _magnifier.utils.types import FullScreenMode, Coordinates
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
@@ -84,7 +84,7 @@ class TestSpotlightManager(_TestMagnifier):
 		self.assertEqual(len(steps), 40)
 
 		# First step should be closer to start
-		firstZoom, firstCoords = steps[0]
+		firstZoom, firstCoords = steps[0]  # noqa: RUF059
 		self.assertLess(abs(firstZoom - 200), abs(firstZoom - 100))
 
 		# Last step should be at target

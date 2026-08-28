@@ -3,9 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from typing import (
-	Iterable,
-)
+from collections.abc import Iterable
 
 
 class CaseInsensitiveSet(set):
@@ -18,19 +16,19 @@ class CaseInsensitiveSet(set):
 		for v in values:
 			self.add(v)
 
-	def add(self, __element: str) -> None:
+	def add(self, __element: str) -> None:  # noqa: PYI063
 		__element = __element.casefold()
 		return super().add(__element)
 
-	def discard(self, __element: str) -> None:
+	def discard(self, __element: str) -> None:  # noqa: PYI063
 		__element = __element.casefold()
 		return super().discard(__element)
 
-	def remove(self, __element: str) -> None:
+	def remove(self, __element: str) -> None:  # noqa: PYI063
 		__element = __element.casefold()
 		return super().remove(__element)
 
-	def __contains__(self, __o: object) -> bool:
+	def __contains__(self, __o: object) -> bool:  # noqa: PYI063
 		if isinstance(__o, str):
 			__o = __o.casefold()
 		return super().__contains__(__o)

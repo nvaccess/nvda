@@ -9,7 +9,7 @@ This module is deprecated.
 Braille input handling now lives in the :mod:`braille.input` package.
 """
 
-from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
+from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol  # noqa: I001
 
 # Deprecated in 2026.3.
 __getattr__ = handleDeprecations(

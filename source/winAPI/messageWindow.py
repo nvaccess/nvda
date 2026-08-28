@@ -9,10 +9,7 @@ A submodule for NVDA's message window, used for handling Window Messages.
 Message windows can be used to handle communications from other processes, new NVDA instances and Windows.
 """
 
-from enum import IntEnum
-from typing import (
-	Optional,
-)
+from enum import IntEnum  # noqa: I001
 
 
 from . import (
@@ -23,7 +20,7 @@ from .types import HWNDValT
 import extensionPoints
 import windowUtils
 
-__all__ = ["pre_handleWindowMessage", "WindowMessage", "_MessageWindow"]
+__all__ = ["WindowMessage", "_MessageWindow", "pre_handleWindowMessage"]
 
 pre_handleWindowMessage = extensionPoints.Action()
 """
@@ -82,7 +79,7 @@ class _MessageWindow(windowUtils.CustomWindow):
 	We don't need to do anything else because wx handles WM_QUIT for all windows.
 	"""
 
-	def __init__(self, windowName: Optional[str] = None):
+	def __init__(self, windowName: str | None = None):
 		super().__init__(windowName)
 		_displayTracking.initialize()
 		_powerTracking.initialize()

@@ -8,14 +8,12 @@
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from datetime import datetime
 from typing import (
 	Any,
-	Dict,
 	Optional,
 	Self,
-	Tuple,
 )
 from uuid import uuid4
 from winBindings import crypt32
@@ -35,9 +33,9 @@ import buildVersion
 if not buildVersion.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
-import gui.contextHelp  # noqa: E402
-from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
-import sys  # noqa: E402
+import gui.contextHelp  # noqa: I001
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import sys
 import subprocess
 import os
 import inspect
@@ -56,13 +54,13 @@ import wx
 import languageHandler
 
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
-import synthDriverHandler  # noqa: E402
+import synthDriverHandler
 import braille
 import gui
 from gui import guiHelper
-from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal  # noqa: E402
+from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
-from addonStore.models.version import (  # noqa: E402
+from addonStore.models.version import (
 	getAddonCompatibilityMessage,
 	getAddonCompatibilityConfirmationMessage,
 )
@@ -95,10 +93,10 @@ try:
 	os.makedirs(storeUpdatesDir)
 except OSError:
 	if not os.path.isdir(storeUpdatesDir):
-		log.debugWarning("Default download path for updates %s could not be created." % storeUpdatesDir)
+		log.debugWarning("Default download path for updates %s could not be created." % storeUpdatesDir)  # noqa: UP031
 
 #: Persistent state information.
-state: Optional[Dict[str, Any]] = None
+state: dict[str, Any] | None = None
 
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
@@ -177,11 +175,11 @@ def getQualifiedDriverClassNameForStats(cls):
 	except AddonError:
 		addon = None
 	if addon:
-		return "%s (addon:%s)" % (name, addon.name)
+		return "%s (addon:%s)" % (name, addon.name)  # noqa: UP031
 	path = inspect.getsourcefile(cls)
 	if isPathExternalToNVDA(path):
-		return "%s (external)" % name
-	return "%s (core)" % name
+		return "%s (external)" % name  # noqa: UP031
+	return "%s (core)" % name  # noqa: UP031
 
 
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
@@ -199,12 +197,12 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	# #11837: build version string, service pack, and product type manually
 	# because winVersion.getWinVer adds Windows release name.
 	winVersion = sys.getwindowsversion()
-	winVersionText = "{v.major}.{v.minor}.{v.build}".format(v=winVersion)
+	winVersionText = f"{winVersion.major}.{winVersion.minor}.{winVersion.build}"
 	if winVersion.service_pack_major != 0:
-		winVersionText += " service pack %d" % winVersion.service_pack_major
+		winVersionText += " service pack %d" % winVersion.service_pack_major  # noqa: UP031
 		if winVersion.service_pack_minor != 0:
-			winVersionText += ".%d" % winVersion.service_pack_minor
-	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
+			winVersionText += ".%d" % winVersion.service_pack_minor  # noqa: UP031
+	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]  # noqa: UP031
 
 	params = {
 		"autoCheck": auto,
@@ -242,7 +240,7 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	try:
 		log.debug(f"Fetching update data from {url}")
 		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
-	except IOError as e:
+	except OSError as e:
 		if (
 			isinstance(e.reason, ssl.SSLCertVerificationError)
 			and e.reason.reason == "CERTIFICATE_VERIFY_FAILED"
@@ -280,7 +278,7 @@ def _setStateToNone(_state):
 	_state["pendingUpdateBackCompatToAPIVersion"] = (0, 0, 0)
 
 
-def getPendingUpdate() -> Optional[Tuple]:
+def getPendingUpdate() -> tuple | None:
 	"""Returns a tuple of the path to and version of the pending update, if any. Returns C{None} otherwise."""
 	try:
 		pendingUpdateFile = state["pendingUpdateFile"]
@@ -322,7 +320,7 @@ def _executeUpdate(destPath: str) -> None:
 	:param destPath: The path to the update executable.
 	"""
 	if not destPath:
-		log.error("destPath must be a non-empty string.", exc_info=True)
+		log.error("destPath must be a non-empty string.", exc_info=True)  # noqa: LOG014
 		return
 
 	_setStateToNone(state)
@@ -380,8 +378,8 @@ class UpdateChecker(garbageHandler.TrackedObject):
 
 	def _bg(self):
 		assert state is not None
-		lastCheckDate = datetime.fromtimestamp(state["lastCheck"])
-		nowDate = datetime.now()
+		lastCheckDate = datetime.fromtimestamp(state["lastCheck"])  # noqa: DTZ006
+		nowDate = datetime.now()  # noqa: DTZ005
 		if (lastCheckDate.year, lastCheckDate.month) != (nowDate.year, nowDate.month):
 			# reset unique ID once a month
 			state["id"] = uuid4().hex
@@ -439,7 +437,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			wx.OK | wx.ICON_ERROR,
 		)
 
-	def _result(self, info: Optional[UpdateInfo]) -> None:
+	def _result(self, info: UpdateInfo | None) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -840,7 +838,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			try:
 				self._download(url)
 			except:  # noqa: E722
-				log.error("Error downloading %s" % url, exc_info=True)
+				log.error("Error downloading %s" % url, exc_info=True)  # noqa: G201, UP031
 			else:  # Successfully downloaded or canceled
 				if not self._shouldCancel:
 					success = True
@@ -868,7 +866,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		UPDATE_DOWNLOAD_TIMEOUT = 60 * 30  # 30 min
 		remote = urllib.request.urlopen(url, timeout=UPDATE_DOWNLOAD_TIMEOUT)
 		if remote.code != 200:
-			raise RuntimeError("Download failed with code %d" % remote.code)
+			raise RuntimeError("Download failed with code %d" % remote.code)  # noqa: UP031
 		size = int(remote.headers["content-length"])
 		with open(self.destPath, "wb") as local:
 			if self.fileHash:
@@ -879,8 +877,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			while True:
 				if self._shouldCancel:
 					return
-				if size - read < chunk:
-					chunk = size - read
+				chunk = min(chunk, size - read)
 				block = remote.read(chunk)
 				if not block:
 					break
@@ -902,7 +899,7 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			return
 		percent = int(float(read) / size * 100)
 		# Translators: The progress message indicating that a download is in progress.
-		cont, skip = self._progressDialog.Update(percent, _("Downloading"))
+		cont, skip = self._progressDialog.Update(percent, _("Downloading"))  # noqa: RUF059
 		if not cont:
 			self._shouldCancel = True
 			self._stopped()
@@ -953,7 +950,7 @@ class DonateRequestDialog(wx.Dialog):
 
 	def __init__(self, parent, continueFunc):
 		# Translators: The title of the dialog requesting donations from users.
-		super(DonateRequestDialog, self).__init__(parent, title=_("Please Donate"))
+		super().__init__(parent, title=_("Please Donate"))
 		self._continue = continueFunc
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -1066,9 +1063,9 @@ def initialize():
 			f = os.path.join(storeUpdatesDir, fileName)
 			if f != state["pendingUpdateFile"]:
 				os.remove(f)
-				log.debug("Update file %s removed" % f)
+				log.debug("Update file %s removed" % f)  # noqa: UP031
 	except OSError:
-		log.warning("Unable to remove old update file %s" % f, exc_info=True)
+		log.warning("Unable to remove old update file %s" % f, exc_info=True)  # noqa: UP031
 
 	if not globalVars.appArgs.launcher and (
 		config.conf["update"]["autoCheck"]

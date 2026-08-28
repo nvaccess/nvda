@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import controlTypes
+import controlTypes  # noqa: I001
 from . import IAccessible
 
 
@@ -16,7 +16,7 @@ class SysMonthCal32(IAccessible):
 		return ""
 
 	def _get_value(self):
-		return super(SysMonthCal32, self).name
+		return super().name
 
 	def script_valueChange(self, gesture):
 		gesture.send()

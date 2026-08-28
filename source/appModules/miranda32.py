@@ -4,10 +4,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import ui
+import ui  # noqa: I001
 import config
-from ctypes import *  # noqa: F403
-from ctypes.wintypes import *  # noqa: F403
+from ctypes import *
+from ctypes.wintypes import *
 import winKernel
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
@@ -84,8 +84,8 @@ MESSAGEVIEWERS = (1001, 1005, 3011, 5005)
 
 
 class AppModule(appModuleHandler.AppModule):
-	lastTextLengths = {}
-	lastMessages = []
+	lastTextLengths = {}  # noqa: RUF012
+	lastMessages = []  # noqa: RUF012
 	# Must not be > 9.
 	MessageHistoryLength = 3
 
@@ -148,14 +148,14 @@ class mirandaIMContactList(IAccessible):
 		)
 		try:
 			watchdog.cancellableSendMessage(self.windowHandle, CLM_GETITEMTEXT, hItem, internalBuf)
-			buf = create_unicode_buffer(MAXITEMTEXTLEN)  # noqa: F405
+			buf = create_unicode_buffer(MAXITEMTEXTLEN)
 			winKernel.readProcessMemory(self.processHandle, internalBuf, buf, MAXITEMTEXTLEN, None)
 			text = buf.value
 			statusMsgPtr = watchdog.cancellableSendMessage(self.windowHandle, CLM_GETSTATUSMSG, hItem, 0)
 			if statusMsgPtr > 0:
-				buf2 = create_unicode_buffer(MAXSTATUSMSGLEN)  # noqa: F405
+				buf2 = create_unicode_buffer(MAXSTATUSMSGLEN)
 				winKernel.readProcessMemory(self.processHandle, statusMsgPtr, buf2, MAXSTATUSMSGLEN, None)
-				text = "%s %s" % (text, buf2.value)
+				text = "%s %s" % (text, buf2.value)  # noqa: UP031
 		finally:
 			winKernel.virtualFreeEx(self.processHandle, internalBuf, 0, winKernel.MEM_RELEASE)
 		return text
@@ -169,7 +169,7 @@ class mirandaIMContactList(IAccessible):
 			return controlTypes.Role.TREEVIEWITEM
 
 	def _get_states(self):
-		newStates = super(mirandaIMContactList, self)._get_states()
+		newStates = super()._get_states()
 		hItem = watchdog.cancellableSendMessage(self.windowHandle, CLM_GETSELECTION, 0, 0)
 		state = watchdog.cancellableSendMessage(self.windowHandle, CLM_GETEXPAND, hItem, 0)
 		if state == CLE_EXPAND:
@@ -204,7 +204,7 @@ class mirandaIMContactList(IAccessible):
 class mirandaIMButton(IAccessible):
 	def _get_name(self):
 		api.moveMouseToNVDAObject(self)
-		return super(mirandaIMButton, self)._get_name()
+		return super()._get_name()
 
 	def _get_role(self):
 		return controlTypes.Role.BUTTON
@@ -233,7 +233,7 @@ class mirandaIMHyperlink(mirandaIMButton):
 
 class MPropertyPage(Dialog, IAccessible):
 	def _get_name(self):
-		name = super(MPropertyPage, self)._get_name()
+		name = super()._get_name()
 		if not name:
 			try:
 				tc = self.parent.next.firstChild
@@ -262,7 +262,7 @@ class MirandaMessageViewerScrollbar(IAccessible):
 			if config.conf["presentation"]["reportDynamicContentChanges"]:
 				ui.message(message)
 			self.appModule.lastTextLengths[self.windowHandle] = curTextLength
-		super(MirandaMessageViewerScrollbar, self).event_valueChange()
+		super().event_valueChange()
 
 
 class DuplicateFocusListBox(IAccessible):
@@ -279,4 +279,4 @@ class DuplicateFocusListBox(IAccessible):
 			or (focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
 		):
 			return False
-		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent

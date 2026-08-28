@@ -464,7 +464,7 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 	:param friendlyName: Friendly name of the device to search for.
 	:return: Endpoint ID string of the best match device, or `None` if no device with a matching friendly name is available.
 	"""
-	from utils.mmdevice import getOutputDevices
+	from utils.mmdevice import getOutputDevices  # noqa: I001
 	from pycaw.constants import DEVICE_STATE
 
 	states = (DEVICE_STATE.ACTIVE, DEVICE_STATE.UNPLUGGED, DEVICE_STATE.DISABLED, DEVICE_STATE.NOTPRESENT)
@@ -518,7 +518,7 @@ def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 		log.debug(f"Loading remote config from {remoteIniPath}")
 		remoteConfig = ConfigObj(remoteIniPath, encoding="UTF-8")
 	except Exception:
-		log.error("Error loading remote.ini", exc_info=True)
+		log.error("Error loading remote.ini", exc_info=True)  # noqa: G201
 		return
 
 	# Create remote section if it doesn't exist
@@ -539,7 +539,7 @@ def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 		os.rename(remoteIniPath, backupPath)
 		log.debug(f"Backed up remote.ini to {backupPath}")
 	except Exception:
-		log.error("Error backing up remote.ini after migration", exc_info=True)
+		log.error("Error backing up remote.ini after migration", exc_info=True)  # noqa: G201
 
 
 def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:

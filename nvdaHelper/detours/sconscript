@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 Import(["thirdPartyEnv"])
 
-import typing  # noqa: E402
+import typing
 
-thirdPartyEnv: Environment = thirdPartyEnv
+thirdPartyEnv: Environment = thirdPartyEnv  # noqa: PLW0127
 env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 detoursPath = Dir("#include/detours")

@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch  # noqa: I001
 from _magnifier.config import ZoomLevel
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.types import Filter, FullScreenMode, MagnifiedView, Direction, Coordinates
@@ -192,7 +192,7 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		try:
 			magnifier._stopMagnifier()
 			testPassed = True
-		except Exception:
+		except Exception:  # noqa: BLE001
 			testPassed = False
 
 		self.assertTrue(testPassed)

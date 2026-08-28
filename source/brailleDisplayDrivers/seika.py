@@ -7,8 +7,7 @@
 # Seika3/5 V1.x/2.0, Seika80, a product from Nippon Telesoft
 # see www.seika-braille.com for more details
 
-from typing import List
-import wx
+import wx  # noqa: I001
 import serial
 import braille
 import braille.display.driver
@@ -35,7 +34,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return True
 
 	def __init__(self):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		for portInfo in hwPortUtils.listComPorts(onlyAvailable=True):
 			port = portInfo["port"]
 			hwID = portInfo["hardwareID"]
@@ -114,13 +113,13 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 			self._readTimer.Stop()
 			self._readTimer = None
 		finally:
 			self._ser.close()
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# every transmitted line consists of the preamble 'sendHeader' and the Cells
 		if 80 == self.numCells:
 			lineBytes: bytes = self.sendHeader + bytes(cells)
@@ -162,7 +161,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				inputCore.manager.executeGesture(InputGestureRouting(key - 1))
 			except inputCore.NoInputGestureAction:
 				log.debug("No Action for routing command")
-				pass
 
 	def _handleNormalKey(self, chars: bytes) -> None:
 		keys = set()
@@ -187,7 +185,6 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			inputCore.manager.executeGesture(InputGestureKeys(data))
 		except inputCore.NoInputGestureAction:
 			log.debug(f"No Action for keys {data}")
-			pass
 
 	gestureMap = inputCore.GlobalGestureMap(
 		{
@@ -212,7 +209,7 @@ class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__()
+		super().__init__()
 		self.id = keys
 
 
@@ -220,7 +217,7 @@ class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
-		super(InputGestureRouting, self).__init__()
+		super().__init__()
 
 		self.id = "routing"
 		self.cellIndexes = [index]

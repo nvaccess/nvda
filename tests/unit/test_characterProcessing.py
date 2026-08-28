@@ -5,7 +5,7 @@
 
 """Unit tests for the characterProcessing module."""
 
-import unittest
+import unittest  # noqa: I001
 import re
 from characterProcessing import SpeechSymbolProcessor
 from characterProcessing import SymbolLevel

@@ -4,7 +4,7 @@
 # Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt
 
-import re
+import re  # noqa: I001
 
 from .commands import (
 	# Commands that are used in this file.
@@ -18,11 +18,7 @@ from .types import (
 	GeneratorWithReturn,
 )
 
-from typing import (
-	Optional,
-	Generator,
-	Callable,
-)
+from collections.abc import Generator, Callable
 
 
 def _yieldIfNonEmpty(seq: SpeechSequence):
@@ -53,7 +49,7 @@ class SpeechWithoutPauses:
 
 	def speakWithoutPauses(
 		self,
-		speechSequence: Optional[SpeechSequence],
+		speechSequence: SpeechSequence | None,
 		detectBreaks: bool = True,
 	) -> bool:
 		"""
@@ -73,9 +69,9 @@ class SpeechWithoutPauses:
 			self.speak(seq)
 		return speech.returnValue
 
-	def getSpeechWithoutPauses(  # noqa: C901
+	def getSpeechWithoutPauses(
 		self,
-		speechSequence: Optional[SpeechSequence],
+		speechSequence: SpeechSequence | None,
 		detectBreaks: bool = True,
 	) -> Generator[SpeechSequence, None, bool]:
 		"""

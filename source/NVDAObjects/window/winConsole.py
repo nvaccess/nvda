@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2020 NV Access Limited, Bill Dengler
 
-import winConsoleHandler
+import winConsoleHandler  # noqa: I001
 from . import Window
 from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
 import api
@@ -38,7 +38,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		consoleObject = winConsoleHandler.consoleObject
 		if consoleObject and self.windowHandle == consoleObject.windowHandle:
 			return winConsoleHandler.WinConsoleTextInfo
-		return super(WinConsole, self).TextInfo
+		return super().TextInfo
 
 	def _get_diffAlgo(self):
 		# #12974: Legacy consoles contain only one screen of text at a time.
@@ -54,17 +54,17 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				# The user is returning to the focus object with object navigation.
 				# The focused console should always be monitored if possible.
 				self.startMonitoring()
-		super(WinConsole, self).event_becomeNavigatorObject(isFocus=isFocus)
+		super().event_becomeNavigatorObject(isFocus=isFocus)
 
 	def event_gainFocus(self):
 		if winConsoleHandler.consoleObject is not self:
 			if winConsoleHandler.consoleObject:
 				winConsoleHandler.disconnectConsole()
 			winConsoleHandler.connectConsole(self)
-		super(WinConsole, self).event_gainFocus()
+		super().event_gainFocus()
 
 	def event_loseFocus(self):
-		super(WinConsole, self).event_loseFocus()
+		super().event_loseFocus()
 		if winConsoleHandler.consoleObject is self:
 			winConsoleHandler.disconnectConsole()
 
@@ -75,7 +75,7 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		return "\n".join(winConsoleHandler.getConsoleVisibleLines())
 
 	def script_caret_backspaceCharacter(self, gesture):
-		super(WinConsole, self).script_caret_backspaceCharacter(gesture)
+		super().script_caret_backspaceCharacter(gesture)
 		# #2586: We use console update events for typed characters,
 		# so the typedCharacter event is never fired for the backspace key.
 		# Call it here so that speak typed words works as expected.
@@ -113,6 +113,6 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 		gesture.send()
 		speech.clearTypedWordBuffer()
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:alt+f4": "close",
 	}

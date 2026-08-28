@@ -3,9 +3,9 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import threading
+import threading  # noqa: I001
 from enum import Enum, auto
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 
 import config
 import requests

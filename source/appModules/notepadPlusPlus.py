@@ -10,7 +10,7 @@ This module is mapped to the right binary separately
 and the current name makes it possible to expose it from `nvdaBuiltin` for add-on developers.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 
 import appModuleHandler
 from NVDAObjects import NVDAObject

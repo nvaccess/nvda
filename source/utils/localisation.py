@@ -8,9 +8,6 @@ from enum import (
 	auto,
 	unique,
 )
-from typing import (
-	Dict,
-)
 
 from utils.displayString import DisplayStringEnum
 
@@ -24,7 +21,7 @@ class TimeOutputFormat(DisplayStringEnum):
 	DAYS = auto()
 
 	@property
-	def _displayStringLabels(self) -> Dict["TimeOutputFormat", str]:
+	def _displayStringLabels(self) -> dict["TimeOutputFormat", str]:
 		return {
 			# Translators: used to format time locally.
 			# substitution rules: {S} seconds

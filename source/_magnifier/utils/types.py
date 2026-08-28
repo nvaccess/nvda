@@ -7,7 +7,7 @@
 Types used in the magnifier module.
 """
 
-from enum import Enum, auto
+from enum import Enum, auto  # noqa: I001
 from typing import NamedTuple
 from utils.displayString import DisplayStringStrEnum, DisplayStringEnum
 
