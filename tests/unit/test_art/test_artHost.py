@@ -252,7 +252,7 @@ class TestHostStandardStreams(unittest.TestCase):
 			[sys.executable, "-c", script],
 			stdin=subprocess.PIPE,
 			stdout=subprocess.PIPE,
-			stderr=subprocess.PIPE,
+			stderr=subprocess.DEVNULL,  # We don't care, and a pipe buffer could fill and block
 			cwd=globalVars.appDir,
 			creationflags=subprocess.CREATE_NO_WINDOW,
 		)
