@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 00:56+0000\n"
-"PO-Revision-Date: 2026-08-25 23:57\n"
+"POT-Creation-Date: 2026-08-26 00:29+0000\n"
+"PO-Revision-Date: 2026-08-31 00:25\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -889,7 +889,7 @@ msgstr "Bogstavnavigation til"
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 #: browseMode.py:467
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
-msgstr "Slår bogstavnavigation til og fra. Når funktionen er slået til, vil indtastning af bogstaver i gennemsynstilstand flytte markøren til forskellige elementer på siden. Når funktionen er slået fra, bliver disse tastetryk sendt videre til applikationen"
+msgstr "Slår bogstavnavigation til og fra. Når funktionen er slået til, kan du bruge enkelttaster i gennemsynstilstand til at springe til forskellige typer elementer på siden. Når funktionen er slået fra, sendes disse tastetryk videre til programmet."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
@@ -904,7 +904,7 @@ msgstr "Ikke understøttet i dette dokument"
 #: browseMode.py:648
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
-msgstr "Flytter til næste overskrift på niveau {i}"
+msgstr "Flytter til næste overskrift på niveau {i}."
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
@@ -918,7 +918,7 @@ msgstr "Ingen næste overskrift på niveau {i}"
 #: browseMode.py:654
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
-msgstr "Flytter til forrige overskrift på niveau {i}"
+msgstr "Flytter til forrige overskrift på niveau {i}."
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
@@ -937,7 +937,7 @@ msgstr "Overskriftsniveauer {i}"
 #. Translators: the description for the Elements List command in browse mode.
 #: browseMode.py:675
 msgid "Lists various types of elements in this document"
-msgstr "Viser liste over forskellige typer elementer i dette dokument"
+msgstr "Viser forskellige typer elementer i det aktuelle dokument."
 
 #. Translators: the description for the activatePosition script on browseMode documents.
 #: browseMode.py:733
@@ -952,27 +952,27 @@ msgstr "standard"
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:816
 msgid "Selects the next element type for browse mode touch navigation"
-msgstr "Vælger den næste elementtype til touchnavigation i gennemsynstilstand"
+msgstr "Skifter til den næste navigationselementtype i gennemsynstilstand."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:835
 msgid "Selects the previous element type for browse mode touch navigation"
-msgstr "Vælger den forrige elementtype til touchnavigation i gennemsynstilstand"
+msgstr "Skifter til den forrige navigationselementtype i gennemsynstilstand."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:854
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
-msgstr "Flytter til det næste element af den valgte type ved touchnavigation i gennemsynstilstand"
+msgstr "Flytter til det næste element af den valgte type ved touchnavigation i gennemsynstilstand."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
 #: browseMode.py:871
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
-msgstr "Flytter til det forrige element af den valgte type ved touchnavigation i gennemsynstilstand"
+msgstr "Flytter til det forrige element af den valgte type ved touchnavigation i gennemsynstilstand."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:912
 msgid "moves to the next heading"
-msgstr "flytter til næste overskrift"
+msgstr "flytter til næste overskrift."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:914
@@ -982,7 +982,7 @@ msgstr "ingen næste overskrift"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:916
 msgid "moves to the previous heading"
-msgstr "flytter til forrige overskrift"
+msgstr "flytter til forrige overskrift."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:918
@@ -997,7 +997,7 @@ msgstr "overskrifter"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:927
 msgid "moves to the next table"
-msgstr "flytter til næste tabel"
+msgstr "flytter til næste tabel."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:929
@@ -1007,7 +1007,7 @@ msgstr "ingen næste tabel"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:931
 msgid "moves to the previous table"
-msgstr "flytter til forrige tabel"
+msgstr "flytter til forrige tabel."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:933
@@ -1022,7 +1022,7 @@ msgstr "tabeller"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:942
 msgid "moves to the next link"
-msgstr "flytter til næste link"
+msgstr "flytter til næste link."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:944
@@ -1032,7 +1032,7 @@ msgstr "intet næste link"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:946
 msgid "moves to the previous link"
-msgstr "flytter til forrige link"
+msgstr "flytter til forrige link."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:948
@@ -1047,7 +1047,7 @@ msgstr "links"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:956
 msgid "moves to the next visited link"
-msgstr "flytter til næste besøgte link"
+msgstr "flytter til næste besøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:958
@@ -1057,7 +1057,7 @@ msgstr "intet næste besøgte link"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:960
 msgid "moves to the previous visited link"
-msgstr "flytter til forrige besøgte link"
+msgstr "flytter til forrige besøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:962
@@ -1072,7 +1072,7 @@ msgstr "besøgte links"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:970
 msgid "moves to the next unvisited link"
-msgstr "flytter til næste ubesøgte link"
+msgstr "flytter til næste ubesøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:972
@@ -1082,7 +1082,7 @@ msgstr "intet næste ubesøgte link"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:974
 msgid "moves to the previous unvisited link"
-msgstr "flytter til forrige ubesøgte link"
+msgstr "flytter til forrige ubesøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:976
@@ -1097,7 +1097,7 @@ msgstr "Ubesøgte links"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:984
 msgid "moves to the next form field"
-msgstr "flytter til næste formularfelt"
+msgstr "flytter til næste formularfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:986
@@ -1107,7 +1107,7 @@ msgstr "intet næste formularfelt"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:988
 msgid "moves to the previous form field"
-msgstr "flytter til forrige formularfelt"
+msgstr "flytter til forrige formularfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:990
@@ -1122,7 +1122,7 @@ msgstr "formularfelter"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:998
 msgid "moves to the next list"
-msgstr "flytter til næste liste"
+msgstr "flytter til næste liste."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1000
@@ -1132,7 +1132,7 @@ msgstr "ingen næste liste"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1002
 msgid "moves to the previous list"
-msgstr "flytter til forrige liste"
+msgstr "flytter til forrige liste."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1004
@@ -1147,7 +1147,7 @@ msgstr "lister"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1013
 msgid "moves to the next list item"
-msgstr "flytter til næste listeemne"
+msgstr "flytter til næste listeemne."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1015
@@ -1157,7 +1157,7 @@ msgstr "intet næste listeemne"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1017
 msgid "moves to the previous list item"
-msgstr "flytter til forrige listeemne"
+msgstr "flytter til forrige listeemne."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1019
@@ -1172,7 +1172,7 @@ msgstr "listeemner"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1027
 msgid "moves to the next button"
-msgstr "flytter til næste knap"
+msgstr "flytter til næste knap."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1029
@@ -1182,7 +1182,7 @@ msgstr "ingen næste knap"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1031
 msgid "moves to the previous button"
-msgstr "flytter til forrige knap"
+msgstr "flytter til forrige knap."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1033
@@ -1197,7 +1197,7 @@ msgstr "knapper"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1041
 msgid "moves to the next edit field"
-msgstr "flytter til næste editfelt"
+msgstr "flytter til næste editfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1043
@@ -1207,7 +1207,7 @@ msgstr "intet næste editfelt"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1045
 msgid "moves to the previous edit field"
-msgstr "flytter til forrige editfelt"
+msgstr "flytter til forrige editfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1047
@@ -1222,7 +1222,7 @@ msgstr "edit-felter"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1056
 msgid "moves to the next frame"
-msgstr "flytter til næste ramme"
+msgstr "flytter til næste ramme."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1058
@@ -1232,7 +1232,7 @@ msgstr "ingen næste ramme"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1060
 msgid "moves to the previous frame"
-msgstr "flytter til forrige ramme"
+msgstr "flytter til forrige ramme."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1062
@@ -1247,7 +1247,7 @@ msgstr "rammer"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1071
 msgid "moves to the next separator"
-msgstr "flytter til næste separator"
+msgstr "flytter til næste separator."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1073
@@ -1257,7 +1257,7 @@ msgstr "ingen næste separator"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1075
 msgid "moves to the previous separator"
-msgstr "flytter til forrige separator"
+msgstr "flytter til forrige separator."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1077
@@ -1272,7 +1272,7 @@ msgstr "separatorer"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1085
 msgid "moves to the next radio button"
-msgstr "flytter til næste radioknap"
+msgstr "flytter til næste radioknap."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1087
@@ -1282,7 +1282,7 @@ msgstr "ingen næste radioknap"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1089
 msgid "moves to the previous radio button"
-msgstr "flytter til forrige radioknap"
+msgstr "flytter til forrige radioknap."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1091
@@ -1297,7 +1297,7 @@ msgstr "radioknapper"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1099
 msgid "moves to the next combo box"
-msgstr "Flytter til næste combo box"
+msgstr "flytter til næste combo box."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1101
@@ -1307,7 +1307,7 @@ msgstr "Ingen næste combo box"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1103
 msgid "moves to the previous combo box"
-msgstr "Flytter til forrige combo box"
+msgstr "flytter til forrige combo box."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1105
@@ -1322,7 +1322,7 @@ msgstr "combo boxe"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1113
 msgid "moves to the next check box"
-msgstr "flytter til næste check box"
+msgstr "flytter til næste check box."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1115
@@ -1332,7 +1332,7 @@ msgstr "ingen næste check box"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1117
 msgid "moves to the previous check box"
-msgstr "flytter til forrige check box"
+msgstr "flytter til forrige check box."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1119
@@ -1347,7 +1347,7 @@ msgstr "check boxe"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1127
 msgid "moves to the next graphic"
-msgstr "flytter til næste grafik"
+msgstr "flytter til næste grafik."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1129
@@ -1357,7 +1357,7 @@ msgstr "ingen næste grafik"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1131
 msgid "moves to the previous graphic"
-msgstr "flytter til forrige grafik"
+msgstr "flytter til forrige grafik."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1133
@@ -1372,7 +1372,7 @@ msgstr "grafik"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1141
 msgid "moves to the next block quote"
-msgstr "flytter til næste blokcitat"
+msgstr "flytter til næste blokcitat."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1143
@@ -1382,7 +1382,7 @@ msgstr "intet næste blokcitat"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1145
 msgid "moves to the previous block quote"
-msgstr "flytter til forrige blokcitat"
+msgstr "flytter til forrige blokcitat."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1147
@@ -1422,7 +1422,7 @@ msgstr "blokke uden links"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1170
 msgid "moves to the next landmark"
-msgstr "flytter til næste landmærke"
+msgstr "flytter til næste landmærke."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1172
@@ -1432,7 +1432,7 @@ msgstr "intet næste landmærke"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1174
 msgid "moves to the previous landmark"
-msgstr "flytter til forrige landmærke"
+msgstr "flytter til forrige landmærke."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1176
@@ -1447,7 +1447,7 @@ msgstr "landmærker"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1185
 msgid "moves to the next embedded object"
-msgstr "flytter til næste indlejrede objekt"
+msgstr "flytter til næste indlejrede objekt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1187
@@ -1457,7 +1457,7 @@ msgstr "intet næste indlejrede objekt"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1189
 msgid "moves to the previous embedded object"
-msgstr "flytter til forrige indlejrede objekt"
+msgstr "flytter til forrige indlejrede objekt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1191
@@ -1472,7 +1472,7 @@ msgstr "indlejrede objekter"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1199
 msgid "moves to the next annotation"
-msgstr "flytter til næste annotation"
+msgstr "flytter til næste annotation."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1201
@@ -1482,7 +1482,7 @@ msgstr "ingen næste annotation"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1203
 msgid "moves to the previous annotation"
-msgstr "flytter til forrige annotation"
+msgstr "flytter til forrige annotation."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1205
@@ -1497,7 +1497,7 @@ msgstr "annotationer"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1213
 msgid "moves to the next error"
-msgstr "flytter til næste fejl"
+msgstr "flytter til næste fejl."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1215
@@ -1507,7 +1507,7 @@ msgstr "ingen næste fejl"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1217
 msgid "moves to the previous error"
-msgstr "flytter til forrige fejl"
+msgstr "flytter til forrige fejl."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1219
@@ -1522,7 +1522,7 @@ msgstr "fejl"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1227
 msgid "moves to the next slider"
-msgstr "flytter til næste skyder"
+msgstr "flytter til næste skyder."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1229
@@ -1532,7 +1532,7 @@ msgstr "inngen næste skyder"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1231
 msgid "moves to the previous slider"
-msgstr "flytter til forrige skyder"
+msgstr "flytter til forrige skyder."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1233
@@ -1547,7 +1547,7 @@ msgstr "skyderer"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1241
 msgid "moves to the next article"
-msgstr "flytter til næste artikel"
+msgstr "flytter til næste artikel."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1243
@@ -1557,7 +1557,7 @@ msgstr "ingen næste artikel"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1245
 msgid "moves to the previous article"
-msgstr "flytter til forrige artikel"
+msgstr "flytter til forrige artikel."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1247
@@ -1572,7 +1572,7 @@ msgstr "artikler"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1255
 msgid "moves to the next grouping"
-msgstr "Flyt til næste gruppe"
+msgstr "flytter til næste gruppe."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1257
@@ -1582,7 +1582,7 @@ msgstr "ingen næste gruppe"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1259
 msgid "moves to the previous grouping"
-msgstr "flytter til forrige gruppe"
+msgstr "flytter til forrige gruppe."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1261
@@ -1597,7 +1597,7 @@ msgstr "grupper"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1269
 msgid "moves to the next tab"
-msgstr "flytter til næste fane"
+msgstr "flytter til næste fane."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1271
@@ -1607,7 +1607,7 @@ msgstr "ingen næste fane"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1273
 msgid "moves to the previous tab"
-msgstr "flytter til forrige fane"
+msgstr "flytter til forrige fane."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1275
@@ -1622,7 +1622,7 @@ msgstr "faner"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1283
 msgid "moves to the next figure"
-msgstr "flytter til næste figur"
+msgstr "flytter til næste figur."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1285
@@ -1632,7 +1632,7 @@ msgstr "ingen næste figur"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1287
 msgid "moves to the previous figure"
-msgstr "flytter til forrige figur"
+msgstr "flytter til forrige figur."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1289
@@ -1647,7 +1647,7 @@ msgstr "figurer"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1297
 msgid "moves to the next menu item"
-msgstr "flytter til næste menupunkt"
+msgstr "flytter til næste menupunkt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1299
@@ -1657,7 +1657,7 @@ msgstr "intet næste menupunkt"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1301
 msgid "moves to the previous menu item"
-msgstr "flytter til forrige menupunkt"
+msgstr "flytter til forrige menupunkt."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1303
@@ -1672,7 +1672,7 @@ msgstr "menupunkter"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1311
 msgid "moves to the next toggle button"
-msgstr "flytter til næste skifteknap"
+msgstr "flytter til næste skifteknap."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1313
@@ -1682,7 +1682,7 @@ msgstr "ingen næste skifteknap"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1315
 msgid "moves to the previous toggle button"
-msgstr "flytter til forrige skifteknap"
+msgstr "flytter til forrige skifteknap."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1317
@@ -1697,7 +1697,7 @@ msgstr "skifteknapper"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1325
 msgid "moves to the next progress bar"
-msgstr "flytter til næste behandlingslinje"
+msgstr "flytter til næste behandlingslinje."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1327
@@ -1707,7 +1707,7 @@ msgstr "ingen næste behandlingslinje"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1329
 msgid "moves to the previous progress bar"
-msgstr "flytter til forrige behandlingslinje"
+msgstr "flytter til forrige behandlingslinje."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1331
@@ -1722,7 +1722,7 @@ msgstr "behandlingslinjer"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1339
 msgid "moves to the next math formula"
-msgstr "flytter til næste matematikformel"
+msgstr "flytter til næste matematikformel."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1341
@@ -1732,7 +1732,7 @@ msgstr "ingen næste matematikformel"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1343
 msgid "moves to the previous math formula"
-msgstr "flytter til forrige matematikformel"
+msgstr "flytter til forrige matematikformel."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1345
@@ -1747,7 +1747,7 @@ msgstr "matematikformler"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1353
 msgid "moves to the next text paragraph"
-msgstr "flytter til næste tekstafsnit"
+msgstr "flytter til næste tekstafsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1355
@@ -1757,7 +1757,7 @@ msgstr "intet næste tekstafsnit"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1357
 msgid "moves to the previous text paragraph"
-msgstr "flytter til forrige tekstafsnit"
+msgstr "flytter til forrige tekstafsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1359
@@ -1772,7 +1772,7 @@ msgstr "tekstafsnit"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1368
 msgid "moves to the next vertically aligned paragraph"
-msgstr "flytter til næste lodrette tekstafsnit"
+msgstr "flytter til næste lodret justerede afsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1370
@@ -1782,7 +1782,7 @@ msgstr "intet næste lodret tekstafsnit"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1372
 msgid "moves to the previous vertically aligned paragraph"
-msgstr "flytter til forrige lodrette tekstafsnit"
+msgstr "flytter til forrige lodret justerede afsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1374
@@ -1797,7 +1797,7 @@ msgstr "lodrette afsnit"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1383
 msgid "moves to the next same style text"
-msgstr "flytter til næste tekst med samme typografi"
+msgstr "flytter til næste tekst med samme typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1385
@@ -1807,7 +1807,7 @@ msgstr "Ingen næste tekst med samme typografi"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1387
 msgid "moves to the previous same style text"
-msgstr "flytter til forrige tekst med samme typografi"
+msgstr "flytter til forrige tekst med samme typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1389
@@ -1822,7 +1822,7 @@ msgstr "samme typografi"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1397
 msgid "moves to the next different style text"
-msgstr "flytter til næste tekst med en anden typografi"
+msgstr "flytter til næste tekst med en anden typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1399
@@ -1832,7 +1832,7 @@ msgstr "Ingen tekst med en anden typografi"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1401
 msgid "moves to the previous different style text"
-msgstr "flytter til forrige tekst med en anden typografi"
+msgstr "flytter til forrige tekst med en anden typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1403
@@ -1847,7 +1847,7 @@ msgstr "anden typografi"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1411
 msgid "moves to the next reference"
-msgstr "flytter til næste reference"
+msgstr "flytter til næste reference."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1413
@@ -1857,7 +1857,7 @@ msgstr "ingen næste reference"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1415
 msgid "moves to the previous reference"
-msgstr "flytter til forrige reference"
+msgstr "flytter til forrige reference."
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1417
@@ -1953,7 +1953,7 @@ msgstr "ikke i en objektbeholder"
 #. Translators: Description for the Move to start of container command in browse mode.
 #: browseMode.py:2463
 msgid "Moves to the start of the container element, such as a list or table"
-msgstr "Flytter til begyndelsen af en objektbeholder, eksempelvis en liste eller tabel"
+msgstr "Flytter til begyndelsen af en objektbeholder, eksempelvis en liste eller tabel."
 
 #. Translators: a message reported when:
 #. Review cursor is at the bottom line of the current navigator object.
@@ -1969,7 +1969,7 @@ msgstr "Bund"
 #. Translators: Description for the Move past end of container command in browse mode.
 #: browseMode.py:2491
 msgid "Moves past the end of the container element, such as a list or table"
-msgstr "Flytter forbi slutningen af objektbeholderen, eksempelvis en liste eller tabel"
+msgstr "Flytter forbi slutningen af objektbeholderen, eksempelvis en liste eller tabel."
 
 #. Translators: the description for the toggleScreenLayout script.
 #: browseMode.py:2829
@@ -1984,7 +1984,7 @@ msgstr "Ikke understøttet i dette dokument"
 #. Translators: input help message for toggle native selection command
 #: browseMode.py:2851
 msgid "Toggles native selection mode on and off"
-msgstr "Slår oprindelig markeringstilstand til og fra"
+msgstr "Slår oprindelig markeringstilstand til og fra."
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2857
@@ -2573,12 +2573,12 @@ msgstr "Læser kolonnen lodret fra den aktuelle celle nedad til den sidste celle
 #. Translators: the description for the speak row command
 #: documentBase.py:562
 msgid "Reads the current row horizontally from left to right without moving the system caret."
-msgstr "Læser den aktuelle række vandret fra venstre mod højre uden at flytte systemmærket."
+msgstr "Læser den aktuelle række vandret fra venstre mod højre uden at flytte systemmarkøren."
 
 #. Translators: the description for the speak column command
 #: documentBase.py:571
 msgid "Reads the current column vertically from top to bottom without moving the system caret."
-msgstr "Læser den aktuelle kolonne lodret fra top til bund uden at flytte systemets indikator."
+msgstr "Læser den aktuelle kolonne lodret fra top til bund uden at flytte systemmarkøren."
 
 #. Translators: The message announced when toggling the include layout tables browse mode setting.
 #: documentBase.py:581
@@ -2593,7 +2593,7 @@ msgstr "Layouttabeller til"
 #. Translators: Input help mode message for include layout tables command.
 #: documentBase.py:591
 msgid "Toggles on and off the inclusion of layout tables in browse mode"
-msgstr "Slår rapportering af layout-tabeller til og fra"
+msgstr "Slår medtagelse af layouttabeller i gennemsynstilstand til og fra."
 
 #. Translators: Message reported upon action (e.g. context sensitive help, open documentation from NVDA menu)
 #: documentationUtils.py:63
@@ -2775,7 +2775,7 @@ msgstr "Oplæser den aktuelle linje ved applikationsmarkøren. 2 tryk på denne 
 #. Translators: Input help mode message for left mouse click command.
 #: globalCommands.py:288
 msgid "Clicks the left mouse button once at the current mouse position"
-msgstr "Udfører et enkelt venstre museklik på musens aktuelle position"
+msgstr "Udfører et enkelt venstre museklik på musens aktuelle position."
 
 #. Translators: Reported when left mouse button is clicked.
 #: globalCommands.py:294
@@ -2785,7 +2785,7 @@ msgstr "Venstre klik"
 #. Translators: Input help mode message for right mouse click command.
 #: globalCommands.py:300
 msgid "Clicks the right mouse button once at the current mouse position"
-msgstr "Udfører et enkelt højre museklik på musens aktuelle position"
+msgstr "Udfører et enkelt højre museklik på musens aktuelle position."
 
 #. Translators: Reported when right mouse button is clicked.
 #: globalCommands.py:306
@@ -2805,27 +2805,27 @@ msgstr "Låser højre museknap eller låser den op"
 #. Translators: Input help mode message for scroll up at the mouse position command.
 #: globalCommands.py:337
 msgid "Scroll up at the mouse position"
-msgstr "Rul op ved musens position"
+msgstr "Ruller musehjulet op ved musens aktuelle position."
 
 #. Translators: Input help mode message for scroll down at the mouse position command.
 #: globalCommands.py:347
 msgid "Scroll down at the mouse position"
-msgstr "Rul ned ved musens position"
+msgstr "Ruller musehjulet ned ved musens aktuelle position."
 
 #. Translators: Input help mode message for scroll left at the mouse position command.
 #: globalCommands.py:357
 msgid "Scroll left at the mouse position"
-msgstr "Rul til venstre ved musens position"
+msgstr "Ruller musehjulet til venstre ved musens aktuelle position."
 
 #. Translators: Input help mode message for scroll right at the mouse position command.
 #: globalCommands.py:367
 msgid "Scroll right at the mouse position"
-msgstr "Rul til højre ved musens position"
+msgstr "Ruller musehjulet til højre ved musens aktuelle position."
 
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:377
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr "Oplyser den aktuelle markering i edit-felter og dokumenter. Ved to tryk staves denne information. Ved tre tryk, vil informationen blive vist i gennemsynstilstand. "
+msgstr "Oplyser den aktuelle markering i edit-felter og dokumenter. Ved to tryk staves oplysningerne. Ved tre tryk staves de med tegnbeskrivelser. Ved fire tryk vises de i en besked, der kan læses i gennemsynstilstand. "
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -2839,52 +2839,52 @@ msgstr "%s valgt"
 #. Translators: Input help mode message for report date and time command.
 #: globalCommands.py:439
 msgid "If pressed once, reports the current time. If pressed twice, reports the current date"
-msgstr "Et enkelt tryk giver aktuel tid. To tryk giver aktuel dato"
+msgstr "Tryk én gang for klokkeslæt, to gange for dato."
 
 #. Translators: Input help mode message for set the first value in the synth ring setting.
 #: globalCommands.py:467
 msgid "Set the first value of the current setting in the synth settings ring"
-msgstr "Spring til første værdi for den aktuelle indstilling for ringen af talesynteseindstillinger"
+msgstr "Indstiller den aktuelle indstilling i ringen af indstillinger for talesyntese til den første værdi."
 
 #. Translators: Input help mode message for set the last value in the synth ring settings.
 #: globalCommands.py:480
 msgid "Set the last value of the current setting in the synth settings ring"
-msgstr "Spring til sidste værdi for den aktuelle indstilling for ringen af talesynteseindstillinger"
+msgstr "Indstiller den aktuelle indstilling i ringen af indstillinger for talesyntese til den sidste værdi."
 
 #. Translators: Input help mode message for increase synth setting value command.
 #: globalCommands.py:493
 msgid "Increases the currently active setting in the synth settings ring"
-msgstr "Forøger den aktuelle indstilling i ringen af indstillinger for talesyntese"
+msgstr "Forøger den aktuelle indstilling i ringen af indstillinger for talesyntese."
 
 #. Translators: Input help mode message for increasing synth setting value command in larger steps.
 #: globalCommands.py:507
 msgid "Increases the currently active setting in the synth settings ring in a larger step"
-msgstr "Forøger den aktuelle indstilling i ringen af indstillinger for talesynteseindstillinger i større trin"
+msgstr "Forøger den aktuelle indstilling i ringen af indstillinger for talesyntese i større trin."
 
 #. Translators: Input help mode message for decrease synth setting value command.
 #: globalCommands.py:521
 msgid "Decreases the currently active setting in the synth settings ring"
-msgstr "Formindsker den aktuelle indstilling i ringen af indstillinger for talesyntese"
+msgstr "Formindsker den aktuelle indstilling i ringen af indstillinger for talesyntese."
 
 #. Translators: Input help mode message for decreasing synth setting value command in larger steps.
 #: globalCommands.py:535
 msgid "Decreases the currently active setting in the synth settings ring in a larger step"
-msgstr "Formindsker den aktuelle indstilling i ringen af indstillinger for talesynteseindstillinger i større trin"
+msgstr "Formindsker den aktuelle indstilling i ringen af indstillinger for talesyntese i større trin."
 
 #. Translators: Input help mode message for next synth setting command.
 #: globalCommands.py:549
 msgid "Moves to the next available setting in the synth settings ring"
-msgstr "Flytter til næste tilgængelige indstilling i ringen af indstillinger for talesyntese"
+msgstr "Flytter til næste tilgængelige indstilling i ringen af indstillinger for talesyntese."
 
 #. Translators: Input help mode message for previous synth setting command.
 #: globalCommands.py:563
 msgid "Moves to the previous available setting in the synth settings ring"
-msgstr "Flytter til forrige tilgængelige indstilling i ringen af indstillinger for talesyntese"
+msgstr "Flytter til forrige tilgængelige indstilling i ringen af indstillinger for talesyntese."
 
 #. Translators: Input help mode message for toggling keyboard layout.
 #: globalCommands.py:577
 msgid "Toggles between desktop and laptop keyboard layout"
-msgstr "Skifter mellem desktop- og laptop-layout"
+msgstr "Skifter mellem desktop- og laptop-layout."
 
 #. Translators: Reported when the user toggles keyboard layout.
 #. {layout} will be replaced with the new keyboard layout, i.e. desktop or laptop
@@ -2920,7 +2920,7 @@ msgstr "Sig indtastede ord {mode}"
 #. Translators: Input help mode message for toggle speak command keys command.
 #: globalCommands.py:627
 msgid "Toggles on and off the speaking of command keys"
-msgstr "Slår oplæsning af funktionstaster til og fra"
+msgstr "Slår oplæsning af funktionstaster til og fra."
 
 #. Translators: The message announced when toggling the speak typed command keyboard setting.
 #: globalCommands.py:634
@@ -2935,7 +2935,7 @@ msgstr "Sig funktionstaster til"
 #. Translators: Input help mode message for toggle report font name command.
 #: globalCommands.py:644
 msgid "Toggles on and off the reporting of font changes"
-msgstr "Slår rapportering af skrifttype til og fra"
+msgstr "Slår rapportering af skrifttype til og fra."
 
 #. Translators: The message announced when toggling the report font name document formatting setting.
 #: globalCommands.py:650
@@ -2950,7 +2950,7 @@ msgstr "Oplys skrifttype til"
 #. Translators: Input help mode message for toggle report font size command.
 #: globalCommands.py:660
 msgid "Toggles on and off the reporting of font size changes"
-msgstr "Slår rapportering af skriftstørrelse til og fra"
+msgstr "Slår rapportering af skriftstørrelse til og fra."
 
 #. Translators: The message announced when toggling the report font size document formatting setting.
 #: globalCommands.py:666
@@ -2990,7 +2990,7 @@ msgstr "Sig og vis skrifttypeattributter på punkt"
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:702
 msgid "Toggles on and off the reporting of superscripts and subscripts"
-msgstr "Slår rapportering af hævet og sænket skrift til og fra"
+msgstr "Slår rapportering af hævet og sænket skrift til og fra."
 
 #. Translators: The message announced when toggling the report superscripts and subscripts
 #. document formatting setting.
@@ -3007,7 +3007,7 @@ msgstr "Oplys hævet og sænket skrift fra"
 #. Translators: Input help mode message for toggle report revisions command.
 #: globalCommands.py:720
 msgid "Toggles on and off the reporting of revisions"
-msgstr "Slår rapportering af redaktørrevisioner til eller fra"
+msgstr "Slår rapportering af redaktørrevisioner til og fra."
 
 #. Translators: The message announced when toggling the report revisions document formatting setting.
 #: globalCommands.py:726
@@ -3022,7 +3022,7 @@ msgstr "Oplys ændringer til"
 #. Translators: Input help mode message for toggle report emphasis command.
 #: globalCommands.py:736
 msgid "Toggles on and off the reporting of emphasis"
-msgstr "Slår rapportering af fremhævelse til og fra"
+msgstr "Slår rapportering af fremhævelse til og fra."
 
 #. Translators: The message announced when toggling the report emphasis document formatting setting.
 #: globalCommands.py:742
@@ -3037,7 +3037,7 @@ msgstr "Oplys fremhævning til"
 #. Translators: Input help mode message for toggle report marked (highlighted) content command.
 #: globalCommands.py:752
 msgid "Toggles on and off the reporting of highlighted text"
-msgstr "Slår rapportering af fremhævet tekst til og fra"
+msgstr "Slår rapportering af fremhævet tekst til og fra."
 
 #. Translators: The message announced when toggling the report marked document formatting setting.
 #: globalCommands.py:760
@@ -3052,7 +3052,7 @@ msgstr "Oplys fremhævet fra"
 #. Translators: Input help mode message for toggle report colors command.
 #: globalCommands.py:768
 msgid "Toggles on and off the reporting of colors"
-msgstr "Slår rapportering af farver til og fra"
+msgstr "Slår rapportering af farver til og fra."
 
 #. Translators: The message announced when toggling the report colors document formatting setting.
 #: globalCommands.py:774
@@ -3067,7 +3067,7 @@ msgstr "Rapportér farver til"
 #. Translators: Input help mode message for toggle report alignment command.
 #: globalCommands.py:784
 msgid "Toggles on and off the reporting of text alignment"
-msgstr "Slår rapportering af justering til og fra"
+msgstr "Slår rapportering af justering til og fra."
 
 #. Translators: The message announced when toggling the report alignment document formatting setting.
 #: globalCommands.py:790
@@ -3082,7 +3082,7 @@ msgstr "Oplys justering til"
 #. Translators: Input help mode message for toggle report style command.
 #: globalCommands.py:800
 msgid "Toggles on and off the reporting of style changes"
-msgstr "Slår rapportering af typografi til og fra"
+msgstr "Slår rapportering af typografi til og fra."
 
 #. Translators: The message announced when toggling the report style document formatting setting.
 #: globalCommands.py:806
@@ -3097,7 +3097,7 @@ msgstr "Oplys typografi til"
 #. Translators: Input help mode message for toggle report spelling errors command.
 #: globalCommands.py:816
 msgid "Cycles through options for how to report spelling or grammar errors"
-msgstr "Skifter mellem indstillingerne for, hvordan stave- og grammatikfejl skal rapporteres"
+msgstr "Skifter mellem indstillingerne for, hvordan stave- og grammatikfejl skal rapporteres."
 
 #. Translators: Reported when the user cycles through the choices to report spelling or grammar errors.
 #. {mode} will be replaced with the mode; e.g. Off, Speech, Sound, Speech and sound.
@@ -3109,7 +3109,7 @@ msgstr "Rapportering af fejl {mode}"
 #. Translators: Input help mode message for command to toggle report spelling or grammar errors in braille.
 #: globalCommands.py:835
 msgid "Toggles reporting spelling or grammar errors in braille"
-msgstr "Slår rapportering af stave- og gramatikfejl på punkt til og fra"
+msgstr "Slår rapportering af stave- og grammatikfejl på punkt til og fra."
 
 #. Translators: Message presented when turning on reporting spelling or grammar errors in braille.
 #: globalCommands.py:845
@@ -3124,7 +3124,7 @@ msgstr "Rapportér fejl på punkt slået fra"
 #. Translators: Input help mode message for command to toggle braille automatic scroll.
 #: globalCommands.py:852
 msgid "Toggles braille automatic scroll"
-msgstr "Slår automatisk rulning af punkt til eller fra"
+msgstr "Slår automatisk rulning af punkt til og fra."
 
 #. Translators: Message reported when automatic scrolling has been enabled in braille.
 #: globalCommands.py:861
@@ -3139,7 +3139,7 @@ msgstr "Automatisk rulning deaktiveret"
 #. Translators: Input help mode message for command to increase the rate for braille automatic scroll.
 #: globalCommands.py:874
 msgid "Increases the rate for braille automatic scroll"
-msgstr "Øger hastigheden for automatisk rulning af punktdisplay"
+msgstr "Øger hastigheden for automatisk rulning af punktdisplay."
 
 #. Translators: Message shown when increasing the braille auto scroll rate.
 #. {rate} will be replaced with the rate as a whole number from 0 to 100.
@@ -3153,12 +3153,12 @@ msgstr "Rullehastighed {rate}"
 #. Translators: Input help mode message for command to decrease the rate for braille automatic scroll.
 #: globalCommands.py:887
 msgid "Decreases the rate for braille automatic scroll"
-msgstr "Sænker hastigheden for automatisk rulning af punktdisplay"
+msgstr "Sænker hastigheden for automatisk rulning af punktdisplay."
 
 #. Translators: Input help mode message for toggle report pages command.
 #: globalCommands.py:900
 msgid "Toggles on and off the reporting of pages"
-msgstr "Slår rapportering af sider til og fra"
+msgstr "Slår rapportering af sider til og fra."
 
 #. Translators: The message announced when toggling the report pages document formatting setting.
 #: globalCommands.py:906
@@ -3173,7 +3173,7 @@ msgstr "Oplys sider til"
 #. Translators: Input help mode message for toggle report line numbers command.
 #: globalCommands.py:916
 msgid "Toggles on and off the reporting of line numbers"
-msgstr "Slår rapportering af linjenumre til og fra"
+msgstr "Slår rapportering af linjenumre til og fra."
 
 #. Translators: The message announced when toggling the report line numbers document formatting setting.
 #: globalCommands.py:922
@@ -3188,7 +3188,7 @@ msgstr "Oplys linjenumre til"
 #. Translators: Input help mode message for toggle report line indentation command.
 #: globalCommands.py:932
 msgid "Cycles through line indentation settings"
-msgstr "Skifter mellem indstillinger for linjeindrykning"
+msgstr "Skifter mellem indstillinger for linjeindrykning."
 
 #. Translators: A message reported when cycling through line indentation settings.
 #. {mode} will be replaced with the mode; i.e. Off, Speech, Tones or Both Speech and Tones.
@@ -3200,7 +3200,7 @@ msgstr "Oplys linjeindrykning {mode}"
 #. Translators: Input help mode message for toggle ignore blank lines for line indentation reporting command.
 #: globalCommands.py:948
 msgid "Toggles on and off the ignoring of blank lines for line indentation reporting"
-msgstr "Slår ignoreringsindstillingen for blanke linjer ved rapportering af linjeindrykning til og fra"
+msgstr "Slår ignoreringsindstillingen for blanke linjer ved rapportering af linjeindrykning til og fra."
 
 #. Translators: The message announced when toggling off the ignore blank lines for line indentation
 #. reporting document formatting setting.
@@ -3217,7 +3217,7 @@ msgstr "Ignorer blanke linjer ved rapportering af linjeindrykning til"
 #. Translators: Input help mode message for toggle report paragraph indentation command.
 #: globalCommands.py:965
 msgid "Toggles on and off the reporting of paragraph indentation"
-msgstr "Slår rapportering af indrykning af afsnit til og fra"
+msgstr "Slår rapportering af indrykning af afsnit til og fra."
 
 #. Translators: The message announced when toggling the report paragraph indentation document formatting setting.
 #: globalCommands.py:971
@@ -3232,7 +3232,7 @@ msgstr "Oplys indrykning af afsnit til"
 #. Translators: Input help mode message for toggle report line spacing command.
 #: globalCommands.py:981
 msgid "Toggles on and off the reporting of line spacing"
-msgstr "Slår rapportering af linjeafstand til og fra"
+msgstr "Slår rapportering af linjeafstand til og fra."
 
 #. Translators: The message announced when toggling the report line spacing document formatting setting.
 #: globalCommands.py:987
@@ -3247,7 +3247,7 @@ msgstr "Oplys linjeafstand til"
 #. Translators: Input help mode message for toggle report tables command.
 #: globalCommands.py:997
 msgid "Toggles on and off the reporting of tables"
-msgstr "Slår rapportering af tabeller til og fra"
+msgstr "Slår rapportering af tabeller til og fra."
 
 #. Translators: The message announced when toggling the report tables document formatting setting.
 #: globalCommands.py:1003
@@ -3274,7 +3274,7 @@ msgstr "Oplys tabeloverskrifter {mode}"
 #. Translators: Input help mode message for toggle report table cell coordinates command.
 #: globalCommands.py:1027
 msgid "Toggles on and off the reporting of table cell coordinates"
-msgstr "Slår rapportering af cellekoordinater i tabeller til og fra"
+msgstr "Slår rapportering af cellekoordinater i tabeller til og fra."
 
 #. Translators: The message announced when toggling the report table cell coordinates document formatting setting.
 #: globalCommands.py:1033
@@ -3289,7 +3289,7 @@ msgstr "Oplys cellekoordinater i tabeller til"
 #. Translators: Input help mode message for toggle report cell borders command.
 #: globalCommands.py:1043
 msgid "Cycles through the cell border reporting settings"
-msgstr "Skifter mellem indstillingerne for oplysninger om cellekanter"
+msgstr "Skifter mellem indstillingerne for oplysninger om cellekanter."
 
 #. Translators: Reported when the user cycles through report cell border modes.
 #. {mode} will be replaced with the mode; e.g. Off, Styles and Colors and styles.
@@ -3301,7 +3301,7 @@ msgstr "Oplys cellekanter {mode}"
 #. Translators: Input help mode message for toggle report links command.
 #: globalCommands.py:1057
 msgid "Toggles on and off the reporting of links"
-msgstr "Slår rapportering af links til og fra"
+msgstr "Slår rapportering af links til og fra."
 
 #. Translators: The message announced when toggling the report links document formatting setting.
 #: globalCommands.py:1063
@@ -3316,7 +3316,7 @@ msgstr "Oplys links til"
 #. Translators: Input help mode message for toggle report link type command.
 #: globalCommands.py:1073
 msgid "Toggles on and off the reporting of link type"
-msgstr "Slår oplysning af linktype til og fra"
+msgstr "Slår oplysning af linktype til og fra."
 
 #. Translators: The message announced when toggling the report link type document formatting setting.
 #: globalCommands.py:1082
@@ -3337,7 +3337,7 @@ msgstr "Indstillingen \"oplys links\" skal være aktiveret, før du kan slå opl
 #. Translators: Input help mode message for toggle report graphics command.
 #: globalCommands.py:1093
 msgid "Toggles on and off the reporting of graphics"
-msgstr "Slår rapportering af grafik til og fra"
+msgstr "Slår rapportering af grafik til og fra."
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
 #: globalCommands.py:1099
@@ -3352,7 +3352,7 @@ msgstr "Oplys grafik til"
 #. Translators: Input help mode message for toggle report comments command.
 #: globalCommands.py:1109
 msgid "Toggles on and off the reporting of comments"
-msgstr "Slår rapportering af kommentarer til og fra"
+msgstr "Slår rapportering af kommentarer til og fra."
 
 #. Translators: The message announced when toggling the report comments document formatting setting.
 #: globalCommands.py:1115
@@ -3367,7 +3367,7 @@ msgstr "Oplys kommentarer til"
 #. Translators: Input help mode message for toggle report lists command.
 #: globalCommands.py:1125
 msgid "Toggles on and off the reporting of lists"
-msgstr "Slår rapportering af lister til og fra"
+msgstr "Slår rapportering af lister til og fra."
 
 #. Translators: The message announced when toggling the report lists document formatting setting.
 #: globalCommands.py:1131
@@ -3382,7 +3382,7 @@ msgstr "Oplys lister til"
 #. Translators: Input help mode message for toggle report headings command.
 #: globalCommands.py:1141
 msgid "Toggles on and off the reporting of headings"
-msgstr "Slår rapportering af overskrifter til og fra"
+msgstr "Slår rapportering af overskrifter til og fra."
 
 #. Translators: The message announced when toggling the report headings document formatting setting.
 #: globalCommands.py:1147
@@ -3397,7 +3397,7 @@ msgstr "Oplys overskrifter til"
 #. Translators: Input help mode message for toggle report groupings command.
 #: globalCommands.py:1157
 msgid "Toggles on and off the reporting of groupings"
-msgstr "Slår rapportering af grupper til og fra"
+msgstr "Slår rapportering af grupper til og fra."
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 #: globalCommands.py:1163
@@ -3442,7 +3442,7 @@ msgstr "Oplys landmærker og områder til"
 #. Translators: Input help mode message for toggle report articles command.
 #: globalCommands.py:1205
 msgid "Toggles on and off the reporting of articles"
-msgstr "Slår rapportering af artikler til og fra"
+msgstr "Slår rapportering af artikler til og fra."
 
 #. Translators: The message announced when toggling the report articles document formatting setting.
 #: globalCommands.py:1211
@@ -3487,7 +3487,7 @@ msgstr "Oplys, hvis klikbar til"
 #. Translators: Input help mode message for toggle report figures and captions command.
 #: globalCommands.py:1253
 msgid "Toggles on and off the reporting of figures and captions"
-msgstr "Slår rapportering af billedtekster til og fra"
+msgstr "Slår rapportering af figurer og billedtekster til og fra."
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
@@ -3537,7 +3537,7 @@ msgstr "Symbol niveau %s"
 #. Translators: Input help mode message for toggle delayed character description command.
 #: globalCommands.py:1317
 msgid "Toggles on and off delayed descriptions for characters on cursor movement"
-msgstr "Slår indstillingen for forsinkede beskrivelser af tegn ved markørbevægelser til og fra"
+msgstr "Slår indstillingen for forsinkede beskrivelser af tegn ved markørbevægelser til og fra."
 
 #. Translators: The message announced when toggling the delayed character description setting.
 #: globalCommands.py:1325
@@ -3607,7 +3607,7 @@ msgstr "Simpel læsetilstand til"
 #. Translators: Input help mode message for report current navigator object command.
 #: globalCommands.py:1459
 msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"
-msgstr "Oplyser det aktuelle navigatorobjekt. 2 tryk staver informationen og 3 tryk kopierer navn og værdi på objektet til udklipsholderen"
+msgstr "Oplyser det aktuelle navigatorobjekt. Ved to tryk staves oplysningerne, og ved tre tryk kopieres objektets navn og værdi til udklipsholderen."
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -3625,18 +3625,18 @@ msgstr "Ingen oplysninger om placering"
 #. review cursor, falling back to the location of navigator object if needed.
 #: globalCommands.py:1530
 msgid "Reports information about the location of the text at the review cursor, or location of the navigator object if there is no text under review cursor."
-msgstr "Oplyser information om placeringen af teksten ved læsemarkøren eller navigatorobjektet, hvis der ikke er en læsemarkør."
+msgstr "Oplyser placeringen af teksten ved læsemarkøren eller placeringen af navigatorobjektet, hvis der ikke er tekst ved læsemarkøren."
 
 #. Translators: Description for a keyboard command which reports location of the navigator object.
 #: globalCommands.py:1542
 msgid "Reports information about the location of the current navigator object."
-msgstr "Oplyser informationer om placeringen af det aktuelle navigatorobjekt."
+msgstr "Oplyser oplysninger om placeringen af det aktuelle navigatorobjekt."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. current caret position falling back to the location of focused object if needed.
 #: globalCommands.py:1554
 msgid "Reports information about the location of the text at the caret, or location of the currently focused object if there is no caret."
-msgstr "Oplyser information om placeringen af teksten ved systemmarkøren eller det aktuelt fokuserede objekt, hvis der ikke er en systemmarkør."
+msgstr "Oplyser placeringen af teksten ved systemmarkøren eller placeringen af objektet med fokus, hvis der ikke er nogen systemmarkør."
 
 #. Translators: Description for a keyboard command which reports location of the
 #. currently focused object.
@@ -3647,14 +3647,14 @@ msgstr "Oplyser information om placeringen af det aktuelt fokuserede objekt."
 #. Translators: Description for report review cursor location command.
 #: globalCommands.py:1580
 msgid "Reports information about the location of the text or object at the review cursor. Pressing twice may provide further detail."
-msgstr "Viser information om placeringen af teksten eller objektet ved læsemarkøren. To tryk kan give flere detaljer."
+msgstr "Oplyser placeringen af teksten eller objektet ved læsemarkøren. To tryk kan give flere oplysninger."
 
 #. Translators: Description for a keyboard command
 #. which reports location of the text at the caret position
 #. or object with focus if there is no caret.
 #: globalCommands.py:1598
 msgid "Reports information about the location of the text or object at the position of system caret. Pressing twice may provide further detail."
-msgstr "Oplyser information om placeringen af teksten eller objektet ved systemmarkøren. To tryk kan give flere detaljer."
+msgstr "Oplyser placeringen af teksten eller objektet ved systemmarkøren. To tryk kan give flere oplysninger."
 
 #. Translators: Input help mode message for move navigator object to current focus command.
 #: globalCommands.py:1614
@@ -3669,7 +3669,7 @@ msgstr "Flyt til fokus"
 #. Translators: Input help mode message for move focus to current navigator object command.
 #: globalCommands.py:1640
 msgid "Pressed once sets the keyboard focus to the navigator object, pressed twice sets the system caret to the position of the review cursor"
-msgstr "Et enkelt tryk sætter tastaturfokus  til navigatorobjektet, to tryk sætter systemmarkøren til læsemarkørens position."
+msgstr "Tryk én gang for at flytte systemfokus til det nuværende navigatorobjekt. Tryk to gange for at flytte systemmarkøren til læsemarkøren."
 
 #. Translators: Reported when:
 #. 1. There is no focusable object e.g. cannot use tab and shift tab to move to controls.
@@ -3692,7 +3692,7 @@ msgstr "Ingen systemmarkør"
 #. Translators: Input help mode message for move to parent object command.
 #: globalCommands.py:1686
 msgid "Moves the navigator object to the object containing it"
-msgstr "Flytter navigatorobjektet til det objekt, som indeholder det aktuelle objekt."
+msgstr "Navigerer til det overordnede objekt i forhold til det aktuelle navigatorobjekt."
 
 #. Translators: Reported when there is no containing (parent) object such as when focused on desktop.
 #: globalCommands.py:1702
@@ -3724,7 +3724,7 @@ msgstr "Ingen forrige"
 #. Translators: Input help mode message for move to first child object command.
 #: globalCommands.py:1776
 msgid "Moves the navigator object to the first object inside it"
-msgstr "Flytter navigatorobjektet til det første objekt inden i det."
+msgstr "Flytter til det første objekt, som er indeholdt i det aktuelle navigatorobjekt."
 
 #. Translators: Reported when there is no contained (first child) object such as inside a document.
 #: globalCommands.py:1792
@@ -3797,7 +3797,7 @@ msgstr "Flytter læsemarkøren til forrige ord i det aktuelle navigatorobjekt og
 #. Translators: Input help mode message for report current word under review cursor command.
 #: globalCommands.py:2117
 msgid "Speaks the word of the current navigator object where the review cursor is situated. Pressing twice spells the word. Pressing three times spells the word using character descriptions"
-msgstr "Oplæser det ord i det aktuelle navigatorobjekt, hvor læsemarkøren er placeret. Tryk 2 gangefor at stave ordet. Tryk tre gange for at få ordet stavet fonetisk."
+msgstr "Læser det ord i det aktuelle navigatorobjekt, hvor læsemarkøren er placeret. Tryk to gange for at stave ordet. Tryk tre gange for at stave ordet fonetisk."
 
 #. Translators: Input help mode message for move review cursor to next word command.
 #: globalCommands.py:2146
@@ -3822,7 +3822,7 @@ msgstr "Venstre"
 #. Translators: Input help mode message for report current character under review cursor command.
 #: globalCommands.py:2250
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Oplyser det tegn i det aktuelle navigatorobjekt, hvor læsemarkøren er placeret. Tryk to gange for at høre tegnet fonetisk. Tryk tre gange for at høre den numeriske værdi af tegnet decimalt og hexadecimalt."
+msgstr "Oplyser tegnet i det aktuelle navigatorobjekt ved læsemarkørens position. Ved to tryk oplyses en beskrivelse af eller et eksempel på tegnet. Ved tre tryk oplyses tegnets numeriske værdi decimalt og hexadecimalt."
 
 #. Translators: Input help mode message for move review cursor to next character command.
 #: globalCommands.py:2298
@@ -3842,17 +3842,17 @@ msgstr "Flytter læsemarkøren til sidste tegn på linjen i det aktuelle navigat
 #. Translators: Input help mode message for move review cursor to start of selection command.
 #: globalCommands.py:2364
 msgid "Moves the review cursor to the first character of the selection, and speaks it"
-msgstr "Flytter læsemarkøren til første tegn i den valgte tekst og læser det op"
+msgstr "Flytter læsemarkøren til første tegn i den valgte tekst og læser det op."
 
 #. Translators: Input help mode message for move review cursor to end of selection command.
 #: globalCommands.py:2392
 msgid "Moves the review cursor to the last character of the selection, and speaks it"
-msgstr "Flytter læsemarkøren til sidste tegn i den valgte tekst og læser det op"
+msgstr "Flytter læsemarkøren til sidste tegn i den valgte tekst og læser det op."
 
 #. Translators: Input help mode message for Review Current Symbol command.
 #: globalCommands.py:2428
 msgid "Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode"
-msgstr "Oplyser symbolet under læsemarkøren. Ved et dobbelttryk, vil symbolet samt teksten der bruges til at udtale symbolet vises i gennemsynstilstand."
+msgstr "Oplyser symbolet ved læsemarkørens aktuelle position. Ved to tryk vises symbolet og den tekst, der bruges til at udtale det, i gennemsynstilstand."
 
 #. Translators: Reported when there is no replacement for the symbol at the position of the review cursor.
 #: globalCommands.py:2444
@@ -3890,13 +3890,13 @@ msgstr "Taletilstand {mode}"
 #. mostly used in web browsing to move from embedded object to the webpage document.
 #: globalCommands.py:2494
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
-msgstr "Flytter fokus ud af det aktuelle indlejrede objekt og ind i det dokument, der indeholder det"
+msgstr "Flytter fokus ud af det aktuelle indlejrede objekt og ind i det dokument, der indeholder objektet."
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
 #: globalCommands.py:2519 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Skifter mellem gennemsynstilstand og fokustilstand. I fokustilstand bliver tastetrykkene sluppet igennem til applikationen, så du kan manipulere direkte med en kontrol. I gennemsynstilstand kan der navigeres i dokumentet med markøren,  med bogstavnavigation osv."
+msgstr "Skifter mellem gennemsynstilstand og fokustilstand. I fokustilstand sendes tastetryk direkte videre til programmet, så du kan interagere direkte med et kontrolelement. I gennemsynstilstand kan du navigere i dokumentet med markøren, taster til hurtignavigation osv."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:2569
@@ -3921,7 +3921,7 @@ msgstr "Læser fra læsemarkøren til slutningen af den aktuelle tekst og flytte
 #. Translators: Input help mode message for say all with system caret command.
 #: globalCommands.py:2608
 msgid "Reads from the system caret up to the end of the text, moving the caret as it goes"
-msgstr "Læser fra systemmarkøren til slutningen af teksten og flytter markøren samtidig. "
+msgstr "Læser fra systemmarkørens aktuelle position til slutningen af teksten og flytter systemmarkøren under læsningen."
 
 #. Translators: Reported when trying to obtain formatting information (such as font name, indentation and so on) but there is no formatting information for the text under cursor.
 #: globalCommands.py:2669 globalCommands.py:2680 globalCommands.py:4244
@@ -3936,32 +3936,32 @@ msgstr "Formatering"
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:2721
 msgid "Reports formatting info for the current review cursor position."
-msgstr "Oplyser den aktuelle tekstformattering under læsemarkøren"
+msgstr "Oplyser den aktuelle tekstformattering under læsemarkøren."
 
 #. Translators: Input help mode message for show formatting at review cursor command.
 #: globalCommands.py:2730
 msgid "Presents, in browse mode, formatting info for the current review cursor position."
-msgstr "Viser tekstformateringsoplysninger for teksten under læsemarkøren i gennemsynstilstand"
+msgstr "Viser tekstformateringsoplysninger for teksten under læsemarkøren i gennemsynstilstand."
 
 #. Translators: Input help mode message for report formatting command.
 #: globalCommands.py:2739
 msgid "Reports formatting info for the current review cursor position. If pressed twice, presents the information in browse mode"
-msgstr "Oplyser formateringsinformation for læsemarkørens aktuelle position. Ved et dobbelttryk vil denne information blive vist i gennemsynstilstand."
+msgstr "Oplyser formateringen af teksten ved læsemarkørens position. Ved to tryk vises oplysningerne i gennemsynstilstand."
 
 #. Translators: Input help mode message for report formatting at caret command.
 #: globalCommands.py:2755
 msgid "Reports formatting info for the text under the caret."
-msgstr "Oplyser den aktuelle tekstformattering under markøren"
+msgstr "Oplyser den aktuelle tekstformattering under markøren."
 
 #. Translators: Input help mode message for show formatting at caret position command.
 #: globalCommands.py:2764
 msgid "Presents, in browse mode, formatting info for the text under the caret."
-msgstr "Viser tekstformateringsoplysninger for teksten under markøren i gennemsynstilstand"
+msgstr "Viser tekstformateringsoplysninger for teksten under markøren i gennemsynstilstand."
 
 #. Translators: Input help mode message for report formatting at caret command.
 #: globalCommands.py:2773
 msgid "Reports formatting info for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr "Oplyser formateringsinformation for markørens aktuelle position i et dokument. Ved et dobbelttryk vil denne information blive vist i gennemsynstilstand."
+msgstr "Oplyser formateringsoplysninger for teksten ved systemmarkørens aktuelle position. Ved to tryk vises oplysningerne i gennemsynstilstand."
 
 #. Translators: the description for the reportDetailsSummary script.
 #: globalCommands.py:2839
@@ -3976,7 +3976,7 @@ msgstr "Ingen yderligere detaljer"
 #. Translators: Input help mode message for report current focus command.
 #: globalCommands.py:2901
 msgid "Reports the object with focus. If pressed twice, spells the information. Pressing three times spells it using character descriptions."
-msgstr "Oplyser objektet med fokus. Tryk to gange for at få informationen stavet. Et tredje tryk staver informationen ved brug af tegnbeskrivelser."
+msgstr "Oplyser objektet med fokus. Ved to tryk staves oplysningerne. Ved tre tryk staves de ved hjælp af tegnbeskrivelser."
 
 #. Translators: Reported when there is no status line for the current program or window.
 #: globalCommands.py:2977
@@ -4016,13 +4016,13 @@ msgstr "Læser statuslinjen for det aktuelle program og flytter navigatorobjekte
 #. Translators: Input help mode message for report status line text command.
 #: globalCommands.py:3056
 msgid "Reads the current application status bar. If pressed twice, spells the information. If pressed three times, copies the status bar to the clipboard"
-msgstr "Oplyser statuslinjen i den aktuelle applikation. Tryk to gange for at få stavet informationen. Tryk tre gange for at kopiere informationen til udklipsholderen."
+msgstr "Læser statuslinjen i det aktuelle program. Ved to tryk staves oplysningerne. Ved tre tryk kopieres statuslinjen til udklipsholderen."
 
 #. Translators: Description for a keyboard command which reports the
 #. accelerator key of the currently focused object.
 #: globalCommands.py:3080
 msgid "Reports the shortcut key of the currently focused object"
-msgstr "Oplyser genvejstasten for det aktuelt fokuserede objekt"
+msgstr "Oplyser genvejstasten for det objekt, der er i fokus."
 
 #. Translators: reported when a user requests the accelerator key
 #. of the currently focused object, but there is none set.
@@ -4033,7 +4033,7 @@ msgstr "Ingen genvejstast"
 #. Translators: Input help mode message for toggle mouse tracking command.
 #: globalCommands.py:3099
 msgid "Toggles the reporting of information as the mouse moves"
-msgstr "Bestemmer, hvor meget information, der oplyses, når musen flyttes"
+msgstr "Slår rapportering af oplysninger til og fra, når musen flyttes."
 
 #. Translators: presented when the mouse tracking is toggled.
 #: globalCommands.py:3106
@@ -4048,7 +4048,7 @@ msgstr "Følg mus til"
 #. Translators: Input help mode message for toggle mouse audio coordinates command.
 #: globalCommands.py:3116
 msgid "Toggles beeps that report mouse coordinates as the mouse moves"
-msgstr "Slår lydene for musens koordinater under bevægelse til og fra"
+msgstr "Bestemmer, om NVDA afspiller lyd for musens koordinater under bevægelse."
 
 #. Translators: Reported when mouse audio coordinates are toggled on.
 #: globalCommands.py:3121
@@ -4063,7 +4063,7 @@ msgstr "Lydkoordinater for musen slået fra"
 #. Translators: Input help mode message for toggle mouse text unit resolution command.
 #: globalCommands.py:3133
 msgid "Toggles how much text will be spoken when the mouse moves"
-msgstr "Bestemmer, hvor meget tekst, der oplyses, når musen flyttes"
+msgstr "Bestemmer, hvor meget tekst der oplæses, når musen flyttes."
 
 #. Translators: Reports the new state of the mouse text unit resolution:.
 #. %s will be replaced with the new label.
@@ -4086,7 +4086,7 @@ msgstr "Ingen titel"
 #. Translators: Input help mode message for read foreground object command (usually the foreground window).
 #: globalCommands.py:3187
 msgid "Reads all controls in the active window"
-msgstr "Læser alle kontrolelementer i det aktive vindue"
+msgstr "Læser alle kontrolelementerne i det aktive vindue."
 
 #. Translators: GUI development tool, to get information about the components used in the NVDA GUI
 #: globalCommands.py:3209
@@ -4249,133 +4249,133 @@ msgstr " %s kører i øjeblikket."
 #. Translators: Input help mode message for go to general settings command.
 #: globalCommands.py:3423
 msgid "Shows NVDA's general settings"
-msgstr "Viser NVDAs generelle indstillinger"
+msgstr "Viser NVDA's generelle indstillinger."
 
 #. Translators: Input help mode message for go to select synthesizer command.
 #: globalCommands.py:3433
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr "Viser dialogen med NVDAs talesyntese indstillinger"
+msgstr "Viser dialogen Vælg talesyntese."
 
 #. Translators: Input help mode message for go to speech settings command.
 #: globalCommands.py:3443
 msgid "Shows NVDA's speech settings"
-msgstr "Viser NVDAs indstillinger for tale"
+msgstr "Viser NVDA's indstillinger for tale."
 
 #. Translators: Input help mode message for go to select braille display command.
 #: globalCommands.py:3453
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Viser dialogen til valg at punktdisplay"
+msgstr "Viser dialogen til valg af punktdisplay."
 
 #. Translators: Input help mode message for go to braille settings command.
 #: globalCommands.py:3463
 msgid "Shows NVDA's braille settings"
-msgstr "Viser NVDAs punktindstillinger"
+msgstr "Viser NVDA's punktindstillinger."
 
 #. Translators: Input help mode message for go to audio settings command.
 #: globalCommands.py:3472
 msgid "Shows NVDA's audio settings"
-msgstr "Viser NVDAs lydindstillinger"
+msgstr "Viser NVDA's lydindstillinger."
 
 #. Translators: Input help mode message for go to privacy and security settings command.
 #: globalCommands.py:3482
 msgid "Shows NVDA's privacy and security settings"
-msgstr "Viser NVDAs privatlivs- og sikkerhedsindstillinger"
+msgstr "Viser NVDA's privatlivs- og sikkerhedsindstillinger."
 
 #. Translators: Input help mode message for go to vision settings command.
 #: globalCommands.py:3491
 msgid "Shows NVDA's vision settings"
-msgstr "Viser indstillingskategorien \"Syn\" i NVDAs indstillinger"
+msgstr "Viser indstillingskategorien \"Syn\" i NVDA's indstillinger."
 
 #. Translators: Input help mode message for go to keyboard settings command.
 #: globalCommands.py:3500
 msgid "Shows NVDA's keyboard settings"
-msgstr "Viser NVDAs tastaturindstillinger"
+msgstr "Viser NVDA's tastaturindstillinger."
 
 #. Translators: Input help mode message for go to mouse settings command.
 #: globalCommands.py:3510
 msgid "Shows NVDA's mouse settings"
-msgstr "Viser NVDAs museindstillinger"
+msgstr "Viser NVDA's museindstillinger."
 
 #. Translators: Input help mode message for go to review cursor settings command.
 #: globalCommands.py:3520
 msgid "Shows NVDA's review cursor settings"
-msgstr "Viser indstillingerne for læsemarkøren"
+msgstr "Viser indstillingerne for læsemarkøren."
 
 #. Translators: Input help mode message for go to input composition settings command.
 #: globalCommands.py:3529
 msgid "Shows NVDA's input composition settings"
-msgstr "Viser indstillingerne for inputkomposition"
+msgstr "Viser indstillingerne for inputkomposition."
 
 #. Translators: Input help mode message for go to object presentation settings command.
 #: globalCommands.py:3538
 msgid "Shows NVDA's object presentation settings"
-msgstr "Viser NVDAs indstillinger for objektpræsentation"
+msgstr "Viser NVDA's indstillinger for objektpræsentation."
 
 #. Translators: Input help mode message for go to browse mode settings command.
 #: globalCommands.py:3548
 msgid "Shows NVDA's browse mode settings"
-msgstr "Viser NVDAs indstillinger for gennemsynstilstand"
+msgstr "Viser NVDA's indstillinger for gennemsynstilstand."
 
 #. Translators: Input help mode message for go to document formatting settings command.
 #: globalCommands.py:3558
 msgid "Shows NVDA's document formatting settings"
-msgstr "Viser NVDAs indstillinger for dokumentformatering"
+msgstr "Viser NVDA's indstillinger for dokumentformatering."
 
 #. Translators: Input help mode message for go to Remote Access settings command.
 #: globalCommands.py:3568
 msgctxt "remote"
 msgid "Shows the Remote Access settings"
-msgstr "Viser indstillingerne for Fjernstyring"
+msgstr "Viser indstillingerne for Fjernstyring."
 
 #. Translators: Input help mode message for go to Add-on Store settings command.
 #: globalCommands.py:3577
 msgid "Shows NVDA's Add-on Store settings"
-msgstr "Viser NVDAs indstillinger for tilføjelsescenteret"
+msgstr "Viser NVDA's indstillinger for tilføjelsescenteret."
 
 #. Translators: Input help mode message for go to Windows OCR settings command.
 #: globalCommands.py:3586
 msgid "Shows NVDA's Windows OCR settings"
-msgstr "Viser NVDAs indstillinger for Windows Tekstgenkendelse"
+msgstr "Viser NVDA's indstillinger for Windows Tekstgenkendelse."
 
 #. Translators: Input help mode message for go to Advanced settings command.
 #: globalCommands.py:3595
 msgid "Shows NVDA's Advanced settings"
-msgstr "Viser NVDAs avancerede indstillinger"
+msgstr "Viser NVDA's avancerede indstillinger."
 
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3604
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "Viser dialogen for NVDAs standardordbog"
+msgstr "Viser dialogen for NVDA's standardordbog."
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 #: globalCommands.py:3613
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "Viser dialogen for NVDAs stemmespecifikke ordbog"
+msgstr "Viser dialogen for NVDA's stemmespecifikke ordbog."
 
 #. Translators: Input help mode message for opening temporary dictionary.
 #: globalCommands.py:3622
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "Viser dialogen for NVDAs midlertidige ordbog"
+msgstr "Viser dialogen for NVDA's midlertidige ordbog."
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 #: globalCommands.py:3631
 msgid "Shows the NVDA symbol pronunciation dialog"
-msgstr "Viser dialogen for NVDAs udtale af symboler"
+msgstr "Viser dialogen for NVDA's udtale af symboler."
 
 #. Translators: Input help mode message for go to input gestures dialog command.
 #: globalCommands.py:3640
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Viser dialogen til håndtering af NVDA-kommandoer"
+msgstr "Viser dialogen til håndtering af NVDA-kommandoer."
 
 #. Translators: Input help mode message for go to magnifier settings command.
 #: globalCommands.py:3649
 msgid "Shows NVDA's magnifier settings"
-msgstr "Viser NVDAs forstørrelsesindstillinger"
+msgstr "Viser NVDA's forstørrelsesindstillinger."
 
 #. Translators: Input help mode message for the report current configuration profile command.
 #: globalCommands.py:3659
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "Oplyser navnet på den aktuelle indstillingsprofil, der bruges af NVDA"
+msgstr "Oplyser navnet på den aktuelle indstillingsprofil, der bruges af NVDA."
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
@@ -4398,22 +4398,22 @@ msgstr "Gemmer den aktuelle NVDA-konfiguration"
 #. Translators: Input help mode message for apply last saved or default settings command.
 #: globalCommands.py:3690
 msgid "Pressing once reverts the current configuration to the most recently saved state. Pressing three times resets to factory defaults."
-msgstr "Tryk en gang for at genindlæse den senest gemte konfiguration. Tryk 3 gange for at vende tilbage til fabriksindstillingern."
+msgstr "Tryk én gang for at gendanne den aktuelle konfiguration til den senest gemte tilstand. Tryk tre gange for at gendanne fabriksindstillingerne."
 
 #. Translators: Input help mode message for activate python console command.
 #: globalCommands.py:3705
 msgid "Activates the NVDA Python Console, primarily useful for development"
-msgstr "Aktiverer NVDAs PYTHON konsol. Bruges primært til udviklingsformål"
+msgstr "Aktiverer NVDA's Python-konsol, som primært er nyttig til udvikling."
 
 #. Translators: Input help mode message to activate Add-on Store command.
 #: globalCommands.py:3725
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
-msgstr "Aktiverer Tilføjelsescenteret for at gennemse og administrere tilføjelsespakker til NVDA"
+msgstr "Aktiverer Tilføjelsescenteret for at gennemse og administrere tilføjelsespakker til NVDA."
 
 #. Translators: Input help mode message for toggle speech viewer command.
 #: globalCommands.py:3734
 msgid "Toggles the NVDA Speech viewer, a floating window that allows you to view all the text that NVDA is currently speaking"
-msgstr "Slår talevisning til/fra, et vindue, hvor du kan se alt, hvad NVDA siger"
+msgstr "Slår NVDA's talevisning til og fra. Dette er et flydende vindue, hvor du kan se al den tekst, NVDA aktuelt læser op."
 
 #. Translators: The message announced when disabling speech viewer.
 #: globalCommands.py:3743
@@ -4428,7 +4428,7 @@ msgstr "Talevisning til"
 #. Translators: Input help mode message for toggle Braille viewer command.
 #: globalCommands.py:3756
 msgid "Toggles the NVDA Braille viewer, a floating window that allows you to view braille output, and the text equivalent for each braille character"
-msgstr "Slår punktviser for NVDA til og fra. Denne vises som et flydende vindue, der giver dig mulighed for at se punktoutput, samt den tilsvarende tekst for hvert tegn"
+msgstr "Slår NVDA's punktviser til og fra. Den vises som et flydende vindue, hvor du kan se punktoutput samt den tilsvarende tekst for hvert punkttegn."
 
 #. Translators: The message announced when disabling braille viewer.
 #: globalCommands.py:3767
@@ -4468,7 +4468,7 @@ msgstr "Punkttilstand {brailleMode}"
 #. braille move system caret when routing review cursor command.
 #: globalCommands.py:3830
 msgid "Cycle through the braille move system caret when routing review cursor states"
-msgstr "Skift mellem de forskellige muligheder for indstillingen \"Punkt flytter systemmarkør, når læsemarkøren flyttes med markørknapperne\""
+msgstr "Skifter mellem tilstandene for punktindstillingen Flyt systemmarkøren ved brug af markørknapper med læsemarkøren"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
 #: globalCommands.py:3840
@@ -4491,7 +4491,7 @@ msgstr "Punkt flytter systemmarkør, når læsemarkøren flyttes med markørknap
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 #: globalCommands.py:3872
 msgid "Toggle the way context information is presented in braille"
-msgstr "Skift mellem de forskellige tilstande kontekstinformationer kan vises på punkt"
+msgstr "Skifter den måde, kontekstoplysninger vises på punkt"
 
 #. Translators: Reports the new state of braille focus context presentation.
 #. %s will be replaced with the context presentation setting.
@@ -4504,7 +4504,7 @@ msgstr "Punkt fokuskontekstpræsentation: %s"
 #. Translators: Input help mode message for toggle braille cursor command.
 #: globalCommands.py:3894
 msgid "Toggle the braille cursor on and off"
-msgstr "Slå punktmarkøren til og fra"
+msgstr "Slår punktmarkøren til eller fra"
 
 #. Translators: The message announced when toggling the braille cursor.
 #: globalCommands.py:3901
@@ -4519,7 +4519,7 @@ msgstr "Punktmarkør til"
 #. Translators: Input help mode message for speak on routing command.
 #: globalCommands.py:3913
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
-msgstr "Slår oplæsning af tegnet under markøren til eller fra, når markørknapper flytter markøren i tekst"
+msgstr "Slår oplæsning af tegnet under markøren til og fra, når markøren flyttes i tekst med markørknapper."
 
 #. Translators: The message announced when toggling on speaking character when routing.
 #: globalCommands.py:3921
@@ -4534,7 +4534,7 @@ msgstr "Deaktiveret oplæsning af tegn, når markørknapper flytter markøren i 
 #. Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
 #: globalCommands.py:3929
 msgid "Toggles on and off speaking when navigating by lines or paragraph with braille"
-msgstr "Slår tale til eller fra ved linje- eller afsnitsnavigation med punktskrift"
+msgstr "Slår tale ved navigation efter linjer eller afsnit med punkt til og fra."
 
 #. Translators: The message announced when toggling the speaking on navigating by unit braille setting.
 #: globalCommands.py:3938
@@ -4549,7 +4549,7 @@ msgstr "Tale ved linje- eller afsnitsnavigation med punktskrift slået fra"
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3945
 msgid "Cycle through the braille cursor shapes"
-msgstr "Skifter mellem punktmarkørens tilgængelige forme"
+msgstr "Skifter mellem punktmarkørformerne"
 
 #. Translators: A message reported when changing the braille cursor shape when the braille cursor is turned off.
 #: globalCommands.py:3952
@@ -4565,7 +4565,7 @@ msgstr "Punktmarkør %s"
 #. Translators: Input help mode message for cycle through braille show messages command.
 #: globalCommands.py:3972
 msgid "Cycle through the braille show messages modes"
-msgstr "Skifter mellem de forskellige metoder for visning af beskeder på punktdisplayet"
+msgstr "Skifter mellem tilstandene for visning af beskeder på punkt"
 
 #. Translators: Reports which show braille message mode is used
 #. (disabled, timeout or indefinitely).
@@ -4577,7 +4577,7 @@ msgstr "Vis beskeder på punkt %s"
 #. Translators: Input help mode message for cycle through braille show selection command.
 #: globalCommands.py:3990
 msgid "Cycle through the braille show selection states"
-msgstr "Skift mellem de forskellige indstillinger for visning af valgmarkøren på punktdisplayet"
+msgstr "Skifter mellem tilstandene for visning af markering på punkt"
 
 #. Translators: Used when reporting braille show selection state
 #. (default behavior).
@@ -4596,7 +4596,7 @@ msgstr "Vis valgmarkør på punkt %s"
 #. Translators: Input help mode message for Braille Unicode normalization command.
 #: globalCommands.py:4018
 msgid "Cycle through the braille Unicode normalization states"
-msgstr "Skift mellem de forskellige indstillinger for normalisering på punkt"
+msgstr "Skifter mellem Unicode-normaliseringstilstandene for punkt"
 
 #. Translators: Used when reporting braille Unicode normalization state
 #. (default behavior).
@@ -4615,7 +4615,7 @@ msgstr "Unicode-normalisering på punkt {state}"
 #. Translators: Input help mode message for report clipboard text command.
 #: globalCommands.py:4047
 msgid "Reports the text on the Windows clipboard. Pressing twice spells this information. Pressing three times spells it using character descriptions."
-msgstr "Oplyser teksten i udklipsholderen. Ved to tryk staves informationen. Ved et tredje tryk staves informationen ved brug af tegnbeskrivelser."
+msgstr "Oplyser teksten i Windows-udklipsholderen. Ved to tryk staves den. Ved tre tryk staves den ved hjælp af tegnbeskrivelser."
 
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:4062
@@ -4647,7 +4647,7 @@ msgstr "Start markeret"
 #. select or copy command
 #: globalCommands.py:4107
 msgid "Move the review cursor to the position marked as the start of text to be selected or copied"
-msgstr "Markerer læsemarkørens aktuelle position som begyndelsen af teksten der skal vælges eller kopieres"
+msgstr "Flytter læsemarkøren til den position, der er markeret som begyndelsen på den tekst, der skal vælges eller kopieres."
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -4659,7 +4659,7 @@ msgstr "Ingen startmarkør sat"
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 #: globalCommands.py:4139
 msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
-msgstr "Ved et tryk vælges teksten fra den tidligere startmarkør til og med læsemarkørens aktuelle position. Ved to tryk vil teksten blive kopieret til udklipsholderen"
+msgstr "Ved ét tryk vælges teksten fra den tidligere startmarkør til og med læsemarkørens aktuelle position. Ved to tryk kopieres teksten til udklipsholderen."
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 #: globalCommands.py:4157
@@ -4679,57 +4679,57 @@ msgstr "Kan ikke vælge tekst, tryk to gange for at kopiere"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4211
 msgid "Scrolls the braille display back"
-msgstr "Ruller punktdisplay tilbage"
+msgstr "Ruller punktdisplayet tilbage."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4220
 msgid "Scrolls the braille display forward"
-msgstr "Ruller punktdisplay fremad"
+msgstr "Ruller punktdisplayet frem."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4229
 msgid "Routes the cursor to or activates the object under this braille cell"
-msgstr "Flytter markøren til eller aktiverer objektet under den pågældende punktcelle"
+msgstr "Flytter markøren til eller aktiverer objektet under denne punktcelle."
 
 #. Translators: Input help mode message for Braille report formatting command.
 #: globalCommands.py:4237
 msgid "Reports formatting info for the text under this braille cell"
-msgstr "Oplyser den aktuelle tekstformattering under punktcellen"
+msgstr "Oplyser formateringsoplysninger for teksten under denne punktcelle."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4250
 msgid "Moves the braille display to the previous line"
-msgstr "Flytter punktdisplay  til forrige linje"
+msgstr "Flytter punktdisplayet til den forrige linje."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4259
 msgid "Moves the braille display to the next line"
-msgstr "Flytter punktdisplay til næste linje"
+msgstr "Flytter punktdisplayet til den næste linje."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4268
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "Skriver punkt via Punkttastaturet"
+msgstr "Indtaster punktskrift via punkttastaturet."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4277
 msgid "Moves the braille display to the current focus"
-msgstr "Flytter punktdisplay  til det aktuelle fokus"
+msgstr "Flytter punktdisplayet til det aktuelle fokus."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4299
 msgid "Erases the last entered braille cell or character"
-msgstr "Sletter sidste indtastede punktcelle eller tegn"
+msgstr "Sletter den senest indtastede punktcelle eller det senest indtastede tegn."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4308
 msgid "Translates any braille input and presses the enter key"
-msgstr "Oversætter alt indtastet punkt og trykker på enter"
+msgstr "Oversætter alt punktinput og trykker på enter-tasten."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4317
 msgid "Translates any braille input"
-msgstr "Oversætter alt indtastet punkt"
+msgstr "Oversætter alt punktinput."
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4326
@@ -4837,12 +4837,12 @@ msgstr "Viser webadressen for linket ved systemmarkøren eller fokus i et vindue
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4534
 msgid "Moves to the next object in a flattened view of the object navigation hierarchy"
-msgstr "Flytter til det næste objekt i en flad visning af objektnavigationshierarkiet"
+msgstr "Flytter til det næste objekt i en flad visning af objektnavigationshierarkiet."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4572
 msgid "Moves to the previous object in a flattened view of the object navigation hierarchy"
-msgstr "Flytter til det forrige objekt i en flad visning af objektnavigationshierarkiet"
+msgstr "Flytter til det forrige objekt i en flad visning af objektnavigationshierarkiet."
 
 #. Translators: Describes a command.
 #: globalCommands.py:4605
@@ -4867,12 +4867,12 @@ msgstr "Touchinteraktion deaktiveret"
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4628
 msgid "Cycles between available touch modes"
-msgstr "Skifter mellem tilgængelige touchtilstande"
+msgstr "Skifter mellem tilgængelige touchtilstande."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4643
 msgid "Reports the object and content directly under your finger"
-msgstr "Læser objektet og dets indhold lige under din finger"
+msgstr "Læser objektet og dets indhold lige under din finger."
 
 #. Translators: Input help mode message for a touchscreen gesture.
 #: globalCommands.py:4653
@@ -4892,12 +4892,12 @@ msgstr "Objektet har ingen placering"
 #. Translators: Describes the command to open the Configuration Profiles dialog.
 #: globalCommands.py:4715
 msgid "Shows the NVDA Configuration Profiles dialog"
-msgstr "Viser dialogboksen med NVDAs indstillingsprofiler"
+msgstr "Viser dialogen Indstillingsprofiler"
 
 #. Translators: Input help mode message for toggle configuration profile triggers command.
 #: globalCommands.py:4725
 msgid "Toggles disabling of all configuration profile triggers. Disabling remains in effect until NVDA is restarted"
-msgstr "Skifter deaktivering af alle indstillingsprofiludløsere. Deaktivering forbliver i kraft, indtil NVDA genstartes"
+msgstr "Slår deaktivering af alle udløsere for indstillingsprofiler til og fra. Deaktiveringen forbliver i kraft, indtil NVDA genstartes."
 
 #. Translators: The message announced when temporarily disabling all configuration profile triggers.
 #: globalCommands.py:4734
@@ -5133,7 +5133,7 @@ msgstr "Skifter mellem indstillingerne for lydopdeling"
 #: globalCommands.py:5339
 msgctxt "reportLanguage"
 msgid "Reports the language for the text under the caret. If pressed twice, presents the information in browse mode"
-msgstr "Oplyser sproget for teksten ved markørens aktuelle position. Ved et dobbelttryk vil denne information blive vist i gennemsynstilstand."
+msgstr "Oplyser sproget for teksten ved markørens aktuelle position. Ved to tryk vises oplysningerne i gennemsynstilstand."
 
 #. Translators: Reported when the language of the text at caret is not defined.
 #: globalCommands.py:5354
@@ -5256,7 +5256,7 @@ msgstr "Indstillingsprofil {profile} manuelt aktiveret"
 #: globalCommands.py:5555
 #, python-brace-format
 msgid "Activates or deactivates the {profile} configuration profile"
-msgstr "Aktiverer eller deaktiverer indstillingsprofil {profile}"
+msgstr "Aktiverer eller deaktiverer indstillingsprofil {profile}."
 
 #. Translators: The name of a category of NVDA commands.
 #: inputCore.py:60
@@ -5280,7 +5280,7 @@ msgstr "CTRL+ALT+n"
 #. Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
 #: installer.py:522
 msgid "NVDA web site"
-msgstr "NVDAs hjemmeside"
+msgstr "NVDA's hjemmeside"
 
 #. Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
 #: installer.py:531
@@ -7431,7 +7431,7 @@ msgstr "Søger efter opdatering"
 msgctxt "updateCheck"
 msgid "Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "Sørg for, at du har forbindelse til internettet, og at URL’en til NVDA-spejlserveren er gyldig.\n"
+msgstr "Sørg for, at du har forbindelse til internettet, og at URL'en til NVDA-spejlserveren er gyldig.\n"
 "Spejl-URL: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -7674,7 +7674,7 @@ msgstr "Fejl ved opdatering af tilføjelsesdata"
 msgctxt "addonStore"
 msgid "Make sure you are connected to the internet, and the Add-on Store mirror URL is valid.\n"
 "Mirror URL: {url}"
-msgstr "Sørg for, at du har forbindelse til internettet, og at URL’en til spejlserveren med tilføjelser er gyldig.\n"
+msgstr "Sørg for, at du har forbindelse til internettet, og at URL'en til spejlserveren med tilføjelser er gyldig.\n"
 "Spejl-URL: {url}"
 
 #. Translators: Presented when fetching add-on data from the store fails and the default metadata URL is being used.
@@ -8034,7 +8034,7 @@ msgstr "En opdateret version af denne tilføjelse er påkrævet. Denne tilføjel
 #: addonStore\models\version.py:145
 msgctxt "addonStore"
 msgid "Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be disabled after installation. After installation, you will be able to manually re-enable these add-ons at your own risk. If you rely on these add-ons, please review the list to decide whether to continue with the installation. "
-msgstr "Din NVDA-konfiguration indeholder tilføjelser, der er inkompatible med denne version af NVDA. Disse tilføjelser vil blive deaktiveret efter installationen. Efter installationen vil du være i stand til manuelt at genaktivere disse tilføjelser på egen risiko. Hvis du er afhængig af disse tilføjelser, bedes du gennemgå listen for at beslutte, om du vil fortsætte med installationen."
+msgstr "Din NVDA-konfiguration indeholder tilføjelser, der ikke er kompatible med denne version af NVDA. Tilføjelserne deaktiveres efter installationen. Derefter kan du manuelt aktivere dem igen på eget ansvar. Hvis du er afhængig af disse tilføjelser, bør du gennemgå listen og beslutte, om installationen skal fortsætte. "
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
@@ -8171,7 +8171,7 @@ msgstr "Viser en af de tidligere beskeder."
 #. Translators: This is presented to inform the user that no instant message has been received.
 #: appModules\miranda32.py:136 appModules\vipmud.py:42
 msgid "No message yet"
-msgstr "Endnu ingen meddelelse"
+msgstr "Endnu ingen besked"
 
 #. Translators: This Outlook Express message has an attachment
 #: appModules\msimn.py:20 appModules\outlook.py:571
@@ -8415,7 +8415,7 @@ msgstr "Kunne ikke finde {description} vindue."
 #: appModules\poedit.py:129
 msgctxt "poedit"
 msgid "Reports any notes for translators. If pressed twice, presents the notes in browse mode"
-msgstr "Oplyser noter til oversættere. Hvis der trykkes to gange, vises disse i gennemsynstilstand"
+msgstr "Læser oversætternoter. Hvis der trykkes to gange, vises noterne i gennemsynstilstand."
 
 #. Translators: The description of the "Translator notes" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8428,7 +8428,7 @@ msgstr "noter til oversættere"
 #: appModules\poedit.py:153
 msgctxt "poedit"
 msgid "Reports any comment in the comments window. If pressed twice, presents the comment in browse mode"
-msgstr "Oplæser alle kommentarer i vinduet med kommentarer. Hvis der trykkes to gange, vises dette i gennemsynstilstand"
+msgstr "Læser en kommentar i kommentarvinduet. Hvis der trykkes to gange, vises teksten i gennemsynstilstand."
 
 #. Translators: The description of the "comment" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8441,7 +8441,7 @@ msgstr "kommentar"
 #: appModules\poedit.py:180
 msgctxt "poedit"
 msgid "Reports the previous source text, if any. If pressed twice, presents the text in browse mode"
-msgstr "Oplyser den gamle kildetekst, hvis aktuel. Hvis der trykkes to gange, vises teksten i gennemsynstilstand"
+msgstr "Oplyser den tidligere kildetekst, hvis den findes. Ved to tryk vises teksten i gennemsynstilstand."
 
 #. Translators: The description of the "previous source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -8454,7 +8454,7 @@ msgstr "forrige kildetekst"
 #: appModules\poedit.py:206
 msgctxt "poedit"
 msgid "Reports a translation issue, if any. If pressed twice, presents the warning in browse mode"
-msgstr "Oplyser oversættelsesadvarsel, hvis aktuel. Hvis der trykkes to gange, vises advarslen i gennemsynstilstand"
+msgstr "Oplyser en oversættelsesadvarsel, hvis der er en. Ved to tryk vises advarslen i gennemsynstilstand."
 
 #. Translators: The description of the "translation issue" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -9180,7 +9180,7 @@ msgstr "Tekst"
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
 msgid "Eurobraille displays"
-msgstr "Eurobraille displays"
+msgstr "Eurobraille-punktdisplays"
 
 #. Translators: Message when HID keyboard simulation is unavailable.
 #: brailleDisplayDrivers\eurobraille\driver.py:378
@@ -12918,13 +12918,13 @@ msgstr "Installér ventende opdatering"
 #. Translators: A message in the exit Dialog shown when all add-ons are disabled.
 #: gui\exit.py:88
 msgid "All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again."
-msgstr "Alle tilføjelsesprogrammer er nu slået fra. De vil blive slået til igen ved næste genstart, medmindre du vælger at slå dem fra igen."
+msgstr "Alle tilføjelser er nu deaktiveret. De aktiveres igen ved næste genstart, medmindre du vælger at deaktivere dem igen."
 
 #. Translators: A message in the exit Dialog shown when NVDA language has been
 #. overwritten from the command line.
 #: gui\exit.py:96
 msgid "NVDA's interface language is now forced from the command line. On the next restart, the language  saved in NVDA's configuration will be used instead."
-msgstr "NVDA's grænsefladesprog er nu gennemtvunget fra kommandolinjen. Ved næste genstart vil det sprog, der er gemt i NVDAs konfiguration, blive brugt i stedet."
+msgstr "NVDA's grænsefladesprog er nu gennemtvunget fra kommandolinjen. Ved næste genstart vil det sprog, der er gemt i NVDA's konfiguration, blive brugt i stedet."
 
 #. Translators: The label for actions list in the Exit dialog.
 #: gui\exit.py:104
@@ -12968,7 +12968,7 @@ msgstr[1] "{category} ({nbResults} resultater)"
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:586
 msgid "Input Gestures"
-msgstr "Håndter Kommandoer"
+msgstr "Håndter kommandoer"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:596
@@ -13668,7 +13668,7 @@ msgstr "&Udtaleordbøger:"
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1876
 msgid "&Modes available in the Cycle speech mode command:"
-msgstr "&Tilstande tilgængelige, når kommandoen til at skifte mellem taletilstande benyttes:"
+msgstr "&Tilstande, der er tilgængelige for kommandoen til at skifte mellem taletilstande:"
 
 #. Translators: This is the label for a checkbox in the voice settings panel.
 #: gui\settingsDialogs.py:1890
@@ -13689,7 +13689,7 @@ msgstr "Mindst to taletilstande skal vælges."
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
 #: gui\settingsDialogs.py:1990
 msgid "Modes available in the Cycle speech mode command"
-msgstr "Tilstande tilgængelige, når kommandoen til at skifte mellem taletilstande benyttes"
+msgstr "Tilstande, der er tilgængelige for kommandoen til at skifte mellem taletilstande"
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:1999
@@ -13886,7 +13886,7 @@ msgstr "Oplys ændringer i &kompositionsstrengen"
 #. Translators: This is a label appearing on the Object Presentation settings panel.
 #: gui\settingsDialogs.py:2394
 msgid "Configure how much information NVDA will present about controls. These options apply to focus reporting and NVDA object navigation, but not when reading text content e.g. web content with browse mode."
-msgstr "Bestem, hvor meget information NVDA skal oplyse om diverse kontrolelementer. Disse muligheder gælder for rapportering af fokus og objektnavigation, men ikke ved læsning af tekstindhold f.eks. webindhold i gennemsynstilstand."
+msgstr "Bestemmer, hvor mange oplysninger NVDA skal give om kontrolelementer. Indstillingerne gælder for oplysninger om fokus og NVDA's objektnavigation, men ikke ved læsning af tekstindhold, f.eks. webindhold i gennemsynstilstand."
 
 #. Translators: This is the label for the object presentation panel.
 #: gui\settingsDialogs.py:2400
@@ -15226,7 +15226,7 @@ msgstr "Auto&matisk rullehastighed"
 #: gui\settingsDialogs.py:5647
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
-msgstr "Kunne ikke anvende synshjælpemidlet {providerName}"
+msgstr "Kunne ikke indlæse synshjælpemidlet {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
@@ -15234,7 +15234,7 @@ msgstr "Kunne ikke anvende synshjælpemidlet {providerName}"
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
-msgstr "Kunne ikke indlæse følgende synshjælpemiddel:\n"
+msgstr "Kunne ikke indlæse følgende synshjælpemidler:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
@@ -15247,7 +15247,7 @@ msgstr "Fejl under afvikling af synshjælpemiddel"
 #: gui\settingsDialogs.py:5677
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
-msgstr "Kunne ikke afslutte {providerName} på korrekt vis"
+msgstr "Kunne ikke afslutte synshjælpemidlet {providerName} korrekt"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
@@ -15645,9 +15645,9 @@ msgstr "Indsamling af brugsdata under brugen af NVDA"
 msgid "In order to improve NVDA in the future, NV Access wishes to collect usage data from running copies of NVDA.\n\n"
 "Data includes Operating System version, NVDA version, language, country of origin, plus certain NVDA configuration such as current synthesizer, braille display and braille table. No spoken or braille content will be ever sent to NV Access. Please refer to the User Guide for a current list of all data collected.\n\n"
 "Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
-msgstr "For at forbedre NVDA i fremtiden ønsker NV Access at indsamle brugsdata fra kørende kopier af NVDA.\n\n"
-"Data inkluderer operativsystemversion, NVDA-version, sprog, oprindelsesland, samt visse NVDA-indstillinger som f.eks. aktuelle talesyntese, benyttet punktdisplay og punktskriftsindstillinger. Intet indhold i form af tale eller punktskrift vil blive sendt til NV Access. Se venligst brugervejledningen for en aktuel liste over alle indsamlede data.\n\n"
-"Ønsker du at give tilladelse til, at NV Access regelmæssigt må indsamle brugsdata til forbedring af NVDA?"
+msgstr "For at forbedre NVDA i fremtiden ønsker NV Access at indsamle brugsdata fra aktive kopier af NVDA.\n\n"
+"Dataene omfatter operativsystemets version, NVDA-version, sprog, oprindelsesland samt visse NVDA-indstillinger, f.eks. den aktuelle talesyntese, punktdisplayet og punkttabellen. Intet tale- eller punktindhold sendes nogensinde til NV Access. Du kan se den aktuelle liste over alle indsamlede data i brugervejledningen.\n\n"
+"Vil du tillade, at NV Access regelmæssigt indsamler disse data for at forbedre NVDA?"
 
 #. Translators: Label for a submenu that allows the user to change the default update
 #. channel of the selected add-on
@@ -16548,7 +16548,7 @@ msgstr "Fejl ved start af navigation af matematik."
 #: mathPres\MathCAT\MathCAT.py:120
 msgctxt "math"
 msgid "Error in brailling math: see NVDA error log for details"
-msgstr "Fejl under visning af matematisk indhold på punkt. Se NVDAs fejllog for detaljer"
+msgstr "Fejl under visning af matematik på punkt. Se NVDA's fejllog for nærmere oplysninger."
 
 #. Translators: this message alerts users to an error in navigating math.
 #: mathPres\MathCAT\MathCAT.py:136
@@ -16621,13 +16621,13 @@ msgstr "{lang} ({code})"
 #: mathPres\MathCAT\navCommands.py:26
 msgctxt "math"
 msgid "Move to previous item in math"
-msgstr "Flyt til forrige element i matematik"
+msgstr "Flyt til forrige element i matematik."
 
 #. Translators: Input help message for the command to move to the next item in math.
 #: mathPres\MathCAT\navCommands.py:32
 msgctxt "math"
 msgid "Move to next item in math"
-msgstr "Flyt til næste element i matematik"
+msgstr "Flyt til næste element i matematik."
 
 #. Translators: Input help message for the command to zoom out in math.
 #: mathPres\MathCAT\navCommands.py:38
@@ -16645,25 +16645,25 @@ msgstr "Zoom ind i matematik"
 #: mathPres\MathCAT\navCommands.py:50
 msgctxt "math"
 msgid "Move to previous table cell or digit in math"
-msgstr "Flyt til forrige tabelcelle eller -ciffer i matematik"
+msgstr "Flyt til forrige tabelcelle eller -ciffer i matematik."
 
 #. Translators: Input help message for the command to move to the next table cell or digit in math.
 #: mathPres\MathCAT\navCommands.py:56
 msgctxt "math"
 msgid "Move to next table cell or digit in math"
-msgstr "Flyt til næste tabelcelle eller -ciffer i matematik"
+msgstr "Flyt til næste tabelcelle eller -ciffer i matematik."
 
 #. Translators: Input help message for the command to move to the cell or digit above in math.
 #: mathPres\MathCAT\navCommands.py:62
 msgctxt "math"
 msgid "Move to cell or digit above in math"
-msgstr "Flyt til celle eller ciffer ovenfor i matematik"
+msgstr "Flyt til celle eller ciffer ovenfor i matematik."
 
 #. Translators: Input help message for the command to move to the cell or digit below in math.
 #: mathPres\MathCAT\navCommands.py:68
 msgctxt "math"
 msgid "Move to cell or digit below in math"
-msgstr "Flyt til celle eller ciffer nedenfor i matematik"
+msgstr "Flyt til celle eller ciffer nedenfor i matematik."
 
 #. Translators: Input help message for the command to read the previous item in math.
 #: mathPres\MathCAT\navCommands.py:74
@@ -16753,43 +16753,43 @@ msgstr "Beskriv det aktuelle emne i matematik"
 #: mathPres\MathCAT\navCommands.py:167
 msgctxt "math"
 msgid "Move to start of math expression"
-msgstr "Flyt til start af matematikudtryk"
+msgstr "Flyt til start af matematikudtryk."
 
 #. Translators: Input help message for the command to move to the start of a line in math.
 #: mathPres\MathCAT\navCommands.py:173
 msgctxt "math"
 msgid "Move to start of line in math"
-msgstr "Flyt til start af linje i matematik"
+msgstr "Flyt til start af linje i matematik."
 
 #. Translators: Input help message for the command to move to the start of a column in math.
 #: mathPres\MathCAT\navCommands.py:179
 msgctxt "math"
 msgid "Move to start of column in math"
-msgstr "Flyt til start af kolonne i matematik"
+msgstr "Flyt til start af kolonne i matematik."
 
 #. Translators: Input help message for the command to move to the end of a math expression.
 #: mathPres\MathCAT\navCommands.py:185
 msgctxt "math"
 msgid "Move to end of math expression"
-msgstr "Flyt til slutning af matematikudtryk"
+msgstr "Flyt til slutning af matematikudtryk."
 
 #. Translators: Input help message for the command to move to the end of a line in math.
 #: mathPres\MathCAT\navCommands.py:191
 msgctxt "math"
 msgid "Move to end of line in math"
-msgstr "Flyt til start af linje i matematik"
+msgstr "Flyt til slutning af linje i matematik."
 
 #. Translators: Input help message for the command to move to the end of a column in math.
 #: mathPres\MathCAT\navCommands.py:197
 msgctxt "math"
 msgid "Move to end of column in math"
-msgstr "Flyt til slutning af kolonne i matematik"
+msgstr "Flyt til slutning af kolonne i matematik."
 
 #. Translators: Input help message for the command to move back to the last position in math.
 #: mathPres\MathCAT\navCommands.py:203
 msgctxt "math"
 msgid "Move back to last position in math"
-msgstr "Flyt tilbage til sidste position i matematik"
+msgstr "Flyt tilbage til sidste position i matematik."
 
 #. Translators: Input help message for the command to jump to a placemarker in math; {n} is replaced with the placemarker number.
 #: mathPres\MathCAT\navCommands.py:216
@@ -17129,7 +17129,7 @@ msgstr[1] "%s emner"
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:242
 msgid "Set column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this table. Pressing twice will forget the current column header for this cell."
-msgstr "Indstil kolonneoverskrift. Tryk én gang for at indstille denne celle som den første kolonneoverskrift for enhver celle nedenunder og til højre for den indenfor denne tabel. Tryk to gange for at nulstille den nuværende kolonneoverskrift for denne celle."
+msgstr "Indstil kolonneoverskrift. Tryk én gang for at indstille denne celle som den første kolonneoverskrift for alle celler nedenfor og til højre for den i denne tabel. Tryk to gange for at fjerne den aktuelle kolonneoverskrift fra denne celle."
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:260
@@ -17158,7 +17158,7 @@ msgstr "Kan ikke finde række {rowNumber} kolonne {columnNumber} i kolonneoversk
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:295
 msgid "Set row header. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this table. Pressing twice will forget the current row header for this cell."
-msgstr "Indstil rækkeoverskrift. Tryk én gang for at indstille denne celle som den første rækkeoverskrift for enhver celle nedenunder og til højre for den indenfor denne tabel. Tryk to gange for at nulstille den nuværende rækkeoverskrift for denne celle."
+msgstr "Indstil rækkeoverskrift. Tryk én gang for at indstille denne celle som den første rækkeoverskrift for alle celler nedenfor og til højre for den i denne tabel. Tryk to gange for at fjerne den aktuelle rækkeoverskrift fra denne celle."
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:312
@@ -17187,7 +17187,7 @@ msgstr "Kan ikke finde række {rowNumber} kolonne {columnNumber} i rækkeoverskr
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:346
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr "Oplyser den del af teksten i kommentaren, hvor systemmarkøren er placeret. Hvis der trykkes to gange, vises dette i gennemsynstilstand."
+msgstr "Oplyser teksten i den kommentar, hvor systemmarkøren er placeret. Ved to tryk vises oplysningerne i gennemsynstilstand."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:907
@@ -17231,7 +17231,7 @@ msgstr[1] "{num} forslag"
 #: NVDAObjects\UIA\excel.py:196
 msgctxt "excel-UIA"
 msgid "Shows a browseable message Listing information about a cell's appearance such as outline and fill colors, rotation and size"
-msgstr "Viser en meddelelse med oplysninger om en celles udseende, såsom konturer og udfyldningsfarver, rotation og størrelse. Oplysningerne kan læses med gennemsynstilstand."
+msgstr "Viser en besked, der kan læses i gennemsynstilstand, med oplysninger om en celles udseende, f.eks. kant- og udfyldningsfarver, rotation og størrelse"
 
 #. Translators: The width of the cell in points
 #: NVDAObjects\UIA\excel.py:206
@@ -17460,7 +17460,7 @@ msgstr "Navigering efter sætning understøttes ikke i dette dokument"
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:885
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr "Oplyser den del af teksten i kommentaren, hvor systemmarkøren er placeret. Hvis der trykkes to gange, vises dette i gennemsynstilstand"
+msgstr "Oplyser teksten i den kommentar, hvor systemmarkøren er placeret. Ved to tryk vises oplysningerne i en besked, der kan læses i gennemsynstilstand."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
@@ -18438,7 +18438,7 @@ msgstr "rektangulær graduering"
 #. Translators: the description for the elements list command in Microsoft Excel.
 #: NVDAObjects\window\excel.py:754
 msgid "Lists various types of elements in this spreadsheet"
-msgstr "Liste over forskellige typer elementer i dette ark"
+msgstr "Viser en liste over forskellige typer elementer i dette regneark."
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -18518,7 +18518,7 @@ msgstr "gennemstreget til"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1677
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr "Indstil kolonneoverskrift. Tryk én gang for at indstille denne celle som den første kolonneoverskrift for enhver celle nedenunder og til højre for den indenfor dette område. Tryk to gange for at nulstille den nuværende kolonneoverskrift for denne celle."
+msgstr "Indstil kolonneoverskrift. Tryk én gang for at indstille denne celle som den første kolonneoverskrift for alle celler nedenfor og til højre for den i dette område. Tryk to gange for at fjerne den aktuelle kolonneoverskrift fra denne celle."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1689
@@ -18547,7 +18547,7 @@ msgstr "Kan ikke finde {address} i kolonneoverskrifter"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1708
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr "Indstil rækkeoverskrift. Tryk én gang for at indstille denne celle som den første rækkeoverskrift for enhver celle nedenunder og til højre for den indenfor dette område. Tryk to gange for at nulstille den nuværende rækkeoverskrift for denne celle."
+msgstr "Indstil rækkeoverskrift. Tryk én gang for at indstille denne celle som den første rækkeoverskrift for alle celler nedenfor og til højre for den i dette område. Tryk to gange for at fjerne den aktuelle rækkeoverskrift fra denne celle."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1720
@@ -18582,17 +18582,17 @@ msgstr "Ark {0}, {1}"
 #: NVDAObjects\window\excel.py:1914
 #, python-brace-format
 msgid "Input Message is {title}: {message}"
-msgstr "Input-meddelelse er {title}: {message}"
+msgstr "Inputbeskeden er {title}: {message}"
 
 #: NVDAObjects\window\excel.py:1916
 #, python-brace-format
 msgid "Input Message is {message}"
-msgstr "Input-meddelelse er {message}"
+msgstr "Inputbeskeden er {message}"
 
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1931
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
-msgstr "Oplyser notatet ved den aktuelle celle. Ved to tryk, vil dette vises i gennemsynstilstand"
+msgstr "Oplyser notatet i den aktuelle celle. Ved to tryk vises oplysningerne i gennemsynstilstand."
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
@@ -19341,7 +19341,7 @@ msgstr "Der opstod et problem under aktivering af skærmtæppet og skærmens ind
 #: screenCurtain\_screenCurtain.py:74
 msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
 "Do you wish to continue?"
-msgstr "Aktivering af skærmtæppet vil gøre skærmen på din computer helt sort. Sørg for at du vil være i stand til at navigere uden brug af din skærm, før du fortsætter. \n\n"
+msgstr "Hvis du aktiverer skærmtæppet, bliver computerskærmen helt sort. Sørg for, at du kan navigere helt uden at bruge skærmen, før du fortsætter. \n\n"
 "Vil du fortsætte?"
 
 #. Translators: Reported when the language of the text being read is not supported by the current synthesizer.
@@ -19840,12 +19840,12 @@ msgstr "forlader stavefejl"
 #. Translators: Reported when text contains a grammar error.
 #: speech\speech.py:3091
 msgid "grammar error"
-msgstr "gramatikfejl"
+msgstr "grammatikfejl"
 
 #. Translators: Reported when moving out of text containing a grammar error.
 #: speech\speech.py:3094
 msgid "out of grammar error"
-msgstr "forlader gramatikfejl"
+msgstr "forlader grammatikfejl"
 
 #. Translators: Indicates end of a table.
 #: speech\speech.py:3138
@@ -19990,14 +19990,14 @@ msgstr "position {x}, {y}"
 #: UIAHandler\browseMode.py:113
 #, python-brace-format
 msgid "spelling and grammar: {text}"
-msgstr "stavning og gramatik: {text}"
+msgstr "stavning og grammatik: {text}"
 
 #. Translators: The label shown for a grammar error in the NVDA Elements List dialog in Microsoft Word.
 #. {text} will be replaced with the text of the spelling error.
 #: UIAHandler\browseMode.py:121
 #, python-brace-format
 msgid "grammar: {text}"
-msgstr "gramatik: {text}"
+msgstr "grammatik: {text}"
 
 #. Translators: a style of fill type (to color the inside of a control or text)
 #: UIAHandler\constants.py:19

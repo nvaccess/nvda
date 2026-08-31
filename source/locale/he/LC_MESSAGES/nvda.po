@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-24 00:56+0000\n"
-"PO-Revision-Date: 2026-08-25 23:57\n"
+"POT-Creation-Date: 2026-08-26 00:29+0000\n"
+"PO-Revision-Date: 2026-08-31 00:25\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==2 ? 1 : 2);\n"
 "X-Crowdin-Project: nvda\n"
 "X-Crowdin-Project-ID: 598017\n"
 "X-Crowdin-Language: he\n"
@@ -2322,7 +2322,6 @@ msgid_plural "The following add-ons failed to update: {}."
 msgstr[0] "עדכון התוסף הבא נכשל:{}."
 msgstr[1] "עדכון התוסף הבא נכשל:{}."
 msgstr[2] "עדכון התוספים הבאים נכשל:{}."
-msgstr[3] "עדכון התוספים הבאים נכשל:{}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
 #: core.py:94
@@ -2330,8 +2329,7 @@ msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
 msgstr[0] "הסרת התוסף הבא נכשלה:{}."
 msgstr[1] "הסרת התוסף הבא נכשלה:{}."
-msgstr[2] "הסרת התוסף הבא נכשלה:{}."
-msgstr[3] "הסרת התוספים הבאים נכשלה:{}."
+msgstr[2] "הסרת התוספים הבאים נכשלה:{}."
 
 #. Translators: Shown when one or more add-ons failed to be installed.
 #: core.py:103
@@ -2339,8 +2337,7 @@ msgid "The following add-on failed to be installed: {}."
 msgid_plural "The following add-ons failed to be installed: {}."
 msgstr[0] "התקנת התוסף הבא נכשלה:{}."
 msgstr[1] "התקנת התוסף הבא נכשלה:{}."
-msgstr[2] "התקנת התוסף הבא נכשלה:{}."
-msgstr[3] "התקנת התוספים הבאים נכשלה:{}."
+msgstr[2] "התקנת התוספים הבאים נכשלה:{}."
 
 #. Translators: Shown when one or more actions on add-ons failed.
 #. {failureMsg} will be replaced with the specific error message.
@@ -4639,7 +4636,6 @@ msgid_plural "The clipboard contains a large amount of text. It is %s characters
 msgstr[0] "לוח הגזירים מכיל כמות גדולה של טקסט. הוא מכיל %s תווים"
 msgstr[1] "לוח הגזירים מכיל כמות גדולה של טקסט. הוא מכיל %s תווים"
 msgstr[2] "לוח הגזירים מכיל כמות גדולה של טקסט. הוא מכיל %s תווים"
-msgstr[3] "לוח הגזירים מכיל כמות גדולה של טקסט. הוא מכיל %s תווים"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -7256,7 +7252,6 @@ msgid_plural "{numFingers} finger {action}"
 msgstr[0] "{numFingers} אצבע {action}"
 msgstr[1] "{numFingers} אצבע {action}"
 msgstr[2] "{numFingers} אצבע {action}"
-msgstr[3] "{numFingers} אצבע {action}"
 
 #. Translators: a touch screen gesture where two fingers move toward each other (zoom out)
 #: touchTracker.py:40
@@ -7411,7 +7406,6 @@ msgid_plural "%d characters"
 msgstr[0] "תו %d"
 msgstr[1] "תו %d"
 msgstr[2] "תווים %d"
-msgstr[3] "תווים %d"
 
 #. Translators: Announced when a text has been copied to clipboard.
 #. {text} is replaced by the copied text.
@@ -8381,7 +8375,6 @@ msgid_plural "categories {categories}"
 msgstr[0] "קטגוריה {categories}"
 msgstr[1] "קטגוריה {categories}"
 msgstr[2] "קטגוריות {categories}"
-msgstr[3] "קטגוריות {categories}"
 
 #. Translators: A message reported when on a calendar appointment with category in Microsoft Outlook
 #: appModules\outlook.py:472
@@ -8649,7 +8642,6 @@ msgid_plural "covers left of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
 msgstr[1] "מכסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
 msgstr[2] "מכסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
-msgstr[3] "מכסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:672
@@ -8659,7 +8651,6 @@ msgid_plural "behind left of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכוסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
 msgstr[1] "מכוסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
 msgstr[2] "מכוסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
-msgstr[3] "מכוסה ב{distance:.3g} נקודות מהקצה השמאלי של{otherShape}"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:684
@@ -8669,7 +8660,6 @@ msgid_plural "covers top of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
 msgstr[1] "מכסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
 msgstr[2] "מכסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
-msgstr[3] "מכסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:693
@@ -8679,7 +8669,6 @@ msgid_plural "behind top of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכוסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
 msgstr[1] "מכוסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
 msgstr[2] "מכוסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
-msgstr[3] "מכוסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:705
@@ -8688,8 +8677,7 @@ msgid "covers right of {otherShape} by {distance:.3g} point"
 msgid_plural "covers right of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכסה מימין ל{otherShape} ב{distance:.3g} נקודות"
 msgstr[1] "מכוסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
-msgstr[2] "מכוסה ב{distance:.3g} נקודות מהקצה העליון של{otherShape}"
-msgstr[3] "מכסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
+msgstr[2] "מכסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:714
@@ -8699,7 +8687,6 @@ msgid_plural "behind right of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכוסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
 msgstr[1] "מכוסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
 msgstr[2] "מכוסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
-msgstr[3] "מכוסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:726
@@ -8708,8 +8695,7 @@ msgid "covers bottom of {otherShape} by {distance:.3g} point"
 msgid_plural "covers bottom of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
 msgstr[1] "מכוסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
-msgstr[2] "מכוסה ב{distance:.3g} נקודות מהקצה הימני של{otherShape}"
-msgstr[3] "מכסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
+msgstr[2] "מכסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
 
 #. Translators: A message when a shape is behind another shape on a PowerPoint slide
 #: appModules\powerpnt.py:735
@@ -8719,7 +8705,6 @@ msgid_plural "behind bottom of {otherShape} by {distance:.3g} points"
 msgstr[0] "מכוסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
 msgstr[1] "מכוסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
 msgstr[2] "מכוסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
-msgstr[3] "מכוסה ב{distance:.3g} נקודות מהקצה התחתון של{otherShape}"
 
 #. Translators: A message when a shape is in front of another shape on a PowerPoint slide
 #: appModules\powerpnt.py:743
@@ -8742,7 +8727,6 @@ msgid_plural "{distance:.3g} points from left slide edge"
 msgstr[0] "{distance:.3g} נקודות מהקצה השמאלי של השקף"
 msgstr[1] "{distance:.3g} נקודות מהקצה השמאלי של השקף"
 msgstr[2] "{distance:.3g} נקודות מהקצה השמאלי של השקף"
-msgstr[3] "{distance:.3g} נקודות מהקצה השמאלי של השקף"
 
 #. Translators: For a shape too far off the left edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's left edge (off the slide) to the slide's left edge (where the slide starts)
@@ -8753,7 +8737,6 @@ msgid_plural "Off left slide edge by {distance:.3g} points"
 msgstr[0] "מחוץ לקצה השמאלי של השקף ב {distance:.3g} נקודות"
 msgstr[1] "מחוץ לקצה השמאלי של השקף ב {distance:.3g} נקודות"
 msgstr[2] "מחוץ לקצה השמאלי של השקף ב {distance:.3g} נקודות"
-msgstr[3] "מחוץ לקצה השמאלי של השקף ב {distance:.3g} נקודות"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. top edge to the slide's top edge
@@ -8764,7 +8747,6 @@ msgid_plural "{distance:.3g} points from top slide edge"
 msgstr[0] "{distance:.3g} נקודות מהקצה העליון של השקף"
 msgstr[1] "{distance:.3g} נקודות מהקצה העליון של השקף"
 msgstr[2] "{distance:.3g} נקודות מהקצה העליון של השקף"
-msgstr[3] "{distance:.3g} נקודות מהקצה העליון של השקף"
 
 #. Translators: For a shape too far off the top edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's top edge (off the slide) to the slide's top edge (where the slide starts)
@@ -8775,7 +8757,6 @@ msgid_plural "Off top slide edge by {distance:.3g} points"
 msgstr[0] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
 msgstr[1] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
 msgstr[2] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
-msgstr[3] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. right edge to the slide's right edge
@@ -8785,8 +8766,7 @@ msgid "{distance:.3g} point from right slide edge"
 msgid_plural "{distance:.3g} points from right slide edge"
 msgstr[0] "{distance:.3g} נקודות מהקצה הימני של השקף"
 msgstr[1] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
-msgstr[2] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
-msgstr[3] "{distance:.3g} נקודות מהקצה הימני של השקף"
+msgstr[2] "{distance:.3g} נקודות מהקצה הימני של השקף"
 
 #. Translators: For a shape too far off the right edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's right edge (off the slide) to the slide's right edge (where the slide starts)
@@ -8796,8 +8776,7 @@ msgid "Off right slide edge by {distance:.3g} point"
 msgid_plural "Off right slide edge by {distance:.3g} points"
 msgstr[0] "מחוץ לקצה הימני של השקף ב {distance:.3g} נקודות"
 msgstr[1] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
-msgstr[2] "מחוץ לקצה העליון של השקף ב {distance:.3g} נקודות"
-msgstr[3] "מחוץ לקצה הימני של השקף ב {distance:.3g} נקודות"
+msgstr[2] "מחוץ לקצה הימני של השקף ב {distance:.3g} נקודות"
 
 #. Translators: For a shape within a PowerPoint Slide, this is the distance in points from the shape's
 #. bottom edge to the slide's bottom edge
@@ -8808,7 +8787,6 @@ msgid_plural "{distance:.3g} points from bottom slide edge"
 msgstr[0] "{distance:.3g} נקודות מהקצה התחתון של השקף"
 msgstr[1] "{distance:.3g} נקודות מהקצה התחתון של השקף"
 msgstr[2] "{distance:.3g} נקודות מהקצה התחתון של השקף"
-msgstr[3] "{distance:.3g} נקודות מהקצה התחתון של השקף"
 
 #. Translators: For a shape too far off the bottom edge of a PowerPoint Slide, this is the distance in
 #. points from the shape's bottom edge (off the slide) to the slide's bottom edge (where the slide starts)
@@ -8819,7 +8797,6 @@ msgid_plural "Off bottom slide edge by {distance:.3g} points"
 msgstr[0] "מחוץ לקצה התחתון של השקף ב {distance:.3g} נקודות"
 msgstr[1] "מחוץ לקצה התחתון של השקף ב {distance:.3g} נקודות"
 msgstr[2] "מחוץ לקצה התחתון של השקף ב {distance:.3g} נקודות"
-msgstr[3] "מחוץ לקצה התחתון של השקף ב {distance:.3g} נקודות"
 
 #. Translators: The description for a script
 #: appModules\powerpnt.py:1462
@@ -8890,7 +8867,6 @@ msgid_plural "{val:.2f} inches"
 msgstr[0] "{val:.2f} אינץ'"
 msgstr[1] "{val:.2f} אינץ'"
 msgstr[2] "{val:.2f} אינץ'"
-msgstr[3] "{val:.2f} אינץ'"
 
 #. Translators: a measurement in centimetres
 #: appModules\soffice.py:431 NVDAObjects\IAccessible\__init__.py:128
@@ -8900,7 +8876,6 @@ msgid_plural "{val:.2f} centimetres"
 msgstr[0] "{val:.2f} ס\"מ"
 msgstr[1] "{val:.2f} ס\"מ"
 msgstr[2] "{val:.2f} ס\"מ"
-msgstr[3] "{val:.2f} ס\"מ"
 
 #. Translators: LibreOffice, report cursor position in the current page
 #: appModules\soffice.py:449
@@ -13011,8 +12986,7 @@ msgid "{category} ({nbResults} result)"
 msgid_plural "{category} ({nbResults} results)"
 msgstr[0] "{category} ({nbResults} תוצאה)"
 msgstr[1] "{category} ({nbResults} תוצאה)"
-msgstr[2] "{category} ({nbResults} תוצאה)"
-msgstr[3] "{category} ({nbResults} תוצאות)"
+msgstr[2] "{category} ({nbResults} תוצאות)"
 
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:586
@@ -15808,8 +15782,7 @@ msgid "{num} add-on selected."
 msgid_plural "{num} add-ons selected."
 msgstr[0] "{num} תוסף נבחר."
 msgstr[1] "{num} תוסף נבחר."
-msgstr[2] "{num} תוסף נבחר."
-msgstr[3] "{num} תוספים נבחרים."
+msgstr[2] "{num} תוספים נבחרים."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:250
@@ -15931,7 +15904,6 @@ msgid_plural "{malicious} malware scanners detected this add-on as potentially m
 msgstr[0] "{malicious} סורק תוכנות זדוניות זיהה תוסף זה כזדוני אפשרי (מתוך {total})."
 msgstr[1] "{malicious} סורקי תוכנות זדוניות זיהו תוסף זה כזדוני אפשרי (מתוך {total})."
 msgstr[2] "{malicious} סורקי תוכנות זדוניות זיהו תוסף זה כזדוני אפשרי (מתוך {total})."
-msgstr[3] "{malicious} סורקי תוכנות זדוניות זיהו תוסף זה כזדוני אפשרי (מתוך {total})."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:389
@@ -16251,7 +16223,6 @@ msgid_plural "You have selected to copy {num} add-ons to NVDA's system-wide conf
 msgstr[0] "בחרת להעתיק תוסף {num} לתצורה המערכתית של NVDA. שימוש בתוסף זה בעת הכניסה למערכת ובמסכים בטוחים מהווה סיכון אבטחה חמור."
 msgstr[1] "בחרת להעתיק {num} תוספים לתצורה המערכתית של NVDA. שימוש בתוספים אלה בעת הכניסה למערכת ובמסכים בטוחים מהווה סיכון אבטחה חמור."
 msgstr[2] "בחרת להעתיק {num} תוספים לתצורה המערכתית של NVDA. שימוש בתוספים אלה בעת הכניסה למערכת ובמסכים בטוחים מהווה סיכון אבטחה חמור."
-msgstr[3] "בחרת להעתיק {num} תוספים לתצורה המערכתית של NVDA. שימוש בתוספים אלה בעת הכניסה למערכת ובמסכים בטוחים מהווה סיכון אבטחה חמור."
 
 #. Translators: A message to warn the user when copying their configuration will remove add-ons
 #: gui\addonStoreGui\controls\messageDialogs.py:876
@@ -16262,7 +16233,6 @@ msgid_plural "This action will remove {num} add-ons from NVDA's system-wide conf
 msgstr[0] "פעולה זו תסיר תוסף {num} מהתצורה המערכתית של NVDA. "
 msgstr[1] "פעולה זו תסיר {num} תוספים מהתצורה המערכתית של NVDA. "
 msgstr[2] "פעולה זו תסיר {num} תוספים מהתצורה המערכתית של NVDA. "
-msgstr[3] "פעולה זו תסיר {num} תוספים מהתצורה המערכתית של NVDA. "
 
 #. Translators: A prompt asking the user to confirm whether to perform an action.
 #: gui\addonStoreGui\controls\messageDialogs.py:885
@@ -16341,7 +16311,6 @@ msgid_plural "Installing {num} add-ons, please wait."
 msgstr[0] "מתקין תוסף {num}, נא להמתין."
 msgstr[1] "מתקין {num} תוספים, נא להמתין."
 msgstr[2] "מתקין {num} תוספים, נא להמתין."
-msgstr[3] "מתקין {num} תוספים, נא להמתין."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {num} will be replaced with the number of add-ons to be installed
@@ -16353,7 +16322,6 @@ msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
 msgstr[0] "מתבצעת הורדה של תוסף {num}, לבטל את ההורדה?"
 msgstr[1] "מתבצעת הורדה של {num} תוספים, לבטל את ההורדה?"
 msgstr[2] "מתבצעת הורדה של {num} תוספים, לבטל את ההורדה?"
-msgstr[3] "מתבצעת הורדה של {num} תוספים, לבטל את ההורדה?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -17110,7 +17078,6 @@ msgid_plural "%d percent"
 msgstr[0] "%d אחוז"
 msgstr[1] "%d אחוזים"
 msgstr[2] "%d אחוזים"
-msgstr[3] "%d אחוזים"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered
 #. in various search fields such as Start search box in Windows 10.
@@ -17192,8 +17159,7 @@ msgid "%s item"
 msgid_plural "%s items"
 msgstr[0] "%s פריט"
 msgstr[1] "%s פריט"
-msgstr[2] "%s פריט"
-msgstr[3] "%s פריטים"
+msgstr[2] "%s פריטים"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:242
@@ -17296,7 +17262,6 @@ msgid_plural "{num} suggestions"
 msgstr[0] "{num} הצעה"
 msgstr[1] "{num} הצעות"
 msgstr[2] "{num} הצעות"
-msgstr[3] "{num} הצעות"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:196
@@ -17327,7 +17292,6 @@ msgid_plural "Rotation: {0} degrees"
 msgstr[0] "סובב: {0} מעלות"
 msgstr[1] "סובב: {0} מעלות"
 msgstr[2] "סובב: {0} מעלות"
-msgstr[3] "סובב: {0} מעלות"
 
 #. Translators: The outline (border) colors of an Excel cell.
 #: NVDAObjects\UIA\excel.py:232
@@ -17446,7 +17410,6 @@ msgid_plural "Comment thread: {comment}  by {author} with {numReplies} replies"
 msgstr[0] "שרשור תגובה: {comment} ע\"י {author} עם {numReplies} תשובות"
 msgstr[1] "שרשור תגובה: {comment} ע\"י {author} עם {numReplies} תשובות"
 msgstr[2] "שרשור תגובה: {comment} ע\"י {author} עם {numReplies} תשובות"
-msgstr[3] "שרשור תגובה: {comment} ע\"י {author} עם {numReplies} תשובות"
 
 #. Translators: A message in Excel when there is no comment thread
 #: NVDAObjects\UIA\excel.py:545
@@ -18124,8 +18087,7 @@ msgid "There is %d series in this chart"
 msgid_plural "There are %d series in this chart"
 msgstr[0] "ישנה %d סדרה בתרשים זה"
 msgstr[1] "ישנה %d סדרה בתרשים זה"
-msgstr[2] "ישנה %d סדרה בתרשים זה"
-msgstr[3] "ישנן %d סדרות בתרשים זה"
+msgstr[2] "ישנן %d סדרות בתרשים זה"
 
 #. Translators: Specifies the number and name of a series when listing series in a chart.
 #: NVDAObjects\window\_msOfficeChart.py:620
@@ -19210,7 +19172,6 @@ msgid_plural "%.1f lines"
 msgstr[0] "%.1f שורה"
 msgstr[1] "%.1f שורות"
 msgstr[2] "%.1f שורות"
-msgstr[3] "%.1f שורות"
 
 #. Translators: the title of the message dialog desplaying an MS Word table description.
 #: NVDAObjects\window\winword.py:1486
@@ -19329,8 +19290,7 @@ msgid "{offset:.3g} character"
 msgid_plural "{offset:.3g} characters"
 msgstr[0] "{offset:.3g} תו"
 msgstr[1] "{offset:.3g} תו"
-msgstr[2] "{offset:.3g} תו"
-msgstr[3] "{offset:.3g} תווים"
+msgstr[2] "{offset:.3g} תווים"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:2066
@@ -19339,8 +19299,7 @@ msgid "{offset:.3g} inch"
 msgid_plural "{offset:.3g} inches"
 msgstr[0] "{offset:.3g} אינץ'"
 msgstr[1] "{offset:.3g} אינץ'"
-msgstr[2] "{offset:.3g} אינץ'"
-msgstr[3] "{offset:.3g} אינצ'ים"
+msgstr[2] "{offset:.3g} אינצ'ים"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:2074
@@ -19350,7 +19309,6 @@ msgid_plural "{offset:.3g} centimeters"
 msgstr[0] "{offset:.3g} ס\"מ"
 msgstr[1] "{offset:.3g} ס\"מ"
 msgstr[2] "{offset:.3g} ס\"מ"
-msgstr[3] "{offset:.3g} ס\"מ"
 
 #. Translators: a measurement in Microsoft Word
 #: NVDAObjects\window\winword.py:2082
@@ -19360,7 +19318,6 @@ msgid_plural "{offset:.3g} millimeters"
 msgstr[0] "{offset:.3g} מ\"מ"
 msgstr[1] "{offset:.3g} מ\"מ"
 msgstr[2] "{offset:.3g} מ\"מ"
-msgstr[3] "{offset:.3g} מ\"מ"
 
 #. Translators: a measurement in Microsoft Word (points)
 #: NVDAObjects\window\winword.py:2088
@@ -19377,7 +19334,6 @@ msgid_plural "{offset:.3g} picas"
 msgstr[0] "{offset:.3g} pica"
 msgstr[1] "{offset:.3g} picas"
 msgstr[2] "{offset:.3g} picas"
-msgstr[3] "{offset:.3g} picas"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:2112
@@ -19565,7 +19521,6 @@ msgid_plural "with %s columns"
 msgstr[0] "עם %s עמודות"
 msgstr[1] "עם %s עמודות"
 msgstr[2] "עם %s עמודות"
-msgstr[3] "עם %s עמודות"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
 #: speech\speech.py:2225
@@ -19575,7 +19530,6 @@ msgid_plural "with %s rows"
 msgstr[0] "עם %s שורה"
 msgstr[1] "עם %s שורות"
 msgstr[2] "עם %s שורות"
-msgstr[3] "עם %s שורות"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
@@ -19586,7 +19540,6 @@ msgid_plural "{rowCount} rows"
 msgstr[0] "{rowCount} שורה"
 msgstr[1] "{rowCount} שורות"
 msgstr[2] "{rowCount} שורות"
-msgstr[3] "{rowCount} שורות"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
@@ -19597,7 +19550,6 @@ msgid_plural "{columnCount} columns"
 msgstr[0] "{columnCount} עמודות"
 msgstr[1] "{columnCount} עמודות"
 msgstr[2] "{columnCount} עמודות"
-msgstr[3] "{columnCount} עמודות"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
 #: speech\speech.py:2432
@@ -19607,7 +19559,6 @@ msgid_plural "with %s items"
 msgstr[0] "עם %s פריטים"
 msgstr[1] "עם %s פריטים"
 msgstr[2] "עם %s פריטים"
-msgstr[3] "עם %s פריטים"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
 #: speech\speech.py:2576 speech\speech.py:3034
@@ -19646,7 +19597,6 @@ msgid_plural "%s columns"
 msgstr[0] "%s עמודות"
 msgstr[1] "%s עמודות"
 msgstr[2] "%s עמודות"
-msgstr[3] "%s עמודות"
 
 #. Translators: Indicates the text column number in a document.
 #: speech\speech.py:2680
@@ -20286,7 +20236,6 @@ msgid_plural "{hours:d} hours"
 msgstr[0] "{hours:d} שעות"
 msgstr[1] "{hours:d} hours"
 msgstr[2] "{hours:d} hours"
-msgstr[3] "{hours:d} hours"
 
 #. Translators: This is the minute string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "34 minutes".
@@ -20297,7 +20246,6 @@ msgid_plural "{minutes:d} minutes"
 msgstr[0] "דקה {minutes:d}"
 msgstr[1] "{minutes:d} minutes"
 msgstr[2] "{minutes:d} minutes"
-msgstr[3] "{minutes:d} minutes"
 
 #. Translators: This is the main string for the estimated remaining runtime of the laptop battery.
 #. E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
