@@ -21,19 +21,21 @@ allows host processes to behave the same when running from source.
 """
 
 import os
+from typing import Final
 
 from . import _HOST_MARKER_ENV
 
 __all__ = ["log"]
+
+#: The numeric level of NVDA's ``DEBUGWARNING`` (``logHandler.Logger.DEBUGWARNING``).
+#: Duplicated because the host must not import ``logHandler`` to read it.
+_DEBUGWARNING_LEVEL: Final[int] = 15
 
 
 if os.environ.get(_HOST_MARKER_ENV):
 	# The isolated host: log to our own stdlib logger, never NVDA's.
 	import logging
 
-	#: The numeric level of NVDA's ``DEBUGWARNING``.
-	#: Duplicated because the host must not import ``logHandler`` to read it; keep the two in sync.
-	_DEBUGWARNING_LEVEL = 15
 	logging.addLevelName(_DEBUGWARNING_LEVEL, "DEBUGWARNING")
 
 	class _HostLogger(logging.LoggerAdapter):

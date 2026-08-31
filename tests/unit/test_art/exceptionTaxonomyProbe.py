@@ -22,11 +22,8 @@ Exits ``0`` if the exception arrived as its real class,
 and non-zero with a diagnostic on standard error otherwise.
 """
 
+import os
 import sys
-
-from _art.host import entrypoint
-from _art.host.rootService import HostRootService
-from _art.transport import Connection
 
 #: The capability the probe requests; core refuses every capability for now.
 _REQUESTED_CAPABILITY = "audio"
@@ -37,6 +34,16 @@ def _check() -> list[str]:
 
 	:returns: Human-readable descriptions of each failed expectation, empty if all held.
 	"""
+	# Mark this process as the host before importing any module that reaches ``_art._log``,
+	# exactly as ``entrypoint.main`` does.
+	import _art
+
+	os.environ[_art._HOST_MARKER_ENV] = "1"
+
+	from _art.host import entrypoint
+	from _art.host.rootService import HostRootService
+	from _art.transport import Connection
+
 	stream = entrypoint._claimControlStream()
 	conn = Connection(stream, HostRootService(), name="taxonomy probe host")
 	conn.bgEventLoop(daemon=True)
