@@ -186,15 +186,17 @@ class SubprocessHostController:
 			return None
 
 	def terminate(self) -> None:
-		"""Stop the host process, killing it if it does not go quietly."""
+		"""Stop the host process.
+
+		.. note::
+			This currently hard-kills the host immediately.
+			It can only become a cooperative shutdown once the host has a protocol for one.
+		"""
 		if self._process is None or self._process.poll() is not None:
 			return
 		log.debug("Terminating ART host process")
 		self._process.terminate()
-		if self.wait(_TERMINATE_GRACE_SECONDS) is None:
-			log.debugWarning("ART host did not exit after terminate; killing it")
-			self._process.kill()
-			self._process.wait()
+		self._process.wait()
 
 	def createPipePair(self) -> tuple[Stream, tuple[int, int]]:
 		"""Manufacture a pipe pair for a dependent connection.
@@ -226,16 +228,18 @@ class SubprocessHostController:
 				openHandles += coreRead, hostWriteLocal
 				# The host's read and write handles are not valid in this process,
 				# so we can't close them on failure.
-				# Failure to duplicate `hostWriteLocal` into the host process most likely means that it died,
-				# in which case `hostRead` will already have been freed, anyway.
+				# If the second duplication fails after the first succeeded,
+				# the handle already placed in the host is orphaned there.
+				# Failure to duplicate `hostWriteLocal` into the host process most likely means that the host process died,
+				# in which case `hostRead` will have been freed by the kernel.
 				hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
 				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
 			except Exception:
 				for handle in openHandles:
 					CloseHandle(handle)
 				raise
-			# The host has its own copies now; ours would otherwise hold the pipes open, so the
-			# host would never see end-of-file when core goes away.
+			# The host has its own copies now; ours would otherwise hold the pipes open,
+			# so the host would never see end-of-file when core goes away.
 			CloseHandle(hostReadLocal)
 			CloseHandle(hostWriteLocal)
 			return (

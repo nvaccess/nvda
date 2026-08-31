@@ -49,7 +49,13 @@ class ThreadHostController:
 		try:
 			entrypoint.run(hostStream)
 		except Exception:  # noqa: BLE001
+			# A host failure ends the thread with a non-zero status rather than propagating a traceback.
 			self._exitStatus = 1
+		except BaseException:
+			# SystemExit/KeyboardInterrupt: record failure before letting it unwind the thread,
+			# so a finished thread never lacks a status.
+			self._exitStatus = 1
+			raise
 		else:
 			self._exitStatus = 0
 
@@ -59,8 +65,9 @@ class ThreadHostController:
 			raise RuntimeError("Cannot poll a host that has not been started")
 		if self._thread.is_alive():
 			return None
-		# The thread may have been recorded as finished before _run assigned a status.
-		return self._exitStatus if self._exitStatus is not None else 0
+		# ``_run`` records a status before anything else, so a finished thread always has one;
+		# fall back to a failure status rather than reporting a clean exit if somehow it does not.
+		return self._exitStatus if self._exitStatus is not None else 1
 
 	def wait(self, timeout: float | None = None) -> int | None:
 		"""Wait for the host thread to finish."""

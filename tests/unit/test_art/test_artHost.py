@@ -11,6 +11,7 @@ import os
 import pathlib
 import subprocess
 import sys
+import threading
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -434,3 +435,21 @@ class TestHostRootServiceDisconnect(unittest.TestCase):
 		self.assertTrue(service.terminated)
 		with self.assertRaises(RuntimeError):
 			_ = service.coreRoot
+
+
+class TestThreadHostControllerFailureReporting(unittest.TestCase):
+	"""The thread-backed controller must not report a crashed host thread as a clean exit."""
+
+	def test_finishedThreadWithoutAStatusIsAFailure(self):
+		"""A finished host thread that recorded no status died abnormally; poll reports failure, not 0."""
+		controller = ThreadHostController()
+		finished = threading.Thread(target=lambda: None)
+		finished.start()
+		finished.join()
+		# Stand in for ``_run`` dying from a ``BaseException`` its ``except Exception`` did not catch:
+		# the thread is finished, but no exit status was recorded.
+		controller._thread = finished
+		controller._exitStatus = None
+
+		self.assertIsNotNone(controller.poll())
+		self.assertNotEqual(controller.poll(), 0)
