@@ -22,13 +22,15 @@ import os
 import sys
 from typing import Final
 
-from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
 from winBindings.kernel32 import CloseHandle
 
 from ..transport import Connection
 from ..winHandles import claimHandleFromDescriptor
 from .rootService import HostRootService
+
+#: The host's logger.
+log = logging.getLogger("_art.host")
 
 #: Name of the host's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART host control"
@@ -107,7 +109,12 @@ def _claimControlStream() -> Stream:
 
 
 def _initializeLogging() -> None:
-	"""Send this process's log output to standard error."""
+	"""Send this process's log output to standard error.
+
+	The level is set as low as it goes so that the host captures everything for now;
+	NVDA drains the host's standard error into its own log.
+	"""
+	log.setLevel(logging.DEBUG)
 	handler = logging.StreamHandler(sys.stderr)
 	handler.setFormatter(logging.Formatter("ART host: %(levelname)s - %(name)s - %(message)s"))
 	log.addHandler(handler)
