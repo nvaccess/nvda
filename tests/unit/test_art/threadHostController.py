@@ -55,7 +55,9 @@ class ThreadHostController:
 
 	def poll(self) -> int | None:
 		"""Check whether the host thread has finished, without blocking."""
-		if self._thread is None or self._thread.is_alive():
+		if self._thread is None:
+			raise RuntimeError("Cannot poll a host that has not been started")
+		if self._thread.is_alive():
 			return None
 		# The thread may have been recorded as finished before _run assigned a status.
 		return self._exitStatus if self._exitStatus is not None else 0
@@ -63,7 +65,7 @@ class ThreadHostController:
 	def wait(self, timeout: float | None = None) -> int | None:
 		"""Wait for the host thread to finish."""
 		if self._thread is None:
-			return None
+			raise RuntimeError("Cannot wait on a host that has not been started")
 		self._thread.join(timeout)
 		return self.poll()
 

@@ -133,6 +133,16 @@ class HostControllerConformanceMixin:
 		conn = self.startHost()
 		self.assertEqual(conn.remoteService.ping(), "pong")
 
+	def test_pollBeforeStartIsRefused(self):
+		"""Polling a host that was never started is an error, not a silent ``None``."""
+		with self.assertRaises(RuntimeError):
+			self.controller.poll()
+
+	def test_waitBeforeStartIsRefused(self):
+		"""Waiting on a host that was never started is an error, not a silent ``None``."""
+		with self.assertRaises(RuntimeError):
+			self.controller.wait(_PROCESS_TIMEOUT)
+
 	def test_pollIsNoneWhileTheHostRuns(self):
 		"""A running host has no exit status yet."""
 		conn = self.startHost()

@@ -62,6 +62,7 @@ class HostController[HostPipeEnd](Protocol):
 		"""Check whether the host has finished, without blocking.
 
 		:returns: The exit status, or ``None`` if the host is still running.
+		:raises RuntimeError: If the host has not been started.
 		"""
 		...
 
@@ -70,6 +71,7 @@ class HostController[HostPipeEnd](Protocol):
 
 		:param timeout: Seconds to wait, or ``None`` to wait indefinitely.
 		:returns: The exit status, or ``None`` if the host was still running when ``timeout`` elapsed.
+		:raises RuntimeError: If the host has not been started.
 		"""
 		...
 
@@ -162,20 +164,22 @@ class SubprocessHostController:
 	def poll(self) -> int | None:
 		"""Check whether the host process has exited, without blocking.
 
-		:returns: The exit code of the process, or `None` if the process is till alive.
+		:returns: The exit code of the process, or ``None`` if it is still alive.
+		:raises RuntimeError: If the host has not been started.
 		"""
 		if self._process is None:
-			return None
+			raise RuntimeError("Cannot poll a host that has not been started")
 		return self._process.poll()
 
 	def wait(self, timeout: float | None = None) -> int | None:
 		"""Wait for the host process to exit.
 
 		:param timeout: How long to wait, in seconds.
-		:returns: The exit code of the process, or `None` if it was still alive after ``timeout`` had elapsed.
+		:returns: The exit code of the process, or ``None`` if it was still alive after ``timeout`` had elapsed.
+		:raises RuntimeError: If the host has not been started.
 		"""
 		if self._process is None:
-			return None
+			raise RuntimeError("Cannot wait on a host that has not been started")
 		try:
 			return self._process.wait(timeout)
 		except subprocess.TimeoutExpired:
