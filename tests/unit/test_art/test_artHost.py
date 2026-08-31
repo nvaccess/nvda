@@ -406,3 +406,21 @@ class TestHostLoggingIsolation(unittest.TestCase):
 			0,
 			f"The host did not stay isolated from core: {diagnostic}",
 		)
+
+
+class TestHostRootServiceDisconnect(unittest.TestCase):
+	"""The host root service cleans up when core drops the control connection."""
+
+	def test_onDisconnectClearsConnectionAndTerminates(self):
+		"""After ``on_disconnect``, ``coreRoot`` is unavailable again and the service is terminated."""
+		service = HostRootService()
+		conn = MagicMock()
+		service.on_connect(conn)
+		# Sanity: while connected, coreRoot reaches core through the connection.
+		self.assertIs(service.coreRoot, conn.root)
+
+		service.on_disconnect(conn)
+
+		self.assertTrue(service.terminated)
+		with self.assertRaises(RuntimeError):
+			_ = service.coreRoot

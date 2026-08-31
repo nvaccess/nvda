@@ -35,6 +35,24 @@ class HostRootService(Service):
 		super().on_connect(conn)
 		self._conn = conn
 
+	def on_disconnect(self, conn: rpyc.Connection) -> None:
+		"""Tear the service down when core drops the control connection.
+
+		Clears the recorded connection so :attr:`coreRoot` no longer hands out a dead reference,
+		and terminates the service so anything bound to its lifetime is released deterministically
+		rather than lingering until process exit or garbage collection.
+
+		:param conn: The rpyc connection that has closed.
+
+		.. note::
+			Since there should only ever be one ``HostRootService`` per add-on,
+			this method does not check the identity of ``con``,
+			as it should always be the same as that passed to ``on_connect``.
+		"""
+		super().on_disconnect(conn)
+		self._conn = None
+		self.terminate()
+
 	@property
 	def coreRoot(self) -> rpyc.Service:
 		"""Core's root service, through which capabilities are requested.
