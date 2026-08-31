@@ -7,15 +7,12 @@
 
 from __future__ import annotations
 
-import logging
 from typing import Literal
 
 import rpyc
 
+from .._log import log
 from ..transport import Service
-
-#: This module's logger.
-log = logging.getLogger(__name__)
 
 
 @rpyc.service

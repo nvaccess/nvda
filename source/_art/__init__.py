@@ -15,3 +15,11 @@ This package defines NVDA's out-of-process, sandboxed add-on runtime.
 * :mod:`.exceptions`: The capability failure taxonomy, shared by both sides.
 * :mod:`.winHandles`: Handle ownership helpers, shared by both sides.
 """
+
+from typing import Final
+
+#: Environment variable the host entry point sets, at run time, to mark its process.
+#:
+#: Shared code, like :mod:`._log`, checks for its presence to distinguish between host and core.
+#: It should only be set from :func:`.host.entrypoint.main`.
+_HOST_MARKER_ENV: Final[str] = "ART_HOST"

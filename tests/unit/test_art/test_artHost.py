@@ -377,3 +377,32 @@ class TestExceptionTaxonomyAcrossProcess(unittest.TestCase):
 			0,
 			f"A denial raised by core reached the host as the wrong type: {diagnostic}",
 		)
+
+
+class TestHostLoggingIsolation(unittest.TestCase):
+	"""The host process logs without importing NVDA core.
+
+	Shared transport code logs through :mod:`_art._log`, which resolves to NVDA's ``log`` in core
+	but to a stdlib logger in the host, so the host never imports ``logHandler`` (and core with it).
+	The choice is made once, at import time, from the host marker,
+	so it can only be observed in a process that boots as the host does;
+	see :mod:`.logIsolationProbe`.
+	"""
+
+	def test_hostDoesNotImportLogHandler(self):
+		"""A host process reaches the transport without ``logHandler`` becoming resident."""
+		probe = pathlib.Path(__file__).parent / "logIsolationProbe.py"
+		process = subprocess.run(
+			[sys.executable, str(probe)],
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+			capture_output=True,
+			timeout=_PROCESS_TIMEOUT,
+			check=False,
+		)
+		diagnostic = process.stderr.decode(errors="replace")
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"The host did not stay isolated from core: {diagnostic}",
+		)

@@ -25,12 +25,8 @@ from typing import Final
 from rpyc.core.stream import PipeStream, Stream
 from winBindings.kernel32 import CloseHandle
 
-from ..transport import Connection
+from .. import _HOST_MARKER_ENV
 from ..winHandles import claimHandleFromDescriptor
-from .rootService import HostRootService
-
-#: The host's logger.
-log = logging.getLogger("_art.host")
 
 #: Name of the host's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART host control"
@@ -43,6 +39,11 @@ def run(stream: Stream) -> None:
 
 	:param stream: The host's end of the control connection.
 	"""
+	# Import late to allow ``main`` to set the host marker first.
+	from .._log import log
+	from ..transport import Connection
+	from .rootService import HostRootService
+
 	service = HostRootService()
 	conn = Connection(stream, service, name=CONTROL_CONNECTION_NAME)
 	log.debug("ART host serving control connection")
@@ -111,13 +112,15 @@ def _claimControlStream() -> Stream:
 def _initializeLogging() -> None:
 	"""Send this process's log output to standard error.
 
+	Configures the ``_art`` logger tree root, which every ART logger propagates to, so all of the host's records reach the handler.
 	The level is set as low as it goes so that the host captures everything for now;
 	NVDA drains the host's standard error into its own log.
 	"""
-	log.setLevel(logging.DEBUG)
+	artLog = logging.getLogger("_art")
+	artLog.setLevel(logging.DEBUG)
 	handler = logging.StreamHandler(sys.stderr)
 	handler.setFormatter(logging.Formatter("ART host: %(levelname)s - %(name)s - %(message)s"))
-	log.addHandler(handler)
+	artLog.addHandler(handler)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -127,6 +130,9 @@ def main(argv: list[str] | None = None) -> int:
 		Accepted so that the build ID and the launch arguments that follow it have somewhere to go.
 	:returns: Process exit status.
 	"""
+	# Mark this process as the host before any shared module is imported,
+	# so shared code doesn't attempt to pull in core.
+	os.environ[_HOST_MARKER_ENV] = "1"
 	try:
 		stream = _claimControlStream()
 	except OSError:
@@ -134,9 +140,12 @@ def main(argv: list[str] | None = None) -> int:
 		print("ART host could not claim its control stream", file=sys.stderr)
 		raise
 	_initializeLogging()
+	# Import late because we needed to add the host marker first.
+	from .._log import log
+
 	try:
 		run(stream)
-	except Exception:
+	except Exception:  # noqa: BLE001
 		log.exception("Unhandled exception in ART host")
 		return 1
 	return 0
