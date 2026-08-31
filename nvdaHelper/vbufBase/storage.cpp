@@ -248,7 +248,7 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
-		// Names were sanitized for XML validity when added; see addAttribute.
+		// Names were validated for XML validity when added; see addAttribute.
 		text+=i->first;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
@@ -320,16 +320,14 @@ VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 }
 
 bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::wstring& value) {
-	LOG_DEBUG(L"Adding attribute "<<name<<L" with value "<<value);
-	// #6249, #7173: sanitize the name here, at the buffer's single insertion point,
-	// so the map only ever holds names that are valid in the XML markup
-	// generateAttributesForMarkupOpeningTag serializes to.
-	std::wstring sanitizedName=sanitizeXMLAttribName(name);
-	if(sanitizedName!=name) {
-		// A sanitized name must never replace an attribute whose name was
-		// genuinely valid, so don't overwrite an existing entry.
-		return this->attributes.emplace(std::move(sanitizedName),value).second;
+	// #6249, #7173: Attribute names sourced from browsers can contain characters
+	// which aren't valid in XML names; e.g. spaces from localised action names
+	// or quotes from malformed HTML such as aria-label"foo".
+	if(!isValidXMLAttribName(name)) {
+		LOG_DEBUG(L"Dropping attribute with invalid XML name "<<name);
+		return false;
 	}
+	LOG_DEBUG(L"Adding attribute "<<name<<L" with value "<<value);
 	this->attributes[name]=value;
 	return true;
 }

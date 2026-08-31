@@ -261,12 +261,11 @@ class VBufStorage_fieldNode_t {
 
 /**
  * Adds an attribute to this field.
- * Characters in the name that are invalid in XML attribute names are replaced,
+ * Attributes with names that are invalid in XML are not added,
  * as the buffer serializes attributes as XML markup.
- * A name modified this way will never replace an existing attribute whose name was valid.
  * @param name the name of the attribute
  * @param value the value of the attribute.
- * @return true if the attribute was added, false if there was an error.
+ * @return true if the attribute was added, false if the name was invalid.
  */
 	bool addAttribute(const std::wstring& name, const std::wstring& value);
 

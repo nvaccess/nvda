@@ -38,37 +38,29 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute
 	}
 }
 
-inline bool isValidXMLNameChar(const wchar_t c) {
-	// A conservative subset of the XML NameChar production: expat as shipped with
-	// Python enforces the stricter XML 1.0 fourth edition name rules, so anything
-	// broader risks emitting names it rejects. All attribute names NVDA consumes
-	// are ASCII, so nothing meaningful is lost by replacing the rest.
+inline bool isValidXMLNameStartChar(const wchar_t c) {
 	return (c >= L'a' && c <= L'z')
 		|| (c >= L'A' && c <= L'Z')
-		|| (c >= L'0' && c <= L'9')
-		|| c == L'-' || c == L'.' || c == L':' || c == L'_';
+		|| c == L':' || c == L'_';
 }
 
-inline std::wstring sanitizeXMLAttribName(std::wstring attribName) {
-	// #6249, #7173: Attribute names sourced from browsers can contain characters
-	// which aren't valid in XML names; e.g. spaces from localised Chrome action names
-	// or quotes from malformed HTML such as aria-label"foo".
-	// Replace them so the generated XML stays well-formed.
-	std::replace_if(
-		attribName.begin(), attribName.end(),
-		[](wchar_t c) { return !isValidXMLNameChar(c); },
-		L'_'
-	);
-	// XML names must not be empty or start with a digit, hyphen or period
-	// (NameStartChar is stricter than NameChar).
-	if (attribName.empty() || !(
-		(attribName[0] >= L'a' && attribName[0] <= L'z')
-		|| (attribName[0] >= L'A' && attribName[0] <= L'Z')
-		|| attribName[0] == L'_' || attribName[0] == L':'
-	)) {
-		attribName.insert(0, 1, L'_');
+inline bool isValidXMLNameChar(const wchar_t c) {
+	return isValidXMLNameStartChar(c)
+		|| (c >= L'0' && c <= L'9')
+		|| c == L'-' || c == L'.';
+}
+
+inline bool isValidXMLAttribName(const std::wstring& attribName) {
+	// Use a conservative subset of XML names accepted by the expat parser NVDA uses.
+	// All attribute names NVDA consumes are ASCII.
+	if (attribName.empty() || !isValidXMLNameStartChar(attribName.front())) {
+		return false;
 	}
-	return attribName;
+	return std::all_of(
+		attribName.cbegin() + 1,
+		attribName.cend(),
+		isValidXMLNameChar
+	);
 }
 
 #endif
