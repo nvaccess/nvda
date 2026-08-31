@@ -33,7 +33,19 @@ def run(stream: Stream) -> None:
 
 	:param stream: The host's end of the control connection.
 	"""
-	raise NotImplementedError
+	# Import late to allow ``main`` to set the host marker first.
+	from .._log import log
+	from ..transport import Connection
+	from .rootService import HostRootService
+
+	service = HostRootService()
+	conn = Connection(stream, service, name=CONTROL_CONNECTION_NAME)
+	log.debug("ART host serving control connection")
+	try:
+		conn.eventLoop()
+	finally:
+		log.debug("ART host control connection closed")
+		conn.close()
 
 
 def main(argv: list[str] | None = None) -> int:
