@@ -38,10 +38,27 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute
 	}
 }
 
+inline bool isValidXMLNameChar(const wchar_t c) {
+	// A conservative subset of the XML NameChar production: expat as shipped with
+	// Python enforces the stricter XML 1.0 fourth edition name rules, so anything
+	// broader risks emitting names it rejects. All attribute names NVDA consumes
+	// are ASCII, so nothing meaningful is lost by replacing the rest.
+	return (c >= L'a' && c <= L'z')
+		|| (c >= L'A' && c <= L'Z')
+		|| (c >= L'0' && c <= L'9')
+		|| c == L'-' || c == L'.' || c == L':' || c == L'_';
+}
+
 inline std::wstring sanitizeXMLAttribName(std::wstring attribName) {
-	// #6249: Attribute names can sometimes contain spaces,
-	// but this isn't valid in XML, so filter it out.
-	std::replace(attribName.begin(), attribName.end(), L' ', L'_');
+	// #6249, #7173: Attribute names sourced from browsers can contain characters
+	// which aren't valid in XML names; e.g. spaces from localised Chrome action names
+	// or quotes from malformed HTML such as aria-label"foo".
+	// Replace them so the generated XML stays well-formed.
+	std::replace_if(
+		attribName.begin(), attribName.end(),
+		[](wchar_t c) { return !isValidXMLNameChar(c); },
+		L'_'
+	);
 	return attribName;
 }
 

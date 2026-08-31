@@ -247,8 +247,15 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	}
 	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
+	// #7173: distinct attribute names may become identical after sanitization,
+	// and duplicate attributes are invalid XML, so drop all but the first.
+	set<wstring> seenAttribNames;
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
-		text+=sanitizeXMLAttribName(i->first);
+		wstring attribName=sanitizeXMLAttribName(i->first);
+		if(!seenAttribNames.insert(attribName).second) {
+			continue;
+		}
+		text+=attribName;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
 			appendCharToXML(*j,text,true);

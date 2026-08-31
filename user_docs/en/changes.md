@@ -121,6 +121,7 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 ### Bug Fixes
 
 * 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
 * Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
