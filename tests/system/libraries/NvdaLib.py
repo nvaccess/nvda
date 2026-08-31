@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020 NV Access Limited
+# Copyright (C) 2020-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,15 +159,17 @@ class NvdaLib:
 	_spyServerURI = f"http://127.0.0.1:{_spyServerPort}"
 	_spyAlias = _nvdaSpyAlias
 
-	def _startNVDAProcess(self):
+	def _startNVDAProcess(self, language: str | None = None):
 		"""Start NVDA.
 		Use debug logging, replacing any current instance, using the system test profile directory
 		"""
 		_locations.ensurePathsExist()
+		langStr = "" if language is None else f' --lang="{language}"'
 		command = (
 			f"{_locations.baseNVDACommandline}"
 			f" --debug-logging"
 			f" -r"
+			f"{langStr}"
 			f' -c "{_locations.profileDir}"'
 			f' --log-file "{_locations.logPath}"'
 		)
@@ -290,12 +292,19 @@ class NvdaLib:
 				],
 			)
 
-	def start_NVDA(self, settingsFileName: str, gesturesFileName: str | None = None):
+	def start_NVDA(
+		self,
+		settingsFileName: str,
+		gesturesFileName: str | None = None,
+		language: str | None = None,
+	):
 		self.lastNVDAStart = _datetime.utcnow()  # noqa: DTZ003
 		builtIn.log(f"Starting NVDA with config: {settingsFileName}")
+		if language:
+			builtIn.log(f"Overriding startup language via command line: {language}")
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
-		nvdaProcessHandle = self._startNVDAProcess()
+		nvdaProcessHandle = self._startNVDAProcess(language)
 		builtIn.log("Started NVDA process", level="DEBUG")  # observe timing of the startup
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
@@ -308,11 +317,15 @@ class NvdaLib:
 		"""NVDA logs are saved to the ${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log"""
 		builtIn.log("Saving NVDA log")
 		saveToPath = self.create_preserved_test_output_filename("nvda.log")
-		opSys.copy_file(
-			_locations.logPath,
-			saveToPath,
-		)
-		builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
+		try:
+			opSys.copy_file(
+				_locations.logPath,
+				saveToPath,
+			)
+		except RuntimeError as e:
+			builtIn.log(f"Failed to save NVDA log: {e}", level="WARN")
+		else:
+			builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
 
 	def save_py2exe_boot_log(self):
 		"""If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.

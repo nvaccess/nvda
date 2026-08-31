@@ -505,8 +505,8 @@ Portable and temporary copies of NVDA have the following restrictions:
   * Task Manager
   * Windows 11 Voice Access
 * The inability to read User Account Control (UAC) screens when trying to start an application with administrative privileges.
-* The inability to support input from a touchscreen.
-If the NVDA magnifier is enabled, touchscreen input will not work correctly.
+* NVDA ignores touch input (gestures are passed through).
+* Mouse and touch input will not work correctly with the NVDA magnifier enabled (i.e. inaccurate input).
 * The inability to provide features such as browse mode and speaking of typed characters in Windows Store apps.
 * Audio ducking is not supported.
 
@@ -2327,8 +2327,8 @@ For example, when set to "Line", say all reads by line in Rich Edit controls suc
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Sentence where possible), Sentence where possible, Paragraph, Line|
-|Default |Sentence where possible|
+| Options | Default (Sentence where possible), Sentence where possible, Paragraph, Line |
+| Default | Sentence where possible |
 
 ##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
 
@@ -5566,10 +5566,10 @@ Please see the display's documentation for descriptions of where these keys can 
 
 | Name |Key|
 |---|---|
-| Move braille display to previous line | c1 |
-| Scroll braille display back | c2 |
-| Move braille display to next line | c3 |
-| Scroll braille display forward | c5 |
+| Move braille display to previous line | `c1` |
+| Scroll braille display back | `c2` |
+| Move braille display to next line | `c3` |
+| Scroll braille display forward | `c5` |
 |NVDA Menu |c1+c3+c4+c5 (command n)|
 |windows+d key (minimize all applications) |c1+c4+c5 (command d)|
 |Say all |c1+c2+c3+c4+c5+c6|
