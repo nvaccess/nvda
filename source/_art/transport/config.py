@@ -15,6 +15,11 @@ import builtins
 
 import rpyc.core.vinegar
 
+# ``instantiate_custom_exceptions`` only rebuilds an exception as its real class when that class's module is already resident.
+# Importing the taxonomy here makes it resident on both sides as soon as the transport is,
+# regardless of whether the code that catches an ART exception has imported it first.
+from .. import exceptions  # noqa: F401
+
 #: The rpyc protocol configuration shared by every ART connection.
 #:
 #: These defaults are deliberately restrictive.
@@ -34,6 +39,12 @@ PROTOCOL_CONFIG: dict[str, bool] = {
 	"allow_delattr": False,
 	# pickle would permit arbitrary code execution during deserialization.
 	"allow_pickle": False,
+	# Rebuild remote exceptions as their real classes.
+	# Without this, vinegar substitutes a ``GenericException`` subclass,
+	# which elides ART's exception taxonomy.
+	"instantiate_custom_exceptions": True,
+	# Importing a module named by the peer is arbitrary code execution. Never enable this.
+	"import_custom_exceptions": False,
 	# A raising handler must not tear down the whole channel.
 	"close_catchall": True,
 }
