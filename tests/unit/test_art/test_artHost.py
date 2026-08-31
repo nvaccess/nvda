@@ -37,7 +37,7 @@ _PROCESS_TIMEOUT: float = 30.0
 
 
 def getProbePath(filename: str) -> str:
-	return pathlib.Path(__file__).parent / "probes" / filename
+	return str(pathlib.Path(__file__).parent / "probes" / filename)
 
 
 class TestRootServices(unittest.TestCase):
@@ -329,9 +329,8 @@ class TestControlStreamHandleOwnership(unittest.TestCase):
 		The check runs in a child process, since ``_claimControlStream`` takes over the standard
 		streams of whichever process calls it.
 		"""
-		probe = getProbePath("controlStream.py")
 		process = subprocess.Popen(
-			[sys.executable, str(probe)],
+			[sys.executable, getProbePath("controlStream.py")],
 			stdin=subprocess.PIPE,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
@@ -359,9 +358,8 @@ class TestExceptionTaxonomyAcrossProcess(unittest.TestCase):
 
 	def test_deniedCapabilityArrivesAsItsRealClass(self):
 		"""A denial raised by core is catchable by its taxonomy classes in a fresh host."""
-		probe = getProbePath("exceptionTaxonomy.py")
 		process = subprocess.Popen(
-			[sys.executable, str(probe)],
+			[sys.executable, getProbePath("exceptionTaxonomy.py")],
 			stdin=subprocess.PIPE,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
@@ -403,9 +401,8 @@ class TestHostLoggingIsolation(unittest.TestCase):
 
 	def test_hostDoesNotImportLogHandler(self):
 		"""A host process reaches the transport without ``logHandler`` becoming resident."""
-		probe = getProbePath("logIsolation.py")
 		process = subprocess.run(
-			[sys.executable, str(probe)],
+			[sys.executable, getProbePath("logIsolation.py")],
 			cwd=globalVars.appDir,
 			creationflags=subprocess.CREATE_NO_WINDOW,
 			capture_output=True,
