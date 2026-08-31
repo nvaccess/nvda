@@ -36,6 +36,10 @@ from .threadHostController import ThreadHostController
 _PROCESS_TIMEOUT: float = 30.0
 
 
+def getProbePath(filename: str) -> str:
+	return pathlib.Path(__file__).parent / "probes" / filename
+
+
 class TestRootServices(unittest.TestCase):
 	"""Exercise both root services over an in-process pipe pair.
 
@@ -325,7 +329,7 @@ class TestControlStreamHandleOwnership(unittest.TestCase):
 		The check runs in a child process, since ``_claimControlStream`` takes over the standard
 		streams of whichever process calls it.
 		"""
-		probe = pathlib.Path(__file__).parent / "controlStreamProbe.py"
+		probe = getProbePath("controlStream.py")
 		process = subprocess.Popen(
 			[sys.executable, str(probe)],
 			stdin=subprocess.PIPE,
@@ -350,14 +354,12 @@ class TestExceptionTaxonomyAcrossProcess(unittest.TestCase):
 	only when that class's module is resident in the receiving process.
 	A host process does not import :mod:`_art.exceptions` just by booting,
 	so unless the transport makes the taxonomy resident, a denial raised by core arrives at the host as a ``GenericException`` subclass.
-
-	The check runs in a child process that deliberately avoids importing the taxonomy before the boundary call;
-	see :mod:`.exceptionTaxonomyProbe`.
+	The check runs in a child process that deliberately avoids importing the taxonomy before the boundary call.
 	"""
 
 	def test_deniedCapabilityArrivesAsItsRealClass(self):
 		"""A denial raised by core is catchable by its taxonomy classes in a fresh host."""
-		probe = pathlib.Path(__file__).parent / "exceptionTaxonomyProbe.py"
+		probe = getProbePath("exceptionTaxonomy.py")
 		process = subprocess.Popen(
 			[sys.executable, str(probe)],
 			stdin=subprocess.PIPE,
@@ -396,13 +398,12 @@ class TestHostLoggingIsolation(unittest.TestCase):
 	Shared transport code logs through :mod:`_art._log`, which resolves to NVDA's ``log`` in core
 	but to a stdlib logger in the host, so the host never imports ``logHandler`` (and core with it).
 	The choice is made once, at import time, from the host marker,
-	so it can only be observed in a process that boots as the host does;
-	see :mod:`.logIsolationProbe`.
+	so it can only be observed in a process that boots as the host does.
 	"""
 
 	def test_hostDoesNotImportLogHandler(self):
 		"""A host process reaches the transport without ``logHandler`` becoming resident."""
-		probe = pathlib.Path(__file__).parent / "logIsolationProbe.py"
+		probe = getProbePath("logIsolation.py")
 		process = subprocess.run(
 			[sys.executable, str(probe)],
 			cwd=globalVars.appDir,
