@@ -11,6 +11,8 @@ tears it down.
 It controls the host process, not the add-on running inside it.
 
 The abstraction is provided primarily to facilitate testing.
+
+A thread-backed version for testing is provided at ``tests/unit/test_art/threadHostController.py``.
 """
 
 from __future__ import annotations
