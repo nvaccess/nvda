@@ -5,23 +5,36 @@
 
 """Unit tests for the ART host entry point, root services, and host controllers."""
 
+import msvcrt
+import os
+import pathlib
+import subprocess
+import sys
 import threading
 import unittest
 from unittest.mock import MagicMock
 
+import globalVars
 from _art.exceptions import CapabilityDeniedError, CapabilityUnavailableError, PermissionNotGrantedError
+from _art.host.entrypoint import CONTROL_CONNECTION_NAME
 from _art.host.rootService import HostRootService
 from _art.session.hostController import (
 	HostController,
+	claimProcessControlStream,
 )
 from _art.session.rootService import CoreRootService
 from _art.transport import Connection
+from _art.winHandles import claimHandleFromDescriptor
 from rpyc.core.stream import PipeStream
 
 from .threadHostController import ThreadHostController
 
 #: Bound on anything involving a real process, in seconds.
 _PROCESS_TIMEOUT: float = 30.0
+
+
+def getProbePath(filename: str) -> str:
+	return str(pathlib.Path(__file__).parent / "probes" / filename)
 
 
 class TestRootServices(unittest.TestCase):
@@ -175,6 +188,95 @@ class TestThreadHostController(HostControllerConformanceMixin, unittest.TestCase
 		self.assertIsNotNone(hostEnd)
 		coreEnd.close()
 		hostEnd.close()
+
+
+class TestHostStandardStreams(unittest.TestCase):
+	"""The entry point's defence of the control connection, and its diagnostic channel."""
+
+	def test_strayStdoutDoesNotCorruptTheControlStream(self):
+		"""Output written to standard output after boot must not reach the wire.
+
+		The control connection is carried on the host's standard output, so a stray ``print`` is
+		enough to desynchronise rpyc's framing. The entry point folds standard output into
+		standard error to prevent exactly this, and this is the test that says so.
+		"""
+		script = (
+			"import _art.host.entrypoint as entrypoint\n"
+			"stream = entrypoint._claimControlStream()\n"
+			"print('stray stdout that would otherwise corrupt the wire')\n"
+			"entrypoint.run(stream)\n"
+		)
+		process = subprocess.Popen(
+			[sys.executable, "-c", script],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.DEVNULL,  # We don't care, and a pipe buffer could fill and block
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.wait)
+		self.addCleanup(process.kill)
+		conn = Connection(
+			claimProcessControlStream(process),
+			CoreRootService(),
+			name=f"test {CONTROL_CONNECTION_NAME}",
+		)
+		self.addCleanup(conn.close)
+		conn.bgEventLoop(daemon=True)
+		# If the print had reached the wire, this would fail to deserialize rather than answer.
+		self.assertEqual(conn.remoteService.ping(), "pong")
+
+
+class TestControlStreamHandleOwnership(unittest.TestCase):
+	"""Exactly one owner of each handle carrying the control connection.
+
+	``PipeStream`` closes the handles it is built from.
+	Anything that owns them as well -- a C runtime descriptor, or a Python file object over one --
+	closes them a second time.
+	Since Windows recycles handle values, that second close may land on an unrelated object rather
+	than failing, so these tests assert on ownership rather than on an error.
+	"""
+
+	def test_claimingADescriptorLeavesOneOwner(self):
+		"""The descriptor is released, and its handle survives for the caller to use."""
+		readFd, writeFd = os.pipe()
+		self.addCleanup(os.close, writeFd)
+		handle = claimHandleFromDescriptor(readFd)
+		with self.assertRaises(OSError):
+			# The descriptor is gone, so it cannot close the handle a second time.
+			os.fstat(readFd)
+		# Ownership moved, rather than the object dying with the descriptor.
+		message = b"still open"
+		os.write(writeFd, message)
+		claimed = msvcrt.open_osfhandle(handle, os.O_RDONLY)
+		self.addCleanup(os.close, claimed)
+		self.assertEqual(os.read(claimed, len(message)), message)
+
+	def test_bootReleasesTheDescriptorsItDuplicates(self):
+		"""``_claimControlStream`` gives its descriptors to the stream and keeps none back.
+
+		Reading a handle out of a descriptor does not transfer ownership.
+		A descriptor left behind holds a second claim, which the system closes at process
+		teardown, long after the stream has closed the handle.
+
+		The check runs in a child process, since ``_claimControlStream`` takes over the standard
+		streams of whichever process calls it.
+		"""
+		process = subprocess.Popen(
+			[sys.executable, getProbePath("controlStream.py")],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.kill)
+		_stdout, stderr = process.communicate(timeout=_PROCESS_TIMEOUT)
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"Host boot kept a claim on its control descriptors: {stderr.decode(errors='replace')}",
+		)
 
 
 class TestHostRootServiceDisconnect(unittest.TestCase):

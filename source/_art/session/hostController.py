@@ -17,9 +17,13 @@ A thread-backed version for testing is provided at ``tests/unit/test_art/threadH
 
 from __future__ import annotations
 
+import msvcrt
+import subprocess
 from typing import Protocol
 
-from rpyc.core.stream import Stream
+from rpyc.core.stream import PipeStream, Stream
+
+from ..winHandles import duplicateHandleForSelf
 
 
 class HostController[HostPipeEnd](Protocol):
@@ -64,3 +68,27 @@ class HostController[HostPipeEnd](Protocol):
 		:raises RuntimeError: If the host is not running.
 		"""
 		...
+
+
+def claimProcessControlStream(process: subprocess.Popen) -> Stream:
+	"""Take sole ownership of a child's standard input and output as a control stream.
+
+	Using ``PipeStream(process.stdout, process.stdin)`` sets up a double free:
+	When closed, the file objects and the ``PipeStream`` both close the underlying handles, but neither is aware of the other's actions.
+	Since handles are reused, this may result in an entirely unrelated handle being closed.
+	Duplicating the handles for the stream and closing the file objects immediately leaves one owner of each.
+
+	:param process: The child process whose standard streams carry the control connection.
+	:returns: A stream over the child's standard input and output.
+	:raises RuntimeError: If ``process`` was created without one or both of stdin or stdout piped.
+	:raises OSError: If pipe handle duplication fails.
+	"""
+	stdout = process.stdout
+	stdin = process.stdin
+	if stdout is None or stdin is None:
+		raise RuntimeError("The host process was not created with its standard streams piped")
+	readHandle = duplicateHandleForSelf(msvcrt.get_osfhandle(stdout.fileno()))
+	writeHandle = duplicateHandleForSelf(msvcrt.get_osfhandle(stdin.fileno()))
+	stdout.close()
+	stdin.close()
+	return PipeStream(readHandle, writeHandle)
