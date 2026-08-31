@@ -33,7 +33,7 @@ import NVDAState
 import winKernel
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
-from winBindings.kernel32 import CloseHandle, CreatePipe
+from winBindings.kernel32 import CloseHandle, CreatePipe, OpenProcess
 
 from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
@@ -115,7 +115,7 @@ class SubprocessHostController:
 		if self._process is not None:
 			raise RuntimeError("Host has already been started")
 		if not NVDAState.isRunningAsSource():
-			raise RuntimeError("The ART host can only be launched on the interpreter path; ")
+			raise RuntimeError("The ART host can only be launched on the interpreter path")
 		log.debug(f"Launching ART host: {sys.executable} -m {_HOST_ENTRYPOINT_MODULE}")
 		self._process = subprocess.Popen(
 			[sys.executable, "-m", _HOST_ENTRYPOINT_MODULE],
@@ -210,37 +210,42 @@ class SubprocessHostController:
 		"""
 		if self._process is None:
 			raise RuntimeError("Cannot create a pipe pair before the host has started")
-		targetProcess = self._process._handle
-		# One pipe per direction, since an anonymous pipe is one-way.
-		hostReadLocal, coreWrite, coreRead, hostWriteLocal = HANDLE(), HANDLE(), HANDLE(), HANDLE()
-		openHandles: list[HANDLE] = []
+		targetProcess = OpenProcess(winKernel.PROCESS_DUP_HANDLE, False, self._process.pid)
+		if not targetProcess:
+			raise WinError()
 		try:
-			if not CreatePipe(byref(hostReadLocal), byref(coreWrite), None, _PIPE_BUFFER_SIZE):
-				raise WinError()
-			openHandles += hostReadLocal, coreWrite
-			if not CreatePipe(byref(coreRead), byref(hostWriteLocal), None, _PIPE_BUFFER_SIZE):
-				raise WinError()
-			openHandles += coreRead, hostWriteLocal
-			# The host's read and write handles are not valid in this process,
-			# so we can't close them on failure.
-			# Failure to duplicate `hostWriteLocal` into the host process most likely means that it died,
-			# in which case `hostRead` will already have been freed, anyway.
-			hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
-			hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
-		except Exception:
-			for handle in openHandles:
-				CloseHandle(handle)
-			raise
-		# The host has its own copies now; ours would otherwise hold the pipes open, so the
-		# host would never see end-of-file when core goes away.
-		CloseHandle(hostReadLocal)
-		CloseHandle(hostWriteLocal)
-		return (
-			# PipeStream takes ownership of the handles it's constructed with,
-			# so closing them when done is its responsibility.
-			PipeStream(coreRead.value, coreWrite.value),
-			(hostRead.value, hostWrite.value),
-		)
+			# One pipe per direction, since an anonymous pipe is one-way.
+			hostReadLocal, coreWrite, coreRead, hostWriteLocal = HANDLE(), HANDLE(), HANDLE(), HANDLE()
+			openHandles: list[HANDLE] = []
+			try:
+				if not CreatePipe(byref(hostReadLocal), byref(coreWrite), None, _PIPE_BUFFER_SIZE):
+					raise WinError()
+				openHandles += hostReadLocal, coreWrite
+				if not CreatePipe(byref(coreRead), byref(hostWriteLocal), None, _PIPE_BUFFER_SIZE):
+					raise WinError()
+				openHandles += coreRead, hostWriteLocal
+				# The host's read and write handles are not valid in this process,
+				# so we can't close them on failure.
+				# Failure to duplicate `hostWriteLocal` into the host process most likely means that it died,
+				# in which case `hostRead` will already have been freed, anyway.
+				hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
+				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
+			except Exception:
+				for handle in openHandles:
+					CloseHandle(handle)
+				raise
+			# The host has its own copies now; ours would otherwise hold the pipes open, so the
+			# host would never see end-of-file when core goes away.
+			CloseHandle(hostReadLocal)
+			CloseHandle(hostWriteLocal)
+			return (
+				# PipeStream takes ownership of the handles it's constructed with,
+				# so closing them when done is its responsibility.
+				PipeStream(coreRead.value, coreWrite.value),
+				(hostRead.value, hostWrite.value),
+			)
+		finally:
+			CloseHandle(targetProcess)
 
 
 def claimProcessControlStream(process: subprocess.Popen) -> Stream:
