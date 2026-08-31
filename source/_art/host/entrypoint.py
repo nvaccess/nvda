@@ -73,37 +73,52 @@ def _claimControlStream() -> Stream:
 
 	:returns: The host's end of the control connection.
 	"""
-	#: File descriptors of the standard streams.
+	# File descriptors of the standard streams.
 	STDIN_FD: Final[int] = 0
 	STDOUT_FD: Final[int] = 1
 	STDERR_FD: Final[int] = 2
 	# Duplicate the current stdin and stdout for our own use
 	readFd = os.dup(STDIN_FD)
-	writeFd = os.dup(STDOUT_FD)
-	# Make stdin point to the null device
-	devNullFd = os.open(os.devnull, os.O_RDWR)
 	try:
-		os.dup2(devNullFd, STDIN_FD)
-	finally:
-		os.close(devNullFd)
-	sys.stdin = open(os.devnull)  # noqa: SIM115
-	# make stdout point to stderr
+		writeFd = os.dup(STDOUT_FD)
+	except:
+		os.close(readFd)
+		raise
 	try:
-		os.dup2(STDERR_FD, STDOUT_FD)
-	except OSError:
-		# No usable standard error, so redirect to the null device instead
+		# Make stdin point to the null device
 		devNullFd = os.open(os.devnull, os.O_RDWR)
 		try:
-			os.dup2(devNullFd, STDOUT_FD)
+			os.dup2(devNullFd, STDIN_FD)
 		finally:
 			os.close(devNullFd)
-	sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")  # noqa: SIM115
+		sys.stdin = open(os.devnull)  # noqa: SIM115
+		# make stdout point to stderr
+		try:
+			os.dup2(STDERR_FD, STDOUT_FD)
+		except OSError:
+			# No usable standard error, so redirect to the null device instead
+			devNullFd = os.open(os.devnull, os.O_RDWR)
+			try:
+				os.dup2(devNullFd, STDOUT_FD)
+			finally:
+				os.close(devNullFd)
+		sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")  # noqa: SIM115
+	except:
+		os.close(readFd)
+		os.close(writeFd)
+		raise
 	# ``PipeStream`` closes the handles it is built from, so it has to be their sole owner:
 	# leaving the descriptors open would hand the C runtime a second claim on them.
-	readHandle = claimHandleFromDescriptor(readFd)
+	try:
+		readHandle = claimHandleFromDescriptor(readFd)
+	except OSError:
+		os.close(readFd)
+		os.close(writeFd)
+		raise
 	try:
 		writeHandle = claimHandleFromDescriptor(writeFd)
 	except OSError:
+		os.close(writeFd)
 		CloseHandle(readHandle)
 		raise
 	return PipeStream(readHandle, writeHandle)
