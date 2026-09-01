@@ -13,8 +13,9 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 import rpyc
-from logHandler import log
 from rpyc.core.stream import Stream
+
+from .._log import log
 
 if TYPE_CHECKING:
 	from .connection import Connection

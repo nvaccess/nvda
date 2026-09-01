@@ -14,9 +14,9 @@ import weakref
 from typing import Final
 
 import rpyc
-from logHandler import log
 from rpyc.core.stream import Stream
 
+from .._log import log
 from .config import PROTOCOL_CONFIG
 from .service import Service
 
