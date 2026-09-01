@@ -288,7 +288,15 @@ addTable(
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hi-in-g1.utb", _("Hindi grade 1"), inputForLangs={"hi"}, outputForLangs={"hi"})
+addTable(
+	"hi-in-g1.utb",
+	_("Hindi grade 1"),
+	# #20671: Although Hindi Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+	inputForLangs={"hi"},
+	outputForLangs={"hi"},
+)
 addTable(
 	"hr-comp8.utb",
 	# Translators: The name of a braille table displayed in the
