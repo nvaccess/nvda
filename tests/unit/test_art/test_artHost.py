@@ -5,6 +5,7 @@
 
 """Unit tests for the ART host entry point, root services, and host controllers."""
 
+import io
 import msvcrt
 import os
 import pathlib
@@ -12,7 +13,7 @@ import subprocess
 import sys
 import threading
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import globalVars
 from _art.exceptions import CapabilityDeniedError, CapabilityUnavailableError, PermissionNotGrantedError
@@ -20,6 +21,7 @@ from _art.host.entrypoint import CONTROL_CONNECTION_NAME
 from _art.host.rootService import HostRootService
 from _art.session.hostController import (
 	HostController,
+	SubprocessHostController,
 	claimProcessControlStream,
 )
 from _art.session.rootService import CoreRootService
@@ -188,6 +190,62 @@ class TestThreadHostController(HostControllerConformanceMixin, unittest.TestCase
 		self.assertIsNotNone(hostEnd)
 		coreEnd.close()
 		hostEnd.close()
+
+
+class TestSubprocessHostController(HostControllerConformanceMixin, unittest.TestCase):
+	"""The real implementation, driving a genuine child process.
+
+	These are the tests a thread cannot stand in for.
+	"""
+
+	def makeController(self) -> HostController:
+		return SubprocessHostController()
+
+	def test_hostRunsInADifferentProcess(self):
+		"""The ping is answered by another process, not this one."""
+		self.startHost()
+		self.assertIsNotNone(self.controller._process)
+		self.assertNotEqual(self.controller._process.pid, os.getpid())
+
+	def test_createPipePairRequiresARunningHost(self):
+		"""There is nothing to duplicate handles into before the host starts."""
+		with self.assertRaises(RuntimeError):
+			self.controller.createPipePair()
+
+	def test_createPipePairDuplicatesHandlesIntoTheHost(self):
+		"""Core gets a stream, and the host gets two handle values valid in its own process.
+
+		The host does not consume these until dependent connections exist, so this checks only
+		that the ends are manufactured, not that traffic flows over them.
+		"""
+		self.startHost()
+		coreEnd, hostEnd = self.controller.createPipePair()
+		readHandle, writeHandle = hostEnd
+		self.assertIsInstance(readHandle, int)
+		self.assertIsInstance(writeHandle, int)
+		self.assertNotEqual(readHandle, 0)
+		self.assertNotEqual(writeHandle, 0)
+		coreEnd.close()
+
+	def test_stderrIsForwardedToTheLog(self):
+		"""Whatever the host writes to standard error is surfaced in NVDA's log.
+
+		Leaving the host's standard error unconnected is what makes an unhandled traceback vanish
+		in the 32-bit synth driver host; this is the drain that stops that happening here.
+		"""
+		stderr = io.BytesIO(b"Traceback (most recent call last):\nValueError: boom\n")
+		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
+			SubprocessHostController._drainStderr(stderr)
+		logged = " ".join(str(call) for call in mockLog.warning.call_args_list)
+		self.assertIn("ValueError: boom", logged)
+		self.assertIn("Traceback", logged)
+
+	def test_drainSurvivesUndecodableOutput(self):
+		"""A host writing non-UTF-8 bytes must not kill the drain thread."""
+		stderr = io.BytesIO(b"\xff\xfe not valid utf-8\n")
+		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
+			SubprocessHostController._drainStderr(stderr)
+		self.assertTrue(mockLog.warning.called)
 
 
 class TestHostStandardStreams(unittest.TestCase):
