@@ -40,9 +40,6 @@ from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 #: The module run to boot a host process.
 _HOST_ENTRYPOINT_MODULE: Final[str] = "_art.host.entrypoint"
 
-#: How long :meth:`SubprocessHostController.terminate` waits for a polite exit before killing.
-_TERMINATE_GRACE_SECONDS: Final[float] = 5.0
-
 #: Buffer size for pipes backing dependent connections, matching rpyc's own default.
 _PIPE_BUFFER_SIZE: Final[int] = 130000
 
