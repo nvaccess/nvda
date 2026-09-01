@@ -32,13 +32,27 @@ addTable("ar-ar-g1.utb", _("Arabic grade 1"), inputForLangs={"ar"}, outputForLan
 addTable("ar-ar-g2.ctb", _("Arabic grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("as-in-g1.utb", _("Assamese grade 1"), inputForLangs={"as"}, outputForLangs={"as"})
+addTable(
+	"as-in-g1.utb",
+	_("Assamese grade 1"),
+	# #20671: Although Assamese Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+	inputForLangs={"as"},
+	outputForLangs={"as"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ba.utb", _("Bashkir grade 1"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("be-in-g1.utb", _("Bengali grade 1"))
+addTable(
+	"be-in-g1.utb",
+	_("Bengali grade 1"),
+	# #20671: Although Bengali Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("bel-comp.utb", _("Belarusian computer braille"))
@@ -256,7 +270,15 @@ addTable("ga-g1.utb", _("Irish grade 1"), inputForLangs={"ga"}, outputForLangs={
 addTable("ga-g2.ctb", _("Irish grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("gu-in-g1.utb", _("Gujarati grade 1"), inputForLangs={"gu"}, outputForLangs={"gu"})
+addTable(
+	"gu-in-g1.utb",
+	_("Gujarati grade 1"),
+	# #20671: Although Gujarati Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+	inputForLangs={"gu"},
+	outputForLangs={"gu"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("grc-international-en.utb", _("Greek international braille (2-cell accented letters)"))
@@ -354,7 +376,15 @@ addTable(
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ka-in-g1.utb", _("Kannada grade 1"), inputForLangs={"kn"}, outputForLangs={"kn"})
+addTable(
+	"ka-in-g1.utb",
+	_("Kannada grade 1"),
+	# #20671: Although Kannada Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+	inputForLangs={"kn"},
+	outputForLangs={"kn"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ka.utb", _("Georgian literary braille"))
@@ -381,7 +411,13 @@ addTable("ko-g1.ctb", _("Korean grade 1"), inputForLangs={"ko"}, outputForLangs=
 addTable("ko-g2.ctb", _("Korean grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ks-in-g1.utb", _("Kashmiri grade 1"))
+addTable(
+	"ks-in-g1.utb",
+	_("Kashmiri grade 1"),
+	# #20671: Although Kashmiri Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("lo-g1.utb", _("Lao Grade 1"))
@@ -405,10 +441,22 @@ addTable("mao-nz-g1.ctb", _("Māori Braille"))
 addTable("mk-g1.utb", _("Macedonian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ml-in-g1.utb", _("Malayalam grade 1"))
+addTable(
+	"ml-in-g1.utb",
+	_("Malayalam grade 1"),
+	# #20671: Although Malayalam Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("mn-in-g1.utb", _("Manipuri grade 1"))
+addTable(
+	"mn-in-g1.utb",
+	_("Manipuri grade 1"),
+	# #20671: Although Manipuri Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ms-my-g2.ctb", _("Malay grade 2"), contracted=True)
@@ -420,7 +468,13 @@ addTable("mn-MN-g1.utb", _("Mongolian grade 1"), inputForLangs={"mn"}, outputFor
 addTable("mn-MN-g2.ctb", _("Mongolian grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("mr-in-g1.utb", _("Marathi grade 1"))
+addTable(
+	"mr-in-g1.utb",
+	_("Marathi grade 1"),
+	# #20671: Although Marathi Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("my-g1.utb", _("Burmese grade 1"), inputForLangs={"my"}, outputForLangs={"my"})
@@ -450,7 +504,15 @@ addTable("No-No-g2.ctb", _("Norwegian grade 2"), contracted=True)
 addTable("No-No-g3.ctb", _("Norwegian grade 3"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("np-in-g1.utb", _("Nepali grade 1"), inputForLangs={"ne"}, outputForLangs={"ne"})
+addTable(
+	"np-in-g1.utb",
+	_("Nepali grade 1"),
+	# #20671: Although Nepali Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+	inputForLangs={"ne"},
+	outputForLangs={"ne"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("nso-za-g1.utb", _("Sepedi grade 1"))
@@ -462,7 +524,13 @@ addTable("nso-za-g2.ctb", _("Sepedi grade 2"), contracted=True)
 addTable("ny-mw.utb", _("Chichewa (Malawi) literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("or-in-g1.utb", _("Oriya grade 1"))
+addTable(
+	"or-in-g1.utb",
+	_("Oriya grade 1"),
+	# #20671: Although Oriya Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ovd-6g0.utb", _("Elfdalian 6 dot"))
@@ -494,7 +562,13 @@ addTable("Pt-Pt-g1.utb", _("Portuguese grade 1"), inputForLangs={"pt"}, outputFo
 addTable("Pt-Pt-g2.ctb", _("Portuguese grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("pu-in-g1.utb", _("Punjabi grade 1"))
+addTable(
+	"pu-in-g1.utb",
+	_("Punjabi grade 1"),
+	# #20671: Although Punjabi Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ro-g0.utb", _("Romanian 6 dot"), inputForLangs={"ro"}, outputForLangs={"ro"})
@@ -521,7 +595,13 @@ addTable("ru-ru-g1.ctb", _("Russian contracted braille"), contracted=True, input
 addTable("rw-rw-g1.utb", _("Kinyarwanda literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("sa-in-g1.utb", _("Sanskrit grade 1"))
+addTable(
+	"sa-in-g1.utb",
+	_("Sanskrit grade 1"),
+	# #20671: Although Sanskrit Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("sah.utb", _("Yakut grade 1"), input=False)
@@ -659,7 +739,13 @@ addTable("ta-ta-g1.ctb", _("Tamil grade 1"), inputForLangs={"ta"}, outputForLang
 addTable("tt.utb", _("Tatar grade 1"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("te-in-g1.utb", _("Telugu grade 1"))
+addTable(
+	"te-in-g1.utb",
+	_("Telugu grade 1"),
+	# #20671: Although Telugu Braille is not contracted, later cells can change
+	# earlier output, so NVDA must use its "contracted" input buffering mode.
+	contracted=True,
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("th-comp8-backward.utb", _("Thai 8 dot computer braille"), output=False)

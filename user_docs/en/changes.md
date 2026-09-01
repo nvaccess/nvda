@@ -94,7 +94,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
   * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
-* Fixed incorrect back-translation when using the Hindi grade 1 table for braille input. (#20671)
+* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671)
 
 #### Web browsers
 
