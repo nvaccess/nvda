@@ -16,7 +16,6 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 import globalVars
-import NVDAState
 from _art.exceptions import CapabilityDeniedError, CapabilityUnavailableError, PermissionNotGrantedError
 from _art.host.entrypoint import CONTROL_CONNECTION_NAME
 from _art.host.rootService import HostRootService
@@ -193,10 +192,6 @@ class TestThreadHostController(HostControllerConformanceMixin, unittest.TestCase
 		hostEnd.close()
 
 
-@unittest.skipUnless(
-	NVDAState.isRunningAsSource(),
-	"The ART host runs on the interpreter path; there is no host executable yet",
-)
 class TestSubprocessHostController(HostControllerConformanceMixin, unittest.TestCase):
 	"""The real implementation, driving a genuine child process.
 
@@ -232,11 +227,27 @@ class TestSubprocessHostController(HostControllerConformanceMixin, unittest.Test
 		self.assertNotEqual(writeHandle, 0)
 		coreEnd.close()
 
+	def test_stderrIsForwardedToTheLog(self):
+		"""Whatever the host writes to standard error is surfaced in NVDA's log.
 
-@unittest.skipUnless(
-	NVDAState.isRunningAsSource(),
-	"The ART host runs on the interpreter path; there is no host executable yet",
-)
+		Leaving the host's standard error unconnected is what makes an unhandled traceback vanish
+		in the 32-bit synth driver host; this is the drain that stops that happening here.
+		"""
+		stderr = io.BytesIO(b"Traceback (most recent call last):\nValueError: boom\n")
+		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
+			SubprocessHostController._drainStderr(stderr)
+		logged = " ".join(str(call) for call in mockLog.warning.call_args_list)
+		self.assertIn("ValueError: boom", logged)
+		self.assertIn("Traceback", logged)
+
+	def test_drainSurvivesUndecodableOutput(self):
+		"""A host writing non-UTF-8 bytes must not kill the drain thread."""
+		stderr = io.BytesIO(b"\xff\xfe not valid utf-8\n")
+		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
+			SubprocessHostController._drainStderr(stderr)
+		self.assertTrue(mockLog.warning.called)
+
+
 class TestHostStandardStreams(unittest.TestCase):
 	"""The entry point's defence of the control connection, and its diagnostic channel."""
 
@@ -272,26 +283,6 @@ class TestHostStandardStreams(unittest.TestCase):
 		conn.bgEventLoop(daemon=True)
 		# If the print had reached the wire, this would fail to deserialize rather than answer.
 		self.assertEqual(conn.remoteService.ping(), "pong")
-
-	def test_stderrIsForwardedToTheLog(self):
-		"""Whatever the host writes to standard error is surfaced in NVDA's log.
-
-		Leaving the host's standard error unconnected is what makes an unhandled traceback vanish
-		in the 32-bit synth driver host; this is the drain that stops that happening here.
-		"""
-		stderr = io.BytesIO(b"Traceback (most recent call last):\nValueError: boom\n")
-		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
-			SubprocessHostController._drainStderr(stderr)
-		logged = " ".join(str(call) for call in mockLog.warning.call_args_list)
-		self.assertIn("ValueError: boom", logged)
-		self.assertIn("Traceback", logged)
-
-	def test_drainSurvivesUndecodableOutput(self):
-		"""A host writing non-UTF-8 bytes must not kill the drain thread."""
-		stderr = io.BytesIO(b"\xff\xfe not valid utf-8\n")
-		with patch("_art.session.hostController.log", new=MagicMock()) as mockLog:
-			SubprocessHostController._drainStderr(stderr)
-		self.assertTrue(mockLog.warning.called)
 
 
 class TestControlStreamHandleOwnership(unittest.TestCase):
