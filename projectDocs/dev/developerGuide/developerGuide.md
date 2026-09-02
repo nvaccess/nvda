@@ -1317,7 +1317,7 @@ For more information on speech dictionaries, refer to the [User Guide](https://d
 In addition to provide speech dictionaries, add-ons can manipulate existing speech dictionaries
 
 ```python
-tempDict = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.TEMP).dictionary
+tempDict = speechDictHandler.definitions.getDictionaryDefinition(DictionaryType.TEMP).dictionary
 for entry in tempDict:
 	tempDict.remove(entry)
 ```
