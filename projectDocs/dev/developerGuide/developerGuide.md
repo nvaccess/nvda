@@ -1320,7 +1320,7 @@ In addition to provide speech dictionaries, add-ons can manipulate existing spee
 tempDict = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.TEMP).dictionary
 for entry in tempDict:
 	tempDict.remove(entry)
-```)
+```
 
 For more information, look at `speechDictHandler.types.py`.
 
