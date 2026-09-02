@@ -1,75 +1,106 @@
 # Windows and NVDA validation report
 
-## Environment
+## Environment and scope
 
 * Date: 2026-08-29
-* Host: `DESKTOP-09H5AA7`
-* Operating system: Windows 10 build 19045
-* NVDA: 2026.1.1 portable
-* Worker Python: 3.12
-* Model profile: PP-OCRv6 tiny, CPUExecutionProvider
-* Source: `feature/ospp-on-device-ocr` at this report's revision
+* Host: Windows 10 Home Chinese, build 19045, 64-bit
+* NVDA: 2026.1.1 stable and 2026.2rc2, isolated portable configurations
+* Worker: frozen Python 3.12 AMD64 executable, CPUExecutionProvider
+* Profiles: PP-OCRv6 tiny and small
+* Source: uncommitted local development on `feature/ospp-on-device-ocr`
+
+This is local development/acceptance evidence, not a release claim. The declared manifest range is minimum NVDA
+2026.1 and last-tested NVDA 2026.2. The candidate was not committed, pushed, submitted, or installed over the user's
+normal NVDA configuration.
 
 ## Outcome
 
-The packaged add-on loaded in an isolated NVDA configuration and completed real-model recognition through the
-`NVDA+Alt+O` gesture. A 1400x500 Chinese/English image produced these ordered result lines:
+The final candidate passed its complete Windows validation helper. The packaged add-on loaded in both tested NVDA
+versions and completed a real `NVDA+Alt+O` gesture. The worker returned these ordered lines exactly:
 
 ```text
 NVDA on-device OCR
 离线识别：你好，世界2026
-Privacy first - fast and local
+Privacy first · fast and local
 ```
 
-NVDA automatically read the result, and the same `LinesWordsResult` was rendered by NVDA's Braille Viewer. The
-standard content-recognition result document remained navigable and dismissible. No ONNX Runtime or NumPy module
-was loaded into `nvda.exe`.
+NVDA announced the result through its standard content-recognition result flow. Inspection of `nvda.exe` found no
+NumPy or ONNX Runtime module. A repeated gesture while a delayed request was active cancelled/replaced the first
+request and produced exactly one completion. All isolated NVDA and Worker processes were absent after cleanup.
 
-## Defects found by the Windows run
+## Final artifact audit
 
-1. PyInstaller initially copied private, older MSVC runtime DLLs beside the Worker. They shadowed the current system
-   redistributable and caused ONNX Runtime DLL initialization to fail. The build now excludes those exact runtime
-   names and checks for the current x64 VC++ 2015-2022 runtime before packaging.
-2. The settings panel used the obsolete top-level `guiHelper` import. It now imports `guiHelper` from NVDA's `gui`
-   package and loads as the twentieth settings category in NVDA 2026.1.1.
-3. A frozen Worker inherited the Windows system code page. Chinese JSON was therefore not valid UTF-8 when read by
-   NVDA's explicitly UTF-8 client. The Worker now reconfigures stdin, stdout, and stderr at startup; a regression
-   test starts it with `PYTHONIOENCODING=cp1252` and verifies a Chinese request ID round-trips as UTF-8.
+| Field | Value |
+| --- | --- |
+| Candidate | `onDeviceOcr-0.2.0-fully-adapted-localtest.nvda-addon` |
+| Size | 33,087,794 bytes |
+| SHA-256 | `bafa1f94b42c40fdc1e5a023ecea8a2648435ab674c9e2b9ca3a2e5f6c355193` |
+| Archive | 17 entries; required paths present; no duplicates or unsafe paths |
+| Exclusions | no ONNX model, `.po`, `.pyc`, `.pyo`, `__pycache__`, or `.part` entry |
+| Source match | every packaged source/config/help/catalog entry matched the audited Windows source |
+| Localization | compiled `zh_CN` catalog loaded successfully |
+| Embedded Worker | 33,345,445 bytes; SHA-256 `48a7c548a4427e60ead409c1b6d70792942bc35bc151346ae57afa4697fcb768` |
+| PE machine | `0x8664` (AMD64) |
+| Manifest | minimum 2026.1; last tested 2026.2 |
 
-## Functional evidence
+The source archive transferred for this run had SHA-256
+`36ede5962fb7649ff26576b553ce137fedf69676bd75533ec97d10c2ac8e86d0`.
+
+## Functional and compatibility evidence
 
 | Check | Observation | Result |
 | --- | --- | --- |
-| Build | Reproducible PyInstaller build and `.nvda-addon` packaging completed | Pass |
-| Frozen protocol | Test-double request exited 0 with version and request ID intact | Pass |
-| Real frozen inference | Three Chinese/English lines, CPUExecutionProvider | Pass |
-| NVDA add-on load | `onDeviceOcr 0.2.0` added to `globalPlugins` | Pass |
-| Settings | `On-device OCR`, category 20 of 20, controls created without error | Pass |
-| Gesture | Windows key events invoked `kb(desktop):NVDA+alt+o` | Pass |
-| Speech | NVDA log contains all three ordered result lines | Pass |
-| Braille | NVDA Braille Viewer rendered the standard recognition result | Pass |
-| Warm reuse | Same Worker PID, `sessionCacheHit=True` | Pass |
-| Idle release | Worker exited after the configured 120 seconds | Pass |
-| Main-process isolation | `nvda.exe` loaded ML module count: 0 | Pass |
-| Automated regression | 16 tests passed on Windows with `ResourceWarning` as error | Pass |
+| Automated regression | 42 tests passed in 2.950 seconds with `ResourceWarning` as error | Pass |
+| Build | frozen Worker PE validation and add-on packaging completed | Pass |
+| Stable NVDA | 2026.1.1 AMD64; 175 modules; real gesture returned three lines/regions | Pass |
+| Next NVDA line | 2026.2rc2 AMD64; 183 modules; real gesture returned three lines/regions | Pass |
+| Main-process isolation | forbidden NumPy/ONNX Runtime modules: none in both NVDA runs | Pass |
+| NVDA errors | add-on-specific errors: none in all four NVDA scenarios | Pass |
+| Cancellation/replacement | two gestures 0.2 seconds apart against a two-second request; one completion | Pass |
+| Small capture | approximately 287×39 focused capture submitted as 1148×156; bounded below 1280 | Pass |
+| Normal capture | remains at 1x; deskew fallback remains inactive on normal horizontal text | Pass |
+| Localization | zh_CN manifest/catalog and translated settings/status/error strings packaged | Pass |
+| Cleanup | NVDA and Worker process lists empty before and after the isolated suite | Pass |
 
-## Timing and memory
+Two processes with the Worker executable path are visible during each PyInstaller one-file run: its bootloader parent
+and extracted child. This is expected one-file behavior; neither remained after the test. PowerShell also labels
+native stderr from verbose `unittest` and PyInstaller progress as `NativeCommandError` / `RemoteException`; the same
+build log ends with the test `OK`, both artifact creation messages, and `FULL_ADAPT_BUILD_PASSED`.
 
-The large Chinese/English NVDA run took 0.3566 seconds inside the Worker on a cold session. Its warm cached rerun took
-0.2639 seconds and reused Worker PID 16740. An earlier 960x320 cached run took 0.2989 seconds cold and 0.2557 seconds
-warm. These are comfortably below the three-second target and five-second OSPP outer bound.
+## Real-model timing
 
-The observed warm Worker working set was 75,476,992 bytes. At the isolation check, NVDA's working set was 185,499,648
-bytes and its loaded-module list contained no `onnxruntime` or `numpy` module. The Worker was absent after idle expiry.
+| Profile/case | End-to-end | Worker inference | Session cache | Result |
+| --- | ---: | ---: | --- | --- |
+| Tiny, 8-degree sample, cold | 1.3121 s | 0.2120 s | no | exact; one deskewed region |
+| Tiny, mixed sample, warm | 0.0986 s | 0.0977 s | yes | exact three lines |
+| Small, mixed sample, cold | 4.8466 s | 0.3790 s | no | exact three lines |
+| Small, mixed sample, warm | 0.3307 s | 0.3298 s | yes | exact three lines |
 
-## Final artifact
+The small profile's cold start is within the OSPP five-second outer interaction bound but close to its edge. Tiny is
+the appropriate default for a lightweight experience; small remains an explicit higher-accuracy choice.
 
-* File: `onDeviceOcr-0.2.0.nvda-addon`
-* Size: 33,079,716 bytes
-* SHA-256: `cf2cc5d1515a838ace5e2e912360d36289454a3c2d0fea96c77d4bc1605c6bd7`
-* Embedded Worker size: 33,342,428 bytes
-* Embedded Worker SHA-256: `9594f9ed7c71ea7a587fb84db780482ba3e93bd6dc1c0a75dc091b7bda9bb599`
+## Defects found and closed during Windows testing
 
-The test used an isolated portable NVDA configuration. Optional `ftd2xx` and remote-console accessibility warnings
-in the log were unrelated to this add-on. Small default-size Notepad text was less reliable than the large image;
-this is an OCR quality limitation to retain in future corpus testing, not a protocol or NVDA integration failure.
+1. Private older MSVC DLLs shadowed the current system redistributable; exact runtime names are excluded and the x64
+   VC++ 2015–2022 runtime is checked before packaging.
+2. The settings panel used an obsolete top-level `guiHelper` import; it now uses NVDA's supported `gui` package.
+3. Frozen Worker streams inherited the Windows code page; stdin/stdout/stderr are now explicitly UTF-8.
+4. The archiver admitted stale Python caches; it now walks a sorted filtered list and validates the package.
+5. The add-on claimed an untested future NVDA version; `lastTestedNVDAVersion` now truthfully declares 2026.2 after
+   validation on 2026.2rc2.
+6. Very small navigator objects lost text detail; only small captures now receive bounded nearest-neighbour scaling.
+7. Corrupt settings/profile values and unexpected capture/plugin exceptions could escape the command boundary;
+   fallback, localized reporting, and lifecycle cleanup now cover those paths.
+
+## Honest residual boundaries
+
+* The 17-case small-text corpus is 15/17 exact; 8 px and 10 px samples remain below reliable OCR quality. The new
+  scaling fixes small capture surfaces, but it cannot recreate source glyph detail that is absent.
+* Vertical text, handwriting, strong perspective, 90-degree/arbitrary rotation, and complex multi-column layout are
+  outside this lightweight horizontal desktop-UI postprocessor.
+* Windows 11 ARM64 and native ARM64 packaging were not tested. The supplied Worker is deliberately verified AMD64.
+* NVDA 2026.2 final was not available for this run; 2026.2rc2 was tested. The manifest does not claim 2026.3.
+* The command stays on `NVDA+Alt+O`; taking over core `NVDA+R` awaits the engine-selection design in issue #17406.
+
+Within the declared Windows x64, NVDA 2026.1–2026.2, horizontal desktop-text scope, no known integration, isolation,
+localization, cancellation, packaging, or process-cleanup defect remained after this run.

@@ -8,8 +8,11 @@ every run. Retain the NVDA log and a machine-readable timing summary.
 * Build `onDeviceOcr-0.2.0.nvda-addon` with the provided PowerShell script.
 * Install into a current NVDA portable or user profile and restart NVDA.
 * Confirm **NVDA Settings > On-device OCR** opens without an error.
+* Confirm the Simplified Chinese manifest, settings, status, and error strings load from the compiled catalog.
 * Confirm `nvda.exe` has not loaded `onnxruntime.dll`, NumPy, PaddleOCR, PaddlePaddle, RapidOCR, or the model files.
 * Confirm `onnxOcrWorker.exe` is a child process only after recognition begins.
+* Confirm the packaged Worker PE machine is AMD64 and the archive contains no models, source catalogs, Python
+  caches, partial downloads, duplicate paths, or unsafe paths.
 
 ## Functional matrix
 
@@ -27,12 +30,18 @@ every run. Retain the NVDA log and a machine-readable timing summary.
 | Network unavailable with valid cache | Recognition succeeds offline |
 | Screen Curtain | Uses NVDA's existing content-recognition capture policy and messages |
 | Excel focused | Existing row-header gesture remains unchanged; OCR is `NVDA+Alt+O` |
+| NVDA secure desktop | Command is blocked before capture, model download, or worker startup |
+| Windows locked with a below-lock-screen navigator object | Object validation refuses capture |
+| Small navigator object | Capture is enlarged by a bounded factor; ordinary captures remain at 1x |
+| Oversized/malformed capture | Localized error is reported before allocation or Worker launch |
+| NVDA compatibility | Current stable and the next declared release candidate load and complete a real gesture |
 
 ## Sample corpus
 
 At minimum test: Notepad English, Notepad Simplified Chinese, mixed Chinese/English/digits, Windows Settings at 100%
 and 150% scaling, a browser image with no accessibility text, low-contrast UI, dense two-column text, an empty image,
-and a rotated-text negative case. Record exact output and mark expected limitations rather than silently passing.
+an 8-degree skew case, and a 90-degree/strong-perspective negative case. Record exact output and mark expected
+limitations rather than silently passing.
 
 ## Performance acceptance
 

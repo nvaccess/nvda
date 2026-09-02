@@ -84,8 +84,9 @@ class OnnxPaddleOcrAdapter:
 	The implementation is optimized for horizontal desktop UI text. It avoids
 	OpenCV, Pillow, PaddleOCR and RapidOCR at runtime. DB regions are extracted
 	with a run-length connected-component pass and expanded with a rectangular
-	approximation of DB ``unclip``. Perspective correction and arbitrary rotated
-	text remain outside this implementation's declared scope.
+	approximation of DB ``unclip``. A low-confidence horizontal crop can be
+	deskewed by its foreground principal axis. Perspective correction and
+	arbitrary rotated text remain outside this implementation's declared scope.
 	"""
 
 	def __init__(self, modelBundle: ModelBundle) -> None:
@@ -152,11 +153,20 @@ class OnnxPaddleOcrAdapter:
 		if not boxes and self._config.get("recognizeFullImageWhenNoDetection", False):
 			boxes = [_Box(0, 0, width, height)]
 		recognizedBoxes: list[tuple[_Box, str, float]] = []
+		deskewedRegions = 0
 		recognitionStartedAt = time.perf_counter()
+		minimumConfidence = float(self._recognizerConfig.get("minimumConfidence", 0))
 		for box in boxes:
 			crop = bgrImage[box.top : box.bottom, box.left : box.right]
 			text, confidence = self._recognizeCrop(crop)
-			minimumConfidence = float(self._recognizerConfig.get("minimumConfidence", 0))
+			if confidence < minimumConfidence:
+				deskewedCrop = self._deskewCrop(crop)
+				if deskewedCrop is not None:
+					deskewedText, deskewedConfidence = self._recognizeCrop(deskewedCrop)
+					if deskewedConfidence > confidence:
+						text = deskewedText
+						confidence = deskewedConfidence
+						deskewedRegions += 1
 			if text and confidence >= minimumConfidence:
 				recognizedBoxes.append((box, text, confidence))
 		lines = self._toLines(recognizedBoxes)
@@ -166,6 +176,7 @@ class OnnxPaddleOcrAdapter:
 			"recognitionSeconds": time.perf_counter() - recognitionStartedAt,
 			"detectedRegions": len(boxes),
 			"recognizedRegions": len(recognizedBoxes),
+			"deskewedRegions": deskewedRegions,
 			"provider": self._detector.get_providers()[0],
 		}
 		return lines
@@ -356,6 +367,111 @@ class OnnxPaddleOcrAdapter:
 				components.append((int(left), int(top), int(right), int(bottom)))
 		return components
 
+	def _deskewCrop(self, crop: Any) -> Any | None:
+		"""Deskew a failed horizontal-text crop using its foreground principal axis."""
+		maximumAngle = self._recognizerConfig.get("deskewMaximumAngle", 0)
+		if type(maximumAngle) not in (int, float) or not 0 <= maximumAngle <= 30:
+			raise InferenceConfigurationError("deskewMaximumAngle must be between 0 and 30")
+		if maximumAngle == 0 or min(crop.shape[:2]) < 3:
+			return None
+		minimumAngle = self._recognizerConfig.get("deskewMinimumAngle", 2)
+		if type(minimumAngle) not in (int, float) or not 0 <= minimumAngle <= maximumAngle:
+			raise InferenceConfigurationError(
+				"deskewMinimumAngle must be between 0 and deskewMaximumAngle",
+			)
+		minimumAspectRatio = self._recognizerConfig.get("deskewMinimumAspectRatio", 4)
+		if type(minimumAspectRatio) not in (int, float) or minimumAspectRatio <= 1:
+			raise InferenceConfigurationError("deskewMinimumAspectRatio must be greater than 1")
+		foregroundThreshold = self._positiveInt(
+			self._recognizerConfig,
+			"deskewForegroundThreshold",
+			20,
+		)
+		if foregroundThreshold > 255:
+			raise InferenceConfigurationError("deskewForegroundThreshold must be at most 255")
+
+		border = self._numpy.concatenate((crop[0], crop[-1], crop[:, 0], crop[:, -1]))
+		background = self._numpy.median(border, axis=0)
+		foreground = self._foregroundMask(crop, background, foregroundThreshold)
+		trimmed = self._trimToForeground(crop, foreground)
+		if trimmed is None:
+			return None
+		trimmedCrop, trimmedMask = trimmed
+		y, x = self._numpy.nonzero(trimmedMask)
+		if len(x) < 20:
+			return None
+		x = x.astype(self._numpy.float64)
+		y = y.astype(self._numpy.float64)
+		x -= x.mean()
+		y -= y.mean()
+		covarianceX = float(self._numpy.mean(x * x))
+		covarianceY = float(self._numpy.mean(y * y))
+		covarianceXY = float(self._numpy.mean(x * y))
+		angle = 0.5 * self._numpy.degrees(
+			self._numpy.arctan2(2 * covarianceXY, covarianceX - covarianceY),
+		)
+		trace = covarianceX + covarianceY
+		discriminant = ((covarianceX - covarianceY) ** 2 + 4 * covarianceXY**2) ** 0.5
+		majorVariance = (trace + discriminant) / 2
+		minorVariance = max((trace - discriminant) / 2, 1e-9)
+		if majorVariance / minorVariance < minimumAspectRatio:
+			return None
+		if abs(angle) < minimumAngle or abs(angle) > maximumAngle:
+			return None
+		rotated = self._rotateBilinear(trimmedCrop, float(angle), background)
+		rotatedForeground = self._foregroundMask(rotated, background, foregroundThreshold)
+		rotatedTrimmed = self._trimToForeground(rotated, rotatedForeground)
+		return rotatedTrimmed[0] if rotatedTrimmed is not None else None
+
+	def _foregroundMask(self, image: Any, background: Any, threshold: int) -> Any:
+		difference = self._numpy.abs(image.astype(self._numpy.float32) - background)
+		return self._numpy.max(difference, axis=2) >= threshold
+
+	def _trimToForeground(self, image: Any, foreground: Any) -> tuple[Any, Any] | None:
+		y, x = self._numpy.nonzero(foreground)
+		if len(x) < 20:
+			return None
+		padding = max(2, round(min(image.shape[:2]) * 0.025))
+		left = max(0, int(x.min()) - padding)
+		right = min(image.shape[1], int(x.max()) + padding + 1)
+		top = max(0, int(y.min()) - padding)
+		bottom = min(image.shape[0], int(y.max()) + padding + 1)
+		return image[top:bottom, left:right], foreground[top:bottom, left:right]
+
+	def _rotateBilinear(self, image: Any, angleDegrees: float, fillColor: Any) -> Any:
+		"""Rotate an image with expansion, using image-coordinate counter-clockwise angles."""
+		height, width = image.shape[:2]
+		angle = self._numpy.radians(angleDegrees)
+		cosine = float(self._numpy.cos(angle))
+		sine = float(self._numpy.sin(angle))
+		outputWidth = max(1, int(self._numpy.ceil(abs(width * cosine) + abs(height * sine))))
+		outputHeight = max(1, int(self._numpy.ceil(abs(height * cosine) + abs(width * sine))))
+		output = self._numpy.empty((outputHeight, outputWidth, image.shape[2]), dtype=self._numpy.uint8)
+		output[:] = self._numpy.asarray(fillColor, dtype=self._numpy.uint8)
+		# Limit transient coordinate/interpolation arrays for wide desktop captures.
+		for rowStart in range(0, outputHeight, 128):
+			rowEnd = min(rowStart + 128, outputHeight)
+			outputY, outputX = self._numpy.mgrid[rowStart:rowEnd, 0:outputWidth]
+			centeredX = outputX - (outputWidth - 1) / 2
+			centeredY = outputY - (outputHeight - 1) / 2
+			sourceX = cosine * centeredX - sine * centeredY + (width - 1) / 2
+			sourceY = sine * centeredX + cosine * centeredY + (height - 1) / 2
+			valid = (sourceX >= 0) & (sourceX <= width - 1) & (sourceY >= 0) & (sourceY <= height - 1)
+			x0 = self._numpy.floor(sourceX).astype(int)
+			y0 = self._numpy.floor(sourceY).astype(int)
+			x0 = self._numpy.clip(x0, 0, width - 1)
+			y0 = self._numpy.clip(y0, 0, height - 1)
+			x1 = self._numpy.minimum(x0 + 1, width - 1)
+			y1 = self._numpy.minimum(y0 + 1, height - 1)
+			xWeight = (sourceX - x0)[..., self._numpy.newaxis]
+			yWeight = (sourceY - y0)[..., self._numpy.newaxis]
+			top = image[y0, x0] * (1 - xWeight) + image[y0, x1] * xWeight
+			bottom = image[y1, x0] * (1 - xWeight) + image[y1, x1] * xWeight
+			interpolated = self._numpy.clip(top * (1 - yWeight) + bottom * yWeight, 0, 255)
+			outputBlock = output[rowStart:rowEnd]
+			outputBlock[valid] = interpolated[valid].astype(self._numpy.uint8)
+		return output
+
 	def _recognizeCrop(self, crop: Any) -> tuple[str, float]:
 		targetHeight = self._positiveInt(self._recognizerConfig, "height", 48)
 		maxWidth = self._positiveInt(self._recognizerConfig, "maxWidth", 2048)
@@ -446,7 +562,7 @@ class OnnxPaddleOcrAdapter:
 	@staticmethod
 	def _positiveInt(config: dict[str, Any], key: str, default: int) -> int:
 		value = config.get(key, default)
-		if not isinstance(value, int) or value <= 0:
+		if type(value) is not int or value <= 0:
 			raise InferenceConfigurationError(f"{key} must be a positive integer")
 		return value
 

@@ -39,8 +39,10 @@ ignored. The client owns and deletes the frame after every terminal path.
       "recognitionSeconds": 0.08,
       "detectedRegions": 1,
       "recognizedRegions": 1,
+      "deskewedRegions": 0,
       "provider": "CPUExecutionProvider",
       "sessionCacheHit": false,
+      "workerArchitecture": "AMD64",
       "workerProcessId": 1234
     }
   }
@@ -50,6 +52,10 @@ ignored. The client owns and deletes the frame after every terminal path.
 Coordinates are relative to the submitted frame. NVDA's `LinesWordsResult` converts them back to screen coordinates
 for review and routing. A detected text region is currently represented as one word-like item; regions are grouped
 into visual lines and sorted left-to-right.
+
+The add-on may enlarge a capture whose width or height is below 100 pixels before sending it. The scale factor is at
+most 4 and is also limited so the longest submitted side is at most 1280 pixels. Normal-size captures retain their
+original pixels. The result's scale factor maps Worker coordinates back to the original screen object.
 
 ## Error response
 
@@ -62,12 +68,14 @@ into visual lines and sorted left-to-right.
 ```
 
 Malformed JSON, wrong versions, mismatched IDs, invalid frame metadata, unsafe manifests, failed integrity checks,
-download errors, and inference errors are terminal. The client discards the Worker after protocol or process errors.
+download errors, malformed result geometry, non-finite metrics, and inference errors are terminal. The client
+discards the Worker after protocol or process errors.
 
 ## Lifecycle and cancellation
 
 Successful requests reuse the process and cached inference sessions. A settings/model change creates a new client.
 Cancellation clears the active request first, then terminates the process; this suppresses stale callbacks even if
 native inference cannot cooperatively cancel. The next request starts a clean process. Add-on termination and idle
-expiry use the same cleanup path. A packaged worker also accepts a `shutdown` request for diagnostics, although the
-production client uses process termination for bounded cleanup.
+expiry use the same cleanup path. A request that produces no terminal response within 180 seconds is reported as an
+error and the process is restarted for the next request. A packaged worker also accepts a versioned `shutdown`
+request for diagnostics, although the production client uses process termination for bounded cleanup.

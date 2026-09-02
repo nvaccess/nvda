@@ -108,6 +108,28 @@ class TestModelManager(unittest.TestCase):
 		with self.assertRaises(ManifestError):
 			ModelManager(self._root / "cache").ensureModels(manifestPath)
 
+	def test_rejectsWindowsUnsafeFileNamesOnEveryPlatform(self) -> None:
+		for fileName in ("..\\detector.onnx", "CON.onnx", "model.onnx.", "model:onxx"):
+			with self.subTest(fileName=fileName):
+				manifestPath = self._writeManifest(detectorFileName=fileName)
+				with self.assertRaises(ManifestError):
+					ModelManager.loadManifest(manifestPath)
+
+	def test_rejectsWindowsReservedManifestId(self) -> None:
+		manifestPath = self._writeManifest()
+		manifest = json.loads(manifestPath.read_text(encoding="utf-8"))
+		manifest["id"] = "NUL"
+		manifestPath.write_text(json.dumps(manifest), encoding="utf-8")
+		with self.assertRaises(ManifestError):
+			ModelManager.loadManifest(manifestPath)
+
+	def test_rejectsDuplicateJsonKeys(self) -> None:
+		manifestPath = self._writeManifest()
+		manifestText = manifestPath.read_text(encoding="utf-8")
+		manifestPath.write_text(manifestText[:-1] + ', "id": "shadowed"}', encoding="utf-8")
+		with self.assertRaises(ManifestError):
+			ModelManager.loadManifest(manifestPath)
+
 	def test_rejectsIncorrectHash(self) -> None:
 		manifestPath = self._writeManifest()
 		manifest = json.loads(manifestPath.read_text(encoding="utf-8"))
@@ -123,6 +145,31 @@ class TestModelManager(unittest.TestCase):
 		manifestPath.write_text(json.dumps(manifest), encoding="utf-8")
 		with self.assertRaises(ManifestError):
 			ModelManager(self._root / "cache").ensureModels(manifestPath)
+
+	def test_rejectsBooleanDeclaredSize(self) -> None:
+		manifestPath = self._writeManifest()
+		manifest = json.loads(manifestPath.read_text(encoding="utf-8"))
+		manifest["files"]["detector"]["sizeBytes"] = True
+		manifestPath.write_text(json.dumps(manifest), encoding="utf-8")
+		with self.assertRaises(ManifestError):
+			ModelManager.loadManifest(manifestPath)
+
+	def test_rejectsDuplicateFileNamesCaseInsensitively(self) -> None:
+		manifestPath = self._writeManifest()
+		manifest = json.loads(manifestPath.read_text(encoding="utf-8"))
+		manifest["files"]["recognizer"]["file"] = "DETECTOR.onnx"
+		manifestPath.write_text(json.dumps(manifest), encoding="utf-8")
+		with self.assertRaises(ManifestError):
+			ModelManager.loadManifest(manifestPath)
+
+	def test_rejectsBundleLargerThanOneGiB(self) -> None:
+		manifestPath = self._writeManifest()
+		manifest = json.loads(manifestPath.read_text(encoding="utf-8"))
+		manifest["files"]["detector"]["sizeBytes"] = 600 * 1024 * 1024
+		manifest["files"]["recognizer"]["sizeBytes"] = 600 * 1024 * 1024
+		manifestPath.write_text(json.dumps(manifest), encoding="utf-8")
+		with self.assertRaises(ManifestError):
+			ModelManager.loadManifest(manifestPath)
 
 
 if __name__ == "__main__":

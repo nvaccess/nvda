@@ -26,6 +26,11 @@ _SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 _ALLOWED_URL_SCHEMES = frozenset(("https", "file"))
 _DOWNLOAD_CHUNK_SIZE = 1024 * 1024
 _MAX_MODEL_FILE_SIZE = 1024 * 1024 * 1024
+_MAX_MODEL_BUNDLE_SIZE = 1024 * 1024 * 1024
+_UNSAFE_WINDOWS_FILE_NAME_PATTERN = re.compile(r'[<>:"/\\|?*\x00-\x1f]')
+_WINDOWS_RESERVED_FILE_STEMS = frozenset(
+	("con", "prn", "aux", "nul"),
+) | frozenset(f"{prefix}{number}" for prefix in ("com", "lpt") for number in range(1, 10))
 
 
 class ManifestError(ValueError):
@@ -115,7 +120,7 @@ class ModelManager:
 		"""Load and validate a supported OCR model manifest."""
 		try:
 			with manifestPath.open("r", encoding="utf-8") as manifestFile:
-				manifest = json.load(manifestFile)
+				manifest = json.load(manifestFile, object_pairs_hook=ModelManager._objectWithoutDuplicateKeys)
 		except (OSError, json.JSONDecodeError) as error:
 			raise ManifestError(f"Unable to read model manifest: {error}") from error
 		if not isinstance(manifest, dict):
@@ -123,7 +128,11 @@ class ModelManager:
 		if manifest.get("schemaVersion") not in (1, 2):
 			raise ManifestError("Only model manifest schemaVersion 1 or 2 is supported")
 		manifestId = manifest.get("id")
-		if not isinstance(manifestId, str) or not _MANIFEST_ID_PATTERN.fullmatch(manifestId):
+		if (
+			not isinstance(manifestId, str)
+			or not _MANIFEST_ID_PATTERN.fullmatch(manifestId)
+			or not ModelManager._isSafeWindowsPathComponent(manifestId)
+		):
 			raise ManifestError("Model manifest id is invalid")
 		files = manifest.get("files")
 		if not isinstance(files, dict) or not files:
@@ -131,6 +140,13 @@ class ModelManager:
 		validatedFiles: list[ModelFile] = []
 		for key, value in files.items():
 			validatedFiles.append(ModelManager._validateFile(key, value))
+		fileNames = [modelFile.fileName.casefold() for modelFile in validatedFiles]
+		if len(fileNames) != len(set(fileNames)):
+			raise ManifestError("Model manifest file names must be unique")
+		if sum(modelFile.sizeBytes for modelFile in validatedFiles) > _MAX_MODEL_BUNDLE_SIZE:
+			raise ManifestError(
+				f"Model manifest total size must not exceed {_MAX_MODEL_BUNDLE_SIZE} bytes",
+			)
 		for sectionName in ("detector", "recognizer"):
 			if not isinstance(manifest.get(sectionName), dict):
 				raise ManifestError(f"Model manifest requires a {sectionName} object")
@@ -154,6 +170,27 @@ class ModelManager:
 		return manifest
 
 	@staticmethod
+	def _objectWithoutDuplicateKeys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+		result: dict[str, Any] = {}
+		for key, value in pairs:
+			if key in result:
+				raise ManifestError(f"Model manifest contains duplicate key {key!r}")
+			result[key] = value
+		return result
+
+	@staticmethod
+	def _isSafeWindowsPathComponent(value: str) -> bool:
+		if (
+			not value
+			or len(value) > 255
+			or value.endswith((" ", "."))
+			or _UNSAFE_WINDOWS_FILE_NAME_PATTERN.search(value)
+		):
+			return False
+		stem = value.split(".", 1)[0].casefold()
+		return stem not in _WINDOWS_RESERVED_FILE_STEMS
+
+	@staticmethod
 	def _validateMetadata(manifest: dict[str, Any]) -> None:
 		for key in ("displayName", "modelLicense", "modelSource"):
 			value = manifest.get(key)
@@ -174,12 +211,7 @@ class ModelManager:
 		if not isinstance(value, dict):
 			raise ManifestError(f"Model file {key!r} must be an object")
 		fileName = value.get("file")
-		if (
-			not isinstance(fileName, str)
-			or not fileName
-			or Path(fileName).name != fileName
-			or fileName in (".", "..")
-		):
+		if not isinstance(fileName, str) or not ModelManager._isSafeWindowsPathComponent(fileName):
 			raise ManifestError(f"Model file {key!r} has an unsafe file name")
 		url = value.get("url")
 		if not isinstance(url, str) or urlparse(url).scheme not in _ALLOWED_URL_SCHEMES:
@@ -188,7 +220,7 @@ class ModelManager:
 		if not isinstance(sha256, str) or not _SHA256_PATTERN.fullmatch(sha256):
 			raise ManifestError(f"Model file {key!r} requires a lowercase SHA-256 digest")
 		sizeBytes = value.get("sizeBytes")
-		if not isinstance(sizeBytes, int) or not 0 < sizeBytes <= _MAX_MODEL_FILE_SIZE:
+		if type(sizeBytes) is not int or not 0 < sizeBytes <= _MAX_MODEL_FILE_SIZE:
 			raise ManifestError(
 				f"Model file {key!r} sizeBytes must be between 1 and {_MAX_MODEL_FILE_SIZE}",
 			)

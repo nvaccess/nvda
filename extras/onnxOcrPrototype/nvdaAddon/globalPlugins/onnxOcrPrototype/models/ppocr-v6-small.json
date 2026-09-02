@@ -53,7 +53,11 @@
 		"blankIndex": 0,
 		"characterIndexOffset": 1,
 		"useSpaceCharacter": true,
-		"minimumConfidence": 0.5
+		"minimumConfidence": 0.5,
+		"deskewMaximumAngle": 15,
+		"deskewMinimumAngle": 2,
+		"deskewMinimumAspectRatio": 4,
+		"deskewForegroundThreshold": 20
 	},
 	"recognizeFullImageWhenNoDetection": false
 }

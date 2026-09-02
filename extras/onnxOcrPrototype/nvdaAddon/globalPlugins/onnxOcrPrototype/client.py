@@ -6,6 +6,7 @@
 """Asynchronous, cancellable client for the isolated OCR worker process."""
 
 import json
+import math
 import subprocess
 import tempfile
 import threading
@@ -29,7 +30,7 @@ class OcrWorkerResult:
 	"""Recognition data and worker-side performance measurements."""
 
 	lines: list[list[dict[str, Any]]]
-	metrics: dict[str, int | float | str]
+	metrics: dict[str, bool | int | float | str]
 
 
 @dataclass
@@ -39,6 +40,7 @@ class _RequestState:
 	cancelled: bool = False
 	framePath: Path | None = None
 	process: subprocess.Popen[str] | None = None
+	timeoutTimer: threading.Timer | None = None
 
 
 class OcrWorkerClient:
@@ -60,11 +62,28 @@ class OcrWorkerClient:
 		useTestDouble: bool = False,
 		testDoubleDelaySeconds: float = 0,
 		idleTimeoutSeconds: float = 120,
+		requestTimeoutSeconds: float = 180,
 	) -> None:
 		if (workerPython is None) == (workerExecutable is None):
 			raise ValueError("Configure exactly one of workerPython or workerExecutable")
-		if not 0 <= idleTimeoutSeconds <= 3600:
+		if (
+			type(idleTimeoutSeconds) not in (int, float)
+			or not math.isfinite(idleTimeoutSeconds)
+			or not 0 <= idleTimeoutSeconds <= 3600
+		):
 			raise ValueError("idleTimeoutSeconds must be between 0 and 3600")
+		if (
+			type(requestTimeoutSeconds) not in (int, float)
+			or not math.isfinite(requestTimeoutSeconds)
+			or not 0 < requestTimeoutSeconds <= 3600
+		):
+			raise ValueError("requestTimeoutSeconds must be greater than 0 and at most 3600")
+		if (
+			type(testDoubleDelaySeconds) not in (int, float)
+			or not math.isfinite(testDoubleDelaySeconds)
+			or not 0 <= testDoubleDelaySeconds <= 10
+		):
+			raise ValueError("testDoubleDelaySeconds must be between 0 and 10")
 		self._workerPython = workerPython
 		self._workerExecutable = workerExecutable
 		self._workerMain = workerMain
@@ -73,6 +92,7 @@ class OcrWorkerClient:
 		self._useTestDouble = useTestDouble
 		self._testDoubleDelaySeconds = testDoubleDelaySeconds
 		self._idleTimeoutSeconds = idleTimeoutSeconds
+		self._requestTimeoutSeconds = requestTimeoutSeconds
 		self._lock = threading.RLock()
 		self._active: _RequestState | None = None
 		self._process: subprocess.Popen[str] | None = None
@@ -101,7 +121,15 @@ class OcrWorkerClient:
 		onResult: Callable[[OcrWorkerResult | Exception], None],
 	) -> str:
 		"""Submit a BGRA frame without blocking the caller."""
-		if width <= 0 or height <= 0 or stride < width * 4:
+		if (
+			type(width) is not int
+			or type(height) is not int
+			or type(stride) is not int
+			or width <= 0
+			or height <= 0
+			or stride < width * 4
+			or stride % 4
+		):
 			raise ValueError("Invalid BGRA frame dimensions")
 		if len(frame) != stride * height:
 			raise ValueError("BGRA frame length does not match stride and height")
@@ -111,6 +139,7 @@ class OcrWorkerClient:
 				raise RuntimeError("Only one OCR request can be active")
 			self._cancelIdleTimerLocked()
 			self._active = requestState
+			self._scheduleRequestTimeoutLocked(requestState)
 		threading.Thread(
 			target=self._runRequest,
 			name="onDeviceOcrWorkerClient",
@@ -125,6 +154,7 @@ class OcrWorkerClient:
 			requestState = self._active
 			if requestState is not None:
 				requestState.cancelled = True
+				self._cancelRequestTimeoutLocked(requestState)
 				self._active = None
 			process = self._detachProcessLocked()
 		self._terminateProcess(process)
@@ -141,6 +171,7 @@ class OcrWorkerClient:
 		height: int,
 		stride: int,
 	) -> None:
+		completion: OcrWorkerResult | Exception | None = None
 		try:
 			framePath = self._writeFrame(frame)
 			requestState.framePath = framePath
@@ -175,15 +206,25 @@ class OcrWorkerClient:
 			if not responseLine:
 				detail = self._formatProcessFailure(process)
 				raise WorkerError(f"OCR worker exited without a response: {detail}")
-			response = self._parseResponse(responseLine, requestState.requestId)
-			self._finish(requestState, response)
+			response = self._parseResponse(
+				responseLine,
+				requestState.requestId,
+				frameWidth=width,
+				frameHeight=height,
+			)
+			completion = response
 		except Exception as error:  # noqa: BLE001 - This is the worker-thread error boundary.
-			self._discardProcess(requestState.process)
+			if requestState.process is not None or not self._isCancelled(requestState):
+				self._discardProcess(requestState.process)
 			if not self._isCancelled(requestState):
-				self._finish(requestState, error)
+				completion = error
 		finally:
 			if requestState.framePath is not None:
 				requestState.framePath.unlink(missing_ok=True)
+		if completion is not None:
+			# Invoke the owner callback outside the worker-I/O error boundary. A
+			# re-entrant callback may immediately start another request on this client.
+			self._finish(requestState, completion)
 
 	def _ensureProcess(self) -> subprocess.Popen[str]:
 		with self._lock:
@@ -237,9 +278,39 @@ class OcrWorkerClient:
 		with self._lock:
 			if requestState.cancelled or self._active is not requestState:
 				return
+			self._cancelRequestTimeoutLocked(requestState)
 			self._active = None
 			self._scheduleIdleTimerLocked()
 		requestState.onResult(result)
+
+	def _scheduleRequestTimeoutLocked(self, requestState: _RequestState) -> None:
+		timer = threading.Timer(
+			self._requestTimeoutSeconds,
+			self._timeoutRequest,
+			args=(requestState,),
+		)
+		timer.daemon = True
+		requestState.timeoutTimer = timer
+		timer.start()
+
+	@staticmethod
+	def _cancelRequestTimeoutLocked(requestState: _RequestState) -> None:
+		if requestState.timeoutTimer is not None:
+			requestState.timeoutTimer.cancel()
+			requestState.timeoutTimer = None
+
+	def _timeoutRequest(self, requestState: _RequestState) -> None:
+		with self._lock:
+			if requestState.cancelled or self._active is not requestState:
+				return
+			requestState.cancelled = True
+			self._cancelRequestTimeoutLocked(requestState)
+			self._active = None
+			process = self._detachProcessLocked()
+		self._terminateProcess(process)
+		requestState.onResult(
+			WorkerError(f"OCR worker timed out after {self._requestTimeoutSeconds:g} seconds"),
+		)
 
 	def _discardProcess(self, expectedProcess: subprocess.Popen[str] | None) -> None:
 		with self._lock:
@@ -323,11 +394,19 @@ class OcrWorkerClient:
 			return Path(frameFile.name)
 
 	@staticmethod
-	def _parseResponse(responseLine: str, expectedRequestId: str) -> OcrWorkerResult:
+	def _parseResponse(
+		responseLine: str,
+		expectedRequestId: str,
+		*,
+		frameWidth: int,
+		frameHeight: int,
+	) -> OcrWorkerResult:
 		try:
 			response = json.loads(responseLine)
 		except json.JSONDecodeError as error:
 			raise WorkerError("OCR worker returned invalid JSON") from error
+		if not isinstance(response, dict):
+			raise WorkerError("OCR worker response must be an object")
 		if response.get("protocolVersion") != _PROTOCOL_VERSION:
 			raise WorkerError("OCR worker protocol version did not match")
 		if response.get("requestId") != expectedRequestId:
@@ -341,6 +420,38 @@ class OcrWorkerClient:
 		if not isinstance(result, dict) or not isinstance(result.get("lines"), list):
 			raise WorkerError("OCR worker response did not contain result lines")
 		metrics = result.get("metrics", {})
-		if not isinstance(metrics, dict):
+		if not isinstance(metrics, dict) or not all(
+			isinstance(key, str)
+			and isinstance(value, (bool, int, float, str))
+			and (not isinstance(value, float) or math.isfinite(value))
+			for key, value in metrics.items()
+		):
 			raise WorkerError("OCR worker response metrics were invalid")
+		OcrWorkerClient._validateLines(
+			result["lines"],
+			frameWidth=frameWidth,
+			frameHeight=frameHeight,
+		)
 		return OcrWorkerResult(lines=result["lines"], metrics=metrics)
+
+	@staticmethod
+	def _validateLines(lines: list[Any], *, frameWidth: int, frameHeight: int) -> None:
+		for line in lines:
+			if not isinstance(line, list):
+				raise WorkerError("OCR worker response lines must contain word lists")
+			for word in line:
+				if not isinstance(word, dict) or not isinstance(word.get("text"), str):
+					raise WorkerError("OCR worker response contained an invalid word")
+				for key in ("x", "y", "width", "height"):
+					value = word.get(key)
+					if type(value) is not int or value < 0 or (key in ("width", "height") and value == 0):
+						raise WorkerError("OCR worker response contained invalid word geometry")
+				if word["x"] + word["width"] > frameWidth or word["y"] + word["height"] > frameHeight:
+					raise WorkerError("OCR worker response contained out-of-bounds word geometry")
+				confidence = word.get("confidence")
+				if confidence is not None and (
+					type(confidence) not in (int, float)
+					or not math.isfinite(confidence)
+					or not 0 <= confidence <= 1
+				):
+					raise WorkerError("OCR worker response contained invalid word confidence")

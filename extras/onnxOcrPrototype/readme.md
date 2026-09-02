@@ -12,6 +12,9 @@ functional prototype for OSPP project `25d3e0489` and follows the constraints di
 * NVDA presents the result through its standard content-recognition document, including speech, braille,
   cursor-key review, Escape to dismiss, and routing/clicking through OCR coordinates.
 * Choose the tiny or small PP-OCRv6 model under **NVDA Settings > On-device OCR**.
+* English and Simplified Chinese add-on UI/help are included. Small navigator-object captures are enlarged only for
+  recognition, with a bounded factor and detector size; ordinary captures are not resampled.
+* Recognition is blocked on NVDA secure desktops and refuses navigator objects hidden below the Windows lock screen.
 * The selected detector and recognizer download on first use, are checked by exact size and SHA-256, and remain in
   `%LOCALAPPDATA%\nvda\onDeviceOcr\models`.
 * After the initial download, image recognition is offline. Temporary BGRA captures are user-local and removed
@@ -39,11 +42,13 @@ NVDA main process
 
 The NVDA process never imports NumPy, ONNX Runtime, RapidOCR, PaddleOCR, or PaddlePaddle. The worker imports only
 NumPy and ONNX Runtime. A warm worker retains model sessions for responsive repeated recognition; cancellation,
-failure, model changes, add-on termination, and the idle timeout all dispose of it safely.
+failure, model changes, add-on termination, the 180-second request timeout, and the idle timeout all dispose of it
+safely.
 
 The worker protocol is versioned, request IDs prevent stale results, stderr stays outside the JSON response stream,
-and only one request can be active. Models are not committed to Git or bundled into the add-on. The schema records
-source, license, supported languages, byte size, and SHA-256 for every external file.
+response geometry is validated before it reaches NVDA, and only one request can be active. Models are not committed
+to Git or bundled into the add-on. The schema records source, license, supported languages, byte size, and SHA-256
+for every external file, with a one-GiB upper bound for a complete bundle.
 
 ## Included model profiles
 
@@ -65,6 +70,9 @@ embedded Python environment and keeps native libraries out of `nvda.exe`.
 
 The Microsoft Visual C++ 2015–2022 x64 Redistributable must be installed. The build deliberately excludes Python's
 older private MSVC DLL copies because they shadow the current system runtime and prevent ONNX Runtime from loading.
+It also verifies that the frozen Worker is an AMD64 PE image before creating the add-on.
+The add-on build compiles each tracked `.po` catalog with NVDA's bundled `msgfmt.exe` (or `msgfmt` on `PATH`) so a
+clean checkout does not depend on ignored local `.mo` files.
 
 ```powershell
 cd extras\onnxOcrPrototype
@@ -93,18 +101,20 @@ Windows release validation must additionally cover:
 2. first-use model download, exact hashes, and no model files inside the add-on or repository;
 3. Chinese/English recognition delivered to speech and braille through the result document;
 4. warm repeated recognition, cancellation, dismissal, NVDA restart, and Worker cleanup;
-5. timing and private-working-set measurements against the OSPP 3–5 second interaction target.
+5. English and Simplified Chinese localization, small-capture scaling, AMD64 packaging, supported NVDA versions,
+   timing, and private-working-set measurements against the OSPP 3–5 second interaction target.
 
 The manual matrix and evidence fields are in [docs/windows-test-plan.md](docs/windows-test-plan.md). The completed
-Windows 10 / NVDA 2026.1.1 acceptance evidence is in
+Windows 10 acceptance evidence for NVDA 2026.1.1 and 2026.2rc2 is in
 [docs/windows-validation-report.md](docs/windows-validation-report.md).
 
 ## Current scope
 
 The included postprocessor is designed for horizontal desktop UI text. It uses DB thresholding, dilation,
-run-length connected components, rectangular unclip expansion, CTC decoding, and line ordering. It does not yet
-perform polygon contour extraction, perspective rectification, an angle classifier, handwriting recognition, or
-vertical-text layout. Those are documented follow-ups rather than hidden dependencies.
+run-length connected components, rectangular unclip expansion, CTC decoding, line ordering, and a pure-NumPy
+foreground-axis retry for low-confidence text skewed by 2–15 degrees. It does not yet perform polygon contour
+extraction, perspective rectification, arbitrary rotation, handwriting recognition, or vertical-text layout. Those
+are documented follow-ups rather than hidden dependencies.
 
 The add-on command is an integration seam while #17406 remains unresolved. If NVDA core gains a content-recognizer
 registry and preferred-engine setting, `OnDeviceOcrRecognizer` can be registered there without changing the worker,

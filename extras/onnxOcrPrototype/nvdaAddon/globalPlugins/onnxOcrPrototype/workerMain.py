@@ -8,6 +8,7 @@
 import argparse
 import json
 import os
+import platform
 import sys
 import time
 import traceback
@@ -56,7 +57,7 @@ def _handleRequest(
 	*,
 	useTestDouble: bool,
 	adapterCache: dict[tuple[str, str], OnnxPaddleOcrAdapter],
-) -> tuple[list[list[dict[str, int | str | float]]], dict[str, int | float | str]]:
+) -> tuple[list[list[dict[str, int | str | float]]], dict[str, bool | int | float | str]]:
 	preparationStartedAt = time.perf_counter()
 	if request.get("protocolVersion") != 1:
 		raise ValueError("Unsupported worker protocol version")
@@ -71,7 +72,7 @@ def _handleRequest(
 	stride = _requiredPositiveInt(image, "stride")
 	if useTestDouble:
 		delay = request.get("testDoubleDelaySeconds", 0)
-		if not isinstance(delay, (int, float)) or delay < 0 or delay > 10:
+		if type(delay) not in (int, float) or delay < 0 or delay > 10:
 			raise ValueError("testDoubleDelaySeconds must be between 0 and 10")
 		adapter = TestDoubleAdapter(float(delay))
 		sessionCacheHit = True
@@ -97,6 +98,7 @@ def _handleRequest(
 		{
 			"preparationSeconds": preparationSeconds,
 			"sessionCacheHit": sessionCacheHit,
+			"workerArchitecture": platform.machine() or "unknown",
 			"workerProcessId": os.getpid(),
 		},
 	)
@@ -112,7 +114,7 @@ def _requiredString(value: dict[str, Any], key: str) -> str:
 
 def _requiredPositiveInt(value: dict[str, Any], key: str) -> int:
 	result = value.get(key)
-	if not isinstance(result, int) or result <= 0:
+	if type(result) is not int or result <= 0:
 		raise ValueError(f"{key} must be a positive integer")
 	return result
 
@@ -127,6 +129,12 @@ def _processRequestLine(
 	requestId: str | None = None
 	try:
 		request = _readRequest(requestLine)
+		rawRequestId = request.get("requestId")
+		if not isinstance(rawRequestId, str) or not rawRequestId:
+			raise ValueError("requestId must be a non-empty string")
+		requestId = rawRequestId
+		if request.get("protocolVersion") != 1:
+			raise ValueError("Unsupported worker protocol version")
 		if request.get("type") == "shutdown":
 			print(
 				json.dumps(
@@ -136,10 +144,6 @@ def _processRequestLine(
 				flush=True,
 			)
 			return False
-		rawRequestId = request.get("requestId")
-		if not isinstance(rawRequestId, str) or not rawRequestId:
-			raise ValueError("requestId must be a non-empty string")
-		requestId = rawRequestId
 		lines, metrics = _handleRequest(
 			request,
 			useTestDouble=useTestDouble,

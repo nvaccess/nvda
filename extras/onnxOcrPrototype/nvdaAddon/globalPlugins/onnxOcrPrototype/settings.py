@@ -5,10 +5,13 @@
 
 """Settings UI for on-device OCR."""
 
+import addonHandler
 import config
 import wx
 from gui import guiHelper
 from gui.settingsDialogs import SettingsPanel
+
+addonHandler.initTranslation()
 
 _CONFIG_SECTION = "onDeviceOcr"
 _MODEL_PROFILES = ("tiny", "small")
@@ -30,7 +33,11 @@ class OnDeviceOcrSettingsPanel(SettingsPanel):
 		)
 		self.modelChoice = helper.addLabeledControl(modelLabel, wx.Choice, choices=modelChoices)
 		profile = str(config.conf[_CONFIG_SECTION]["modelProfile"])
-		self.modelChoice.SetSelection(_MODEL_PROFILES.index(profile))
+		try:
+			profileIndex = _MODEL_PROFILES.index(profile)
+		except ValueError:
+			profileIndex = 0
+		self.modelChoice.SetSelection(profileIndex)
 
 		# Translators: Label for automatically reading OCR output.
 		autoSayAllLabel = _("Automatically &read the result")
@@ -58,6 +65,9 @@ class OnDeviceOcrSettingsPanel(SettingsPanel):
 		)
 
 	def onSave(self) -> None:
-		config.conf[_CONFIG_SECTION]["modelProfile"] = _MODEL_PROFILES[self.modelChoice.GetSelection()]
+		selection = self.modelChoice.GetSelection()
+		if selection not in range(len(_MODEL_PROFILES)):
+			selection = 0
+		config.conf[_CONFIG_SECTION]["modelProfile"] = _MODEL_PROFILES[selection]
 		config.conf[_CONFIG_SECTION]["autoSayAllOnResult"] = self.autoSayAllCheckbox.IsChecked()
 		config.conf[_CONFIG_SECTION]["workerIdleTimeoutSeconds"] = self.idleTimeoutSpin.GetValue()

@@ -52,6 +52,40 @@ class TestAdapterGeometry(unittest.TestCase):
 		)
 		self.assertEqual(components, [(1, 0, 3, 1)])
 
+	@unittest.skipIf(numpy is None, "NumPy is not installed")
+	def test_deskewsSmallAngleForegroundBand(self) -> None:
+		adapter = object.__new__(OnnxPaddleOcrAdapter)
+		adapter._numpy = numpy
+		adapter._recognizerConfig = {
+			"deskewMaximumAngle": 15,
+			"deskewMinimumAngle": 2,
+			"deskewMinimumAspectRatio": 4,
+			"deskewForegroundThreshold": 20,
+		}
+		image = numpy.full((160, 500, 3), 255, dtype=numpy.uint8)
+		for x in range(40, 460):
+			y = round(80 - (x - 250) * 0.14)
+			image[y - 2 : y + 3, x] = 0
+		deskewed = adapter._deskewCrop(image)
+		self.assertIsNotNone(deskewed)
+		assert deskewed is not None
+		self.assertGreater(deskewed.shape[1], 400)
+		self.assertLess(deskewed.shape[0], 20)
+
+	@unittest.skipIf(numpy is None, "NumPy is not installed")
+	def test_doesNotDeskewHorizontalForegroundBand(self) -> None:
+		adapter = object.__new__(OnnxPaddleOcrAdapter)
+		adapter._numpy = numpy
+		adapter._recognizerConfig = {
+			"deskewMaximumAngle": 15,
+			"deskewMinimumAngle": 2,
+			"deskewMinimumAspectRatio": 4,
+			"deskewForegroundThreshold": 20,
+		}
+		image = numpy.full((80, 300, 3), 255, dtype=numpy.uint8)
+		image[38:43, 20:280] = 0
+		self.assertIsNone(adapter._deskewCrop(image))
+
 
 if __name__ == "__main__":
 	unittest.main()

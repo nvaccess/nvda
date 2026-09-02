@@ -37,4 +37,18 @@ New-Item -ItemType Directory -Force $RuntimeDirectory | Out-Null
 	$SpecPath
 
 Copy-Item -Force (Join-Path $DistributionDirectory "onnxOcrWorker.exe") $RuntimeDirectory
+$WorkerExecutable = Join-Path $RuntimeDirectory "onnxOcrWorker.exe"
+$WorkerBytes = [System.IO.File]::ReadAllBytes($WorkerExecutable)
+if ($WorkerBytes.Length -lt 64) {
+	throw "Worker executable is too small to contain a valid PE header"
+}
+$PeOffset = [System.BitConverter]::ToInt32($WorkerBytes, 0x3C)
+if ($PeOffset -lt 0 -or $PeOffset + 6 -gt $WorkerBytes.Length) {
+	throw "Worker executable has an invalid PE header offset"
+}
+$PeSignature = [System.Text.Encoding]::ASCII.GetString($WorkerBytes, $PeOffset, 4)
+$PeMachine = [System.BitConverter]::ToUInt16($WorkerBytes, $PeOffset + 4)
+if ($PeSignature -ne "PE`0`0" -or $PeMachine -ne 0x8664) {
+	throw ("Worker must be an x64 PE executable; signature={0}, machine=0x{1:X4}" -f $PeSignature, $PeMachine)
+}
 Write-Host "Worker created at $RuntimeDirectory\onnxOcrWorker.exe"

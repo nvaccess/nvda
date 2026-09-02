@@ -18,7 +18,8 @@ more accurate but uses more memory.</p>
 are deleted after success, failure, and cancellation. Models are stored in
 <code>%LOCALAPPDATA%\nvda\onDeviceOcr\models</code> and verified by SHA-256.</p>
 <h2>Limitations</h2>
-<p>The current pipeline targets horizontal desktop UI text. Rotated, vertical, handwriting, strongly perspective,
-and complex multi-column text can be inaccurate. The separate OCR process closes after the configured idle period.</p>
+<p>The current pipeline targets horizontal desktop UI text and retries low-confidence text skewed by 2–15 degrees.
+Vertical, handwriting, strongly perspective, arbitrary-angle, and complex multi-column text can be inaccurate. The
+separate OCR process closes after the configured idle period.</p>
 </body>
 </html>

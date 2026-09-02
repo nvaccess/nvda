@@ -24,11 +24,14 @@ from contentRecog import (
 	onRecognizeResultCallbackT,
 	recogUi,
 )
+from locationHelper import RectLTWH
 from logHandler import log
 from scriptHandler import script
+from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 addonHandler.initTranslation()
 
+from .capture import getAdaptiveResizeFactor, isCaptureSizeSupported
 from .client import OcrWorkerClient, OcrWorkerResult
 from .settings import OnDeviceOcrSettingsPanel
 
@@ -82,7 +85,7 @@ def _modelDirectory() -> Path:
 	return Path(localAppData) / "nvda" / "onDeviceOcr" / "models"
 
 
-def _configurationSignature() -> tuple[str, bool, int, str, str, str]:
+def _configurationSignature() -> tuple[str, bool, int, str, str, str, str, bool, str]:
 	settings = config.conf[_CONFIG_SECTION]
 	return (
 		str(settings["modelProfile"]),
@@ -91,6 +94,9 @@ def _configurationSignature() -> tuple[str, bool, int, str, str, str]:
 		os.environ.get(_MANIFEST_ENV, ""),
 		os.environ.get(_WORKER_EXECUTABLE_ENV, ""),
 		os.environ.get(_WORKER_PYTHON_ENV, ""),
+		os.environ.get(_MODEL_DIRECTORY_ENV, ""),
+		_isEnabledEnvironmentValue(_TEST_DOUBLE_ENV),
+		os.environ.get(_TEST_DOUBLE_DELAY_ENV, ""),
 	)
 
 
@@ -130,7 +136,10 @@ class OnDeviceOcrRecognizer(ContentRecognizer):
 			manifestPath = Path(configuredManifest).expanduser()
 		else:
 			profile = str(config.conf[_CONFIG_SECTION]["modelProfile"])
-			manifestPath = pluginDirectory / "models" / _MODEL_MANIFESTS[profile]
+			manifestName = _MODEL_MANIFESTS.get(profile)
+			if manifestName is None:
+				raise OnDeviceOcrConfigurationError(f"Unknown OCR model profile: {profile}")
+			manifestPath = pluginDirectory / "models" / manifestName
 		if not useTestDouble and not manifestPath.is_file():
 			raise OnDeviceOcrConfigurationError(f"OCR model manifest does not exist: {manifestPath}")
 
@@ -148,6 +157,25 @@ class OnDeviceOcrRecognizer(ContentRecognizer):
 
 	def _get_autoSayAllOnResult(self) -> bool:
 		return self._autoSayAllOnResult
+
+	def getResizeFactor(self, width: int, height: int) -> int | float:
+		"""Improve small-control OCR without enlarging normal captures."""
+		return getAdaptiveResizeFactor(width, height)
+
+	def validateCaptureBounds(self, location: RectLTWH) -> bool:
+		"""Prevent a pathological navigator object from allocating an excessive frame."""
+		if location.width <= 0 or location.height <= 0:
+			# Let NVDA's content-recognition UI report its standard not-visible message.
+			return True
+		if isCaptureSizeSupported(location.width, location.height):
+			return True
+		# Translators: Reported when a navigator object is too large to capture safely for OCR.
+		ui.message(_("The current navigator object is too large for on-device OCR."))
+		return False
+
+	def validateObject(self, nav: Any) -> bool:
+		"""Do not capture content hidden below the Windows lock screen."""
+		return not objectBelowLockScreenAndWindowsIsLocked(nav)
 
 	def recognize(
 		self,
@@ -208,7 +236,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self) -> None:
 		super().__init__()
 		self._recognizer: OnDeviceOcrRecognizer | None = None
-		self._recognizerSignature: tuple[str, bool, int, str, str, str] | None = None
+		self._recognizerSignature: tuple[str, bool, int, str, str, str, str, bool, str] | None = None
 		if OnDeviceOcrSettingsPanel not in gui.settingsDialogs.NVDASettingsDialog.categoryClasses:
 			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(OnDeviceOcrSettingsPanel)
 
@@ -217,7 +245,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		if self._recognizer is None or signature != self._recognizerSignature:
 			if self._recognizer is not None:
 				self._recognizer.terminate()
-			self._recognizer = OnDeviceOcrRecognizer()
+			self._recognizer = None
+			self._recognizerSignature = None
+			recognizer = OnDeviceOcrRecognizer()
+			self._recognizer = recognizer
 			self._recognizerSignature = signature
 		return self._recognizer
 
@@ -226,10 +257,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		description=_("Recognizes the current navigator object using on-device OCR"),
 		gesture="kb:NVDA+alt+o",
 	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_recognizeWithOnDeviceOcr(self, gesture: Any) -> None:
 		try:
 			recognizer = self._getRecognizer()
-		except OnDeviceOcrConfigurationError:
+		except Exception:
 			log.exception("On-device OCR is not configured")
 			# Translators: Reported when the isolated OCR worker is unavailable.
 			ui.message(_("On-device OCR is not available. Reinstall the add-on or check its settings."))
