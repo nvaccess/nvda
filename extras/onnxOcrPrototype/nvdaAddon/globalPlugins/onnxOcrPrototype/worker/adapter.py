@@ -94,8 +94,7 @@ class OnnxPaddleOcrAdapter:
 			import onnxruntime
 		except ImportError as error:
 			raise RuntimeError(
-				"The OCR worker requires NumPy and ONNX Runtime; "
-				f"native runtime loading failed: {error}",
+				f"The OCR worker requires NumPy and ONNX Runtime; native runtime loading failed: {error}",
 			) from error
 		self._numpy = numpy
 		self._onnxruntime = onnxruntime
