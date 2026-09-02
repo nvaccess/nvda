@@ -856,7 +856,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 				info = self._moveBySentenceWithObjectModel(direction)
 			else:
 				# Legacy object model not available.
-				# Translators: a message when navigating by sentence is unavailable in MS Word
+				# Translators: a message when navigating by sentence is unavailable in the current document
 				ui.message(_("Navigating by sentence not supported in this document"))
 				gesture.send()
 				return
