@@ -42,6 +42,10 @@ optional dilation, run-length/union-find connected components, score filtering, 
 dynamic-width recognizer preprocessing, softmax normalization where needed, CTC decoding, confidence filtering, and
 visual line ordering. ONNX character metadata removes a redundant dictionary download for the selected models.
 
+The Windows build pins its direct Python dependencies and filters Python 3.12's older private MSVC runtime copies
+from the frozen executable. Those copies otherwise shadow the current VC++ 2015–2022 system Redistributable and make
+ONNX Runtime fail during DLL initialization. The build performs an explicit system-runtime preflight.
+
 ## Verification to date
 
 * 15 automated tests pass with `ResourceWarning` promoted to an error.

@@ -63,6 +63,9 @@ boundary.
 The release artifact uses a Python 3.12 worker frozen as a separate executable. This avoids depending on NVDA's
 embedded Python environment and keeps native libraries out of `nvda.exe`.
 
+The Microsoft Visual C++ 2015–2022 x64 Redistributable must be installed. The build deliberately excludes Python's
+older private MSVC DLL copies because they shadow the current system runtime and prevent ONNX Runtime from loading.
+
 ```powershell
 cd extras\onnxOcrPrototype
 powershell -ExecutionPolicy Bypass -File .\scripts\buildAddon.ps1

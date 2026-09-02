@@ -7,9 +7,7 @@ $WorkerExecutable = Join-Path $AddonRoot "globalPlugins\onnxOcrPrototype\workerR
 $OutputDirectory = Join-Path $ProjectRoot "dist"
 $OutputPath = Join-Path $OutputDirectory "onDeviceOcr-0.2.0.nvda-addon"
 
-if (-not (Test-Path $WorkerExecutable)) {
-	& (Join-Path $PSScriptRoot "buildWorker.ps1")
-}
+& (Join-Path $PSScriptRoot "buildWorker.ps1")
 
 New-Item -ItemType Directory -Force $OutputDirectory | Out-Null
 if (Test-Path $OutputPath) {
