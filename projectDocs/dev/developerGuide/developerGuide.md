@@ -1322,7 +1322,7 @@ for entry in tempDict:
 	tempDict.remove(entry)
 ```
 
-For more information, look at `speechDictHandler.types.py`.
+For more information, look at `speechDictHandler/types.py`.
 
 ### Add-on Documentation {#AddonDoc}
 
