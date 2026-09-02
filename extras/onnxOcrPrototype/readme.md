@@ -95,7 +95,9 @@ Windows release validation must additionally cover:
 4. warm repeated recognition, cancellation, dismissal, NVDA restart, and Worker cleanup;
 5. timing and private-working-set measurements against the OSPP 3–5 second interaction target.
 
-The manual matrix and evidence fields are in [docs/windows-test-plan.md](docs/windows-test-plan.md).
+The manual matrix and evidence fields are in [docs/windows-test-plan.md](docs/windows-test-plan.md). The completed
+Windows 10 / NVDA 2026.1.1 acceptance evidence is in
+[docs/windows-validation-report.md](docs/windows-validation-report.md).
 
 ## Current scope
 

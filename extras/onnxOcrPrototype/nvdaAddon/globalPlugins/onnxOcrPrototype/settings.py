@@ -6,8 +6,8 @@
 """Settings UI for on-device OCR."""
 
 import config
-import guiHelper
 import wx
+from gui import guiHelper
 from gui.settingsDialogs import SettingsPanel
 
 _CONFIG_SECTION = "onDeviceOcr"

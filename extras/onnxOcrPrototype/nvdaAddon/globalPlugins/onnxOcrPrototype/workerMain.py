@@ -18,6 +18,17 @@ from worker.adapter import OnnxPaddleOcrAdapter, TestDoubleAdapter
 from worker.modelManager import ModelManager
 
 
+def _configureProtocolStreams() -> None:
+	"""Make the JSON-lines boundary independent of the Windows system code page."""
+	for stream in (sys.stdin, sys.stdout):
+		reconfigure = getattr(stream, "reconfigure", None)
+		if reconfigure is not None:
+			reconfigure(encoding="utf-8", errors="strict", newline="\n")
+	reconfigureStderr = getattr(sys.stderr, "reconfigure", None)
+	if reconfigureStderr is not None:
+		reconfigureStderr(encoding="utf-8", errors="backslashreplace", newline="\n")
+
+
 def _parseArguments() -> argparse.Namespace:
 	parser = argparse.ArgumentParser(description=__doc__)
 	parser.add_argument(
@@ -155,6 +166,7 @@ def _processRequestLine(
 
 def main() -> int:
 	"""Process one request, or serve requests until stdin closes."""
+	_configureProtocolStreams()
 	arguments = _parseArguments()
 	adapterCache: dict[tuple[str, str], OnnxPaddleOcrAdapter] = {}
 	if arguments.serve:

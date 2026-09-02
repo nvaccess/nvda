@@ -56,8 +56,11 @@ ONNX Runtime fail during DLL initialization. The build performs an explicit syst
 * Model-only CPU time on the development host was 0.082 seconds. The cached cold external-worker run was 0.220
   seconds end to end; four warm runs were 0.068–0.071 seconds and reused one PID. This proves compatibility, not
   Windows acceptance.
-* The earlier Windows test-double run already validated NVDA capture, result presentation, cancellation, dismissal,
-  and temporary-file cleanup. The current build still requires a fresh packaged-worker and real-model Windows run.
+* A fresh Windows 10 / NVDA 2026.1.1 run validated the packaged Worker, real PP-OCRv6 inference, `NVDA+Alt+O`, the
+  settings category, ordered speech and Braille Viewer output, warm PID/session reuse, idle release, and main-process
+  isolation. See `windows-validation-report.md` for timings, memory, hashes, and defects found during acceptance.
+* The final Windows suite contains 16 passing tests, including a regression which forces a non-UTF-8 system stream
+  encoding and verifies that Chinese protocol data still round-trips as UTF-8.
 
 ## Challenges and decisions
 
@@ -76,10 +79,10 @@ shared cache UI without changing inference.
 
 ## Next upstream steps
 
-1. Complete and attach Windows timing/memory evidence from `windows-test-plan.md`.
-2. Decide with NV Access whether the first contribution should land as an add-on, an experimental core engine, or
+1. Decide with NV Access whether the first contribution should land as an add-on, an experimental core engine, or
    the process/model-manager foundation from #18662.
-3. Implement the engine registry/preferred-engine UX proposed in #17406 before assigning `NVDA+R` to an alternative
+2. Implement the engine registry/preferred-engine UX proposed in #17406 before assigning `NVDA+R` to an alternative
    OCR backend.
-4. Split reviewable changes: protocol/process manager, model manager, adapter/tests, then UI registration.
-5. Expand the corpus and only then consider polygon/angle/language-specific model profiles.
+3. Split reviewable changes: protocol/process manager, model manager, adapter/tests, then UI registration.
+4. Expand the corpus across small text, high DPI, multi-column, low contrast, and rotated text before considering
+   polygon/angle/language-specific model profiles.
