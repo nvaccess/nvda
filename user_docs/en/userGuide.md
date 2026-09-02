@@ -788,8 +788,8 @@ NVDA provides the following key commands in relation to the system caret:
 |Report language |none |none |Reports text language. Pressing twice shows the information in a window|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 |Report caret location |NVDA+numpadDelete |NVDA+delete |Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail.|
-|Next sentence |alt+downArrow |alt+downArrow |Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook)|
-|Previous sentence |alt+upArrow |alt+upArrow |Moves the caret to the previous sentence and announces it. (only supported in Microsoft Word and Outlook)|
+| Next sentence | `alt+downArrow` | `alt+downArrow` | Moves the caret to the next sentence and announces it. Some documents are not supported |
+| Previous sentence | `alt+upArrow` | `alt+upArrow` | Moves the caret to the previous sentence and announces it. Some documents are not supported |
 
 When within a table, the following key commands are also available:
 
@@ -2320,10 +2320,10 @@ To toggle Unicode normalization from anywhere, please assign a custom gesture us
 This combo box lets you choose the unit of text that say all (continuous reading) advances by.
 This affects how frequently the text caret and view move during say all, and can also affect intonation in long blocks of text.
 When set to "Sentence where possible", NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.
-Sentence boundaries are supported in Microsoft Word and Outlook, in Rich Edit controls, and in browse mode documents such as web pages.
+Sentence boundaries are supported in Microsoft Word and Outlook, in several edit controls, and in most browse mode documents such as web pages.
 When set to "Paragraph", NVDA reads paragraph by paragraph.
 When set to "Line", NVDA always reads line by line.
-For example, when set to "Line", say all reads by line in Rich Edit controls such as WordPad or NVDA's log viewer, whereas the default reads these by sentence.
+For example, when set to "Line", say all reads by line in Rich Edit controls such as NVDA's log viewer, whereas the default reads these by sentence.
 
 | . {.hideHeaderRow} |.|
 |---|---|

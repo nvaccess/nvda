@@ -446,13 +446,25 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 
 	script_moveByLine_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
+	def _moveBySentence_scriptHelper(self, gesture: InputGesture, direction: int) -> None:
+		"""Move the caret by sentence, reporting documents whose text info has no sentence support.
+
+		:param gesture: The triggering gesture.
+		:param direction: 1 to move to the next sentence, -1 to move to the previous one.
+		"""
+		try:
+			self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, direction)
+		except NotImplementedError:
+			# Translators: a message when navigating by sentence is unavailable in the current document
+			ui.message(_("Navigating by sentence not supported in this document"))
+
 	def script_moveBySentence_back(self, gesture):
-		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, -1)
+		self._moveBySentence_scriptHelper(gesture, -1)
 
 	script_moveBySentence_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveBySentence_forward(self, gesture):
-		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, 1)
+		self._moveBySentence_scriptHelper(gesture, 1)
 
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 

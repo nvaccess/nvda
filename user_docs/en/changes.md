@@ -15,6 +15,7 @@
 * A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
 * A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
 * The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#19353, @Mubashir78)
+* Sentence navigation (`alt+upArrow` and `alt+downArrow`) now works in many more situations, such as in most browse mode documents and in several edit controls. (#18901, @LeonarddeR)
 
 #### Braille
 
@@ -49,8 +50,8 @@
 
 ### Changes
 
-* Updated Liblouis Braille translator to [3.38.0](https://github.com/liblouis/liblouis/releases/tag/v3.38.0). (#20269, @codeofdusk)
-  * Added new Elfdalian and Sami tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+* Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
+  * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
@@ -94,6 +95,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
   * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671)
 
 #### Web browsers
 
