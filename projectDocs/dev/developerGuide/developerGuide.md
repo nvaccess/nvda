@@ -1345,25 +1345,18 @@ When an add-on ships with tables, this information is included in its manifest i
 For example:
 
 ```
-
 [brailleTables]
 [[fr-bfu-tabmod-comp8.utb]]
 displayName = French (unified) 8 dot computer braille - Addition
 contracted = False
 output = True
-
 input = True
 
 [[no-no-8dot.utb]]
-
 displayName = Norwegian 8 dot computer braille - Replacement
-
 contracted = False
-
 output = True
-
 input = True
-
 ```
 
 In the above example, `fr-bfu-tabmod-comp8.utb` is a new table, while `no-no-8dot.utb` replaces a table that is already included in NVDA.
