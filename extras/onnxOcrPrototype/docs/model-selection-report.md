@@ -29,10 +29,10 @@ and ONNX Runtime must not make NVDA startup, responsiveness, or steady-state mem
 The committed manifests are authoritative. Each contains the ModelScope download URL, byte length, and SHA-256 from
 RapidOCR release `v3.9.2`:
 
-- `PP-OCRv6_det_tiny.onnx`: 1,829,618 bytes;
-- `PP-OCRv6_rec_tiny.onnx`: 4,489,813 bytes;
-- `PP-OCRv6_det_small.onnx`: 9,929,594 bytes;
-- `PP-OCRv6_rec_small.onnx`: 21,234,383 bytes.
+* `PP-OCRv6_det_tiny.onnx`: 1,829,618 bytes;
+* `PP-OCRv6_rec_tiny.onnx`: 4,489,813 bytes;
+* `PP-OCRv6_det_small.onnx`: 9,929,594 bytes;
+* `PP-OCRv6_rec_small.onnx`: 21,234,383 bytes.
 
 The ONNX recognizers carry their character list in model metadata, so schema version 2 does not require a separate
 dictionary download. A custom schema version 1 manifest can still declare a dictionary file.
@@ -58,15 +58,15 @@ separately.
 
 ## Remaining model work
 
-- Add representative real Windows UI captures and low-contrast/scaled-text cases to the evaluation corpus.
-- Compare tiny/small accuracy and resource use on baseline x64 hardware.
-- Add specialized Arabic/Cyrillic profiles only after their model licenses, hashes, and memory costs are documented.
-- Consider angle classification/polygon rectification only if measured failures justify the extra model and latency.
+* Add representative real Windows UI captures and low-contrast/scaled-text cases to the evaluation corpus.
+* Compare tiny/small accuracy and resource use on baseline x64 hardware.
+* Add specialized Arabic/Cyrillic profiles only after their model licenses, hashes, and memory costs are documented.
+* Consider angle classification/polygon rectification only if measured failures justify the extra model and latency.
 
 Primary references:
 
-- [RapidOCR repository and license](https://github.com/RapidAI/RapidOCR)
-- [RapidOCR default model catalog](https://github.com/RapidAI/RapidOCR/blob/main/python/rapidocr/default_models.yaml)
-- [PaddleOCR ONNX conversion documentation](https://github.com/PaddlePaddle/PaddleOCR/blob/main/deploy/paddle2onnx/readme.md)
-- [NVDA ONNX Runtime issue #18662](https://github.com/nvaccess/nvda/issues/18662)
-- [NVDA alternative OCR issue #18663](https://github.com/nvaccess/nvda/issues/18663)
+* [RapidOCR repository and license](https://github.com/RapidAI/RapidOCR)
+* [RapidOCR default model catalog](https://github.com/RapidAI/RapidOCR/blob/main/python/rapidocr/default_models.yaml)
+* [PaddleOCR ONNX conversion documentation](https://github.com/PaddlePaddle/PaddleOCR/blob/main/deploy/paddle2onnx/readme.md)
+* [NVDA ONNX Runtime issue #18662](https://github.com/nvaccess/nvda/issues/18662)
+* [NVDA alternative OCR issue #18663](https://github.com/nvaccess/nvda/issues/18663)

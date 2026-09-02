@@ -5,11 +5,11 @@ every run. Retain the NVDA log and a machine-readable timing summary.
 
 ## Installation and isolation
 
-- Build `onDeviceOcr-0.2.0.nvda-addon` with the provided PowerShell script.
-- Install into a current NVDA portable or user profile and restart NVDA.
-- Confirm **NVDA Settings > On-device OCR** opens without an error.
-- Confirm `nvda.exe` has not loaded `onnxruntime.dll`, NumPy, PaddleOCR, PaddlePaddle, RapidOCR, or the model files.
-- Confirm `onnxOcrWorker.exe` is a child process only after recognition begins.
+* Build `onDeviceOcr-0.2.0.nvda-addon` with the provided PowerShell script.
+* Install into a current NVDA portable or user profile and restart NVDA.
+* Confirm **NVDA Settings > On-device OCR** opens without an error.
+* Confirm `nvda.exe` has not loaded `onnxruntime.dll`, NumPy, PaddleOCR, PaddlePaddle, RapidOCR, or the model files.
+* Confirm `onnxOcrWorker.exe` is a child process only after recognition begins.
 
 ## Functional matrix
 
@@ -36,12 +36,12 @@ and a rotated-text negative case. Record exact output and mark expected limitati
 
 ## Performance acceptance
 
-- First use is reported separately because it includes network download.
-- Cold cached run includes worker startup and ONNX session creation.
-- Warm runs: at least 10; report median and p95 end-to-end time.
-- The target for a typical window/object is below 3 seconds, with 5 seconds as the outer OSPP interaction bound.
-- Record peak Worker private working set and verify NVDA's private working set does not retain the model allocation.
-- Cancel a deliberately overlapping run and verify Worker exit within 2 seconds.
+* First use is reported separately because it includes network download.
+* Cold cached run includes worker startup and ONNX session creation.
+* Warm runs: at least 10; report median and p95 end-to-end time.
+* The target for a typical window/object is below 3 seconds, with 5 seconds as the outer OSPP interaction bound.
+* Record peak Worker private working set and verify NVDA's private working set does not retain the model allocation.
+* Cancel a deliberately overlapping run and verify Worker exit within 2 seconds.
 
 ## Evidence template
 

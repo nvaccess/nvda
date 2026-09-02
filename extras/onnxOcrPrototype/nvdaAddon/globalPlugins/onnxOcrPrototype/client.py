@@ -314,7 +314,11 @@ class OcrWorkerClient:
 
 	@staticmethod
 	def _writeFrame(frame: bytes) -> Path:
-		with tempfile.NamedTemporaryFile(prefix="nvda-on-device-ocr-", suffix=".bgra", delete=False) as frameFile:
+		with tempfile.NamedTemporaryFile(
+			prefix="nvda-on-device-ocr-",
+			suffix=".bgra",
+			delete=False,
+		) as frameFile:
 			frameFile.write(frame)
 			return Path(frameFile.name)
 

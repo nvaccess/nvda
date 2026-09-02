@@ -229,7 +229,10 @@ class OnnxPaddleOcrAdapter:
 		if framePath.stat().st_size != expectedSize:
 			raise ValueError("BGRA frame size does not match its metadata")
 		bgra = self._numpy.memmap(
-			framePath, dtype=self._numpy.uint8, mode="r", shape=(height, stride // 4, 4)
+			framePath,
+			dtype=self._numpy.uint8,
+			mode="r",
+			shape=(height, stride // 4, 4),
 		)
 		# NVDA captures BGRA and PP-OCR's OpenCV reference pipeline consumes BGR.
 		# Keeping the first three channels avoids a subtle red/blue swap.

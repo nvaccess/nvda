@@ -8,13 +8,13 @@ functional prototype for OSPP project `25d3e0489` and follows the constraints di
 
 ## User experience
 
-- Press `NVDA+Alt+O` to recognize the current navigator object.
-- NVDA presents the result through its standard content-recognition document, including speech, braille,
+* Press `NVDA+Alt+O` to recognize the current navigator object.
+* NVDA presents the result through its standard content-recognition document, including speech, braille,
   cursor-key review, Escape to dismiss, and routing/clicking through OCR coordinates.
-- Choose the tiny or small PP-OCRv6 model under **NVDA Settings > On-device OCR**.
-- The selected detector and recognizer download on first use, are checked by exact size and SHA-256, and remain in
+* Choose the tiny or small PP-OCRv6 model under **NVDA Settings > On-device OCR**.
+* The selected detector and recognizer download on first use, are checked by exact size and SHA-256, and remain in
   `%LOCALAPPDATA%\nvda\onDeviceOcr\models`.
-- After the initial download, image recognition is offline. Temporary BGRA captures are user-local and removed
+* After the initial download, image recognition is offline. Temporary BGRA captures are user-local and removed
   after success, failure, or cancellation.
 
 The new command deliberately does not claim `NVDA+R`. Issue #17406 proposes a shared engine selector for that core

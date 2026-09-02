@@ -44,15 +44,15 @@ visual line ordering. ONNX character metadata removes a redundant dictionary dow
 
 ## Verification to date
 
-- 15 automated tests pass with `ResourceWarning` promoted to an error.
-- The suite covers protocol validation, invalid frames, async callback, Worker reuse, cancellation suppression,
+* 15 automated tests pass with `ResourceWarning` promoted to an error.
+* The suite covers protocol validation, invalid frames, async callback, Worker reuse, cancellation suppression,
   restart after cancellation, path traversal, missing sizes, bad hashes, corrupt-cache repair, schema-v2 embedded
   dictionaries, connected components, and reading order.
-- Direct real-model inference on a 960×320 mixed Chinese/English synthetic image returned the expected three lines.
-- Model-only CPU time on the development host was 0.082 seconds. The cached cold external-worker run was 0.220
+* Direct real-model inference on a 960×320 mixed Chinese/English synthetic image returned the expected three lines.
+* Model-only CPU time on the development host was 0.082 seconds. The cached cold external-worker run was 0.220
   seconds end to end; four warm runs were 0.068–0.071 seconds and reused one PID. This proves compatibility, not
   Windows acceptance.
-- The earlier Windows test-double run already validated NVDA capture, result presentation, cancellation, dismissal,
+* The earlier Windows test-double run already validated NVDA capture, result presentation, cancellation, dismissal,
   and temporary-file cleanup. The current build still requires a fresh packaged-worker and real-model Windows run.
 
 ## Challenges and decisions
