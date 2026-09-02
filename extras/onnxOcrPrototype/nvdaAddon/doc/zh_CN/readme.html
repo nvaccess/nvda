@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>设备端 OCR</title></head>
+<body>
+<h1>设备端 OCR</h1>
+<p>本插件使用本地 PP-OCRv6 模型，识别 NVDA 当前浏览对象中的文字。</p>
+<h2>使用方法</h2>
+<ol>
+<li>把浏览对象移动到可见的窗口、控件或图片。</li>
+<li>按 <kbd>NVDA+Alt+O</kbd>。NVDA 会提示“正在识别”。第一次使用时会下载并校验所选模型。</li>
+<li>可通过语音、盲文或方向键阅读结果；按 Escape 返回。</li>
+</ol>
+<p>在<strong> NVDA 设置 &gt; 设备端 OCR</strong>中可选择 Tiny 或 Small 模型，并设置是否自动朗读。Tiny
+是速度最快的默认模型，适合简体中文、繁体中文、英文和常用拉丁文字；Small 额外支持日文，准确率可能更高，
+但占用内存也更多。</p>
+<h2>隐私和文件</h2>
+<p>模型下载完成后，识别过程完全离线，截图不会上传。成功、失败或取消后都会删除临时图像。模型保存在
+<code>%LOCALAPPDATA%\nvda\onDeviceOcr\models</code>，并通过文件大小和 SHA-256 校验。</p>
+<h2>已知限制</h2>
+<p>当前流程主要针对桌面界面的水平文字；旋转文字、竖排文字、手写体、强透视和复杂多栏排版的识别效果可能不佳。
+OCR 独立进程会在设置的空闲时间后退出。</p>
+</body>
+</html>

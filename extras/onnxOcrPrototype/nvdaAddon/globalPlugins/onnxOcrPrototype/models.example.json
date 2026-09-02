@@ -1,0 +1,56 @@
+{
+	"schemaVersion": 2,
+	"id": "custom-ppocr-model",
+	"displayName": "Custom PP-OCR model",
+	"modelLicense": "REPLACE_WITH_MODEL_LICENSE",
+	"modelSource": "https://replace.invalid/model-source",
+	"languages": ["REPLACE_WITH_SUPPORTED_LANGUAGES"],
+	"files": {
+		"detector": {
+			"file": "detector.onnx",
+			"url": "https://replace.invalid/ppocr-detector.onnx",
+			"sha256": "REPLACE_WITH_64_LOWERCASE_HEX_CHARACTERS",
+			"sizeBytes": 1
+		},
+		"recognizer": {
+			"file": "recognizer.onnx",
+			"url": "https://replace.invalid/ppocr-recognizer.onnx",
+			"sha256": "REPLACE_WITH_64_LOWERCASE_HEX_CHARACTERS",
+			"sizeBytes": 1
+		},
+		"dictionary": {
+			"file": "dictionary.txt",
+			"url": "https://replace.invalid/ppocr-dictionary.txt",
+			"sha256": "REPLACE_WITH_64_LOWERCASE_HEX_CHARACTERS",
+			"sizeBytes": 1
+		}
+	},
+	"providers": [
+		"CPUExecutionProvider"
+	],
+	"detector": {
+		"modelFile": "detector",
+		"inputName": null,
+		"maxSide": 960,
+		"mean": [0.485, 0.456, 0.406],
+		"scale": [4.367, 4.464, 4.444],
+		"pixelThreshold": 0.3,
+		"boxThreshold": 0.5,
+		"minimumComponentArea": 8,
+		"boxExpansionPixels": 2
+	},
+	"recognizer": {
+		"modelFile": "recognizer",
+		"dictionaryFile": "dictionary",
+		"inputName": null,
+		"height": 48,
+		"maxWidth": 320,
+		"mean": [0.5, 0.5, 0.5],
+		"scale": [2.0, 2.0, 2.0],
+		"blankIndex": 0,
+		"characterIndexOffset": 1,
+		"useSpaceCharacter": true,
+		"minimumConfidence": 0.0
+	},
+	"recognizeFullImageWhenNoDetection": false
+}

@@ -1,0 +1,59 @@
+{
+	"schemaVersion": 2,
+	"id": "rapidocr-ppocr-v6-small-3.9.2",
+	"displayName": "PP-OCRv6 small multilingual",
+	"modelLicense": "Apache-2.0",
+	"modelSource": "https://github.com/RapidAI/RapidOCR",
+	"languages": [
+		"Chinese (Simplified)",
+		"Chinese (Traditional)",
+		"English",
+		"Japanese",
+		"Latin-script languages"
+	],
+	"files": {
+		"detector": {
+			"file": "PP-OCRv6_det_small.onnx",
+			"url": "https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.9.2/onnx/PP-OCRv6/det/PP-OCRv6_det_small.onnx",
+			"sha256": "090f04abcd9d9a7498bc4ebf677e4cb9bdce1fe4197ddb7e529f1ef44e1ff94f",
+			"sizeBytes": 9929594
+		},
+		"recognizer": {
+			"file": "PP-OCRv6_rec_small.onnx",
+			"url": "https://www.modelscope.cn/models/RapidAI/RapidOCR/resolve/v3.9.2/onnx/PP-OCRv6/rec/PP-OCRv6_rec_small.onnx",
+			"sha256": "6f327246b50388f3c176ae304bd95767ea6dc0c9ae92153ef8cbe210b3c14884",
+			"sizeBytes": 21234383
+		}
+	},
+	"providers": [
+		"CPUExecutionProvider"
+	],
+	"enableCpuMemoryArena": false,
+	"intraOpNumThreads": 2,
+	"detector": {
+		"modelFile": "detector",
+		"inputName": null,
+		"maxSide": 1280,
+		"mean": [0.5, 0.5, 0.5],
+		"scale": [2.0, 2.0, 2.0],
+		"pixelThreshold": 0.3,
+		"boxThreshold": 0.5,
+		"minimumComponentArea": 8,
+		"unclipRatio": 1.6,
+		"useDilation": true
+	},
+	"recognizer": {
+		"modelFile": "recognizer",
+		"inputName": null,
+		"height": 48,
+		"maxWidth": 2048,
+		"mean": [0.5, 0.5, 0.5],
+		"scale": [2.0, 2.0, 2.0],
+		"characterMetadataKey": "character",
+		"blankIndex": 0,
+		"characterIndexOffset": 1,
+		"useSpaceCharacter": true,
+		"minimumConfidence": 0.5
+	},
+	"recognizeFullImageWhenNoDetection": false
+}

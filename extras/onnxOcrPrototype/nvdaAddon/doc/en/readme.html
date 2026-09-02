@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>On-device OCR</title></head>
+<body>
+<h1>On-device OCR</h1>
+<p>This add-on recognizes text in the current NVDA navigator object with a local PP-OCRv6 model.</p>
+<h2>Use</h2>
+<ol>
+<li>Move the navigator object to a visible window, control, or image.</li>
+<li>Press <kbd>NVDA+Alt+O</kbd>. NVDA says “Recognizing”. The first use downloads and verifies the selected model.</li>
+<li>Read the result with speech, braille, or cursor keys. Press Escape to return.</li>
+</ol>
+<p>Choose Tiny or Small and automatic reading under <strong>NVDA Settings &gt; On-device OCR</strong>. Tiny is the
+fastest default for Chinese, English, Traditional Chinese, and common Latin scripts. Small adds Japanese and can be
+more accurate but uses more memory.</p>
+<h2>Privacy and files</h2>
+<p>After the first model download, recognition is offline. Captured images are not uploaded. Temporary frame files
+are deleted after success, failure, and cancellation. Models are stored in
+<code>%LOCALAPPDATA%\nvda\onDeviceOcr\models</code> and verified by SHA-256.</p>
+<h2>Limitations</h2>
+<p>The current pipeline targets horizontal desktop UI text. Rotated, vertical, handwriting, strongly perspective,
+and complex multi-column text can be inaccurate. The separate OCR process closes after the configured idle period.</p>
+</body>
+</html>
