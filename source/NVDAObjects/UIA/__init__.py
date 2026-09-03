@@ -1631,7 +1631,8 @@ class UIA(Window):
 
 	def _get_shouldAllowUIAFocusEvent(self):
 		try:
-			return bool(self._getUIACacheablePropertyValue(UIAHandler.UIA_HasKeyboardFocusPropertyId))
+			# Focus may have moved since the event sender's cache was populated.
+			return bool(self.UIAElement.currentHasKeyboardFocus)
 		except COMError:
 			return True
 

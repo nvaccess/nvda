@@ -2053,6 +2053,55 @@ class BrowseModeDocumentTreeInterceptor(
 			self.passThrough = False
 		reportPassThrough(self)
 
+	_EXPAND_OR_POPUP_STATES = frozenset(
+		{
+			controlTypes.State.COLLAPSED,
+			controlTypes.State.EXPANDED,
+			controlTypes.State.AUTOCOMPLETE,
+			controlTypes.State.HASPOPUP,
+			controlTypes.State.HASPOPUP_DIALOG,
+			controlTypes.State.HASPOPUP_GRID,
+			controlTypes.State.HASPOPUP_LIST,
+			controlTypes.State.HASPOPUP_TREE,
+		},
+	)
+	"""States indicating that a control consumes alt+upArrow and alt+downArrow itself."""
+
+	def _isExpandableControlAtCaret(self) -> bool:
+		"""Whether the focusable control at the caret handles alt+upArrow and alt+downArrow itself.
+
+		:return: ``True`` to collapse/expand the control, ``False`` to navigate by sentence.
+		"""
+		obj = self.currentFocusableNVDAObject
+		if obj is None or obj == self.rootNVDAObject:
+			return False
+		return obj.role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or not obj.states.isdisjoint(
+			self._EXPAND_OR_POPUP_STATES,
+		)
+
+	def getAlternativeScript(
+		self,
+		gesture: inputCore.InputGesture,
+		script: scriptHandler._ScriptFunctionT | None,
+	) -> scriptHandler._ScriptFunctionT | None:
+		"""Hand the sentence navigation gestures to the control at the caret when it takes them itself.
+
+		:param gesture: The triggering gesture.
+		:param script: The script bound to the gesture.
+		:return: The script to run instead, which may be the one that was passed in.
+		"""
+		if (
+			not self.passThrough
+			and script
+			in (
+				self.script_moveBySentence_back,
+				self.script_moveBySentence_forward,
+			)
+			and self._isExpandableControlAtCaret()
+		):
+			return self.script_collapseOrExpandControl
+		return super().getAlternativeScript(gesture, script)
+
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual  caret is not within the currently focused node.
 		This is done because many nodes are not focusable and it is thus possible for the virtual caret to be unsynchronised with the focus.
@@ -2825,8 +2874,6 @@ class BrowseModeDocumentTreeInterceptor(
 				return
 
 	__gestures = {  # noqa: RUF012
-		"kb:alt+upArrow": "collapseOrExpandControl",
-		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",
 		"kb:shift+tab": "shiftTab",
 		"kb:shift+,": "moveToStartOfContainer",
