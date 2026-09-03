@@ -278,6 +278,45 @@ class TestControlStreamHandleOwnership(unittest.TestCase):
 			f"Host boot kept a claim on its control descriptors: {stderr.decode(errors='replace')}",
 		)
 
+	def assertFailedBootStrandsNothing(self, failingClaim: int):
+		"""Fail the ``failingClaim``-th descriptor claim during boot, and assert the unwind is complete.
+
+		Runs in a child process for the same reason as
+		:meth:`test_bootReleasesTheDescriptorsItDuplicates`.
+
+		:param failingClaim: One-based index of the claim to fail.
+		"""
+		process = subprocess.Popen(
+			[sys.executable, getProbePath("controlStreamCleanup.py"), str(failingClaim)],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.kill)
+		_stdout, stderr = process.communicate(timeout=_PROCESS_TIMEOUT)
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"Failed host boot did not unwind cleanly: {stderr.decode(errors='replace')}",
+		)
+
+	def test_failingTheFirstClaimClosesBothDescriptors(self):
+		"""A boot that fails before claiming anything still owns both descriptors, and closes both.
+
+		Nothing has become a handle yet, so this is the case that says the descriptor half of the unwind runs.
+		"""
+		self.assertFailedBootStrandsNothing(1)
+
+	def test_failingTheSecondClaimReleasesTheDescriptorAndTheHandle(self):
+		"""A boot that fails after one claim owns a descriptor and a handle, and releases both.
+
+		This is the only point where the boot path holds a descriptor and a handle,
+		which are closed in different ways.
+		"""
+		self.assertFailedBootStrandsNothing(2)
+
 
 class TestHostRootServiceDisconnect(unittest.TestCase):
 	"""The host root service cleans up when core drops the control connection."""
