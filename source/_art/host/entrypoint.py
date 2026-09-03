@@ -20,6 +20,7 @@ from __future__ import annotations
 import logging
 import os
 import sys
+import traceback
 from typing import Final
 
 from rpyc.core.stream import PipeStream, Stream
@@ -159,7 +160,7 @@ def _initializeLogging() -> None:
 	"""
 	artLog = logging.getLogger("_art")
 	artLog.setLevel(logging.DEBUG)
-	handler = logging.StreamHandler(sys.stderr)
+	handler = logging.StreamHandler(sys.stderr if sys.stderr is not None else open(os.devnull))  # noqa: SIM115
 	handler.setFormatter(logging.Formatter("ART host: %(levelname)s - %(name)s - %(message)s"))
 	artLog.addHandler(handler)
 
@@ -170,16 +171,20 @@ def main(argv: list[str] | None = None) -> int:
 	:param argv: Unused for now.
 		Accepted so that the build ID and the launch arguments that follow it have somewhere to go.
 	:returns: Process exit status.
+		0 on success;
+		1 if claiming the control stream fails, or if we get an unhandled exception from ``run``.
 	"""
 	# Mark this process as the host before any shared module is imported,
 	# so shared code doesn't attempt to pull in core.
 	os.environ[_HOST_MARKER_ENV] = "1"
 	try:
 		stream = _claimControlStream()
-	except OSError:
-		# We don't have logging yet, so output directly to stderr.
-		print("ART host could not claim its control stream", file=sys.stderr)
-		raise
+	except OSError as exc:
+		# We don't have logging yet, so output directly to stderr, if it exists.
+		if sys.stderr is not None:
+			print("ART host could not claim its control stream", file=sys.stderr)
+			traceback.print_exception(exc, file=sys.stderr)
+		return 1
 	_initializeLogging()
 	# Import late because we needed to add the host marker first.
 	from .._log import log
