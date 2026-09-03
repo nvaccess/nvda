@@ -201,9 +201,9 @@ class SubprocessHostController:
 		Core keeps a stream over its own ends; the host's ends are duplicated into the host
 		process, and their values handed over for it to rebuild a stream from.
 
-		:returns: A 2-touple:
+		:returns: A 2-tuple:
 			The first member is core's end of the connection;
-			The second member is a (read, write) touple of file handles valid in the host process.
+			The second member is a (read, write) tuple of file handles valid in the host process.
 		:raises RuntimeError: If the host process is not running.
 		:raises OSError: If pipe creation or handle duplication fails.
 		"""
