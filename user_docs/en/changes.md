@@ -185,6 +185,7 @@ The default implementation forwards to `interactWithMathMl`, preserving compatib
 Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
 * Component updates:
   * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
+  * Python to 3.13.15. (#20634, @dpy013)
 * Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
   * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
 * Fixed a handle leak in `hwIo.Bulk.__init__`: if the read pipe opened successfully but the write pipe failed to open, the read handle was never closed, leaving the device open for the remaining lifetime of the process. (#20555, @KihunJang1981)
