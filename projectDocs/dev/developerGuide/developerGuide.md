@@ -1314,7 +1314,7 @@ For more information on speech dictionaries, refer to the [User Guide](https://d
 
 #### Manipulating existing dictionaries
 
-In addition to provide speech dictionaries, add-ons can manipulate existing speech dictionaries
+In addition to provide speech dictionaries, add-ons can manipulate existing speech dictionaries.
 
 ```python
 tempDict = speechDictHandler.definitions.getDictionaryDefinition(DictionaryType.TEMP).dictionary
