@@ -30,6 +30,12 @@ from ..winHandles import claimHandleFromDescriptor
 
 #: Name of the host's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART host control"
+#: File descriptor of this process's standard input.
+_STDIN_FD: Final[int] = 0
+#: File descriptor of this process's standard output.
+_STDOUT_FD: Final[int] = 1
+#: File descriptor of this process's standard error.
+_STDERR_FD: Final[int] = 2
 
 
 def run(stream: Stream) -> None:
@@ -54,72 +60,92 @@ def run(stream: Stream) -> None:
 		conn.close()
 
 
+def _redirectToDevNull(targetFd: int) -> None:
+	"""Point a descriptor at the null device.
+
+	The descriptor opened to reach the null device is closed again before returning,
+	so this owns nothing once it is done.
+
+	:param targetFd: Descriptor to redirect.
+		Left open, but pointing at the null device.
+	:raises OSError: If the null device cannot be opened, or ``targetFd`` cannot be redirected.
+	"""
+	devNullFd = os.open(os.devnull, os.O_RDWR)
+	try:
+		os.dup2(devNullFd, targetFd)
+	finally:
+		os.close(devNullFd)
+
+
+def _redirectStandardStreams() -> None:
+	"""Move this process's standard input and output off the descriptors carrying the control connection.
+
+	Standard input is pointed at the null device, and standard output is folded into standard error,
+	so that anything written to either after boot cannot desynchronise rpyc's framing on the wire.
+	Both the descriptors and the :mod:`sys` objects layered over them are moved,
+	since either is enough to corrupt the connection.
+
+	Standard error is left where it is:
+	it is the host's diagnostic channel, which NVDA drains to its log.
+
+	Owns nothing on return, so a caller part way through claiming descriptors
+	has nothing extra to release if this raises.
+
+	:raises OSError: If the null device cannot be opened, or a descriptor cannot be redirected.
+	"""
+	# Make stdin point to the null device
+	_redirectToDevNull(_STDIN_FD)
+	sys.stdin = open(os.devnull)  # noqa: SIM115
+	# make stdout point to stderr
+	try:
+		os.dup2(_STDERR_FD, _STDOUT_FD)
+	except OSError:
+		# No usable standard error, so redirect to the null device instead
+		_redirectToDevNull(_STDOUT_FD)
+	sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")  # noqa: SIM115
+
+
 def _claimControlStream() -> Stream:
 	"""Take private ownership of the standard descriptors and return the control stream.
 
-	The control connection runs over stdin and stdout,  which carry framed rpyc traffic rather than text.
+	The control connection runs over stdin and stdout, which carry framed rpyc traffic rather than text.
 	Writing anything else to them will corrupt the connection.
-	To ensure the wire has exclusive use of the original descriptors, duplicate them, then:
-
-	* point stdin (descriptor 0) at the null device; and
-	* alias stdout (descriptor 1)  to stderr (descriptor 2).
+	To give the wire exclusive use of the original descriptors, duplicate them,
+	then move the standard streams elsewhere (see :func:`_redirectStandardStreams`).
 
 	The duplicated descriptors are then converted into handles the returned stream solely owns,
 	so that nothing else closes them out from under it
 	(see :func:`_art.winHandles.claimHandleFromDescriptor`).
 
-	Standard error is the host's diagnostic channel,
-	which NVDA drains to its log.
-
 	:returns: The host's end of the control connection.
+	:raises OSError: If the descriptors cannot be duplicated, redirected, or claimed.
+		Nothing is left open in that case.
 	"""
-	# File descriptors of the standard streams.
-	STDIN_FD: Final[int] = 0
-	STDOUT_FD: Final[int] = 1
-	STDERR_FD: Final[int] = 2
-	# Duplicate the current stdin and stdout for our own use
-	readFd = os.dup(STDIN_FD)
+	readFd = -1
+	writeFd = -1
+	readHandle: int | None = None
 	try:
-		writeFd = os.dup(STDOUT_FD)
-	except:
-		os.close(readFd)
-		raise
-	try:
-		# Make stdin point to the null device
-		devNullFd = os.open(os.devnull, os.O_RDWR)
-		try:
-			os.dup2(devNullFd, STDIN_FD)
-		finally:
-			os.close(devNullFd)
-		sys.stdin = open(os.devnull)  # noqa: SIM115
-		# make stdout point to stderr
-		try:
-			os.dup2(STDERR_FD, STDOUT_FD)
-		except OSError:
-			# No usable standard error, so redirect to the null device instead
-			devNullFd = os.open(os.devnull, os.O_RDWR)
-			try:
-				os.dup2(devNullFd, STDOUT_FD)
-			finally:
-				os.close(devNullFd)
-		sys.stdout = sys.stderr if sys.stderr is not None else open(os.devnull, "w")  # noqa: SIM115
-	except:
-		os.close(readFd)
-		os.close(writeFd)
-		raise
-	# ``PipeStream`` closes the handles it is built from, so it has to be their sole owner:
-	# leaving the descriptors open would hand the C runtime a second claim on them.
-	try:
+		readFd = os.dup(_STDIN_FD)
+		writeFd = os.dup(_STDOUT_FD)
+		_redirectStandardStreams()
+		# ``PipeStream`` closes the handles it is built from, so it has to be their sole owner:
+		# leaving the descriptors open would hand the C runtime a second claim on them.
 		readHandle = claimHandleFromDescriptor(readFd)
-	except OSError:
-		os.close(readFd)
-		os.close(writeFd)
-		raise
-	try:
+		readFd = -1
 		writeHandle = claimHandleFromDescriptor(writeFd)
-	except OSError:
-		os.close(writeFd)
-		CloseHandle(readHandle)
+		writeFd = -1
+	# Deliberately not ``except BaseException``:
+	# a signal-delivered exception can land between a successful claim and resetting the variable  to its sentinel,
+	# at which point the descriptor has been closed, unbeknownst to us.
+	# Closing it again could land on a recycled descriptor,
+	# so leaking it is the safest option.
+	except Exception:
+		if readFd >= 0:
+			os.close(readFd)
+		if writeFd >= 0:
+			os.close(writeFd)
+		if readHandle is not None:
+			CloseHandle(readHandle)
 		raise
 	return PipeStream(readHandle, writeHandle)
 
