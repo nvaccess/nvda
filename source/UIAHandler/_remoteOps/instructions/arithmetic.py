@@ -9,7 +9,7 @@ such as addition, subtraction, multiplication, and division.
 Both binary and in-place operations are supported.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 from .. import lowLevel
 from .. import builder

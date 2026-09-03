@@ -26,7 +26,7 @@ Example::
     bridge.disconnect()  # Clean up when done
 """
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from .protocol import RemoteMessageType
 from .transport import Transport
 
@@ -42,7 +42,7 @@ class BridgeTransport:
 	their lifecycle.
 	"""
 
-	excluded: set[RemoteMessageType] = {
+	excluded: set[RemoteMessageType] = {  # noqa: RUF012
 		RemoteMessageType.CLIENT_JOINED,
 		RemoteMessageType.CLIENT_LEFT,
 		RemoteMessageType.CHANNEL_JOINED,

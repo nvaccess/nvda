@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2021 NV Access Limited
 
-from enum import (
+from enum import (  # noqa: I001
 	auto,
 	Enum,
 )

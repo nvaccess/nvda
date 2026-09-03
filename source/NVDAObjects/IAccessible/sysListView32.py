@@ -3,10 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
-from ctypes import *  # noqa: F403
+import time  # noqa: I001
+from ctypes import *
 import ctypes
-from ctypes.wintypes import *  # noqa: F403
+from ctypes.wintypes import *
 from comtypes import BSTR
 from enum import IntFlag
 import NVDAHelper
@@ -22,7 +22,6 @@ import config
 from config.configFlags import ReportTableHeaders
 from locationHelper import RectLTRB
 from logHandler import log
-from typing import Optional
 from utils import _deprecate
 
 # Window messages
@@ -130,81 +129,81 @@ HDM_FIRST = 0x1200
 HDM_GETITEMCOUNT = HDM_FIRST
 
 
-class LVITEM(Structure):  # noqa: F405
-	_fields_ = [
-		("mask", c_uint),  # noqa: F405
-		("iItem", c_int),  # noqa: F405
-		("iSubItem", c_int),  # noqa: F405
-		("state", c_uint),  # noqa: F405
-		("stateMask", c_uint),  # noqa: F405
+class LVITEM(Structure):
+	_fields_ = [  # noqa: RUF012
+		("mask", c_uint),
+		("iItem", c_int),
+		("iSubItem", c_int),
+		("state", c_uint),
+		("stateMask", c_uint),
 		# A pointer to a buffer containing the text of the item.
 		# #18706: note that the pointer size is dictated by the architecture of the process that
 		# hosts the list item, not the process that fetches the list item information.
-		("pszText", c_ulong),  # noqa: F405
-		("cchTextMax", c_int),  # noqa: F405
-		("iImage", c_int),  # noqa: F405
-		("lParam", LPARAM),  # noqa: F405
-		("iIndent", c_int),  # noqa: F405
-		("iGroupID", c_int),  # noqa: F405
-		("cColumns", c_uint),  # noqa: F405
-		("puColumns", c_uint),  # noqa: F405
-		("piColFmt", POINTER(c_int)),  # noqa: F405
-		("iGroup", c_int),  # noqa: F405
+		("pszText", c_ulong),
+		("cchTextMax", c_int),
+		("iImage", c_int),
+		("lParam", LPARAM),
+		("iIndent", c_int),
+		("iGroupID", c_int),
+		("cColumns", c_uint),
+		("puColumns", c_uint),
+		("piColFmt", POINTER(c_int)),
+		("iGroup", c_int),
 	]
 
 
-class LVITEM64(Structure):  # noqa: F405
-	_fields_ = [
-		("mask", c_uint),  # noqa: F405
-		("iItem", c_int),  # noqa: F405
-		("iSubItem", c_int),  # noqa: F405
-		("state", c_uint),  # noqa: F405
-		("stateMask", c_uint),  # noqa: F405
-		("pszText", c_ulonglong),  # noqa: F405
-		("cchTextMax", c_int),  # noqa: F405
-		("iImage", c_int),  # noqa: F405
-		("lParam", c_ulonglong),  # noqa: F405
-		("iIndent", c_int),  # noqa: F405
-		("iGroupID", c_int),  # noqa: F405
-		("cColumns", c_uint),  # noqa: F405
-		("puColumns", c_uint),  # noqa: F405
-		("piColFmt", c_ulonglong),  # noqa: F405
-		("iGroup", c_int),  # noqa: F405
+class LVITEM64(Structure):
+	_fields_ = [  # noqa: RUF012
+		("mask", c_uint),
+		("iItem", c_int),
+		("iSubItem", c_int),
+		("state", c_uint),
+		("stateMask", c_uint),
+		("pszText", c_ulonglong),
+		("cchTextMax", c_int),
+		("iImage", c_int),
+		("lParam", c_ulonglong),
+		("iIndent", c_int),
+		("iGroupID", c_int),
+		("cColumns", c_uint),
+		("puColumns", c_uint),
+		("piColFmt", c_ulonglong),
+		("iGroup", c_int),
 	]
 
 
-class LVCOLUMN(Structure):  # noqa: F405
-	_fields_ = [
-		("mask", c_uint),  # noqa: F405
-		("fmt", c_int),  # noqa: F405
-		("cx", c_int),  # noqa: F405
+class LVCOLUMN(Structure):
+	_fields_ = [  # noqa: RUF012
+		("mask", c_uint),
+		("fmt", c_int),
+		("cx", c_int),
 		# A pointer to a buffer containing the column text.
 		# #18706: note that the pointer size is dictated by the architecture of the process that
 		# hosts the list item, not the process that fetches the list item information.
-		("pszText", c_ulong),  # noqa: F405
-		("cchTextMax", c_int),  # noqa: F405
-		("iSubItem", c_int),  # noqa: F405
-		("iImage", c_int),  # noqa: F405
-		("iOrder", c_int),  # noqa: F405
-		("cxMin", c_int),  # noqa: F405
-		("cxDefault", c_int),  # noqa: F405
-		("cxIdeal", c_int),  # noqa: F405
+		("pszText", c_ulong),
+		("cchTextMax", c_int),
+		("iSubItem", c_int),
+		("iImage", c_int),
+		("iOrder", c_int),
+		("cxMin", c_int),
+		("cxDefault", c_int),
+		("cxIdeal", c_int),
 	]
 
 
-class LVCOLUMN64(Structure):  # noqa: F405
-	_fields_ = [
-		("mask", c_uint),  # noqa: F405
-		("fmt", c_int),  # noqa: F405
-		("cx", c_int),  # noqa: F405
-		("pszText", c_ulonglong),  # noqa: F405
-		("cchTextMax", c_int),  # noqa: F405
-		("iSubItem", c_int),  # noqa: F405
-		("iImage", c_int),  # noqa: F405
-		("iOrder", c_int),  # noqa: F405
-		("cxMin", c_int),  # noqa: F405
-		("cxDefault", c_int),  # noqa: F405
-		("cxIdeal", c_int),  # noqa: F405
+class LVCOLUMN64(Structure):
+	_fields_ = [  # noqa: RUF012
+		("mask", c_uint),
+		("fmt", c_int),
+		("cx", c_int),
+		("pszText", c_ulonglong),
+		("cchTextMax", c_int),
+		("iSubItem", c_int),
+		("iImage", c_int),
+		("iOrder", c_int),
+		("cxMin", c_int),
+		("cxDefault", c_int),
+		("cxIdeal", c_int),
 	]
 
 
@@ -230,24 +229,24 @@ class List(List):
 	def getListGroupInfo(self, groupIndex):
 		header = AutoFreeBSTR()
 		footer = AutoFreeBSTR()
-		state = c_int()  # noqa: F405
+		state = c_int()
 		if (
 			watchdog.cancellableExecute(
 				NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getGroupInfo,
 				self.appModule.helperLocalBindingHandle,
 				self.windowHandle,
 				groupIndex,
-				byref(header),  # noqa: F405
-				byref(footer),  # noqa: F405
-				byref(state),  # noqa: F405
+				byref(header),
+				byref(footer),
+				byref(state),
 			)
 			!= 0
-		):  # noqa: F405
+		):
 			return None
-		return dict(header=header.value, footer=footer.value, state=state.value, groupIndex=groupIndex)
+		return dict(header=header.value, footer=footer.value, state=state.value, groupIndex=groupIndex)  # noqa: C408
 
 	def _get_name(self):
-		name = super(List, self)._get_name()
+		name = super()._get_name()
 		if not name:
 			name = super(IAccessible, self)._get_name()
 		return name
@@ -269,7 +268,7 @@ class List(List):
 						groupInfo=info,
 					)
 					return eventHandler.queueEvent("gainFocus", groupingObj)
-		return super(List, self).event_gainFocus()
+		return super().event_gainFocus()
 
 	def _get_isMultiColumn(self):
 		view = watchdog.cancellableSendMessage(self.windowHandle, LVM_GETVIEW, 0, 0)
@@ -297,7 +296,7 @@ class List(List):
 			return 1
 		return count
 
-	def _getColumnOrderArrayRawInProc(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRawInProc(self, columnCount: int) -> ctypes.Array | None:
 		"""Retrieves a list of column indexes for a given list control.
 		See `_getColumnOrderArrayRaw` for more comments.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
@@ -315,7 +314,7 @@ class List(List):
 			return None
 		return columnOrderArray
 
-	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRawOutProc(self, columnCount: int) -> ctypes.Array | None:
 		"""Retrieves a list of column indexes for a given list control.
 		See `_getColumnOrderArrayRaw` for more comments.
 		Note that this method operates out of process and has to reserve memory inside a given application.
@@ -328,12 +327,12 @@ class List(List):
 		internalCoa = winKernel.virtualAllocEx(
 			processHandle,
 			None,
-			sizeof(coa),  # noqa: F405
+			sizeof(coa),
 			winKernel.MEM_COMMIT,
-			winKernel.PAGE_READWRITE,  # noqa: F405
-		)  # noqa: F405
+			winKernel.PAGE_READWRITE,
+		)
 		try:
-			winKernel.writeProcessMemory(processHandle, internalCoa, byref(coa), sizeof(coa), None)  # noqa: F405
+			winKernel.writeProcessMemory(processHandle, internalCoa, byref(coa), sizeof(coa), None)
 			# The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
 			# it returns nonzero if successful, or 0 otherwise.
 			# https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
@@ -344,7 +343,7 @@ class List(List):
 				internalCoa,
 			)
 			if res:
-				winKernel.readProcessMemory(processHandle, internalCoa, byref(coa), sizeof(coa), None)  # noqa: F405
+				winKernel.readProcessMemory(processHandle, internalCoa, byref(coa), sizeof(coa), None)
 			else:
 				coa = None
 				log.debugWarning(
@@ -355,7 +354,7 @@ class List(List):
 			winKernel.virtualFreeEx(processHandle, internalCoa, 0, winKernel.MEM_RELEASE)
 		return coa
 
-	def _getColumnOrderArrayRaw(self, columnCount: int) -> Optional[ctypes.Array]:
+	def _getColumnOrderArrayRaw(self, columnCount: int) -> ctypes.Array | None:
 		"""Retrieves an array of column indexes for a given list.
 		The indexes are placed in order in which columns are displayed on screen from left to right.
 		Note that when columns are reordered the indexes remain the same - only their order differs.
@@ -364,7 +363,7 @@ class List(List):
 			return self._getColumnOrderArrayRawOutProc(columnCount)
 		return self._getColumnOrderArrayRawInProc(columnCount)
 
-	def _getMappedColumn(self, presentationIndex: int) -> Optional[int]:
+	def _getMappedColumn(self, presentationIndex: int) -> int | None:
 		"""
 		Multi-column SysListViews can have their columns re-ordered.
 		To keep a consistent internal mapping, a column order array is used
@@ -396,7 +395,7 @@ class List(List):
 
 class GroupingItem(Window):
 	def __init__(self, windowHandle=None, parentNVDAObject=None, groupInfo=None):
-		super(GroupingItem, self).__init__(windowHandle=windowHandle)
+		super().__init__(windowHandle=windowHandle)
 		self.parent = parentNVDAObject
 		self.groupInfo = groupInfo
 
@@ -453,7 +452,7 @@ class ListItemWithoutColumnSupport(IAccessible):
 	description = None
 
 	def _get_value(self):
-		value = super(ListItemWithoutColumnSupport, self)._get_description()
+		value = super()._get_description()
 		if (not value or value.isspace()) and self.windowStyle & ListViewWindowStyle.OWNERDRAWFIXED:
 			value = self.displayText
 		if not value:
@@ -464,11 +463,11 @@ class ListItemWithoutColumnSupport(IAccessible):
 	def _get_positionInfo(self):
 		index = self.IAccessibleChildID
 		totalCount = watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMCOUNT, 0, 0)
-		return dict(indexInGroup=index, similarItemsInGroup=totalCount)
+		return dict(indexInGroup=index, similarItemsInGroup=totalCount)  # noqa: C408
 
 	def event_stateChange(self):
 		if self.hasFocus:
-			super(ListItemWithoutColumnSupport, self).event_stateChange()
+			super().event_stateChange()
 
 
 class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColumnSupport):
@@ -505,7 +504,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		"""
 		processHandle = self.processHandle
 		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
-		localRect = RECT(  # noqa: F405
+		localRect = RECT(
 			# Returns the bounding rectangle of the entire item, including the icon and label.
 			left=LVIR_LABEL,
 			# According to Microsoft, top should be the one-based index of the subitem.
@@ -515,18 +514,18 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		internalRect = winKernel.virtualAllocEx(
 			processHandle,
 			None,
-			sizeof(localRect),  # noqa: F405
+			sizeof(localRect),
 			winKernel.MEM_COMMIT,
-			winKernel.PAGE_READWRITE,  # noqa: F405
-		)  # noqa: F405
+			winKernel.PAGE_READWRITE,
+		)
 		try:
 			winKernel.writeProcessMemory(
 				processHandle,
 				internalRect,
-				byref(localRect),  # noqa: F405
-				sizeof(localRect),  # noqa: F405
-				None,  # noqa: F405
-			)  # noqa: F405
+				byref(localRect),
+				sizeof(localRect),
+				None,
+			)
 			res = watchdog.cancellableSendMessage(
 				self.windowHandle,
 				LVM_GETSUBITEMRECT,
@@ -548,7 +547,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return localRect
 
-	def _getColumnLocationRaw(self, index: int) -> Optional[RectLTRB]:
+	def _getColumnLocationRaw(self, index: int) -> RectLTRB | None:
 		if not self.appModule.helperLocalBindingHandle:
 			rect = self._getColumnLocationRawOutProc(index)
 		else:
@@ -563,19 +562,17 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		top = rect.top
 		right = rect.right
 		bottom = rect.bottom
-		if left > right:
-			left = right
-		if top > bottom:
-			top = bottom
+		left = min(left, right)
+		top = min(top, bottom)
 		return RectLTRB(left, top, right, bottom).toScreen(self.windowHandle).toLTWH()
 
-	def _getColumnLocation(self, column: int) -> Optional[RectLTRB]:
+	def _getColumnLocation(self, column: int) -> RectLTRB | None:
 		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
 		return self._getColumnLocationRaw(mappedColumn)
 
-	def _getColumnContentRawInProc(self, index: int) -> Optional[str]:
+	def _getColumnContentRawInProc(self, index: int) -> str | None:
 		"""Retrieves text for a given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
 		i.e when running as a Windows Store application or when no focus event was received on startup.
@@ -597,7 +594,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return text.value
 
-	def _getColumnContentRawOutProc(self, index: int) -> Optional[str]:
+	def _getColumnContentRawOutProc(self, index: int) -> str | None:
 		"""Retrieves text for a given column.
 		Note that this method operates out of process and has to reserve memory inside a given application.
 		As a consequence it may fail when reserved memory is above the range available
@@ -609,10 +606,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		internalItem = winKernel.virtualAllocEx(
 			processHandle,
 			None,
-			sizeof(self.LVITEM),  # noqa: F405
+			sizeof(self.LVITEM),
 			winKernel.MEM_COMMIT,
-			winKernel.PAGE_READWRITE,  # noqa: F405
-		)  # noqa: F405
+			winKernel.PAGE_READWRITE,
+		)
 		try:
 			internalText = winKernel.virtualAllocEx(
 				processHandle,
@@ -632,10 +629,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				winKernel.writeProcessMemory(
 					processHandle,
 					internalItem,
-					byref(item),  # noqa: F405
-					sizeof(self.LVITEM),  # noqa: F405
-					None,  # noqa: F405
-				)  # noqa: F405
+					byref(item),
+					sizeof(self.LVITEM),
+					None,
+				)
 				len = watchdog.cancellableSendMessage(
 					self.windowHandle,
 					LVM_GETITEMTEXTW,
@@ -646,24 +643,24 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 					winKernel.readProcessMemory(
 						processHandle,
 						internalItem,
-						byref(item),  # noqa: F405
-						sizeof(self.LVITEM),  # noqa: F405
-						None,  # noqa: F405
-					)  # noqa: F405
-					buffer = create_unicode_buffer(len)  # noqa: F405
-					winKernel.readProcessMemory(processHandle, item.pszText, buffer, sizeof(buffer), None)  # noqa: F405
+						byref(item),
+						sizeof(self.LVITEM),
+						None,
+					)
+					buffer = create_unicode_buffer(len)
+					winKernel.readProcessMemory(processHandle, item.pszText, buffer, sizeof(buffer), None)
 			finally:
 				winKernel.virtualFreeEx(processHandle, internalText, 0, winKernel.MEM_RELEASE)
 		finally:
 			winKernel.virtualFreeEx(processHandle, internalItem, 0, winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnContentRaw(self, index: int) -> Optional[str]:
+	def _getColumnContentRaw(self, index: int) -> str | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnContentRawOutProc(index)
 		return self._getColumnContentRawInProc(index)
 
-	def _getColumnContent(self, column: int) -> Optional[str]:
+	def _getColumnContent(self, column: int) -> str | None:
 		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
@@ -674,21 +671,21 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		internalItem = winKernel.virtualAllocEx(
 			processHandle,
 			None,
-			sizeof(self.LVITEM),  # noqa: F405
+			sizeof(self.LVITEM),
 			winKernel.MEM_COMMIT,
-			winKernel.PAGE_READWRITE,  # noqa: F405
-		)  # noqa: F405
+			winKernel.PAGE_READWRITE,
+		)
 		try:
 			item = self.LVITEM(
 				iItem=self.IAccessibleChildID - 1,
 				mask=LVIF_IMAGE | LVIF_COLUMNS,
 				iSubItem=index,
 			)
-			winKernel.writeProcessMemory(processHandle, internalItem, byref(item), sizeof(self.LVITEM), None)  # noqa: F405
+			winKernel.writeProcessMemory(processHandle, internalItem, byref(item), sizeof(self.LVITEM), None)
 			item.mask = LVIF_IMAGE | LVIF_COLUMNS
-			winKernel.writeProcessMemory(processHandle, internalItem, byref(item), sizeof(self.LVITEM), None)  # noqa: F405
+			winKernel.writeProcessMemory(processHandle, internalItem, byref(item), sizeof(self.LVITEM), None)
 			watchdog.cancellableSendMessage(self.windowHandle, LVM_GETITEMW, 0, internalItem)
-			winKernel.readProcessMemory(processHandle, internalItem, byref(item), sizeof(item), None)  # noqa: F405
+			winKernel.readProcessMemory(processHandle, internalItem, byref(item), sizeof(item), None)
 		finally:
 			winKernel.virtualFreeEx(processHandle, internalItem, 0, winKernel.MEM_RELEASE)
 		return item.iImage
@@ -699,7 +696,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return self._getColumnImageIDRaw(mappedColumn)
 
-	def _getColumnHeaderRawOutProc(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRawOutProc(self, index: int) -> str | None:
 		"""Retrieves text of the header for the given column.
 		Note that this method operates out of process and has to reserve memory inside a given application.
 		As a consequence it may fail when reserved memory is above the range available
@@ -711,10 +708,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		internalColumn = winKernel.virtualAllocEx(
 			processHandle,
 			None,
-			sizeof(self.LVCOLUMN),  # noqa: F405
+			sizeof(self.LVCOLUMN),
 			winKernel.MEM_COMMIT,
-			winKernel.PAGE_READWRITE,  # noqa: F405
-		)  # noqa: F405
+			winKernel.PAGE_READWRITE,
+		)
 		try:
 			internalText = winKernel.virtualAllocEx(
 				processHandle,
@@ -733,10 +730,10 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				winKernel.writeProcessMemory(
 					processHandle,
 					internalColumn,
-					byref(column),  # noqa: F405
-					sizeof(self.LVCOLUMN),  # noqa: F405
-					None,  # noqa: F405
-				)  # noqa: F405
+					byref(column),
+					sizeof(self.LVCOLUMN),
+					None,
+				)
 				res = watchdog.cancellableSendMessage(
 					self.windowHandle,
 					LVM_GETCOLUMNW,
@@ -747,19 +744,19 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 					winKernel.readProcessMemory(
 						processHandle,
 						internalColumn,
-						byref(column),  # noqa: F405
-						sizeof(self.LVCOLUMN),  # noqa: F405
-						None,  # noqa: F405
-					)  # noqa: F405
-					buffer = create_unicode_buffer(column.cchTextMax)  # noqa: F405
-					winKernel.readProcessMemory(processHandle, column.pszText, buffer, sizeof(buffer), None)  # noqa: F405
+						byref(column),
+						sizeof(self.LVCOLUMN),
+						None,
+					)
+					buffer = create_unicode_buffer(column.cchTextMax)
+					winKernel.readProcessMemory(processHandle, column.pszText, buffer, sizeof(buffer), None)
 			finally:
 				winKernel.virtualFreeEx(processHandle, internalText, 0, winKernel.MEM_RELEASE)
 		finally:
 			winKernel.virtualFreeEx(processHandle, internalColumn, 0, winKernel.MEM_RELEASE)
 		return buffer.value if buffer else None
 
-	def _getColumnHeaderRawInProc(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRawInProc(self, index: int) -> str | None:
 		"""Retrieves text of the header for the given column.
 		Note that this method operates in process and cannot be used in situations where NVDA cannot inject
 		i.e when running as a Windows Store application or when no focus event was received on startup.
@@ -779,12 +776,12 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			return None
 		return text.value
 
-	def _getColumnHeaderRaw(self, index: int) -> Optional[str]:
+	def _getColumnHeaderRaw(self, index: int) -> str | None:
 		if not self.appModule.helperLocalBindingHandle:
 			return self._getColumnHeaderRawOutProc(index)
 		return self._getColumnHeaderRawInProc(index)
 
-	def _getColumnHeader(self, column: int) -> Optional[str]:
+	def _getColumnHeader(self, column: int) -> str | None:
 		mappedColumn = self.parent._getMappedColumn(column)
 		if mappedColumn is None:
 			return None
@@ -793,7 +790,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 	def _get_name(self):
 		parent = self.parent
 		if not isinstance(parent, List) or not parent.isMultiColumn or self._shouldDisableMultiColumn:
-			name = super(ListItem, self).name
+			name = super().name
 			if name:
 				return name
 			elif self.windowStyle & ListViewWindowStyle.OWNERDRAWFIXED:
@@ -819,7 +816,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			else:
 				header = None
 			if header:
-				textList.append("%s: %s" % (header, content))
+				textList.append("%s: %s" % (header, content))  # noqa: UP031
 			else:
 				textList.append(content)
 		name = "; ".join(textList)

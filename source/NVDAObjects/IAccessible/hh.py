@@ -6,7 +6,7 @@
 
 """NVDAObjects for Microsoft HTML Help."""
 
-import IAccessibleHandler
+import IAccessibleHandler  # noqa: I001
 from . import IAccessible
 
 
@@ -51,4 +51,4 @@ class KeywordList(IAccessible):
 			# We do this at the IAccessibleHandler level so that duplicate focus event checks will work properly.
 			IAccessibleHandler.processFocusNVDAEvent(child)
 		else:
-			super(KeywordList, self).event_gainFocus()
+			super().event_gainFocus()

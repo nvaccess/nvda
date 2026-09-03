@@ -8,7 +8,7 @@ This module contains the instructions that operate on all object types.
 Including to set a value, or compare two values.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 import UIAHandler
 from .. import lowLevel

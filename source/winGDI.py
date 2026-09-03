@@ -7,7 +7,7 @@
 When working on this file, consider moving to winAPI.
 """
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	POINTER,
 	byref,
 )
@@ -105,7 +105,7 @@ def GDIPlusGraphicsContext(hdc):
 	if gpStatus:
 		# See https://docs.microsoft.com/en-us/windows/desktop/api/Gdiplustypes/ne-gdiplustypes-status
 		# for a list of applicable status codes
-		raise RuntimeError("GdipCreateFromHDC failed with status code %d" % gpStatus)
+		raise RuntimeError("GdipCreateFromHDC failed with status code %d" % gpStatus)  # noqa: UP031
 	try:
 		yield gpGraphics
 	finally:
@@ -127,10 +127,10 @@ def GDIPlusPen(color, width, dashStyle=DashStyleSolid):
 	gpPen = POINTER(GpPen)()
 	gpStatus = GdipCreatePen1(color, width, UnitPixel, byref(gpPen))
 	if gpStatus:
-		raise RuntimeError("GdipCreatePen1 failed with status code %d" % gpStatus)
+		raise RuntimeError("GdipCreatePen1 failed with status code %d" % gpStatus)  # noqa: UP031
 	gpStatus = GdipSetPenDashStyle(gpPen, dashStyle)
 	if gpStatus:
-		raise RuntimeError("GdipSetPenDashStyle failed with status code %d" % gpStatus)
+		raise RuntimeError("GdipSetPenDashStyle failed with status code %d" % gpStatus)  # noqa: UP031
 	try:
 		yield gpPen
 	finally:
@@ -147,4 +147,4 @@ def gdiPlusDrawRectangle(gpGraphics, gpPen, left, top, width, height):
 		float(height),
 	)
 	if gpStatus:
-		raise RuntimeError("GdipDrawRectangle failed with status code %d" % gpStatus)
+		raise RuntimeError("GdipDrawRectangle failed with status code %d" % gpStatus)  # noqa: UP031

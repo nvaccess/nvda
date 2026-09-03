@@ -3,8 +3,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Callable
-from typing import List, Iterator
+from collections.abc import Callable  # noqa: I001
+from collections.abc import Iterator
 
 import ctypes
 from ctypes import byref
@@ -279,7 +279,7 @@ class _WinUsbBulk:
 				try:
 					self._onReceive(data)
 				except Exception:
-					log.error("", exc_info=True)
+					log.error("", exc_info=True)  # noqa: G201
 			self._recvEvt.set()
 
 	def waitForRead(self, timeout: float) -> bool:
@@ -378,7 +378,7 @@ class BrailleSense(Model):
 	numCells = 0  # Either 18 or 32
 
 	def _get_keys(self):
-		keys = super(BrailleSense, self)._get_keys()
+		keys = super()._get_keys()
 		keys.update(
 			{
 				0x01 << 16: "leftSideScrollUp",
@@ -398,7 +398,7 @@ class BrailleEdge(Model):
 	numCells = 40
 
 	def _get_keys(self):
-		keys = super(BrailleEdge, self)._get_keys()
+		keys = super()._get_keys()
 		keys.update(
 			{
 				0x01 << 16: "leftSideScrollUp",
@@ -612,13 +612,13 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._model = None
 		self._serialData = b""
 
 		for match in self._getTryPorts(port):
-			portType, portId, port, portInfo = match
+			portType, portId, port, portInfo = match  # noqa: RUF059
 			self.isBulk = portType == bdDetect.ProtocolType.CUSTOM
 			self.isHID = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
@@ -630,7 +630,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 						# onReceiveSize based on max packet size according to USB endpoint information.
 						try:
 							self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
-						except EnvironmentError as bulkError:
+						except OSError as bulkError:
 							# himsusb.sys (the legacy kernel driver hwIo.Bulk expects) may not be
 							# available -- e.g. Windows 11 blocks installation of unsigned/non-WHCP
 							# kernel drivers. Fall back to WinUSB (winusb.sys, an inbox driver) if
@@ -647,7 +647,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 								raise
 							try:
 								self._dev = _WinUsbBulk(winUsbPath, self._onReceive, onReceiveSize=64)
-							except EnvironmentError as winUsbError:
+							except OSError as winUsbError:
 								log.debug(f"WinUSB fallback failed: {winUsbError}")
 								raise
 					case bdDetect.ProtocolType.SERIAL:
@@ -661,7 +661,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 						)
 					case _:
 						log.error(f"No matching case for portType found: {portType}")
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			for i in range(3):
@@ -685,11 +685,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if self._model:
 				# A display responded.
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self._model.name,
-						type=portType,
-						port=port,
-					),
+					f"Found {self._model.name} connected via {portType} ({port})",
 				)
 				break
 
@@ -697,7 +693,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		else:
 			raise RuntimeError("No Hims display found")
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = bytes(cells)
 		if self.isHID:
@@ -717,7 +713,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			try:
 				data: bytes = self._dev.getFeature(HR_CAPS)
 				self.numCells = data[9]
-			except WindowsError:
+			except OSError:
 				log.exception("Failed to fetch number of cells")
 				return
 		else:
@@ -725,7 +721,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			self._sendPacket(b"\xfb", b"\x01", bytes(32))  # send 32 null bytes
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
-		log.debug("Considering sending identification requests for device %s" % str(match))
+		log.debug("Considering sending identification requests for device %s" % str(match))  # noqa: UP031
 		if "bluetoothName" in match.deviceInfo:  # Bluetooth
 			matchedModelsMap = [
 				modelTuple
@@ -747,14 +743,14 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				# There is only one model matching the criteria, and we have the proper number of cells.
 				# There's no point in sending an identification request at all, just use this model
 				log.debug(
-					"Use %s as model without sending an additional identification request" % modelCls.name,
+					"Use %s as model without sending an additional identification request" % modelCls.name,  # noqa: UP031
 				)
 				self._model = modelCls()
 				self.numCells = numCells
 				return
 		self._model = None
 		for modelId, cls in matchedModelsMap:
-			log.debug("Sending request for id %r" % modelId)
+			log.debug("Sending request for id %r" % modelId)  # noqa: UP031
 
 			self._dev.write(
 				b"".join(
@@ -767,30 +763,30 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			)
 			self._dev.waitForRead(self.timeout)
 			if self._model:
-				log.debug("%s model has been set" % self._model.name)
+				log.debug("%s model has been set" % self._model.name)  # noqa: UP031
 				break
 
 	def _handleIdentification(self, recvId: bytes):
 		modelCls = None
 		models = [modelCls for modelId, modelCls in modelMap if (modelId == recvId)]
-		log.debug("Identification received, id %s" % recvId)
+		log.debug("Identification received, id %s" % recvId)  # noqa: UP031
 		if not models:
 			raise ValueError("Device identification ID unknown in model map")
 		if len(models) == 1:
 			modelCls = models[0]
 			self.numCells = self.numCells or modelCls.numCells
-			log.debug("There is an exact match, %s found with %d cells" % (modelCls.name, self.numCells))
+			log.debug("There is an exact match, %s found with %d cells" % (modelCls.name, self.numCells))  # noqa: UP031
 		elif len(models) > 1:
-			log.debug("Multiple models match: %s" % ", ".join(modelCls.name for modelCls in models))
+			log.debug("Multiple models match: %s" % ", ".join(modelCls.name for modelCls in models))  # noqa: UP031
 			try:
 				modelCls = next(cls for cls in models if cls.numCells == self.numCells)
 				log.debug(
-					"There is an exact match out of multiple models, %s found with %d cells"
+					"There is an exact match out of multiple models, %s found with %d cells"  # noqa: UP031
 					% (modelCls.name, self.numCells),
 				)
 			except StopIteration:
 				log.debugWarning(
-					"No exact model match found for the reported %d cells display" % self.numCells,
+					"No exact model match found for the reported %d cells display" % self.numCells,  # noqa: UP031
 				)
 				try:
 					modelCls = next(cls for cls in models if not cls.numCells)
@@ -820,7 +816,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)  # noqa: UP031
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys))
@@ -836,7 +832,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		routingKey = int.from_bytes(data[2:7], "little", signed=False)
 		if routingKey != 0:  # Routing key
 			try:
-				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))
+				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))  # noqa: FURB163
 			except inputCore.NoInputGestureAction:
 				pass
 		else:  # Other key
@@ -852,7 +848,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)  # noqa: UP031
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys, True))
@@ -898,7 +894,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			try:
 				# Command packets are ten bytes long
 				packet = firstByte + stream.read(9)
-			except IOError:
+			except OSError:
 				# remaining data will be received next onReceive
 				self._serialData = firstByte
 				return
@@ -924,7 +920,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		d1Len = len(data1)
 		d2Len = len(data2)
 		# Construct the packet
-		packet: List[bytes] = [
+		packet: list[bytes] = [
 			# Packet start
 			packetType * 2,
 			# Mode
@@ -974,7 +970,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# We must sleep before closing the port as not doing this can leave the display in a bad state where it can not be re-initialized.
 			time.sleep(self.timeout)
@@ -1113,7 +1109,7 @@ class KeyInputGesture(
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):
-		super(KeyInputGesture, self).__init__()
+		super().__init__()
 		# Model identifiers should not contain spaces.
 		self.model = model.name.replace(" ", "")
 		self.keys = keys
@@ -1122,7 +1118,7 @@ class KeyInputGesture(
 		for key in keys:
 			if isBrailleInput:
 				if isHid:
-					if 8 <= int(math.log(key, 2)) <= 15:
+					if 8 <= int(math.log(key, 2)) <= 15:  # noqa: FURB163
 						self.dots |= key >> 8
 					elif model.keys.get(key) == "space":
 						self.space = True

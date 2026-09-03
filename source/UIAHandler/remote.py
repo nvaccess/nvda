@@ -4,11 +4,11 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from typing import (
+from typing import (  # noqa: I001
 	Any,
-	Generator,
 	cast,
 )
+from collections.abc import Generator
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
 import winVersion
@@ -302,7 +302,7 @@ def msWord_textRange_expandToEnclosingSentence(
 
 def collectAllHeadingsInTextRange(
 	textRange: UIA.IUIAutomationTextRange,
-) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
+) -> Generator[tuple[int, str, UIA.IUIAutomationElement]]:
 	op = operation.Operation()
 
 	@op.buildIterableFunction
@@ -321,7 +321,7 @@ def collectAllHeadingsInTextRange(
 					label = paragraphRange.getText(-1)
 					ra.Yield(level, label, paragraphRange)
 
-	for level, label, paragraphRange in op.iterExecute(maxTries=20):
+	for level, label, paragraphRange in op.iterExecute(maxTries=20):  # noqa: UP028
 		yield level, label, paragraphRange
 
 

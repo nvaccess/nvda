@@ -5,14 +5,14 @@
 
 """Functionality to capture and work with bitmaps of the screen."""
 
-import ctypes
+import ctypes  # noqa: I001
 import winGDI
 import winBindings.gdi32
 from winBindings import user32 as _user32
 from utils import _deprecate
 
 
-class ScreenBitmap(object):
+class ScreenBitmap:
 	"""Provides a way to capture a bitmap of any part of the screen. The object caches needed DCs and bitmaps therefore an instance of an object only handles one size of bitmap."""
 
 	def __init__(self, width, height):

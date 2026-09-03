@@ -7,7 +7,7 @@
 High-level UIA remote ops Unit tests for UIA element methods.
 """
 
-from unittest import TestCase
+from unittest import TestCase  # noqa: I001
 from unittest.mock import Mock
 from ctypes import POINTER
 from UIAHandler import UIA

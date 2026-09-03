@@ -21,12 +21,12 @@ from SCons.Builder import Builder
 
 # This build emitter tells the builder that a header file, a client stub c file, and a server stub c file will be generated
 def MSRPCStubs_buildEmitter(target, source, env):
-	base, ext = Util.splitext(str(target[0] if len(target) > 0 else source[0]))
-	newTargets = ["%s.h" % base]
+	base, ext = Util.splitext(str(target[0] if len(target) > 0 else source[0]))  # noqa: RUF059
+	newTargets = ["%s.h" % base]  # noqa: UP031
 	if not env["MSRPCStubs_noServer"]:
-		newTargets.append("%s_S.c" % base)
+		newTargets.append("%s_S.c" % base)  # noqa: UP031
 	if not env["MSRPCStubs_noClient"]:
-		newTargets.append("%s_C.c" % base)
+		newTargets.append("%s_C.c" % base)  # noqa: UP031
 	return (newTargets, source)
 
 
@@ -35,7 +35,7 @@ def MSRPCStubs_builder_actionGenerator(target, source, env, for_signature):
 	for src in source:
 		src = str(src)
 		if src.endswith(".acf"):
-			sources.append("/acf %s" % src)
+			sources.append("/acf %s" % src)  # noqa: UP031
 		else:
 			sources.append(src)
 	sources = " ".join(sources)
@@ -43,28 +43,28 @@ def MSRPCStubs_builder_actionGenerator(target, source, env, for_signature):
 	for tg in target:
 		tg = str(tg)
 		if tg.endswith(".h"):
-			targets.append("/header %s" % tg)
+			targets.append("/header %s" % tg)  # noqa: UP031
 		elif tg.endswith("_S.c"):
-			targets.append("/sstub %s" % tg)
+			targets.append("/sstub %s" % tg)  # noqa: UP031
 		elif tg.endswith("_C.c"):
-			targets.append("/cstub %s" % tg)
+			targets.append("/cstub %s" % tg)  # noqa: UP031
 		else:
-			raise ValueError("Don't know what to do with %s" % tg)
+			raise ValueError("Don't know what to do with %s" % tg)  # noqa: UP031
 	targets = " ".join(targets)
 	noServer = "/server none" if env.get("MSRPCStubs_noServer", False) else ""
 	noClient = "/client none" if env.get("MSRPCStubs_noClient", False) else ""
 
 	prefix = env.get("MSRPCStubs_prefix", "")
 	if prefix:
-		prefix = "/prefix all %s" % prefix
+		prefix = "/prefix all %s" % prefix  # noqa: UP031
 	serverPrefix = env.get("MSRPCStubs_serverPrefix", "")
 	if serverPrefix:
-		serverPrefix = "/prefix server %s" % serverPrefix
+		serverPrefix = "/prefix server %s" % serverPrefix  # noqa: UP031
 	clientPrefix = env.get("MSRPCStubs_clientPrefix", "")
 	if clientPrefix:
-		clientPrefix = "/prefix client %s" % clientPrefix
+		clientPrefix = "/prefix client %s" % clientPrefix  # noqa: UP031
 
-	return " ".join(
+	return " ".join(  # noqa: FLY002
 		["${MIDL}", "${MIDLFLAGS}", noServer, noClient, prefix, serverPrefix, clientPrefix, targets, sources],
 	)
 

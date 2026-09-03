@@ -5,7 +5,7 @@
 
 """Logic for NVDA installation process tests."""
 
-from robot.libraries.BuiltIn import BuiltIn
+from robot.libraries.BuiltIn import BuiltIn  # noqa: I001
 
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords

@@ -44,13 +44,13 @@ def _createRegistryStructure(keyHandle: winreg.HKEYType, data: dict):
 					_createRegistryStructure(subkey, value)
 				finally:
 					subkey.Close()
-			except WindowsError as e:
+			except OSError as e:
 				raise OSError(f"Failed to create registry subkey {name}: {e}")
 		else:
 			# Set value
 			try:
 				winreg.SetValueEx(keyHandle, name, 0, winreg.REG_SZ, str(value))
-			except WindowsError as e:
+			except OSError as e:
 				raise OSError(f"Failed to set registry value {name}: {e}")
 
 
@@ -76,7 +76,7 @@ def unregisterURLHandler():
 			winreg.HKEY_CURRENT_USER,
 			RegistryKey.REMOTE_URL_HANDLER.value,
 		)
-	except WindowsError as e:
+	except OSError as e:
 		raise OSError(f"Failed to unregister URL handler: {e}")
 
 

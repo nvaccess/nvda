@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
 
-from .formatFields import TextPosition, TextAlign, VerticalTextAlign
+from .formatFields import TextPosition, TextAlign, VerticalTextAlign  # noqa: I001
 from .isCurrent import IsCurrent
 from .outputReason import OutputReason
 from .processAndLabelStates import processAndLabelStates
@@ -16,13 +16,13 @@ from . import deprecatedAliases
 # deprecatedAliases included for backwards compatibility.
 # Supress F403 - unable to detect undefined names.
 # Supress F401 - imported but unused
-from .deprecatedAliases import *  # noqa: F403, F401
+from .deprecatedAliases import *
 
 # Override (and limit) the symbols exported by the controlTypes package
 # These are the symbols available when `from controlTypes import *` is used.
 # Note, deprecated aliases are exposed for backwards compatibility, using these aliases is not recommended,
 # consult the deprecatedAliases module for alternatives.
-__all__ = [
+__all__ = [  # noqa: PLE0604
 	"IsCurrent",
 	"OutputReason",
 	"processAndLabelStates",

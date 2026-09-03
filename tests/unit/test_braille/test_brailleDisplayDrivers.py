@@ -5,7 +5,7 @@
 
 """Unit tests for braille display drivers."""
 
-from brailleDisplayDrivers import seikantk
+from brailleDisplayDrivers import seikantk  # noqa: I001
 import unittest
 import braille
 import braille.display
@@ -335,5 +335,5 @@ class TestBRLTTY(unittest.TestCase):
 		try:
 			# SUpress Flake8 F401 imported but unused, as we're testing the import
 			import brlapi  # noqa: F401
-		except Exception:
+		except Exception:  # noqa: BLE001
 			self.fail("Couldn't import the brlapi module")

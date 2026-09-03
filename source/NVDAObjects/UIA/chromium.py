@@ -4,7 +4,7 @@
 # Copyright (C) 2020-2021 NV Access limited, Leonard de Ruijter
 
 
-import UIAHandler
+import UIAHandler  # noqa: I001
 from . import web
 import controlTypes
 
@@ -51,7 +51,7 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 		if obj.role == controlTypes.Role.COMBOBOX:
 			field["content"] = obj.value
 		# Layout tables do not have the UIA table pattern
-		if field["role"] == controlTypes.Role.TABLE:
+		if field["role"] == controlTypes.Role.TABLE:  # noqa: SIM102
 			if not obj._getUIACacheablePropertyValue(UIAHandler.UIA_IsTablePatternAvailablePropertyId):
 				field["table-layout"] = True
 		# Currently no way to tell if author has explicitly set name.

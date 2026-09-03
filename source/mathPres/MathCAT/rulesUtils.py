@@ -26,7 +26,7 @@ def getRulesFiles(
 		os.path.basename(file) for file in glob.glob(os.path.join(pathToDir, "*_Rules.yaml"))
 	]
 	for dir in os.listdir(pathToDir):
-		if os.path.isdir(os.path.join(pathToDir, dir)):
+		if os.path.isdir(os.path.join(pathToDir, dir)):  # noqa: SIM102
 			if processSubDirs:
 				ruleFiles.extend(processSubDirs(dir, language))
 	return ruleFiles

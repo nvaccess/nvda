@@ -16,13 +16,13 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
-from .base import Region
+from .base import Region  # noqa: I001
 from ..constants import TEXT_SEPARATOR
 from .properties import getPropertiesBraille
 from ._routing import _routingShouldMoveSystemCaret
 
 
-def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
+def NVDAObjectHasUsefulText(obj: NVDAObject) -> bool:
 	"""Does obj contain useful text to display in braille
 
 	:param obj: object to check
@@ -35,7 +35,7 @@ def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 	if issubclass(obj.TextInfo, displayModel.DisplayModelTextInfo):
 		# #1711: Flat review (using displayModel) should always be presented on the braille display
 		return True
-	if obj._hasNavigableText or isinstance(obj, EditableText):
+	if obj._hasNavigableText or isinstance(obj, EditableText):  # noqa: SIM103
 		return True
 	return False
 
@@ -46,7 +46,7 @@ class NVDAObjectRegion(Region):
 	A cursor routing request will activate the object's default action.
 	"""
 
-	def __init__(self, obj: "NVDAObject", appendText: str = ""):
+	def __init__(self, obj: NVDAObject, appendText: str = ""):
 		"""Constructor.
 		@param obj: The associated NVDAObject.
 		@param appendText: Text which should always be appended to the NVDAObject text, useful if this region will always precede other regions.
@@ -116,7 +116,7 @@ class NVDAObjectRegion(Region):
 				except (NotImplementedError, LookupError):
 					pass
 		self.rawText = text + self.appendText
-		super(NVDAObjectRegion, self).update()
+		super().update()
 
 	def routeTo(self, braillePos):
 		try:

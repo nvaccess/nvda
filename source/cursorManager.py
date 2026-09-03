@@ -9,7 +9,7 @@ Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
 """
 
-import weakref
+import weakref  # noqa: I001
 
 import wx
 import core
@@ -193,7 +193,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	_lastFindText = ""
 	_lastCaseSensitivity = False
 
-	_searchEntries: list[str] = []
+	_searchEntries: list[str] = []  # noqa: RUF012
 	"""In-memory history of search terms, most-recent first. Cleared on restart."""
 
 	@classmethod
@@ -216,7 +216,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		del cls._searchEntries[_MAX_SEARCH_HISTORY_ENTRIES:]
 
 	def __init__(self, *args, **kwargs):
-		super(CursorManager, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		self.initCursorManager()
 
 	def initOverlayClass(self):
@@ -446,13 +446,25 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 
 	script_moveByLine_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
+	def _moveBySentence_scriptHelper(self, gesture: InputGesture, direction: int) -> None:
+		"""Move the caret by sentence, reporting documents whose text info has no sentence support.
+
+		:param gesture: The triggering gesture.
+		:param direction: 1 to move to the next sentence, -1 to move to the previous one.
+		"""
+		try:
+			self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, direction)
+		except NotImplementedError:
+			# Translators: a message when navigating by sentence is unavailable in the current document
+			ui.message(_("Navigating by sentence not supported in this document"))
+
 	def script_moveBySentence_back(self, gesture):
-		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, -1)
+		self._moveBySentence_scriptHelper(gesture, -1)
 
 	script_moveBySentence_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveBySentence_forward(self, gesture):
-		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, 1)
+		self._moveBySentence_scriptHelper(gesture, 1)
 
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
@@ -680,7 +692,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		speech.speakSelectionChange(oldTextInfo, newInfo)
 		braille.handler.handleCaretMove(self)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:pageUp": "moveByPage_back",
 		"kb:pageDown": "moveByPage_forward",
 		"kb:upArrow": "moveByLine_back",
@@ -743,10 +755,10 @@ class ReviewCursorManager(CursorManager):
 	_focusEventMustUpdateCaretPosition = True
 
 	def initCursorManager(self):
-		super(ReviewCursorManager, self).initCursorManager()
+		super().initCursorManager()
 		realTI = self.TextInfo
 		self.TextInfo = type(
-			"ReviewCursorManager_%s" % realTI.__name__,
+			"ReviewCursorManager_%s" % realTI.__name__,  # noqa: UP031
 			(_ReviewCursorManagerTextInfo, realTI),
 			{},
 		)
@@ -759,4 +771,4 @@ class ReviewCursorManager(CursorManager):
 			sel = self._selection.copy()
 			sel.collapse()
 			return sel
-		return super(ReviewCursorManager, self).makeTextInfo(position)
+		return super().makeTextInfo(position)

@@ -9,7 +9,7 @@ This refers to the user interface presented by the screen reader alone, not the 
 See L{gui} for the graphical user interface.
 """
 
-import os
+import os  # noqa: I001
 from collections.abc import Callable
 from html import escape
 from typing import Final

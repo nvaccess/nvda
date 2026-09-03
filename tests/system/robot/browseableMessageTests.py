@@ -12,7 +12,7 @@ Pressing the gesture twice on a known symbol opens a browseableMessage dialog sh
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-from SystemTestSpy import _getLib
+from SystemTestSpy import _getLib  # noqa: I001
 
 # Imported for type information
 from NotepadLib import NotepadLib as _NotepadLib

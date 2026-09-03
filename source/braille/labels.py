@@ -3,13 +3,12 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 
-import typing
 
 import controlTypes
 
-roleLabels: typing.Dict[controlTypes.Role, str] = {
+roleLabels: dict[controlTypes.Role, str] = {
 	# Translators: Displayed in braille for an object which is a
 	# window.
 	controlTypes.Role.WINDOW: _("wnd"),

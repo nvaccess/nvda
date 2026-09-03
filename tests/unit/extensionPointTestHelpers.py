@@ -5,7 +5,7 @@
 
 """Helper functions to test extension points."""
 
-from collections.abc import Callable, Generator, Iterable
+from collections.abc import Callable, Generator, Iterable  # noqa: I001
 from typing import Any, TypeVar
 from extensionPoints import (
 	Action,
@@ -21,7 +21,7 @@ from contextlib import contextmanager
 ExpectedOutputT = TypeVar("ExpectedOutputT", bound=Any)
 
 
-def _extensionPointTester(
+def _extensionPointTester(  # noqa: UP047
 	testCase: unittest.TestCase,
 	extensionPoint: Action | Chain | Decider | Filter,
 	expectedOutput: ExpectedOutputT,
@@ -29,7 +29,7 @@ def _extensionPointTester(
 	useAssertDictContainsSubset: bool,
 	expectedKwargs: dict,
 	actualKwargs: dict,
-) -> Generator[ExpectedOutputT, None, None]:
+) -> Generator[ExpectedOutputT]:
 	"""A helper function to test extension points.
 	:param testCase: The test case to apply assertions on.
 	:param extensionPoint: The extensionPoint that will be triggered by the test case.

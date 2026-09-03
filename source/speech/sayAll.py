@@ -4,9 +4,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta, abstractmethod  # noqa: I001
 from enum import IntEnum
-from typing import Callable, TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
+from collections.abc import Callable
 import weakref
 import garbageHandler
 from logHandler import log
@@ -27,7 +28,7 @@ from .types import (
 )
 
 if TYPE_CHECKING:
-	import NVDAObjects
+	import NVDAObjects  # noqa: I001
 	from .speech import (
 		getTextInfoSpeech,
 		SpeakTextInfoState,
@@ -108,8 +109,8 @@ class _SayAllHandler:
 	def readText(
 		self,
 		cursor: CURSOR,
-		startPos: Optional[textInfos.TextInfo] = None,
-		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		startPos: textInfos.TextInfo | None = None,
+		nextLineFunc: Callable[[textInfos.TextInfo], textInfos.TextInfo] | None = None,
 		shouldUpdateCaret: bool = True,
 		startedFromScript: bool | None = False,
 	) -> None:
@@ -171,7 +172,7 @@ class _ObjectsReader(_Reader):
 		yield obj
 		child = obj.simpleFirstChild
 		while child:
-			for descendant in self.walk(child):
+			for descendant in self.walk(child):  # noqa: UP028
 				yield descendant
 			child = child.simpleNext
 
@@ -179,7 +180,7 @@ class _ObjectsReader(_Reader):
 		if not self.walker:
 			# We were stopped.
 			return
-		if self.prevObj:
+		if self.prevObj:  # noqa: SIM102
 			# We just started speaking this object, so move the navigator to it.
 			if not api.setNavigatorObject(
 				self.prevObj,
@@ -307,7 +308,7 @@ class _TextReader(_Reader):
 			self.finish()
 			return
 
-		if not self.initialIteration or not self.shouldReadInitialPosition():
+		if not self.initialIteration or not self.shouldReadInitialPosition():  # noqa: SIM102
 			if not self.nextLineImpl():
 				return
 		self.initialIteration = False
@@ -440,8 +441,8 @@ class _TableTextReader(_CaretTextReader):
 	def __init__(
 		self,
 		handler: _SayAllHandler,
-		startPos: Optional[textInfos.TextInfo] = None,
-		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		startPos: textInfos.TextInfo | None = None,
+		nextLineFunc: Callable[[textInfos.TextInfo], textInfos.TextInfo] | None = None,
 		shouldUpdateCaret: bool = True,
 	):
 		self.startPos = startPos

@@ -5,7 +5,7 @@
 
 """System related functions."""
 
-from contextlib import contextmanager
+from contextlib import contextmanager  # noqa: I001
 import ctypes
 import time
 import threading
@@ -23,7 +23,6 @@ from ctypes import (
 import ctypes.wintypes
 from typing import (
 	Generic,
-	Optional,
 	TypeVar,
 )
 
@@ -228,7 +227,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		# Intentionally uses older syntax with `Optional`, instead of `_execAndPumpResT | None`,
 		# as latter is not yet supported for unions potentially containing two instances of `None`
 		# (see CPython issue 107271).
-		self.funcRes: Optional[_execAndPumpResT] = None
+		self.funcRes: _execAndPumpResT | None = None
 		fname = repr(func)
 		super().__init__(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})",
@@ -249,7 +248,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 	def run(self):
 		try:
 			self.funcRes = self.func(*self.args, **self.kwargs)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			self.threadExc = e
 			log.debugWarning("task had errors", exc_info=True)
 
@@ -279,7 +278,7 @@ def resetThreadExecutionState() -> None:
 
 
 @contextmanager
-def getCurrentProcessToken(desiredAccess: int) -> Generator[ctypes.wintypes.HANDLE, None, None]:
+def getCurrentProcessToken(desiredAccess: int) -> Generator[ctypes.wintypes.HANDLE]:
 	"""Context manager which provides access to the access token associated with the current process.
 
 	Handles closing the handle to the access token when the context manager is exited.

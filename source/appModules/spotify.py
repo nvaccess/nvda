@@ -6,7 +6,7 @@
 
 """App module for Spotify"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler

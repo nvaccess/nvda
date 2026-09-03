@@ -5,8 +5,8 @@
 
 """Unit tests for the excel module."""
 
-import unittest
-import NVDAObjects.window.excel as excel
+import unittest  # noqa: I001
+from NVDAObjects.window import excel
 
 
 class TestCellStates(unittest.TestCase):

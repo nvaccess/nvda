@@ -5,7 +5,7 @@
 
 """Unit tests for the textUtils package."""
 
-import unittest
+import unittest  # noqa: I001
 
 from winBindings.icu import ICU_AVAILABLE
 
