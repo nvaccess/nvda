@@ -2,6 +2,28 @@
 
 ## 2026.3
 
+This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
+
+Several performance improvements have been made to reduce lag and improve responsiveness.
+NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
+NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
+NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
+In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
+
+Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
+It is also now possible to change an existing gesture directly in the Input Gestures dialog.
+The dialog used to present browseable messages has been modernized and now better supports resizing, maximizing, and minimizing.
+
+Touch screen input has been significantly expanded.
+Sequential two-flick gestures now combine two flicks in quick succession into a single gesture, greatly increasing the number of bindable touch gestures.
+Edge gestures are also now supported, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the center of the screen.
+
+A new unassigned command has been added to move the mouse cursor to the center of the magnified view.
+Windows OCR can now be used while the Screen Curtain or NVDA's built-in Magnifier is active.
+
+Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+eSpeak NG has been updated with added support for Ligurian and Abkhaz.
+
 ### New Features
 
 * Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
@@ -52,12 +74,12 @@
 
 * Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
   * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+  * Added Ligurian and Abkhaz support.
+* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
-* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
-* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
-  * Added Ligurian and Abkhaz support.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
@@ -88,7 +110,7 @@ Executing the find command while the dialog is open brings it to the foreground 
 
 #### Braille
 
-* On HumanWare Brailliant displays with C-keys, the c1, c2, c3 and c5 command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
+* On HumanWare Brailliant displays with C-keys, the `c1`, `c2`, `c3` and `c5` command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
 Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
 * The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
@@ -108,8 +130,8 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 #### Terminals
 
 * In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177, #20649, @ethindp, @codeofdusk)
-By default, when lines are skipped in a large text flood, NVDA emits a beep proportional to the length of the skipped material.
-This can be disabled in the Advanced settings panel.
+  * By default, when lines are skipped in a large text flood, NVDA emits a beep proportional to the length of the skipped material.
+  This can be disabled in the Advanced settings panel.
 * In Windows Terminal, NVDA is less likely to report stale characters when moving the caret in delayed remote sessions such as SSH. (#19503, @sheldon-im)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
@@ -126,6 +148,7 @@ This could cause errors in the updated add-on on the first start of NVDA after t
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Updated dependencies:
+  * Python to 3.13.15. (#20634, @dpy013)
   * ruff to 0.16.3. (#20732)
   * prek to 0.4.14. (#20732)
   * pyright to 1.1.411. (#20732)
@@ -136,7 +159,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * url-normalize to 3.0.0. (#20707)
   * pywin32 to 312. (#20707)
   * scons to 4.11.0. (#20707)
-  * py2exe to 0.14.2.0. (#20707)
+  * py2exe to 0.14.2.0. (#20707, #20260, @LeonarddeR)
   * nh3 to 0.3.6. (#20707)
   * crowdin-api-client to 1.28.0. (#20707)
   * markdown to 3.10.3. (#20707)
@@ -183,14 +206,11 @@ The default implementation forwards to `interactWithMathMl`, preserving compatib
   * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
 * Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
 Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
-* Component updates:
-  * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
-  * Python to 3.13.15. (#20634, @dpy013)
 * Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
   * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
 * Fixed a handle leak in `hwIo.Bulk.__init__`: if the read pipe opened successfully but the write pipe failed to open, the read handle was never closed, leaving the device open for the remaining lifetime of the process. (#20555, @KihunJang1981)
 * `languageHandler.windowsLCIDToLocaleName` no longer consults `locale.windows_locale`, which is unmaintained, incomplete and changes between Python patch releases. (#20589, @LeonarddeR)
-Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small set of locale identifiers for which NVDA uses a different language code than Windows reports.
+  * Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small set of locale identifiers for which NVDA uses a different language code than Windows reports.
   * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
   * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
   * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
@@ -202,8 +222,7 @@ This adds support for `textInfos.UNIT_SENTENCE` to all `TextInfo` implementation
   `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
   Plain integers remain compatible at run time.
   * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
-* Add the `locationHelper._RectMixin.union` method, which is used to create a rectangle that contains all the other rectangles. (#20705, @hwf1324)
-* In `locationHelper`, the `RectLTWH.toLTRB` and `RectLTRB.toLTWH` methods have both been moved to the `_RectMixin` class to improve compatibility. This has no practical impact on existing code. (#20515, @hwf1324)
+* Added a `union` method to `locationHelper.RectLTWH` and `locationHelper.RectLTRB`, which creates a rectangle that contains all the other rectangles. (#20705, @hwf1324)
 * The `inputCore.decide_handleRawKey` extension point now receives an `injected` keyword argument, which is `True` when the key event was injected by software rather than generated by the keyboard. (#20714, @LeonarddeR)
 
 #### Deprecations
@@ -219,85 +238,85 @@ Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`
 * In `touchTracker`, `actionLabels` is deprecated.
 Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
 * The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
-Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
+Use `gui.message.HtmlMessageDialog` instead. (#20251, @LeonarddeR)
 * `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated.
 Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
-* `brailleInput.LOUIS_DOTS_IO_START` is deprecated with no replacement, as `louisHelper.backTranslate` takes plain braille cells. (#20600, @LeonarddeR)
+* `brailleInput.LOUIS_DOTS_IO_START` is deprecated with no replacement, as `louisHelper.backTranslate` takes plain braille cells. (#20666, @LeonarddeR)
 * The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
 Accessing them as `braille.X` or `brailleInput.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, #20509, @LeonarddeR)
 
-| Old location | New location |
-| --- | --- |
-| `braille.BrailleDisplayDriver` | `braille.display.driver.BrailleDisplayDriver` |
-| `braille.BrailleDisplayGesture` | `braille.display.gesture.BrailleDisplayGesture` |
-| `braille.getSerialPorts` | `braille.display.getSerialPorts` |
-| `braille.getDisplayList` | `braille.display.getDisplayList` |
-| `braille.getDisplayDrivers` | `braille.display.getDisplayDrivers` |
-| `braille.RENAMED_DRIVERS` | `braille.display.RENAMED_DRIVERS` |
-| `braille.DisplayDimensions` | `braille.display.DisplayDimensions` |
-| `braille.Region` | `braille.regions.base.Region` |
-| `braille.RegionWithPositions` | `braille.regions.base.RegionWithPositions` |
-| `braille.TextRegion` | `braille.regions.base.TextRegion` |
-| `braille.rindex` | `braille.regions.base.rindex` |
-| `braille.NVDAObjectRegion` | `braille.regions.NVDAObject.NVDAObjectRegion` |
-| `braille.ReviewNVDAObjectRegion` | `braille.regions.NVDAObject.ReviewNVDAObjectRegion` |
-| `braille.NVDAObjectHasUsefulText` | `braille.regions.NVDAObject.NVDAObjectHasUsefulText` |
-| `braille.TextInfoRegion` | `braille.regions.textInfo.TextInfoRegion` |
-| `braille.CursorManagerRegion` | `braille.regions.textInfo.CursorManagerRegion` |
-| `braille.ReviewTextInfoRegion` | `braille.regions.textInfo.ReviewTextInfoRegion` |
-| `braille.ReviewCursorManagerRegion` | `braille.regions.textInfo.ReviewCursorManagerRegion` |
-| `braille.getControlFieldBraille` | `braille.regions.properties.getControlFieldBraille` |
-| `braille.getFormatFieldBraille` | `braille.regions.properties.getFormatFieldBraille` |
-| `braille.getPropertiesBraille` | `braille.regions.properties.getPropertiesBraille` |
-| `braille.getFocusContextRegions` | `braille.regions.focus.getFocusContextRegions` |
-| `braille.getFocusRegions` | `braille.regions.focus.getFocusRegions` |
-| `braille.invalidateCachedFocusAncestors` | `braille.regions.focus.invalidateCachedFocusAncestors` |
-| `braille.BrailleBuffer` | `braille.buffers.BrailleBuffer` |
-| `braille.BrailleHandler` | `braille.brailleHandler.BrailleHandler` |
-| `braille.formatCellsForLog` | `braille.brailleHandler.formatCellsForLog` |
-| `braille.FALLBACK_TABLE` | `braille.brailleHandler.FALLBACK_TABLE` |
-| `braille.roleLabels` | `braille.labels.roleLabels` |
-| `braille.positiveStateLabels` | `braille.labels.positiveStateLabels` |
-| `braille.negativeStateLabels` | `braille.labels.negativeStateLabels` |
-| `braille.landmarkLabels` | `braille.labels.landmarkLabels` |
-| `braille.FormatTagDelimiter` | `braille.formatting.FormatTagDelimiter` |
-| `braille.FormattingMarker` | `braille.formatting.FormattingMarker` |
-| `braille.fontAttributeFormattingMarkers` | `braille.formatting.fontAttributeFormattingMarkers` |
-| `braille.getParagraphStartMarker` | `braille.formatting.getParagraphStartMarker` |
-| `braille.AUTO_DISPLAY_NAME` | `braille.constants.AUTO_DISPLAY_NAME` |
-| `braille.AUTOMATIC_PORT` | `braille.constants.AUTOMATIC_PORT` |
-| `braille.BLUETOOTH_PORT` | `braille.constants.BLUETOOTH_PORT` |
-| `braille.USB_PORT` | `braille.constants.USB_PORT` |
-| `braille.NO_BRAILLE_DISPLAY_NAME` | `braille.constants.NO_BRAILLE_DISPLAY_NAME` |
-| `braille.CONTINUATION_SHAPE` | `braille.constants.CONTINUATION_SHAPE` |
-| `braille.CURSOR_SHAPES` | `braille.constants.CURSOR_SHAPES` |
-| `braille.SELECTION_SHAPE` | `braille.constants.SELECTION_SHAPE` |
-| `braille.END_OF_BRAILLE_OUTPUT_SHAPE` | `braille.constants.END_OF_BRAILLE_OUTPUT_SHAPE` |
-| `braille.INPUT_START_IND` | `braille.constants.INPUT_START_IND` |
-| `braille.INPUT_END_IND` | `braille.constants.INPUT_END_IND` |
-| `braille.TEXT_SEPARATOR` | `braille.constants.TEXT_SEPARATOR` |
-| `braille.CONTEXTPRES_*` | `braille.constants.CONTEXTPRES_*` |
-| `braille.focusContextPresentations` | `braille.constants.focusContextPresentations` |
-| `braille.pre_writeCells` | `braille.extensions.pre_writeCells` |
-| `braille.filter_displaySize` | `braille.extensions.filter_displaySize` |
-| `braille.filter_displayDimensions` | `braille.extensions.filter_displayDimensions` |
-| `braille.displaySizeChanged` | `braille.extensions.displaySizeChanged` |
-| `braille.displayChanged` | `braille.extensions.displayChanged` |
-| `braille.decide_enabled` | `braille.extensions.decide_enabled` |
-| `braille.BrailleMode` | `config.configFlags.BrailleMode` |
-| `braille.TetherTo` | `config.configFlags.TetherTo` |
-| `brailleInput.handler` | `braille.input.handler` |
-| `brailleInput.initialize` | `braille.input.initialize` |
-| `brailleInput.terminate` | `braille.input.terminate` |
-| `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
-| `brailleInput.DOT7` | `braille.input.constants.DOT7` |
-| `brailleInput.DOT8` | `braille.input.constants.DOT8` |
-| `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
-| `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
-| `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
-| `brailleInput.BrailleInputGesture` | `braille.input.gesture.BrailleInputGesture` |
-| `brailleInput.BrailleInputHandler` | `braille.input.inputHandler.BrailleInputHandler` |
-| `brailleInput.speakDots` | `braille.input.inputHandler.speakDots` |
+  | Old location | New location |
+  | --- | --- |
+  | `braille.BrailleDisplayDriver` | `braille.display.driver.BrailleDisplayDriver` |
+  | `braille.BrailleDisplayGesture` | `braille.display.gesture.BrailleDisplayGesture` |
+  | `braille.getSerialPorts` | `braille.display.getSerialPorts` |
+  | `braille.getDisplayList` | `braille.display.getDisplayList` |
+  | `braille.getDisplayDrivers` | `braille.display.getDisplayDrivers` |
+  | `braille.RENAMED_DRIVERS` | `braille.display.RENAMED_DRIVERS` |
+  | `braille.DisplayDimensions` | `braille.display.DisplayDimensions` |
+  | `braille.Region` | `braille.regions.base.Region` |
+  | `braille.RegionWithPositions` | `braille.regions.base.RegionWithPositions` |
+  | `braille.TextRegion` | `braille.regions.base.TextRegion` |
+  | `braille.rindex` | `braille.regions.base.rindex` |
+  | `braille.NVDAObjectRegion` | `braille.regions.NVDAObject.NVDAObjectRegion` |
+  | `braille.ReviewNVDAObjectRegion` | `braille.regions.NVDAObject.ReviewNVDAObjectRegion` |
+  | `braille.NVDAObjectHasUsefulText` | `braille.regions.NVDAObject.NVDAObjectHasUsefulText` |
+  | `braille.TextInfoRegion` | `braille.regions.textInfo.TextInfoRegion` |
+  | `braille.CursorManagerRegion` | `braille.regions.textInfo.CursorManagerRegion` |
+  | `braille.ReviewTextInfoRegion` | `braille.regions.textInfo.ReviewTextInfoRegion` |
+  | `braille.ReviewCursorManagerRegion` | `braille.regions.textInfo.ReviewCursorManagerRegion` |
+  | `braille.getControlFieldBraille` | `braille.regions.properties.getControlFieldBraille` |
+  | `braille.getFormatFieldBraille` | `braille.regions.properties.getFormatFieldBraille` |
+  | `braille.getPropertiesBraille` | `braille.regions.properties.getPropertiesBraille` |
+  | `braille.getFocusContextRegions` | `braille.regions.focus.getFocusContextRegions` |
+  | `braille.getFocusRegions` | `braille.regions.focus.getFocusRegions` |
+  | `braille.invalidateCachedFocusAncestors` | `braille.regions.focus.invalidateCachedFocusAncestors` |
+  | `braille.BrailleBuffer` | `braille.buffers.BrailleBuffer` |
+  | `braille.BrailleHandler` | `braille.brailleHandler.BrailleHandler` |
+  | `braille.formatCellsForLog` | `braille.brailleHandler.formatCellsForLog` |
+  | `braille.FALLBACK_TABLE` | `braille.brailleHandler.FALLBACK_TABLE` |
+  | `braille.roleLabels` | `braille.labels.roleLabels` |
+  | `braille.positiveStateLabels` | `braille.labels.positiveStateLabels` |
+  | `braille.negativeStateLabels` | `braille.labels.negativeStateLabels` |
+  | `braille.landmarkLabels` | `braille.labels.landmarkLabels` |
+  | `braille.FormatTagDelimiter` | `braille.formatting.FormatTagDelimiter` |
+  | `braille.FormattingMarker` | `braille.formatting.FormattingMarker` |
+  | `braille.fontAttributeFormattingMarkers` | `braille.formatting.fontAttributeFormattingMarkers` |
+  | `braille.getParagraphStartMarker` | `braille.formatting.getParagraphStartMarker` |
+  | `braille.AUTO_DISPLAY_NAME` | `braille.constants.AUTO_DISPLAY_NAME` |
+  | `braille.AUTOMATIC_PORT` | `braille.constants.AUTOMATIC_PORT` |
+  | `braille.BLUETOOTH_PORT` | `braille.constants.BLUETOOTH_PORT` |
+  | `braille.USB_PORT` | `braille.constants.USB_PORT` |
+  | `braille.NO_BRAILLE_DISPLAY_NAME` | `braille.constants.NO_BRAILLE_DISPLAY_NAME` |
+  | `braille.CONTINUATION_SHAPE` | `braille.constants.CONTINUATION_SHAPE` |
+  | `braille.CURSOR_SHAPES` | `braille.constants.CURSOR_SHAPES` |
+  | `braille.SELECTION_SHAPE` | `braille.constants.SELECTION_SHAPE` |
+  | `braille.END_OF_BRAILLE_OUTPUT_SHAPE` | `braille.constants.END_OF_BRAILLE_OUTPUT_SHAPE` |
+  | `braille.INPUT_START_IND` | `braille.constants.INPUT_START_IND` |
+  | `braille.INPUT_END_IND` | `braille.constants.INPUT_END_IND` |
+  | `braille.TEXT_SEPARATOR` | `braille.constants.TEXT_SEPARATOR` |
+  | `braille.CONTEXTPRES_*` | `braille.constants.CONTEXTPRES_*` |
+  | `braille.focusContextPresentations` | `braille.constants.focusContextPresentations` |
+  | `braille.pre_writeCells` | `braille.extensions.pre_writeCells` |
+  | `braille.filter_displaySize` | `braille.extensions.filter_displaySize` |
+  | `braille.filter_displayDimensions` | `braille.extensions.filter_displayDimensions` |
+  | `braille.displaySizeChanged` | `braille.extensions.displaySizeChanged` |
+  | `braille.displayChanged` | `braille.extensions.displayChanged` |
+  | `braille.decide_enabled` | `braille.extensions.decide_enabled` |
+  | `braille.BrailleMode` | `config.configFlags.BrailleMode` |
+  | `braille.TetherTo` | `config.configFlags.TetherTo` |
+  | `brailleInput.handler` | `braille.input.handler` |
+  | `brailleInput.initialize` | `braille.input.initialize` |
+  | `brailleInput.terminate` | `braille.input.terminate` |
+  | `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
+  | `brailleInput.DOT7` | `braille.input.constants.DOT7` |
+  | `brailleInput.DOT8` | `braille.input.constants.DOT8` |
+  | `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
+  | `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
+  | `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
+  | `brailleInput.BrailleInputGesture` | `braille.input.gesture.BrailleInputGesture` |
+  | `brailleInput.BrailleInputHandler` | `braille.input.inputHandler.BrailleInputHandler` |
+  | `brailleInput.speakDots` | `braille.input.inputHandler.speakDots` |
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
