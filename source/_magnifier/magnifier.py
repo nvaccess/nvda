@@ -326,6 +326,34 @@ class Magnifier:
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
+	def reconfigure(self) -> None:
+		"""
+		Re-read the configuration and apply any changed settings to the running
+		magnifier session.
+
+		Called on a configuration reload (e.g. NVDA+Ctrl+R) for a magnifier that
+		is already running and remains enabled. This preserves the current
+		magnification session and viewport position, updating only the settings
+		that changed in the reloaded configuration (zoom level, color filter and
+		pan step).
+
+		Tracking modes (follow mouse / focus / review cursor / navigator object)
+		are read from the configuration on each update, so no action is needed
+		here for them.
+		"""
+		try:
+			newZoom = getZoomLevel()
+			if newZoom != self._zoomLevel:
+				self.zoomLevel = newZoom
+		except ValueError:
+			log.warning(
+				f"Invalid zoom level ({getZoomLevel()}) in configuration; keeping current zoom.",
+			)
+		self._panStep = getPanStep()
+		self.filterType = getFilter()
+		if self._isActive:
+			self._doUpdate()
+
 	def onScreenCurtainEnabled(self) -> None:
 		"""
 		Called when screen curtain is being enabled.

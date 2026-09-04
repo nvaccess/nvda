@@ -101,6 +101,48 @@ def terminate() -> None:
 	_magnifier = None
 
 
+def reconfigure() -> None:
+	"""
+	Reconcile the magnifier with a reloaded configuration (e.g. NVDA+Ctrl+R).
+
+	If the magnifier is already running and remains enabled in the reloaded
+	configuration, its active magnification session and viewport position are
+	preserved and only the changed settings are applied (see
+	L{Magnifier.reconfigure}). If it is explicitly disabled in the new
+	configuration it is stopped normally, and if it becomes enabled it is
+	started.
+	"""
+	global _magnifier  # noqa: PLW0602
+
+	if _magnifier is None:
+		log.debug("Reconfiguring magnifier, but it is not initialized; initializing.")
+		initialize()
+		return
+
+	wasActive = isActive()
+	configuredEnabled = getEnabled()
+	configuredView = getMagnifiedView()
+
+	# A change of magnified view requires recreating the magnifier instance.
+	if configuredView != _magnifier._MAGNIFIED_VIEW:
+		_setMagnifiedView(configuredView)
+		# The previous session was torn down by _setMagnifiedView.
+		wasActive = False
+
+	if wasActive and not configuredEnabled:
+		# Explicitly disabled in the new configuration: terminate normally.
+		stop(persist=False)
+	elif not wasActive and configuredEnabled:
+		# Enabled in the new configuration and not currently running: start.
+		try:
+			start()
+		except MagnifierStartError:
+			log.warning("Magnifier is enabled in config but failed to start.", exc_info=True)
+	elif isActive():
+		# Still running and still enabled: preserve session, apply changes.
+		_magnifier.reconfigure()
+
+
 def start() -> None:
 	"""Start the magnifier.
 
