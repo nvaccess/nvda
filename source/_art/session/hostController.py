@@ -152,8 +152,6 @@ class SubprocessHostController:
 				text = line.decode("utf-8", errors="replace").rstrip()
 				if text:
 					log.warning(f"ART host: {text}")
-		except Exception:
-			log.exception("Error draining ART host stderr")
 		finally:
 			# We must close our end of the pipe, as an open but undrained pipe will hang the host if it fills the buffer.
 			# After this, the host attempting to write to the pipe will fail, but not block.
