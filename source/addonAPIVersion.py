@@ -1,12 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2025 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2018-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-
-import buildVersion  # noqa: I001
 import re
 
+import buildVersion
 
 """
 This module contains add-on API version information for this build of NVDA. This file provides information on
@@ -21,12 +20,13 @@ CURRENT: AddonApiVersionT = (
 	buildVersion.version_minor,
 )
 
-BACK_COMPAT_TO: AddonApiVersionT = (2026, 1, 0)
+BACK_COMPAT_TO: AddonApiVersionT = (2027, 1, 0)
 """
 As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning should be added below.
 These only serve to act as a reminder, the changelog should be consulted for a comprehensive listing.
 EG: (x, y, z): Large changes to speech.py
 ---
+(2027, 1, 0): Upgrade to python 3.14.
 (2026, 1, 0): Upgrade to python 3.13 and migration to 64bit from 32bit
 (2025, 1, 0): HTML passed to browsableMessage is now sanitised, and various changes to the settings schema
 (2024, 1, 0): upgrade to python 3.11
