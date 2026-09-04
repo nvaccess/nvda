@@ -2,6 +2,28 @@
 
 ## 2026.3
 
+This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
+
+Several performance improvements have been made to reduce lag and improve responsiveness.
+NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
+NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
+NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
+In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
+
+Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
+It is also now possible to change an existing gesture directly in the Input Gestures dialog.
+The dialog used to present browseable messages has been modernized and now better supports resizing, maximizing, and minimizing.
+
+Touch screen input has been significantly expanded.
+Sequential two-flick gestures now combine two flicks in quick succession into a single gesture, greatly increasing the number of bindable touch gestures.
+Edge gestures are also now supported, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the center of the screen.
+
+A new unassigned command has been added to the Magnifier to move the mouse cursor to the center of the magnified view.
+Windows OCR can now be used while the Screen Curtain or NVDA's built-in Magnifier is active.
+
+Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+eSpeak NG has been updated with added support for Ligurian and Abkhaz.
+
 ### New Features
 
 * Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
@@ -52,12 +74,12 @@
 
 * Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
   * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+  * Added Ligurian and Abkhaz support.
+* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
   * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
   * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
-* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
-* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
-  * Added Ligurian and Abkhaz support.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
@@ -88,7 +110,7 @@ Executing the find command while the dialog is open brings it to the foreground 
 
 #### Braille
 
-* On HumanWare Brailliant displays with C-keys, the c1, c2, c3 and c5 command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
+* On HumanWare Brailliant displays with C-keys, the `c1`, `c2`, `c3` and `c5` command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
 Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
 * The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
 * Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
@@ -126,6 +148,7 @@ This could cause errors in the updated add-on on the first start of NVDA after t
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Updated dependencies:
+  * Python to 3.13.15. (#20634, @dpy013)
   * ruff to 0.16.3. (#20732)
   * prek to 0.4.14. (#20732)
   * pyright to 1.1.411. (#20732)
@@ -136,7 +159,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * url-normalize to 3.0.0. (#20707)
   * pywin32 to 312. (#20707)
   * scons to 4.11.0. (#20707)
-  * py2exe to 0.14.2.0. (#20707)
+  * py2exe to 0.14.2.0. (#20707, #20260, @LeonarddeR)
   * nh3 to 0.3.6. (#20707)
   * crowdin-api-client to 1.28.0. (#20707)
   * markdown to 3.10.3. (#20707)
@@ -183,9 +206,6 @@ The default implementation forwards to `interactWithMathMl`, preserving compatib
   * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
 * Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
 Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
-* Component updates:
-  * Updated py2exe to 0.14.1.1. (#20260, @LeonarddeR)
-  * Python to 3.13.15. (#20634, @dpy013)
 * Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
   * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
 * Fixed a handle leak in `hwIo.Bulk.__init__`: if the read pipe opened successfully but the write pipe failed to open, the read handle was never closed, leaving the device open for the remaining lifetime of the process. (#20555, @KihunJang1981)
