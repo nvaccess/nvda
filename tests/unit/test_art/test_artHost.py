@@ -247,6 +247,20 @@ class TestSubprocessHostController(HostControllerConformanceMixin, unittest.Test
 			SubprocessHostController._drainStderr(stderr)
 		self.assertTrue(mockLog.warning.called)
 
+	def test_drainClosesItsEndOfThePipe(self):
+		"""A finished drain must close core's read end.
+
+		An open but undrained pipe blocks the host's next write forever;
+		closing turns that hang into a fast failure.
+		"""
+		stderr = io.BytesIO(b"anything\n")
+		self.assertFalse(stderr.closed)
+		# test_stderrIsForwardedToTheLog asserts that what is written to stderr reaches the log,
+		# mocking log here keeps the runner's log clean.
+		with patch("_art.session.hostController.log", new=MagicMock()):
+			SubprocessHostController._drainStderr(stderr)
+		self.assertTrue(stderr.closed)
+
 
 class TestHostStandardStreams(unittest.TestCase):
 	"""The entry point's defence of the control connection, and its diagnostic channel."""

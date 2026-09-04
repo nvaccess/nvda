@@ -148,13 +148,15 @@ class SubprocessHostController:
 	@staticmethod
 	def _drainStderr(stderr: io.BufferedReader) -> None:
 		try:
-			for line in iter(stderr.readline, b""):
+			for line in stderr:
 				text = line.decode("utf-8", errors="replace").rstrip()
 				if text:
 					log.warning(f"ART host: {text}")
-		except Exception:  # noqa: BLE001
-			log.debugWarning("Error draining ART host stderr", exc_info=True)
+		except Exception:
+			log.exception("Error draining ART host stderr")
 		finally:
+			# We must close our end of the pipe, as an open but undrained pipe will hang the host if it fills the buffer.
+			# After this, the host attempting to write to the pipe will fail, but not block.
 			with contextlib.suppress(Exception):
 				stderr.close()
 
