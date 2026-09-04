@@ -223,7 +223,7 @@ Use `gui.message.HtmlMessageDialog` instead. (#18878, @LeonarddeR)
 * `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated.
 Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
 * `brailleInput.LOUIS_DOTS_IO_START` is deprecated with no replacement, as `louisHelper.backTranslate` takes plain braille cells. (#20600, @LeonarddeR)
-* The following symbols from `winKernel` are deprecated:
+* The following symbols from `winKernel` are deprecated: (#20784)
   * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
   * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
 * The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
