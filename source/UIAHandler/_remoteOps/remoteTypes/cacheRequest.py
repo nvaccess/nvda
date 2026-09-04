@@ -4,10 +4,8 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from __future__ import annotations
-from typing import (
-	Iterable,
-)
+from __future__ import annotations  # noqa: I001
+from collections.abc import Iterable
 from .. import lowLevel
 from .. import instructions
 from ..remoteFuncWrapper import (

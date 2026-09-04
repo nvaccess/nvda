@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2026 NV Access Limited
 
-from .types import SpeechSequence
+from .types import SpeechSequence  # noqa: I001
 
 
 __all__ = ["SpeechSequence"]

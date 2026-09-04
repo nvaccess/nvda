@@ -4,8 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
-from typing import List, Union, Optional
+import time  # noqa: I001
 
 import wx
 import braille
@@ -23,7 +22,7 @@ except:  # noqa: E722
 	log.debug("Failed to import ftdi2.", exc_info=True)
 	ftdi2 = None
 # for bluetooth
-import hwPortUtils
+import hwPortUtils  # noqa: I001
 import serial
 
 
@@ -60,7 +59,7 @@ def brl_auto_id() -> bytes:
 	)
 
 
-def _swapDotBits(d: int) -> List[int]:
+def _swapDotBits(d: int) -> list[int]:
 	# swap dot bits
 	d2 = 0
 	if d & 1:
@@ -84,7 +83,7 @@ def _swapDotBits(d: int) -> List[int]:
 	return [b, a]
 
 
-def brl_out(data: List[int], nrk: int, nlk: int, nv: int) -> bytes:
+def brl_out(data: list[int], nrk: int, nlk: int, nv: int) -> bytes:
 	"""write data to braille cell with nv vertical cells, nrk cells right and nlk cells left
 	some papenmeier displays have vertical cells, other displays have dummy cells with keys
 	"""
@@ -153,7 +152,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 				key=lambda item: "bluetoothName" in item,
 			):
 				port = portInfo["port"]
-				if "bluetoothName" in portInfo:
+				if "bluetoothName" in portInfo:  # noqa: SIM102
 					if (
 						portInfo["bluetoothName"][0:14] == "braillex trio "
 						or portInfo["bluetoothName"][0:13] == "braillex live"
@@ -169,7 +168,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 						except:  # noqa: E722
 							log.debugWarning("connectBluetooth failed", exc_info=True)
 
-	def connectUSB(self, devlist: List[bytes]):
+	def connectUSB(self, devlist: list[bytes]):
 		"""Try to connect to usb device, this is triggered when bluetooth
 		connection could not be established"""
 		try:
@@ -182,7 +181,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 
 	def __init__(self):
 		"""initialize driver"""
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._nlk = 0
 		self._nrk = 0
@@ -190,7 +189,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		self._baud = 0
 		self._dev = None
 		self._proto = None
-		devlist: List[bytes] = []
+		devlist: list[bytes] = []
 
 		# try to connect to usb device,
 		# if no usb device is found there may be a bluetooth device
@@ -310,7 +309,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			except:  # noqa: E722
 				log.debugWarning("BROKEN PIPE - THIS SHOULD NEVER HAPPEN", exc_info=True)
 		if self.numCells == 0:
-			raise Exception("no device found")
+			raise Exception("no device found")  # noqa: TRY002
 
 		# start keycheck timer
 		self.startTimer()
@@ -330,7 +329,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		try:
 			self._keyCheckTimer.Stop()
 			self._bluetoothTimer.Stop()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 		self._keyCheckTimer = None
@@ -395,7 +394,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	def terminate(self):
 		"""free resources used by this driver"""
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 			self.stopTimer()
 			if self._dev is not None:
 				self._dev.close()
@@ -404,7 +403,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 			log.debug("Failed to terminate braille display.", exc_info=True)
 			self._dev = None
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		"""write to braille display"""
 		if self._dev is None:
 			return
@@ -425,7 +424,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 		try:
 			if self._dev is None and self._baud > 0:
 				try:
-					devlist: List[bytes] = ftdi2.listDevices()
+					devlist: list[bytes] = ftdi2.listDevices()
 					if len(devlist) > 0:
 						self.connectUSB(devlist)
 				except:  # noqa: E722
@@ -442,7 +441,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 					self.executeGesture(ig)
 		except:  # noqa: E722
 			log.debug("Failed to read keys.", exc_info=True)
-			if self._dev != None:  # noqa: E711
+			if self._dev != None:
 				self._dev.close()
 			self._dev = None
 
@@ -525,7 +524,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, Scriptab
 	)
 
 
-def brl_decode_trio(keys: bytes) -> List[int]:
+def brl_decode_trio(keys: bytes) -> list[int]:
 	"""decode routing keys on Trio"""
 	if keys[0] == ord(b"K"):  # KEYSTATE CHANGED EVENT on Trio, not Braille keys
 		keys = keys[3:]
@@ -547,7 +546,7 @@ def brl_decode_trio(keys: bytes) -> List[int]:
 	return []
 
 
-def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
+def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> list[int]:
 	"""decode routing keys non Trio devices"""
 	n = start  # key index iterator
 	j = []
@@ -579,7 +578,7 @@ def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
 	return j
 
 
-def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> List[str]:
+def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> list[str]:
 	"""translate key names for protocol A with repeat"""
 	driver._repeatcount += 1
 	if driver._repeatcount < 10:
@@ -590,24 +589,24 @@ def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> List[str]:
 	for key in driver.decodedkeys:
 		try:
 			dec.append(driver._keynamesrepeat[key])
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 	return dec
 
 
-def brl_decode_key_names(driver: BrailleDisplayDriver) -> List[str]:
+def brl_decode_key_names(driver: BrailleDisplayDriver) -> list[str]:
 	"""translate key names for protocol A"""
 	dec = []
 	keys = driver.decodedkeys
 	for key in keys:
 		try:
 			dec.append(driver._keynames[key])
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 	return dec
 
 
-def brl_join_keys(dec: List[str]) -> str:
+def brl_join_keys(dec: list[str]) -> str:
 	"""join key names with comma, this is used for key combinations"""
 	if len(dec) == 1:
 		return dec[0]
@@ -626,9 +625,9 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys: Optional[Union[bytes, int]], driver: BrailleDisplayDriver):
+	def __init__(self, keys: bytes | int | None, driver: BrailleDisplayDriver):
 		"""create an input gesture and decode keys"""
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.id = ""
 
 		if keys is None:
@@ -674,7 +673,7 @@ class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.
 			assert isinstance(keys, bytes)
 			decodedkeys = brl_decode_trio(keys)
 		else:
-			decodedkeys: List[int] = []
+			decodedkeys: list[int] = []
 
 		length = len(decodedkeys)
 		if length == 1 and 32 <= decodedkeys[0] < 32 + driver.numCells * 2:

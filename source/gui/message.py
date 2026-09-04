@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 import threading
 import time
 import warnings
@@ -13,7 +13,7 @@ from collections import deque
 from collections.abc import Callable, Collection
 from enum import Enum, IntEnum, auto
 from functools import partialmethod, singledispatchmethod, wraps
-from typing import Any, Literal, NamedTuple, Optional, Self
+from typing import Any, Literal, NamedTuple, Self
 
 import core
 import extensionPoints
@@ -63,7 +63,7 @@ def _countAsMessageBox():
 				_messageBoxCounter += 1
 			try:
 				return func(*args, **kwargs)
-			except Exception:
+			except Exception:  # noqa: TRY203
 				raise
 			finally:
 				with _messageBoxCounterLock:
@@ -107,7 +107,7 @@ def messageBox(
 	message: str,
 	caption: str = wx.MessageBoxCaptionStr,
 	style: int = wx.OK | wx.CENTER,
-	parent: Optional[wx.Window] = None,
+	parent: wx.Window | None = None,
 ) -> int:
 	"""Display a modal message dialog.
 
@@ -151,7 +151,7 @@ class DisplayableError(Exception):
 	@type displayableError: DisplayableError
 	"""
 
-	def __init__(self, displayMessage: str, titleMessage: Optional[str] = None):
+	def __init__(self, displayMessage: str, titleMessage: str | None = None):
 		"""An error with a message that should be presented to the user via a message box.
 
 		Code outside the GUI layer may raise DisplayableError to report a failure with a
@@ -231,7 +231,7 @@ class EscapeCode(IntEnum):
 	"""
 
 
-type wxArtID = int
+type wxArtID = int  # noqa: PYI042
 
 
 class DialogType(Enum):
@@ -399,7 +399,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	.. warning:: Unless noted otherwise, the message dialog API is **not** thread safe.
 	"""
 
-	_instances: deque["MessageDialog"] = deque()
+	_instances: deque["MessageDialog"] = deque()  # noqa: RUF012
 	"""Double-ended queue of open instances.
 	When programatically closing non-blocking instances or focusing blocking instances, this should operate like a stack (I.E. LIFO behaviour).
 	Random access still needs to be supported for the case of non-modal dialogs being closed out of order.
@@ -604,7 +604,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		:return: The dialog instance.
 		"""
-		buttonIds = set(button.id for button in buttons)
+		buttonIds = set(button.id for button in buttons)  # noqa: C401
 		if len(buttonIds) != len(buttons):
 			raise KeyError("Button IDs must be unique.")
 		if not buttonIds.isdisjoint(self._commands):
@@ -1041,7 +1041,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				log.error("fallback action was not in commands. This indicates a logic error.")
 
 			# fallback action is unavailable. Try using the default focus instead.
-			if (defaultFocus := self.GetDefaultItem()) is not None:
+			if (defaultFocus := self.GetDefaultItem()) is not None:  # noqa: SIM102
 				# Default focus does not have to be a command, for instance if a custom control has been added and made the default focus.
 				if (action := self._commands.get(defaultFocus.GetId(), None)) is not None:
 					return action

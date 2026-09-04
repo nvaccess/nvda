@@ -40,7 +40,7 @@ def _loadManifest(path: os.PathLike, translationRelpaths: Sequence[str]) -> Addo
 		return AddonManifest(untranslatedFile)
 
 
-def _getAddonManifestsFromPath(path: os.PathLike) -> Generator[AddonManifest, None, None]:
+def _getAddonManifestsFromPath(path: os.PathLike) -> Generator[AddonManifest]:
 	"""Yield add-on manifests from subdirectories of the given path.
 
 	Subdirectories that are empty, pending deletion, or pending install are skipped.

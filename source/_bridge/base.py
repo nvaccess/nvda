@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import functools
 from ctypes import WinError, byref
 from ctypes.wintypes import HANDLE
@@ -170,7 +170,7 @@ class Service(rpyc.Service):
 				log.debug(f"Closing dependent connection '{conn.name}' on parent service {self}")
 				try:
 					conn.close()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning("Exception while closing dependent connection", exc_info=True)
 		self._dependentConnections.clear()
 		for service_ref in self._dependantServices:
@@ -179,7 +179,7 @@ class Service(rpyc.Service):
 				log.debug(f"Terminating dependant service {service} on parent service {self}")
 				try:
 					service.terminate()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning("Exception while terminating dependant service", exc_info=True)
 		self._dependantServices.clear()
 		self._terminated = True
@@ -233,7 +233,7 @@ class Proxy[Service_t: Service]:
 				log.debug(f"Closing held Connection '{conn._name}' on Proxy {self}")
 				try:
 					conn.close()
-				except Exception:
+				except Exception:  # noqa: BLE001
 					log.debugWarning("Exception while closing held connection", exc_info=True)
 		# A base may or may not have a __del__ method.
 		# Depending on how Proxy might be used as a mixin, we should call it if it exists.
@@ -279,7 +279,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 			return
 		try:
 			rawConn.serve_all()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if not rawConn._closed:
 				log.debugWarning(f"Error in event loop for Connection '{name}'", exc_info=True)
 		log.debug(f"Exiting event loop for Connection '{name}'")
@@ -302,7 +302,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 			return
 		try:
 			rawConn.serve_all()
-		except Exception:
+		except Exception:  # noqa: BLE001
 			if not rawConn._closed:
 				log.debugWarning(f"Error in event loop for Connection '{self._name}'", exc_info=True)
 		log.debug(f"Exiting event loop for Connection '{self._name}'")
@@ -316,7 +316,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		log.debug(f"Closing RPYC connection for '{name}'")
 		try:
 			conn.close()
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			if not conn._closed:
 				log.debugWarning(f"Exception while closing RPYC connection for '{name}', {e}")
 			del e
@@ -329,7 +329,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 			log.debug(f"Terminating service {self._localService} on Connection '{self._name}'")
 			try:
 				self._localService.terminate()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning("Exception while terminating local service", exc_info=True)
 			self._localService = None
 		conn = self._conn

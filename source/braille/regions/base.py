@@ -26,7 +26,7 @@ from ..constants import (
 RegionWithPositions = collections.namedtuple("RegionWithPositions", ("region", "start", "end"))
 
 
-class Region(object):
+class Region:
 	"""A region of braille to be displayed.
 	Each portion of braille to be displayed is represented by a region.
 	The region is responsible for retrieving its text and the cursor and selection positions, translating it into braille cells and handling cursor routing requests relative to its braille cells.
@@ -179,7 +179,7 @@ class TextRegion(Region):
 	"""A simple region containing a string of text."""
 
 	def __init__(self, text):
-		super(TextRegion, self).__init__()
+		super().__init__()
 		self.rawText = text
 
 
@@ -187,4 +187,4 @@ def rindex(seq, item, start, end):
 	for index in range(end - 1, start - 1, -1):
 		if seq[index] == item:
 			return index
-	raise ValueError("%r is not in sequence" % item)
+	raise ValueError("%r is not in sequence" % item)  # noqa: UP031

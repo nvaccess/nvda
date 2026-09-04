@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools~=80.10.2", "wheel"]
+requires = ["setuptools~=84.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -116,6 +116,15 @@ max-complexity = 15
 ignore = [
 	# indentation contains tabs
 	"W191",
+	# lower snake case module names, we use lowerCamelCase instead
+	"N999",
+	# Linux executable warning that precommit.ci picks up due to linux runners
+	"EXE001",
+	"EXE002",
+]
+extend-unsafe-fixes = [
+	# Sort imports
+	"I001",
 ]
 logger-objects = ["logHandler.log"]
 
@@ -402,15 +411,15 @@ dev = [
 	"scons==4.11.0",
 	# Packaging NVDA
 	"py2exe==0.14.2.0",
-	"setuptools~=80.10.2",
+	"setuptools~=84.0.0",
 	"nvda-mathcat",
 	"uv==0.12.5",
 ]
 lint = [
-	"ruff==0.15.9",
-	"prek==0.4.4",
-	"pyright[nodejs]==1.1.407",
-	"ty==0.0.60",
+	"ruff==0.16.3",
+	"prek==0.4.14",
+	"pyright[nodejs]==1.1.411",
+	"ty==0.0.73",
 ]
 license-check = [
 	"licensecheck==2026.0.8",

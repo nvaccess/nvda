@@ -18,7 +18,7 @@ muting and uses wxPython's CallAfter for thread synchronization.
 	not be used directly outside of the remote connection infrastructure.
 """
 
-from enum import IntEnum, nonmember
+from enum import IntEnum, nonmember  # noqa: I001
 import os
 from typing import Any
 import winreg
@@ -407,7 +407,7 @@ class LocalMachine:
 		except OSError:
 			# Something went wrong trying to read the registry.
 			# Return False to avoid a false positive.
-			log.error(f"Error reading {SoftwareSASGeneration.DISPLAY_PATH}.", exc_info=True)
+			log.error(f"Error reading {SoftwareSASGeneration.DISPLAY_PATH}.", exc_info=True)  # noqa: G201
 			return False
 		# None of the known impediments to simulating the SAS seem to hold,
 		# so it should be safe to do so.

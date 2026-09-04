@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import re
+import re  # noqa: I001
 from collections.abc import Generator
 from ctypes import (
 	Array,
@@ -12,7 +12,7 @@ from ctypes import (
 	windll,
 )
 from os import path
-from typing import TYPE_CHECKING, Type
+from typing import TYPE_CHECKING
 
 import braille
 import braille.regions.base
@@ -78,7 +78,7 @@ def _callMathCAT(func, /, *args, **kwargs):
 class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	"""An NVDA object used to interact with MathML."""
 
-	__gestures = {}
+	__gestures = {}  # noqa: RUF012
 
 	# Put MathML or other formats on the clipboard.
 	# MathML is put on the clipboard using the two formats below (defined by MathML spec)
@@ -115,7 +115,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def reportFocus(self) -> None:
 		"""Calls MathCAT's ZoomIn command and speaks the resulting text."""
 		self._shouldUpdateMathHighlight = False
-		super(MathCATInteraction, self).reportFocus()
+		super().reportFocus()
 		try:
 			text: str = libmathcat.DoNavigateCommand("ZoomIn")
 			speech.speak(convertSSMLTextForNVDA(text))
@@ -145,7 +145,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			return None
 		try:
 			nodeId = libmathcat.GetNavigationMathMLId()[0]
-		except Exception:
+		except Exception:  # noqa: BLE001
 			log.debugWarning("Error getting MathCAT navigation node id", exc_info=True)
 			return None
 		if nodeId in self._mathNodeRectsById:
@@ -171,7 +171,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 	def getBrailleRegions(
 		self,
 		review: bool = False,
-	) -> Generator[braille.regions.base.Region, None, None]:
+	) -> Generator[braille.regions.base.Region]:
 		"""Yields braille.Region objects for this MathCATInteraction object."""
 		yield braille.regions.NVDAObject.NVDAObjectRegion(self, appendText=" ")
 		region: braille.regions.base.Region = braille.regions.base.Region()
@@ -231,7 +231,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 		for cmd in NAV_COMMANDS:
 			scriptSuffix = cmd.commandName[0].lower() + cmd.commandName[1:]
 			funcName = f"script_{scriptSuffix}"
-			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)  # noqa: E731
+			script = lambda self, gesture, _cmd=cmd.commandName: self._doNavigateCommand(_cmd)
 			script.__doc__ = cmd.description
 			script.__name__ = funcName
 			script.category = SCRCAT_MATH_NAV
@@ -280,7 +280,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 					savedMathML: str = self._mathMlForNavigation
 					savedTTS: str = libmathcat.GetPreference("TTS")
 					if savedMathML == "":  # shouldn't happen
-						raise Exception("Internal error -- MathML not set for copy")
+						raise Exception("Internal error -- MathML not set for copy")  # noqa: TRY002
 					libmathcat.SetPreference("TTS", "None")
 					libmathcat.SetMathML(mathml)
 					# get the speech text and collapse the whitespace
@@ -418,7 +418,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			ui.message(pgettext("math", "Invalid math formatting found"))
 			libmathcat.SetMathML("<math></math>")
 		try:
-			supportedCommands: set[Type["SynthCommand"]] = synth.supportedCommands
+			supportedCommands: set[type[SynthCommand]] = synth.supportedCommands
 			# Set preferences for capital letters
 			libmathcat.SetPreference(
 				"CapitalLetters_Beep",

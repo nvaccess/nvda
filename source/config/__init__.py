@@ -10,7 +10,7 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
-from collections.abc import Collection
+from collections.abc import Collection  # noqa: I001
 from enum import Enum
 from typing import Any
 from addonAPIVersion import BACK_COMPAT_TO
@@ -101,7 +101,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return _RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 def initialize():
@@ -118,7 +118,7 @@ def saveOnExit():
 	if conf["general"]["saveConfigurationOnExit"]:
 		try:
 			conf.save()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 
@@ -135,8 +135,8 @@ def isInstalledCopy() -> bool:
 			"- this is not an installed copy.",
 		)
 		return False
-	except WindowsError:
-		log.error(
+	except OSError:
+		log.error(  # noqa: G201
 			f"Unable to open isInstalledCopy registry key {_RegistryKey.INSTALLED_COPY}",
 			exc_info=True,
 		)
@@ -150,15 +150,15 @@ def isInstalledCopy() -> bool:
 			"- this may not be an installed copy.",
 		)
 		return False
-	except WindowsError:
-		log.error("Unable to query isInstalledCopy registry key", exc_info=True)
+	except OSError:
+		log.error("Unable to query isInstalledCopy registry key", exc_info=True)  # noqa: G201
 		return False
 
 	k.Close()
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
-	except (WindowsError, FileNotFoundError):
-		log.error(
+	except (OSError, FileNotFoundError):
+		log.error(  # noqa: G201
 			"Failed to access the installed NVDA directory,"
 			"or, a portable copy failed to access the current NVDA app directory",
 			exc_info=True,
@@ -172,8 +172,8 @@ def getInstalledUserConfigPath() -> str | None:
 	except FileNotFoundError:
 		log.debug("Could not find nvda registry key, NVDA is not currently installed")
 		return None
-	except WindowsError:
-		log.error("Could not open nvda registry key", exc_info=True)
+	except OSError:
+		log.error("Could not open nvda registry key", exc_info=True)  # noqa: G201
 		return None
 
 	if NVDAState._configInLocalAppDataEnabled():
@@ -184,7 +184,7 @@ def getInstalledUserConfigPath() -> str | None:
 	configParent = SHGetKnownFolderPath(configFolder)
 	try:
 		return os.path.join(configParent, "nvda")
-	except WindowsError:
+	except OSError:
 		# (#13242) There is some uncertainty as to how this could be caused
 		log.debugWarning("Installed user config is not in local app data", exc_info=True)
 		return None
@@ -350,7 +350,7 @@ def _setSystemConfig(
 	:param isMigration: Whether this is a migration from one system config location to another, defaults to ``False``.
 		When this is ``True``, the ``addons/`` directory and ``addonsState.pickle``/``addonsState.json`` in ``fromPath`` will be copied as-is, if they exist.
 	"""
-	import installer
+	import installer  # noqa: I001
 	import addonHandler
 
 	toPath = os.path.join(prefix, "systemConfig")
@@ -386,7 +386,7 @@ def _setSystemConfig(
 			# This will also exclude pending updates.
 			if f.casefold().endswith(".exe"):
 				log.debug(
-					"Ignored file %s while copying current user configuration to system configuration" % f,
+					"Ignored file %s while copying current user configuration to system configuration" % f,  # noqa: UP031
 				)
 				continue
 			sourceFilePath = os.path.join(curSourceDir, f)
@@ -408,7 +408,7 @@ def _prepareToCopyAddons(fromPath: str, toPath: str, addonDirs: list[str], addon
 		This will be mutated to only contain the add-ons that should be copied.
 	:param addonsToCopy: Add-on IDs of the add-ons that should be copied.
 	"""
-	from addonStore.models.status import AddonStateCategory
+	from addonStore.models.status import AddonStateCategory  # noqa: I001
 	import addonHandler
 
 	addonsToCopy = CaseInsensitiveSet(addonsToCopy)
@@ -445,7 +445,7 @@ def setStartOnLogonScreen(enable: bool) -> None:
 	try:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
-	except WindowsError:
+	except OSError:
 		log.debugWarning(
 			"Failed to set start on logon screen's config, retrying elevated.",
 			exc_info=True,
@@ -456,7 +456,7 @@ def setStartOnLogonScreen(enable: bool) -> None:
 		if (
 			systemUtils.execElevated(
 				SLAVE_FILENAME,
-				("config_setStartOnLogonScreen", "%d" % enable),
+				("config_setStartOnLogonScreen", "%d" % enable),  # noqa: UP031
 				wait=True,
 			)
 			!= 0
@@ -490,7 +490,7 @@ class ConfigManager:
 	Changed settings are written to the most recently activated profile.
 	"""
 
-	BASE_ONLY_SECTIONS = {
+	BASE_ONLY_SECTIONS = {  # noqa: RUF012
 		"general",
 		"update",
 		"development",
@@ -555,7 +555,7 @@ class ConfigManager:
 				self.baseConfigError = False
 			except:  # noqa: E722
 				backupFileName = fn + ".corrupted.bak"
-				log.error(
+				log.error(  # noqa: G201
 					"Error loading base configuration; the base configuration file will be reinitialized."
 					f" A copy of your previous configuration file will be saved at {backupFileName}",
 					exc_info=True,
@@ -565,7 +565,7 @@ class ConfigManager:
 						os.unlink(backupFileName)
 					os.rename(fn, backupFileName)
 				except Exception:
-					log.error(
+					log.error(  # noqa: G201
 						f"Unable to save a copy of the corrupted configuration to {backupFileName}",
 						exc_info=True,
 					)
@@ -595,7 +595,6 @@ class ConfigManager:
 		:param profile: The profile to check for logging settings.
 		:return: True if debug level logging is enabled, False otherwise.
 		"""
-		#
 		try:
 			logLevelName: str = profile["general"]["loggingLevel"]
 			if not logLevelName:
@@ -614,7 +613,7 @@ class ConfigManager:
 		:raises e: Re-raises any exception that occurs during the profile upgrade process.
 		:return: The loaded configuration object.
 		"""
-		log.info("Loading config: {0}".format(fn))
+		log.info(f"Loading config: {fn}")
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
@@ -629,7 +628,7 @@ class ConfigManager:
 			if self._shouldLogConfigAtStartup(profileCopy):
 				# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
 				log.info(f"Config before schema update:\n{profileCopy}", redactSecrets=True)
-			raise e
+			raise e  # noqa: TRY201
 
 		if self._shouldLogConfigAtStartup(profile):
 			# We must log at info level here as the logHandler hasn't been set to log at debug level yet.
@@ -738,14 +737,14 @@ class ConfigManager:
 			log.info("Base configuration saved")
 			for name in self._dirtyProfiles:
 				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
-				log.info("Saved configuration profile %s" % name)
+				log.info("Saved configuration profile %s" % name)  # noqa: UP031
 			self._dirtyProfiles.clear()
 		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system", exc_info=True)
-			raise e
+			raise e  # noqa: TRY201
 		except Exception as e:
 			log.warning("Error saving configuration", exc_info=True)
-			raise e
+			raise e  # noqa: TRY201
 		post_configSave.notify()
 
 	def reset(self, factoryDefaults=False):
@@ -775,7 +774,7 @@ class ConfigManager:
 			raise ValueError("Missing name.")
 		fn = self._getProfileFn(name)
 		if os.path.isfile(fn):
-			raise ValueError("A profile with the same name already exists: %s" % name)
+			raise ValueError("A profile with the same name already exists: %s" % name)  # noqa: UP031
 		# Just create an empty file to make sure we can.
 		open(fn, "w").close()
 		# Register a script for the new profile.
@@ -795,7 +794,7 @@ class ConfigManager:
 			return
 		fn = self._getProfileFn(name)
 		if not os.path.isfile(fn):
-			raise LookupError("No such profile: %s" % name)
+			raise LookupError("No such profile: %s" % name)  # noqa: UP031
 		os.remove(fn)
 		# Remove the script for the deleted profile from the script collector.
 		# Import late to avoid circular import.
@@ -857,11 +856,11 @@ class ConfigManager:
 		oldFn = self._getProfileFn(oldName)
 		newFn = self._getProfileFn(newName)
 		if not os.path.isfile(oldFn):
-			raise LookupError("No such profile: %s" % oldName)
+			raise LookupError("No such profile: %s" % oldName)  # noqa: UP031
 		# Windows file names are case insensitive,
 		# so only test for file existence if the names don't match case insensitively.
 		if oldName.lower() != newName.lower() and os.path.isfile(newFn):
-			raise ValueError("A profile with the same name already exists: %s" % newName)
+			raise ValueError("A profile with the same name already exists: %s" % newName)  # noqa: UP031
 
 		os.rename(oldFn, newFn)
 		# Update any associated triggers.
@@ -900,7 +899,7 @@ class ConfigManager:
 			self._suspendedTriggers[trigger] = "enter"
 			return
 
-		log.debug("Activating triggered profile %s" % trigger.profileName)
+		log.debug("Activating triggered profile %s" % trigger.profileName)  # noqa: UP031
 		try:
 			profile = trigger._profile = self._getProfile(trigger.profileName)
 		except:
@@ -931,7 +930,7 @@ class ConfigManager:
 		profile = trigger._profile
 		if profile is None:
 			return
-		log.debug("Deactivating triggered profile %s" % trigger.profileName)
+		log.debug("Deactivating triggered profile %s" % trigger.profileName)  # noqa: UP031
 		profile.triggered = False
 		try:
 			self.profiles.remove(profile)
@@ -1009,7 +1008,7 @@ class ConfigManager:
 		try:
 			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
 		except:  # noqa: E722
-			log.error("Error loading profile triggers", exc_info=True)
+			log.error("Error loading profile triggers", exc_info=True)  # noqa: G201
 			cobj = ConfigObj(None, indent_type="\t", encoding="UTF-8")
 			cobj.filename = fn
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
@@ -1075,7 +1074,7 @@ class ConfigManager:
 
 	def setConfigValue(
 		self,
-		value: bool | int | float | str,
+		value: bool | float | str,
 		*keyPath: *tuple[str, str, *tuple[str, ...]],
 	) -> None:
 		"""
@@ -1155,10 +1154,10 @@ class ConfigValidationData:
 		super().__init__()
 
 	# args passed to the convert function
-	args: list[Any] = []
+	args: list[Any] = []  # noqa: RUF012
 
 	# kwargs passed to the convert function.
-	kwargs: dict[str, Any] = {}
+	kwargs: dict[str, Any] = {}  # noqa: RUF012
 	# the default value, used when config is missing.
 	default = None  # converted to the appropriate type
 
@@ -1529,8 +1528,8 @@ class ProfileTrigger:
 		try:
 			conf._triggerProfileEnter(self)
 		except:  # noqa: E722
-			log.error(
-				"Error entering trigger %s, profile %s" % (self.spec, self.profileName),
+			log.error(  # noqa: G201
+				"Error entering trigger %s, profile %s" % (self.spec, self.profileName),  # noqa: UP031
 				exc_info=True,
 			)
 
@@ -1545,8 +1544,8 @@ class ProfileTrigger:
 		try:
 			conf._triggerProfileExit(self)
 		except:  # noqa: E722
-			log.error(
-				"Error exiting trigger %s, profile %s" % (self.spec, self.profileName),
+			log.error(  # noqa: G201
+				"Error exiting trigger %s, profile %s" % (self.spec, self.profileName),  # noqa: UP031
 				exc_info=True,
 			)
 

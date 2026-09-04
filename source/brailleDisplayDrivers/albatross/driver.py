@@ -8,7 +8,7 @@ Communication with display is done here. See class L{BrailleDisplayDriver}
 for description of most important functions.
 """
 
-import serial
+import serial  # noqa: I001
 import time
 
 from collections import deque
@@ -24,10 +24,6 @@ from serial.win32 import (
 from threading import (
 	Event,
 	Lock,
-)
-from typing import (
-	List,
-	Optional,
 )
 
 import braille
@@ -104,7 +100,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# Used key layout
 		self._keyLayout: int
 		# Keep old display data, only changed content is sent.
-		self._oldCells: List[int] = []
+		self._oldCells: list[int] = []
 		# Set to True when filtering redundant init packets when init byte
 		# received but not yet settings byte.
 		self._initByteReceived = False
@@ -223,7 +219,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			if not self._dev:
 				try:
 					initState: bool = self._initPort(i)
-				except IOError:
+				except OSError:
 					# Port initialization failed. No need to try with 9600 bps,
 					# and there is no other port to try.
 					log.debug(f"Port {self._currentPort} not initialized", exc_info=True)
@@ -289,7 +285,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 				time.sleep(SLEEP_TIMEOUT)
 				return False
 			return True
-		except IOError:
+		except OSError:
 			if i == MAX_INIT_RETRIES - 1:
 				log.debug(f"Port {self._currentPort} not opened", exc_info=True)
 				return False
@@ -313,7 +309,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
 		# might raise.
-		except (IOError, AttributeError):
+		except (OSError, AttributeError):
 			self._disableConnection()
 			log.debug("Trying to reconnect", exc_info=True)
 			return False
@@ -328,7 +324,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			else:
 				log.debug(f"Read: INIT_START_BYTE {INIT_START_BYTE} not in {data}")
 				return False
-		except (IOError, AttributeError):
+		except (OSError, AttributeError):
 			self._disableConnection()
 			log.debug(
 				f"INIT_START_BYTE {INIT_START_BYTE} read failed, trying to reconnect",
@@ -359,7 +355,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
 		# might raise.
-		except (IOError, AttributeError):
+		except (OSError, AttributeError):
 			self._disableConnection()
 			log.debug("Settings byte read failed, trying to reconnect", exc_info=True)
 			return False
@@ -381,7 +377,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
 		# might raise.
-		except (IOError, AttributeError):
+		except (OSError, AttributeError):
 			log.debug(
 				f"I/O buffer reset failed on port {self._currentPort}",
 				exc_info=True,
@@ -421,7 +417,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# Only one try to open port when called from "albatross_read" thread.
 			# This is indicated by _dev is not None.
 			# ReadThread run function calls _readHandling again if needed.
-			if self._dev:
+			if self._dev:  # noqa: SIM102
 				if not self._openPort():
 					return
 			if not self._initConnection():
@@ -432,7 +428,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			return
 		self._handleReadQueue()
 
-	def _somethingToRead(self) -> Optional[bytes]:
+	def _somethingToRead(self) -> bytes | None:
 		"""All but connecting/reconnecting related read operations.
 		@return: on success returns data, on failure C{None}
 		"""
@@ -448,7 +444,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
 		# might raise.
-		except (IOError, AttributeError):
+		except (OSError, AttributeError):
 			self._disableConnection()
 			log.debug("Read failed, trying to reconnect", exc_info=True)
 			return None
@@ -487,7 +483,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					return False
 			self._readQueue.append(iAsByte)
 			log.debug(f"Read: enqueued {iAsByte}")
-		if settingsByte is not None:
+		if settingsByte is not None:  # noqa: SIM102
 			# Ensuring connection is established also after exit internal menu.
 			if not len(self._readQueue):
 				self._readQueue.append(INIT_START_BYTE)
@@ -517,7 +513,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 			# Considering situation where "albatross_read" thread is about to read
 			# but writing to display fails during it - or vice versa - AttributeError
 			# might raise.
-			except (IOError, AttributeError):
+			except (OSError, AttributeError):
 				self._disableConnection()
 				log.debug(f"Write failed: {data}, trying to reconnect", exc_info=True)
 
@@ -698,7 +694,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		"""
 		for i, key in enumerate(data):
 			if self._keyLayout == KeyLayout.switched:
-				if key in LEFT_RIGHT_KEY_CODES.keys():
+				if key in LEFT_RIGHT_KEY_CODES.keys():  # noqa: SIM118
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				elif key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
@@ -709,10 +705,10 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					)[j]
 				continue
 			if self._keyLayout == KeyLayout.bothSidesAsRight:
-				if key in LEFT_RIGHT_KEY_CODES.keys():
+				if key in LEFT_RIGHT_KEY_CODES.keys():  # noqa: SIM118
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				continue
-			if self._keyLayout == KeyLayout.bothSidesAsLeft:
+			if self._keyLayout == KeyLayout.bothSidesAsLeft:  # noqa: SIM102
 				if key in LEFT_RIGHT_KEY_CODES.values():
 					j = list(
 						LEFT_RIGHT_KEY_CODES.values(),
@@ -734,7 +730,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		"""Whole display should be updated at next time."""
 		self._oldCells = [0] * len(self._oldCells)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		"""Prepare cell content for display.
 		@param cells: List of cells content
 		"""
@@ -745,7 +741,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		# Using lock because called also indirectly manually when display is
 		# switched back on or exited from internal menu.
 		with self._displayLock:
-			writeBytes: List[bytes] = [START_BYTE]
+			writeBytes: list[bytes] = [START_BYTE]
 			# Only changed content is sent (cell index and data).
 			for i, cell in enumerate(cells):
 				if cell != self._oldCells[i]:
@@ -755,7 +751,7 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 					# Bits have to be reversed.
 					writeBytes.append(
 						int(
-							"{:08b}".format(cell)[::-1],
+							f"{cell:08b}"[::-1],
 							2,
 						).to_bytes(
 							1,

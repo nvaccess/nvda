@@ -5,7 +5,7 @@
 
 """Recognition of text using the UWP OCR engine included in Windows 10 and later."""
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	cast,
 	POINTER,
 )

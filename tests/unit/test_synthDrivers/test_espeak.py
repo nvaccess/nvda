@@ -5,7 +5,7 @@
 
 """Unit tests for the eSpeak synth driver submodule."""
 
-import logging
+import logging  # noqa: I001
 import unittest
 
 from languageHandler import stripLocaleFromLangCode
@@ -18,8 +18,8 @@ from unittest import mock
 
 class FakeESpeakSynthDriver:
 	_language = "default"
-	_defaultLangToLocale = {"default": "en-gb"}
-	availableLanguages = {"fr", "fr-fr", "en-gb", "ta-ta"}
+	_defaultLangToLocale = {"default": "en-gb"}  # noqa: RUF012
+	availableLanguages = {"fr", "fr-fr", "en-gb", "ta-ta"}  # noqa: RUF012
 
 
 class TestSynthDriver_Logic(unittest.TestCase):
@@ -104,7 +104,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 			),
 		)
 
-		supportedLanguagesWithLocaleStripped = set(
+		supportedLanguagesWithLocaleStripped = set(  # noqa: C401
 			stripLocaleFromLangCode(lang) for lang in eSpeakAvailableLangs
 		)
 		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(
@@ -125,7 +125,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		Confirms that eSpeak can manually be switched to all of its supported languages with the locale removed.
 		This doesn't test automatic language switching.
 		"""
-		availableLangsWithoutLocale = set(
+		availableLangsWithoutLocale = set(  # noqa: C401
 			stripLocaleFromLangCode(lang) for lang in self._driver.availableLanguages
 		)
 		for langWithoutLocale in availableLangsWithoutLocale:

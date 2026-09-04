@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import operator
+import operator  # noqa: I001
 from comtypes import COMError
 import config
 from config.featureFlagEnums import WindowsTerminalStrategyFlag
@@ -96,8 +96,6 @@ def getDeepestLastChildUIAElementInWalker(element, walker):
 class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 
-	pass
-
 
 def getUIATextAttributeValueFromRange(rangeObj, attrib, ignoreMixedValues=False):
 	"""
@@ -107,7 +105,7 @@ def getUIATextAttributeValueFromRange(rangeObj, attrib, ignoreMixedValues=False)
 		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
-	if val == UIAHandler.handler.ReservedMixedAttributeValue:
+	if val == UIAHandler.handler.ReservedMixedAttributeValue:  # noqa: SIM102
 		if not ignoreMixedValues:
 			raise UIAMixedAttributeError
 	return val
@@ -176,7 +174,7 @@ def iterUIARangeByUnit(rangeObj, unit, reverse=False):
 def getEnclosingElementWithCacheFromUIATextRange(textRange, cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getEnclosingElementBuildCache if it exists, otherwise IUIAutomationTextRange::getEnclosingElement and then IUIAutomationElement::buildUpdatedCache."""
 	if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-		raise ValueError("%s is not a text range" % textRange)
+		raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 	try:
 		textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 	except (COMError, AttributeError):
@@ -187,7 +185,7 @@ def getEnclosingElementWithCacheFromUIATextRange(textRange, cacheRequest):
 	return textRange.getEnclosingElementBuildCache(cacheRequest)
 
 
-class CacheableUIAElementArray(object):
+class CacheableUIAElementArray:
 	def __init__(self, elementArray, cacheRequest=None):
 		self._elementArray = elementArray
 		self._cacheRequest = cacheRequest
@@ -206,7 +204,7 @@ class CacheableUIAElementArray(object):
 def getChildrenWithCacheFromUIATextRange(textRange, cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getChildrenBuildCache if it exists, otherwise IUIAutomationTextRange::getChildren but wraps the result in an object that automatically calls IUIAutomationElement::buildUpdateCache on any element retreaved."""
 	if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-		raise ValueError("%s is not a text range" % textRange)
+		raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 	try:
 		textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 	except (COMError, AttributeError):
@@ -243,7 +241,7 @@ def isTextRangeOffscreen(textRange, visiRanges):
 		raise RuntimeError("Visible textRanges array is empty or invalid.")
 
 
-class UIATextRangeAttributeValueFetcher(object):
+class UIATextRangeAttributeValueFetcher:
 	def __init__(self, textRange):
 		self.textRange = textRange
 
@@ -262,7 +260,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 	def __init__(self, textRange, IDs):
 		IDs = list(IDs)
 		self.IDsToValues = {}
-		super(BulkUIATextRangeAttributeValueFetcher, self).__init__(textRange)
+		super().__init__(textRange)
 		IDsArray = (ctypes.c_long * len(IDs))(*IDs)
 		values = textRange.GetAttributeValues(IDsArray, len(IDsArray))
 		self.IDsToValues = {IDs[x]: values[x] for x in range(len(IDs))}
@@ -297,7 +295,7 @@ class FakeEventHandlerGroup:
 
 	def AddNotificationEventHandler(self, scope, cacheRequest, handler):
 		if not isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
-			raise RuntimeError
+			raise RuntimeError  # noqa: TRY004
 		self._notificationEventHandlers[(scope, cacheRequest)] = handler
 
 	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
@@ -324,7 +322,7 @@ class FakeEventHandlerGroup:
 				self.unregisterFromClientObject(element)
 			except COMError:
 				pass
-			raise e
+			raise e  # noqa: TRY201
 
 	def unregisterFromClientObject(self, element):
 		for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():

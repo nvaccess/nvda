@@ -7,7 +7,7 @@
 High-level UIA remote ops Unit tests for writing iterable functions that can yield values.
 """
 
-from unittest import TestCase
+from unittest import TestCase  # noqa: I001
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
 
@@ -25,7 +25,7 @@ class Test_iterable(TestCase):
 
 		results = []
 		for i in op.iterExecute():
-			results.append(i)
+			results.append(i)  # noqa: PERF402
 		self.assertEqual(results, [0, 1, 2, 3])
 
 	def test_long_iterableFunction(self):
@@ -69,7 +69,7 @@ class Test_iterable(TestCase):
 
 		results = []
 		for i in op.iterExecute():
-			results.append(i)
+			results.append(i)  # noqa: PERF402
 		self.assertEqual(results, [10, 11, 12, 13, 14])
 
 	def test_forEachItemInArray(self):
@@ -92,5 +92,5 @@ class Test_iterable(TestCase):
 
 		results = []
 		for i in op.iterExecute():
-			results.append(i)
+			results.append(i)  # noqa: PERF402
 		self.assertEqual(results, [0, 2, 4, 6, 8])

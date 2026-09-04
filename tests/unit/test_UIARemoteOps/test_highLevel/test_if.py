@@ -7,7 +7,7 @@
 High-level UIA remote ops Unit tests for if conditions.
 """
 
-from unittest import TestCase
+from unittest import TestCase  # noqa: I001
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
 
@@ -54,9 +54,8 @@ class Test_if(TestCase):
 
 		@op.buildFunction
 		def code(ra: remoteAPI.RemoteAPI):
-			with self.assertRaises(RuntimeError):
-				with ra.elseBlock():
-					pass
+			with self.assertRaises(RuntimeError), ra.elseBlock():
+				pass
 
 	def test_if_with_multiple_returns_first(self):
 		op = operation.Operation(localMode=True)

@@ -7,7 +7,7 @@
 Full-screen magnifier module.
 """
 
-from ctypes import byref
+from ctypes import byref  # noqa: I001
 from ctypes.wintypes import RECT
 from typing import override
 
@@ -219,7 +219,7 @@ class FullScreenMagnifier(Magnifier):
 			self._initializeNativeMagnification()
 			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 		except OSError:
-			log.error("Recovery failed", exc_info=True)
+			log.error("Recovery failed", exc_info=True)  # noqa: G201
 			self._conductRecoveryFailure()
 			return
 

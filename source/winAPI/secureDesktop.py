@@ -33,7 +33,7 @@ post_secureDesktopStateChange.unregister(onSecureDesktopChange)
 
 
 def _handleSecureDesktopChange():
-	import api
+	import api  # noqa: I001
 	import keyboardHandler
 	from NVDAObjects import NVDAObject
 	from speech.priorities import SpeechPriority

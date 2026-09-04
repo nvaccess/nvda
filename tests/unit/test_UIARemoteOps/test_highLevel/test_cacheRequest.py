@@ -7,7 +7,7 @@
 High-level UIA remote ops unit tests for cache request support.
 """
 
-import struct
+import struct  # noqa: I001
 from unittest import TestCase
 from unittest.mock import Mock, patch
 from ctypes import POINTER

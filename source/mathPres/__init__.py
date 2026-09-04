@@ -10,9 +10,9 @@ Plugins can register their own implementation for any or all of these
 using ``registerProvider``.
 """
 
-import re
+import re  # noqa: I001
 import typing
-from typing import List, Optional, Union
+from typing import List, Optional, Union  # noqa: F401, UP035
 
 from NVDAObjects.window import Window
 import controlTypes
@@ -26,7 +26,7 @@ import textInfos
 
 if typing.TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
-	from speech.commands import SpeechCommand  # noqa F401: type-checking only
+	from speech.commands import SpeechCommand
 
 
 class MathPresentationProvider:
@@ -34,7 +34,7 @@ class MathPresentationProvider:
 	A single provider does not need to implement all presentation types.
 	"""
 
-	def getSpeechForMathMl(self, mathMl: str) -> List[Union[str, "SpeechCommand"]]:
+	def getSpeechForMathMl(self, mathMl: str) -> list[Union[str, "SpeechCommand"]]:
 		"""Get speech output for specified MathML markup.
 
 		:param mathMl: The MathML markup.
@@ -154,8 +154,8 @@ class MathInteractionNVDAObject(Window):
 		"""
 		self.parent = parent = api.getFocusObject()
 		self.provider = provider
-		self.sourceObj: "NVDAObject | None" = sourceObj
-		super(MathInteractionNVDAObject, self).__init__(windowHandle=parent.windowHandle)
+		self.sourceObj: NVDAObject | None = sourceObj
+		super().__init__(windowHandle=parent.windowHandle)
 
 	def setFocus(self):
 		ti = self.parent.treeInterceptor
@@ -177,7 +177,7 @@ class MathInteractionNVDAObject(Window):
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Exit math interaction")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:escape": "exit",
 	}
 
@@ -193,7 +193,7 @@ def stripExtraneousXml(xml):
 	return RE_STRIP_XML_PREFIX.sub("", xml)
 
 
-def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> Optional[str]:
+def getMathMlFromTextInfo(pos: textInfos.TextInfo) -> str | None:
 	"""Get MathML (if any) at the start of a TextInfo.
 
 	:param pos: The TextInfo in question.
@@ -254,4 +254,4 @@ RE_MATH_APPEND = re.compile(r"(<math[^>]*)>")
 
 def insertLanguageIntoMath(mathMl, language):
 	"""Insert the specified language into a math tag."""
-	return RE_MATH_APPEND.sub(r'\1 xml:lang="%s">' % language, mathMl, count=1)
+	return RE_MATH_APPEND.sub(r'\1 xml:lang="%s">' % language, mathMl, count=1)  # noqa: UP031

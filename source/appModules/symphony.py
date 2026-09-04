@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2010 Michael Curran <mick@kulgan.net>
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible

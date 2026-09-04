@@ -3,14 +3,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod  # noqa: I001
 import functools
 from typing import (
 	Generic,
-	Iterable,
 	TypeVar,
 	cast,
 )
+from collections.abc import Iterable
 
 import wx
 
@@ -32,16 +32,16 @@ from ..viewModels.store import AddonStoreVM
 
 __all__ = [
 	"AddonActionT",
-	"_ActionsContextMenuP",
-	"_MonoActionsContextMenu",
-	"_BatchActionsContextMenu",
 	"AddonListValidator",
+	"_ActionsContextMenuP",
+	"_BatchActionsContextMenu",
+	"_MonoActionsContextMenu",
 ]
 
 AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM, AddonUpdateChannelActionVM)
 
 
-class _ActionsContextMenuP(Generic[AddonActionT], ABC):
+class _ActionsContextMenuP(Generic[AddonActionT], ABC):  # noqa: PYI059, UP046
 	_actions: list[AddonActionT]
 	_actionMenuItemMap: dict[AddonActionT, wx.MenuItem]
 	_contextMenu: wx.Menu
@@ -179,7 +179,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 		self._storeVM = storeVM
 		self._actionMenuItemMap = {}
 		self._contextMenu = wx.Menu()
-		self._selectedAddons: Iterable[AddonListItemVM] = tuple()
+		self._selectedAddons: Iterable[AddonListItemVM] = tuple()  # noqa: C408
 
 	def _updateSelectedAddons(self, selectedAddons: Iterable[AddonListItemVM]):
 		# Reset the action menu as self._actions depends on the selected add-ons

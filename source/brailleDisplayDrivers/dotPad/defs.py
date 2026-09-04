@@ -4,7 +4,7 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import enum
+import enum  # noqa: I001
 import ctypes
 
 

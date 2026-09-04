@@ -3,12 +3,12 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited
 
-from vision import providerBase
+from vision import providerBase  # noqa: I001
 from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting, NumericDriverSetting
 import gui
 from autoSettingsUtils.utils import StringParameterInfo
 from autoSettingsUtils.autoSettings import SupportedSettingType
-from typing import Optional, Type, Any, List
+from typing import Any
 
 """Example provider, which demonstrates using the automatically constructed GUI. Rename this file, removing
  the first underscore to test it with NVDA.
@@ -23,7 +23,7 @@ This might be because the provider must interface with an external application o
 
 class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 	#: dictionary of the setting id's available when provider is running.
-	_availableRuntimeSettings = []
+	_availableRuntimeSettings = []  # noqa: RUF012
 
 	# The following settings can be configured prior to runtime in this example
 	shouldDoX: bool
@@ -31,7 +31,7 @@ class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 	amountOfZ: int
 	nameOfSomething: str
 
-	availableNameofsomethings = {
+	availableNameofsomethings = {  # noqa: RUF012
 		"n1": StringParameterInfo(id="n1", displayName="name one"),
 		"n2": StringParameterInfo(id="n2", displayName="name two"),
 		"n3": StringParameterInfo(id="n3", displayName="name three"),
@@ -86,7 +86,7 @@ class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 	def clearRuntimeSettingAvailability(self):
 		self._availableRuntimeSettings = []
 
-	def addRuntimeSettingsAvailibility(self, settingIDs: List[str]):
+	def addRuntimeSettingsAvailibility(self, settingIDs: list[str]):
 		self._availableRuntimeSettings.extend(settingIDs)
 		# ensure any previously saved settings are loaded from config file:
 		self._initSpecificSettings(self, self._getAvailableRuntimeSettings())
@@ -133,7 +133,7 @@ class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 		return True  # Check any dependencies (Windows version, Hardware access, Installed applications)
 
 	@classmethod
-	def getSettingsPanelClass(cls) -> Optional[Type]:
+	def getSettingsPanelClass(cls) -> type | None:
 		"""Returns the instance to be used in order to construct a settings panel for the provider.
 		@return: Optional[SettingsPanel]
 		@remarks: When None is returned, L{gui.settingsDialogs.VisionProviderSubPanel_Wrapper} is used.

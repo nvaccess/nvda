@@ -5,7 +5,7 @@
 
 """Utilities for working with the Windows Ease of Access Center."""
 
-from enum import Enum, IntEnum
+from enum import Enum, IntEnum  # noqa: I001
 from typing import Any
 
 from config.registry import RegistryKey as _RegistryKey, EASE_OF_ACCESS_APP_KEY_NAME
@@ -40,7 +40,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "canConfigTerminateOnDesktopSwitch" and NVDAState._allowDeprecatedAPI():
 		log.warning("canConfigTerminateOnDesktopSwitch is deprecated.")
 		return True
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class AutoStartContext(IntEnum):
@@ -60,8 +60,8 @@ def isRegistered() -> bool:
 		return True
 	except FileNotFoundError:
 		log.debug("Unable to find AT registry key")
-	except WindowsError:
-		log.error("Unable to open AT registry key", exc_info=True)
+	except OSError:
+		log.error("Unable to open AT registry key", exc_info=True)  # noqa: G201
 	return False
 
 
@@ -121,8 +121,8 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	except FileNotFoundError:
 		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
 		return []
-	except WindowsError:
-		log.error(
+	except OSError:
+		log.error(  # noqa: G201
 			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
 			exc_info=True,
 		)
@@ -132,8 +132,8 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
 	except FileNotFoundError:
 		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
-	except WindowsError:
-		log.error(
+	except OSError:
+		log.error(  # noqa: G201
 			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
 			exc_info=True,
 		)

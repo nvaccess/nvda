@@ -3,11 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time
+import time  # noqa: I001
 from itertools import count, takewhile
 from queue import Empty, Queue
 from threading import Event, Thread
-from typing import Callable, Iterator
+from collections.abc import Callable, Iterator
 import weakref
 
 from _asyncioEventLoop.utils import runCoroutineSync
@@ -57,12 +57,12 @@ def queueReader(
 			continue
 
 		def apc(_x: int = 0):
-			return onReceive(data)
+			return onReceive(data)  # noqa: B023
 
 		try:
 			ioThread.queueAsApc(apc)
 		except OSError:
-			log.error("Reader thread failed to queue APC", exc_info=True)
+			log.error("Reader thread failed to queue APC", exc_info=True)  # noqa: G201
 		queue.task_done()
 
 
@@ -156,7 +156,7 @@ class Ble(IoBase):
 		# Listen for notifications
 		await self._client.start_notify(self._readCharacteristicUuid, self._notifyReceive)
 
-	def waitForRead(self, timeout: int | float) -> bool:
+	def waitForRead(self, timeout: float) -> bool:
 		"""Wait for data to be received from the peripheral."""
 		self._readEvent.clear()
 		return self._readEvent.wait(timeout)
@@ -210,7 +210,7 @@ class Ble(IoBase):
 		"""Check if the BLE peripheral is currently connected."""
 		return self._client.is_connected
 
-	def waitForConnection(self, maxWait: int | float):
+	def waitForConnection(self, maxWait: float):
 		"""Wait for connection and service discovery.
 
 		:param maxWait: Maximum time to wait in seconds.

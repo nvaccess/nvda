@@ -5,7 +5,7 @@
 
 """Set of unit tests veryfying behavior of scripts defined in ``globalCommands``."""
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import patch
 
 import config
