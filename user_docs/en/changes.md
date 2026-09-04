@@ -1,5 +1,39 @@
 # What's New in NVDA
 
+## 2027.1
+
+### Important notes
+
+### New Features
+<!-- Note we are in a feature freeze, only features related to API breaking changes should be listed here -->
+
+### Changes
+
+### Bug Fixes
+
+#### Performance
+
+#### Braille
+
+#### Web browsers
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.3
 
 This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
