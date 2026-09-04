@@ -328,9 +328,12 @@ def resetConfiguration(factoryDefaults=False):
 	import textUtils._wordSeg
 	import _magnifier as magnifier
 
-	magnifier.terminate()
-	log.debug("Terminating vision")
-	vision.terminate()
+	# The vision handler and magnifier are NOT torn down here.
+	# Their providers/sessions are reconciled after the configuration is
+	# reloaded (see the "Reloading config" section below), so that providers
+	# which are already running and remain enabled in the new configuration
+	# (e.g. the magnifier) keep their runtime session and viewport position
+	# instead of being terminated and re-initialized.
 	log.debug("Terminating Screen Curtain")
 	screenCurtain.terminate()
 	log.debug("Terminating math presentation")
@@ -401,11 +404,25 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("Initializing math presentation")
 	mathPres.initialize()
 	# Vision
-	log.debug("initializing vision")
-	vision.initialize()
+	# Reuse the already-running vision handler (kept alive above). Its
+	# handleConfigProfileSwitch reconciles the set of running providers with
+	# the newly configured providers: it terminates only those that are no
+	# longer enabled and initializes only newly enabled ones, while leaving
+	# providers that are both running and still enabled alive (preserving
+	# runtime state such as the magnifier's viewport position).
+	if vision.handler is not None:
+		log.debug("Reconciling vision providers with reloaded configuration")
+		vision.handler.handleConfigProfileSwitch()
+	else:
+		log.debug("initializing vision")
+		vision.initialize()
 	log.debug("initializing Screen Curtain")
 	screenCurtain.initialize()
-	magnifier.initialize()
+	# Magnifier
+	# Reconcile the magnifier with the reloaded configuration rather than
+	# tearing it down and re-initializing it, so an already-running magnifier
+	# keeps its session and viewport and only changed settings are applied.
+	magnifier.reconfigure()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
 	inputCore.manager.loadLocaleGestureMap()

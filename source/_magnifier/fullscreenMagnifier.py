@@ -44,6 +44,17 @@ class FullScreenMagnifier(Magnifier):
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
 
+	@override
+	def reconfigure(self) -> None:
+		"""
+		Update the full-screen magnifier's settings that are not read live from
+		the configuration on each update (the full-screen tracking mode), then
+		delegate to the base implementation for the shared settings.
+		This preserves the active session and viewport position.
+		"""
+		self._fullscreenMode = getFullscreenMode()
+		super().reconfigure()
+
 	@staticmethod
 	def _isAccessDeniedError(error: OSError) -> bool:
 		"""Return True when OSError represents Windows access denied (WinError 5)."""
