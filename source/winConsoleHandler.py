@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2025 NV Access Limited, Babbage B.V.
+# Copyright (C) 2009-2026 NV Access Limited, Babbage B.V.
 
 from ctypes.wintypes import SMALL_RECT  # noqa: I001
 import gui
@@ -73,7 +73,7 @@ def connectConsole(obj):
 	wincon.SetConsoleCtrlHandler(_consoleCtrlHandler, True)
 	consoleOutputHandle = winKernel.CreateFile(
 		"CONOUT$",
-		winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+		winBindings.kernel32.GENERIC.READ | winBindings.kernel32.GENERIC.WRITE,
 		winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
 		None,
 		winKernel.OPEN_EXISTING,

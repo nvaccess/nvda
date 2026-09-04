@@ -363,7 +363,7 @@ class Bulk(IoBase):
 		writePath = f"{path}\\{epOut}"
 		readHandle = CreateFile(
 			readPath,
-			winKernel.GENERIC_READ,
+			winBindings.kernel32.GENERIC.READ,
 			0,
 			None,
 			winKernel.OPEN_EXISTING,
@@ -376,7 +376,7 @@ class Bulk(IoBase):
 			raise ctypes.WinError()
 		writeHandle = CreateFile(
 			writePath,
-			winKernel.GENERIC_WRITE,
+			winBindings.kernel32.GENERIC.WRITE,
 			0,
 			None,
 			winKernel.OPEN_EXISTING,

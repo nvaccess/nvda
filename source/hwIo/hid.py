@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2025 NV Access Limited, Babbage B.V.
+# Copyright (C) 2015-2026 NV Access Limited, Babbage B.V.
 
 
 """Raw input/output for braille displays via HID
@@ -22,6 +22,7 @@ from .base import IoBase, _isDebug
 import hidpi
 import winBindings.hid
 from utils import _deprecate
+from winBindings import kernel32
 
 
 __getattr__ = _deprecate.handleDeprecations(
@@ -151,7 +152,7 @@ class Hid(IoBase):
 			log.debug("Opening device %s" % path)  # noqa: UP031
 		handle = CreateFile(
 			path,
-			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+			kernel32.GENERIC.READ | kernel32.GENERIC.WRITE,
 			0 if exclusive else winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
 			None,
 			winKernel.OPEN_EXISTING,

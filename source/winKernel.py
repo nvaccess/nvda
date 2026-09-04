@@ -70,6 +70,8 @@ __getattr__ = _deprecate.handleDeprecations(
 	),
 	_deprecate.MovedSymbol("advapi32", "winBindings.advapi32", "dll"),
 	_deprecate.MovedSymbol("DUPLICATE_SAME_ACCESS", "winBindings.kernel32", "DUPLICATE", "SAME_ACCESS"),
+	_deprecate.MovedSymbol("GENERIC_READ", "winBindings.kernel32", "GENERIC", "READ"),
+	_deprecate.MovedSymbol("GENERIC_WRITE", "winBindings.kernel32", "GENERIC", "WRITE"),
 )
 
 
@@ -118,8 +120,6 @@ def GetStdHandle(handleID):
 	return h
 
 
-GENERIC_READ = 0x80000000
-GENERIC_WRITE = 0x40000000
 FILE_SHARE_READ = 1
 FILE_SHARE_WRITE = 2
 FILE_SHARE_DELETE = 4

@@ -139,6 +139,20 @@ __all__ = (
 
 dll = windll.kernel32
 
+
+class GENERIC(IntEnum):
+	"""Access rights which  are mapped to sets of standard and object-specific access rights by securable objects.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/secauthz/generic-access-rights
+	"""
+
+	#: Write access.
+	WRITE = 0x40000000
+	#: Read access.
+	READ = 0x80000000
+
+
 GetModuleHandle = WINFUNCTYPE(None)(("GetModuleHandleW", dll))
 """
 Retrieves a module handle for the specified module, which must have been loaded by the calling process.
