@@ -24,6 +24,11 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 
+* Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle. A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
+  * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
+  * Closing a device now cancels a pending write, and repeated `close()` calls are safe.
+  * A failure to start a background read is now reported through the driver's read error callback, instead of silently ending the read loop.
+
 #### API Breaking Changes
 
 These are breaking API changes.
