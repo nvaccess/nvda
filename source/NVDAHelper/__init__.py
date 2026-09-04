@@ -781,7 +781,14 @@ class _RemoteLoader:
 
 	def _duplicateAsInheritable(self, handle):
 		curProc = winKernel.GetCurrentProcess()
-		return winKernel.DuplicateHandle(curProc, handle, curProc, 0, True, winKernel.DUPLICATE_SAME_ACCESS)
+		return winKernel.DuplicateHandle(
+			curProc,
+			handle,
+			curProc,
+			0,
+			True,
+			winBindings.kernel32.DUPLICATE.SAME_ACCESS,
+		)
 
 	def terminate(self):
 		# Closing the write end of the pipe will cause EOF for the waiting loader process, which will then exit gracefully.

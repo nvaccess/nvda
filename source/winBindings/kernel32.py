@@ -139,6 +139,20 @@ __all__ = (
 
 dll = windll.kernel32
 
+
+class GENERIC(IntEnum):
+	"""Access rights which  are mapped to sets of standard and object-specific access rights by securable objects.
+
+	..seealso::
+		https://learn.microsoft.com/en-us/windows/win32/secauthz/generic-access-rights
+	"""
+
+	#: Write access.
+	WRITE = 0x40000000
+	#: Read access.
+	READ = 0x80000000
+
+
 GetModuleHandle = WINFUNCTYPE(None)(("GetModuleHandleW", dll))
 """
 Retrieves a module handle for the specified module, which must have been loaded by the calling process.
@@ -299,6 +313,17 @@ WriteProcessMemory.argtypes = (
 	POINTER(c_size_t),  # lpNumberOfBytesWritten
 )
 WriteProcessMemory.restype = BOOL
+
+
+class DUPLICATE(IntEnum):
+	"""Possible values of the dwOptions parameter to DuplicateHandle."""
+
+	CLOSE_SOURCE = 0x00000001
+	"""Closes the source handle, regardless of any error status returned."""
+
+	SAME_ACCESS = 0x00000002
+	"""The duplicate handle has the same access as the source handle, and the dwDesiredAccess parameter is ignored."""
+
 
 DuplicateHandle = WINFUNCTYPE(None)(("DuplicateHandle", dll))
 """
