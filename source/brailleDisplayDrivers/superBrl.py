@@ -3,11 +3,12 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2023 NV Access Limited, Coscell Kao, Babbage B.V.
 
-from typing import List
 
-import serial
+import serial  # noqa: I001
 import bdDetect
 import braille
+import braille.display
+import braille.display.driver
 import hwIo
 from hwIo import intToByte
 import time
@@ -24,7 +25,7 @@ DESCRIBE_TAG = b"\xff\xff\x0a"
 DISPLAY_TAG = b"\xff\xff\x04\x00\x99\x00\x50\x00"
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "superBrl"
 	# Translators: Names of braille displays.
 	description = _("SuperBraille")
@@ -42,11 +43,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="Auto"):
-		super(BrailleDisplayDriver, self).__init__()
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		super().__init__()
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			try:
 				self._dev = hwIo.Serial(
 					port,
@@ -57,7 +58,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					writeTimeout=TIMEOUT,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 
@@ -67,7 +68,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Check for cell information
 			if self.numCells:
 				# ok, it is a SuperBraille
-				log.info("Found superBraille device, version %s" % self.version)
+				log.info("Found superBraille device, version %s" % self.version)  # noqa: UP031
 				break
 			else:
 				self._dev.close()
@@ -76,7 +77,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# We must sleep before closing the COM port as not doing this can leave the display in a bad state where it can not be re-initialized
 			time.sleep(TIMEOUT)
@@ -95,8 +96,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._dev.read(1)
 		self.version = self._dev.read(8)
 
-	def display(self, cells: List[int]):
-		writeBytes: List[bytes] = [DISPLAY_TAG]
+	def display(self, cells: list[int]):
+		writeBytes: list[bytes] = [DISPLAY_TAG]
 		for cell in cells:
 			writeBytes.append(b"\x00")
 			writeBytes.append(intToByte(cell))

@@ -3,12 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import Dict
-from enum import Enum
+from enum import Enum  # noqa: I001
 import controlTypes
 
 
-ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {
+ariaRolesToNVDARoles: dict[str, controlTypes.Role] = {
 	"description": controlTypes.Role.STATICTEXT,  # Not in ARIA 1.1 spec
 	"alert": controlTypes.Role.ALERT,
 	"alertdialog": controlTypes.Role.DIALOG,
@@ -68,13 +67,13 @@ ariaRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"insertion": controlTypes.Role.INSERTED_CONTENT,
 }
 
-ariaSortValuesToNVDAStates: Dict[str, controlTypes.State] = {
+ariaSortValuesToNVDAStates: dict[str, controlTypes.State] = {
 	"descending": controlTypes.State.SORTED_DESCENDING,
 	"ascending": controlTypes.State.SORTED_ASCENDING,
 	"other": controlTypes.State.SORTED,
 }
 
-landmarkRoles: Dict[str, str] = {
+landmarkRoles: dict[str, str] = {
 	# Translators: Reported for the banner landmark, normally found on web pages.
 	"banner": pgettext("aria", "banner"),
 	# Translators: Reported for the complementary landmark, normally found on web pages.
@@ -95,7 +94,7 @@ ariaRolesToNVDARoles.update(
 	{role: controlTypes.Role.LANDMARK for role in landmarkRoles if role not in ariaRolesToNVDARoles},
 )
 
-htmlNodeNameToAriaRoles: Dict[str, str] = {
+htmlNodeNameToAriaRoles: dict[str, str] = {
 	"header": "banner",
 	"nav": "navigation",
 	"main": "main",
@@ -115,7 +114,7 @@ class AriaLivePoliteness(str, Enum):
 	ASSERTIVE = "assertive"
 
 
-ariaHaspopupValuesToNVDAStates: Dict[str, controlTypes.State] = {
+ariaHaspopupValuesToNVDAStates: dict[str, controlTypes.State] = {
 	"true": controlTypes.State.HASPOPUP,
 	"menu": controlTypes.State.HASPOPUP,
 	"dialog": controlTypes.State.HASPOPUP_DIALOG,

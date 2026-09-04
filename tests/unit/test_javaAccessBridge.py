@@ -5,7 +5,7 @@
 
 """Unit tests for Java Access Bridge"""
 
-import queue
+import queue  # noqa: I001
 import unittest
 from unittest.mock import call, MagicMock, patch
 
@@ -72,7 +72,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 			for modifierCombination in MODIFIER_COMBINATIONS:
 				modifiers = 0
 				modLabels = []
-				for m, l in modifierCombination.items():  # noqa: E741
+				for m, l in modifierCombination.items():
 					modifiers |= m
 					modLabels.append(l)
 				with self.subTest(character=c, modifiers=modifiers, modLabels=modLabels):
@@ -84,11 +84,11 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 			for modifierCombination in MODIFIER_COMBINATIONS:
 				modifiers = AccessibleKeystroke.FKEY
 				modLabels = []
-				for m, l in modifierCombination.items():  # noqa: E741
+				for m, l in modifierCombination.items():
 					modifiers |= m
 					modLabels.append(l)
 				with self.subTest(fkey=ord(c), modifiers=modifiers, modLabels=modLabels):
-					expected = modLabels + ["F{}".format(ord(c))]
+					expected = modLabels + [f"F{ord(c)}"]
 					self.assertListEqual(expected, JABHandler._getKeyLabels(modifiers, c))
 
 	def testControlCodeShortcut(self):
@@ -96,7 +96,7 @@ class TestJavaAccessBridgeShortcutKeys(unittest.TestCase):
 			for modifierCombination in MODIFIER_COMBINATIONS:
 				modifiers = AccessibleKeystroke.CONTROLCODE
 				modLabels = []
-				for m, l in modifierCombination.items():  # noqa: E741
+				for m, l in modifierCombination.items():
 					modifiers |= m
 					modLabels.append(l)
 				with self.subTest(controlCode=c, label=v, modifiers=modifiers, modLabels=modLabels):

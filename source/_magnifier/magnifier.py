@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -8,13 +8,15 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from comtypes import COMError
 from logHandler import log
 from NVDAState import _TrackNVDAInitialization
 import wx
 import ui
 import screenCurtain
+import mouseHandler
+import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
 from .utils.types import (
@@ -96,7 +98,7 @@ class Magnifier:
 		:raises ValueError: If the value is not in the valid zoom range
 		"""
 		if not isinstance(value, int):
-			raise ValueError("Zoom level must be an integer percentage")
+			raise ValueError("Zoom level must be an integer percentage")  # noqa: TRY004
 		if not (ZoomLevel.MIN_ZOOM <= value <= ZoomLevel.MAX_ZOOM):
 			raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
 		if value % ZoomLevel.STEP_FACTOR != 0:
@@ -231,7 +233,7 @@ class Magnifier:
 		except (OSError, COMError):
 			self._consecutiveErrors += 1
 			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
-				log.error(
+				log.error(  # noqa: G201
 					f"Error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS}), attempting recovery",
 					exc_info=True,
 				)
@@ -241,7 +243,7 @@ class Magnifier:
 					# Recovery itself failed: reset counter and restart timer directly
 					# to avoid a permanent freeze (recovery is responsible for rescheduling
 					# but may fail before reaching that point).
-					log.error(
+					log.error(  # noqa: G201
 						"Recovery failed unexpectedly, restarting timer to prevent freeze",
 						exc_info=True,
 					)
@@ -429,12 +431,31 @@ class Magnifier:
 		Ensure that manual panning mode (self._isManualPanning) is set to False when focus coordinates change.
 		"""
 		focusCoordinates = self._focusManager.getCurrentFocusCoordinates()
-		if self._isManualPanning:
+		if self._isManualPanning:  # noqa: SIM102
 			if focusCoordinates != self._lastFocusCoordinates:
 				self._isManualPanning = False
 		self._lastFocusCoordinates = focusCoordinates
 
-	def _startTimer(self, callback: Callable[[], None] = None) -> None:
+	def moveMouseToViewCenter(self) -> None:
+		"""
+		Move the mouse cursor to the center of the magnified view.
+		Does not check for mouse button state, allowing use during drag-and-drop.
+		"""
+		center = self._computeMagnifiedViewCenter()
+		winUser.setCursorPos(center.x, center.y)
+		log.debug(f"Cursor manually repositioned to magnified view center ({center.x}, {center.y})")
+		mouseHandler.executeMouseMoveEvent(center.x, center.y)
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+		Subclasses must implement this method for their specific display mode.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+		raise NotImplementedError("Subclasses must implement this method")
+
+	def _startTimer(self, callback: Callable[[], None] = None) -> None:  # noqa: RUF013
 		"""
 		Start the timer with a callback function
 

@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from _magnifier.config import ZoomLevel
+from _magnifier.config import ZoomLevel  # noqa: I001
 from _magnifier.magnifier import Magnifier
 from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
@@ -481,6 +481,11 @@ class TestMagnifier(_TestMagnifier):
 		self.assertFalse(self.magnifier._isManualPanning)
 		self.assertEqual(self.magnifier._lastFocusCoordinates, focusB)
 
+	def testComputeMagnifiedViewCenterRaisesNotImplemented(self):
+		"""Base _computeMagnifiedViewCenter must raise NotImplementedError."""
+		with self.assertRaises(NotImplementedError):
+			self.magnifier._computeMagnifiedViewCenter()
+
 	def testStartTimer(self):
 		"""Starting the timer."""
 		self.magnifier._stopTimer = MagicMock()
@@ -551,7 +556,7 @@ class TestMagnifier(_TestMagnifier):
 	def testStartBlockedByScreenCurtain(self):
 		"""After startup, screen curtain active makes _startMagnifier raise and not set _isActive."""
 		self._mockScreenCurtain(enabled=True)
-		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):
+		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=True):  # noqa: SIM117
 			with self.assertRaises(MagnifierStartError):
 				self.magnifier._startMagnifier()
 
@@ -560,7 +565,7 @@ class TestMagnifier(_TestMagnifier):
 	def testStartBlockedAtStartupSetsFlag(self):
 		"""At NVDA startup, screen curtain blocks silently and sets _screenCurtainIsActive."""
 		self._mockScreenCurtain(enabled=True)
-		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=False):
+		with patch("NVDAState._TrackNVDAInitialization.isInitializationComplete", return_value=False):  # noqa: SIM117
 			with patch("_magnifier.magnifier.ui.message") as mock_message:
 				self.magnifier._startMagnifier()
 

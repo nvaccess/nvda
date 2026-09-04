@@ -12,7 +12,7 @@
 # This license can be found at:
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
-from typing import Callable, List
+from collections.abc import Callable  # noqa: I001
 import re
 from SCons.Node.FS import File
 
@@ -20,10 +20,10 @@ Import(
 	"env",
 )
 
-import importlib.util  # noqa: E402
+import importlib.util
 
 # Monkeypatch comtypes to clear the importlib cache when importing a new module
-import comtypes.client._generate  # noqa: E402
+import comtypes.client._generate
 
 old_my_import = comtypes.client._generate._my_import
 
@@ -110,7 +110,7 @@ else:
 		interfaceFile.write(fileContent)
 
 
-def interfaceAction(target: List[File], source, env):
+def interfaceAction(target: list[File], source, env):
 	clsid = env.get("clsid")
 	if clsid:
 		source = (clsid, env["majorVersion"], env["minorVersion"])
@@ -131,7 +131,7 @@ interfaceBuilder = env.Builder(
 env["BUILDERS"]["comtypesInterface"] = interfaceBuilder
 
 # Force comtypes generated interfaces in to our directory
-import comtypes.client  # noqa: E402
+import comtypes.client
 
 comtypes.client.gen_dir = Dir("comInterfaces").abspath
 

@@ -6,11 +6,11 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import copy
+import copy  # noqa: I001
 import logging
 import math
 import os
@@ -21,15 +21,14 @@ from enum import IntEnum
 from locale import strxfrm
 from typing import (
 	Any,
-	List,
-	Optional,
-	Set,
 )
 
 import audio
 import audioDucking
 import braille
-import brailleInput
+import braille.constants
+import braille.display
+import braille.input
 import brailleTables
 import characterProcessing
 import config
@@ -49,7 +48,6 @@ import requests
 import speech
 import speechDictHandler
 import systemUtils
-from utils.security import isRunningOnSecureDesktop
 import vision
 import vision.providerBase
 import vision.providerInfo
@@ -59,6 +57,7 @@ from wx.lib import scrolledpanel
 
 import screenCurtain._screenCurtain
 from utils import mmdevice
+from utils.security import isRunningOnSecureDesktop
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -80,6 +79,7 @@ from config.configFlags import (
 	TetherTo,
 	TypingEcho,
 	LoggingLevel,
+	BrailleMode,
 )
 from logHandler import log
 from synthDriverHandler import SynthDriver, changeVoice, getSynth, getSynthList, setSynth
@@ -165,10 +165,7 @@ class SettingsDialog(
 		if log.isEnabledFor(log.DEBUG):
 			instancesState = dict(SettingsDialog._instances)
 			log.debug(
-				"Creating new settings dialog (multiInstanceAllowed:{}). State of _instances {!r}".format(
-					multiInstanceAllowed,
-					instancesState,
-				),
+				f"Creating new settings dialog (multiInstanceAllowed:{multiInstanceAllowed}). State of _instances {instancesState!r}",
 			)
 		if state is cls.DialogState.CREATED and not multiInstanceAllowed:
 			raise SettingsDialog.MultiInstanceErrorWithDialog(
@@ -214,7 +211,7 @@ class SettingsDialog(
 		hasApplyButton: bool = False,
 		settingsSizerOrientation: int = wx.VERTICAL,
 		multiInstanceAllowed: bool = False,
-		buttons: Set[int] = {wx.OK, wx.CANCEL},
+		buttons: set[int] = {wx.OK, wx.CANCEL},  # noqa: B006
 	):
 		"""
 		@param parent: The parent for this dialog; C{None} for no parent.
@@ -282,7 +279,7 @@ class SettingsDialog(
 			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
 		if gui._isDebug():
-			log.debug("Loading %s took %.2f seconds" % (self.__class__.__name__, time.time() - startTime))
+			log.debug("Loading %s took %.2f seconds" % (self.__class__.__name__, time.time() - startTime))  # noqa: UP031
 
 	def _enterActivatesOk_ctrlSActivatesApply(self, evt):
 		"""Listens for keyboard input and triggers ok button on enter and triggers apply button when control + S is
@@ -453,7 +450,7 @@ class SettingsPanel(
 		self,
 		message: str,
 		option: str,
-		category: Optional[str] = None,
+		category: str | None = None,
 	):
 		if category is None:
 			category = self.title
@@ -522,7 +519,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	"""
 
 	title = ""
-	categoryClasses: list[type[SettingsPanel]] = []
+	categoryClasses: list[type[SettingsPanel]] = []  # noqa: RUF012
 
 	class CategoryUnavailableError(RuntimeError):
 		pass
@@ -536,11 +533,11 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""
 		if initialCategory and not issubclass(initialCategory, SettingsPanel):
 			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+				log.debug(f"Unable to open category: {initialCategory}", stack_info=True)
 			raise TypeError("initialCategory should be an instance of SettingsPanel")
 		if initialCategory and initialCategory not in self.categoryClasses:
 			if gui._isDebug():
-				log.debug("Unable to open category: {}".format(initialCategory), stack_info=True)
+				log.debug(f"Unable to open category: {initialCategory}", stack_info=True)
 			raise MultiCategorySettingsDialog.CategoryUnavailableError(
 				"The provided initial category is not a part of this dialog",
 			)
@@ -551,7 +548,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		# Partially filled, check for KeyError
 		self.catIdToInstanceMap: dict[int, SettingsPanel] = {}
 
-		super(MultiCategorySettingsDialog, self).__init__(
+		super().__init__(
 			parent,
 			resizeable=True,
 			settingsSizerOrientation=wx.HORIZONTAL,
@@ -617,8 +614,8 @@ class MultiCategorySettingsDialog(SettingsDialog):
 
 		for cls in self.categoryClasses:
 			if not issubclass(cls, SettingsPanel):
-				raise RuntimeError(
-					"Invalid category class %s provided in %s.categoryClasses"
+				raise RuntimeError(  # noqa: TRY004
+					"Invalid category class %s provided in %s.categoryClasses"  # noqa: UP031
 					% (cls.__name__, self.__class__.__name__),
 				)
 			# It's important here that the listItems are added to catListCtrl in the same order that they exist in categoryClasses.
@@ -663,7 +660,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			try:
 				cls = self.categoryClasses[catId]
 			except IndexError:
-				raise ValueError("Unable to create panel for unknown category ID: {}".format(catId))
+				raise ValueError(f"Unable to create panel for unknown category ID: {catId}")
 			panel = cls(parent=self.container)
 			panel.Hide()
 			self.containerSizer.Add(
@@ -740,7 +737,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 			newCat = self._getCategoryPanel(newCatId)
 		except ValueError as e:
 			newCatTitle = self.catListCtrl.GetItemText(newCatId)
-			log.error("Unable to change to category: {}".format(newCatTitle), exc_info=e)
+			log.error(f"Unable to change to category: {newCatTitle}", exc_info=e)
 			return
 		if oldCat:
 			oldCat.onPanelDeactivated()
@@ -765,7 +762,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 		"""
 		for panel in self.catIdToInstanceMap.values():
 			if panel.isValid() is False:
-				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)
+				raise ValueError("Validation for %s blocked saving settings" % panel.__class__.__name__)  # noqa: UP031
 
 	def _saveAllPanels(self):
 		for panel in self.catIdToInstanceMap.values():
@@ -792,7 +789,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	def onCancel(self, evt):
 		for panel in self.catIdToInstanceMap.values():
 			panel.onDiscard()
-		super(MultiCategorySettingsDialog, self).onCancel(evt)
+		super().onCancel(evt)
 
 	def onApply(self, evt):
 		try:
@@ -1067,7 +1064,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if self.startOnLogonScreenCheckBox.IsEnabled():
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-			except (WindowsError, RuntimeError):
+			except (OSError, RuntimeError):
 				gui.messageBox(
 					_("This change requires administrator privileges."),
 					_("Insufficient Privileges"),
@@ -1110,7 +1107,7 @@ class LanguageRestartDialog(
 
 	def __init__(self, parent):
 		# Translators: The title of the dialog which appears when the user changed NVDA's interface language.
-		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
+		super().__init__(parent, title=_("Language Configuration Change"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		sHelper.addItem(
@@ -1208,11 +1205,11 @@ class SpeechSettingsPanel(SettingsPanel):
 	def onPanelActivated(self):
 		# call super after all panel updates have been completed, we dont want the panel to show until this is complete.
 		self.voicePanel.onPanelActivated()
-		super(SpeechSettingsPanel, self).onPanelActivated()
+		super().onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.voicePanel.onPanelDeactivated()
-		super(SpeechSettingsPanel, self).onPanelDeactivated()
+		super().onPanelDeactivated()
 
 	def onDiscard(self):
 		self.voicePanel.onDiscard()
@@ -1228,7 +1225,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 	# Translators: This is the label for the synthesizer selection dialog
 	title = _("Select Synthesizer")
 	helpId = "SynthesizerSelection"
-	synthNames: List[str] = []
+	synthNames: list[str] = []  # noqa: RUF012
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -1252,7 +1249,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		try:
 			index = self.synthNames.index(getSynth().name)
 			self.synthList.SetSelection(index)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	def onOk(self, evt):
@@ -1275,10 +1272,10 @@ class SynthesizerSelectionDialog(SettingsDialog):
 			# Hack: we need to update the synth in our parent window before closing.
 			# Otherwise, NVDA will report the old synth even though the new synth is reflected visually.
 			self.Parent.updateCurrentSynth()
-		super(SynthesizerSelectionDialog, self).onOk(evt)
+		super().onOk(evt)
 
 
-class DriverSettingChanger(object):
+class DriverSettingChanger:
 	"""Functor which acts as callback for GUI events."""
 
 	def __init__(self, driver, setting):
@@ -1300,7 +1297,7 @@ class StringDriverSettingChanger(DriverSettingChanger):
 
 	def __init__(self, driver, setting, container):
 		self.container = container
-		super(StringDriverSettingChanger, self).__init__(driver, setting)
+		super().__init__(driver, setting)
 
 	def __call__(self, evt):
 		evt.Skip()  # allow other handlers to also process this event.
@@ -1310,14 +1307,14 @@ class StringDriverSettingChanger(DriverSettingChanger):
 			speech.cancelSpeech()
 			changeVoice(
 				self.driver,
-				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,
+				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,  # noqa: UP031
 			)
 			self.container.updateDriverSettings(changedSetting=self.setting.id)
 		else:
 			setattr(
 				self.driver,
 				self.setting.id,
-				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,
+				getattr(self.container, "_%ss" % self.setting.id)[evt.GetSelection()].id,  # noqa: UP031
 			)
 
 
@@ -1345,7 +1342,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 		"""
 		self.sizerDict = {}
 		self.lastControl = None
-		super(AutoSettingsMixin, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		# because settings instances can be of type L{Driver} as well, we have to handle
 		# showing settings for non-instances. Because of this, we must reacquire a reference
 		# to the settings class whenever we wish to use it (via L{getSettings}) in case the instance changes.
@@ -1750,6 +1747,17 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
 
+		self.sayAllReadingUnitCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Speech settings panel.
+				"Say all reads by",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "sayAllReadingUnit"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SpeechSettingsSayAllReadingUnit", self.sayAllReadingUnitCombo)
+
 		# Translators: This is the label for a checkbox in the
 		# speech settings panel.
 		reportNormalizedForCharacterNavigationText = _("Report '&Normalized' when navigating by character")
@@ -1914,6 +1922,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
+		self.sayAllReadingUnitCombo.saveCurrentValueToConf()
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
@@ -1949,7 +1958,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		# continue event propagation to custom control event handler
 		# to guarantee user is notified about checkbox being checked or unchecked
 		evt.Skip()
-		if evt.GetInt() == self._allSpeechModes.index(
+		if evt.GetInt() == self._allSpeechModes.index(  # noqa: SIM102
 			speech.SpeechMode.talk,
 		) and not self.speechModesList.IsChecked(evt.GetInt()):
 			if (
@@ -2665,6 +2674,28 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
+		self.searchHistoryCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"&Keep search history",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "findHistory"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("SearchHistory", self.searchHistoryCombo)
+
+		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the browse mode settings panel.
+				"Nati&ve selection mode",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "nativeSelectionMode"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("NativeSelectionModeSetting", self.nativeSelectionModeCombo)
+
 		# browseMode imports gui, which imports from settingsDialogs, so a top-level import
 		# would create a circular dependency. Keep this import lazy.
 		import browseMode
@@ -2701,6 +2732,8 @@ class BrowseModePanel(SettingsPanel):
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
 		)
+		self.searchHistoryCombo.saveCurrentValueToConf()
+		self.nativeSelectionModeCombo.saveCurrentValueToConf()
 		config.conf["virtualBuffers"]["browseModeTouchNavigationElements"] = [
 			itemType
 			for i, (itemType, _label) in enumerate(self._browseModeElements)
@@ -2750,7 +2783,7 @@ class MathSettingsPanel(SettingsPanel):
 			return list(enumClass)[selectionIndex].value
 		except (IndexError, AttributeError):
 			# If the selection is invalid, return the first option's value
-			return list(enumClass)[0].value
+			return list(enumClass)[0].value  # noqa: RUF015
 
 	def _getPauseFactorSliderValue(
 		self,
@@ -3064,7 +3097,7 @@ class MathSettingsPanel(SettingsPanel):
 		self.useWordNativeMathCheckBox.SetValue(config.conf["math"]["other"]["useWordNativeMath"])
 
 	def onSave(self):
-		from mathPres.MathCAT.preferences import MathCATUserPreferences
+		from mathPres.MathCAT.preferences import MathCATUserPreferences  # noqa: I001
 		from mathPres.MathCAT.preferences import (
 			BrailleNavHighlightOption,
 			ChemistryOption,
@@ -3336,6 +3369,24 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.ignoreBlankLinesRLICheckbox.SetValue(config.conf["documentFormatting"]["ignoreBlankLinesForRLI"])
 		self.ignoreBlankLinesRLICheckbox.Enable(reportLineIndentation != 0)
 
+		# Translators: This is the label of a spin control in the document formatting settings panel
+		# to adjust the duration of indentation tones in milliseconds.
+		indentToneDurationText = _("Indent tone &duration (ms):")
+		self.indentToneDurationSpin = pageAndSpaceGroup.addLabeledControl(
+			indentToneDurationText,
+			wx.SpinCtrl,
+			min=10,
+			max=2000,
+			initial=config.conf["documentFormatting"]["indentToneDuration"],
+		)
+		self.indentToneDurationSpin.Enable(
+			reportLineIndentation in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
+		)
+		self.bindHelpEvent(
+			"IndentToneDuration",
+			self.indentToneDurationSpin,
+		)
+
 		# Translators: This message is presented in the document formatting settings panel
 		# If this option is selected, NVDA will report paragraph indentation if available.
 		paragraphIndentationText = _("&Paragraph indentation")
@@ -3487,6 +3538,9 @@ class DocumentFormattingPanel(SettingsPanel):
 
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
+		self.indentToneDurationSpin.Enable(
+			evt.GetSelection() in (ReportLineIndentation.TONES, ReportLineIndentation.SPEECH_AND_TONES),
+		)
 
 	def _onLinksChange(self, evt: wx.CommandEvent):
 		self.linkTypeCheckBox.Enable(evt.IsChecked())
@@ -3517,6 +3571,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
+		config.conf["documentFormatting"]["indentToneDuration"] = self.indentToneDurationSpin.GetValue()
 		config.conf["documentFormatting"]["ignoreBlankLinesForRLI"] = (
 			self.ignoreBlankLinesRLICheckbox.IsChecked()
 		)
@@ -3549,6 +3604,7 @@ class DocumentNavigationPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+
 		# Translators: This is a label for the paragraph navigation style in the document navigation dialog
 		paragraphStyleLabel = _("&Paragraph style:")
 		self.paragraphStyleCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
@@ -3559,8 +3615,24 @@ class DocumentNavigationPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("ParagraphStyle", self.paragraphStyleCombo)
 
-	def onSave(self):
+		# Translators: This is a label for the word segmentation standard in the document navigation dialog
+		wordNavigationUnitLabel = _("&Word Segmentation Standard:")
+		self.wordSegCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=wordNavigationUnitLabel,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentNavigation", "wordSegmentationStandard"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("WordSegmentationStandard", self.wordSegCombo)
+
+	def onSave(self) -> None:
 		self.paragraphStyleCombo.saveCurrentValueToConf()
+		self.wordSegCombo.saveCurrentValueToConf()
+
+	def postSave(self) -> None:
+		import textUtils._wordSeg
+
+		textUtils._wordSeg.initialize()
 
 
 def _synthWarningDialog(newSynth: str):
@@ -4141,10 +4213,16 @@ class TouchInteractionPanel(SettingsPanel):
 		self.touchTypingCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("&Touch typing mode")))
 		self.bindHelpEvent("TouchTypingMode", self.touchTypingCheckBox)
 		self.touchTypingCheckBox.SetValue(config.conf["touch"]["touchTyping"])
+		# Translators: This is the label for a checkbox in the touch interaction settings panel.
+		self.edgeGesturesCheckBox = sHelper.addItem(wx.CheckBox(self, label=_("Enable &edge gestures")))
+		self.bindHelpEvent("TouchEdgeGestures", self.edgeGesturesCheckBox)
+		self.edgeGesturesCheckBox.SetValue(config.conf["touch"]["edgeGestures"])
+		self.edgeGesturesCheckBox.Enable(touchHandler.touchSupported())
 
 	def onSave(self):
 		config.conf["touch"]["enabled"] = self.enableTouchSupportCheckBox.IsChecked()
 		config.conf["touch"]["touchTyping"] = self.touchTypingCheckBox.IsChecked()
+		config.conf["touch"]["edgeGestures"] = self.edgeGesturesCheckBox.IsChecked()
 		touchHandler.setTouchSupport(config.conf["touch"]["enabled"])
 
 
@@ -4461,6 +4539,22 @@ class AdvancedPanelControls(
 			["terminals", "keyboardSupportInLegacy"],
 		)
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
+		# Translators: This is the label for a checkbox in the
+		# Advanced settings panel.
+		label = _("Beep for &skipped lines")
+		self.beepForSkippedLinesCheckBox = terminalsGroup.addItem(
+			wx.CheckBox(terminalsBox, label=label),
+		)
+		self.bindHelpEvent(
+			"BeepForSkippedLines",
+			self.beepForSkippedLinesCheckBox,
+		)
+		self.beepForSkippedLinesCheckBox.SetValue(
+			config.conf["terminals"]["beepForSkippedLines"],
+		)
+		self.beepForSkippedLinesCheckBox.defaultValue = self._getDefaultValue(
+			["terminals", "beepForSkippedLines"],
+		)
 
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
@@ -4757,6 +4851,7 @@ class AdvancedPanelControls(
 			== self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 			== self.winConsoleSpeakPasswordsCheckBox.defaultValue
+			and self.beepForSkippedLinesCheckBox.IsChecked() == self.beepForSkippedLinesCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.wtStrategyCombo.isValueConfigSpecDefault()
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
@@ -4789,6 +4884,9 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
+		self.beepForSkippedLinesCheckBox.SetValue(
+			self.beepForSkippedLinesCheckBox.defaultValue,
+		)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
@@ -4831,6 +4929,7 @@ class AdvancedPanelControls(
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
+		config.conf["terminals"]["beepForSkippedLines"] = self.beepForSkippedLinesCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf["terminals"]["diffAlgo"] = self.diffAlgoVals[diffAlgoChoice]
 		self.wtStrategyCombo.saveCurrentValueToConf()
@@ -4872,7 +4971,7 @@ class AdvancedPanel(SettingsPanel):
 		"have been specifically instructed by NVDA developers.",
 	)
 
-	panelDescription = "{}\n{}".format(warningHeader, warningExplanation)
+	panelDescription = f"{warningHeader}\n{warningExplanation}"
 
 	def makeSettings(self, settingsSizer):
 		"""
@@ -4993,7 +5092,7 @@ class BrailleSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def updateCurrentDisplay(self):
-		if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+		if config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME:
 			displayDesc = BrailleDisplaySelectionDialog.getCurrentAutoDisplayDescription()
 		else:
 			displayDesc = braille.handler.display.description
@@ -5001,11 +5100,11 @@ class BrailleSettingsPanel(SettingsPanel):
 
 	def onPanelActivated(self):
 		self.brailleSubPanel.onPanelActivated()
-		super(BrailleSettingsPanel, self).onPanelActivated()
+		super().onPanelActivated()
 
 	def onPanelDeactivated(self):
 		self.brailleSubPanel.onPanelDeactivated()
-		super(BrailleSettingsPanel, self).onPanelDeactivated()
+		super().onPanelDeactivated()
 
 	def onDiscard(self):
 		self.brailleSubPanel.onDiscard()
@@ -5018,8 +5117,8 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	# Translators: This is the label for the braille display selection dialog.
 	title = _("Select Braille Display")
 	helpId = "SelectBrailleDisplay"
-	displayNames = []
-	possiblePorts = []
+	displayNames = []  # noqa: RUF012
+	possiblePorts = []  # noqa: RUF012
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -5053,28 +5152,28 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 
 	@staticmethod
 	def getCurrentAutoDisplayDescription():
-		description = braille.AUTOMATIC_PORT[1]
+		description = braille.constants.AUTOMATIC_PORT[1]
 		if (
-			config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME
+			config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME
 			and braille.handler.display.name != "noBraille"
 		):
-			description = "%s (%s)" % (description, braille.handler.display.description)
+			description = "%s (%s)" % (description, braille.handler.display.description)  # noqa: UP031
 		return description
 
 	def updateBrailleDisplayLists(self):
-		driverList = [(braille.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
-		driverList.extend(braille.getDisplayList())
+		driverList = [(braille.constants.AUTO_DISPLAY_NAME, self.getCurrentAutoDisplayDescription())]
+		driverList.extend(braille.display.getDisplayList())
 		self.displayNames = [driver[0] for driver in driverList]
 		displayChoices = [driver[1] for driver in driverList]
 		self.displayList.Clear()
 		self.displayList.AppendItems(displayChoices)
 		try:
-			if config.conf["braille"]["display"] == braille.AUTO_DISPLAY_NAME:
+			if config.conf["braille"]["display"] == braille.constants.AUTO_DISPLAY_NAME:
 				selection = 0
 			else:
 				selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 		import bdDetect
@@ -5094,9 +5193,9 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 	def updateStateDependentControls(self):
 		displayName = self.displayNames[self.displayList.GetSelection()]
 		self.possiblePorts = []
-		isAutoDisplaySelected = displayName == braille.AUTOMATIC_PORT[0]
+		isAutoDisplaySelected = displayName == braille.constants.AUTOMATIC_PORT[0]
 		if not isAutoDisplaySelected:
-			displayCls = braille._getDisplayDriver(displayName)
+			displayCls = braille.display._getDisplayDriver(displayName)
 			try:
 				self.possiblePorts.extend(displayCls.getPossiblePorts().items())
 			except NotImplementedError:
@@ -5160,7 +5259,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			# Hack: we need to update the display in our parent window before closing.
 			# Otherwise, NVDA will report the old display even though the new display is reflected visually.
 			self.Parent.updateCurrentDisplay()
-		super(BrailleDisplaySelectionDialog, self).onOk(evt)
+		super().onOk(evt)
 
 
 class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
@@ -5226,7 +5325,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			if config.conf["braille"]["inputTable"] == "auto":
 				selection = 0
 			else:
-				selection = self.inTables.index(brailleInput.handler.table) + 1
+				selection = self.inTables.index(braille.input.handler.table) + 1
 			self.inTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -5237,12 +5336,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		# Translators: The label for a setting in braille settings to select which braille mode to use
 		modeListText = _("Braille mode:")
-		modeChoices = [x.displayString for x in braille.BrailleMode]
+		modeChoices = [x.displayString for x in BrailleMode]
 		self.brailleModes = sHelper.addLabeledControl(modeListText, wx.Choice, choices=modeChoices)
 		self.bindHelpEvent("BrailleMode", self.brailleModes)
 		self.brailleModes.Bind(wx.EVT_CHOICE, self._onModeChange)
-		current = braille.BrailleMode(config.conf["braille"]["mode"])
-		modeList = list(braille.BrailleMode)
+		current = BrailleMode(config.conf["braille"]["mode"])
+		modeList = list(BrailleMode)
 		index = modeList.index(current)
 		self.brailleModes.SetSelection(index)
 		followCursorGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
@@ -5297,8 +5396,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if not self.showCursorCheckBox.GetValue() or not self.cursorBlinkCheckBox.GetValue():
 			self.cursorBlinkRateEdit.Disable()
 
-		self.cursorShapes = [s[0] for s in braille.CURSOR_SHAPES]
-		cursorShapeChoices = [s[1] for s in braille.CURSOR_SHAPES]
+		self.cursorShapes = [s[0] for s in braille.constants.CURSOR_SHAPES]
+		cursorShapeChoices = [s[1] for s in braille.constants.CURSOR_SHAPES]
 
 		# Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 		cursorShapeFocusLabelText = _("Cursor shape for &focus:")
@@ -5311,7 +5410,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
 			self.cursorShapeFocusList.SetSelection(selection)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeFocusList.Disable()
@@ -5327,7 +5426,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
 			self.cursorShapeReviewList.SetSelection(selection)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeReviewList.Disable()
@@ -5445,8 +5544,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
-		self.focusContextPresentationValues = [x[0] for x in braille.focusContextPresentations]
-		focusContextPresentationChoices = [x[1] for x in braille.focusContextPresentations]
+		self.focusContextPresentationValues = [x[0] for x in braille.constants.focusContextPresentations]
+		focusContextPresentationChoices = [x[1] for x in braille.constants.focusContextPresentations]
 		self.focusContextPresentationList = followCursorGroupHelper.addLabeledControl(
 			focusContextPresentationLabelText,
 			wx.Choice,
@@ -5502,15 +5601,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
 
 		self.followCursorGroupBox.Enable(
-			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
+			list(BrailleMode)[self.brailleModes.GetSelection()] is BrailleMode.FOLLOW_CURSORS,
 		)
 
-		# Translators: The label for a setting in braille settings to enable word wrap
-		# (try to avoid splitting words at the end of the braille display).
-		wordWrapText = _("Avoid splitting &words when possible")
-		self.wordWrapCheckBox = sHelper.addItem(wx.CheckBox(self, label=wordWrapText))
-		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
-		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
+		self.textWrapComboBox: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			# Translators: The label for a setting in braille settings to configure text wrap behaviour
+			# (how to break lines that don't fit on the braille display).
+			labelText=_("Text &wrap"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "textWrap"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleSettingsWordWrap", self.textWrapComboBox)
 
 		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
@@ -5552,22 +5654,40 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoScrollRateSlider.SetPageSize(10)
 		self.bindHelpEvent("BrailleAutoScrollRate", self.autoScrollRateSlider)
 
+		self.useChineseWordSegmentationCheckBox = sHelper.addItem(
+			wx.CheckBox(
+				self,
+				# Translators: The label for a checkbox in the Braille settings panel.
+				label=_("Use &Chinese word segmentation"),
+			),
+		)
+		self.bindHelpEvent(
+			"ChineseBrailleWordSegmentation",
+			self.useChineseWordSegmentationCheckBox,
+		)
+		self.useChineseWordSegmentationCheckBox.SetValue(
+			config.conf["braille"]["useChineseWordSegmentation"],
+		)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		config.conf["braille"]["useChineseWordSegmentation"] = (
+			self.useChineseWordSegmentationCheckBox.IsChecked()
+		)
 		if self.outTableList.GetSelection() > 0:
 			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
 		else:
 			braille.handler.table = self.outTableForCurLang
 			config.conf["braille"]["translationTable"] = "auto"
 		if self.inTableList.GetSelection():
-			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
+			braille.input.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
 		else:
-			brailleInput.handler.table = self.inTableForCurLang
+			braille.input.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
-		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
+		mode = list(BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
@@ -5600,7 +5720,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
-		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.textWrapComboBox.saveCurrentValueToConf()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
 			self.focusContextPresentationList.GetSelection()
@@ -5635,7 +5755,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 def showStartErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5665,7 +5785,7 @@ def showStartErrorForProviders(
 
 def showTerminationErrorForProviders(
 	parent: wx.Window,
-	providers: List[vision.providerInfo.ProviderInfo],
+	providers: list[vision.providerInfo.ProviderInfo],
 ) -> None:
 	if not providers:
 		return
@@ -5711,7 +5831,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 	def getProviderInfo(self) -> vision.providerInfo.ProviderInfo:
 		return self._providerInfo
 
-	def getProviderInstance(self) -> Optional[vision.providerBase.VisionEnhancementProvider]:
+	def getProviderInstance(self) -> vision.providerBase.VisionEnhancementProvider | None:
 		return vision.handler.getProviderInstance(self._providerInfo)
 
 	def startProvider(
@@ -5748,7 +5868,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			vision.handler.initializeProvider(self._providerInfo)
 			return True
 		except Exception:
-			log.error(
+			log.error(  # noqa: G201
 				f"Could not initialize the {self._providerInfo.providerId} vision enhancement provider",
 				exc_info=True,
 			)
@@ -5766,7 +5886,7 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 			vision.handler.terminateProvider(self._providerInfo, saveSettings=False)
 			return True
 		except Exception:
-			log.error(
+			log.error(  # noqa: G201
 				f"Could not terminate the {self._providerInfo.providerId} vision enhancement provider",
 				exc_info=True,
 			)
@@ -5775,8 +5895,8 @@ class VisionProviderStateControl(vision.providerBase.VisionProviderStateControl)
 
 class VisionSettingsPanel(SettingsPanel):
 	settingsSizerHelper: guiHelper.BoxSizerHelper
-	providerPanelInstances: List[SettingsPanel]
-	initialProviders: List[vision.providerInfo.ProviderInfo]
+	providerPanelInstances: list[SettingsPanel]
+	initialProviders: list[vision.providerInfo.ProviderInfo]
 	# Translators: This is the label for the vision panel
 	title = _("Vision")
 	helpId = "VisionSettings"
@@ -5787,7 +5907,7 @@ class VisionSettingsPanel(SettingsPanel):
 	def _createProviderSettingsPanel(
 		self,
 		providerInfo: vision.providerInfo.ProviderInfo,
-	) -> Optional[SettingsPanel]:
+	) -> SettingsPanel | None:
 		settingsPanelCls = providerInfo.providerClass.getSettingsPanelClass()
 		if not settingsPanelCls:
 			if gui._isDebug():
@@ -5832,12 +5952,12 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeInitProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 	) -> None:
 		"""Initializes one or more providers in a way that is gui friendly,
 		showing an error if appropriate.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).startProvider(shouldPromptOnError=False)
 			if not success:
@@ -5846,14 +5966,14 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def safeTerminateProviders(
 		self,
-		providers: List[vision.providerInfo.ProviderInfo],
+		providers: list[vision.providerInfo.ProviderInfo],
 		verbose: bool = False,
 	) -> None:
 		"""Terminates one or more providers in a way that is gui friendly,
 		@verbose: Whether to show a termination error.
 		@returns: Whether termination succeeded for all providers.
 		"""
-		errorProviders: List[vision.providerInfo.ProviderInfo] = []
+		errorProviders: list[vision.providerInfo.ProviderInfo] = []
 		for provider in providers:
 			success = VisionProviderStateControl(self, provider).terminateProvider(shouldPromptOnError=False)
 			if not success:
@@ -5946,7 +6066,7 @@ class VisionProviderSubPanel_Wrapper(
 		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
-		self._providerSettings: Optional[VisionProviderSubPanel_Settings] = None
+		self._providerSettings: VisionProviderSubPanel_Settings | None = None
 		self._providerSettingsSizer = wx.BoxSizer(orient=wx.VERTICAL)
 		super().__init__(parent=parent)
 
@@ -6000,7 +6120,7 @@ class VisionProviderSubPanel_Wrapper(
 		# Broad except used since we can not know what exceptions a provider might throw.
 		# We should be able to continue despite a buggy provider.
 		except Exception:
-			log.error("unable to create provider settings", exc_info=True)
+			log.error("unable to create provider settings", exc_info=True)  # noqa: G201
 			return False
 		return True
 
@@ -6461,17 +6581,17 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
 			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
 
-	def _ocrActive(self) -> bool:
+	def _contentRecognitionActive(self) -> bool:
 		"""
-		Outputs a message when trying to activate screen curtain when OCR is active.
+		Outputs a message when content recognition prevents Screen Curtain from being enabled.
 
-		:return: ``True`` when OCR is active, ``False`` otherwise.
+		:return: ``True`` when Screen Curtain should not be enabled, ``False`` otherwise.
 		"""
 		# Import late to avoid circular import
-		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
+		from contentRecog import recogUi
 
 		focusObj = api.getFocusObject()
-		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
+		if recogUi._shouldBlockScreenCurtainEnable(focusObj):
 			ui.message(
 				screenCurtain._screenCurtain.UNAVAILABLE_WHEN_RECOGNISING_CONTENT_MESSAGE,
 				speechPriority=speech.priorities.Spri.NOW,
@@ -6488,14 +6608,14 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		currentlyEnabled = screenCurtain.screenCurtain.enabled
 		if shouldBeEnabled and not currentlyEnabled:
 			confirmed = self._confirmEnableScreenCurtainWithUser()
-			if not confirmed or self._ocrActive():
+			if not confirmed or self._contentRecognitionActive():
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:
 					screenCurtain.screenCurtain.enable(persist=False)
 					self._screenCurtainCheckboxChanged = True
 				except Exception:
-					log.error("Error enabling Screen Curtain.", exc_info=True)
+					log.error("Error enabling Screen Curtain.", exc_info=True)  # noqa: G201
 					ui.message(
 						screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE,
 						speechPriority=speech.priorities.Spri.NOW,
@@ -6533,7 +6653,7 @@ NvdaSettingsDialogWindowHandle = None
 class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# Translators: This is the label for the NVDA settings dialog.
 	title = _("NVDA Settings")
-	categoryClasses = [
+	categoryClasses = [  # noqa: RUF012
 		GeneralSettingsPanel,
 		SpeechSettingsPanel,
 		BrailleSettingsPanel,
@@ -6571,7 +6691,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
-		super(NVDASettingsDialog, self).makeSettings(settingsSizer)
+		super().makeSettings(settingsSizer)
 		self._doOnCategoryChange()
 		global NvdaSettingsDialogWindowHandle
 		NvdaSettingsDialogWindowHandle = self.GetHandle()
@@ -6580,7 +6700,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
 		if (
-			not NvdaSettingsDialogActiveConfigProfile
+			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
 			or isinstance(self.currentCategory, GeneralSettingsPanel)
 			or isinstance(self.currentCategory, AddonStorePanel)
 			or isinstance(self.currentCategory, RemoteSettingsPanel)
@@ -6596,11 +6716,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		)
 
 	def _getDialogTitle(self):
-		return "{dialogTitle}: {panelTitle} ({configProfile})".format(
-			dialogTitle=self.title,
-			panelTitle=self.currentCategory.title,
-			configProfile=NvdaSettingsDialogActiveConfigProfile,
-		)
+		return f"{self.title}: {self.currentCategory.title} ({NvdaSettingsDialogActiveConfigProfile})"
 
 	def onCategoryChange(self, evt: wx.ListEvent):
 		super().onCategoryChange(evt)
@@ -6659,7 +6775,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# Translators: This is the label for the symbol pronunciation dialog.
 		# %s is replaced by the language for which symbol pronunciation is being edited.
 		self.title = _("Symbol Pronunciation (%s)") % desc
-		super(SpeechSymbolsDialog, self).__init__(
+		super().__init__(
 			parent,
 			resizeable=True,
 		)
@@ -6817,7 +6933,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		elif column == 3:
 			return characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS[symbol.preserve]
 		else:
-			raise ValueError("Unknown column: %d" % column)
+			raise ValueError("Unknown column: %d" % column)  # noqa: UP031
 
 	def onSymbolEdited(self):
 		if self.editingItem is not None:
@@ -6920,10 +7036,10 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
 			self.symbolProcessor.userSymbols.save()
-		except IOError as e:
-			log.error("Error saving user symbols info: %s" % e)
+		except OSError as e:
+			log.error("Error saving user symbols info: %s" % e)  # noqa: UP031
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
-		super(SpeechSymbolsDialog, self).onOk(evt)
+		super().onOk(evt)
 
 	def _refreshVisibleItems(self):
 		count = self.symbolsList.GetCountPerPage()
@@ -6951,6 +7067,6 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 def _isResponseUpdateMetadata(response: requests.Response) -> bool:
 	try:
 		updateCheck.UpdateInfo.parseUpdateCheckResponse(response.text)
-	except Exception:
+	except Exception:  # noqa: BLE001
 		return False
 	return True

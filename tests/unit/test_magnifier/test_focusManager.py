@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 from _magnifier.utils.focusManager import FocusManager
 from _magnifier.utils.types import Coordinates, MagnifierTrackingType
 import unittest
@@ -142,7 +142,7 @@ class TestFocusManager(unittest.TestCase):
 			self.assertEqual(coords, Coordinates(500, 600))
 
 		# Case 2: Caret fails, focus object works
-		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):
+		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):  # noqa: SIM117
 			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
 				mock_focus.return_value.location = (200, 300, 100, 80)
 
@@ -151,7 +151,7 @@ class TestFocusManager(unittest.TestCase):
 				self.assertEqual(coords, Coordinates(200, 300))
 
 		# Case 3: Everything fails - should return last valid position from Case 2
-		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):
+		with patch("_magnifier.utils.focusManager.api.getCaretPosition", side_effect=RuntimeError):  # noqa: SIM117
 			with patch("_magnifier.utils.focusManager.api.getFocusObject", return_value=None):
 				coords = self.focusManager._getSystemFocusPosition()
 				# Should return last valid position (200, 300)
@@ -159,16 +159,18 @@ class TestFocusManager(unittest.TestCase):
 
 	def testGetSystemFocusPositionSurvivesOSError(self):
 		"""OSError from magnification API calls must be caught."""
-		with patch(
-			"_magnifier.utils.focusManager.api.getCaretPosition",
-			side_effect=OSError("WinError"),
+		with (
+			patch(
+				"_magnifier.utils.focusManager.api.getCaretPosition",
+				side_effect=OSError("WinError"),
+			),
+			patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus,
 		):
-			with patch("_magnifier.utils.focusManager.api.getFocusObject") as mock_focus:
-				mock_focus.return_value.location = (10, 20, 30, 40)
+			mock_focus.return_value.location = (10, 20, 30, 40)
 
-				coords = self.focusManager._getSystemFocusPosition()
-				# Top-left: (10, 20)
-				self.assertEqual(coords, Coordinates(10, 20))
+			coords = self.focusManager._getSystemFocusPosition()
+			# Top-left: (10, 20)
+			self.assertEqual(coords, Coordinates(10, 20))
 
 	def testGetMousePosition(self):
 		"""Getting mouse position."""
@@ -337,7 +339,7 @@ class TestFocusManager(unittest.TestCase):
 					),
 					patch(
 						"_magnifier.utils.focusManager.winUser.getAsyncKeyState",
-						side_effect=lambda _key: -1 if param.leftPressed else 0,
+						side_effect=lambda _key: -1 if param.leftPressed else 0,  # noqa: B023
 					),
 					patch(
 						"_magnifier.utils.focusManager.winUser.getCursorPos",

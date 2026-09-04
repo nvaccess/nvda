@@ -7,13 +7,14 @@
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 import encodings
 import locale
 import unicodedata
 from abc import ABCMeta, abstractmethod, abstractproperty
 from functools import cached_property
-from typing import Generator, Optional, Tuple, Type
+from typing import Optional, Tuple, Type  # noqa: F401, UP035
+from collections.abc import Generator
 
 from logHandler import log
 
@@ -33,7 +34,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		self.decoded: str = text
 
 	def __repr__(self):
-		return f"{self.__class__.__name__}({repr(self.decoded)})"
+		return f"{self.__class__.__name__}({self.decoded!r})"
 
 	@abstractproperty
 	def encodedStringLength(self) -> int:
@@ -51,7 +52,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to subclass-specific encoded string offsets.
@@ -65,12 +66,12 @@ class OffsetConverter(metaclass=ABCMeta):
 		"""
 		if strEnd is not None and strEnd < strStart:
 			raise ValueError(
-				"strEnd=%d must be greater than or equal to strStart=%d" % (strEnd, strStart),
+				"strEnd=%d must be greater than or equal to strStart=%d" % (strEnd, strStart),  # noqa: UP031
 			)
-		if strStart < 0 or strStart > self.strLength:
+		if strStart < 0 or strStart > self.strLength:  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("str start index out of range")
-		if strEnd is not None and (strEnd < 0 or strEnd > self.strLength):
+		if strEnd is not None and (strEnd < 0 or strEnd > self.strLength):  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("str end index out of range")
 
@@ -80,7 +81,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		r"""
 		This method takes two offsets from subclass-specific encoded string representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -96,10 +97,10 @@ class OffsetConverter(metaclass=ABCMeta):
 			raise ValueError(
 				f"{encodedEnd=} must be greater than or equal to {encodedStart=}",
 			)
-		if encodedStart < 0 or encodedStart > self.encodedStringLength:
+		if encodedStart < 0 or encodedStart > self.encodedStringLength:  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("Wide string start index out of range")
-		if encodedEnd is not None and (encodedEnd < 0 or encodedEnd > self.encodedStringLength):
+		if encodedEnd is not None and (encodedEnd < 0 or encodedEnd > self.encodedStringLength):  # noqa: SIM102
 			if raiseOnError:
 				raise IndexError("Wide string end index out of range")
 
@@ -136,7 +137,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
 		of the string the object is initialized with, and converts them to wide character string offsets.
@@ -173,7 +174,7 @@ class WideStringOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int,
 		raiseOnError: bool = False,
-	) -> Tuple[int, int]:
+	) -> tuple[int, int]:
 		r"""
 		This method takes two offsets from the wide character representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -241,7 +242,7 @@ class WideStringOffsetConverter(OffsetConverter):
 def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
-	encoding: Optional[str] = None,
+	encoding: str | None = None,
 	errorsFallback: str = "replace",
 ):
 	"""
@@ -281,7 +282,7 @@ def getTextFromRawBytes(
 		text = rawText.decode(encoding, errors="surrogatepass")
 	except UnicodeDecodeError:
 		log.debugWarning(
-			"Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf,
+			"Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf,  # noqa: UP031
 		)
 		text = rawText.decode(encoding, errors=errorsFallback)
 	return text
@@ -343,7 +344,7 @@ class UTF8OffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
 			resultStart = 0
@@ -362,7 +363,7 @@ class UTF8OffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		r"""
 		This method takes two offsets from UTF-8 representation
 		of the string the object is initialized with, and converts them to str offsets.
@@ -403,7 +404,7 @@ class IdentityOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strEnd is None:
 			return strStart
@@ -414,7 +415,7 @@ class IdentityOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int, int]:
+	) -> int | tuple[int, int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedEnd is None:
 			return encodedStart
@@ -468,7 +469,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			normOffset += len(normPart)
 		self.encoded = normalized
 
-	def _processReordered(self, a: str, b: str) -> Generator[int, None, None]:
+	def _processReordered(self, a: str, b: str) -> Generator[int]:
 		""" "Yields the offset in b of every character in a"""
 		for char in a:
 			index = b.find(char)
@@ -485,7 +486,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		strStart: int,
 		strEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int]:
+	) -> int | tuple[int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
 			resultStart = 0
@@ -504,7 +505,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		encodedStart: int,
 		encodedEnd: int | None = None,
 		raiseOnError: bool = False,
-	) -> int | Tuple[int]:
+	) -> int | tuple[int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedStart == 0:
 			resultStart = 0
@@ -567,7 +568,7 @@ def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALI
 	return unicodedata.normalize(normalizationForm, text)
 
 
-ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
+ENCODINGS_TO_CONVERTERS: dict[str, type[OffsetConverter]] = {
 	WCHAR_ENCODING: WideStringOffsetConverter,
 	UTF8_ENCODING: UTF8OffsetConverter,
 	"utf_32_le": IdentityOffsetConverter,
@@ -576,7 +577,7 @@ ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {
 }
 
 
-def getOffsetConverter(encoding: str) -> Type[OffsetConverter]:
+def getOffsetConverter(encoding: str) -> type[OffsetConverter]:
 	try:
 		return ENCODINGS_TO_CONVERTERS[encoding]
 	except IndexError as e:

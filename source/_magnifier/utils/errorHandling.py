@@ -7,7 +7,7 @@
 Error handling helpers for the magnifier module.
 """
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from functools import wraps
 from logHandler import log
 from typing import ParamSpec, TypeVar, cast
@@ -39,7 +39,7 @@ class MagnifierStartError(Exception):
 		self.message = message
 
 
-def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R]:
+def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R]:  # noqa: UP047
 	"""
 	Decorator for native magnifier API calls.
 

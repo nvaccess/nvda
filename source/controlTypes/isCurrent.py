@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
-from typing import Dict
 
 from utils.displayString import DisplayStringStrEnum
 
@@ -36,7 +35,7 @@ class IsCurrent(DisplayStringStrEnum):
 
 #: Text to use for 'current' values. These describe if an item is the current item
 #: within a particular kind of selection. EG aria-current
-_isCurrentLabels: Dict[IsCurrent, str] = {
+_isCurrentLabels: dict[IsCurrent, str] = {
 	IsCurrent.NO: "",  # There is nothing extra to say for items that are not current.
 	# Translators: Presented when an item is marked as current in a collection of items
 	IsCurrent.YES: _("current"),

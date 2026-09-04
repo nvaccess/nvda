@@ -1,9 +1,9 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import byref, c_short, c_long
+from ctypes import byref, c_short, c_long  # noqa: I001
 import unicodedata
 import math
 from NVDAHelper import localLib
@@ -22,12 +22,7 @@ from logHandler import log
 import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
-from typing import (
-	List,
-	Tuple,
-	Optional,
-	Dict,
-)
+from textUtils.segFlag import CharSegFlag, WordSegFlag
 
 #: A text info unit constant for a single chunk in a display model
 UNIT_DISPLAYCHUNK = "displayChunk"
@@ -35,7 +30,7 @@ UNIT_DISPLAYCHUNK = "displayChunk"
 
 def wcharToInt(c):
 	i = ord(c)
-	return c_short(i).value  # noqa: F405
+	return c_short(i).value
 
 
 def detectStringDirection(s):
@@ -49,7 +44,7 @@ def detectStringDirection(s):
 
 
 def normalizeRtlString(s):
-	l = []  # noqa: E741
+	l = []
 	for c in s:
 		# If this is an arabic presentation form b character (commenly given by Windows when converting from glyphs)
 		# Decompose it to its original basic arabic (non-presentational_ character.
@@ -62,7 +57,7 @@ def normalizeRtlString(s):
 	return "".join(l)
 
 
-def yieldListRange(l, start, stop):  # noqa: E741
+def yieldListRange(l, start, stop):
 	for x in range(start, stop):
 		yield l[x]
 
@@ -279,21 +274,21 @@ def getWindowTextInRect(
 
 
 def getFocusRect(obj):
-	left = c_long()  # noqa: F405
-	top = c_long()  # noqa: F405
-	right = c_long()  # noqa: F405
-	bottom = c_long()  # noqa: F405
+	left = c_long()
+	top = c_long()
+	right = c_long()
+	bottom = c_long()
 	if (
 		NVDAHelper.localLib.displayModel_getFocusRect(
 			obj.appModule.helperLocalBindingHandle,
 			obj.windowHandle,
-			byref(left),  # noqa: F405
-			byref(top),  # noqa: F405
-			byref(right),  # noqa: F405
-			byref(bottom),  # noqa: F405
+			byref(left),
+			byref(top),
+			byref(right),
+			byref(bottom),
 		)
 		== 0
-	):  # noqa: F405
+	):
 		return left.value, top.value, right.value, bottom.value
 	return None
 
@@ -378,17 +373,17 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			self._location = limitRect.left, limitRect.top, limitRect.right, limitRect.bottom
 		else:
 			self._location = None
-		super(DisplayModelTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 
 	_cache__storyFieldsAndRects = True
 
 	def _get__storyFieldsAndRects(
 		self,
-	) -> Tuple[
-		List[textInfos.TextInfo.TextOrFieldsT],
-		List[RectLTRB],
-		List[int],
-		List[int],
+	) -> tuple[
+		list[textInfos.TextInfo.TextOrFieldsT],
+		list[RectLTRB],
+		list[int],
+		list[int],
 	]:
 		# All returned coordinates are logical coordinates.
 		if self._location:
@@ -421,7 +416,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		)
 		if not text:
 			return [], [], [], []
-		text = "<control>%s</control>" % text
+		text = "<control>%s</control>" % text  # noqa: UP031
 		commandList = XMLFormatting.XMLTextParser().parse(text)
 		curFormatField = None
 		lastEndOffset = 0
@@ -525,12 +520,17 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 			return lineEndOffsets[-1]
 		return 0
 
-	useUniscribe = False
+	# Override segFlags to strictly use the old fallen-back method
+	charSegFlag = CharSegFlag.NONE
+
+	@property
+	def wordSegFlag(self) -> WordSegFlag:
+		return WordSegFlag.NONE
 
 	def _getTextRange(self, start, end):
 		return "".join(x for x in self._getFieldsInRange(start, end) if isinstance(x, str))
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		start = self._startOffset
 		end = self._endOffset
 		if start == end:
@@ -538,12 +538,12 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return self._getFieldsInRange(start, end)
 
 	def _normalizeFormatField(self, field):
-		field["bold"] = True if field.get("bold") == "true" else False
+		field["bold"] = True if field.get("bold") == "true" else False  # noqa: SIM210
 		field["hwnd"] = int(field.get("hwnd", "0"), 16)
 		field["baseline"] = int(field.get("baseline", "-1"))
 		field["direction"] = int(field.get("direction", "0"))
-		field["italic"] = True if field.get("italic") == "true" else False
-		field["underline"] = True if field.get("underline") == "true" else False
+		field["italic"] = True if field.get("italic") == "true" else False  # noqa: SIM210
+		field["underline"] = True if field.get("underline") == "true" else False  # noqa: SIM210
 		color = field.get("color")
 		if color is not None:
 			field["color"] = colors.RGB.fromDisplayModelFormatColor_t(int(color))
@@ -605,7 +605,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return obj
 
 	def _getOffsetsFromNVDAObject(self, obj):
-		l = obj.location  # noqa: E741
+		l = obj.location
 		if not l:
 			log.debugWarning("object has no location")
 			raise LookupError
@@ -667,7 +667,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 				if lineEndOffset >= self._endOffset:
 					return
 			return
-		for chunk in super(DisplayModelTextInfo, self).getTextInChunks(unit):
+		for chunk in super().getTextInChunks(unit):  # noqa: UP028
 			yield chunk
 
 	def _get_boundingRects(self):
@@ -779,7 +779,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 
 	def _getSelectionOffsets(self):
 		try:
-			return super(EditableTextDisplayModelTextInfo, self)._getSelectionOffsets()
+			return super()._getSelectionOffsets()
 		except LookupError:
 			offset = self._getCaretOffset()
 			return offset, offset

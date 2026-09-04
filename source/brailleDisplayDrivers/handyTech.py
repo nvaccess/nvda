@@ -1,20 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2008-2025 NV Access Limited, Bram Duvigneau, Babbage B.V.,
-# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
+# Copyright (C) 2008-2026 NV Access Limited, Bram Duvigneau, Babbage B.V.,
+# Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter, Bill Dengler
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Braille display driver for Handy Tech braille displays.
 """
 
-from collections import OrderedDict
-from typing import (
-	Dict,
-	List,
-	Optional,
-	Union,
-)
+from collections import OrderedDict  # noqa: I001
 
 from io import BytesIO
 import serial
@@ -22,7 +16,10 @@ import weakref
 import hwIo
 from hwIo import intToByte, boolToByte
 import braille
-import brailleInput
+import braille.display
+import braille.display.driver
+import braille.display.gesture
+import braille.input.gesture
 import inputCore
 import ui
 from baseObject import ScriptableObject, AutoPropertyObject
@@ -112,6 +109,10 @@ MODEL_MODULAR_40 = b"\x89"
 MODEL_ACTIVATOR = b"\xa4"
 MODEL_ACTIVATOR_PRO_64 = b"\xa6"
 MODEL_ACTIVATOR_PRO_80 = b"\xa8"
+MODEL_MY_BRAILLE_24 = b"\xb2"
+MODEL_MY_BRAILLE_40 = b"\xb4"
+MODEL_MY_BRAILLE_64 = b"\xb6"
+MODEL_MY_BRAILLE_80 = b"\xb8"
 
 # Key constants
 KEY_B1 = 0x03
@@ -165,7 +166,7 @@ class Model(AutoPropertyObject):
 	numCells = 0
 
 	def __init__(self, display):
-		super(Model, self).__init__()
+		super().__init__()
 		# A weak reference to the driver instance, used due to a circular reference  between Model and Display
 		self._displayRef = weakref.ref(display)
 
@@ -227,7 +228,7 @@ class Model(AutoPropertyObject):
 			},
 		)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		"""Display cells on the braille display
 
 		This is the modern protocol, which uses an extended packet to send braille
@@ -240,10 +241,10 @@ class Model(AutoPropertyObject):
 		)
 
 
-class OldProtocolMixin(object):
+class OldProtocolMixin:
 	"Mixin for displays using an older protocol to send braille cells and handle input"
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		"""Write cells to the display according to the old protocol
 
 		This older protocol sends a simple packet starting with HT_PKT_BRAILLE,
@@ -252,24 +253,79 @@ class OldProtocolMixin(object):
 		self._display.sendPacket(HT_PKT_BRAILLE, bytes(cells))
 
 
-class AtcMixin(object):
+class AtcMixin:
 	"""Support for displays with Active Tactile Control (ATC)"""
 
+	READING_POSITION_PACKET_LENGTH = 2
+	UNKNOWN_READING_POSITION = 0xFF
+	# ATC can report transient false reading positions immediately
+	# after cells are refreshed. Use a short settling window before
+	# accepting changes.
+	READ_SUPPRESS_AFTER_REFRESH_SECONDS = 0.25
+	READING_POSITION_MAX_JUMP_DURING_SETTLE = 2
+
+	def __init__(self, display: "BrailleDisplayDriver"):
+		super().__init__(display)
+		self._readingPosition: int | None = None
+		self._lastRefreshTime: float = 0.0
+
 	def postInit(self):
-		super(AtcMixin, self).postInit()
+		super().postInit()
 		log.debug("Enabling ATC")
 		self._display.atc = True
 
+	def display(self, cells: list[int]) -> None:
+		super().display(cells)
+		self._lastRefreshTime = time.monotonic()
 
-class TimeSyncFirmnessMixin(object):
+	def handleReadingPosition(self, packet: bytes) -> None:
+		if len(packet) != self.READING_POSITION_PACKET_LENGTH:
+			log.debugWarning(
+				f"Unexpected ATC reading position packet with length {len(packet)}: {packet!r}",
+			)
+			return
+		readingPosition = packet[1]
+		elapsedSinceRefresh = time.monotonic() - self._lastRefreshTime
+		isSettlingAfterRefresh = elapsedSinceRefresh < self.READ_SUPPRESS_AFTER_REFRESH_SECONDS
+		if readingPosition == self.UNKNOWN_READING_POSITION:
+			if isSettlingAfterRefresh:
+				return
+			self._readingPosition = None
+			return
+		if readingPosition >= self.numCells:
+			log.debugWarning(
+				f"Display has {self.numCells} cells but reported an ATC "
+				f"reading position of {readingPosition}",
+			)
+			return
+
+		# During refresh settling, preserve confirmed state. Real touches tend
+		# to remain near the previous cell, while refresh noise often appears
+		# as a release, a new touch from nowhere, or a large jump.
+		if isSettlingAfterRefresh:
+			if self._readingPosition is None:
+				return
+			if abs(readingPosition - self._readingPosition) > self.READING_POSITION_MAX_JUMP_DURING_SETTLE:
+				return
+		if readingPosition == self._readingPosition:
+			return
+		self._readingPosition = readingPosition
+
+
+class TimeSyncFirmnessMixin:
 	"""Functionality for displays that support time synchronization and dot firmness adjustments."""
 
 	supportedSettings = (
-		braille.BrailleDisplayDriver.DotFirmnessSetting(defaultVal=1, minVal=0, maxVal=2, useConfig=False),
+		braille.display.driver.BrailleDisplayDriver.DotFirmnessSetting(
+			defaultVal=1,
+			minVal=0,
+			maxVal=2,
+			useConfig=False,
+		),
 	)
 
 	def postInit(self):
-		super(TimeSyncFirmnessMixin, self).postInit()
+		super().postInit()
 		log.debug("Request current display time")
 		self._display.sendExtendedPacket(HT_EXTPKT_GET_RTC)
 		log.debug("Request current dot firmness")
@@ -277,7 +333,7 @@ class TimeSyncFirmnessMixin(object):
 
 	def handleTime(self, timeBytes: bytes):
 		try:
-			displayDateTime = datetime.datetime(
+			displayDateTime = datetime.datetime(  # noqa: DTZ001
 				year=timeBytes[0] << 8 | timeBytes[1],
 				month=timeBytes[2],
 				day=timeBytes[3],
@@ -286,19 +342,19 @@ class TimeSyncFirmnessMixin(object):
 				second=timeBytes[6],
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of Handy Tech display: %r" % timeBytes)
+			log.debugWarning("Invalid time/date of Handy Tech display: %r" % timeBytes)  # noqa: UP031
 			return
-		localDateTime = datetime.datetime.today()
+		localDateTime = datetime.datetime.today()  # noqa: DTZ002
 		if abs((displayDateTime - localDateTime).total_seconds()) >= 5:
-			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())
+			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())  # noqa: UP031
 			self.syncTime(localDateTime)
 		else:
-			log.debug("Time in sync. Display time %s" % displayDateTime.isoformat())
+			log.debug("Time in sync. Display time %s" % displayDateTime.isoformat())  # noqa: UP031
 
 	def syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
 		# Setting the time uses a swapped byte order for the year.
-		timeList: List[int] = [
+		timeList: list[int] = [
 			dt.year & 0xFF,
 			dt.year >> 8,
 			dt.month,
@@ -321,7 +377,7 @@ class TripleActionKeysMixin(AutoPropertyObject):
 
 	def _get_keys(self):
 		"""Add the triple action keys to the keys property"""
-		keys = super(TripleActionKeysMixin, self).keys
+		keys = super().keys
 		keys.update(
 			{
 				0x0C: "leftTakTop",
@@ -342,7 +398,7 @@ class JoystickMixin(AutoPropertyObject):
 
 	def _get_keys(self):
 		"""Add the joystick keys to the keys property"""
-		keys = super(JoystickMixin, self).keys
+		keys = super().keys
 		keys.update(
 			{
 				0x74: "joystickLeft",
@@ -363,7 +419,7 @@ class StatusCellMixin(AutoPropertyObject):
 
 	def _get_keys(self):
 		"""Add the status routing keys to the keys property"""
-		keys = super(StatusCellMixin, self).keys
+		keys = super().keys
 		keys.update(
 			{
 				0x70: "statusRouting1",
@@ -374,7 +430,7 @@ class StatusCellMixin(AutoPropertyObject):
 		)
 		return keys
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		"""Display braille on the display with empty status cells
 
 		Some displays (e.g. Modular series) have 4 status cells.
@@ -382,7 +438,7 @@ class StatusCellMixin(AutoPropertyObject):
 		support status cells, we just send empty cells.
 		"""
 		cells = [0] * 4 + cells
-		super(StatusCellMixin, self).display(cells)
+		super().display(cells)
 
 
 class ActiveSplitMixin:
@@ -405,7 +461,7 @@ class ModularEvolution(AtcMixin, TripleActionKeysMixin, Model):
 	genericName = "Modular Evolution"
 
 	def _get_name(self):
-		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+		return f"{self.genericName} {self.numCells}"
 
 
 class ModularEvolution88(ModularEvolution):
@@ -462,7 +518,7 @@ class BrailleWave(OldProtocolMixin, Model):
 	genericName = name = "Braille Wave"
 
 	def _get_keys(self):
-		keys = super(BrailleWave, self).keys
+		keys = super().keys
 		keys.update(
 			{
 				0x0C: "escape",
@@ -477,19 +533,19 @@ class BasicBraille(Model):
 	genericName = "Basic Braille"
 
 	def _get_name(self):
-		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+		return f"{self.genericName} {self.numCells}"
 
 
 class BasicBraillePlus(TripleActionKeysMixin, Model):
 	genericName = "Basic Braille Plus"
 
 	def _get_name(self):
-		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+		return f"{self.genericName} {self.numCells}"
 
 
 def basicBrailleFactory(numCells, deviceId):
 	return type(
-		"BasicBraille{cells}".format(cells=numCells),
+		f"BasicBraille{numCells}",
 		(BasicBraille,),
 		{
 			"deviceId": deviceId,
@@ -511,7 +567,7 @@ BasicBraille84 = basicBrailleFactory(84, MODEL_BASIC_BRAILLE_84)
 
 def basicBraillePlusFactory(numCells, deviceId):
 	return type(
-		"BasicBraillePlus{cells}".format(cells=numCells),
+		f"BasicBraillePlus{numCells}",
 		(BasicBraillePlus,),
 		{
 			"deviceId": deviceId,
@@ -528,7 +584,7 @@ class BrailleStar(TripleActionKeysMixin, Model):
 	genericName = "Braille Star"
 
 	def _get_name(self):
-		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+		return f"{self.genericName} {self.numCells}"
 
 
 class BrailleStar40(BrailleStar):
@@ -545,7 +601,7 @@ class Modular(StatusCellMixin, TripleActionKeysMixin, OldProtocolMixin, Model):
 	genericName = "Modular"
 
 	def _get_name(self):
-		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+		return f"{self.genericName} {self.numCells}"
 
 
 class Modular20(Modular):
@@ -575,7 +631,7 @@ class Activator(
 	numCells = 40
 	genericName = name = "Activator"
 
-	def _get_keys(self) -> Dict[int, str]:
+	def _get_keys(self) -> dict[int, str]:
 		keys = super().keys
 		keys.update(
 			{
@@ -596,9 +652,9 @@ class ActivatorPro(
 	genericName = "Activator Pro"
 
 	def _get_name(self):
-		return "{name} {cells}".format(name=self.genericName, cells=self.numCells)
+		return f"{self.genericName} {self.numCells}"
 
-	def _get_keys(self) -> Dict[int, str]:
+	def _get_keys(self) -> dict[int, str]:
 		keys = super().keys
 		keys.update(
 			{
@@ -616,6 +672,50 @@ class ActivatorPro64(ActivatorPro):
 
 class ActivatorPro80(ActivatorPro):
 	deviceId = MODEL_ACTIVATOR_PRO_80
+	numCells = 80
+
+
+class MyBraille(
+	ActiveSplitMixin,
+	TimeSyncFirmnessMixin,
+	AtcMixin,
+	JoystickMixin,
+	TripleActionKeysMixin,
+	Model,
+):
+	genericName = "myBraille"
+
+	def _get_name(self) -> str:
+		return f"{self.genericName} {self.numCells}"
+
+	def _get_keys(self) -> dict[int, str]:
+		keys = super().keys
+		keys.update(
+			{
+				0x7A: "escape",
+				0x7B: "return",
+			},
+		)
+		return keys
+
+
+class MyBraille24(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_24
+	numCells = 24
+
+
+class MyBraille40(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_40
+	numCells = 40
+
+
+class MyBraille64(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_64
+	numCells = 64
+
+
+class MyBraille80(MyBraille):
+	deviceId = MODEL_MY_BRAILLE_80
 	numCells = 80
 
 
@@ -674,7 +774,7 @@ HT_HID_RPT_InBaud = b"\xfe"  # set baud rate of serial connection
 HT_HID_CMD_FlushBuffers = b"\x01"  # flush input and output buffers
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
 	name = "handyTech"
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
@@ -718,6 +818,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"VID_1FE4&PID_00A4",  # Activator
 				"VID_1FE4&PID_00A6",  # Activator Pro 64
 				"VID_1FE4&PID_00A8",  # Activator Pro 80
+				"VID_1FE4&PID_00B2",  # myBraille 24
+				"VID_1FE4&PID_00B4",  # myBraille 40
+				"VID_1FE4&PID_00B6",  # myBraille 64
+				"VID_1FE4&PID_00B8",  # myBraille 80
 			},
 		)
 
@@ -745,15 +849,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					"Braille Wave BW",
 					"Easy Braille EBR",
 					"Activator",
+					"myBraille",
 				)
 			),
 		)
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
-	_dev: Optional[Union[hwIo.Hid, hwIo.Serial]]
+	_dev: hwIo.Hid | hwIo.Serial | None
 
 	def __new__(cls, *args, **kwargs):
 		obj = super().__new__(cls, *args, **kwargs)
@@ -771,7 +876,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._hidSerialBuffer = b""
 		self._atc = False
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.ProtocolType.HID
@@ -795,7 +900,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						writeTimeout=self.timeout,
 						onReceive=self._serialOnReceive,
 					)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 
@@ -813,11 +918,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self._dev.waitForRead(self.timeout)
 				self._model.postInit()
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self._model.name,
-						type=portType,
-						port=port,
-					),
+					f"Found {self._model.name} connected via {portType} ({port})",
 				)
 				# Create the message window on the ui thread.
 				wx.CallAfter(self.createMessageWindow)
@@ -834,7 +935,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			cls._sleepcounter = 0
 			cls._messageWindow = InvisibleDriverWindow()
-		except WindowsError:
+		except OSError:
 			log.debugWarning("", exc_info=True)
 
 	@classmethod
@@ -847,7 +948,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		cls._sleepcounter = 0
 		try:
 			cls._messageWindow.destroy()
-		except WindowsError:
+		except OSError:
 			log.debugWarning("", exc_info=True)
 		cls._messageWindow = None
 
@@ -902,7 +1003,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def _get_supportedSettings(self):
 		settings = [
-			braille.BrailleDisplayDriver.BrailleInputSetting(),
+			braille.display.driver.BrailleDisplayDriver.BrailleInputSetting(),
 		]
 		if self._model:
 			# Add the per model supported settings to the list.
@@ -920,7 +1021,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if isinstance(self._model, AtcMixin):
 			self.sendExtendedPacket(HT_EXTPKT_SET_ATC_MODE, boolToByte(state))
 		else:
-			log.debugWarning("Changing ATC setting for unsupported device %s" % self._model.name)
+			log.debugWarning("Changing ATC setting for unsupported device %s" % self._model.name)  # noqa: UP031
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._atc = state
 
@@ -933,7 +1034,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if isinstance(self._model, TimeSyncFirmnessMixin):
 			self.sendExtendedPacket(HT_EXTPKT_SET_FIRMNESS, intToByte(value))
 		else:
-			log.debugWarning("Changing dot firmness setting for unsupported device %s" % self._model.name)
+			log.debugWarning("Changing dot firmness setting for unsupported device %s" % self._model.name)  # noqa: UP031
 		# Regardless whether this setting is supported or not, we want to safe its state.
 		self._dotFirmness = value
 
@@ -1040,9 +1141,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			modelId: bytes = stream.read(1)
 			if not self._model:
 				if modelId not in MODELS:
-					log.debugWarning("Unknown model: %r" % modelId)
+					log.debugWarning("Unknown model: %r" % modelId)  # noqa: UP031
 					raise RuntimeError(
-						"The model with ID %r is not supported by this driver" % modelId,
+						"The model with ID %r is not supported by this driver" % modelId,  # noqa: UP031
 					)
 				self._model = MODELS.get(modelId)(self)
 				if htPacketType == HT_PKT_OK_WITH_LENGTH:
@@ -1078,6 +1179,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			elif extPacketType == HT_EXTPKT_ATC_INFO:
 				# Ignore ATC packets for now
 				pass
+			elif extPacketType == HT_EXTPKT_READING_POSITION:
+				if isinstance(self._model, AtcMixin):
+					self._model.handleReadingPosition(packet)
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
 				self.numCells = packet[3]
 			elif isinstance(self._model, TimeSyncFirmnessMixin):
@@ -1088,7 +1192,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			else:
 				# Unknown extended packet, log it
 				log.debugWarning(
-					"Unhandled extended packet of type %r: %r" % (extPacketType, packet),
+					"Unhandled extended packet of type %r: %r" % (extPacketType, packet),  # noqa: UP031
 				)
 		else:
 			serPacketOrd = ord(htPacketType)
@@ -1098,7 +1202,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self._handleInput(serPacketOrd)
 			else:
 				# Unknown packet type, log it
-				log.debugWarning("Unhandled packet of type %r" % htPacketType)
+				log.debugWarning("Unhandled packet of type %r" % htPacketType)  # noqa: UP031
 
 	def _handleInput(self, key: int):
 		release = (key & KEY_RELEASE_MASK) != 0
@@ -1112,7 +1216,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ignoreKeyReleases = False
 			self._keysDown.add(key)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		self._model.display(cells)
 
@@ -1130,7 +1234,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: description of the script to toggle braille input
 	script_toggleBrailleInput.__doc__ = _("Toggle braille input")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(handytech):space+b1+b3+b4": "toggleBrailleInput",
 		"br(handytech):leftSpace+b1+b3+b4": "toggleBrailleInput",
 		"br(handytech):rightSpace+b1+b3+b4": "toggleBrailleInput",
@@ -1143,6 +1247,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		{
 			"globalCommands.GlobalCommands": {
 				"braille_routeTo": ("br(handyTech):routing",),
+				"braille_selectRange": ("br(handyTech):multiRouting",),
 				"braille_scrollBack": (
 					"br(handytech):leftSpace",
 					"br(handytech):leftTakTop",
@@ -1198,17 +1303,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isBrailleInput=False):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.model = model.genericName.replace(" ", "")
 		self.keys = set(keys)
 
 		self.keyNames = names = []
 		if isBrailleInput:
 			self.dots = self._calculateDots()
+		routingIndexes: list[int] = []
 		for key in keys:
 			if isBrailleInput and (
 				key in KEY_SPACES or (key in (KEY_LEFT, KEY_RIGHT) and isinstance(model, EasyBraille))
@@ -1216,15 +1322,18 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.space = True
 				names.append("space")
 			elif isBrailleInput and key in KEY_DOTS:
-				names.append("dot%d" % KEY_DOTS[key])
+				names.append("dot%d" % KEY_DOTS[key])  # noqa: UP031
 			elif KEY_ROUTING <= key < KEY_ROUTING + model.numCells:
-				self.routingIndex = key - KEY_ROUTING
-				names.append("routing")
+				routingIndexes.append(key - KEY_ROUTING)
 			else:
 				try:
 					names.append(model.keys[key])
 				except KeyError:
-					log.debugWarning("Unknown key %d" % key)
+					log.debugWarning("Unknown key %d" % key)  # noqa: UP031
+		if routingIndexes:
+			routingIndexes.sort()
+			self.cellIndexes = routingIndexes
+			names.append(self.idForCellCount(len(routingIndexes)))
 
 		self.id = "+".join(names)
 

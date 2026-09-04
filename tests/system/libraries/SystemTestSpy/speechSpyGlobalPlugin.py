@@ -9,13 +9,12 @@ It is copied into the (system test specific) NVDA profile directory. It becomes 
 of a package.
 """
 
-import gettext
+import gettext  # noqa: I001
 import typing
 from typing import (
 	Optional,
-	Tuple,
 )
-from braille import DisplayDimensions
+from braille.display import DisplayDimensions
 import core
 import globalPluginHandler
 import threading
@@ -37,7 +36,7 @@ import os
 SpeechIndexT = int
 
 
-def _importRobotRemoteServer() -> typing.Type:
+def _importRobotRemoteServer() -> type:
 	log.debug(f"before path mod: {sys.path}")
 	# Get the path to the top of the package
 	TOP_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -94,13 +93,13 @@ class NVDASpyLib:
 		from synthDrivers.speechSpySynthDriver import post_speech  # type: ignore[reportMissingImports]
 
 		if typing.TYPE_CHECKING:
-			from .speechSpySynthDriver import post_speech
+			from .speechSpySynthDriver import post_speech  # noqa: TC004
 
 		post_speech.register(self._onNvdaSpeech)
 
-	ConfKeyPath = typing.List[str]
-	ConfKeyVal = typing.Union[str, bool, int]
-	NVDAConfMods = typing.List[typing.Tuple[ConfKeyPath, ConfKeyVal]]
+	ConfKeyPath = list[str]
+	ConfKeyVal = typing.Union[str, bool, int]  # noqa: UP007
+	NVDAConfMods = list[tuple[ConfKeyPath, ConfKeyVal]]
 
 	def modifyNVDAConfig(self, confMods: NVDAConfMods):
 		for keyPath, keyVal in confMods:
@@ -122,7 +121,7 @@ class NVDASpyLib:
 		gesture: str,
 		module: str,
 		className: str,
-		script: Optional[str],
+		script: str | None,
 		replace: bool = False,
 	):
 		import inputCore
@@ -135,7 +134,7 @@ class NVDASpyLib:
 			replace,
 		)
 
-	fakeTranslations: typing.Optional[gettext.NullTranslations] = None
+	fakeTranslations: gettext.NullTranslations | None = None
 
 	def override_translationString(self, invariantString: str, replacementString: str):
 		import languageHandler
@@ -144,7 +143,7 @@ class NVDASpyLib:
 
 			class Translation_Fake(gettext.NullTranslations):
 				originalTranslationFunction: Optional
-				translationResults: typing.Dict[str, str]
+				translationResults: dict[str, str]
 
 				def __init__(
 					self,
@@ -179,7 +178,7 @@ class NVDASpyLib:
 		return langDesc
 
 	def queueNVDAMainThreadCrash(self):
-		from queueHandler import queueFunction, eventQueue
+		from queueHandler import queueFunction, eventQueue  # noqa: I001
 
 		queueFunction(eventQueue, _crashNVDA)
 
@@ -197,9 +196,10 @@ class NVDASpyLib:
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
 		import braille
+		import braille.extensions
 
-		braille.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
-		braille.pre_writeCells.register(self._onNvdaBraille)
+		braille.extensions.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
+		braille.extensions.pre_writeCells.register(self._onNvdaBraille)
 
 	def _onNvdaBraille(self, rawText: str):
 		if not rawText:
@@ -246,7 +246,7 @@ class NVDASpyLib:
 		with self._speechLock:
 			return len(self._nvdaSpeech_requiresLock) - 1
 
-	def _getIndexOfSpeech(self, speech, searchAfterIndex: Optional[int] = None):
+	def _getIndexOfSpeech(self, speech, searchAfterIndex: int | None = None):
 		if searchAfterIndex is None:
 			firstIndexToCheck = 0
 		else:
@@ -259,7 +259,7 @@ class NVDASpyLib:
 					return index
 			return -1
 
-	def _hasSpeechFinished(self, speechStartedIndex: Optional[int] = None):
+	def _hasSpeechFinished(self, speechStartedIndex: int | None = None):
 		with self._speechLock:
 			nextIndex = self.get_next_speech_index()
 			started = speechStartedIndex is None or speechStartedIndex < nextIndex
@@ -303,7 +303,7 @@ class NVDASpyLib:
 
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
-			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))
+			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))  # noqa: UP031
 		else:
 			log.info("No developer info for navigator object")
 
@@ -315,11 +315,11 @@ class NVDASpyLib:
 		with self._speechLock:
 			try:
 				self._devInfoToLog()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.error("Unable to log dev info")
 			try:
-				log.debug(f"All speech:\n{repr(self._nvdaSpeech_requiresLock)}")
-			except Exception:
+				log.debug(f"All speech:\n{self._nvdaSpeech_requiresLock!r}")
+			except Exception:  # noqa: BLE001
 				log.error("Unable to log speech")
 
 	def _dump_braille_to_log(self):
@@ -329,8 +329,8 @@ class NVDASpyLib:
 		log.debug("dump_braille_to_log.")
 		with self._brailleLock:
 			try:
-				log.debug(f"All braille:\n{repr(self._nvdaBraille_requiresLock)}")
-			except Exception:
+				log.debug(f"All braille:\n{self._nvdaBraille_requiresLock!r}")
+			except Exception:  # noqa: BLE001
 				log.error("Unable to log braille")
 
 	def dump_speech_to_log(self):
@@ -379,10 +379,10 @@ class NVDASpyLib:
 	def _has_speech_occurred_before_timeout(
 		self,
 		speech: str,
-		afterIndex: Optional[int],
+		afterIndex: int | None,
 		maxWaitSeconds: float,
 		intervalBetweenSeconds: float,
-	) -> Tuple[bool, Optional[int]]:
+	) -> tuple[bool, int | None]:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
@@ -401,10 +401,10 @@ class NVDASpyLib:
 	def wait_for_specific_speech_no_raise(
 		self,
 		speech: str,
-		afterIndex: Optional[int] = None,
+		afterIndex: int | None = None,
 		maxWaitSeconds: float = 5.0,
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
-	) -> Optional[int]:
+	) -> int | None:
 		"""
 		@param speech: The speech to expect.
 		@param afterIndex: The speech should come after this index. The index is exclusive.
@@ -425,7 +425,7 @@ class NVDASpyLib:
 	def wait_for_specific_speech(
 		self,
 		speech: str,
-		afterIndex: Optional[int] = None,
+		afterIndex: int | None = None,
 		maxWaitSeconds: float = 5.0,
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> int:
@@ -453,7 +453,7 @@ class NVDASpyLib:
 	def ensure_speech_did_not_occur(
 		self,
 		speech: str,
-		afterIndex: Optional[int] = None,
+		afterIndex: int | None = None,
 		maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> None:
@@ -481,8 +481,8 @@ class NVDASpyLib:
 	def wait_for_speech_to_finish(
 		self,
 		maxWaitSeconds=5.0,
-		speechStartedIndex: Optional[int] = None,
-		errorMessage: Optional[str] = "Speech did not finish before timeout",
+		speechStartedIndex: int | None = None,
+		errorMessage: str | None = "Speech did not finish before timeout",
 	) -> bool:
 		"""speechStartedIndex should generally be fetched with get_next_speech_index
 		@param errorMessage: Supply None to bypass assert.
@@ -573,7 +573,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 			port=8270,  # default:8270 is `registered by IANA` for remote server usage. Two ASCII values, RF.
 			serve=False,  # we want to start this serving on another thread so as not to block.
 		)
-		log.debug("Server address: {}".format(server.server_address))
+		log.debug(f"Server address: {server.server_address}")
 		server_thread = threading.Thread(
 			target=server.serve,
 			name="RF Test Spy Thread",
@@ -586,7 +586,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 		self._server.stop()
 
 
-def _crashNVDA(param: Optional[int] = None):
+def _crashNVDA(param: int | None = None):
 	# Causes a breakpoint exception to occur in the current process.
 	# This allows the calling thread to signal the debugger to handle the exception.
 	#

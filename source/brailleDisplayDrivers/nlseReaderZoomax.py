@@ -1,12 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited, Zoomax
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# NLS eReader Zoomax driver for NVDA.
+# Copyright (C) 2025-2026 NV Access Limited, Zoomax, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import bdDetect
+"""NLS eReader Zoomax driver for NVDA."""
+
+import bdDetect  # noqa: I001
 import braille
-import brailleInput
+import braille.display.driver
+import braille.display.gesture
+import braille.input.gesture
 import hwIo
 import inputCore
 import serial
@@ -84,7 +87,7 @@ COMMAND_RESPONSE_INFO: dict[DeviceCommand, DeviceResponseInfo] = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "nlseReaderZoomax"
 	# Translators: Names of braille displays.
@@ -104,7 +107,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("NLS eReader Z"))
 
 	def _connect(self, port: str) -> bool:
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			try:
 				self._dev = hwIo.Serial(
 					port,
@@ -116,7 +119,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					writeTimeout=TIMEOUT_SEC,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("Port not yet available.", exc_info=True)
 				continue
 
@@ -150,7 +153,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def terminate(self):
 		try:
 			super().terminate()
-		except EnvironmentError:
+		except OSError:
 			pass
 		finally:
 			self._dev.close()
@@ -234,6 +237,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"braille_previousLine": ("br(nlseReaderZoomax):d1",),
 				"braille_nextLine": ("br(nlseReaderZoomax):d3",),
 				"braille_routeTo": ("br(nlseReaderZoomax):routing",),
+				"braille_selectRange": ("br(nlseReaderZoomax):multiRouting",),
 				"kb:upArrow": ("br(nlseReaderZoomax):up",),
 				"kb:downArrow": ("br(nlseReaderZoomax):down",),
 				"kb:leftArrow": ("br(nlseReaderZoomax):left",),
@@ -244,7 +248,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keysDown: dict[bytes, bytes]):
@@ -264,11 +268,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & SPACEBAR_KEYS_MASK
 			if group == DeviceCommand.ROUTING_KEYS:
-				for index in range(braille.handler.display.numCells):
-					if groupKeysDown & (1 << index):
-						self.routingIndex = index
-						names.append("routing")
-						break
+				self.cellIndexes = [
+					index for index in range(braille.handler.display.numCells) if groupKeysDown & (1 << index)
+				]
+				if self.cellIndexes:
+					names.append(self.idForCellCount(len(self.cellIndexes)))
 			else:
 				for index, name in enumerate(COMMAND_RESPONSE_INFO.get(group).keys):
 					if groupKeysDown & (1 << index):

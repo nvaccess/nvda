@@ -1,14 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
+# Copyright (C) 2008-2026 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
 # Julien Cochuyt, Noelia Ruiz Martínez, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass
-from typing import (
-	Iterable,
-	Optional,
-)
+from dataclasses import dataclass  # noqa: I001
+from collections.abc import Iterable
 import typing
 from ctypes import byref
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -33,7 +30,7 @@ import documentBase
 import locationHelper
 
 
-def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
+def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> dict[str, typing.Any]:
 	valForCurrent = attrs.get("IAccessible2::attribute_current", "false")
 	try:
 		isCurrent = controlTypes.IsCurrent(valForCurrent)
@@ -50,14 +47,16 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	def _setSelectionOffsets(self, start: int, end: int):
 		super()._setSelectionOffsets(start, end)
-		if self.obj._nativeAppSelectionMode:
+		# In focus mode the application owns the caret, so the selection is only pushed to the
+		# application while browse mode is active.
+		if self.obj._nativeAppSelectionMode and not self.obj.passThrough:
 			if start != end:
 				self.obj.updateAppSelection()
 			else:
 				self.obj.clearAppSelection()
 
 	def _getBoundingRectFromOffset(self, offset):
-		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)  # noqa: RUF059
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart + 1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
@@ -74,7 +73,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if not hasattr(obj, "IAccessibleTextObject"):
 				raise LookupError("Object doesn't have an IAccessibleTextObject")
 			return IA2TextTextInfo._getBoundingRectFromOffsetInObject(obj, relOffset)
-		return super(Gecko_ia2_TextInfo, self)._getBoundingRectFromOffset(offset)
+		return super()._getBoundingRectFromOffset(offset)
 
 	def _calculateDescriptionFrom(self, attrs: textInfos.ControlField) -> controlTypes.DescriptionFrom:
 		"""Overridable calculation of DescriptionFrom
@@ -99,7 +98,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 	# C901 '_normalizeControlField' is too complex
 	# Note: when working on _normalizeControlField, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _normalizeControlField(self, attrs):  # noqa: C901
+	def _normalizeControlField(self, attrs):
 		# convert some IAccessible2 text values to integers
 		for name in (
 			"ia2TextWindowHandle",
@@ -216,9 +215,17 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["detailsRoles"] = set(self._normalizeDetailsRole(detailsRoles))
 			if config.conf["debugLog"]["annotations"]:
 				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
-		return super()._normalizeControlField(attrs)
+		attrs = super()._normalizeControlField(attrs)
+		# #17750: The table-id attribute from the buffer is just a unique id.
+		# However, the IAccessible NVDAObject specifies the tableID as
+		# (windowHandle, uniqueId). These need to be compatible for speech cache
+		# comparison lest we break row/column change detection.
+		tableID = attrs.get("table-id")
+		if tableID:
+			attrs["table-id"] = (int(attrs["controlIdentifier_docHandle"]), tableID)
+		return attrs
 
-	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
+	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[controlTypes.Role | None]:
 		"""
 		The attribute has been added directly to the buffer as a string, containing a comma separated list
 		of values, each value is either:
@@ -231,7 +238,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
 
 		if config.conf["debugLog"]["annotations"]:
-			log.debug(f"detailsRoles: {repr(detailsRoles)}")
+			log.debug(f"detailsRoles: {detailsRoles!r}")
 		detailsRolesValues = detailsRoles.split(",")
 		for detailsRole in detailsRolesValues:
 			if detailsRole.isdigit():
@@ -262,11 +269,11 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			val = attrs.get(name, None)
 			if val is not None:
 				attrs[name] = int(val)
-		return super(Gecko_ia2_TextInfo, self)._normalizeFormatField(attrs)
+		return super()._normalizeFormatField(attrs)
 
 	def _get_location(self) -> locationHelper.RectLTWH:
 		document = self.obj.rootNVDAObject.IAccessibleObject
-		docHandle, ID = self._getFieldIdentifierFromOffset(self._startOffset)
+		docHandle, ID = self._getFieldIdentifierFromOffset(self._startOffset)  # noqa: RUF059
 		location = document.accLocation(ID)
 		return locationHelper.RectLTWH(*location)
 
@@ -276,7 +283,7 @@ class Gecko_ia2(VirtualBuffer):
 	_nativeAppSelectionModeSupported = True
 
 	def __init__(self, rootNVDAObject):
-		super(Gecko_ia2, self).__init__(rootNVDAObject, backendName="gecko_ia2")
+		super().__init__(rootNVDAObject, backendName="gecko_ia2")
 		self._initialScrollObj = None
 
 	def __contains__(self, obj):
@@ -354,18 +361,18 @@ class Gecko_ia2(VirtualBuffer):
 	def _shouldIgnoreFocus(self, obj):
 		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.EDITABLE not in obj.states:
 			return True
-		return super(Gecko_ia2, self)._shouldIgnoreFocus(obj)
+		return super()._shouldIgnoreFocus(obj)
 
 	def _postGainFocus(self, obj):
 		if isinstance(obj, NVDAObjects.behaviors.EditableText):
 			# We aren't passing this event to the NVDAObject, so we need to do this ourselves.
 			obj.initAutoSelectDetection()
-		super(Gecko_ia2, self)._postGainFocus(obj)
+		super()._postGainFocus(obj)
 
 	def _shouldSetFocusToObj(self, obj):
 		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.State.LINKED in obj.states:
 			return True
-		return super(Gecko_ia2, self)._shouldSetFocusToObj(obj)
+		return super()._shouldSetFocusToObj(obj)
 
 	def _activateLongDesc(self, controlField):
 		index = int(controlField["IAccessibleAction_showlongdesc"])
@@ -396,18 +403,18 @@ class Gecko_ia2(VirtualBuffer):
 		elif nodeType == "link":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
 			}
 		elif nodeType == "visitedLink":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],  # noqa: UP031
 			}
 		elif nodeType == "unvisitedLink":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],  # noqa: UP031
 			}
 		elif nodeType == "formField":
 			attrs = [
@@ -478,6 +485,8 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_SLIDER]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("slider")]},
 			]
+		elif nodeType == "clickable":
+			attrs = {"IAccessibleAction_click": [VBufStorage_findMatch_notEmpty]}
 		elif nodeType == "graphic":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType == "blockQuote":
@@ -488,7 +497,7 @@ class Gecko_ia2(VirtualBuffer):
 				{"IAccessible::role": [IA2.IA2_ROLE_BLOCK_QUOTE]},
 			]
 		elif nodeType == "focusable":
-			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}  # noqa: UP031
 		elif nodeType == "landmark":
 			attrs = [
 				{"IAccessible::role": [IA2.IA2_ROLE_LANDMARK]},
@@ -579,8 +588,7 @@ class Gecko_ia2(VirtualBuffer):
 	event_scrollingStart.ignoreIsReady = True
 
 	def _getTableCellAt(self, tableID, startPos, destRow, destCol):
-		docHandle = self.rootDocHandle
-		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
+		table = self.getNVDAObjectFromIdentifier(*tableID)
 		try:
 			try:
 				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(
@@ -614,7 +622,7 @@ class Gecko_ia2(VirtualBuffer):
 			return None
 
 	def _getInitialCaretPos(self):
-		initialPos = super(Gecko_ia2, self)._getInitialCaretPos()
+		initialPos = super()._getInitialCaretPos()
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
@@ -634,7 +642,7 @@ class Gecko_ia2(VirtualBuffer):
 		# Where we have not included its inner text attribute run
 		# as the content was overridden by an ARIA label or similar.
 		for field in selFields:
-			if isinstance(field, textInfos.FieldCommand):
+			if isinstance(field, textInfos.FieldCommand):  # noqa: SIM102
 				if field.command in ("controlStart", "formatChange"):
 					hwnd = field.field.get("ia2TextWindowHandle")
 					if hwnd is not None:
@@ -694,8 +702,8 @@ class Gecko_ia2(VirtualBuffer):
 			break
 		if ia2Sel.endOffset is None:
 			raise NotImplementedError("No ia2TextEndOffset in any field")
-		log.debug(f"ia2 end window: {repr(ia2Sel.endWindow)}")
-		log.debug(f"ia2 end ID: {repr(ia2Sel.endID)}")
+		log.debug(f"ia2 end window: {ia2Sel.endWindow!r}")
+		log.debug(f"ia2 end ID: {ia2Sel.endID!r}")
 		log.debug(f"ia2 end offset: {ia2Sel.endOffset}")
 		if ia2Sel.endID == ia2Sel.startID:
 			ia2Sel.endObj = ia2Sel.startObj
@@ -710,38 +718,74 @@ class Gecko_ia2(VirtualBuffer):
 			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2 end obj {ia2Sel.endObj}")
 
-	def updateAppSelection(self):
-		"""Update the native selection in the application to match the browse mode selection in NVDA."""
+	def _initialize_nativeAppSelectionModeSupport(self) -> None:
+		"""Turn on native selection mode when the document supports clearing
+		and setting the native selection.
+		"""
+		try:
+			self.clearAppSelection()
+			self.updateAppSelection()
+		except (NotImplementedError, COMError):
+			log.debugWarning(
+				"Native selection unsupported in this document, not enabling native selection mode",
+				exc_info=True,
+			)
+			return
+		self._nativeAppSelectionMode = True
+
+	def _setAppSelection(self, selInfo: textInfos.TextInfo):
+		"""Set the native selection in the application to the given range.
+
+		A collapsed range is expressed as a degenerate selection, i.e. a selection whose end
+		matches its start, which places the caret in the application.
+		If the caret position cannot be located, the native selection is left unchanged.
+
+		:param selInfo: The range to select.
+		:raises NotImplementedError: If the application does not support setting selections,
+			or the start or end of a non collapsed range could not be found.
+		"""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
 				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
 			raise NotImplementedError from e
-		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		ia2Sel = _Ia2Selection()
+		log.debug("checking fields...")
 		if not selInfo.isCollapsed:
 			selFields = selInfo.getTextWithFields()
-			ia2Sel = _Ia2Selection()
-
-			log.debug("checking fields...")
 			self._getStartSelection(ia2Sel, selFields)
 			self._getEndSelection(ia2Sel, selFields)
+		else:
+			# Expand to a character to obtain the IAccessibleText information for the caret position.
+			caretInfo = selInfo.copy()
+			caretInfo.expand(textInfos.UNIT_CHARACTER)
+			try:
+				self._getStartSelection(ia2Sel, caretInfo.getTextWithFields())
+			except NotImplementedError:
+				log.debug("Could not locate the caret position, leaving the app selection unchanged")
+				return
+			ia2Sel.endObj = ia2Sel.startObj
+			ia2Sel.endOffset = ia2Sel.startOffset
+		log.debug("setting selection...")
+		r = IA2TextSelection(
+			ia2Sel.startObj,
+			ia2Sel.startOffset,
+			ia2Sel.endObj,
+			ia2Sel.endOffset,
+			False,
+		)
+		paccTextSelectionContainer.SetSelections(1, byref(r))
 
-			log.debug("setting selection...")
-			r = IA2TextSelection(
-				ia2Sel.startObj,
-				ia2Sel.startOffset,
-				ia2Sel.endObj,
-				ia2Sel.endOffset,
-				False,
-			)
-			paccTextSelectionContainer.SetSelections(1, byref(r))
-		else:  # No selection
-			r = IA2TextSelection(None, 0, None, 0, False)
-			paccTextSelectionContainer.SetSelections(0, byref(r))
+	def updateAppSelection(self):
+		self._setAppSelection(self.makeTextInfo(textInfos.POSITION_SELECTION))
+
+	def collapseAppSelection(self):
+		selInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		selInfo.collapse()
+		self._setAppSelection(selInfo)
 
 	def clearAppSelection(self):
-		"""Clear the native selection in the application."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
 				IAccessibleTextSelectionContainer,

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from itertools import chain, filterfalse
+from itertools import chain, filterfalse  # noqa: I001
 import os.path
 import sys
 import threading
@@ -56,15 +56,15 @@ if TYPE_CHECKING:
 
 __all__ = [
 	"ErrorAddonInstallDialogWithYesNoButtons",
-	"_shouldProceedWhenInstalledAddonVersionUnknown",
-	"_shouldProceedToRemoveAddonDialog",
-	"_shouldInstallWhenAddonTooOldDialog",
+	"UpdatableAddonsDialog",
+	"_SafetyWarningDialog",
 	"_shouldEnableWhenAddonTooOldDialog",
+	"_shouldInstallWhenAddonTooOldDialog",
+	"_shouldProceedToRemoveAddonDialog",
+	"_shouldProceedWhenInstalledAddonVersionUnknown",
+	"_showAddonInfo",
 	"_showAddonRequiresNVDAUpdateDialog",
 	"_showConfirmAddonInstallDialog",
-	"_showAddonInfo",
-	"_SafetyWarningDialog",
-	"UpdatableAddonsDialog",
 ]
 
 
@@ -443,11 +443,17 @@ class UpdatableAddonsDialog(
 		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
 
+		if any(addon.isDisabled or addon.isBlocked for addon in self.addonsPendingUpdate):
+			# Translators: The label of a button in a dialog that updates all add-ons,
+			# shown when the add-ons to update include disabled add-ons, which updating re-enables.
+			updateAllLabel = pgettext("addonStore", "&Update (and enable) all")
+		else:
+			# Translators: The label of a button in a dialog
+			updateAllLabel = pgettext("addonStore", "&Update all")
 		self.updateAllButton = bHelper.addButton(
 			self,
 			wx.ID_CLOSE,
-			# Translators: The label of a button in a dialog
-			label=pgettext("addonStore", "&Update all"),
+			label=updateAllLabel,
 		)
 		self.updateAllButton.Bind(wx.EVT_BUTTON, self.onUpdateAllButton)
 
@@ -456,7 +462,7 @@ class UpdatableAddonsDialog(
 		closeButton.Bind(wx.EVT_BUTTON, self.onCloseButton)
 
 	def _createAddonsPanel(self, sHelper: BoxSizerHelper):
-		from .actions import _MonoActionsContextMenu
+		from .actions import _MonoActionsContextMenu  # noqa: I001
 		from .addonList import AddonVirtualList
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
 
@@ -507,7 +513,7 @@ class UpdatableAddonsDialog(
 		self.Close()
 
 	def onClose(self, evt: wx.CloseEvent):
-		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+		from gui.addonStoreGui.viewModels.store import AddonStoreVM  # noqa: I001
 		from .storeDialog import AddonStoreDialog
 
 		evt.Veto()
@@ -834,7 +840,7 @@ class _CopyAddonsDialog(
 		# _showAddonInfo takes an _AddonGUIModel, but all we have is an AddonTemplate.
 		# The most direct way to create an _AddonGUIModel from an AddonTemplate is to use _createGUIModelFromManifest, but it takes an AddonBase.
 		# Since we want to avoid the side effects of Addon, and this isn't an AddonBundle, dynamically create an AddonBase subclass that wraps this manifest.
-		addon = type("TempAddon", (AddonBase,), dict(manifest=manifest))()
+		addon = type("TempAddon", (AddonBase,), dict(manifest=manifest))()  # noqa: C408
 		_showAddonInfo(addon._addonGuiModel)
 
 	def onClose(self, evt: wx.CloseEvent):

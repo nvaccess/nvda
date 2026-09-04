@@ -7,7 +7,7 @@
 
 """App module for µTorrent"""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import api
 import controlTypes
 import displayModel
@@ -32,7 +32,7 @@ class DuplicateFocusListView(IAccessible):
 			or (focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
 		):
 			return False
-		return super(DuplicateFocusListView, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 
 class TorrentContentsListItem(ListItem):
@@ -41,7 +41,7 @@ class TorrentContentsListItem(ListItem):
 	"""
 
 	def _getColumnContent(self, column):
-		superContent = super(TorrentContentsListItem, self)._getColumnContent(column)
+		superContent = super()._getColumnContent(column)
 		if superContent or column != 1:
 			return superContent
 		# We need to use the display model to retrieve the Name column.

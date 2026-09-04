@@ -5,7 +5,7 @@
 
 """App module for Visual Studio Code."""
 
-import api
+import api  # noqa: I001
 import appModuleHandler
 import controlTypes
 import re
@@ -75,7 +75,7 @@ class AppModule(appModuleHandler.AppModule):
 		between = text[first.end() : second.start()]
 		if "." in between:
 			return False
-		if not between.strip():
+		if not between.strip():  # noqa: SIM103
 			# Only whitespace or an empty string found,
 			# not the line/column number
 			return False

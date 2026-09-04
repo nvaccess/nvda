@@ -22,19 +22,19 @@ def _updateVersionFromVCS():
 			head = f.read().rstrip()
 		if not head.startswith("ref: "):
 			# Detached head.
-			version = "source-DETACHED-%s" % head[:7]
+			version = "source-DETACHED-%s" % head[:7]  # noqa: UP031
 			return
 		# Strip the "ref: " prefix to get the ref.
 		ref = head[5:]
 		with open(os.path.join(gitDir, ref), "r") as f:
 			commit = f.read().rstrip()
 		version = f"source-{os.path.basename(ref)}-{commit[:7]}"
-	except:  # noqa: E722
+	except:  # noqa: E722, S110
 		pass
 
 
 def _formatDevVersionString():
-	return "{y}.{M}.{m}dev".format(y=version_year, M=version_major, m=version_minor)
+	return f"{version_year}.{version_major}.{version_minor}dev"
 
 
 def formatBuildVersionString():
@@ -42,7 +42,7 @@ def formatBuildVersionString():
 	Examples:
 	- "2019.1.0.123"
 	"""
-	return "{y}.{M}.{m}.{b}".format(y=version_year, M=version_major, m=version_minor, b=version_build)
+	return f"{version_year}.{version_major}.{version_minor}.{version_build}"
 
 
 def formatVersionForGUI(year, major, minor):
@@ -54,17 +54,17 @@ def formatVersionForGUI(year, major, minor):
 	"""
 	if None in (year, major, minor):
 		raise ValueError(
-			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor),
+			f"Three values must be provided. Got year={year}, major={major}, minor={minor}",
 		)
 	if minor == 0:
-		return "{y}.{M}".format(y=year, M=major)
-	return "{y}.{M}.{m}".format(y=year, M=major, m=minor)
+		return f"{year}.{major}"
+	return f"{year}.{major}.{minor}"
 
 
 # Version information for NVDA
 name = "NVDA"
 version_year = 2026
-version_major = 2
+version_major = 3
 version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript'.
 version = _formatDevVersionString()
@@ -73,7 +73,7 @@ copyrightYears = "2006-2026"
 url = "https://www.nvaccess.org"
 updateVersionType = None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401
+	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource]  # noqa: F401, I001
 except ImportError:
 	_updateVersionFromVCS()
 

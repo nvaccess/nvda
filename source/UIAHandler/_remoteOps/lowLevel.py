@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2025 NV Access Limited
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from ctypes import (
 	oledll,
 	byref,
@@ -361,6 +361,12 @@ class TextPatternRangeEndpoint(enum.IntEnum):
 PropertyId = enum.IntEnum(
 	"PropertyId",
 	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")},
+)
+
+
+PatternId = enum.IntEnum(
+	"PatternId",
+	{k[4:-9]: v for k, v in vars(UIA).items() if k.endswith("PatternId")},
 )
 
 

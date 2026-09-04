@@ -7,17 +7,18 @@
 While this app module also covers older Notepad releases,
 this module provides workarounds for Windows 11 Notepad."""
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import appModuleHandler
 import api
 import braille
+import braille.regions.properties
 import controlTypes
 import eventHandler
 import speech
 import UIAHandler
 from NVDAObjects.UIA import UIA
 from NVDAObjects import NVDAObject
-from typing import Callable
+from collections.abc import Callable
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -32,7 +33,7 @@ class AppModule(appModuleHandler.AppModule):
 			speech.cancelSpeech()
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.message(
-				braille.getPropertiesBraille(
+				braille.regions.properties.getPropertiesBraille(
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,

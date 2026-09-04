@@ -1,18 +1,18 @@
-# -*- coding: UTF-8 -*-
-# brailleDisplayDrivers/baum.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
+# Copyright (C) 2010-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from io import BytesIO
-from typing import Union, List, Optional
+from io import BytesIO  # noqa: I001
 
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
-import brailleInput
+import braille.input.gesture
 import bdDetect
 import hwIo
 
@@ -73,7 +73,7 @@ KEY_NAMES = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
 	name = "baum"
 	# Translators: Names of braille displays.
@@ -156,14 +156,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
-		self._deviceID: Optional[str] = None
+		self._deviceID: str | None = None
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			self.isHid = portType == bdDetect.ProtocolType.HID
@@ -178,14 +178,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						writeTimeout=TIMEOUT,
 						onReceive=self._onReceive,
 					)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			if self.isHid:
 				try:
 					# It's essential to send protocol on for the Orbit Reader 20.
 					self._sendRequest(BAUM_PROTOCOL_ONOFF, True)
-				except EnvironmentError:
+				except OSError:
 					# Pronto! and VarioUltra don't support BAUM_PROTOCOL_ONOFF.
 					pass
 				# Explicitly request device info.
@@ -207,11 +207,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self.numCells:
 				# A display responded.
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self._deviceID,
-						type=portType,
-						port=port,
-					),
+					f"Found {self._deviceID} connected via {portType} ({port})",
 				)
 				break
 			self._dev.close()
@@ -224,10 +220,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 			try:
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, boolToByte(False))
-			except EnvironmentError:
+			except OSError:
 				# Some displays don't support BAUM_PROTOCOL_ONOFF.
 				pass
 		finally:
@@ -235,7 +231,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If it doesn't, we may not be able to re-open it later.
 			self._dev.close()
 
-	def _sendRequest(self, command: bytes, arg: Union[bytes, bool, int] = b""):
+	def _sendRequest(self, command: bytes, arg: bytes | bool | int = b""):
 		"""
 		:type command: bytes
 		:type arg: bytes | bool | int
@@ -271,7 +267,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			stream = BytesIO(data)
 		else:
 			if data != ESCAPE:
-				log.debugWarning("Ignoring byte before escape: %r" % data)
+				log.debugWarning("Ignoring byte before escape: %r" % data)  # noqa: UP031
 				return
 			# data only contained the escape. Read the rest from the device.
 			stream = self._dev
@@ -299,7 +295,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in KEY_NAMES:
 			arg = sum(byte << offset * 8 for offset, byte in enumerate(arg))
-			if arg < self._keysDown.get(command, 0):
+			prevArg = self._keysDown.get(command, 0)
+			if command == BAUM_ROUTING_KEY and arg > 0:
+				# BAUM_ROUTING_KEY sends a 1-indexed key number, not a cumulative bitmask.
+				# Normalize to accumulated bitmask so the shared press/release logic below works.
+				arg = prevArg | (1 << (arg - 1))
+			if arg < prevArg:
 				# Release.
 				if not self._ignoreKeyReleases:
 					# The first key released executes the key combination.
@@ -316,7 +317,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._ignoreKeyReleases = False
 			if arg > 0:
 				self._keysDown[command] = arg
-			elif command in self._keysDown:
+			elif prevArg:
 				# All keys in this group have been released.
 				# #3541: Remove this group so it doesn't count as a group with keys down.
 				del self._keysDown[command]
@@ -327,9 +328,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			pass
 
 		else:
-			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
+			log.debugWarning(f"Unknown command {command!r}, arg {arg!r}")
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		arg = bytes(cells)
 		self._sendRequest(BAUM_DISPLAY_DATA, arg)
@@ -342,6 +343,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"braille_previousLine": ("br(baum):d1",),
 				"braille_nextLine": ("br(baum):d3",),
 				"braille_routeTo": ("br(baum):routing",),
+				"braille_selectRange": ("br(baum):multiRouting",),
 				"kb:upArrow": ("br(baum):up",),
 				"kb:downArrow": ("br(baum):down",),
 				"kb:leftArrow": ("br(baum):left",),
@@ -388,11 +390,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		# Model identifiers should not contain spaces.
 		if model:
 			self.model = model.replace(" ", "")
@@ -406,15 +408,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				# 0xfc covers command keys. The space bars are covered by 0x3.
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & 0x3
-			if group == BAUM_ROUTING_KEYS:
-				for index in range(braille.handler.display.numCells):
-					if groupKeysDown & (1 << index):
-						self.routingIndex = index
-						names.append("routing")
-						break
-			elif group == BAUM_ROUTING_KEY:
-				self.routingIndex = groupKeysDown - 1
-				names.append("routing")
+			if group in (BAUM_ROUTING_KEYS, BAUM_ROUTING_KEY):
+				self.cellIndexes = [
+					index for index in range(braille.handler.display.numCells) if groupKeysDown & (1 << index)
+				]
+				if self.cellIndexes:
+					names.append(self.idForCellCount(len(self.cellIndexes)))
 			else:
 				for index, name in enumerate(KEY_NAMES[group]):
 					if groupKeysDown & (1 << index):

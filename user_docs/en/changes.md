@@ -1,5 +1,326 @@
 # What's New in NVDA
 
+## 2026.3
+
+This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
+
+Several performance improvements have been made to reduce lag and improve responsiveness.
+NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
+NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
+NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
+In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
+
+Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
+It is also now possible to change an existing gesture directly in the Input Gestures dialog.
+The dialog used to present browseable messages has been modernized and now better supports resizing, maximizing, and minimizing.
+
+Touch screen input has been significantly expanded.
+Sequential two-flick gestures now combine two flicks in quick succession into a single gesture, greatly increasing the number of bindable touch gestures.
+Edge gestures are also now supported, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the center of the screen.
+
+A new unassigned command has been added to move the mouse cursor to the center of the magnified view.
+Windows OCR can now be used while the Screen Curtain or NVDA's built-in Magnifier is active.
+
+Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+eSpeak NG has been updated with added support for Ligurian and Abkhaz.
+
+### New Features
+
+* Add-ons can be removed from the "Updatable add-ons" tab in the Add-on Store. (#15030, @nvdaes)
+* Chinese text can now be navigated by word using built-in input gestures.
+  * A Word Segmentation Standard setting was added to the "Document Navigation" panel. (#18735, @CrazySteve0605, @Cary-rowen)
+  * Word segmentation can also use the Windows built-in ICU library for boundary detection, improving navigation for Japanese and emoji. (#20343, #20494, @LeonarddeR)
+  * By default, ICU is preferred over the legacy Windows segmentation wherever available, while Chinese word segmentation takes precedence for Chinese text.
+* Magnifier: A new unassigned command has been added to move the mouse cursor to the center of the magnified view. (#20127, @CyrilleB79)
+* Added context menu and shortcuts support to the Configuration Profiles, Input Gestures and Speech Dictionaries dialogs. (#18169, #16816, #20420, @amirmahdifard)
+* It is now possible to change an existing gesture in the Input Gestures dialog. (#10983, @amirmahdifard)
+* A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)
+* A new command, assigned to `NVDA+control+x`, copies the last spoken information to the clipboard. (#19385, @Cary-rowen)
+* The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#19353, @Mubashir78)
+* Sentence navigation (`alt+upArrow` and `alt+downArrow`) now works in many more situations, such as in most browse mode documents and in several edit controls. (#18901, @LeonarddeR)
+
+#### Braille
+
+* Braille output for Chinese now includes spaces between words. (#18865, @CrazySteve0605, @Cary-rowen)
+* On supported braille displays, pressing multiple routing keys simultaneously can now be bound to a new "multi routing" gesture. (#20001, @LeonarddeR)
+  * The "select range" command, which selects the text from the first up to the last pressed routing key, is bound to this gesture by default on supporting drivers.
+  * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
+* Support for the myBraille family of Help Tech Braille displays has been added. (#20426)
+* The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
+  * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
+  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
+
+#### Touch screen input
+
+* Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
+  * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
+  * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
+* Added edge gesture support for touch screens, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
+  * Edge gestures are disabled by default and can be enabled in the Touch Interaction settings panel.
+  * All four edges are supported.
+  Note that the Windows taskbar may override gestures on an edge.
+  Gestures from the taskbar edge open the Start menu or Action Center, NVDA will not receive them.
+
+#### Browse mode
+
+* Added an unassigned Quick Navigation Command for jumping to next/previous clickable element in browse mode. (#14429, @cary-rowen)
+* Added a "Native selection mode" option to NVDA's Browse Mode settings, disabled by default. (#15908)
+  * When enabled, native selection mode is automatically turned on in browse mode documents which support it, such as in Mozilla Firefox and browsers based on Chromium 134 or newer.
+  * Native selection mode can still be toggled per document with `NVDA+shift+f10`.
+* When navigating math on the web, Visual Highlight now follows the current subpart of the expression using the browse mode cursor highlighter. (#19191, @RyanMcCleary)
+* The Find dialog in browse mode can now remember previously searched terms in a search history combo box, which can be turned off via a new "Keep search history" browse mode setting. (#8482, @marlon-sousa, @LeonarddeR)
+
+### Changes
+
+* Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
+  * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+  * Added Ligurian and Abkhaz support.
+* Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
+* The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
+  * The dialog's shortcut to copy contents of the message to the clipboard was changed to `alt+c`.
+  * Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)
+* Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
+* Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
+* Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+
+### Bug Fixes
+
+* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
+* In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
+* Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
+* After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
+* Only one browse mode Find dialog can be open at a time.
+Executing the find command while the dialog is open brings it to the foreground and points it at the document you executed the command from. (#20484, @LeonarddeR)
+* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
+* Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
+* NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
+* Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
+* Fixed an error when loading 32-bit synthesizers on some systems. (#20088)
+
+#### Performance
+
+* NVDA should no longer cause File Explorer or other applications to crash when NVDA is exited or restarted. (#16207)
+* When an application stops responding, NVDA no longer freezes or floods its log with errors; it stays responsive and drops UIA and MSAA events from the unresponsive application until it recovers. (#16749, @heath-toby)
+* Reduced lag on UI Automation text change events, improving the responsiveness of controls such as combo boxes and of File Explorer, by using the cached element class name instead of a live cross-process fetch. (#16749, @heath-toby)
+* NVDA recovers more quickly when an application stops responding; in particular, switching away from a hung application returns NVDA to responsiveness immediately. (#20169, @heath-toby)
+* NVDA no longer floods its log with errors while Windows is locked and a browse mode document keeps updating in the background, such as a playing video in Mozilla Firefox. (#18861, @bramd)
+
+#### Braille
+
+* On HumanWare Brailliant displays with C-keys, the `c1`, `c2`, `c3` and `c5` command keys now move the braille display to the previous line, scroll it back, move it to the next line and scroll it forward.
+Previously these keys had no function when pressed on their own. (#20366, @fla-rion)
+* The HID keyboard input simulation setting for ALVA braille displays is now remembered across reconnects and restarts. (#20455, @Cary-rowen)
+* Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)
+* HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
+  * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
+* NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
+* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671)
+
+#### Web browsers
+
+* When moving to an ARIA grid cell in focus mode in web browsers, NVDA no longer reports both the row and column headers even if only the row or only the column changed. (#17750, @jcsteh)
+* NVDA now announces heading, paragraph, list, and list item children inside webpage alerts (`role="alert"`). (#14990, @mehm8128)
+* NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
+* In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
+* In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)
+
+#### Terminals
+
+* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177, #20649, @ethindp, @codeofdusk)
+  * By default, when lines are skipped in a large text flood, NVDA emits a beep proportional to the length of the skipped material.
+  This can be disabled in the Advanced settings panel.
+* In Windows Terminal, NVDA is less likely to report stale characters when moving the caret in delayed remote sessions such as SSH. (#19503, @sheldon-im)
+* In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
+
+#### Add-on Store
+
+* The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
+* The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
+* Updating an add-on no longer leaves modules of the old version loaded.
+This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Updated dependencies:
+  * Python to 3.13.15. (#20634, @dpy013)
+  * ruff to 0.16.3. (#20732)
+  * prek to 0.4.14. (#20732)
+  * pyright to 1.1.411. (#20732)
+  * ty to 0.0.73. (#20732)
+  * comtypes to 1.4.16. (#20707)
+  * cryptography to 50.0.0. (#20707)
+  * requests to 2.34.2. (#20707)
+  * url-normalize to 3.0.0. (#20707)
+  * pywin32 to 312. (#20707)
+  * scons to 4.11.0. (#20707)
+  * py2exe to 0.14.2.0. (#20707, #20260, @LeonarddeR)
+  * nh3 to 0.3.6. (#20707)
+  * crowdin-api-client to 1.28.0. (#20707)
+  * markdown to 3.10.3. (#20707)
+  * lxml to 6.1.2. (#20707)
+  * pymdown-extensions to 11.0.1. (#20707)
+  * pyphen to 0.18.1. (#20707)
+  * regex to 2026.7.19. (#20707)
+  * uv to 0.12.5. (#20707)
+  * licensecheck to 2026.0.8. (#20707)
+  * sphinx to 9.1.0. (#20707)
+  * sphinx-rtd-theme to 3.1.0. (#20707)
+  * robotframework to 7.4.2. (#20707)
+  * unittest-xml-reporting to 4.0.0. (#20707)
+  * setuptools to 84.0.0. (#20744)
+* The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
+* The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
+  * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
+  * Elements returned or yielded from the operation carry the populated cache.
+  * Such a cache stores default values for properties the element does not support; the reserved "not supported" value is not preserved.
+* UIA remote operations can now return `UInt32`, `Int64`, `Single` and `Double` values, as well as the reserved "not supported" value for property fetches that ignore defaults. (#20621, @LeonarddeR)
+  * A remote variant can be tested for the reserved "not supported" value inside the operation with `RemoteVariant.isNotSupported`.
+* `mathPres.interactWithMathMl` now accepts an optional `sourceObj` argument.
+Math presentation providers can override `MathPresentationProvider.interactWithMathMlFromSource` to use the source object when starting interaction.
+The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
+* Vision enhancement providers can register with `vision.handler.extensionPoints.post_mathNavigation` to receive the screen rectangle of the current math navigation position, or `None` when no rectangle is available. (#20372, @RyanMcCleary)
+* The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
+  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
+  Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
+  * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
+* `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
+  * In the `installTasks` module, add-on developers can add a spec for each configuration section to be registered.
+  * The `config.configSections.registerSection` method can be used in the `onInstall` function.
+  * To register a section to be used in the normal configuration, regardless of profiles, the `isBaseOnly` parameter should be set to `True`.
+* The `braille` module is now a package, split into focused submodules such as `braille.constants`, `braille.labels`, `braille.formatting`, `braille.regions`, `braille.display`, `braille.buffers`, `braille.brailleHandler` and `braille.extensions`. (#12772, #20458, @LeonarddeR)
+  * The `brailleInput` module has also moved into this package as `braille.input`, split into `braille.input.constants`, `braille.input.gesture` and `braille.input.inputHandler`. (#12772, #20509, @LeonarddeR)
+* Added `gui.message.HtmlMessageDialog`, a `MessageDialog` subclass that renders a full HTML document in a `wx.html2.WebView`. (#18878, @LeonarddeR)
+  * The WebView backend can be overridden via the `_webViewBackend` class attribute, which defaults to the IE backend.
+  * JavaScript in the message can trigger NVDA actions by navigating to `nvda-action://<action>` URLs; `close` is handled internally and other actions can be registered with `registerAction`.
+* `gui.message.MessageDialog` gained the protected `_createMessageControl` and `_wrapMessageControl` hooks, so subclasses can use a different control for the message body. (#18878, @LeonarddeR)
+* Added [cppjieba](https://github.com/yanyiwu/cppjieba) as a git submodule for Chinese word segmentation. (#18548, @CrazySteve0605)
+* `braille.BrailleDisplayGesture` now exposes a `cellIndexes` list attribute, replacing the single-valued `routingIndex`. (#20001, @LeonarddeR)
+  * Drivers should set `cellIndexes` directly instead of `routingIndex`.
+  * When a gesture addresses more than one cell, its `id` should be set to `"multiRouting"` (or be built via the new `BrailleDisplayGesture.idForCellCount(n)` helper).
+  * `cellIndexes` is not limited to routing keys; touch-sensitive cells (e.g. Handy Tech Active Tactile Control) can reuse the same attribute.
+* Added a new `hwIo.ble` submodule for Bluetooth Low Energy device discovery and I/O, exposing a `Scanner` singleton (with a `deviceDiscovered` extension point), a `Ble` class implementing the `IoBase` contract, and a `findDeviceByAddress` helper.
+Built on top of [Bleak](https://bleak.readthedocs.io/) and the `_asyncioEventLoop` module. (#19838, @bramd)
+* Handlers registered on an `extensionPoints` registrar (`Action`, `Filter`, `Decider`, `AccumulatingDecider`, `Chain`) may now register or unregister handlers while being called, without raising `RuntimeError: OrderedDict mutated during iteration`. (#20545, @LeonarddeR)
+  * `HandlerRegistrar.handlers` now iterates over a snapshot of the registered handlers taken before the first handler is yielded.
+* Fixed a handle leak in `hwIo.Bulk.__init__`: if the read pipe opened successfully but the write pipe failed to open, the read handle was never closed, leaving the device open for the remaining lifetime of the process. (#20555, @KihunJang1981)
+* `languageHandler.windowsLCIDToLocaleName` no longer consults `locale.windows_locale`, which is unmaintained, incomplete and changes between Python patch releases. (#20589, @LeonarddeR)
+  * Locale names are now taken from `winKernel.LCIDToLocaleName`, apart from a small set of locale identifiers for which NVDA uses a different language code than Windows reports.
+  * As a result, some locale identifiers now resolve to a different name, such as `zh_CN` rather than `zh_CHS`, `km_KH` rather than `kh_KH` and `en_JM` rather than `en_JA`.
+  * Locale names now carry a script subtag where Windows reports one, such as `sr_LATN_CS` rather than `sr_SP` for LCID 2074.
+  * The SAPI 4 and SAPI 5 synthesizers report voice languages through this function as well, so the language of a voice can now be reported for locale identifiers that `locale.windows_locale` did not cover.
+* `OffsetsTextInfo` now implements `_getSentenceOffsets` using the Windows built-in ICU library.
+This adds support for `textInfos.UNIT_SENTENCE` to all `TextInfo` implementations based on `OffsetsTextInfo`. (#20603, @LeonarddeR)
+  * For unsupported encodings, or when ICU is unavailable (on Windows versions older than 1703), `_getSentenceOffsets` continues to raise `NotImplementedError`.
+* `louisHelper` is now the only module that performs braille translation. (#20600, @LeonarddeR)
+  * Added `louisHelper.TranslationMode` and `louisHelper.Typeform`, holding the translation modes and typeforms NVDA uses.
+  `braille.Region.rawTextTypeforms` is now annotated as `list[louisHelper.Typeform]`.
+  Plain integers remain compatible at run time.
+  * Added `louisHelper.backTranslate`, which back translates braille cells, given as a list of integers, into text.
+* Added a `union` method to `locationHelper.RectLTWH` and `locationHelper.RectLTRB`, which creates a rectangle that contains all the other rectangles. (#20705, @hwf1324)
+* The `inputCore.decide_handleRawKey` extension point now receives an `injected` keyword argument, which is `True` when the key event was injected by software rather than generated by the keyboard. (#20714, @LeonarddeR)
+
+#### Deprecations
+
+* The `braille.BrailleDisplayGesture.routingIndex` attribute is deprecated.
+Use the `cellIndexes` attribute instead. (#20028, @LeonarddeR)
+* `brailleDisplayDrivers.freedomScientific.RoutingGesture` is deprecated.
+Use `KeyGesture` instead. (#20250, @LeonarddeR)
+* The `braille.wordWrap` configuration key is deprecated and bridged to `braille.textWrap`. (#20146, @LeonarddeR)
+* The `useUniscribe` attribute of `textInfos.offsets.OffsetsTextInfo` and its subclasses is deprecated, use `charSegFlag` and `wordSegFlag` instead. (#20183)
+* In `touchTracker`, the module-level `action_*` string constants are deprecated.
+Use the corresponding `TouchAction` enum members instead (e.g. `TouchAction.TAP`, `TouchAction.FLICK_UP`). (#20086, @kefaslungu)
+* In `touchTracker`, `actionLabels` is deprecated.
+Use `TouchAction(value).displayString` instead. (#20086, @kefaslungu)
+* The `URL_MK_UNIFORM`, `DIALOG_OPTIONS` and `HTMLDLG_*` constants in `ui` are deprecated with no replacement, as the COM-based HTML dialog infrastructure has been removed.
+Use `gui.message.HtmlMessageDialog` instead. (#20251, @LeonarddeR)
+* `languageHandler.LCIDS_TO_TRANSLATED_LOCALES` is deprecated.
+Use `languageHandler.windowsLCIDToLocaleName` or `winKernel.LCIDToLocaleName` instead. (#20589, @LeonarddeR)
+* `brailleInput.LOUIS_DOTS_IO_START` is deprecated with no replacement, as `louisHelper.backTranslate` takes plain braille cells. (#20666, @LeonarddeR)
+* The symbols that moved out of the `braille` module facade when it became a package, as well as the symbols of the `brailleInput` module which is now the `braille.input` package, are deprecated.
+Accessing them as `braille.X` or `brailleInput.X` still works but logs a deprecation warning; import them from their new location instead, as listed below. (#20390, #20509, @LeonarddeR)
+
+  | Old location | New location |
+  | --- | --- |
+  | `braille.BrailleDisplayDriver` | `braille.display.driver.BrailleDisplayDriver` |
+  | `braille.BrailleDisplayGesture` | `braille.display.gesture.BrailleDisplayGesture` |
+  | `braille.getSerialPorts` | `braille.display.getSerialPorts` |
+  | `braille.getDisplayList` | `braille.display.getDisplayList` |
+  | `braille.getDisplayDrivers` | `braille.display.getDisplayDrivers` |
+  | `braille.RENAMED_DRIVERS` | `braille.display.RENAMED_DRIVERS` |
+  | `braille.DisplayDimensions` | `braille.display.DisplayDimensions` |
+  | `braille.Region` | `braille.regions.base.Region` |
+  | `braille.RegionWithPositions` | `braille.regions.base.RegionWithPositions` |
+  | `braille.TextRegion` | `braille.regions.base.TextRegion` |
+  | `braille.rindex` | `braille.regions.base.rindex` |
+  | `braille.NVDAObjectRegion` | `braille.regions.NVDAObject.NVDAObjectRegion` |
+  | `braille.ReviewNVDAObjectRegion` | `braille.regions.NVDAObject.ReviewNVDAObjectRegion` |
+  | `braille.NVDAObjectHasUsefulText` | `braille.regions.NVDAObject.NVDAObjectHasUsefulText` |
+  | `braille.TextInfoRegion` | `braille.regions.textInfo.TextInfoRegion` |
+  | `braille.CursorManagerRegion` | `braille.regions.textInfo.CursorManagerRegion` |
+  | `braille.ReviewTextInfoRegion` | `braille.regions.textInfo.ReviewTextInfoRegion` |
+  | `braille.ReviewCursorManagerRegion` | `braille.regions.textInfo.ReviewCursorManagerRegion` |
+  | `braille.getControlFieldBraille` | `braille.regions.properties.getControlFieldBraille` |
+  | `braille.getFormatFieldBraille` | `braille.regions.properties.getFormatFieldBraille` |
+  | `braille.getPropertiesBraille` | `braille.regions.properties.getPropertiesBraille` |
+  | `braille.getFocusContextRegions` | `braille.regions.focus.getFocusContextRegions` |
+  | `braille.getFocusRegions` | `braille.regions.focus.getFocusRegions` |
+  | `braille.invalidateCachedFocusAncestors` | `braille.regions.focus.invalidateCachedFocusAncestors` |
+  | `braille.BrailleBuffer` | `braille.buffers.BrailleBuffer` |
+  | `braille.BrailleHandler` | `braille.brailleHandler.BrailleHandler` |
+  | `braille.formatCellsForLog` | `braille.brailleHandler.formatCellsForLog` |
+  | `braille.FALLBACK_TABLE` | `braille.brailleHandler.FALLBACK_TABLE` |
+  | `braille.roleLabels` | `braille.labels.roleLabels` |
+  | `braille.positiveStateLabels` | `braille.labels.positiveStateLabels` |
+  | `braille.negativeStateLabels` | `braille.labels.negativeStateLabels` |
+  | `braille.landmarkLabels` | `braille.labels.landmarkLabels` |
+  | `braille.FormatTagDelimiter` | `braille.formatting.FormatTagDelimiter` |
+  | `braille.FormattingMarker` | `braille.formatting.FormattingMarker` |
+  | `braille.fontAttributeFormattingMarkers` | `braille.formatting.fontAttributeFormattingMarkers` |
+  | `braille.getParagraphStartMarker` | `braille.formatting.getParagraphStartMarker` |
+  | `braille.AUTO_DISPLAY_NAME` | `braille.constants.AUTO_DISPLAY_NAME` |
+  | `braille.AUTOMATIC_PORT` | `braille.constants.AUTOMATIC_PORT` |
+  | `braille.BLUETOOTH_PORT` | `braille.constants.BLUETOOTH_PORT` |
+  | `braille.USB_PORT` | `braille.constants.USB_PORT` |
+  | `braille.NO_BRAILLE_DISPLAY_NAME` | `braille.constants.NO_BRAILLE_DISPLAY_NAME` |
+  | `braille.CONTINUATION_SHAPE` | `braille.constants.CONTINUATION_SHAPE` |
+  | `braille.CURSOR_SHAPES` | `braille.constants.CURSOR_SHAPES` |
+  | `braille.SELECTION_SHAPE` | `braille.constants.SELECTION_SHAPE` |
+  | `braille.END_OF_BRAILLE_OUTPUT_SHAPE` | `braille.constants.END_OF_BRAILLE_OUTPUT_SHAPE` |
+  | `braille.INPUT_START_IND` | `braille.constants.INPUT_START_IND` |
+  | `braille.INPUT_END_IND` | `braille.constants.INPUT_END_IND` |
+  | `braille.TEXT_SEPARATOR` | `braille.constants.TEXT_SEPARATOR` |
+  | `braille.CONTEXTPRES_*` | `braille.constants.CONTEXTPRES_*` |
+  | `braille.focusContextPresentations` | `braille.constants.focusContextPresentations` |
+  | `braille.pre_writeCells` | `braille.extensions.pre_writeCells` |
+  | `braille.filter_displaySize` | `braille.extensions.filter_displaySize` |
+  | `braille.filter_displayDimensions` | `braille.extensions.filter_displayDimensions` |
+  | `braille.displaySizeChanged` | `braille.extensions.displaySizeChanged` |
+  | `braille.displayChanged` | `braille.extensions.displayChanged` |
+  | `braille.decide_enabled` | `braille.extensions.decide_enabled` |
+  | `braille.BrailleMode` | `config.configFlags.BrailleMode` |
+  | `braille.TetherTo` | `config.configFlags.TetherTo` |
+  | `brailleInput.handler` | `braille.input.handler` |
+  | `brailleInput.initialize` | `braille.input.initialize` |
+  | `brailleInput.terminate` | `braille.input.terminate` |
+  | `brailleInput.FALLBACK_TABLE` | `braille.input.constants.FALLBACK_TABLE` |
+  | `brailleInput.DOT7` | `braille.input.constants.DOT7` |
+  | `brailleInput.DOT8` | `braille.input.constants.DOT8` |
+  | `brailleInput.UNICODE_BRAILLE_START` | `braille.input.constants.UNICODE_BRAILLE_START` |
+  | `brailleInput.UNICODE_BRAILLE_PROTECTED` | `braille.input.constants.UNICODE_BRAILLE_PROTECTED` |
+  | `brailleInput.formatDotNumbers` | `braille.input.gesture.formatDotNumbers` |
+  | `brailleInput.BrailleInputGesture` | `braille.input.gesture.BrailleInputGesture` |
+  | `brailleInput.BrailleInputHandler` | `braille.input.inputHandler.BrailleInputHandler` |
+  | `brailleInput.speakDots` | `braille.input.inputHandler.speakDots` |
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.2
 
 This release includes a new built-in Magnifier feature, improvements to touch gestures and navigation, and expanded speech and braille capabilities.
@@ -183,9 +504,6 @@ This means that headless or otherwise physically inaccessible machines configure
 ### Changes for Developers
 
 * The `winBindings.cfgmgr32` module is now included in NVDA binary builds. (#20089, @Cary-rowen)
-
-<!-- Beyond this point, Markdown should not be linted, as we don't modify old change log sections. -->
-<!-- markdownlint-disable -->
 
 ## 2026.1
 

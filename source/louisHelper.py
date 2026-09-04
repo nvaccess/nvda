@@ -1,26 +1,43 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Helper module to ease communication to and from liblouis."""
 
-import os
+import os  # noqa: I001
+from collections.abc import Sequence
 from ctypes import (
 	WINFUNCTYPE,
 	addressof,
 	c_char_p,
 	c_void_p,
 )
-from typing import Generator
+from enum import IntFlag
+from collections.abc import Generator
 
 import brailleTables
 import config
 import globalVars
+import languageHandler
 from logHandler import log
 
 with os.add_dll_directory(globalVars.appDir):
 	import louis
+
+
+__all__ = [
+	"LOUIS_TO_NVDA_LOG_LEVELS",
+	"TranslationMode",
+	"Typeform",
+	"backTranslate",
+	"getLouisVersion",
+	"getTableLanguage",
+	"initialize",
+	"louis_log",
+	"terminate",
+	"translate",
+]
 
 
 LOUIS_TO_NVDA_LOG_LEVELS = {
@@ -32,8 +49,32 @@ LOUIS_TO_NVDA_LOG_LEVELS = {
 	louis.LOG_FATAL: log.ERROR,
 }
 
+_DOTS_IO_START = 0x8000
+"""Bit flag added to every braille cell handed to liblouis in dots input/output mode."""
 
-def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[str, None, None]:
+
+class TranslationMode(IntFlag):
+	"""Modes to be applied to braille translation and back-translation."""
+
+	NONE = 0
+	"""No mode."""
+	COMPBRL_AT_CURSOR = louis.compbrlAtCursor
+	"""Render the word at the cursor position in computer braille."""
+	PARTIAL_TRANS = louis.partialTrans
+	"""Translate the input as the start of a longer text, so trailing input may still be incomplete."""
+
+
+class Typeform(IntFlag):
+	"""Character formatting to be honoured while translating to braille."""
+
+	PLAIN_TEXT = louis.plain_text
+	"""No formatting."""
+	ITALIC = louis.italic
+	UNDERLINE = louis.underline
+	BOLD = louis.bold
+
+
+def _resolveTableInner(tables: list[str], base: str | None = None) -> Generator[str]:
 	"""Helper function to resolve braille table file names to file paths.
 	This is used by the L{_resolveTable} function to abstract the inner workings
 	from the ctypes related conversion of input and output.
@@ -119,7 +160,7 @@ def louis_log(level, message):
 	if not log.isEnabledFor(NVDALevel):
 		return
 	message = message.decode("ASCII")
-	codepath = "liblouis at internal log level %d" % level
+	codepath = "liblouis at internal log level %d" % level  # noqa: UP031
 	log._log(NVDALevel, message, [], codepath=codepath)
 
 
@@ -152,14 +193,22 @@ def terminate():
 def translate(
 	tableList: list[str],
 	inbuf: str,
-	typeform: list[int] | None = None,
+	typeform: Sequence[Typeform] | None = None,
 	cursorPos: int | None = None,
-	mode: int = 0,
+	mode: TranslationMode = TranslationMode.NONE,
 ) -> tuple[list[int], list[int], list[int], int | None]:
-	"""
-	Convenience wrapper for louis.translate that:
-	* returns a list of integers instead of a string with cells, and
-	* distinguishes between cursor position 0 (cursor at first character) and None (no cursor at all)
+	"""Translate text into braille cells.
+
+	:param tableList: The braille tables to translate with.
+	:param inbuf: The text to translate.
+	:param typeform: A :class:`Typeform` value for every character in ``inbuf``,
+		or ``None`` for no formatting.
+	:param cursorPos: The position of the cursor in ``inbuf``,
+		or ``None`` if there is no cursor.
+	:param mode: Additional modes to translate with.
+	:return: A tuple of the braille cells, a list of input positions for every output position,
+		a list of output positions for every input position,
+		and the position of the cursor in the cells, which is ``None`` when ``cursorPos`` is ``None``.
 	"""
 	text = inbuf.replace("\0", "")
 	braille, brailleToRawPos, rawToBraillePos, brailleCursorPos = louis.translate(
@@ -168,11 +217,44 @@ def translate(
 		# liblouis mutates typeform if it is a list.
 		typeform=tuple(typeform) if isinstance(typeform, list) else typeform,
 		cursorPos=cursorPos or 0,
-		mode=mode,
+		mode=mode | louis.dotsIO,
 	)
-	# liblouis gives us back a character string of cells, so convert it to a list of ints.
-	# For some reason, the highest bit is set, so only grab the lower 8 bits.
-	braille = [ord(cell) & 255 for cell in braille]
+	# liblouis gives us back a character string of cells with _DOTS_IO_START set,
+	# so convert it to a list of ints holding the lower 8 bits.
+	braille = [ord(cell) & 0xFF for cell in braille]
 	if cursorPos is None:
 		brailleCursorPos = None
 	return braille, brailleToRawPos, rawToBraillePos, brailleCursorPos
+
+
+def backTranslate(
+	tableList: list[str],
+	cells: list[int],
+	mode: TranslationMode = TranslationMode.NONE,
+) -> str:
+	"""Back translate braille cells into text.
+
+	:param tableList: The braille tables to translate with.
+	:param cells: The braille cells to back translate.
+		Every cell is masked to a byte.
+	:param mode: Additional modes to translate with.
+	:return: The back translated text.
+		Cells with dot patterns that are undefined in the tables are omitted.
+	"""
+	inbuf = "".join(chr((cell & 0xFF) | _DOTS_IO_START) for cell in cells)
+	return louis.backTranslate(
+		tableList,
+		inbuf,
+		mode=mode | louis.dotsIO | louis.noUndefinedDots,
+	)[0]
+
+
+def getTableLanguage(table: str) -> str | None:
+	"""Get the language of a braille table, if specified in the table file."""
+	lang = louis.getTableInfo(table, "language")
+	return languageHandler.normalizeLanguage(lang) if lang else None
+
+
+def getLouisVersion() -> str:
+	"""Get version information for liblouis."""
+	return louis.version()

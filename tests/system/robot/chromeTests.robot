@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019-2025 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2019-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -246,6 +246,14 @@ styleNav
 	[Documentation]	Same style navigation
 	[Tags]	chrome_misc
 	test_styleNav
+Clickable navigation
+	[Documentation]	Navigate between clickable elements using unassigned quick navigation commands
+	[Tags]	chrome_misc
+	test_clickableNavigation
+Native selection mode focus mode caret movement
+	[Documentation]	The caret can be moved in focus mode while native selection mode is enabled (#19075)
+	[Tags]	chrome_misc
+	test_nativeSelectionMode_focusModeCaretMovement
 
 ## chrome_link tests
 ### Link destination reporting (NVDA+K)

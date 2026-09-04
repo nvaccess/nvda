@@ -23,17 +23,6 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <windows.h>
 #include <objbase.h>
 
-// Tracks information about a COM interface registered in-process
-typedef struct {
-	// The name of the interface (for debugging)
-	std::wstring name;
-	// The unique identifier of the interface
-	IID iid;
-	// The CLSID of the original class object that handled creating / proxying of this interface.
-	// Used when unregistering, so we can put things back the way they were
-	CLSID clsid;
-} PSClsidBackup_t;
-
 // Represents the registration of a COM proxy dll and its interfaces.
 // this can be used for later unregistration of the COM proxy dll
 typedef struct {
@@ -41,8 +30,7 @@ typedef struct {
 	std::wstring dllPath;
 	// The cookie returned by CoRegisterClassObject, for later unregistration via CoRevokeClassObject
 	ULONG_PTR classObjectRegistrationCookie;
-	// Information for all the interfaces registered for this proxy dll via CoRegisterPSClsid
-	std::vector<PSClsidBackup_t> psClsidBackups;
+	std::map<std::wstring, IID> registeredInterfaces;
 } COMProxyRegistration_t;
 
 /* Registers a COM proxy dll and all its interfaces for this process so that they can be marshalled to/from other processes
@@ -56,5 +44,30 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath);
 	@return true if successful, false otherwise
 	*/
 bool unregisterCOMProxy(COMProxyRegistration_t* reg);
+
+/* Registers a proxy for the specified interface, and backs up the original proxy CLSID for later restoration.
+	@param interfaceName the name of the interface (for debugging)
+	@param dllPath the relative path to the proxy dll (relative from this dll)
+	@param iid the IID of the interface to register the proxy for
+	@param clsid the CLSID of the proxy to register for this interface
+	@return true if successful, false otherwise
+	*/
+bool registerInterfaceProxy(std::wstring interfaceName, std::wstring dllPath, IID iid, CLSID clsid);
+
+/* Unregisters the proxy for the specified interface, restoring the original proxy CLSID if it was changed when registering the proxy.
+	@param iid the IID of the interface to unregister the proxy for
+	@return void
+	*/
+bool unregisterInterfaceProxy(IID iid);
+
+/* Clears the cache used for storing generated proxy CLSIDs for dlls. Should be called when NVDA unloads from this process to free cached CLSIDs.
+	@return void
+	*/
+void clearCOMProxyRegistrationCache();
+
+/* Clears the cache used for storing original proxy CLSIDs for interfaces. Should be called when NVDA unloads from this process to free cached CLSIDs.
+	@return void
+	*/
+void clearInterfaceProxyBackups();
 
 #endif

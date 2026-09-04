@@ -3,12 +3,13 @@
 # See the file COPYING for more details.
 # Copyright (C) 2010-2024 NV Access Limited, Cyrille Bougot
 
-import controlTypes
+import controlTypes  # noqa: I001
 import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import EditableTextWithSuggestions
 import speech
 import braille
+import braille.regions.properties
 import ui
 import api
 from speech import sayAll
@@ -21,7 +22,7 @@ SCRCAT_ECLIPSE = _("Eclipse")
 
 class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 	def event_suggestionsClosed(self):
-		super(EclipseTextArea, self).event_suggestionsClosed()
+		super().event_suggestionsClosed()
 		self.appModule.selectedItem = None
 		self.appModule.selectedItemName = None
 
@@ -33,13 +34,13 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		pass
 
 	def event_caret(self):
-		super(EclipseTextArea, self).event_caret()
+		super().event_caret()
 
 		# Check suggestion item and close the list if it is not valid
 		try:
 			if self.appModule.selectedItem and not self.appModule.selectedItem.name:
 				self.event_suggestionsClosed()
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 	@script(
@@ -79,7 +80,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 
 		# In XML documents this is different, maybe in other editors too
 		# so we try to locate the root window again
-		if not rootDocumentationWindow or not rootDocumentationWindow.appModule == self.appModule:
+		if not rootDocumentationWindow or not rootDocumentationWindow.appModule == self.appModule:  # noqa: SIM201
 			try:
 				rootDocumentationWindow = self.appModule.selectedItem.parent.parent.parent.parent.previous
 			except AttributeError:
@@ -155,7 +156,7 @@ class AutocompletionListItem(IAccessible):
 			# Simply calling `reportFocus` doesn't output the text in braille
 			# and reporting with `ui.message` needs an extra translation string when reporting position info
 			braille.handler.message(
-				braille.getPropertiesBraille(
+				braille.regions.properties.getPropertiesBraille(
 					name=self.name,
 					role=self.role,
 					positionInfo=self.positionInfo,
@@ -171,7 +172,7 @@ class AppModule(appModuleHandler.AppModule):
 	selectedItemName = None
 
 	def __init__(self, processID, appName=None):
-		super(AppModule, self).__init__(processID, appName)
+		super().__init__(processID, appName)
 
 	def event_NVDAObject_init(self, obj):
 		if (
@@ -203,5 +204,5 @@ class AppModule(appModuleHandler.AppModule):
 				)
 			):
 				clsList.insert(0, AutocompletionListItem)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass

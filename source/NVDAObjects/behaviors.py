@@ -1,16 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen, Cyrille Bougot, Ethin Probst
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
 """
 
-import os
+import os  # noqa: I001
 import time
 import threading
+import math
+from typing import Literal
 import tones
 import queueHandler
 import eventHandler
@@ -26,19 +28,21 @@ from scriptHandler import script
 import api
 import ui
 import braille
+import braille.regions.properties
 import core
 import nvwave
 import globalVars
-from typing import List, Union
+from collections.abc import Generator
 import diffHandler
 from config.configFlags import (
 	TypingEcho,
 	ReportSpellingErrors,
 )
+from speech.extensions import pre_speechCanceled
 
 
 class ProgressBar(NVDAObject):
-	progressValueCache = {}  # key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage
+	progressValueCache = {}  # key is made of "speech" or "beep" and an x,y coordinate, value is the last percentage  # noqa: RUF012
 
 	def event_valueChange(self):
 		pbConf = config.conf["presentation"]["progressBarUpdates"]
@@ -48,13 +52,13 @@ class ProgressBar(NVDAObject):
 			or controlTypes.State.INVISIBLE in states
 			or controlTypes.State.OFFSCREEN in states
 		):
-			return super(ProgressBar, self).event_valueChange()
+			return super().event_valueChange()
 		val = self.value
 		try:
 			percentage = min(max(0.0, float(val.strip("%\0"))), 100.0)
 		except (AttributeError, ValueError):
-			log.debugWarning("Invalid value: %r" % val)
-			return super(ProgressBar, self).event_valueChange()
+			log.debugWarning("Invalid value: %r" % val)  # noqa: UP031
+			return super().event_valueChange()
 		braille.handler.handleUpdate(self)
 		if not pbConf["reportBackgroundProgressBars"] and not self.isInForeground:
 			return
@@ -64,14 +68,14 @@ class ProgressBar(NVDAObject):
 			left = top = width = height = 0
 		x = left + (width // 2)
 		y = top + (height // 2)
-		lastBeepProgressValue = self.progressValueCache.get("beep,%d,%d" % (x, y), None)
+		lastBeepProgressValue = self.progressValueCache.get("beep,%d,%d" % (x, y), None)  # noqa: UP031
 		if pbConf["progressBarOutputMode"] in ("beep", "both") and (
 			lastBeepProgressValue is None
 			or abs(percentage - lastBeepProgressValue) >= pbConf["beepPercentageInterval"]
 		):
 			tones.beep(pbConf["beepMinHZ"] * 2 ** (percentage / 25.0), 40)
-			self.progressValueCache["beep,%d,%d" % (x, y)] = percentage
-		lastSpeechProgressValue = self.progressValueCache.get("speech,%d,%d" % (x, y), None)
+			self.progressValueCache["beep,%d,%d" % (x, y)] = percentage  # noqa: UP031
+		lastSpeechProgressValue = self.progressValueCache.get("speech,%d,%d" % (x, y), None)  # noqa: UP031
 		if pbConf["progressBarOutputMode"] in ("speak", "both") and (
 			lastSpeechProgressValue is None
 			or abs(percentage - lastSpeechProgressValue) >= pbConf["speechPercentageInterval"]
@@ -82,7 +86,7 @@ class ProgressBar(NVDAObject):
 				# Translators: This is presented to inform the user of a progress bar percentage.
 				ngettext("%d percent", "%d percent", percentage) % percentage,
 			)
-			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage
+			self.progressValueCache["speech,%d,%d" % (x, y)] = percentage  # noqa: UP031
 
 
 class Dialog(NVDAObject):
@@ -177,7 +181,7 @@ class Dialog(NVDAObject):
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText = child.basicText
 				isNameIncluded = True
-			if not isNameIncluded:
+			if not isNameIncluded:  # noqa: SIM102
 				# The label isn't in the text, so explicitly include it first.
 				if childName:
 					textList.append(childName)
@@ -186,7 +190,7 @@ class Dialog(NVDAObject):
 		return "\n".join(textList)
 
 	def _get_description(self):
-		superDesc = super(Dialog, self).description
+		superDesc = super().description
 		if superDesc and not superDesc.isspace():
 			# The object already provides a useful description, so don't override it.
 			return superDesc
@@ -197,7 +201,7 @@ class Dialog(NVDAObject):
 	def _get_isPresentableFocusAncestor(self):
 		# Only fetch this the first time it is requested,
 		# as it is very slow due to getDialogText and the answer shouldn't change anyway.
-		self.isPresentableFocusAncestor = res = super(Dialog, self).isPresentableFocusAncestor
+		self.isPresentableFocusAncestor = res = super().isPresentableFocusAncestor
 		return res
 
 
@@ -266,7 +270,7 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 			# The one before that is the last of the word, which is what we want.
 			info.move(textInfos.UNIT_CHARACTER, -2)
 			info.expand(textInfos.UNIT_CHARACTER)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# Focus probably moved.
 			log.debugWarning("Error fetching last character of previous word", exc_info=True)
 			return
@@ -278,7 +282,7 @@ class EditableTextBase(editableText.EditableText, NVDAObject):
 		def _delayedDetection():
 			try:
 				fields = info.getTextWithFields()
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning(
 					"Error fetching formatting for last character of previous word",
 					exc_info=True,
@@ -381,12 +385,18 @@ class LiveText(NVDAObject):
 	# If the text is live, this is definitely content.
 	presentationType = NVDAObject.presType_content
 
+	MAX_LINES: int = 100
+	"""The maximum number of lines that will be reported when a large number of lines are queued.
+	Subclasses may override this to allow custom line reporting batches.
+	"""
 	announceNewLineText = False
 
 	def initOverlayClass(self):
 		self._event = threading.Event()
 		self._monitorThread = None
 		self._keepMonitoring = False
+		self._reportNewLinesGenID: int | None = None
+		pre_speechCanceled.register(self._onSpeechCanceled)
 
 	def startMonitoring(self):
 		"""Start monitoring for new text.
@@ -415,6 +425,9 @@ class LiveText(NVDAObject):
 		self._keepMonitoring = False
 		self._event.set()
 		self._monitorThread = None
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
 
 	def event_textChange(self):
 		"""Fired when the text changes.
@@ -422,7 +435,7 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
+	def _get_diffAlgo(self) -> Literal[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
 		This property controls which diffing algorithm should be used by
 		this object. If the object contains a strictly contiguous
@@ -451,14 +464,52 @@ class LiveText(NVDAObject):
 		ti = self.makeTextInfo(textInfos.POSITION_ALL)
 		return self.diffAlgo._getText(ti)
 
-	def _reportNewLines(self, lines):
+	def _reportNewLines(self, lines: list[str]) -> None:
 		"""
 		Reports new lines of text using _reportNewText for each new line.
 		Subclasses may override this method to provide custom filtering of new text,
 		where logic depends on multiple lines.
 		"""
-		for line in lines:
-			self._reportNewText(line)
+		if self.MAX_LINES > 0:
+			droppedCount = len(lines) - self.MAX_LINES
+			if droppedCount > 0:
+				if (
+					config.conf["terminals"]["beepForSkippedLines"]
+					and speech.getState().speechMode == speech.SpeechMode.talk
+				):
+					SKIPPED_LINES_BEEP_HZ = 550
+					tones.beep(
+						SKIPPED_LINES_BEEP_HZ,
+						self._getSkippedLinesBeepLength(droppedCount),
+					)
+				lines = lines[-self.MAX_LINES :]
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
+		self._reportNewLinesGenID = queueHandler.registerGeneratorObject(self._reportNewLinesGenerator(lines))
+
+	def _getSkippedLinesBeepLength(self, droppedCount: int) -> int:
+		SKIPPED_LINES_BEEP_MIN_DURATION_MS = 10
+		SKIPPED_LINES_BEEP_MAX_DURATION_MS = 100
+		droppedCount = max(droppedCount, 1)
+		ratio = 1.0 if self.MAX_LINES <= 1 else min(1.0, math.log(droppedCount, self.MAX_LINES))
+		lengthRange = SKIPPED_LINES_BEEP_MAX_DURATION_MS - SKIPPED_LINES_BEEP_MIN_DURATION_MS
+		return round(SKIPPED_LINES_BEEP_MIN_DURATION_MS + lengthRange * ratio)
+
+	def _reportNewLinesGenerator(self, lines: list[str]) -> Generator[None]:
+		YIELD_EVERY = 5  # Sweet spot between yielding on every line and a batch
+		try:
+			for i, line in enumerate(lines, 1):
+				self._reportNewText(line)
+				if i % YIELD_EVERY == 0:
+					yield
+		finally:
+			self._reportNewLinesGenID = None
+
+	def _onSpeechCanceled(self) -> None:
+		if self._reportNewLinesGenID is not None:
+			queueHandler.cancelGeneratorObject(self._reportNewLinesGenID)
+			self._reportNewLinesGenID = None
 
 	def _reportNewText(self, line):
 		"""Report a line of new text."""
@@ -503,7 +554,7 @@ class LiveText(NVDAObject):
 			except:  # noqa: E722
 				log.exception("Error getting or calculating new text")
 
-	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
+	def _calculateNewText(self, newText: str, oldText: str) -> list[str]:
 		return self.diffAlgo.diff(newText, oldText)
 
 
@@ -516,11 +567,11 @@ class Terminal(LiveText, EditableText):
 	role = controlTypes.Role.TERMINAL
 
 	def event_gainFocus(self):
-		super(Terminal, self).event_gainFocus()
+		super().event_gainFocus()
 		self.startMonitoring()
 
 	def event_loseFocus(self):
-		super(Terminal, self).event_loseFocus()
+		super().event_loseFocus()
 		self.stopMonitoring()
 
 	def _get_caretMovementDetectionUsesEvents(self):
@@ -549,7 +600,7 @@ class EnhancedTermTypedCharSupport(Terminal):
 	_supportsTextChange = True
 	#: A queue of typed characters, to be dispatched on C{textChange}.
 	#: This queue allows NVDA to suppress typed passwords when needed.
-	_queuedChars = []
+	_queuedChars = []  # noqa: RUF012
 	#: Whether the last typed character is a tab.
 	#: If so, we should temporarily disable filtering as completions may
 	#: be short.
@@ -630,8 +681,6 @@ class KeyboardHandlerBasedTypedCharSupport(EnhancedTermTypedCharSupport):
 	Rather, it instructs keyboardHandler to use the toUnicodeEx Windows function, in particular
 	the flag to preserve keyboard state available in Windows 10 1607
 	and later."""
-
-	pass
 
 
 class CandidateItem(NVDAObject):
@@ -775,7 +824,7 @@ class RowWithFakeNavigation(NVDAObject):
 	def reportFocus(self):
 		col = self._savedColumnNumber
 		if not col:
-			return super(RowWithFakeNavigation, self).reportFocus()
+			return super().reportFocus()
 		self.__class__._savedColumnNumber = None
 		self._moveToColumnNumber(col)
 
@@ -915,7 +964,7 @@ class _FakeTableCell(NVDAObject):
 	role = controlTypes.Role.TABLECELL
 
 	def __init__(self, parent=None, column=None):
-		super(_FakeTableCell, self).__init__()
+		super().__init__()
 		self.parent = parent
 		self.columnNumber = column
 		try:
@@ -995,7 +1044,9 @@ class ToolTip(NVDAObject):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 
 class Notification(NVDAObject):
@@ -1009,7 +1060,9 @@ class Notification(NVDAObject):
 			return
 		speech.speakObject(self, reason=controlTypes.OutputReason.FOCUS)
 		# Ideally, we wouldn't use getPropertiesBraille directly.
-		braille.handler.message(braille.getPropertiesBraille(name=self.name, role=self.role))
+		braille.handler.message(
+			braille.regions.properties.getPropertiesBraille(name=self.name, role=self.role),
+		)
 
 	event_show = event_alert
 
@@ -1021,6 +1074,6 @@ class WebDialog(NVDAObject):
 	"""
 
 	def _get_shouldCreateTreeInterceptor(self):
-		if self.parent.treeInterceptor:
+		if self.parent.treeInterceptor:  # noqa: SIM103
 			return True
 		return False

@@ -11,8 +11,8 @@ void inProcess_initialize();
 void inProcess_terminate();
 
 #include <functional>
+UINT getExecInThreadMessage();
 typedef std::function<void()> execInThread_funcType;
 bool execInThread(long threadID, execInThread_funcType func);
-
 
 #endif

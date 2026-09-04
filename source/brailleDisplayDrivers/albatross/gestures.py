@@ -5,14 +5,10 @@
 
 """Gesture handling for Tivomatic Caiku Albatross 46 and 80 display driver."""
 
-from logHandler import log
-from typing import (
-	Optional,
-	Set,
-	Tuple,
-)
+from logHandler import log  # noqa: I001
 
 import braille
+import braille.display.gesture
 import inputCore
 
 from .constants import (
@@ -44,6 +40,7 @@ _gestureMap = inputCore.GlobalGestureMap(
 				"br(albatross):rWheelRight",
 			),
 			"braille_routeTo": ("br(albatross):routing",),
+			"braille_selectRange": ("br(albatross):home1+multiRouting", "br(albatross):home2+multiRouting"),
 			"braille_reportFormatting": ("br(albatross):secondRouting",),
 			"braille_toggleFocusContextPresentation": ("br(albatross):attribute1+attribute3",),
 			"speechMode": ("br(albatross):attribute2+attribute4",),
@@ -83,10 +80,10 @@ _gestureMap = inputCore.GlobalGestureMap(
 )
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	"""Changes display key presses to gestures for NVDA input system."""
 
-	def __init__(self, keys: Set[int], name: str):
+	def __init__(self, keys: set[int], name: str):
 		"""Constructor.
 		@param key: set of pressed keys
 		@param name: identifies gestures from this display
@@ -95,22 +92,30 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 		self.source = name
 		self.keyCodes = set(keys)
 		names = []
+		cellIndexesByRange: dict[str, list[int]] = {}
 		for key in self.keyCodes:
 			routingTuple = self._getRoutingIndex(key)
 			if routingTuple:
-				names.append(routingTuple[0])
-				self.routingIndex = routingTuple[1]
+				rangeName, index = routingTuple
+				cellIndexesByRange.setdefault(rangeName, []).append(index)
 			else:
 				try:
 					names.append(Keys(key).name)
 				except (KeyError, ValueError):
 					log.debug(f"Unknown key with id {key}")
+		if cellIndexesByRange:
+			allIndexes: list[int] = []
+			for rangeName, indexes in sorted(cellIndexesByRange.items()):
+				indexes.sort()
+				allIndexes.extend(indexes)
+				names.append(self.idForCellCount(len(indexes), rangeName))
+			self.cellIndexes = allIndexes
 		self.id = "+".join(names)
 		# Try to fix the first valid key press was not recognized as a gesture
 		if self.id and not self.script:
 			self.script = self._get_script()
 
-	def _getRoutingIndex(self, key: int) -> Optional[Tuple[str, int]]:
+	def _getRoutingIndex(self, key: int) -> tuple[str, int] | None:
 		"""Get the routing index, if the key is in a routing index range,
 		returns the name of the range and the index within that range.
 		See L{ROUTING_KEY_RANGES}.

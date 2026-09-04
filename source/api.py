@@ -8,7 +8,7 @@
 Functions should mostly refer to getting an object (NVDAObject) or a position (TextInfo).
 """
 
-import typing
+import typing  # noqa: I001
 
 import config
 import textInfos
@@ -23,12 +23,13 @@ import winUser
 import controlTypes
 import eventHandler
 import braille
+import braille.regions.focus
 import vision
 import watchdog
 import exceptions
 import appModuleHandler
 import cursorManager
-from typing import Any, Optional
+from typing import Any
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 if typing.TYPE_CHECKING:
@@ -76,7 +77,7 @@ def setForegroundObject(obj: NVDAObjects.NVDAObject) -> bool:
 # C901 'setFocusObject' is too complex
 # Note: when working on setFocusObject, look for opportunities to simplify
 # and move logic out into smaller helper functions.
-def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
+def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:
 	"""Stores an object as the current focus object.
 	Note: this does not physically change the window with focus in the operating system,
 	but allows NVDA to keep track of the correct object.
@@ -118,7 +119,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 					f" window class {tempObj.windowClassName if isinstance(tempObj, Window) else type(tempObj)}, "
 					f"application name {tempObj.appModule.appName}",
 				)
-			except:  # noqa: E722
+			except:  # noqa: E722, S110
 				pass
 			tempObj = getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
@@ -162,7 +163,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 		try:
 			treeInterceptorObject = treeInterceptorHandler.update(o)
 		except:  # noqa: E722
-			log.error("Error updating tree interceptor", exc_info=True)
+			log.error("Error updating tree interceptor", exc_info=True)  # noqa: G201
 	# Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	# This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
 	if obj is o or obj in treeInterceptorObject:
@@ -184,7 +185,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	globalVars.focusDifferenceLevel = focusDifferenceLevel
 	globalVars.focusObject = obj
 	globalVars.focusAncestors = ancestors
-	braille.invalidateCachedFocusAncestors(focusDifferenceLevel)
+	braille.regions.focus.invalidateCachedFocusAncestors(focusDifferenceLevel)
 	if config.conf["reviewCursor"]["followFocus"]:
 		setNavigatorObject(obj, isFocus=True)
 	# Fire focusExited event for all old focus ancestors not common with the new focus
@@ -359,7 +360,7 @@ def isTypingProtected():
 	@rtype: boolean
 	"""
 	focusObject = getFocusObject()
-	if focusObject and focusObject.isProtected:
+	if focusObject and focusObject.isProtected:  # noqa: SIM103
 		return True
 	else:
 		return False
@@ -379,7 +380,7 @@ def moveMouseToNVDAObject(obj):
 
 def processPendingEvents(processEventQueue=True):
 	# Import late to avoid circular import.
-	import IAccessibleHandler
+	import IAccessibleHandler  # noqa: I001
 	import JABHandler
 	import wx
 	import queueHandler
@@ -395,7 +396,7 @@ def processPendingEvents(processEventQueue=True):
 		queueHandler.flushQueue(queueHandler.eventQueue)
 
 
-def copyToClip(text: str, notify: Optional[bool] = False) -> bool:
+def copyToClip(text: str, notify: bool | None = False) -> bool:
 	"""Copies the given text to the windows clipboard.
 	@returns: True if it succeeds, False otherwise.
 	@param text: the text which will be copied to the clipboard
@@ -434,7 +435,7 @@ def getClipData():
 		return winUser.getClipboardData(winUser.CF_UNICODETEXT) or ""
 
 
-def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
+def getStatusBar() -> NVDAObjects.NVDAObject | None:
 	"""Obtain the status bar for the current foreground object.
 	@return: The status bar object or C{None} if no status bar was found.
 	"""
@@ -448,12 +449,12 @@ def getStatusBar() -> Optional[NVDAObjects.NVDAObject]:
 	location = foreground.location
 	if not location:
 		return None
-	left, top, width, height = location
+	left, top, width, height = location  # noqa: RUF059
 	bottom = top + height - 1
 	obj = getDesktopObject().objectFromPoint(left, bottom)
 
 	# We may have landed in a child of the status bar, so search the ancestry for a status bar.
-	while obj and not obj.role == controlTypes.Role.STATUSBAR:
+	while obj and not obj.role == controlTypes.Role.STATUSBAR:  # noqa: SIM201
 		obj = obj.parent
 
 	return obj

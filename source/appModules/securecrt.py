@@ -6,7 +6,7 @@
 
 """App module for SecureCRT"""
 
-import re
+import re  # noqa: I001
 import oleacc
 from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText

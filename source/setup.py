@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 
 import argparse
 from ast import NodeTransformer, fix_missing_locations, parse
@@ -19,23 +19,23 @@ from buildVersion import (
 )
 
 gettext.install("nvda")
-from glob import glob  # noqa: E402
-import fnmatch  # noqa: E402
+from glob import glob  # noqa: I001
+import fnmatch
 
 # versionInfo names must be imported after Gettext
 # Suppress E402 (module level import not at top of file)
-from versionInfo import (  # noqa: E402
+from versionInfo import (
 	copyright as NVDAcopyright,  # copyright is a reserved python keyword
 	description,
 )
-from py2exe import freeze  # noqa: E402
-from py2exe.dllfinder import DllFinder  # noqa: E402
-import py2exe.hooks  # noqa: E402
-import wx  # noqa: E402
-import importlib.machinery  # noqa: E402
+from py2exe import freeze
+from py2exe.dllfinder import DllFinder
+import py2exe.hooks
+import wx
+import importlib.machinery
 
 if TYPE_CHECKING:
-	from ast import AnnAssign
+	from ast import AnnAssign  # noqa: I001
 	from py2exe.dllfinder import Scanner
 	from py2exe.mf310 import Module
 
@@ -313,10 +313,14 @@ freeze(
 			"virtualBuffers",
 			"appModules",
 			"comInterfaces",
+			"braille",
+			"braille.display",
+			"braille.regions",
 			"brailleDisplayDrivers",
 			"brailleDisplayDrivers.albatross",
 			"brailleDisplayDrivers.eurobraille",
 			"brailleDisplayDrivers.dotPad",
+			"brailleInput",
 			"synthDrivers",
 			"visionEnhancementProviders",
 			# Required for markdown, markdown implicitly imports this so it isn't picked up
@@ -345,14 +349,15 @@ freeze(
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
 		("documentation", ["../copying.txt"]),
-		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),
-		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),
-		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),
-		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),
+		("lib/%s/x86" % version, glob("lib/x86/*.dll") + glob("lib/x86/*.exe")),  # noqa: UP031
+		("lib/%s/x64" % version, glob("lib/x64/*.dll") + glob("lib/x64/*.exe")),  # noqa: UP031
+		("lib/%s/arm64" % version, glob("lib/arm64/*.dll") + glob("lib/arm64/*.exe")),  # noqa: UP031
+		("lib/%s/arm64ec" % version, glob("lib/arm64ec/*.dll") + glob("lib/arm64ec/*.exe")),  # noqa: UP031
 		("waves", glob("waves/*.wav")),
 		("images", glob("images/*.ico")),
 		("fonts", glob("fonts/*.ttf")),
 		("louis/tables", glob("louis/tables/*")),
+		("cppjieba/dicts", glob("cppjieba/dicts/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
 		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),

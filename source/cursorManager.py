@@ -1,12 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Joseph Lee, Derek Riemer, Davy Kager, Rob Meredith,
+# Marlon Brandão de Sousa, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Implementation of cursor managers.
 A cursor manager provides caret navigation and selection commands for a virtual text range.
 """
+
+import weakref  # noqa: I001
 
 import wx
 import core
@@ -33,18 +36,59 @@ import ui
 from textInfos import DocumentWithPageTurns
 from logHandler import log
 
+_MAX_SEARCH_HISTORY_ENTRIES = 20
+"""The maximum number of entries kept in the in-memory browse mode search history."""
+
 
 class FindDialog(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
-	"""A dialog used to specify text to find in a cursor manager."""
+	"""A dialog used to specify text to find in a cursor manager.
+
+	Only one instance can exist at a time.
+	Creating a dialog while another one is still open returns that dialog,
+	retargeted at the newly provided cursor manager and search parameters.
+	"""
 
 	helpId = "SearchingForText"
 
 	shouldSuspendConfigProfileTriggers = True
 
-	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
+	_instance: "weakref.ReferenceType[FindDialog] | None" = None
+
+	def __new__(cls, *args, **kwargs):
+		# Make this a singleton.
+		# A dialog whose underlying window has been destroyed is falsy, so a new instance is created instead.
+		inst = cls._instance() if cls._instance else None
+		if not inst:
+			return super().__new__(cls)
+		return inst
+
+	def __init__(
+		self,
+		parent: wx.Window,
+		cursorManager: "CursorManager",
+		text: str,
+		caseSensitivity: bool,
+		reverse: bool = False,
+		searchEntries: list[str] | None = None,
+	):
+		"""
+		:param parent: The parent window for this dialog.
+		:param cursorManager: The cursor manager to perform the search in.
+		:param text: The initial text of the search field.
+		:param caseSensitivity: The initial state of the case sensitivity check box.
+		:param reverse: Whether to search backwards from the caret.
+		:param searchEntries: Previously searched terms to offer in the search field,
+			most-recent first. Only used when the search history setting is enabled.
+		"""
+		inst = FindDialog._instance() if FindDialog._instance else None
+		if inst:
+			self._retarget(cursorManager, text, caseSensitivity, reverse, searchEntries)
+			return
+		# Use a weakref so the instance can die.
+		FindDialog._instance = weakref.ref(self)
 		# Translators: Title of a dialog to find text.
 		super().__init__(parent, title=_("Find"))
 
@@ -55,7 +99,16 @@ class FindDialog(
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 		# Translators: Dialog text for NvDA's find command.
 		findLabelText = _("Type the text you wish to find")
-		self.findTextField = sHelper.addLabeledControl(findLabelText, wx.TextCtrl, value=text)
+		if config.conf["virtualBuffers"]["findHistory"]:
+			self.findTextField = sHelper.addLabeledControl(
+				findLabelText,
+				wx.ComboBox,
+				choices=searchEntries or [],
+				value=text,
+				style=wx.CB_DROPDOWN,
+			)
+		else:
+			self.findTextField = sHelper.addLabeledControl(findLabelText, wx.TextCtrl, value=text)
 		# Translators: An option in find dialog to perform case-sensitive search.
 		self.caseSensitiveCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Case &sensitive"))
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
@@ -68,6 +121,34 @@ class FindDialog(
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
 		self.findTextField.SetFocus()
+
+	def _retarget(
+		self,
+		cursorManager: "CursorManager",
+		text: str,
+		caseSensitivity: bool,
+		reverse: bool,
+		searchEntries: list[str] | None,
+	) -> None:
+		"""Point this dialog at another search request.
+
+		Called when the find command is executed while this dialog is still open,
+		possibly from a different document than the one it was opened for.
+
+		:param cursorManager: The cursor manager to perform the search in.
+		:param text: The text of the search field.
+		:param caseSensitivity: The state of the case sensitivity check box.
+		:param reverse: Whether to search backwards from the caret.
+		:param searchEntries: Previously searched terms to offer in the search field, most-recent first.
+		"""
+		self.activeCursorManager = cursorManager
+		self.reverse = reverse
+		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
+		if isinstance(self.findTextField, wx.ComboBox):
+			# Setting the choices clears the value, so restore it afterwards.
+			self.findTextField.Set(searchEntries or [])
+		self.findTextField.SetValue(text)
+		self.findTextField.SelectAll()
 
 	def onOk(self, evt):
 		text = self.findTextField.GetValue()
@@ -112,8 +193,30 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	_lastFindText = ""
 	_lastCaseSensitivity = False
 
+	_searchEntries: list[str] = []  # noqa: RUF012
+	"""In-memory history of search terms, most-recent first. Cleared on restart."""
+
+	@classmethod
+	def _updateSearchHistory(cls, text: str) -> None:
+		"""Add a search term to the front of the shared search history.
+
+		:param text: The term that was just searched for.
+			An empty string is ignored.
+		"""
+		if not text:
+			return
+		# wxComboBox on Windows cannot hold two entries differing only in case,
+		# so dedup case-insensitively and keep the most recently typed casing.
+		foldedText = text.casefold()
+		for index, entry in enumerate(cls._searchEntries):
+			if entry.casefold() == foldedText:
+				del cls._searchEntries[index]
+				break
+		cls._searchEntries.insert(0, text)
+		del cls._searchEntries[_MAX_SEARCH_HISTORY_ENTRIES:]
+
 	def __init__(self, *args, **kwargs):
-		super(CursorManager, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		self.initCursorManager()
 
 	def initOverlayClass(self):
@@ -215,14 +318,31 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 			)
 		CursorManager._lastFindText = text
 		CursorManager._lastCaseSensitivity = caseSensitive
+		if config.conf["virtualBuffers"]["findHistory"]:
+			CursorManager._updateSearchHistory(text)
 
 	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
 		def run():
-			gui.mainFrame.prePopup()
-			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, reverse)
-			d.ShowModal()
-			gui.mainFrame.postPopup()
+			existingDialog = FindDialog._instance() if FindDialog._instance else None
+			if not existingDialog:
+				gui.mainFrame.prePopup()
+			d = FindDialog(
+				gui.mainFrame,
+				self,
+				self._lastFindText,
+				self._lastCaseSensitivity,
+				reverse,
+				self._searchEntries,
+			)
+			if existingDialog:
+				# The dialog is already shown modally, so prePopup was called when it was opened
+				# and its postPopup runs when that ShowModal call returns.
+				d.Raise()
+				d.findTextField.SetFocus()
+			else:
+				d.ShowModal()
+				gui.mainFrame.postPopup()
 
 		wx.CallAfter(run)
 
@@ -326,13 +446,25 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 
 	script_moveByLine_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
+	def _moveBySentence_scriptHelper(self, gesture: InputGesture, direction: int) -> None:
+		"""Move the caret by sentence, reporting documents whose text info has no sentence support.
+
+		:param gesture: The triggering gesture.
+		:param direction: 1 to move to the next sentence, -1 to move to the previous one.
+		"""
+		try:
+			self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, direction)
+		except NotImplementedError:
+			# Translators: a message when navigating by sentence is unavailable in the current document
+			ui.message(_("Navigating by sentence not supported in this document"))
+
 	def script_moveBySentence_back(self, gesture):
-		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, -1)
+		self._moveBySentence_scriptHelper(gesture, -1)
 
 	script_moveBySentence_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveBySentence_forward(self, gesture):
-		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, 1)
+		self._moveBySentence_scriptHelper(gesture, 1)
 
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
@@ -531,6 +663,19 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 	_nativeAppSelectionMode: bool = False
 	"Whether native selection mode is turned on or off"
 
+	def _initialize_nativeAppSelectionModeSupport(self) -> None:
+		"""Initialize support for native application selection mode.
+
+		Called when a browse mode document gains focus for the first time,
+		when the nativeSelectionMode setting is enabled.
+		Subclasses may override this to set the following attributes:
+
+		- ``_nativeAppSelectionModeSupported``: whether native selection mode is supported.
+		- ``_nativeAppSelectionMode``: whether native selection mode is enabled.
+
+		The base implementation leaves the class level defaults untouched.
+		"""
+
 	def script_copyToClipboard(self, gesture: inputCore.InputGesture):
 		if self._nativeAppSelectionMode:
 			gesture.send()
@@ -547,7 +692,7 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		speech.speakSelectionChange(oldTextInfo, newInfo)
 		braille.handler.handleCaretMove(self)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:pageUp": "moveByPage_back",
 		"kb:pageDown": "moveByPage_forward",
 		"kb:upArrow": "moveByLine_back",
@@ -610,10 +755,10 @@ class ReviewCursorManager(CursorManager):
 	_focusEventMustUpdateCaretPosition = True
 
 	def initCursorManager(self):
-		super(ReviewCursorManager, self).initCursorManager()
+		super().initCursorManager()
 		realTI = self.TextInfo
 		self.TextInfo = type(
-			"ReviewCursorManager_%s" % realTI.__name__,
+			"ReviewCursorManager_%s" % realTI.__name__,  # noqa: UP031
 			(_ReviewCursorManagerTextInfo, realTI),
 			{},
 		)
@@ -626,4 +771,4 @@ class ReviewCursorManager(CursorManager):
 			sel = self._selection.copy()
 			sel.collapse()
 			return sel
-		return super(ReviewCursorManager, self).makeTextInfo(position)
+		return super().makeTextInfo(position)

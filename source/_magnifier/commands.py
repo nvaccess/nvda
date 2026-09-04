@@ -8,7 +8,7 @@ Keyboard commands for the magnifier module.
 Contains the command functions and their logic for keyboard shortcuts.
 """
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from typing import Literal
 import speech
 import ui
@@ -161,6 +161,15 @@ def pan(action: MagnifierAction) -> None:
 			ui.message(PAN_ACTION_TO_EDGE_MESSAGES[action])
 
 
+def moveMouseToView() -> None:
+	"""
+	Move the mouse cursor to the center of the magnified view.
+	"""
+	magnifier: Magnifier = getMagnifier()
+	if magnifierIsActiveVerify(magnifier, MagnifierAction.MOVE_MOUSE_TO_VIEW):
+		magnifier.moveMouseToViewCenter()
+
+
 def toggleFilter() -> None:
 	"""Cycle through color filters"""
 	magnifier: Magnifier = getMagnifier()
@@ -273,7 +282,7 @@ def toggleAllFollow() -> None:
 def toggleFullscreenMode() -> None:
 	"""Cycle through full-screen modes (center, border, relative)"""
 	magnifier: Magnifier = getMagnifier()
-	if magnifierIsActiveVerify(
+	if magnifierIsActiveVerify(  # noqa: SIM102
 		magnifier,
 		MagnifierAction.CHANGE_FULLSCREEN_MODE,
 	):
@@ -301,7 +310,7 @@ def toggleFullscreenMode() -> None:
 def startSpotlight() -> None:
 	"""Start spotlight mode in full-screen magnifier"""
 	magnifier: FullScreenMagnifier = getMagnifier()
-	if magnifierIsActiveVerify(
+	if magnifierIsActiveVerify(  # noqa: SIM102
 		magnifier,
 		MagnifierAction.START_SPOTLIGHT,
 	):

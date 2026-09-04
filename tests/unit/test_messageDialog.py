@@ -5,7 +5,7 @@
 
 """Unit tests for the message dialog API."""
 
-from copy import deepcopy
+from copy import deepcopy  # noqa: I001
 import unittest
 from unittest.mock import ANY, MagicMock, Mock, PropertyMock, patch, sentinel
 
@@ -15,10 +15,11 @@ from gui.message import (
 	_messageBoxButtonStylesToMessageDialogButtons,
 )
 from parameterized import parameterized
-from typing import Any, Iterable, NamedTuple
+from typing import Any, NamedTuple
+from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor
 
-from gui.message import Button
+from gui.message import Button, displayDialogAsModal
 from gui.message import MessageDialog
 
 
@@ -70,8 +71,8 @@ class AddDefaultButtonHelpersArgList(NamedTuple):
 
 class MethodCall(NamedTuple):
 	name: str
-	args: tuple[Any, ...] = tuple()
-	kwargs: dict[str, Any] = dict()
+	args: tuple[Any, ...] = tuple()  # noqa: C408
+	kwargs: dict[str, Any] = dict()  # noqa: C408, RUF012
 
 
 class FocusBlockingInstancesDialogs(NamedTuple):
@@ -481,18 +482,16 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_setFallbackActionNonexistantAction(self):
 		"""Test that setting the fallback action to an action that has not been set up results in KeyError, and that a fallback action is returned from getFallbackActionOrFallback."""
 		self.dialog.addYesNoButtons()
-		with self.subTest("Test getting the fallback action."):
-			with self.assertRaises(KeyError):
-				self.dialog.setFallbackAction(ReturnCode.APPLY)
+		with self.subTest("Test getting the fallback action."), self.assertRaises(KeyError):
+			self.dialog.setFallbackAction(ReturnCode.APPLY)
 		with self.subTest("Test getting the fallback fallback action."):
 			self.assertIsNone(self.dialog._getFallbackAction())
 
 	def test_setFallbackActionNonclosingAction(self):
 		"""Check that setting the fallback action to an action that does not close the dialog fails with a ValueError."""
 		self.dialog.addOkButton().addApplyButton(closesDialog=False)
-		with self.subTest("Test setting the fallback action."):
-			with self.assertRaises(ValueError):
-				self.dialog.setFallbackAction(ReturnCode.APPLY)
+		with self.subTest("Test setting the fallback action."), self.assertRaises(ValueError):
+			self.dialog.setFallbackAction(ReturnCode.APPLY)
 
 	def test_getFallbackActionOrFallbackNoControls(self):
 		"""Test that getFallbackActionOrFallback returns wx.ID_NONE and a close command with no callback when the dialog has no buttons."""
@@ -557,30 +556,26 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 class Test_MessageDialog_Threading(WxTestBase):
 	def test_newOnNonmain(self):
 		"""Test that creating a MessageDialog on a non GUI thread fails."""
-		with ThreadPoolExecutor(max_workers=1) as tpe:
-			with self.assertRaises(RuntimeError):
-				tpe.submit(MessageDialog.__new__, MessageDialog).result()
+		with ThreadPoolExecutor(max_workers=1) as tpe, self.assertRaises(RuntimeError):
+			tpe.submit(MessageDialog.__new__, MessageDialog).result()
 
 	def test_initOnNonMain(self):
 		"""Test that initializing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog.__new__(MessageDialog)
-		with ThreadPoolExecutor(max_workers=1) as tpe:
-			with self.assertRaises(RuntimeError):
-				tpe.submit(dlg.__init__, None, "Test").result()
+		with ThreadPoolExecutor(max_workers=1) as tpe, self.assertRaises(RuntimeError):
+			tpe.submit(dlg.__init__, None, "Test").result()
 
 	def test_showOnNonMain(self):
 		"""Test that showing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog(None, "Test")
-		with ThreadPoolExecutor(max_workers=1) as tpe:
-			with self.assertRaises(RuntimeError):
-				tpe.submit(dlg.Show).result()
+		with ThreadPoolExecutor(max_workers=1) as tpe, self.assertRaises(RuntimeError):
+			tpe.submit(dlg.Show).result()
 
 	def test_showModalOnNonMain(self):
 		"""Test that showing a MessageDialog modally on a non-GUI thread fails."""
 		dlg = MessageDialog(None, "Test")
-		with ThreadPoolExecutor(max_workers=1) as tpe:
-			with self.assertRaises(RuntimeError):
-				tpe.submit(dlg.ShowModal).result()
+		with ThreadPoolExecutor(max_workers=1) as tpe, self.assertRaises(RuntimeError):
+			tpe.submit(dlg.ShowModal).result()
 
 
 @patch.object(wx.Dialog, "Show")
@@ -618,6 +613,22 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 			mocked_showModal.assert_called_once()
 			mocked_messageBoxCounter.__iadd__.assert_called_once()
 			mocked_messageBoxCounter.__isub__.assert_called_once()
+
+
+@patch("gui.mainFrame")
+class Test_DisplayDialogAsModal(unittest.TestCase):
+	def test_dialogDeletedDuringShowModal(self, mocked_mainFrame: MagicMock) -> None:
+		"""The dialog must not be accessed after ShowModal returns."""
+		dialog = MagicMock(spec_set=wx.Dialog)
+		dialog.GetParent.side_effect = (None, RuntimeError("wrapped C/C++ object has been deleted"))
+		dialog.ShowModal.return_value = wx.ID_YES
+
+		self.assertEqual(wx.ID_YES, displayDialogAsModal(dialog))
+
+		dialog.GetParent.assert_called_once()
+		dialog.ShowModal.assert_called_once()
+		mocked_mainFrame.prePopup.assert_called_once()
+		mocked_mainFrame.postPopup.assert_called_once()
 
 
 class Test_MessageDialog_EventHandlers(MDTestBase):
@@ -743,7 +754,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		(
 			BlockingInstancesExistArgList(
 				label="noInstances",
-				instances=tuple(),
+				instances=tuple(),  # noqa: C408
 				expectedBlockingInstancesExist=False,
 			),
 			BlockingInstancesExistArgList(

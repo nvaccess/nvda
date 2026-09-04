@@ -12,7 +12,7 @@ Drivers distributed with NVDA do this at the bottom of this module.
 For drivers in add-ons, this must be done in a global plugin.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field  # noqa: I001
 from functools import partial
 import itertools
 import threading
@@ -27,6 +27,8 @@ from collections.abc import Callable, Generator, Iterable, Iterator
 import hwPortUtils
 import NVDAState
 import braille
+import braille.display
+import braille.display.driver
 import winUser
 import config
 import appModuleHandler
@@ -42,7 +44,7 @@ HID_USAGE_PAGE_BRAILLE = 0x41
 
 DBT_DEVNODES_CHANGED = 7
 
-USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
+USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.UNICODE)
 
 
 class ProtocolType(StrEnum):
@@ -63,7 +65,7 @@ class CommunicationType(StrEnum):
 
 class _DeviceTypeMeta(type):
 	# Mapping old attributes to the new enums
-	_mapping = {
+	_mapping = {  # noqa: RUF012
 		"HID": ProtocolType.HID,
 		"SERIAL": ProtocolType.SERIAL,
 		"CUSTOM": ProtocolType.CUSTOM,
@@ -83,8 +85,6 @@ class _DeviceTypeMeta(type):
 class DeviceType(metaclass=_DeviceTypeMeta):
 	"""This class is kept for backwards compatibility.
 	Former members were split into the L{ProtocolType} and L{CommunicationType} enums."""
-
-	...
 
 
 def __getattr__(attrName: str) -> Any:
@@ -108,7 +108,7 @@ def __getattr__(attrName: str) -> Any:
 			f"Use bdDetect.{replacementSymbol.__class__.__name__}.{replacementSymbol.value} instead. ",
 		)
 		return replacementSymbol.value
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class DeviceMatch(NamedTuple):
@@ -321,7 +321,7 @@ def getDriversForPossibleBluetoothDevices(
 			yield (hidName, match)
 
 
-type btDevsCacheT = list[DriverAndDeviceMatch] | None
+type btDevsCacheT = list[DriverAndDeviceMatch] | None  # noqa: PYI042
 
 
 class _DeviceInfoFetcher(AutoPropertyObject):
@@ -707,7 +707,7 @@ def driverSupportsAutoDetection(driver: str) -> bool:
 	@return: C{True} if de driver supports auto detection, C{False} otherwise.
 	"""
 	try:
-		driverCls = braille._getDisplayDriver(driver)
+		driverCls = braille.display._getDisplayDriver(driver)
 	except ImportError:
 		return False
 	return driverCls.isThreadSafe and driverCls.supportsAutomaticDetection
@@ -723,8 +723,8 @@ def driverIsEnabledForAutoDetection(driver: str) -> bool:
 
 def getSupportedBrailleDisplayDrivers(
 	onlyEnabled: bool = False,
-) -> Generator[type["braille.BrailleDisplayDriver"], Any, Any]:
-	return braille.getDisplayDrivers(
+) -> Generator[type["braille.display.driver.BrailleDisplayDriver"], Any, Any]:
+	return braille.display.getDisplayDrivers(
 		lambda d: (
 			d.isThreadSafe
 			and d.supportsAutomaticDetection
@@ -768,7 +768,7 @@ def terminate():
 class DriverRegistrar:
 	"""An object to facilitate registration of drivers in the bdDetect system.
 	It is instanciated for a specific driver and
-	passed to L{braille.BrailleDisplayDriver.registerAutomaticDetection}.
+	passed to L{braille.display.driver.BrailleDisplayDriver.registerAutomaticDetection}.
 	"""
 
 	_driver: str

@@ -3,8 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import threading
-from typing import Optional, Set, Tuple
+import threading  # noqa: I001
 
 import api
 import braille
@@ -35,22 +34,22 @@ from .protocol import hostPortToAddress
 from .transport import RelayTransport
 
 # Type aliases
-KeyModifier = Tuple[int, bool]  # (vk_code, extended)
-Address = Tuple[str, int]  # (hostname, port)
+KeyModifier = tuple[int, bool]  # (vk_code, extended)
+Address = tuple[str, int]  # (hostname, port)
 
 
 class RemoteClient:
-	localScripts: Set[scriptHandler._ScriptFunctionT]
+	localScripts: set[scriptHandler._ScriptFunctionT]
 	localMachine: LocalMachine
-	leaderSession: Optional[LeaderSession]
-	followerSession: Optional[FollowerSession]
-	keyModifiers: Set[KeyModifier]
-	hostPendingModifiers: Set[KeyModifier]
+	leaderSession: LeaderSession | None
+	followerSession: FollowerSession | None
+	keyModifiers: set[KeyModifier]
+	hostPendingModifiers: set[KeyModifier]
 	hostPendingNonmodifier: KeyModifier | None
 	_connecting: bool
-	leaderTransport: Optional[RelayTransport]
-	followerTransport: Optional[RelayTransport]
-	localControlServer: Optional[server.LocalRelayServer]
+	leaderTransport: RelayTransport | None
+	followerTransport: RelayTransport | None
+	localControlServer: server.LocalRelayServer | None
 	sendingKeys: bool
 	sdHandler: SecureDesktopHandler | None
 
@@ -65,10 +64,11 @@ class RemoteClient:
 		self.localMachine = LocalMachine()
 		self.followerSession = None
 		self.leaderSession = None
-		self.menu: Optional[RemoteMenu] = None
+		self.menu: RemoteMenu | None = None
 		if not isRunningOnSecureDesktop():
-			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
+			self.menu: RemoteMenu | None = RemoteMenu(self)
 		self._connecting = False
+		self._followerConnectFailures: int = 0
 		urlHandler.registerURLHandler()
 		self.leaderTransport = None
 		self.followerTransport = None
@@ -79,7 +79,7 @@ class RemoteClient:
 		try:
 			self.sdHandler = SecureDesktopHandler()
 		except RuntimeError:
-			log.error("Failed to initialise the secure desktop handler.", exc_info=True)
+			log.error("Failed to initialise the secure desktop handler.", exc_info=True)  # noqa: G201
 			self.sdHandler = None
 		else:
 			if isRunningOnSecureDesktop():
@@ -258,7 +258,7 @@ class RemoteClient:
 						log.info("Remote disconnection cancelled by user.")
 						return
 				except Exception:
-					log.error("Error showing disconnect confirmation dialog", exc_info=True)
+					log.error("Error showing disconnect confirmation dialog", exc_info=True)  # noqa: G201
 					return
 				finally:
 					self._disconnectConfirmationDialog = None
@@ -317,6 +317,33 @@ class RemoteClient:
 				# Translators: Message shown when unable to connect to the remote computer.
 				message=_("Unable to connect to the remote computer"),
 				style=wx.OK | wx.ICON_WARNING,
+			)
+
+	@alwaysCallAfter
+	def onConnectAsFollowerFailed(self):
+		"""Notify the user when initially connecting as the controlled computer fails.
+
+		:note: Connection attempts continue in the background
+			(:class:`~.transport.ConnectorThread` retries roughly every 5 seconds),
+			so a transient message is used rather than a dialog,
+			and only for the first failed attempt of a connection that has never succeeded.
+			The retry loop must not be stopped here,
+			as unattended autoconnect relies on it (see #20131).
+			This is logged as a warning rather than an error,
+			as NVDA has not given up on the connection.
+		"""
+		if self.followerTransport is None or self.followerTransport.successfulConnects > 0:
+			return
+		self._followerConnectFailures += 1
+		if self._followerConnectFailures == 1:
+			log.warning(f"Failed to connect to {self.followerTransport.address}. Retrying.")
+			ui.delayedMessage(
+				pgettext(
+					"remote",
+					# Translators: Reported when connecting as the controlled computer fails.
+					# NVDA will keep trying to connect in the background.
+					"Unable to connect to the Remote Access server. Retrying",
+				),
 			)
 
 	def doConnect(self, evt: inputCore.InputGesture = None):
@@ -430,10 +457,12 @@ class RemoteClient:
 		if self.sdHandler is not None:
 			self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
+		self._followerConnectFailures = 0
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onFollowerCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsFollower)
+		transport.transportConnectionFailed.register(self.onConnectAsFollowerFailed)
 		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:
@@ -472,7 +501,7 @@ class RemoteClient:
 				)
 			if a == wx.ID_YES or a == wx.ID_NO:
 				return True
-		except Exception as ex:
+		except Exception as ex:  # noqa: BLE001
 			log.error(ex)
 		return False
 

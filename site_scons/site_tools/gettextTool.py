@@ -26,7 +26,7 @@ def generate(env):
 	env["BUILDERS"]["gettextMoFile"] = env.Builder(
 		action=env.Action(
 			[[MSGFMT, "-o", "$TARGET", "$SOURCE"]],
-			lambda t, s, e: "Compiling gettext template %s" % s[0].path,
+			lambda t, s, e: "Compiling gettext template %s" % s[0].path,  # noqa: UP031
 		),
 		suffix=".mo",
 		src_suffix=".po",

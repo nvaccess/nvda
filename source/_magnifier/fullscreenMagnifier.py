@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -7,7 +7,7 @@
 Full-screen magnifier module.
 """
 
-from ctypes import byref
+from ctypes import byref  # noqa: I001
 from ctypes.wintypes import RECT
 from typing import override
 
@@ -219,7 +219,7 @@ class FullScreenMagnifier(Magnifier):
 			self._initializeNativeMagnification()
 			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 		except OSError:
-			log.error("Recovery failed", exc_info=True)
+			log.error("Recovery failed", exc_info=True)  # noqa: G201
 			self._conductRecoveryFailure()
 			return
 
@@ -311,6 +311,19 @@ class FullScreenMagnifier(Magnifier):
 				return self._relativePos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
+		params = self._getMagnifierParameters(coordinates)
+		centerX = params.coordinates.x + params.magnifierSize.width // 2
+		centerY = params.coordinates.y + params.magnifierSize.height // 2
+		return Coordinates(centerX, centerY)
 
 	def _relativePos(
 		self,

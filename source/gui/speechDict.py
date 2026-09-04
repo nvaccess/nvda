@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 from re import error as RegexpError
 
 import globalVars
@@ -38,7 +38,7 @@ class DictionaryEntryDialog(
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
-	def __init__(self, parent, title=_("Edit Dictionary Entry")):
+	def __init__(self, parent, title=_("Edit Dictionary Entry")):  # noqa: B008
 		super().__init__(parent, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
@@ -110,7 +110,7 @@ class DictionaryEntryDialog(
 		except RegexpError as e:
 			log.debugWarning(f"Could not add dictionary entry due to regex error in the pattern field : {e}")
 			if entryType != EntryType.REGEXP:
-				raise e
+				raise e  # noqa: TRY201
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 				_('Regular Expression error in the pattern field: "{error}".').format(error=e),
@@ -128,7 +128,7 @@ class DictionaryEntryDialog(
 				f"Could not add dictionary entry due to regex error in the replacement field : {e}",
 			)
 			if entryType != EntryType.REGEXP:
-				raise e
+				raise e  # noqa: TRY201
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
 				_('Regular Expression error in the replacement field: "{error}".').format(error=e),
@@ -155,7 +155,7 @@ class DictionaryDialog(
 	To use this dialog, override L{__init__} calling super().__init__.
 	"""
 
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}  # noqa: E741
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}  # noqa: RUF012
 	helpId = "SpeechDictionaries"
 
 	@abstractmethod
@@ -181,6 +181,9 @@ class DictionaryDialog(
 			wx.ListCtrl,
 			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
+		self.dictList.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.onEditClick)
+		self.dictList.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
+		self.dictList.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.AppendColumn(_("Comment"), width=150)
 		# Translators: The label for a column in dictionary entries list used to identify pattern
@@ -236,6 +239,24 @@ class DictionaryDialog(
 		).Bind(wx.EVT_BUTTON, self.onRemoveAll)
 
 		sHelper.addItem(bHelper, flag=wx.EXPAND)
+
+	def onCharHook(self, evt: wx.KeyEvent):
+		key = evt.GetKeyCode()
+		if key == wx.WXK_DELETE:
+			self.onRemoveClick(None)
+		else:
+			evt.Skip()
+
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
+		menu = wx.Menu()
+		# Translators: Context menu item label to edit an entry
+		editItem = menu.Append(wx.ID_ANY, _("&Edit"))
+		# Translators: Context menu item label to remove an entry
+		removeItem = menu.Append(wx.ID_ANY, _("&Remove"))
+		self.Bind(wx.EVT_MENU, self.onEditClick, editItem)
+		self.Bind(wx.EVT_MENU, self.onRemoveClick, removeItem)
+		self.PopupMenu(menu)
+		menu.Destroy()
 
 	def postInit(self):
 		self.dictList.SetFocus()
@@ -328,7 +349,7 @@ class DictionaryDialog(
 
 class DefaultDictionaryDialog(DictionaryDialog):
 	def __init__(self, parent: wx.Window | None):
-		definition = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.DEFAULT)
+		definition = speechDictHandler.definitions.getDictionaryDefinition(DictionaryType.DEFAULT)
 		super().__init__(
 			parent,
 			title=definition.displayName,
@@ -338,7 +359,7 @@ class DefaultDictionaryDialog(DictionaryDialog):
 
 class VoiceDictionaryDialog(DictionaryDialog):
 	def __init__(self, parent: wx.Window | None):
-		definition = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.VOICE)
+		definition = speechDictHandler.definitions.getDictionaryDefinition(DictionaryType.VOICE)
 		super().__init__(
 			parent,
 			title=definition.displayName,
@@ -348,7 +369,7 @@ class VoiceDictionaryDialog(DictionaryDialog):
 
 class TemporaryDictionaryDialog(DictionaryDialog):
 	def __init__(self, parent: wx.Window | None):
-		definition = speechDictHandler.definitions._getDictionaryDefinition(DictionaryType.TEMP)
+		definition = speechDictHandler.definitions.getDictionaryDefinition(DictionaryType.TEMP)
 		super().__init__(
 			parent,
 			title=definition.displayName,

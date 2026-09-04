@@ -7,10 +7,10 @@
 """Module that contains the base NVDA object type with dynamic class creation support,
 as well as the associated TextInfo class."""
 
-import time
+import time  # noqa: I001
 import typing
-from typing import (
-	Dict,
+from typing import (  # noqa: UP035
+	Dict,  # noqa: F401
 	Optional,
 	TYPE_CHECKING,
 )
@@ -37,10 +37,12 @@ from treeInterceptorHandler import (
 	TreeInterceptor,
 )
 import braille
+import braille.labels
+import braille.regions.properties
 from utils.security import _isObjectBelowLockScreen
 import vision
 import globalPluginHandler
-import brailleInput
+import braille.input
 import locationHelper
 import aria
 from winAPI.sessionTracking import isLockScreenModeActive
@@ -85,7 +87,7 @@ class InvalidNVDAObject(RuntimeError):
 
 
 class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
-	_dynamicClassCache = {}
+	_dynamicClassCache = {}  # noqa: RUF012
 
 	def __call__(self, chooseBestAPI=True, **kwargs):
 		if chooseBestAPI:
@@ -102,7 +104,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			if isinstance(obj, self):
 				obj.__init__(**kwargs)
 		except InvalidNVDAObject as e:
-			log.debugWarning("Invalid NVDAObject: %s" % e, exc_info=True)
+			log.debugWarning("Invalid NVDAObject: %s" % e, exc_info=True)  # noqa: UP031
 			return None
 
 		clsList = []
@@ -119,7 +121,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				appModule.chooseNVDAObjectOverlayClasses(obj, clsList)
 			except Exception:
 				log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {appModule}")
-				pass
 
 		# Allow global plugins to choose overlay classes.
 		for plugin in globalPluginHandler.runningPlugins:
@@ -128,7 +129,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					plugin.chooseNVDAObjectOverlayClasses(obj, clsList)
 				except Exception:
 					log.exception(f"Exception in chooseNVDAObjectOverlayClasses for {plugin}")
-					pass
 
 		# After all other mutation has finished,
 		# add LockScreenObject if Windows is locked.
@@ -151,7 +151,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 			bases = tuple(bases)
 			newCls = self._dynamicClassCache.get(bases, None)
 			if not newCls:
-				name = "Dynamic_%s" % "".join([x.__name__ for x in clsList])
+				name = "Dynamic_%s" % "".join([x.__name__ for x in clsList])  # noqa: UP031
 				newCls = type(name, bases, {"__module__": __name__})
 				self._dynamicClassCache[bases] = newCls
 
@@ -173,7 +173,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 					continue
 			# Bind gestures specified on the class.
 			try:
-				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))
+				obj.bindGestures(getattr(cls, "_%s__gestures" % cls.__name__))  # noqa: UP031
 			except AttributeError:
 				pass
 
@@ -183,7 +183,6 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 				appModule.event_NVDAObject_init(obj)
 			except Exception:
 				log.exception(f"Exception in event_NVDAObject_init for {appModule}")
-				pass
 
 		return obj
 
@@ -194,7 +193,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		"""
 		cls._dynamicClassCache.clear()
 
-	def _insertLockScreenObject(self, clsList: typing.List["NVDAObject"]) -> None:
+	def _insertLockScreenObject(self, clsList: list["NVDAObject"]) -> None:
 		"""
 		Inserts LockScreenObject to the start of the clsList if Windows is locked.
 		"""
@@ -264,7 +263,7 @@ class NVDAObject(
 		if "getPossibleAPIClasses" in newAPIClass.__dict__:
 			for possibleAPIClass in newAPIClass.getPossibleAPIClasses(kwargs, relation=relation):
 				if "kwargsFromSuper" not in possibleAPIClass.__dict__:
-					log.error("possible API class %s does not implement kwargsFromSuper" % possibleAPIClass)
+					log.error("possible API class %s does not implement kwargsFromSuper" % possibleAPIClass)  # noqa: UP031
 					continue
 				if possibleAPIClass.kwargsFromSuper(kwargs, relation=relation):
 					return possibleAPIClass.findBestAPIClass(kwargs, relation=relation)
@@ -299,7 +298,7 @@ class NVDAObject(
 		"""
 		raise NotImplementedError
 
-	def findOverlayClasses(self, clsList: typing.List[typing.Type["NVDAObject"]]) -> None:
+	def findOverlayClasses(self, clsList: list[type["NVDAObject"]]) -> None:
 		"""
 		Chooses overlay classes which should be added to this object's class structure,
 		after the object has been initially instantiated.
@@ -378,7 +377,7 @@ class NVDAObject(
 		return APIClass(chooseBestAPI=False, **kwargs) if APIClass else None
 
 	def __init__(self):
-		super(NVDAObject, self).__init__()
+		super().__init__()
 		self._mouseEntered = (
 			False  #:True if the mouse has entered this object (for use in L{event_mouseMoved})
 		)
@@ -416,10 +415,10 @@ class NVDAObject(
 		None  #: Another object which should be treeted as the focus if focus is ever given to this object.
 	)
 
-	treeInterceptorClass: typing.Type[TreeInterceptor]
+	treeInterceptorClass: type[TreeInterceptor]
 	"""Type definition for auto prop '_get_treeInterceptorClass'"""
 
-	def _get_treeInterceptorClass(self) -> typing.Type[TreeInterceptor]:
+	def _get_treeInterceptorClass(self) -> type[TreeInterceptor]:
 		"""
 		If this NVDAObject should use a treeInterceptor, then this property
 		provides the L{treeInterceptorHandler.TreeInterceptor} class it should use.
@@ -437,10 +436,10 @@ class NVDAObject(
 	#: @type: bool
 	shouldCreateTreeInterceptor = True
 
-	treeInterceptor: typing.Optional[TreeInterceptor]
+	treeInterceptor: TreeInterceptor | None
 	"""Type definition for auto prop '_get_treeInterceptor'"""
 
-	def _get_treeInterceptor(self) -> typing.Optional[TreeInterceptor]:
+	def _get_treeInterceptor(self) -> TreeInterceptor | None:
 		"""Retrieves the treeInterceptor associated with this object.
 		If a treeInterceptor has not been specifically set,
 		the L{treeInterceptorHandler} is asked if it can find a treeInterceptor containing this object.
@@ -461,7 +460,7 @@ class NVDAObject(
 				self._treeInterceptor = weakref.ref(ti)
 			return ti
 
-	def _set_treeInterceptor(self, obj: typing.Optional[TreeInterceptor]):
+	def _set_treeInterceptor(self, obj: TreeInterceptor | None):
 		"""Specifically sets a treeInterceptor to be associated with this object."""
 		if obj:
 			self._treeInterceptor = weakref.ref(obj)
@@ -499,9 +498,9 @@ class NVDAObject(
 		return controlTypes.Role.UNKNOWN
 
 	#: Type definition for auto prop '_get_roleText'
-	roleText: typing.Optional[str]
+	roleText: str | None
 
-	def _get_roleText(self) -> typing.Optional[str]:
+	def _get_roleText(self) -> str | None:
 		"""
 		A custom role string for this object, which is used for braille and speech presentation, which will override the standard label for this object's role property.
 		No string is provided by default, meaning that NVDA will fall back to using role.
@@ -517,8 +516,8 @@ class NVDAObject(
 		which will override the standard label for this object's role property as well as the value of roleText.
 		By default, NVDA falls back to using roleText.
 		"""
-		if self.landmark and self.landmark in braille.landmarkLabels:
-			return f"{braille.roleLabels[controlTypes.Role.LANDMARK]} {braille.landmarkLabels[self.landmark]}"
+		if self.landmark and self.landmark in braille.labels.landmarkLabels:
+			return f"{braille.labels.roleLabels[controlTypes.Role.LANDMARK]} {braille.labels.landmarkLabels[self.landmark]}"
 		return self.roleText
 
 	#: Typing information for auto property _get_value
@@ -547,20 +546,20 @@ class NVDAObject(
 	"""Typing information for auto property _get_annotations
 	"""
 
-	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
+	def _get_annotations(self) -> AnnotationOrigin | None:
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(
 				f"Fetching annotations not supported on: {self.__class__.__qualname__}",
 			)
 		return None
 
-	detailsSummary: typing.Optional[str]
+	detailsSummary: str | None
 	"""
 	Typing information for auto property _get_detailsSummary
 	Deprecated, use self.annotations.targets instead.
 	"""
 
-	def _get_detailsSummary(self) -> typing.Optional[str]:
+	def _get_detailsSummary(self) -> str | None:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -578,12 +577,12 @@ class NVDAObject(
 		)
 		return bool(self.annotations)
 
-	detailsRole: typing.Optional[controlTypes.Role]
+	detailsRole: controlTypes.Role | None
 	"""Typing information for auto property _get_detailsRole
 	Deprecated, use self.annotations.roles instead.
 	"""
 
-	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
+	def _get_detailsRole(self) -> controlTypes.Role | None:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
 			stack_info=True,
@@ -633,9 +632,9 @@ class NVDAObject(
 		raise NotImplementedError
 
 	# Type info for auto property:
-	states: typing.Set[controlTypes.State]
+	states: set[controlTypes.State]
 
-	def _get_states(self) -> typing.Set[controlTypes.State]:
+	def _get_states(self) -> set[controlTypes.State]:
 		"""Retrieves the current states of this object (example: selected, focused).
 		@return: a set of State constants from L{controlTypes}.
 		"""
@@ -730,7 +729,7 @@ class NVDAObject(
 		return None
 
 	#: Type definition for auto prop '_get_children'
-	children: typing.List["NVDAObject"]
+	children: list["NVDAObject"]
 
 	def _get_children(self):
 		"""Retrieves a list of all the objects directly contained by this object (who's parent is this object).
@@ -801,9 +800,9 @@ class NVDAObject(
 		raise NotImplementedError
 
 	#: Typing information for auto-property: _get_cellCoordsText
-	cellCoordsText: typing.Optional[str]
+	cellCoordsText: str | None
 
-	def _get_cellCoordsText(self) -> typing.Optional[str]:
+	def _get_cellCoordsText(self) -> str | None:
 		"""
 		An alternative text representation of cell coordinates e.g. "a1". Will override presentation of rowNumber and columnNumber.
 		Only implement if the representation is really different.
@@ -901,7 +900,7 @@ class NVDAObject(
 		"""
 		for child in self.children:
 			yield child
-			for recursiveChild in child.recursiveDescendants:
+			for recursiveChild in child.recursiveDescendants:  # noqa: UP028
 				yield recursiveChild
 
 	presType_unavailable = "unavailable"
@@ -1057,7 +1056,7 @@ class NVDAObject(
 		@return: the active child if it has one else None
 		@rtype: L{NVDAObject} or None
 		"""
-		return None
+		return
 
 	#: Type definition for auto prop '_get_isFocusable'
 	isFocusable: bool
@@ -1081,7 +1080,6 @@ class NVDAObject(
 		"""
 		Tries to force this object to take the focus.
 		"""
-		pass
 
 	def scrollIntoView(self):
 		"""Scroll this object into view on the screen if possible."""
@@ -1092,7 +1090,7 @@ class NVDAObject(
 		@return: the label object if it has one else None.
 		@rtype: L{NVDAObject} or None
 		"""
-		return None
+		return
 
 	#: Type definition for auto prop "_get_errorMessage"
 	errorMessage: str | None
@@ -1105,9 +1103,9 @@ class NVDAObject(
 		return None
 
 	#: Type definition for auto prop '_get_positionInfo'
-	positionInfo: Dict[str, int]
+	positionInfo: dict[str, int]
 
-	def _get_positionInfo(self) -> Dict[str, int]:
+	def _get_positionInfo(self) -> dict[str, int]:
 		"""Retrieves position information for this object such as its level, its index with in a group, and the number of items in that group.
 		@return: a dictionary containing any of level, groupIndex and similarItemsInGroup.
 		"""
@@ -1138,9 +1136,9 @@ class NVDAObject(
 		return isProtected
 
 	#: Type definition for auto prop '_get_indexInParent'
-	indexInParent: Optional[int]
+	indexInParent: int | None
 
-	def _get_indexInParent(self) -> Optional[int]:
+	def _get_indexInParent(self) -> int | None:
 		"""The index of this object in its parent object.
 		@return: The 0 based index, C{None} if there is no parent.
 		@raise NotImplementedError: If not supported by the underlying object.
@@ -1170,7 +1168,7 @@ class NVDAObject(
 		"""
 		if self.presentationType in (self.presType_layout, self.presType_unavailable):
 			return False
-		if self.role in (
+		if self.role in (  # noqa: SIM103
 			controlTypes.Role.TREEVIEWITEM,
 			controlTypes.Role.LISTITEM,
 			controlTypes.Role.PROGRESSBAR,
@@ -1217,14 +1215,13 @@ class NVDAObject(
 		@return: the placeholder text else None
 		@rtype: String or None
 		"""
-		log.debug("Potential unimplemented child class: %r" % self)
-		return None
+		log.debug("Potential unimplemented child class: %r" % self)  # noqa: UP031
 
-	landmark: typing.Optional[str]
+	landmark: str | None
 	"""Typing information for auto property _get_landmark
 	"""
 
-	def _get_landmark(self) -> typing.Optional[str]:
+	def _get_landmark(self) -> str | None:
 		"""If this object represents an ARIA landmark, fetches the ARIA landmark role.
 		@return: ARIA landmark role else None
 		"""
@@ -1333,7 +1330,7 @@ class NVDAObject(
 					self.reportFocus()
 					# Display results as flash messages.
 					braille.handler.message(
-						braille.getPropertiesBraille(
+						braille.regions.properties.getPropertiesBraille(
 							name=self.name,
 							role=self.role,
 							positionInfo=self.positionInfo,
@@ -1371,7 +1368,7 @@ class NVDAObject(
 		"""
 		self.reportFocus()
 		braille.handler.handleGainFocus(self)
-		brailleInput.handler.handleGainFocus(self)
+		braille.input.handler.handleGainFocus(self)
 		vision.handler.handleGainFocus(self)
 
 	def event_loseFocus(self):
@@ -1427,7 +1424,7 @@ class NVDAObject(
 	def event_caret(self):
 		if self is api.getFocusObject() and not eventHandler.isPendingEvents("gainFocus"):
 			braille.handler.handleCaretMove(self)
-			brailleInput.handler.handleCaretMove(self)
+			braille.input.handler.handleCaretMove(self)
 			vision.handler.handleCaretMove(self)
 			review.handleCaretMove(self)
 
@@ -1487,16 +1484,16 @@ class NVDAObject(
 		@rtype: str
 		"""
 		if isinstance(string, str) and len(string) > truncateLen:
-			return "%r (truncated)" % string[:truncateLen]
+			return "%r (truncated)" % string[:truncateLen]  # noqa: UP031
 		return repr(string)
 
-	devInfo: typing.List[str]
+	devInfo: list[str]
 	"""Information about this object useful to developers."""
 
 	# C901 '_get_devInfo' is too complex
 	# Note: when working on _get_devInfo, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _get_devInfo(self) -> typing.List[str]:  # noqa: C901
+	def _get_devInfo(self) -> list[str]:
 		"""Information about this object useful to developers.
 		Subclasses may extend this, calling the superclass property first.
 		@return: A list of text strings providing information about this object useful to developers.
@@ -1504,62 +1501,62 @@ class NVDAObject(
 		info = []
 		try:
 			ret = repr(self.name)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("name: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("name: %s" % ret)  # noqa: UP031
 		info.append(f"role: {self.role.name}")
 		info.append(f"processID: {self.processID}")
 		try:
 			ret = repr(self.roleText)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"roleText: {ret}")
 		try:
 			ret = ", ".join(state.name for state in self.states)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("states: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("states: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.isFocusable)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("isFocusable: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("isFocusable: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.hasFocus)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("hasFocus: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("hasFocus: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("Python object: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("Python object: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.__class__.__mro__)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("Python class mro: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("Python class mro: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.description)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("description: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("description: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.location)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("location: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("location: %s" % ret)  # noqa: UP031
 		formatLong = self._formatLongDevInfoString
 		try:
 			ret = formatLong(self.value)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("value: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("value: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.TextInfo)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("TextInfo: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("TextInfo: %s" % ret)  # noqa: UP031
 		info.extend(self.appModule.devInfo)
 		return info
 
@@ -1599,7 +1596,7 @@ class NVDAObject(
 		if role in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.TERMINAL, controlTypes.Role.DOCUMENT):
 			# Edit fields, terminals and documents  are always navigable
 			return True
-		elif controlTypes.State.EDITABLE in states:
+		elif controlTypes.State.EDITABLE in states:  # noqa: SIM103
 			# Anything that is specifically editable is navigable
 			return True
 		else:
@@ -1618,7 +1615,7 @@ class NVDAObject(
 
 	def _get_selectionContainer(self):
 		"""An ancestor NVDAObject which manages the selection for this object and other descendants."""
-		return None
+		return
 
 	def getSelectedItemsCount(self, maxCount=2):
 		"""
