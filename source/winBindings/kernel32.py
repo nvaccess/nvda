@@ -300,6 +300,17 @@ WriteProcessMemory.argtypes = (
 )
 WriteProcessMemory.restype = BOOL
 
+
+class DUPLICATE(IntEnum):
+	"""Possible values of the dwOptions parameter to DuplicateHandle."""
+
+	CLOSE_SOURCE = 0x00000001
+	"""Closes the source handle, regardless of any error status returned."""
+
+	SAME_ACCESS = 0x00000002
+	"""The duplicate handle has the same access as the source handle, and the dwDesiredAccess parameter is ignored."""
+
+
 DuplicateHandle = WINFUNCTYPE(None)(("DuplicateHandle", dll))
 """
 Duplicates an object handle.
