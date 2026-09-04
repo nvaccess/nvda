@@ -136,7 +136,7 @@ def _claimControlStream() -> Stream:
 		writeHandle = claimHandleFromDescriptor(writeFd)
 		writeFd = -1
 	# Deliberately not ``except BaseException``:
-	# a signal-delivered exception can land between a successful claim and resetting the variable  to its sentinel,
+	# a signal-delivered exception can land between a successful claim and resetting the variable to its sentinel,
 	# at which point the descriptor has been closed, unbeknownst to us.
 	# Closing it again could land on a recycled descriptor,
 	# so leaking it is the safest option.
