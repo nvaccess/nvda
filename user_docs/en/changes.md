@@ -24,6 +24,11 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 
+* `keyboardHandler.KeyboardInputGesture.fromName` now treats the non modifier key as the main key, regardless of its position in the name. (#8201, @LeonarddeR)
+  * For example, "alt+b+control" now creates the same gesture as "alt+control+b".
+  * When the name contains only modifiers, the last key remains the main key.
+  * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
+
 #### API Breaking Changes
 
 These are breaking API changes.
