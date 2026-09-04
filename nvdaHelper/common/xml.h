@@ -38,11 +38,29 @@ inline void appendCharToXML(const wchar_t c, std::wstring& xml, bool isAttribute
 	}
 }
 
-inline std::wstring sanitizeXMLAttribName(std::wstring attribName) {
-	// #6249: Attribute names can sometimes contain spaces,
-	// but this isn't valid in XML, so filter it out.
-	std::replace(attribName.begin(), attribName.end(), L' ', L'_');
-	return attribName;
+inline bool isValidXMLNameStartChar(const wchar_t c) {
+	return (c >= L'a' && c <= L'z')
+		|| (c >= L'A' && c <= L'Z')
+		|| c == L':' || c == L'_';
+}
+
+inline bool isValidXMLNameChar(const wchar_t c) {
+	return isValidXMLNameStartChar(c)
+		|| (c >= L'0' && c <= L'9')
+		|| c == L'-' || c == L'.';
+}
+
+inline bool isValidXMLAttribName(const std::wstring& attribName) {
+	// Use a conservative subset of XML names accepted by the expat parser NVDA uses.
+	// All attribute names NVDA consumes are ASCII.
+	if (attribName.empty() || !isValidXMLNameStartChar(attribName.front())) {
+		return false;
+	}
+	return std::all_of(
+		attribName.cbegin() + 1,
+		attribName.cend(),
+		isValidXMLNameChar
+	);
 }
 
 #endif
