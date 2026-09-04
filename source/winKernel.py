@@ -472,6 +472,7 @@ def OpenProcessToken(ProcessHandle, DesiredAccess):
 	return token.value
 
 
+DUPLICATE_CLOSE_SOURCE = 0x00000001
 DUPLICATE_SAME_ACCESS = 0x00000002
 
 

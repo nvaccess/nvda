@@ -33,7 +33,7 @@ import NVDAState
 import winKernel
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
-from winBindings.kernel32 import CloseHandle, CreatePipe, OpenProcess
+from winBindings.kernel32 import CloseHandle, CreatePipe, DuplicateHandle, OpenProcess
 
 from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
@@ -214,6 +214,7 @@ class SubprocessHostController:
 		targetProcess = OpenProcess(winKernel.PROCESS_DUP_HANDLE, False, self._process.pid)
 		if not targetProcess:
 			raise WinError()
+		hostRead: HANDLE | None = None
 		try:
 			# One pipe per direction, since an anonymous pipe is one-way.
 			hostReadLocal, coreWrite, coreRead, hostWriteLocal = HANDLE(), HANDLE(), HANDLE(), HANDLE()
@@ -225,17 +226,28 @@ class SubprocessHostController:
 				if not CreatePipe(byref(coreRead), byref(hostWriteLocal), None, _PIPE_BUFFER_SIZE):
 					raise WinError()
 				openHandles += coreRead, hostWriteLocal
-				# The host's read and write handles are not valid in this process,
-				# so we can't close them on failure.
-				# If the second duplication fails after the first succeeded,
-				# the handle already placed in the host is orphaned there.
-				# Failure to duplicate `hostWriteLocal` into the host process most likely means that the host process died,
-				# in which case `hostRead` will have been freed by the kernel.
 				hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
 				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
 			except Exception:
 				for handle in openHandles:
 					CloseHandle(handle)
+				if hostRead is not None:
+					# The host's read and write handles are not valid in this process, so we can't close them with ``CloseHandle``.
+					# The ``DUPLICATE_CLOSE_SOURCE`` option to ``DuplicateHandle`` allows us to close another process's handle.
+					#
+					# Safety: we haven't passed ``hostRead`` to the host yet, so it can't be using it.
+					# Failure to duplicate ``hostWriteLocal`` into the host process most likely means that the host process died,
+					# in which case the call will fail since kernel handle values are process-specific,
+					# and a dead process can't have a claim on any handles, so there's no risk of closing somebody else's handle.
+					DuplicateHandle(
+						targetProcess,
+						hostRead,
+						None,
+						None,
+						0,
+						False,
+						winKernel.DUPLICATE_CLOSE_SOURCE,
+					)
 				raise
 			# The host has its own copies now; ours would otherwise hold the pipes open,
 			# so the host would never see end-of-file when core goes away.
