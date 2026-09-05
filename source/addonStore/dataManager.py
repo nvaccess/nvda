@@ -60,18 +60,12 @@ FETCH_TIMEOUT_S = 120  # seconds
 
 def initialize():
 	global addonDataManager
-	if config.isAppX:
-		log.info("Add-ons not supported when running as a Windows Store application")
-		return
 	log.debug("initializing addonStore data manager")
 	addonDataManager = _DataManager()
 
 
 def terminate():
 	global addonDataManager
-	if config.isAppX:
-		log.info("Add-ons not supported when running as a Windows Store application")
-		return
 	addonDataManager.terminate()
 	log.debug("terminating addonStore data manager")
 	addonDataManager = None

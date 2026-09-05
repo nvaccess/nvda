@@ -609,7 +609,7 @@ def touchSupported(debugLog: bool = False) -> bool:
 	"""Returns if the system and current NVDA session supports touchscreen interaction.
 	@param debugLog: Whether to log additional details about touch support to the NVDA log.
 	"""
-	if not config.isInstalledCopy() and not config.isAppX:
+	if not config.isInstalledCopy():
 		if debugLog:
 			log.debugWarning("Touch only supported on installed copies")
 		return False
