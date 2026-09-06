@@ -24,6 +24,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 
+* Added [nvdaL10n](https://github.com/nvaccess/nvdaL10n) as a submodule for translations management. (#20777, @nvdaes)
+
 #### API Breaking Changes
 
 These are breaking API changes.
