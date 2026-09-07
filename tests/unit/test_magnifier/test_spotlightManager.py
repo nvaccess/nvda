@@ -197,7 +197,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 		spotlightManager._originalMode = FullScreenMode.RELATIVE
 		spotlightManager._originalZoomLevel = 300
-		savedZoom = 2.5
+		savedZoom = 350
 		magnifier.zoomLevel = savedZoom
 		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
 		magnifier._relativePos = MagicMock(return_value=Coordinates(550, 450))
