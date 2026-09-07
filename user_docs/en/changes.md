@@ -153,7 +153,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
   * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
-* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671)
+* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671, @codeofdusk)
 
 #### Web browsers
 
@@ -178,6 +178,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * Updating an add-on no longer leaves modules of the old version loaded.
 This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)
+* In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)
 
 ### Changes for Developers
 
