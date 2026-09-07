@@ -5,7 +5,7 @@
 
 """Unit tests for NVDAObjects.IAccessible.ia2Web."""
 
-from types import SimpleNamespace
+from types import SimpleNamespace  # noqa: I001 
 from typing import cast
 import unittest
 from unittest.mock import Mock
