@@ -248,7 +248,8 @@ void VBufStorage_fieldNode_t::generateAttributesForMarkupOpeningTag(std::wstring
 	s<<L"_childcount=\""<<childCount<<L"\" _childcontrolcount=\""<<childControlCount<<L"\" _indexInParent=\""<<indexInParent<<L"\" _parentChildCount=\""<<parentChildCount<<L"\" ";
 	text+=s.str();
 	for(VBufStorage_attributeMap_t::iterator i=this->attributes.begin();i!=this->attributes.end();++i) {
-		text+=sanitizeXMLAttribName(i->first);
+		// Names were validated for XML validity when added; see addAttribute.
+		text+=i->first;
 		text+=L"=\"";
 		for(std::wstring::iterator j=i->second.begin();j!=i->second.end();++j) {
 			appendCharToXML(*j,text,true);
@@ -319,6 +320,13 @@ VBufStorage_fieldNode_t::~VBufStorage_fieldNode_t() {
 }
 
 bool VBufStorage_fieldNode_t::addAttribute(const std::wstring& name, const std::wstring& value) {
+	// #6249, #7173: Attribute names sourced from browsers can contain characters
+	// which aren't valid in XML names; e.g. spaces from localised action names
+	// or quotes from malformed HTML such as aria-label"foo".
+	if(!isValidXMLAttribName(name)) {
+		LOG_DEBUG(L"Dropping attribute with invalid XML name "<<name);
+		return false;
+	}
 	LOG_DEBUG(L"Adding attribute "<<name<<L" with value "<<value);
 	this->attributes[name]=value;
 	return true;
