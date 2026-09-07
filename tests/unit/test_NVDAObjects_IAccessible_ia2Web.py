@@ -13,7 +13,7 @@ from unittest.mock import Mock
 from comtypes import COMError
 from comtypes.hresult import E_NOTIMPL
 
-import IAccessibleHandler  # noqa: F401  # Break the NVDAObjects.IAccessible circular import.
+import IAccessibleHandler  # noqa: F401,I001  # Break the NVDAObjects.IAccessible circular import.
 from NVDAObjects.IAccessible.ia2Web import Math
 
 
