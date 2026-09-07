@@ -40,7 +40,7 @@ class SpotlightManager:
 		"""
 		Start the spotlight
 		"""
-		self._originalZoomLevel = self._fullscreenMagnifier.zoomLevel
+		self._originalZoomLevel = int(self._fullscreenMagnifier.zoomLevel)
 		self._currentZoomLevel = self._fullscreenMagnifier.zoomLevel
 
 		log.debug("start spotlight")

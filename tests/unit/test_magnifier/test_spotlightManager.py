@@ -174,7 +174,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
-		spotlightManager._originalZoomLevel = 3.0
+		spotlightManager._originalZoomLevel = 300
 
 		# Mock getCurrentFocusCoordinates to return expected position
 		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
@@ -186,7 +186,7 @@ class TestSpotlightManager(_TestMagnifier):
 		# Should call _animateZoom with original zoom and mouse position
 		spotlightManager._animateZoom.assert_called_once()
 		args = spotlightManager._animateZoom.call_args[0]
-		self.assertEqual(args[0].zoomLevel, 3.0)  # Original zoom level
+		self.assertEqual(args[0].zoomLevel, 300)  # Original zoom level
 		self.assertEqual(args[0].coordinates, Coordinates(500, 400))  # Mouse position for CENTER mode
 
 		magnifier._stopMagnifier()
@@ -198,7 +198,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
-		spotlightManager._originalZoomLevel = 3.0
+		spotlightManager._originalZoomLevel = 300
 
 		# Mock wx.GetMousePosition and _getCoordinatesForMode
 		with patch("wx.GetMousePosition") as mockGetMousePosition:
