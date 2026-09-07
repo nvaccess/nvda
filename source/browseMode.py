@@ -444,6 +444,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	singleLetterNavEnabled = True  #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
 	def getAlternativeScript(self, gesture, script):
+		"""Replace the script bound to a gesture before it is queued for execution.
+
+		This method is called on the input hook thread while the script for a gesture is being resolved.
+
+		:param gesture: The triggering gesture.
+		:param script: The script bound to the gesture, or ``None`` if there is none.
+		:return: The script to queue, which may be the one that was passed in,
+			or ``None`` to pass the gesture on to the application.
+		"""
 		if self.passThrough or not gesture.isCharacter:
 			return script
 		if not self.singleLetterNavEnabled:
@@ -2072,12 +2081,19 @@ class BrowseModeDocumentTreeInterceptor(
 
 		:return: ``True`` to collapse/expand the control, ``False`` to navigate by sentence.
 		"""
-		obj = self.currentFocusableNVDAObject
-		if obj is None or obj == self.rootNVDAObject:
-			return False
-		return obj.role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or not obj.states.isdisjoint(
-			self._EXPAND_OR_POPUP_STATES,
-		)
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				continue
+			states = field.field.get("states") or set()
+			if controlTypes.State.FOCUSABLE not in states:
+				continue
+			role = field.field.get("role")
+			return role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or not states.isdisjoint(
+				self._EXPAND_OR_POPUP_STATES,
+			)
+		return False
 
 	def getAlternativeScript(
 		self,
