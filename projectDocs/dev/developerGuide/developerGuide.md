@@ -1312,6 +1312,18 @@ This uses Unix shell-style wildcards to match any string ending in ".txt" and re
 
 For more information on speech dictionaries, refer to the [User Guide](https://download.nvaccess.org/documentation/userGuide.html#SpeechDictionaries).
 
+#### Manipulating existing dictionaries
+
+In addition to provide speech dictionaries, add-ons can manipulate existing speech dictionaries.
+
+```python
+tempDict = speechDictHandler.definitions.getDictionaryDefinition(DictionaryType.TEMP).dictionary
+for entry in tempDict:
+	tempDict.remove(entry)
+```
+
+For more information, look at `speechDictHandler/types.py`.
+
 ### Add-on Documentation {#AddonDoc}
 
 Documentation for an add-on should be placed in the `doc` directory in the archive.
