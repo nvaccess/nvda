@@ -17,6 +17,10 @@
 
 #### Web browsers
 
+#### Applications
+
+* Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
@@ -113,7 +117,7 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 
 * Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
   * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
-* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+* Updated eSpeak NG to [commit `f13549940`](https://github.com/espeak-ng/espeak-ng/commit/f1354994057fa9b85001675732e7fed2d437292b). (#20691, #20816)
   * Added Ligurian and Abkhaz support.
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
@@ -138,6 +142,7 @@ Executing the find command while the dialog is open brings it to the foreground 
 * NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * Fixed an error when loading 32-bit synthesizers on some systems. (#20088)
+* Magnifier's "Show entire screen overview" feature now works when relative tracking mode is enabled. (#20746)
 
 #### Performance
 
@@ -156,7 +161,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * HIMS Braille Sense and Braille EDGE displays connected via USB now work on systems where the older HIMS USB driver cannot be installed, such as Windows 11. (#20555, @KihunJang1981)
   * On these systems, install the [HIMS WinUSB driver](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) instead.
 * NVDA no longer briefly disconnects and re-detects the braille display on desktop switches that do not enter the secure desktop, such as when switching between a Remote Desktop session and the local machine. (#18810, #20550, @LeonarddeR)
-* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671)
+* Fixed incorrect back-translation when using Hindi and several other Indian grade 1 tables for braille input. (#20671, @codeofdusk)
 
 #### Web browsers
 
@@ -181,6 +186,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * Updating an add-on no longer leaves modules of the old version loaded.
 This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)
+* In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)
 
 ### Changes for Developers
 
