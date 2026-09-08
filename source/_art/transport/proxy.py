@@ -9,8 +9,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Final
 
-from logHandler import log
 from rpyc.core.stream import Stream
+
+from .._log import log
 
 if TYPE_CHECKING:
 	from .connection import Connection

@@ -8,4 +8,17 @@
 This package defines NVDA's out-of-process, sandboxed add-on runtime.
 
 * :mod:`.transport`: Generic transport over anonymous pipes.
+* :mod:`.host`: The add-on side of the boundary:
+	the host entry point and the root service it exposes to core.
+* :mod:`.session`: The core side of the boundary:
+	host controllers, core-side wire ends, and the root service core exposes to the host.
+* :mod:`.exceptions`: The capability failure taxonomy, shared by both sides.
 """
+
+from typing import Final
+
+#: Environment variable the host entry point sets, at run time, to mark its process.
+#:
+#: Shared code, like :mod:`._log`, checks for its presence to distinguish between host and core.
+#: It should only be set from :func:`.host.entrypoint.main`.
+_HOST_MARKER_ENV: Final[str] = "ART_HOST"
