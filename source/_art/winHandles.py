@@ -40,6 +40,29 @@ def duplicateHandleForSelf(handle: int) -> int:
 	return duplicate.value
 
 
+def duplicateHandleIntoProcess(handle: HANDLE, accessMask: int, targetProcess: int) -> HANDLE:
+	"""Duplicate a handle so it is valid in another process.
+
+	:param handle: Handle to duplicate.
+	:param accessMask: Desired access for the duplicate.
+	:param targetProcess: Handle of the process to duplicate into.
+	:returns: A handle valid in ``targetProcess``.
+	:raises OSError: If duplication fails.
+	"""
+	duplicate = HANDLE()
+	if not DuplicateHandle(
+		GetCurrentProcess(),
+		handle,
+		targetProcess,
+		byref(duplicate),
+		accessMask,
+		False,
+		0,
+	):
+		raise WinError()
+	return duplicate
+
+
 def claimHandleFromDescriptor(fd: int) -> int:
 	"""Take sole ownership of the kernel handle behind a C runtime file descriptor.
 
