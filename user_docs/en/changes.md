@@ -35,6 +35,10 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 
 #### Deprecations
 
+* The following symbols from `winKernel` are deprecated: (#20784)
+  * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
+  * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
+
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
 
