@@ -20,6 +20,7 @@
 #### Applications
 
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+* In applications built on the Muse framework, such as MuseScore Studio and Audacity 4, controls that are not text fields are no longer treated as editable text, so arrow keys no longer report "blank". (#20791, @LeonarddeR)
 
 ### Changes for Developers
 

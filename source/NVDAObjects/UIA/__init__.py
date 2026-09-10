@@ -1490,6 +1490,11 @@ class UIA(Window):
 				clsList.append(WpfTextView)
 			clsList.append(EditableTextWithAutoSelectDetection)
 
+		if self.UIAElement.cachedFrameworkID == "Qt":
+			from . import qt
+
+			qt.findExtraOverlayClasses(self, clsList)
+
 		clsList.append(UIA)
 
 		if self.UIAIsWindowElement:
