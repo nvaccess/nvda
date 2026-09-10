@@ -390,6 +390,77 @@ class TestControlStreamHandleOwnership(unittest.TestCase):
 		self.assertFailedBootStrandsNothing(2)
 
 
+class TestExceptionTaxonomyAcrossProcess(unittest.TestCase):
+	"""An ART exception keeps its type when it crosses into a real, freshly booted host.
+
+	``rpyc`` rebuilds a remote exception as its real class
+	only when that class's module is resident in the receiving process.
+	A host process does not import :mod:`_art.exceptions` just by booting,
+	so unless the transport makes the taxonomy resident, a denial raised by core arrives at the host as a ``GenericException`` subclass.
+	The check runs in a child process that deliberately avoids importing the taxonomy before the boundary call.
+	"""
+
+	def test_deniedCapabilityArrivesAsItsRealClass(self):
+		"""A denial raised by core is catchable by its taxonomy classes in a fresh host."""
+		process = subprocess.Popen(
+			[sys.executable, getProbePath("exceptionTaxonomy.py")],
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			stderr=subprocess.PIPE,
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+		)
+		self.addCleanup(process.stderr.close)
+		self.addCleanup(process.kill)
+		conn = Connection(
+			claimProcessControlStream(process),
+			CoreRootService(),
+			name=f"test {CONTROL_CONNECTION_NAME}",
+		)
+		self.addCleanup(conn.close)
+		conn.bgEventLoop(daemon=True)
+		try:
+			process.wait(timeout=_PROCESS_TIMEOUT)
+		except subprocess.TimeoutExpired:
+			process.kill()
+			raise
+		# The probe writes a short diagnostic and never fills the pipe, so reading after it exits
+		# cannot deadlock.
+		diagnostic = process.stderr.read().decode(errors="replace")
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"A denial raised by core reached the host as the wrong type: {diagnostic}",
+		)
+
+
+class TestHostLoggingIsolation(unittest.TestCase):
+	"""The host process logs without importing NVDA core.
+
+	Shared transport code logs through :mod:`_art._log`, which resolves to NVDA's ``log`` in core
+	but to a stdlib logger in the host, so the host never imports ``logHandler`` (and core with it).
+	The choice is made once, at import time, from the host marker,
+	so it can only be observed in a process that boots as the host does.
+	"""
+
+	def test_hostDoesNotImportLogHandler(self):
+		"""A host process reaches the transport without ``logHandler`` becoming resident."""
+		process = subprocess.run(
+			[sys.executable, getProbePath("logIsolation.py")],
+			cwd=globalVars.appDir,
+			creationflags=subprocess.CREATE_NO_WINDOW,
+			capture_output=True,
+			timeout=_PROCESS_TIMEOUT,
+			check=False,
+		)
+		diagnostic = process.stderr.decode(errors="replace")
+		self.assertEqual(
+			process.returncode,
+			0,
+			f"The host did not stay isolated from core: {diagnostic}",
+		)
+
+
 class TestHostRootServiceDisconnect(unittest.TestCase):
 	"""The host root service cleans up when core drops the control connection."""
 
