@@ -99,12 +99,12 @@ class _DataManager:
 			pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
 		self.storeSettings = _AddonStoreSettings()
-		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
-		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		self._latestAddonCache: CachedAddonsModel | None = None
+		self._compatibleAddonCache: CachedAddonsModel | None = None
 		self._installedAddonsCache = _InstalledAddonsCache()
-		# Fetch available add-ons cache early
+		# Load disk caches and fetch available add-ons in a background thread
 		self._initialiseAvailableAddonsThread = threading.Thread(
-			target=self.getLatestCompatibleAddons,
+			target=self._initialiseAvailableAddons,
 			name="initialiseAvailableAddons",
 			daemon=True,
 		)
@@ -117,6 +117,12 @@ class _DataManager:
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
+
+	def _initialiseAvailableAddons(self):
+		# Load disk caches here so the main thread isn't blocked by JSON parsing
+		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
+		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		self.getLatestCompatibleAddons()
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> bytes | None:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
