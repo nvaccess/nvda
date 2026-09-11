@@ -72,19 +72,28 @@ __getattr__ = _deprecate.handleDeprecations(
 	_deprecate.MovedSymbol("DUPLICATE_SAME_ACCESS", "winBindings.kernel32", "DUPLICATE", "SAME_ACCESS"),
 	_deprecate.MovedSymbol("GENERIC_READ", "winBindings.kernel32", "GENERIC", "READ"),
 	_deprecate.MovedSymbol("GENERIC_WRITE", "winBindings.kernel32", "GENERIC", "WRITE"),
+	_deprecate.RemovedSymbol(
+		"PROCESS_ALL_ACCESS",
+		0x1F0FFF,
+		message="Use winBindings.kernel32.PROCESS.ALL_ACCESS instead.",
+	),
+	_deprecate.MovedSymbol("PROCESS_TERMINATE", "winBindings.kernel32", "PROCESS", "TERMINATE"),
+	_deprecate.MovedSymbol("PROCESS_VM_OPERATION", "winBindings.kernel32", "PROCESS", "VM_OPERATION"),
+	_deprecate.MovedSymbol("PROCESS_VM_READ", "winBindings.kernel32", "PROCESS", "VM_READ"),
+	_deprecate.MovedSymbol("PROCESS_VM_WRITE", "winBindings.kernel32", "PROCESS", "VM_WRITE"),
+	_deprecate.MovedSymbol(
+		"PROCESS_QUERY_INFORMATION",
+		"winBindings.kernel32",
+		"PROCESS",
+		"QUERY_INFORMATION",
+	),
 )
 
 
 # Constants
 INFINITE = 0xFFFFFFFF
 # Process control
-PROCESS_ALL_ACCESS = 0x1F0FFF
-PROCESS_TERMINATE = 0x1
-PROCESS_VM_OPERATION = 0x8
-PROCESS_VM_READ = 0x10
-PROCESS_VM_WRITE = 0x20
 SYNCHRONIZE = 0x100000
-PROCESS_QUERY_INFORMATION = 0x400
 READ_CONTROL = 0x20000
 MEM_COMMIT = 0x1000
 MEM_RELEASE = 0x8000
