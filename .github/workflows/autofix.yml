@@ -29,15 +29,15 @@ concurrency:
 jobs:
   autofix:
     name: Auto-fix and lint gate
-    # On the base repo the pull_request run is the gate; skip its push run on non-Fork pushes to
-    # avoid a duplicate. Fork pushes still run for autofix.
-    if: github.event_name != 'push' || github.repository != 'nvaccess/nvda'
     runs-on: windows-2025-vs2026
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
         submodules: true
+        # A push made with this PAT triggers fresh push and pull_request runs on the fixed commit.
+        # The secret is empty outside nvaccess/nvda, so the default token is used there.
+        token: ${{ secrets.NVACCESSAUTO_PUSH_PAT || github.token }}
     - name: Set up python
       uses: actions/setup-python@v6
       with:
@@ -48,6 +48,7 @@ jobs:
       with:
         activate-environment: "false"
     # Autofix role: run the fixer hooks (the "autofix" group) and push the fixes.
+    # The fresh runs triggered by the pushed fix commit find nothing to fix.
     - name: Apply prek auto-fixes
       if: github.event_name == 'push'
       shell: bash
@@ -63,8 +64,8 @@ jobs:
           fi
         done
         if ! git diff --quiet; then
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           git commit -m "Auto-fix: apply prek fixes"
           # Push via an explicit refspec so this works even if checkout left us
@@ -72,9 +73,11 @@ jobs:
           git push origin HEAD:"$REF_NAME"
         fi
     # Gate role: the merge-required blocking check (non-zero exit fails the job).
+    # On nvaccess/nvda the pull_request run is the gate; push runs there skip this step.
     # The skipped hooks are the heavy/env-bound ones with dedicated jobs in
     # testAndPublish.yml.
     - name: Lint gate
+      if: github.event_name != 'push' || github.repository != 'nvaccess/nvda'
       uses: j178/prek-action@v2
       with:
         extra-args: >-
