@@ -444,6 +444,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	singleLetterNavEnabled = True  #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
 	def getAlternativeScript(self, gesture, script):
+		"""Replace the script bound to a gesture before it is queued for execution.
+
+		This method is called on the input hook thread while the script for a gesture is being resolved.
+
+		:param gesture: The triggering gesture.
+		:param script: The script bound to the gesture, or ``None`` if there is none.
+		:return: The script to queue, which may be the one that was passed in,
+			or ``None`` to pass the gesture on to the application.
+		"""
 		if self.passThrough or not gesture.isCharacter:
 			return script
 		if not self.singleLetterNavEnabled:
@@ -2053,6 +2062,62 @@ class BrowseModeDocumentTreeInterceptor(
 			self.passThrough = False
 		reportPassThrough(self)
 
+	_EXPAND_OR_POPUP_STATES = frozenset(
+		{
+			controlTypes.State.COLLAPSED,
+			controlTypes.State.EXPANDED,
+			controlTypes.State.AUTOCOMPLETE,
+			controlTypes.State.HASPOPUP,
+			controlTypes.State.HASPOPUP_DIALOG,
+			controlTypes.State.HASPOPUP_GRID,
+			controlTypes.State.HASPOPUP_LIST,
+			controlTypes.State.HASPOPUP_TREE,
+		},
+	)
+	"""States indicating that a control consumes alt+upArrow and alt+downArrow itself."""
+
+	def _isExpandableControlAtCaret(self) -> bool:
+		"""Whether the focusable control at the caret handles alt+upArrow and alt+downArrow itself.
+
+		:return: ``True`` to collapse/expand the control, ``False`` to navigate by sentence.
+		"""
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				continue
+			states = field.field.get("states") or set()
+			if controlTypes.State.FOCUSABLE not in states:
+				continue
+			role = field.field.get("role")
+			return role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or not states.isdisjoint(
+				self._EXPAND_OR_POPUP_STATES,
+			)
+		return False
+
+	def getAlternativeScript(
+		self,
+		gesture: inputCore.InputGesture,
+		script: scriptHandler._ScriptFunctionT | None,
+	) -> scriptHandler._ScriptFunctionT | None:
+		"""Hand the sentence navigation gestures to the control at the caret when it takes them itself.
+
+		:param gesture: The triggering gesture.
+		:param script: The script bound to the gesture.
+		:return: The script to run instead, which may be the one that was passed in.
+		"""
+		if (
+			not self.passThrough
+			and script
+			in (
+				self.script_moveBySentence_back,
+				self.script_moveBySentence_forward,
+			)
+			and self._isExpandableControlAtCaret()
+		):
+			return self.script_collapseOrExpandControl
+		return super().getAlternativeScript(gesture, script)
+
 	def _tabOverride(self, direction):
 		"""Override the tab order if the virtual  caret is not within the currently focused node.
 		This is done because many nodes are not focusable and it is thus possible for the virtual caret to be unsynchronised with the focus.
@@ -2825,8 +2890,6 @@ class BrowseModeDocumentTreeInterceptor(
 				return
 
 	__gestures = {  # noqa: RUF012
-		"kb:alt+upArrow": "collapseOrExpandControl",
-		"kb:alt+downArrow": "collapseOrExpandControl",
 		"kb:tab": "tab",
 		"kb:shift+tab": "shiftTab",
 		"kb:shift+,": "moveToStartOfContainer",

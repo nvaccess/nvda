@@ -384,12 +384,12 @@ class Math(Ia2Web):
 		)
 		return nodeInfoByPath
 
-	def _get_mathMl(self):
-		# Chromium browsers now expose a 'math' IAccessible2 attribute,
-		# which contains all the raw MathML.
-		# Check for this attribute first before falling back to ISimpleDOM.
+	def _get_mathMl(self) -> str:
+		isNativeMath = self.IA2Attributes.get("tag") == "math"
+		# Chromium exposes an element's inner HTML through the IA2 'math' attribute
+		# for both native MathML and HTML elements with role="math".
 		mathAttr = self.IA2Attributes.get("math")
-		if mathAttr:
+		if mathAttr and isNativeMath:
 			# Chromium sometimes embeds HTML comments in the MathML, strip them
 			mathAttr = re.sub(r"<!--.*?-->", "", mathAttr, flags=re.DOTALL)
 
@@ -419,28 +419,28 @@ class Math(Ia2Web):
 				if not mathPres.getLanguageFromMath(attr) and self.language:
 					attr = mathPres.insertLanguageIntoMath(attr, self.language)
 				return attr
-			if self.IA2Attributes.get("tag") != "math":
-				# Could be a <span> (etc) that has role = math -- check the child
-				# If there is a single <math> child, recurse on the assumption that is what was the intended math
-				mathObjs: list[NVDAObjects.NVDAObject] = [
-					child for child in self.children if child.IA2Attributes.get("tag") == "math"
-				]
-				if len(mathObjs) == 1:
-					return mathObjs[0].mathMl
-				# This isn't MathML
-				raise LookupError
-			if self.language:
-				attrs = ' xml:lang="%s"' % self.language  # noqa: UP031
-			else:
-				attrs = ""
-			return "<math%s>%s</math>" % (attrs, node.innerHTML)  # noqa: UP031
+			if isNativeMath:
+				if self.language:
+					attrs = ' xml:lang="%s"' % self.language  # noqa: UP031
+				else:
+					attrs = ""
+				return "<math%s>%s</math>" % (attrs, node.innerHTML)  # noqa: UP031
 		except COMError:
 			log.debugWarning(
 				"Error retrieving math. "
 				"Not supported in this browser or ISimpleDOM COM proxy not registered.",
 				exc_info=True,
 			)
-			raise LookupError
+			if isNativeMath:
+				raise LookupError
+		# This could be an HTML element with role="math" wrapping native MathML.
+		mathObjs: list[NVDAObjects.NVDAObject] = [
+			child for child in self.children if child.IA2Attributes.get("tag") == "math"
+		]
+		if len(mathObjs) == 1:
+			return mathObjs[0].mathMl
+		# This isn't MathML.
+		raise LookupError
 
 	def _get_role(self):
 		if self.IA2Attributes.get("tag") == "img":

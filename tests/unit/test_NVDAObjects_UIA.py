@@ -88,6 +88,16 @@ class TestMenuItemDescription(unittest.TestCase):
 				getLegacyDescription.assert_not_called()
 
 
+class TestUIAFocusEvent(unittest.TestCase):
+	def test_shouldAllowUIAFocusEventIgnoresStaleCache(self):
+		obj = object.__new__(UIA)
+		obj.UIAElement = Mock(currentHasKeyboardFocus=False)
+
+		with patch.object(UIA, "_getUIACacheablePropertyValue", return_value=True) as getCachedValue:
+			self.assertFalse(obj._get_shouldAllowUIAFocusEvent())
+			getCachedValue.assert_not_called()
+
+
 class TestMenuItemStates(unittest.TestCase):
 	def test_legacyCheckedStateFallback(self) -> None:
 		menuItem = object.__new__(MenuItem)
