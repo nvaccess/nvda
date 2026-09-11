@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited, Cary-rowen
+# Copyright (C) 2026 NV Access Limited, Cary-rowen, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -12,6 +12,8 @@ import api
 import controlTypes
 import eventHandler
 from NVDAObjects.UIA import ListItem, MenuItem, UIA, _NetFrameworkWinFormsComboBox
+from NVDAObjects.UIA import qt
+from NVDAObjects.behaviors import EditableTextWithAutoSelectDetection
 import oleacc
 import UIAHandler
 from winBindings import user32
@@ -202,3 +204,39 @@ class TestNetFrameworkWinFormsComboBox(unittest.TestCase):
 		):
 			listItem.event_UIA_elementSelected()
 		focus.event_valueChange.assert_not_called()
+
+
+class TestMuseFindExtraOverlayClasses(unittest.TestCase):
+	def _makeObj(self, role: controlTypes.Role, className: str, textPattern: object) -> UIA:
+		obj = object.__new__(UIA)
+		obj.UIAElement = Mock(cachedFrameworkID="Qt", cachedClassName=className)
+		obj.role = role
+		obj.UIATextPattern = textPattern
+		return obj
+
+	def test_nonEditableMuseControlLosesEditableTextAndTextPattern(self) -> None:
+		obj = self._makeObj(controlTypes.Role.BUTTON, qt.MUSE_ACCESSIBLE_OBJECT_CLASS_NAME, Mock())
+		clsList = [EditableTextWithAutoSelectDetection, UIA]
+		qt.findExtraOverlayClasses(obj, clsList)
+		self.assertEqual(clsList, [qt.MuseAccessibilityObjectWithNoopTextPattern, UIA])
+		obj.__class__ = qt.MuseAccessibilityObjectWithNoopTextPattern
+		obj.initOverlayClass()
+		self.assertIsNone(obj.UIATextPattern)
+
+	def test_editableMuseControlIsUnchanged(self) -> None:
+		obj = self._makeObj(controlTypes.Role.EDITABLETEXT, qt.MUSE_ACCESSIBLE_OBJECT_CLASS_NAME, Mock())
+		clsList = [EditableTextWithAutoSelectDetection, UIA]
+		qt.findExtraOverlayClasses(obj, clsList)
+		self.assertEqual(clsList, [EditableTextWithAutoSelectDetection, UIA])
+
+	def test_museControlWithoutTextPatternIsUnchanged(self) -> None:
+		obj = self._makeObj(controlTypes.Role.BUTTON, qt.MUSE_ACCESSIBLE_OBJECT_CLASS_NAME, None)
+		clsList = [UIA]
+		qt.findExtraOverlayClasses(obj, clsList)
+		self.assertEqual(clsList, [UIA])
+
+	def test_nonMuseQtControlIsUnchanged(self) -> None:
+		obj = self._makeObj(controlTypes.Role.BUTTON, "QWidgetWindow", Mock())
+		clsList = [EditableTextWithAutoSelectDetection, UIA]
+		qt.findExtraOverlayClasses(obj, clsList)
+		self.assertEqual(clsList, [EditableTextWithAutoSelectDetection, UIA])
