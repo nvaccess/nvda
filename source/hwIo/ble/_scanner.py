@@ -3,17 +3,21 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time  # noqa: I001
-from threading import Event
-from collections.abc import Callable
+from __future__ import annotations
 
-from _asyncioEventLoop.utils import runCoroutine
+import time
+from collections.abc import Callable
+from threading import Event
+from typing import TYPE_CHECKING
+
 import extensionPoints
+from _asyncioEventLoop.utils import runCoroutine
 from logHandler import log
 
-import bleak
-from bleak.backends.device import BLEDevice
-from bleak.backends.scanner import AdvertisementData
+if TYPE_CHECKING:
+	import bleak
+	from bleak.backends.device import BLEDevice
+	from bleak.backends.scanner import AdvertisementData
 
 
 class Scanner:
@@ -28,7 +32,10 @@ class Scanner:
 	_isScanning: Event
 
 	def __init__(self):
-		self._discoveredDevices = {}
+		# Delayed import of bleak to avoid importing it at NVDA startup,
+		# slowing down the startup time when no BLE device is connected.
+		import bleak
+		self._discoveredDevices: dict[str, BLEDevice] = {}
 		self._scanner = bleak.BleakScanner(self._onDeviceAdvertised)
 		self._isScanning = Event()
 		#: Action called when a BLE device is discovered or re-advertises.

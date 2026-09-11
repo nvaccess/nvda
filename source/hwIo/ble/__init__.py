@@ -12,29 +12,36 @@ Only use this if you need access to a device that only implements BLE and not Bl
 Bluetooth Classic devices should be paired through Windows' Bluetooth settings and accessed through the related serial/HID device.
 """
 
-import time  # noqa: I001
-from bleak.exc import BleakError
-from bleak.backends.device import BLEDevice
+from __future__ import annotations
+
+import time
+from typing import TYPE_CHECKING
+
 from logHandler import log
 
-from ._scanner import Scanner
-from ._io import Ble
 from ..base import requiresBackgroundThread
+from ._io import Ble
+from ._scanner import Scanner
+
+if TYPE_CHECKING:
+	from bleak.backends.device import BLEDevice
 
 __all__ = ["Ble", "Scanner", "findDeviceByAddress", "scanner"]
 
 #: Module-level singleton scanner shared by all BLE consumers.
 #: Using a single scanner avoids contention over the Windows BLE stack and
 #: lets multiple callers share the set of already-discovered devices.
-#: None until initialize() is called.
+#: None until a BLE device lookup is first attempted.
 scanner: Scanner | None = None
 
 
 def initialize() -> None:
-	"""Initialize the hwIo.ble module, creating the shared BLE scanner singleton."""
+	"""Initialize the hwIo.ble module.
+
+	The BLE scanner singleton is created lazily on first use to avoid
+	importing the heavy bleak library at startup when no BLE device is connected.
+	"""
 	log.debug("Initializing BLE I/O")
-	global scanner
-	scanner = Scanner()
 
 
 def terminate() -> None:
@@ -45,6 +52,14 @@ def terminate() -> None:
 		if scanner.isScanning:
 			scanner.stop()
 		scanner = None
+
+
+def _ensureScanner() -> Scanner:
+	"""Return the shared scanner, creating it on first call."""
+	global scanner
+	if scanner is None:
+		scanner = Scanner()
+	return scanner
 
 
 @requiresBackgroundThread
@@ -58,20 +73,22 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 	:param pollInterval: How often to check results in seconds (default 0.1)
 	:return: The BLE device object if found, None otherwise
 	"""
-	if scanner is None:
-		raise RuntimeError("hwIo.ble.initialize() must be called before using findDeviceByAddress")
+	_scanner = _ensureScanner()
 	log.debug(f"Searching for BLE device with address {address}")
 
 	# Check if device already discovered
-	for device in scanner.results():
+	for device in _scanner.results():
 		if device.address == address:
 			log.debug(f"Found BLE device {address} in existing results")
 			return device
 
 	# Not found - start scanning if not already running
-	if not scanner.isScanning:
+	if not _scanner.isScanning:
+		# Delayed import of bleak to avoid importing it at NVDA startup,
+		# slowing down the startup time when no BLE device is connected.
+		from bleak.exc import BleakError
 		try:
-			scanner.start()  # Start in background mode
+			_scanner.start()  # Start in background mode
 		except (BleakError, OSError):
 			log.error(f"Failed to start BLE scanner while searching for device {address}", exc_info=True)  # noqa: G201
 			return None
@@ -81,7 +98,7 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 		time.sleep(pollInterval)
 
 		# Check if device appeared
-		for device in scanner.results():
+		for device in _scanner.results():
 			if device.address == address:
 				elapsed = time.time() - startTime
 				log.debug(f"Found BLE device {address} after {elapsed:.2f}s")
