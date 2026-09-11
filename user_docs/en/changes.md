@@ -125,6 +125,7 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+* Limit the speed of rapid Magnifier filter updates to reduce the risk of triggering seizures. (#20750)
 
 ### Bug Fixes
 
@@ -218,6 +219,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * robotframework to 7.4.2. (#20707)
   * unittest-xml-reporting to 4.0.0. (#20707)
   * setuptools to 84.0.0. (#20744)
+* Updated the NVDA Controller Client API to 3.0, adding a `nvdaController_isSpeaking` function. (#20188)
 * The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
