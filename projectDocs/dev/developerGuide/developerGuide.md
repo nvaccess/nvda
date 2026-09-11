@@ -1579,7 +1579,7 @@ See [Displaying errors to the user](#DisplayableError) for a full description an
 | --- | --- | --- |
 | `Action` | `speechCanceled` | Triggered when speech is canceled. |
 | `Action` | `pre_speechCanceled` | Triggered before speech is canceled. |
-| `Action` | `pre_speech` | Triggered before NVDA handles prepared speech. |
+| `Action` | `pre_speech` | Triggered before NVDA handles prepared speech. Handlers receive both the filtered `speechSequence` and unfiltered `originalSpeechSequence`. |
 | `Action` | `post_speechPaused` | Triggered when speech is paused or resumed. |
 | `Action` | `pre_speechQueued` | Triggered after speech is processed and normalized and directly before it is enqueued. |
 | `Filter` | `filter_speechSequence` | Allows components or add-ons to filter speech sequence before it passes to the synth driver. |
