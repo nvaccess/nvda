@@ -1,30 +1,26 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2026 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from copy import deepcopy  # noqa: I001
 import json
 import os
 import pathlib
 import threading
-from typing import (
-	TYPE_CHECKING,
-	Optional,
-)
-
-import requests
-from requests.structures import CaseInsensitiveDict
+from copy import deepcopy
 from json import JSONDecodeError
+from typing import TYPE_CHECKING
 
 import addonAPIVersion
-from baseObject import AutoPropertyObject
 import config
-from core import callLater
 import languageHandler
-from logHandler import log
 import NVDAState
+import requests
+from baseObject import AutoPropertyObject
+from core import callLater
+from logHandler import log
 from NVDAState import WritePaths
+from requests.structures import CaseInsensitiveDict
 
 from .models.addon import (
 	AddonStoreModel,
@@ -35,15 +31,14 @@ from .models.addon import (
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
-from .models.status import AvailableAddonStatus, _canUpdateAddon, getStatus, _StatusFilterKey
+from .models.status import AvailableAddonStatus, _canUpdateAddon, _StatusFilterKey, getStatus
 from .network import (
-	_getCurrentApiVersionForURL,
+	_LATEST_API_VER,
 	_getAddonStoreURL,
 	_getCacheHashURL,
-	_LATEST_API_VER,
+	_getCurrentApiVersionForURL,
 )
 from .settings import _AddonStoreSettings
-
 
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: I001
@@ -54,7 +49,7 @@ if TYPE_CHECKING:
 	from gui.message import DisplayableError
 
 
-addonDataManager: Optional["_DataManager"] = None
+addonDataManager: "_DataManager | None" = None
 FETCH_TIMEOUT_S = 120  # seconds
 
 
@@ -99,12 +94,14 @@ class _DataManager:
 			pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
 		self.storeSettings = _AddonStoreSettings()
-		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
-		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		self._latestAddonCache: CachedAddonsModel | None = None
+		self._compatibleAddonCache: CachedAddonsModel | None = None
+		self._cacheLock = threading.Lock()
+		"""Lock for synchronizing access to the _latestAddonCache and _compatibleAddonCache."""
 		self._installedAddonsCache = _InstalledAddonsCache()
-		# Fetch available add-ons cache early
+		# Load disk caches and fetch available add-ons in a background thread
 		self._initialiseAvailableAddonsThread = threading.Thread(
-			target=self.getLatestCompatibleAddons,
+			target=self._initialiseAvailableAddons,
 			name="initialiseAvailableAddons",
 			daemon=True,
 		)
@@ -117,6 +114,12 @@ class _DataManager:
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
+
+	def _initialiseAvailableAddons(self):
+		# Load disk caches here so the main thread isn't blocked by JSON parsing
+		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
+		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		self.getLatestCompatibleAddons()
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> bytes | None:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
@@ -223,15 +226,17 @@ class _DataManager:
 
 	def getLatestCompatibleAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
+		with self._cacheLock:
+			currentCache = self._compatibleAddonCache
 		shouldRefreshData = (
-			not self._compatibleAddonCache
-			or self._compatibleAddonCache.nvdaAPIVersion != addonAPIVersion.CURRENT
+			not currentCache
+			or currentCache.nvdaAPIVersion != addonAPIVersion.CURRENT
 			or cacheHash is None
-			or self._compatibleAddonCache.cacheHash != cacheHash
-			or self._compatibleAddonCache.cachedLanguage != self._lang
+			or currentCache.cacheHash != cacheHash
+			or currentCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
 			apiData = self._getLatestAddonsDataForVersion(_getCurrentApiVersionForURL())
@@ -241,12 +246,14 @@ class _DataManager:
 					addonData=decodedApiData,
 					cacheHash=cacheHash,
 				)
-				self._compatibleAddonCache = CachedAddonsModel(
+				compatibleAddonsModel = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
+				with self._cacheLock:
+					self._compatibleAddonCache = compatibleAddonsModel
 			else:
 				self._do_displayError(
 					onDisplayableError,
@@ -254,20 +261,24 @@ class _DataManager:
 					pgettext("addonStore", "Unable to fetch latest add-on data for compatible add-ons."),
 				)
 
-		if self._compatibleAddonCache is None:
+		with self._cacheLock:
+			cache = self._compatibleAddonCache
+		if cache is None:
 			return _createAddonGUICollection()
-		return deepcopy(self._compatibleAddonCache.cachedAddonData)
+		return deepcopy(cache.cachedAddonData)
 
 	def getLatestAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
+		with self._cacheLock:
+			currentCache = self._latestAddonCache
 		shouldRefreshData = (
-			not self._latestAddonCache
+			not currentCache
 			or cacheHash is None
-			or self._latestAddonCache.cacheHash != cacheHash
-			or self._latestAddonCache.cachedLanguage != self._lang
+			or currentCache.cacheHash != cacheHash
+			or currentCache.cachedLanguage != self._lang
 		)
 		if shouldRefreshData:
 			apiData = self._getLatestAddonsDataForVersion(_LATEST_API_VER)
@@ -277,12 +288,14 @@ class _DataManager:
 					addonData=decodedApiData,
 					cacheHash=cacheHash,
 				)
-				self._latestAddonCache = CachedAddonsModel(
+				latestAddonsModel = CachedAddonsModel(
 					cachedAddonData=_createStoreCollectionFromJson(decodedApiData),
 					cacheHash=cacheHash,
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=_LATEST_API_VER,
 				)
+				with self._cacheLock:
+					self._latestAddonCache = latestAddonsModel
 			else:
 				self._do_displayError(
 					onDisplayableError,
@@ -290,9 +303,11 @@ class _DataManager:
 					pgettext("addonStore", "Unable to fetch latest add-on data for incompatible add-ons."),
 				)
 
-		if self._latestAddonCache is None:
+		with self._cacheLock:
+			cache = self._latestAddonCache
+		if cache is None:
 			return _createAddonGUICollection()
-		return deepcopy(self._latestAddonCache.cachedAddonData)
+		return deepcopy(cache.cachedAddonData)
 
 	def _do_displayError(
 		self,
