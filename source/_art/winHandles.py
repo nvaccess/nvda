@@ -12,8 +12,7 @@ import os
 from ctypes import WinError, byref
 from ctypes.wintypes import HANDLE
 
-import winKernel
-from winBindings.kernel32 import DuplicateHandle, GetCurrentProcess
+from winBindings.kernel32 import DUPLICATE, DuplicateHandle, GetCurrentProcess
 
 
 def duplicateHandleForSelf(handle: int) -> int:
@@ -34,7 +33,7 @@ def duplicateHandleForSelf(handle: int) -> int:
 		byref(duplicate),
 		0,
 		False,
-		winKernel.DUPLICATE_SAME_ACCESS,
+		DUPLICATE.SAME_ACCESS,
 	):
 		raise WinError()
 	return duplicate.value

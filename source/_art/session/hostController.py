@@ -33,7 +33,7 @@ import NVDAState
 import winKernel
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
-from winBindings.kernel32 import CloseHandle, CreatePipe, DuplicateHandle, OpenProcess
+from winBindings.kernel32 import DUPLICATE, GENERIC, CloseHandle, CreatePipe, DuplicateHandle, OpenProcess
 
 from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
@@ -224,8 +224,8 @@ class SubprocessHostController:
 				if not CreatePipe(byref(coreRead), byref(hostWriteLocal), None, _PIPE_BUFFER_SIZE):
 					raise WinError()
 				openHandles += coreRead, hostWriteLocal
-				hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
-				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
+				hostRead = duplicateHandleIntoProcess(hostReadLocal, GENERIC.READ, targetProcess)
+				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, GENERIC.WRITE, targetProcess)
 			except Exception:
 				for handle in openHandles:
 					CloseHandle(handle)
@@ -244,7 +244,7 @@ class SubprocessHostController:
 						None,
 						0,
 						False,
-						winKernel.DUPLICATE_CLOSE_SOURCE,
+						DUPLICATE.CLOSE_SOURCE,
 					)
 				raise
 			# The host has its own copies now; ours would otherwise hold the pipes open,
