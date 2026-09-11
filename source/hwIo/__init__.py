@@ -29,11 +29,13 @@ def initialize():
 	bgThread = IoThread()
 	bgThread.start()
 	from . import ble
+
 	ble.initialize()
 
 
 def terminate():
 	from . import ble
+
 	ble.terminate()
 	global bgThread
 	bgThread.stop()

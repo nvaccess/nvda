@@ -87,6 +87,7 @@ def findDeviceByAddress(address: str, timeout: float = 5.0, pollInterval: float 
 		# Delayed import of bleak to avoid importing it at NVDA startup,
 		# slowing down the startup time when no BLE device is connected.
 		from bleak.exc import BleakError
+
 		try:
 			_scanner.start()  # Start in background mode
 		except (BleakError, OSError):

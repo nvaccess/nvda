@@ -129,6 +129,7 @@ class Ble(IoBase):
 		# slowing down the startup time when no BLE device is connected.
 		import bleak
 		from bleak.args.winrt import WinRTClientArgs
+
 		winrtClientArgs = WinRTClientArgs(use_cached_services=True)
 		if isinstance(device, str):
 			# String address provided - Bleak will perform implicit discovery

@@ -35,6 +35,7 @@ class Scanner:
 		# Delayed import of bleak to avoid importing it at NVDA startup,
 		# slowing down the startup time when no BLE device is connected.
 		import bleak
+
 		self._discoveredDevices: dict[str, BLEDevice] = {}
 		self._scanner = bleak.BleakScanner(self._onDeviceAdvertised)
 		self._isScanning = Event()
