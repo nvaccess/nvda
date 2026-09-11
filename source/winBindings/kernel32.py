@@ -153,6 +153,27 @@ class GENERIC(IntEnum):
 	READ = 0x80000000
 
 
+class PROCESS(IntEnum):
+	"""Process-specific access rights.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
+	"""
+
+	#: PROCESS_ALL_ACCESS: All possible access rights for a process object.
+	ALL_ACCESS = 0x001FFFFF
+	#: PROCESS_TERMINATE: Required to terminate a process using TerminateProcess.
+	TERMINATE = 0x0001
+	#: PROCESS_VM_OPERATION: Required to perform an operation on the address space of a process.
+	VM_OPERATION = 0x0008
+	#: PROCESS_VM_READ: Required to read memory in a process using ReadProcessMemory.
+	VM_READ = 0x0010
+	#: PROCESS_VM_WRITE: Required to write to memory in a process using WriteProcessMemory.
+	VM_WRITE = 0x0020
+	#: PROCESS_QUERY_INFORMATION: Required to retrieve certain information about a process, such as its token, exit code, and priority class.
+	QUERY_INFORMATION = 0x0400
+
+
 GetModuleHandle = WINFUNCTYPE(None)(("GetModuleHandleW", dll))
 """
 Retrieves a module handle for the specified module, which must have been loaded by the calling process.
