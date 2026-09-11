@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """High-level functions to speak information."""
 
@@ -603,11 +603,13 @@ def getSpellingSpeech(
 ) -> Generator[SequenceItemT]:
 	"""
 	Gets a speech sequence for spelling text.
+
 	:param text: The text to be spelled.
 	:param locale: The locale to use for character descriptions, if applicable.
 	:param useCharacterDescriptions: Whether or not to use character descriptions, e.g. speak "a" as "alpha".
 	:param endsUtterance: Whether an EndUtteranceCommand should be yielded at the end.
-	:param useCharMode: Whether to wrap the sequence in CharacterModeCommand.
+	:param useCharMode: Whether to wrap the sequence in CharacterModeCommand,
+		if supported by the synthesizer and enabled by the user.
 	:returns: A speech sequence generator.
 	"""
 	synth = getSynth()
@@ -633,7 +635,11 @@ def getSpellingSpeech(
 		],
 		endsUtterance=endsUtterance,
 	)
-	if useCharMode and synthConfig["useSpellingFunctionality"]:
+	if (
+		useCharMode
+		and CharacterModeCommand in synth.supportedCommands
+		and synthConfig["useSpellingFunctionality"]
+	):
 		seq = _getSpellingSpeechAddCharMode(seq)
 	# This function applies Unicode normalization as appropriate.
 	# Therefore, suppress the global normalization that might still occur
