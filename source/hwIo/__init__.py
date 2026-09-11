@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2015-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2015-2026 NV Access Limited, Babbage B.V.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
 """Raw input/output for braille displays via serial and HID.
@@ -20,7 +20,6 @@ from .base import (  # noqa: F401, I001
 )
 from .hid import Hid  # noqa: F401
 from .ioThread import IoThread
-from . import ble
 
 bgThread: IoThread
 
@@ -29,10 +28,14 @@ def initialize():
 	global bgThread
 	bgThread = IoThread()
 	bgThread.start()
+	from . import ble
+
 	ble.initialize()
 
 
 def terminate():
+	from . import ble
+
 	ble.terminate()
 	global bgThread
 	bgThread.stop()

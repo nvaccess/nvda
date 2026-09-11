@@ -3,25 +3,28 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import time  # noqa: I001
+from __future__ import annotations
+
+import time
+import weakref
+from collections.abc import Callable, Iterator
 from itertools import count, takewhile
 from queue import Empty, Queue
 from threading import Event, Thread
-from collections.abc import Callable, Iterator
-import weakref
+from typing import TYPE_CHECKING
 
 from _asyncioEventLoop.utils import runCoroutineSync
-from ..base import _isDebug, IoBase, requiresBackgroundThread
-from ..ioThread import IoThread
 from logHandler import log
 
-import bleak
-from bleak.backends.device import BLEDevice
-from bleak.backends.characteristic import BleakGATTCharacteristic
-from bleak.backends.winrt.client import WinRTClientArgs
+from ..base import IoBase, _isDebug, requiresBackgroundThread
+from ..ioThread import IoThread
+
+if TYPE_CHECKING:
+	import bleak
+	from bleak.backends.characteristic import BleakGATTCharacteristic
+	from bleak.backends.device import BLEDevice
 
 CONNECT_TIMEOUT_SECONDS: int = 2
-WINRT_CLIENT_ARGS = WinRTClientArgs(use_cached_services=True)
 
 
 @requiresBackgroundThread
@@ -122,15 +125,21 @@ class Ble(IoBase):
 		onReceive: Callable[[bytes], None],
 		ioThread: IoThread | None = None,
 	) -> None:
+		# Delayed import of bleak to avoid importing it at NVDA startup,
+		# slowing down the startup time when no BLE device is connected.
+		import bleak
+		from bleak.args.winrt import WinRTClientArgs
+
+		winrtClientArgs = WinRTClientArgs(use_cached_services=True)
 		if isinstance(device, str):
 			# String address provided - Bleak will perform implicit discovery
 			address = device
 			log.info(f"Connecting to BLE device at address {address}")
-			self._client = bleak.BleakClient(address, winrt=WINRT_CLIENT_ARGS)
+			self._client = bleak.BleakClient(address, winrt=winrtClientArgs)
 		else:
 			# BLEDevice object provided (preferred)
 			log.info(f"Connecting to {device.name} ({device.address})")
-			self._client = bleak.BleakClient(device, winrt=WINRT_CLIENT_ARGS)
+			self._client = bleak.BleakClient(device, winrt=winrtClientArgs)
 		self._writeServiceUuid = writeServiceUuid
 		self._writeCharacteristicUuid = writeCharacteristicUuid
 		self._readServiceUuid = readServiceUuid
