@@ -83,6 +83,7 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+* Limit the speed of rapid Magnifier filter updates to reduce the risk of triggering seizures. (#20750)
 
 ### Bug Fixes
 
