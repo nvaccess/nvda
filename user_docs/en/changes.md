@@ -35,9 +35,11 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 
 #### Deprecations
 
-* The following symbols from `winKernel` are deprecated: (#20784)
+* The following symbols from `winKernel` are deprecated: (#20784, #20836)
   * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
   * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
+  * `PROCESS_ALL_ACCESS`, `PROCESS_QUERY_INFORMATION`, `PROCESS_TERMINATE`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`: use the `ALL_ACCESS`, `QUERY_INFORMATION`, `TERMINATE`, `VM_OPERATION`, `VM_READ` and `VM_WRITE` members of `winBindings.kernel32.PROCESS` instead.
+    * Note that `winKernel.PROCESS_ALL_ACCESS` uses the pre-Windows Vista access right, whereas `winBindings.kernel32.PROCESS.ALL_ACCESS` uses the updated one.
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
