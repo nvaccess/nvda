@@ -170,6 +170,8 @@ class PROCESS(IntEnum):
 	VM_READ = 0x0010
 	#: PROCESS_VM_WRITE: Required to write to memory in a process using WriteProcessMemory.
 	VM_WRITE = 0x0020
+	#: PROCESS_DUP_HANDLE: Required to duplicate a handle using DuplicateHandle.
+	DUP_HANDLE = 0x0040
 	#: PROCESS_QUERY_INFORMATION: Required to retrieve certain information about a process, such as its token, exit code, and priority class.
 	QUERY_INFORMATION = 0x0400
 
