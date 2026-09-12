@@ -6,7 +6,9 @@
 """Unit tests for the magnification Windows API."""
 
 import unittest
+from unittest import mock
 
+import screenCurtain
 from screenCurtain._screenCurtain import TRANSFORM_BLACK
 from winBindings import magnification
 from winBindings.magnification import MAGCOLOREFFECT
@@ -18,6 +20,26 @@ class _Test_MagnificationAPI(unittest.TestCase):
 
 	def tearDown(self):
 		self.assertTrue(magnification.MagUninitialize())
+
+
+class TestScreenCurtainAvailability(unittest.TestCase):
+	def test_unavailableMagnificationPreventsInitialization(self):
+		loadError = OSError("missing Magnification.dll")
+		with (
+			mock.patch.object(screenCurtain, "MAGNIFICATION_AVAILABLE", False),
+			mock.patch.object(screenCurtain, "MAGNIFICATION_LOAD_ERROR", loadError),
+			mock.patch.object(screenCurtain, "screenCurtain", None),
+			mock.patch.object(screenCurtain, "ScreenCurtain") as screenCurtainClass,
+			mock.patch.object(screenCurtain.log, "warning") as logWarning,
+		):
+			screenCurtain.initialize()
+
+			screenCurtainClass.assert_not_called()
+			self.assertIsNone(screenCurtain.screenCurtain)
+			logWarning.assert_called_once_with(
+				"Screen Curtain unavailable because the Windows Magnification API is unavailable.",
+				exc_info=loadError,
+			)
 
 
 class Test_ScreenCurtain(_Test_MagnificationAPI):
