@@ -3746,7 +3746,6 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+z",
 	)
 	@gui.blockAction.when(
-		gui.blockAction.Context.WINDOWS_STORE_VERSION,
 		gui.blockAction.Context.SECURE_MODE,
 	)
 	def script_activatePythonConsole(self, gesture):

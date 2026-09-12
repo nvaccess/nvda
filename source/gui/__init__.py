@@ -494,7 +494,6 @@ class MainFrame(wx.Frame):
 		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
 		blockAction.Context.WINDOWS_LOCKED,
-		blockAction.Context.WINDOWS_STORE_VERSION,
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreCommand(self, evt: wx.MenuEvent):
@@ -509,7 +508,6 @@ class MainFrame(wx.Frame):
 		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
 		blockAction.Context.WINDOWS_LOCKED,
-		blockAction.Context.WINDOWS_STORE_VERSION,
 		blockAction.Context.RUNNING_LAUNCHER,
 	)
 	def onAddonStoreUpdatableCommand(self, evt: wx.MenuEvent | None):
@@ -702,17 +700,17 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
 			brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
 
-		if not config.isAppX and NVDAState.shouldWriteToDisk():
+		if NVDAState.shouldWriteToDisk():
 			# Translators: The label of a menu item to open the Add-on store
 			item = menu_tools.Append(wx.ID_ANY, _("&Add-on store..."))
 			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
 
-		if not globalVars.appArgs.secure and not config.isAppX:
+		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open NVDA Python Console.
 			item = menu_tools.Append(wx.ID_ANY, _("&Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
 
-		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
+		if not globalVars.appArgs.secure and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
 			item = menu_tools.Append(wx.ID_ANY, _("&Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
@@ -723,10 +721,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to run the System Accessibility Repair Tool
 			item = menu_tools.Append(wx.ID_ANY, _("Run System Accessibility Repair Tool..."))
 			self.Bind(wx.EVT_MENU, frame.onRunCOMRegistrationFixesCommand, item)
-		if not config.isAppX:
-			# Translators: The label for the menu item to reload plugins.
-			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
-			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
+		# Translators: The label for the menu item to reload plugins.
+		item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
+		self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
 		self.menu.AppendSubMenu(menu_tools, _("&Tools"))
 
