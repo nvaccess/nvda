@@ -33,7 +33,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-* Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`, and `WINUSB_AVAILABLE`.
+* Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`,
+  `WINUSB_AVAILABLE`, and `WTSAPI32_AVAILABLE`.
   Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
 * `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
   Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,

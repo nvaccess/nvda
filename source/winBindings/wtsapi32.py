@@ -18,12 +18,32 @@ from ctypes.wintypes import (
 	HANDLE,
 	LPWSTR,
 )
+from typing import Any
 
 
-dll = windll.wtsapi32
+try:
+	dll = windll.wtsapi32
+except (AttributeError, OSError) as e:
+	dll = None
+	WTSAPI32_LOAD_ERROR: Exception | None = e
+else:
+	WTSAPI32_LOAD_ERROR = None
+
+WTSAPI32_AVAILABLE: bool = dll is not None
+"""True if the Windows Terminal Services API is available."""
 
 
-WTSFreeMemory = WINFUNCTYPE(None)(("WTSFreeMemory", dll))
+def _unavailable(*args: Any, **kwargs: Any) -> None:
+	raise OSError("The Windows Terminal Services API is not available")
+
+
+def _bind(name: str, prototype: Any) -> Any:
+	if dll is None:
+		return _unavailable
+	return prototype((name, dll))
+
+
+WTSFreeMemory = _bind("WTSFreeMemory", WINFUNCTYPE(None))
 """
 Frees memory allocated by a Windows Terminal Services function.
 
@@ -35,7 +55,7 @@ WTSFreeMemory.argtypes = (
 	c_void_p,  # pMemory: Pointer to the memory to free
 )
 
-WTSQuerySessionInformation = WINFUNCTYPE(None)(("WTSQuerySessionInformationW", dll))
+WTSQuerySessionInformation = _bind("WTSQuerySessionInformationW", WINFUNCTYPE(None))
 """
 Retrieves session information for the specified session on the specified Remote Desktop Session Host server.
 

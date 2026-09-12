@@ -6707,6 +6707,20 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	if not globalVars.appArgs.secure:
 		categoryClasses.append(AdvancedPanel)
 
+	@classmethod
+	def _getCategoryClasses(cls) -> list[type[SettingsPanel]]:
+		import mathPres
+
+		return [
+			category
+			for category in cls.categoryClasses
+			if category is not MathSettingsPanel or mathPres._mathCATAvailable
+		]
+
+	def __init__(self, parent: wx.Window, initialCategory: type[SettingsPanel] | None = None):
+		self.categoryClasses = self._getCategoryClasses()
+		super().__init__(parent, initialCategory)
+
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
 		super().makeSettings(settingsSizer)
