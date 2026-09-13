@@ -72,7 +72,7 @@ Information about other speech synthesizers that NVDA supports can be found in t
 ### Braille support {#BrailleSupport}
 
 For users that own a refreshable braille display, NVDA can output its information in braille.
-NVDA uses the open source braille translator [Liblouis](https://liblouis.io/) to generate braille sequences from text.
+NVDA uses the open source braille translator [LibLouis](https://liblouis.io/) to generate braille sequences from text.
 Both uncontracted and contracted braille input via a braille keyboard is also supported.
 Furthermore, NVDA will detect many braille displays automatically by default.
 Please see the [Supported Braille Displays](#SupportedBrailleDisplays) section for information about the supported braille displays.
@@ -1199,7 +1199,7 @@ Use the following keys for performing searches:
 
 <!-- KC:endInclude -->
 
-### Embedded Objects {#EmbeddedObjects}
+### Embedded Objects {#ImbeddedObjects}
 
 Pages can include rich content using technologies such as Oracle Java and HTML5, as well as applications and dialogs.
 Where these are encountered in browse mode, NVDA will report "embedded object", "application" or "dialog", respectively.
@@ -1261,8 +1261,8 @@ This can be done by selecting each and choosing "Equation Options", then "Conver
 Ensure your version of MathType is the latest version before doing this.
 Microsoft Word provides linear symbol-based navigation through the equations itself and supports inputting math using several syntaxes, including LaTeX.
 For further details, please see [Linear format equations using UnicodeMath and LaTeX in Word](https://support.microsoft.com/en-us/office/linear-format-equations-using-unicodemath-and-latex-in-word-2e00618d-b1fd-49d8-8cb4-8d17f25754f8)
-* Microsoft PowerPoint, and older versions of Microsoft Word:
-NVDA can read and navigate MathType equations in both Microsoft PowerPoint and Microsoft Word.
+* Microsoft Powerpoint, and older versions of Microsoft Word:
+NVDA can read and navigate MathType equations in both Microsoft Powerpoint and Microsoft word.
 MathType needs to be installed in order for this to work.
 The trial version is sufficient.
 It can be downloaded from the [MathType presentation page](https://www.wiris.com/en/mathtype/).
@@ -2189,8 +2189,8 @@ Left and Up arrow take you up in the list, while right and down arrow move you d
 
 ##### Variant {#SpeechSettingsVariant}
 
-If you are using the eSpeak NG synthesizer which is packaged with NVDA, this is a combo box that allows you to select the Variant the synthesizer should speak with.
-eSpeak NG's Variants are rather like voices, as they provide slightly different attributes to the eSpeak NG voice.
+If you are using the Espeak NG synthesizer which is packaged with NVDA, this is a combo box that allows you to select the Variant the synthesizer should speak with.
+ESpeak NG's Variants are rather like voices, as they provide slightly different attributes to the eSpeak NG voice.
 Some variants will sound like a male, some like a female, and some even like a frog.
 If using a third-party synthesizer, you may also be able to change this value if your chosen voice supports it.
 
@@ -2867,7 +2867,7 @@ By default this command will cycle between the following modes:
 
 There are more advanced sound split modes available in NVDA setting combo box.
 Among these modes, "NVDA in both channels and applications in both channels" forces all the sounds to be directed in both channels.
-This mode may differ from "Sound split disabled" mode in case other audio processing interferes with channel volumes.
+This mode may differ from "Sound split disabled" mode in case other audio processing interfers with channel volumes.
 
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
@@ -3169,13 +3169,13 @@ The available options are:
 * Only in edit controls: NVDA will only announce words typed in edit controls and other areas where text can be typed.
 * Always: NVDA will announce all typed words.
 
-##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInterruptForCharacters}
+##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
 If on, this option will cause speech to be interrupted each time a character is typed.
 This option is enabled by default.
 This option affects all NVDA speech, including in browse mode, focus mode, and say all.
 
-##### Speech interrupt for Enter key {#KeyboardSettingsSpeechInterruptForEnter}
+##### Speech interrupt for Enter key {#KeyboardSettingsSpeechInteruptForEnter}
 
 If on, this option will cause speech to be interrupted each time the Enter key is pressed.
 This option is enabled by default.
@@ -4219,13 +4219,13 @@ While focus tracking is more reliable in more situations, performance is signifi
 ##### Use UI automation to access Microsoft Word document controls {#MSWordUIA}
 
 Configures whether or not NVDA should use the UI Automation accessibility API to access Microsoft Word documents, rather than the older Microsoft Word object model.
-This applies to documents in Microsoft Word itself, plus messages in Microsoft Outlook.
+This applies to documents in Microsoft word itself, plus messages in Microsoft Outlook.
 This setting contains the following values:
 
 * Default (where suitable)
 * Only where necessary: where the Microsoft Word object model is not available at all
 * Where suitable: Microsoft Word version 16.0.15000 or higher on Windows 11, or where the Microsoft Word object model is unavailable
-* Always: wherever UI automation is available in Microsoft Word (no matter how complete).
+* Always: where ever UI automation is available in Microsoft word (no matter how complete).
 
 ##### Use UI automation to access Microsoft Excel spreadsheet controls when available {#UseUiaForExcel}
 
@@ -4432,7 +4432,7 @@ Choosing "No" disables error sounds no matter what your current NVDA version is,
 This field allows users to customize regular expression for detecting text paragraphs in browse mode.
 The [text paragraph navigation command](#TextNavigationCommand) searches for paragraphs matched by this regular expression.
 
-### Miscellaneous Settings {#MiscSettings}
+### miscellaneous Settings {#MiscSettings}
 
 Besides the [NVDA Settings](#NVDASettings) dialog, The Preferences sub-menu of the NVDA Menu contains several other items which are outlined below.
 
@@ -5201,7 +5201,7 @@ This option is selected by default.
 The following displays support this automatic detection functionality.
 
 * Help Tech displays (formerly Handy Tech)
-* Baum/HumanWare/APH/Orbit braille displays
+* Baum/Humanware/APH/Orbit braille displays
 * HumanWare Brailliant BI/B series
 * HumanWare BrailleNote
 * SuperBraille
@@ -5219,7 +5219,7 @@ The following displays support this automatic detection functionality.
 All Focus and PAC Mate displays from [Freedom Scientific](https://www.freedomscientific.com/) are supported when connected via USB or bluetooth.
 You will need the Freedom Scientific braille display drivers installed on your system.
 If you do not have them already, you can obtain them from the [Focus Blue Braille Display Driver page](https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver).
-Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and PAC Mate displays.
+Although this page only mentions the Focus Blue display, the drivers support all Freedom Scientific Focus and Pacmate displays.
 
 By default, NVDA can automatically detect and connect to these displays either via USB or bluetooth.
 However, when configuring the display, you can explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
@@ -5418,7 +5418,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-### Baum/HumanWare/APH/Orbit Braille Displays {#Baum}
+### Baum/Humanware/APH/Orbit Braille Displays {#Baum}
 
 Several [Baum](https://www.visiobraille.de/index.php?article_id=1&clang=2), [HumanWare](https://www.humanware.com/), [APH](https://www.aph.org/) and [Orbit](https://www.orbitresearch.com/) displays are supported when connected via USB, bluetooth or serial.
 These include:
@@ -5524,7 +5524,7 @@ The following extra devices are also supported (and do not require any special d
 
 * APH Mantis Q40
 * APH Chameleon 20
-* HumanWare BrailleOne
+* Humanware BrailleOne
 * NLS eReader HumanWare
 
 Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
@@ -5592,7 +5592,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 ### HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille Series {#Hims}
 
-NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [HIMS](https://www.hims-inc.com/) when connected via USB or bluetooth.
+NVDA supports Braille Sense, Braille EDGE, Smart Beetle and Sync Braille displays from [Hims](https://www.hims-inc.com/) when connected via USB or bluetooth.
 If connecting via USB, you will need to install the [USB drivers from HIMS](http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip) on your system.
 On Windows 11 systems where this driver cannot be installed, Braille Sense and Braille EDGE displays connected via USB can still be detected if you instead install the [HIMS WinUSB driver package](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe).
 
@@ -5943,7 +5943,7 @@ BRAILLEX 2D Screen:
 
 ### HumanWare BrailleNote {#HumanWareBrailleNote}
 
-NVDA supports the BrailleNote notetakers from [HumanWare](https://www.humanware.com) when acting as a display terminal for a screen reader.
+NVDA supports the BrailleNote notetakers from [Humanware](https://www.humanware.com) when acting as a display terminal for a screen reader.
 The following models are supported:
 
 * BrailleNote Classic (serial connection only)
