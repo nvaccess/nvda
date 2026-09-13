@@ -1228,7 +1228,7 @@ Currently, Native Selection Mode is supported in:
 * Chrome, Edge, and any browser based on Chromium 134 or newer
 * Microsoft Word and Outlook, where it cannot be toggled off
 
-Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.
+Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.
 
 <!-- KC:beginInclude -->
 

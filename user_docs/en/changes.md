@@ -128,6 +128,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
 * In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)
+* In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)
 
 #### Terminals
 
@@ -144,7 +145,6 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * Updating an add-on no longer leaves modules of the old version loaded.
 This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)
-* In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)
 
 ### Changes for Developers
 
@@ -190,7 +190,7 @@ Math presentation providers can override `MathPresentationProvider.interactWithM
 The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
 * Vision enhancement providers can register with `vision.handler.extensionPoints.post_mathNavigation` to receive the screen rectangle of the current math navigation position, or `None` when no rectangle is available. (#20372, @RyanMcCleary)
 * The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
-  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
+  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely.
   Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
   * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
 * `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)
