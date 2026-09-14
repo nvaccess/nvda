@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 23:47+0000\n"
-"PO-Revision-Date: 2026-09-07 00:22\n"
+"POT-Creation-Date: 2026-09-11 08:24+0000\n"
+"PO-Revision-Date: 2026-09-14 00:24\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -110,23 +110,23 @@ msgid "Unlabeled"
 msgstr "레이블 없음"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
-#: browseMode.py:459
+#: browseMode.py:468
 msgid "Single letter navigation off"
 msgstr "한 글자 탐색 모드 끔"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
-#: browseMode.py:463
+#: browseMode.py:472
 msgid "Single letter navigation on"
 msgstr "한 글자 탐색 모드 켬"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-#: browseMode.py:467
+#: browseMode.py:476
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
 msgstr "한 글자 명령 켬/끔 전환하기, 브라우즈 모드에서 한 글자 명령을 사용하면 현재 페이지 내의 여러 요소로 직접 이동할 수 있습니다. 한 글자 명령 사용을 해제하면 이 키들은 해당 응용 프로그램에서 처리됩니다"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
-#: browseMode.py:564 appModules\kindle.py:257 appModules\kindle.py:261
+#: browseMode.py:573 appModules\kindle.py:257 appModules\kindle.py:261
 #: appModules\kindle.py:265 contentRecog\recogUi.py:159
 #: contentRecog\recogUi.py:163 contentRecog\recogUi.py:167
 msgid "Not supported in this document"
@@ -134,996 +134,996 @@ msgstr "이 문서에서는 지원되지 않습니다"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:648
+#: browseMode.py:657
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
 msgstr "다음 수준 {i} 제목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:651
+#: browseMode.py:660
 #, python-brace-format
 msgid "No next heading at level {i}"
 msgstr "다음 수준 {i} 제목 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:654
+#: browseMode.py:663
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
 msgstr "이전 수준 {i} 제목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:657
+#: browseMode.py:666
 #, python-brace-format
 msgid "No previous heading at level {i}"
 msgstr "이전 수준 {i} 제목 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #. {i} will be replaced with the heading level number.
-#: browseMode.py:660
+#: browseMode.py:669
 #, python-brace-format
 msgid "headings level {i}"
 msgstr "제목 수준 {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
-#: browseMode.py:675
+#: browseMode.py:684
 msgid "Lists various types of elements in this document"
 msgstr "문서에 포함된 여러 유형의 요소 목록 표시"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#: browseMode.py:733
+#: browseMode.py:742
 msgid "Activates the current object in the document"
 msgstr "문서에서 현재 객체 활성화"
 
 #. Translators: The default element type in browse mode touch navigation (navigates all content).
-#: browseMode.py:807
+#: browseMode.py:816
 msgid "default"
 msgstr "기본 탐색"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:816
+#: browseMode.py:825
 msgid "Selects the next element type for browse mode touch navigation"
 msgstr "다음 브라우즈 모드 터치 탐색 요소 유형 선택"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:835
+#: browseMode.py:844
 msgid "Selects the previous element type for browse mode touch navigation"
 msgstr "이전 브라우즈 모드 터치 탐색 요소 유형 선택"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:854
+#: browseMode.py:863
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
 msgstr "브라우즈 모드 터치 탐색에서 선택한 유형의 다음 요소로 이동"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:871
+#: browseMode.py:880
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
 msgstr "브라우즈 모드 터치 탐색에서 선택한 유형의 이전 요소로 이동"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:912
+#: browseMode.py:921
 msgid "moves to the next heading"
 msgstr "다음 제목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:914
+#: browseMode.py:923
 msgid "no next heading"
 msgstr "다음 제목 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:916
+#: browseMode.py:925
 msgid "moves to the previous heading"
 msgstr "이전 제목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:918
+#: browseMode.py:927
 msgid "no previous heading"
 msgstr "이전 제목 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:920
+#: browseMode.py:929
 msgid "headings"
 msgstr "제목"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:927
+#: browseMode.py:936
 msgid "moves to the next table"
 msgstr "다음 표로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:929
+#: browseMode.py:938
 msgid "no next table"
 msgstr "다음 표 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:931
+#: browseMode.py:940
 msgid "moves to the previous table"
 msgstr "이전 표로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:933
+#: browseMode.py:942
 msgid "no previous table"
 msgstr "이전 표 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:936
+#: browseMode.py:945
 msgid "tables"
 msgstr "표"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:942
+#: browseMode.py:951
 msgid "moves to the next link"
 msgstr "다음 링크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:944
+#: browseMode.py:953
 msgid "no next link"
 msgstr "다음 링크 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:946
+#: browseMode.py:955
 msgid "moves to the previous link"
 msgstr "이전 링크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:948
+#: browseMode.py:957
 msgid "no previous link"
 msgstr "이전 링크 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:950
+#: browseMode.py:959
 msgid "links"
 msgstr "링크"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:956
+#: browseMode.py:965
 msgid "moves to the next visited link"
 msgstr "다음 방문한 링크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:958
+#: browseMode.py:967
 msgid "no next visited link"
 msgstr "다음 방문한 링크 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:960
+#: browseMode.py:969
 msgid "moves to the previous visited link"
 msgstr "이전 방문한 링크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:962
+#: browseMode.py:971
 msgid "no previous visited link"
 msgstr "이전 방문한 링크 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:964
+#: browseMode.py:973
 msgid "visited links"
 msgstr "방문한 링크"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:970
+#: browseMode.py:979
 msgid "moves to the next unvisited link"
 msgstr "다음 방문하지 않은 링크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:972
+#: browseMode.py:981
 msgid "no next unvisited link"
 msgstr "다음 방문하지 않은 링크 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:974
+#: browseMode.py:983
 msgid "moves to the previous unvisited link"
 msgstr "이전 방문하지 않은 링크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:976
+#: browseMode.py:985
 msgid "no previous unvisited link"
 msgstr "이전 방문하지 않은 링크 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:978
+#: browseMode.py:987
 msgid "unvisited links"
 msgstr "방문 안 한 링크"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:984
+#: browseMode.py:993
 msgid "moves to the next form field"
 msgstr "다음 서식란으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:986
+#: browseMode.py:995
 msgid "no next form field"
 msgstr "다음 서식란 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:988
+#: browseMode.py:997
 msgid "moves to the previous form field"
 msgstr "이전 서식란으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:990
+#: browseMode.py:999
 msgid "no previous form field"
 msgstr "이전 서식란 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:992
+#: browseMode.py:1001
 msgid "form fields"
 msgstr "서식란"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:998
+#: browseMode.py:1007
 msgid "moves to the next list"
 msgstr "다음 목록으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1000
+#: browseMode.py:1009
 msgid "no next list"
 msgstr "다음 목록 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1002
+#: browseMode.py:1011
 msgid "moves to the previous list"
 msgstr "이전 목록으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1004
+#: browseMode.py:1013
 msgid "no previous list"
 msgstr "이전 목록 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1007
+#: browseMode.py:1016
 msgid "lists"
 msgstr "목록"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1013
+#: browseMode.py:1022
 msgid "moves to the next list item"
 msgstr "다음 목록 항목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1015
+#: browseMode.py:1024
 msgid "no next list item"
 msgstr "다음 목록 항목 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1017
+#: browseMode.py:1026
 msgid "moves to the previous list item"
 msgstr "이전 목록 항목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1019
+#: browseMode.py:1028
 msgid "no previous list item"
 msgstr "이전 목록 항목 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1021
+#: browseMode.py:1030
 msgid "list items"
 msgstr "목록 항목"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1027
+#: browseMode.py:1036
 msgid "moves to the next button"
 msgstr "다음 버튼으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1029
+#: browseMode.py:1038
 msgid "no next button"
 msgstr "다음 버튼 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1031
+#: browseMode.py:1040
 msgid "moves to the previous button"
 msgstr "이전 버튼으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1033
+#: browseMode.py:1042
 msgid "no previous button"
 msgstr "이전 버튼 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1035
+#: browseMode.py:1044
 msgid "buttons"
 msgstr "버튼"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1041
+#: browseMode.py:1050
 msgid "moves to the next edit field"
 msgstr "다음 입력란으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1043
+#: browseMode.py:1052
 msgid "no next edit field"
 msgstr "다음 입력란 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1045
+#: browseMode.py:1054
 msgid "moves to the previous edit field"
 msgstr "이전 입력란으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1047
+#: browseMode.py:1056
 msgid "no previous edit field"
 msgstr "이전 입력란 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1050
+#: browseMode.py:1059
 msgid "edit fields"
 msgstr "입력란"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1056
+#: browseMode.py:1065
 msgid "moves to the next frame"
 msgstr "다음 프레임으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1058
+#: browseMode.py:1067
 msgid "no next frame"
 msgstr "다음 프레임 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1060
+#: browseMode.py:1069
 msgid "moves to the previous frame"
 msgstr "이전 프레임으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1062
+#: browseMode.py:1071
 msgid "no previous frame"
 msgstr "이전 프레임 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1065
+#: browseMode.py:1074
 msgid "frames"
 msgstr "프레임"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1071
+#: browseMode.py:1080
 msgid "moves to the next separator"
 msgstr "다음 구분선으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1073
+#: browseMode.py:1082
 msgid "no next separator"
 msgstr "다음 구분선 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1075
+#: browseMode.py:1084
 msgid "moves to the previous separator"
 msgstr "이전 구분선으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1077
+#: browseMode.py:1086
 msgid "no previous separator"
 msgstr "이전 구분선 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1079
+#: browseMode.py:1088
 msgid "separators"
 msgstr "구분선"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1085
+#: browseMode.py:1094
 msgid "moves to the next radio button"
 msgstr "다음 라디오 버튼으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1087
+#: browseMode.py:1096
 msgid "no next radio button"
 msgstr "다음 라디오 버튼 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1089
+#: browseMode.py:1098
 msgid "moves to the previous radio button"
 msgstr "이전 라디오 버튼으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1091
+#: browseMode.py:1100
 msgid "no previous radio button"
 msgstr "이전 라디오 버튼 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1093
+#: browseMode.py:1102
 msgid "radio buttons"
 msgstr "라디오버튼"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1099
+#: browseMode.py:1108
 msgid "moves to the next combo box"
 msgstr "다음 콤보상자로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1101
+#: browseMode.py:1110
 msgid "no next combo box"
 msgstr "다음 콤보상자 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1103
+#: browseMode.py:1112
 msgid "moves to the previous combo box"
 msgstr "이전 콤보상자로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1105
+#: browseMode.py:1114
 msgid "no previous combo box"
 msgstr "이전 콤보상자 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1107
+#: browseMode.py:1116
 msgid "combo boxes"
 msgstr "콤보박스"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1113
+#: browseMode.py:1122
 msgid "moves to the next check box"
 msgstr "다음 체크상자로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1115
+#: browseMode.py:1124
 msgid "no next check box"
 msgstr "다음 체크상자 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1117
+#: browseMode.py:1126
 msgid "moves to the previous check box"
 msgstr "이전 체크상자로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1119
+#: browseMode.py:1128
 msgid "no previous check box"
 msgstr "이전 체크상자 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1121
+#: browseMode.py:1130
 msgid "check boxes"
 msgstr "체크상자"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1127
+#: browseMode.py:1136
 msgid "moves to the next graphic"
 msgstr "다음 그래픽으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1129
+#: browseMode.py:1138
 msgid "no next graphic"
 msgstr "다음 그래픽 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1131
+#: browseMode.py:1140
 msgid "moves to the previous graphic"
 msgstr "이전 그래픽으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1133
+#: browseMode.py:1142
 msgid "no previous graphic"
 msgstr "이전 그래픽 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1135
+#: browseMode.py:1144
 msgid "graphics"
 msgstr "그래픽"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1141
+#: browseMode.py:1150
 msgid "moves to the next block quote"
 msgstr "다음 인용문으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1143
+#: browseMode.py:1152
 msgid "no next block quote"
 msgstr "다음 인용문 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1145
+#: browseMode.py:1154
 msgid "moves to the previous block quote"
 msgstr "이전 인용문으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1147
+#: browseMode.py:1156
 msgid "no previous block quote"
 msgstr "이전 인용문 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1149
+#: browseMode.py:1158
 msgid "block quotes"
 msgstr "인용문"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1155
+#: browseMode.py:1164
 msgid "skips forward past a block of links"
 msgstr "링크를 건너 뛰고 다음 텍스트로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1157
+#: browseMode.py:1166
 msgid "no more text after a block of links"
 msgstr "링크 블록 이후 텍스트 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1159
+#: browseMode.py:1168
 msgid "skips backward past a block of links"
 msgstr "링크를 건너 뛰고 이전 텍스트로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1161
+#: browseMode.py:1170
 msgid "no more text before a block of links"
 msgstr "링크 블록 이전 텍스트 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1164
+#: browseMode.py:1173
 msgid "non-link blocks"
 msgstr "링크 아닌 블럭 텍스트"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1170
+#: browseMode.py:1179
 msgid "moves to the next landmark"
 msgstr "다음 랜드마크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1172
+#: browseMode.py:1181
 msgid "no next landmark"
 msgstr "다음 랜드마크 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1174
+#: browseMode.py:1183
 msgid "moves to the previous landmark"
 msgstr "이전 랜드마크로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1176
+#: browseMode.py:1185
 msgid "no previous landmark"
 msgstr "이전 랜드마크 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1179
+#: browseMode.py:1188
 msgid "landmarks"
 msgstr "랜드마크"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1185
+#: browseMode.py:1194
 msgid "moves to the next embedded object"
 msgstr "다음 임베디드 객체로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1187
+#: browseMode.py:1196
 msgid "no next embedded object"
 msgstr "다음 임베디드 객체 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1189
+#: browseMode.py:1198
 msgid "moves to the previous embedded object"
 msgstr "이전 임베디드 객체로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1191
+#: browseMode.py:1200
 msgid "no previous embedded object"
 msgstr "이전 임베디드 객체 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1193
+#: browseMode.py:1202
 msgid "embedded objects"
 msgstr "임베디드 객체"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1199
+#: browseMode.py:1208
 msgid "moves to the next annotation"
 msgstr "다음 주석으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1201
+#: browseMode.py:1210
 msgid "no next annotation"
 msgstr "다음 주석 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1203
+#: browseMode.py:1212
 msgid "moves to the previous annotation"
 msgstr "이전 주석으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1205
+#: browseMode.py:1214
 msgid "no previous annotation"
 msgstr "이전 주석 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1207
+#: browseMode.py:1216
 msgid "annotations"
 msgstr "주석"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1213
+#: browseMode.py:1222
 msgid "moves to the next error"
 msgstr "다음 문자 오류로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1215
+#: browseMode.py:1224
 msgid "no next error"
 msgstr "다음 문자 오류 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1217
+#: browseMode.py:1226
 msgid "moves to the previous error"
 msgstr "이전 문자 오류로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1219
+#: browseMode.py:1228
 msgid "no previous error"
 msgstr "이전 문자 오류 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1221
+#: browseMode.py:1230
 msgid "errors"
 msgstr "오류"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1227
+#: browseMode.py:1236
 msgid "moves to the next slider"
 msgstr "다음 슬라이더로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1229
+#: browseMode.py:1238
 msgid "no next slider"
 msgstr "다음 슬라이더 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1231
+#: browseMode.py:1240
 msgid "moves to the previous slider"
 msgstr "이전 슬라이더로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1233
+#: browseMode.py:1242
 msgid "no previous slider"
 msgstr "이전 슬라이더 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1235
+#: browseMode.py:1244
 msgid "sliders"
 msgstr "슬라이더"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1241
+#: browseMode.py:1250
 msgid "moves to the next clickable element"
-msgstr ""
+msgstr "다음 클릭 가능 요소로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1243
+#: browseMode.py:1252
 msgid "no next clickable element"
-msgstr ""
+msgstr "다음 클릭 가능 요소 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1245
+#: browseMode.py:1254
 msgid "moves to the previous clickable element"
-msgstr ""
+msgstr "이전 클릭 가능 요소로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1247
+#: browseMode.py:1256
 msgid "no previous clickable element"
-msgstr ""
+msgstr "이전 클릭 가능 요소 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1250
+#: browseMode.py:1259
 msgid "clickable elements"
-msgstr ""
+msgstr "클릭 가능 요소"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1256
+#: browseMode.py:1265
 msgid "moves to the next article"
 msgstr "다음 아티클로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1258
+#: browseMode.py:1267
 msgid "no next article"
 msgstr "다음 아티클 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1260
+#: browseMode.py:1269
 msgid "moves to the previous article"
 msgstr "이전 아티클로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1262
+#: browseMode.py:1271
 msgid "no previous article"
 msgstr "이전 아티클 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1264
+#: browseMode.py:1273
 msgid "articles"
 msgstr "아티클"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1270
+#: browseMode.py:1279
 msgid "moves to the next grouping"
 msgstr "다음 그룹으로로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1272
+#: browseMode.py:1281
 msgid "no next grouping"
 msgstr "다음 그룹 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1274
+#: browseMode.py:1283
 msgid "moves to the previous grouping"
 msgstr "이전 그룹으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1276
+#: browseMode.py:1285
 msgid "no previous grouping"
 msgstr "이전 그룹 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1278
+#: browseMode.py:1287
 msgid "groupings"
 msgstr "그룹"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1284
+#: browseMode.py:1293
 msgid "moves to the next tab"
 msgstr "다은 탭으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1286
+#: browseMode.py:1295
 msgid "no next tab"
 msgstr "다음 탭 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1288
+#: browseMode.py:1297
 msgid "moves to the previous tab"
 msgstr "이전 탭으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1290
+#: browseMode.py:1299
 msgid "no previous tab"
 msgstr "이전 탭 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1292
+#: browseMode.py:1301
 msgid "tabs"
 msgstr "탭"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1298
+#: browseMode.py:1307
 msgid "moves to the next figure"
 msgstr "다음 피규어로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1300
+#: browseMode.py:1309
 msgid "no next figure"
 msgstr "다음 피규어 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1302
+#: browseMode.py:1311
 msgid "moves to the previous figure"
 msgstr "이전 피규어로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1304
+#: browseMode.py:1313
 msgid "no previous figure"
 msgstr "이전 피규어 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1306
+#: browseMode.py:1315
 msgid "figures"
 msgstr "피규어"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1312
+#: browseMode.py:1321
 msgid "moves to the next menu item"
 msgstr "다음 메뉴 항목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1314
+#: browseMode.py:1323
 msgid "no next menu item"
 msgstr "다음 메뉴 항목 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1316
+#: browseMode.py:1325
 msgid "moves to the previous menu item"
 msgstr "이전 메뉴 항목으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1318
+#: browseMode.py:1327
 msgid "no previous menu item"
 msgstr "이전 메뉴 항목 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1320
+#: browseMode.py:1329
 msgid "menu items"
 msgstr "메뉴항목"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1326
+#: browseMode.py:1335
 msgid "moves to the next toggle button"
 msgstr "다음 전환 버튼으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1328
+#: browseMode.py:1337
 msgid "no next toggle button"
 msgstr "다음 전환 버튼 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1330
+#: browseMode.py:1339
 msgid "moves to the previous toggle button"
 msgstr "이전 전환 버튼으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1332
+#: browseMode.py:1341
 msgid "no previous toggle button"
 msgstr "이전 전환 버튼 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1334
+#: browseMode.py:1343
 msgid "toggle buttons"
 msgstr "전환 버튼"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1340
+#: browseMode.py:1349
 msgid "moves to the next progress bar"
 msgstr "다음 진행률 막대로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1342
+#: browseMode.py:1351
 msgid "no next progress bar"
 msgstr "다음 진행률 막대 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1344
+#: browseMode.py:1353
 msgid "moves to the previous progress bar"
 msgstr "이전 진행률 막대로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1346
+#: browseMode.py:1355
 msgid "no previous progress bar"
 msgstr "이전 진행률 막대 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1348
+#: browseMode.py:1357
 msgid "progress bars"
 msgstr "진행률 막대"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1354
+#: browseMode.py:1363
 msgid "moves to the next math formula"
 msgstr "다음 수학 공식으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1356
+#: browseMode.py:1365
 msgid "no next math formula"
 msgstr "다음 수학 공식 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1358
+#: browseMode.py:1367
 msgid "moves to the previous math formula"
 msgstr "이전 수학 공식으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1360
+#: browseMode.py:1369
 msgid "no previous math formula"
 msgstr "이전 수학 공식 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1362
+#: browseMode.py:1371
 msgid "math formulas"
 msgstr "수학 공식"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1368
+#: browseMode.py:1377
 msgid "moves to the next text paragraph"
 msgstr "다음 텍스트 문단으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1370
+#: browseMode.py:1379
 msgid "no next text paragraph"
 msgstr "다음 텍스트 문단 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1372
+#: browseMode.py:1381
 msgid "moves to the previous text paragraph"
 msgstr "이전 텍스트 문단으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1374
+#: browseMode.py:1383
 msgid "no previous text paragraph"
 msgstr "이전 텍스트 문단 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1377
+#: browseMode.py:1386
 msgid "text paragraphs"
 msgstr "텍스트 문단"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1383
+#: browseMode.py:1392
 msgid "moves to the next vertically aligned paragraph"
 msgstr "세로로 정렬된 다음 문단으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1385
+#: browseMode.py:1394
 msgid "no next vertically aligned paragraph"
 msgstr "세로로 정렬된 다음 문단 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1387
+#: browseMode.py:1396
 msgid "moves to the previous vertically aligned paragraph"
 msgstr "세로로 정렬된 이전 문단으로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1389
+#: browseMode.py:1398
 msgid "no previous vertically aligned paragraph"
 msgstr "세로로 정렬된 이전 문단 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1392
+#: browseMode.py:1401
 msgid "vertical paragraphs"
 msgstr "수직 문단"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1398
+#: browseMode.py:1407
 msgid "moves to the next same style text"
 msgstr "스타일 서식이 같은 다음 텍스트로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1400
+#: browseMode.py:1409
 msgid "No next same style text"
 msgstr "스타일 서식이 같은 다음 텍스트 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1402
+#: browseMode.py:1411
 msgid "moves to the previous same style text"
 msgstr "스타일 서식이 같은 이전 텍스트로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1404
+#: browseMode.py:1413
 msgid "No previous same style text"
 msgstr "이전 동일 스타일 텍스트 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1406
+#: browseMode.py:1415
 msgid "same style"
 msgstr "동일 스타일"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1412
+#: browseMode.py:1421
 msgid "moves to the next different style text"
 msgstr "스타일 서식이 다른 다음 텍스트로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1414
+#: browseMode.py:1423
 msgid "No next different style text"
 msgstr "스타일 서식이 다른 다음 텍스트 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1416
+#: browseMode.py:1425
 msgid "moves to the previous different style text"
 msgstr "스타일 서식이 다른 이전 텍스트로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1418
+#: browseMode.py:1427
 msgid "No previous different style text"
 msgstr "스타일 서식이 다른 이전 텍스트 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1420
+#: browseMode.py:1429
 msgid "different style"
 msgstr "다른 스타일"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1426
+#: browseMode.py:1435
 msgid "moves to the next reference"
 msgstr "다음 참조로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1428
+#: browseMode.py:1437
 msgid "no next reference"
 msgstr "다음 참조 없음"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1430
+#: browseMode.py:1439
 msgid "moves to the previous reference"
 msgstr "이전 참조로 이동"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1432
+#: browseMode.py:1441
 msgid "no previous reference"
 msgstr "이전 참조 없음"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1435
+#: browseMode.py:1444
 msgid "references"
 msgstr "참조"
 
@@ -1131,7 +1131,7 @@ msgstr "참조"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1454 gui\settingsDialogs.py:3466
+#: browseMode.py:1463 gui\settingsDialogs.py:3466
 msgid "Lin&ks"
 msgstr "링크 (&K)"
 
@@ -1139,42 +1139,42 @@ msgstr "링크 (&K)"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1457 gui\settingsDialogs.py:3461
+#: browseMode.py:1466 gui\settingsDialogs.py:3461
 msgid "&Headings"
 msgstr "제목 (&H)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1460 NVDAObjects\window\excel.py:768
+#: browseMode.py:1469 NVDAObjects\window\excel.py:768
 msgid "&Form fields"
 msgstr "폼 필드 (&F)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1463
+#: browseMode.py:1472
 msgid "&Buttons"
 msgstr "버튼 (&B)"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1466
+#: browseMode.py:1475
 msgid "Lan&dmarks"
 msgstr "랜드마크 (&D)"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: browseMode.py:1479
+#: browseMode.py:1488
 msgid "Elements List"
 msgstr "요소 목록"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1490
+#: browseMode.py:1499
 msgid "Type:"
 msgstr "유형:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1519
+#: browseMode.py:1528
 msgid "Filter b&y:"
 msgstr "요소 이름 검색 (&Y):"
 
@@ -1182,34 +1182,34 @@ msgstr "요소 이름 검색 (&Y):"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1530 globalCommands.py:1856
+#: browseMode.py:1539 globalCommands.py:1856
 msgid "Activate"
 msgstr "활성화"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1535
+#: browseMode.py:1544
 msgid "&Move to"
 msgstr "커서 이동 (&M)"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: browseMode.py:2003
+#: browseMode.py:2012
 msgid "No long description"
 msgstr "상세 설명 없음"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
-#: browseMode.py:2006
+#: browseMode.py:2015
 msgid "Shows the long description at this position if one is found."
 msgstr "현재 위치에 상세 설명이 있다면 해당 내용 읽기."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
-#: browseMode.py:2521 browseMode.py:2542
+#: browseMode.py:2537 browseMode.py:2558
 msgid "Not in a container"
 msgstr "컨테이너 아님"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: browseMode.py:2532
+#: browseMode.py:2548
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "캐럿이 위치한 컨테이너 요소, 목록, 표 등의 맨 앞으로 이동"
 
@@ -1219,53 +1219,53 @@ msgstr "캐럿이 위치한 컨테이너 요소, 목록, 표 등의 맨 앞으�
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2551 globalCommands.py:2006 globalCommands.py:2084
+#: browseMode.py:2567 globalCommands.py:2006 globalCommands.py:2084
 #: globalCommands.py:2204 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "맨 아래"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: browseMode.py:2560
+#: browseMode.py:2576
 msgid "Moves past the end of the container element, such as a list or table"
 msgstr "현재 컨테이너(목록, 표 등) 의 다음 내용으로 건너뛰기"
 
 #. Translators: the description for the toggleScreenLayout script.
-#: browseMode.py:2895
+#: browseMode.py:2911
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "문서 내용을 표시할 때 화면 레이아웃 사용 여부 전환하기"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#: browseMode.py:2904
+#: browseMode.py:2920
 msgid "Not supported in this document."
 msgstr "이 문서에서는 지원되지 않습니다."
 
 #. Translators: input help message for toggle native selection command
-#: browseMode.py:2930
+#: browseMode.py:2946
 msgid "Toggles native selection mode on and off"
 msgstr "네이티브 선택 모드 켬/끔 전환하기"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2936
+#: browseMode.py:2952
 msgid "Native selection mode unsupported in this browse mode document"
 msgstr "이 브라우즈 모드 문서에서 네이티브 선택 모드가 지원되지 않습니다"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
-#: browseMode.py:2939
+#: browseMode.py:2955
 msgid "Native selection mode cannot be turned off in this browse mode document"
 msgstr "이 브라우즈 모드 문서에서 네이티브 선택 모드를 끌 수 없습니다"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2951
+#: browseMode.py:2967
 msgid "Native selection mode unsupported in this document"
 msgstr "이 문서는 네이티브 선택 모드를 지원하지 않습니다"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2955
+#: browseMode.py:2971
 msgid "Native app selection mode enabled"
 msgstr "네이티브 응용프로그램 선택모드 켬"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2963
+#: browseMode.py:2979
 msgid "Native app selection mode disabled"
 msgstr "네이티브 응용프로그램 선택모드 끔"
 
@@ -3958,17 +3958,17 @@ msgstr "현재 점자셀 위치의 서식 정보 읽기"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4294
 msgid "Selects the text from the first up to the last braille cell"
-msgstr ""
+msgstr "첫 점자셀부터 마지막 점자셀까지 텍스트 선택하기"
 
 #. Translators: Reported when selection via multiple routing keys is not possible.
 #: globalCommands.py:4306
 msgid "Cannot select from braille routing keys"
-msgstr ""
+msgstr "점자 라우팅 키로 선택할 수 없음"
 
 #. Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 #: globalCommands.py:4313
 msgid "Selection not supported here"
-msgstr ""
+msgstr "여기서는 선택을 지원하지 않음"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4317
@@ -4351,7 +4351,7 @@ msgstr "돋보기 확대 위치를 아래 가장자리로 이동"
 #. Translators: Describes a command.
 #: globalCommands.py:5272
 msgid "Moves the mouse cursor to the center of the magnified view"
-msgstr ""
+msgstr "마우스 커서를 돋보기 확대 영역의 중앙으로 이동"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5285
@@ -4507,12 +4507,12 @@ msgstr "마지막 음성 말하기 정보"
 #. Translators: Input help mode message for the command to copy the last spoken information.
 #: globalCommands.py:5577
 msgid "Copies the last spoken information to the clipboard."
-msgstr ""
+msgstr "마지막으로 읽은 내용을 클립보드에 복사합니다."
 
 #. Translators: Reported when there is no last spoken information to copy.
 #: globalCommands.py:5586
 msgid "Nothing to copy"
-msgstr ""
+msgstr "복사할 내용 없음"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6533,7 +6533,7 @@ msgstr "네번 {action}"
 #: touchHandler.py:396
 #, python-brace-format
 msgid "{edgeLabel} {action}"
-msgstr ""
+msgstr "{edgeLabel} {action}"
 
 #. Translators: a touch screen action using multiple fingers
 #: touchHandler.py:405
@@ -6618,97 +6618,97 @@ msgstr "두 손가락 벌리기"
 #: touchTracker.py:78
 msgctxt "touch action"
 msgid "flick right then left"
-msgstr ""
+msgstr "오른쪽으로 쓴 후 왼쪽으로 쓸기"
 
 #. Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:80
 msgctxt "touch action"
 msgid "flick left then right"
-msgstr ""
+msgstr "왼쪽으로 쓴 후 오른쪽으로 쓸기"
 
 #. Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:82
 msgctxt "touch action"
 msgid "flick up then down"
-msgstr ""
+msgstr "쓸어올린 후 쓸어내리기"
 
 #. Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:84
 msgctxt "touch action"
 msgid "flick down then up"
-msgstr ""
+msgstr "쓸어내린 후 쓸어올리기"
 
 #. Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:86
 msgctxt "touch action"
 msgid "flick right then up"
-msgstr ""
+msgstr "오른쪽으로 쓴 후 쓸어올리기"
 
 #. Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:88
 msgctxt "touch action"
 msgid "flick right then down"
-msgstr ""
+msgstr "오른쪽으로 쓴 후 쓸어내리기"
 
 #. Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:90
 msgctxt "touch action"
 msgid "flick left then up"
-msgstr ""
+msgstr "왼쪽으로 쓴 후 쓸어올리기"
 
 #. Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:92
 msgctxt "touch action"
 msgid "flick left then down"
-msgstr ""
+msgstr "왼쪽으로 쓴 후 쓸어내리기"
 
 #. Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:94
 msgctxt "touch action"
 msgid "flick up then right"
-msgstr ""
+msgstr "쓸어올린 후 오른쪽으로 쓸기"
 
 #. Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:96
 msgctxt "touch action"
 msgid "flick up then left"
-msgstr ""
+msgstr "쓸어올린 후 왼쪽으로 쓸기"
 
 #. Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:98
 msgctxt "touch action"
 msgid "flick down then right"
-msgstr ""
+msgstr "쓸어내린 후 오른쪽으로 쓸기"
 
 #. Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:100
 msgctxt "touch action"
 msgid "flick down then left"
-msgstr ""
+msgstr "쓸어내린 후 왼쪽으로 쓸기"
 
 #. Translators: describes a touch gesture that started from the left edge of the screen
 #: touchTracker.py:124
 msgctxt "touch edge"
 msgid "left edge"
-msgstr ""
+msgstr "왼쪽 가장자리"
 
 #. Translators: describes a touch gesture that started from the right edge of the screen
 #: touchTracker.py:126
 msgctxt "touch edge"
 msgid "right edge"
-msgstr ""
+msgstr "오른쪽 가장자리"
 
 #. Translators: describes a touch gesture that started from the top edge of the screen
 #: touchTracker.py:128
 msgctxt "touch edge"
 msgid "top edge"
-msgstr ""
+msgstr "위쪽 가장자리"
 
 #. Translators: describes a touch gesture that started from the bottom edge of the screen
 #: touchTracker.py:130
 msgctxt "touch edge"
 msgid "bottom edge"
-msgstr ""
+msgstr "아래쪽 가장자리"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
@@ -6746,7 +6746,7 @@ msgstr "NVDA 메시지"
 #. Translators: The label of a button to copy the text of the window to the clipboard.
 #: ui.py:148
 msgid "&Copy"
-msgstr ""
+msgstr "복사 (&C)"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -7003,9 +7003,11 @@ msgstr "{longName} ({name})\n"
 "버전: {version} ({version_detailed})\n"
 "URL: {url}\n"
 "{copyright}\n\n"
-"{name}는 GNU 일반 공공 라이센스 (2버전 이상)의 적용을 받습니다. 본 라이센스를 따를동안 여러 수단을 통한 소스코드의 공유와 변경 및 원하는 사용자에게 소스코드를 공개할 수 있습니다. 이 약관은 본 소프트웨어의 원본과 수정본 및 파생된 모든 제품에 적용됩니다.\n"
+"{name}는 GNU 일반 공공 라이센스 (2버전 이상)의 적용을 받습니다.\n"
+"본 라이센스를 따를동안 여러 수단을 통한 소스코드의 공유와 변경 및 원하는 사용자에게 소스코드를 공개할 수 있습니다.\n"
+"이 약관은 본 소프트웨어의 원본과 수정본 및 파생된 모든 제품에 적용됩니다.\n"
 "라이센스에 대한 더 자세한 내용은 도움말 메뉴에서 볼 수 있습니다.\n"
-"라이센스 정보는 https://www.gnu.org/licenses/old-licenses/gpl-3.0.html 에 접속하여 확인할 수도 있습니다.\n\n"
+"라이센스 정보는 https://www.gnu.org/licenses/old-licenses/gpl-2.0.html 및 https://www.gnu.org/licenses/gpl-3.0.en.html 에 접속하여 확인할 수도 있습니다.\n\n"
 "{name}는 시각장애인을 위한 무료 공개 솔루션의 개발 도움 및 홍보를 지원하는 비영리단체인 NV Access에 의해 개발되었습니다.\n"
 "만약 NVDA가 유용하다고 생각하고 기능향상이 지속되기를 원한다면, NVDA 메뉴에 있는 후원 기능을 통해 NV Access를 후원해 주셨으면 합니다."
 
@@ -7366,7 +7368,7 @@ msgstr "사용 가능한 추가기능 (&A)"
 #: addonStore\models\status.py:202
 msgctxt "addonStore"
 msgid "Installed incompatible &add-ons"
-msgstr "설치된 비호환 추가기능"
+msgstr "설치된 비호환 추가기능 (&A)"
 
 #. Translators: The reason an add-on is not compatible.
 #. A more recent version of NVDA is required for the add-on to work.
@@ -8388,7 +8390,7 @@ msgstr "뒤로 스크롤시에만 출력"
 #. Translators: Label for a method of word segmentation.
 #: braille\constants.py:65 config\featureFlagEnums.py:153
 msgid "Automatic"
-msgstr "자동 연결"
+msgstr "자동"
 
 #. Translators: String representing the USB port selection for braille displays.
 #: braille\constants.py:77
@@ -8967,7 +8969,7 @@ msgstr "점자 입력 (&U)"
 #. Translators: Label for a setting in braille settings dialog.
 #: braille\display\driver.py:386
 msgid "&HID keyboard input simulation"
-msgstr "HID 키보드 입력 시뮬레이션 (H)"
+msgstr "HID 키보드 입력 시뮬레이션 (&H)"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
 #: braille\display\gesture.py:232
@@ -9591,13 +9593,13 @@ msgstr "영어 (북미) 점자 컴퓨터 코드"
 #. braille settings dialog.
 #: brailleTables\__tables.py:180
 msgid "English (New Zealand) grade 1"
-msgstr ""
+msgstr "영어 (뉴질랜드) 1종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:183
 msgid "English (New Zealand) grade 2"
-msgstr ""
+msgstr "영어 (뉴질랜드) 2종"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9663,7 +9665,7 @@ msgstr "스페인어 2종"
 #. braille settings dialog.
 #: brailleTables\__tables.py:221
 msgid "Spanish (Norway)"
-msgstr ""
+msgstr "스페인어 (노르웨이)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9819,7 +9821,7 @@ msgstr "크로아티아어 1종"
 #. braille settings dialog.
 #: brailleTables\__tables.py:335
 msgid "Haitian Creole Braille"
-msgstr ""
+msgstr "아이티 크리올어 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9969,7 +9971,7 @@ msgstr "라트비아어 1종"
 #. braille settings dialog.
 #: brailleTables\__tables.py:438
 msgid "Māori Braille"
-msgstr ""
+msgstr "마오리어 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10101,13 +10103,13 @@ msgstr "오리야어 1종"
 #. braille settings dialog.
 #: brailleTables\__tables.py:536
 msgid "Elfdalian 6 dot"
-msgstr ""
+msgstr "엘브달렌어 6점"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:539
 msgid "Elfdalian 8 dot"
-msgstr ""
+msgstr "엘브달렌어 8점"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10239,13 +10241,13 @@ msgstr "슬로베니아어 1종"
 #. braille settings dialog.
 #: brailleTables\__tables.py:622
 msgid "Sami 6 dot"
-msgstr ""
+msgstr "사미어 6점"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:625
 msgid "Sami 8 dot"
-msgstr ""
+msgstr "사미어 8점"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10281,13 +10283,13 @@ msgstr "스웨덴어 1종 점자"
 #. braille settings dialog.
 #: brailleTables\__tables.py:646
 msgid "Swedish uncontracted braille (detailed)"
-msgstr ""
+msgstr "스웨덴어 1종 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:652
 msgid "Swedish uncontracted braille (phonetics)"
-msgstr ""
+msgstr "스웨덴어 1종 점자 (음성 기호)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10299,7 +10301,7 @@ msgstr "스웨덴어 3종 점자"
 #. braille settings dialog.
 #: brailleTables\__tables.py:661
 msgid "Swedish partially contracted braille (detailed)"
-msgstr ""
+msgstr "스웨덴어 3종 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10311,43 +10313,43 @@ msgstr "스웨덴어 2종 점자"
 #. braille settings dialog.
 #: brailleTables\__tables.py:671
 msgid "Swedish contracted braille (detailed)"
-msgstr ""
+msgstr "스웨덴어 2종 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:676
 msgid "Swedish 8 dot uncontracted braille"
-msgstr ""
+msgstr "스웨덴어 8점 1종 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:681
 msgid "Swedish 8 dot uncontracted braille (detailed)"
-msgstr ""
+msgstr "스웨덴어 8점 1종 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:687
 msgid "Swedish 8 dot partially contracted braille"
-msgstr ""
+msgstr "스웨덴어 8점 3종 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:694
 msgid "Swedish 8 dot partially contracted braille (detailed)"
-msgstr ""
+msgstr "스웨덴어 8점 3종 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:701
 msgid "Swedish 8 dot contracted braille"
-msgstr ""
+msgstr "스웨덴어 8점 2종 점자"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:708
 msgid "Swedish 8 dot contracted braille (detailed)"
-msgstr ""
+msgstr "스웨덴어 8점 2종 점자 (상세)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10971,59 +10973,59 @@ msgstr "태그"
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:155
 msgid "Chinese"
-msgstr ""
+msgstr "중국어"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:157
 msgid "Unicode (ICU)"
-msgstr ""
+msgstr "Unicode (ICU)"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:159
 msgid "Legacy (Uniscribe)"
-msgstr ""
+msgstr "레거시 (Uniscribe)"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:180
 msgctxt "braille text wrap"
 msgid "Off"
-msgstr ""
+msgstr "끔"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:182
 msgctxt "braille text wrap"
 msgid "Show mark when words are cut"
-msgstr ""
+msgstr "단어가 잘리면 표시"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:184
 msgctxt "braille text wrap"
 msgid "At word boundaries"
-msgstr ""
+msgstr "단어 단위로"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:188
 msgctxt "braille text wrap"
 msgid "At word or syllable boundaries"
-msgstr ""
+msgstr "단어 또는 음절 단위로"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:205
 msgctxt "sayAll"
 msgid "Sentence where possible"
-msgstr ""
+msgstr "가능하면 문장 단위"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:207
 msgctxt "sayAll"
 msgid "Paragraph"
-msgstr ""
+msgstr "문단 단위"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:209
 msgctxt "sayAll"
 msgid "Line"
-msgstr ""
+msgstr "줄 단위"
 
 #. Translators: The title of the document used to present the result of content recognition.
 #: contentRecog\recogUi.py:104
@@ -11077,7 +11079,7 @@ msgstr "컨텐츠 보이지 않음"
 #. is enabled, but the system does not support the required screen capture API.
 #: contentRecog\recogUi.py:326
 msgid "Content recognition is unavailable while Screen Curtain is enabled on this system. Please disable Screen Curtain and try again."
-msgstr ""
+msgstr "이 시스템에서는 화면 커튼이 활성화된 동안 콘텐츠 인식을 사용할 수 없습니다. 화면 커튼을 비활성화한 후 다시 시도하세요."
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 #: contentRecog\recogUi.py:334
@@ -12522,7 +12524,8 @@ msgstr "시스템 접근성 복구 도구"
 #: gui\__init__.py:634
 msgid "The System Accessibility Repair Tool has completed successfully.\n"
 "It is highly recommended that you restart your computer now, to make sure the changes take full effect."
-msgstr "시스템 접근성 복구 도구 작업이 성공적으로 완료되었습니다. 변경 사항이 완전히 적용되도록 하려면 지금 컴퓨터를 재시작하는 것이 좋습니다."
+msgstr "시스템 접근성 복구 도구 작업이 성공적으로 완료되었습니다.\n"
+"변경 사항이 완전히 적용되도록 하려면 지금 컴퓨터를 재시작하는 것이 좋습니다."
 
 #. Translators: The label for the menu item to open NVDA Settings dialog.
 #: gui\__init__.py:661
@@ -12929,7 +12932,8 @@ msgstr "초기 기본값으로 복구됨"
 #: gui\configManagement.py:31
 msgid "Your configuration has been reset to factory defaults.\n"
 "Choose OK to keep factory defaults, or Undo to restore your previous configuration."
-msgstr "구성이 초기 기본값으로 초기화되었습니다. 확인 버튼을 선택하여 기본값을 유지하거나 되돌리기 버튼을 선택하여 이전 구성으로 되돌릴 수 있습니다."
+msgstr "구성이 초기 기본값으로 초기화되었습니다.\n"
+"확인 버튼을 선택하여 기본값을 유지하거나 되돌리기 버튼을 선택하여 이전 구성으로 되돌릴 수 있습니다."
 
 #. Translators: The label of the undo button in the factory defaults reset dialog.
 #. Pressing this button restores the previous configuration.
@@ -13129,7 +13133,8 @@ msgstr "프로필 적용시기:"
 #: gui\configProfiles.py:535
 msgid "This trigger is already associated with another profile. If you continue, it will be removed from that profile and associated with this one.\n"
 "Are you sure you want to continue?"
-msgstr "이 트리거는 이미 다른 프로필과 연결되어 있습니다. 계속하면 해당 프로필에서 삭제되고 이 프로필과 연결됩니다. 계속 하시겠습니까?"
+msgstr "이 트리거는 이미 다른 프로필과 연결되어 있습니다. 계속하면 해당 프로필에서 삭제되고 이 프로필과 연결됩니다.\n"
+"계속 하시겠습니까?"
 
 #. Translators: An error displayed when the user attempts to create a configuration profile
 #. with an empty name.
@@ -13147,7 +13152,8 @@ msgstr "프로필 생성 실패 - 읽기 전용 파일 시스템일 수 있음."
 #: gui\configProfiles.py:597
 msgid "To edit this profile, you will need to manually activate it. Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 "Do you wish to manually activate it now?"
-msgstr "이 프로필을 편집하려면 수동으로 프로필을 적용하여야 합니다. 프로필 편집을 끝낸 후 수동으로 프로필 적용을 해제하면 편집된 프로필을 사용할 수 있습니다. 지금 프로필을 수동 적용하시겠습니까?"
+msgstr "이 프로필을 편집하려면 수동으로 프로필을 적용하여야 합니다. 프로필 편집을 끝낸 후 수동으로 프로필 적용을 해제하면 편집된 프로필을 사용할 수 있습니다.\n"
+"지금 프로필을 수동 적용하시겠습니까?"
 
 #. Translators: The title of the confirmation dialog for manual activation of a created profile.
 #: gui\configProfiles.py:602
@@ -13262,7 +13268,7 @@ msgstr "추가 (&A)"
 #. Translators: Context menu item label to change a gesture
 #: gui\inputGestures.py:632 gui\inputGestures.py:688
 msgid "C&hange"
-msgstr ""
+msgstr "변경 (&H)"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: Context menu item label to remove a gesture
@@ -13544,7 +13550,7 @@ msgstr "휴대용 버전을 저장할 폴더를 선택하십시오."
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr "휴대용 복사본이 만들어질 절대 경로를 지정해주세요. 경로는 드라이브 문자열로 시작되어야 합니다(예: C:). 경로 일부에 대한 자리 표시자로 시스템 환경변수(예: %temp%, %homepath%)가 포함될 수 있습니다.\n\n"
+msgstr "휴대용 복사본이 만들어질 절대 경로를 지정해주세요. 경로는 드라이브 문자열로 시작되어야 합니다(예: C:). 경로 일부에 대한 자리 표시자로 시스템 환경변수(예: %temp%, %homepath%)가 포함될 수 있습니다.\n"
 "현재 경로는 {path}입니다. "
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
@@ -13594,7 +13600,7 @@ msgstr "새로 고침\tF5"
 #. Translators: The label for a menu item in NVDA log viewer to save log file.
 #: gui\logViewer.py:54
 msgid "Save &as...\tCtrl+S"
-msgstr "저장 ...\tCtrl+S"
+msgstr "다른 이름으로 저장 (&A)...\tCtrl+S"
 
 #. Translators: The title of a menu in NVDA Log Viewer.
 #: gui\logViewer.py:61
@@ -13664,7 +13670,7 @@ msgstr "기본값 ({default})"
 msgid "{message}\n\n"
 "Category: \"{category}\"\n"
 "Option: \"{option}\""
-msgstr "{message}\n"
+msgstr "{message}\n\n"
 "분류: \"{category}\"\n"
 "옵션: \"{option}\""
 
@@ -13894,7 +13900,7 @@ msgstr "말하는 중 언어 변경 알림 (&G)"
 #: gui\settingsDialogs.py:1694
 msgctxt "reportLanguage"
 msgid "Report when switching to language is not s&upported by synthesizer"
-msgstr "음성 합성 엔진이 지원하지 않는 언어로 전환할 때 알림"
+msgstr "음성 합성 엔진이 지원하지 않는 언어로 전환할 때 알림 (&U)"
 
 #. Translators: This is the label for a combobox in the
 #. voice settings panel (possible choices are none, some, most and all).
@@ -13912,12 +13918,12 @@ msgstr "기호 및 글자 출력 시 선택된 음성 엔진 언어 사용"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5620
 msgid "Unicode normali&zation"
-msgstr "유니코드 정규화"
+msgstr "유니코드 정규화 (&Z)"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #: gui\settingsDialogs.py:1753
 msgid "Say all reads by"
-msgstr ""
+msgstr "모두 읽기 단위"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
@@ -13952,12 +13958,12 @@ msgstr "철자 발음 지원 시 사용 (&S)"
 #. Translators: Label of the list where user can enable or disable symbol dictionaries.
 #: gui\settingsDialogs.py:1854
 msgid "E&xtra dictionaries for character and symbol processing:"
-msgstr "추가 문자 및 기호 사전"
+msgstr "추가 문자 및 기호 사전 (&X):"
 
 #. Translators: Label of the list where user can enable or disable speech dictionaries.
 #: gui\settingsDialogs.py:1870
 msgid "Sp&eech dictionaries:"
-msgstr "음성 발음 사전:"
+msgstr "음성 발음 사전 (&E):"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1884
@@ -14017,13 +14023,13 @@ msgstr "입력한 단어 말하기 (&W):"
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:2068
 msgid "Speech &interrupt for typed characters"
-msgstr "텍스트 입력 시 음성 정지"
+msgstr "텍스트 입력 시 음성 정지 (&I)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:2080
 msgid "Speech i&nterrupt for Enter key"
-msgstr "엔터키 입력 시 음성 정지"
+msgstr "엔터키 입력 시 음성 정지 (&N)"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -14058,7 +14064,7 @@ msgstr "다른 프로그램에서의 키보드 입력 처리 (&A)"
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:2134
 msgid "&Multiple key press timeout (ms):"
-msgstr "키 연속 입력 제한 시간 (밀리초):"
+msgstr "키 연속 입력 제한 시간 (ms) (&M):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2150
@@ -14301,7 +14307,7 @@ msgstr "화면 레이아웃 사용 (지원되는 경우) (&S)"
 #. enable browse mode on page load.
 #: gui\settingsDialogs.py:2604
 msgid "&Enable browse mode on page load"
-msgstr "페이지가 로드되면 브라우즈 모드 활성화 (E)"
+msgstr "페이지가 로드되면 브라우즈 모드 활성화 (&E)"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -14342,17 +14348,17 @@ msgstr "브라우즈 모드외 명령을 문서가 처리하지 않도록 함 (&
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2680
 msgid "&Keep search history"
-msgstr ""
+msgstr "검색 기록 유지 (&K)"
 
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2691
 msgid "Nati&ve selection mode"
-msgstr ""
+msgstr "네이티브 선택 모드 (&V)"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2707
 msgid "T&ouch navigation elements:"
-msgstr "터치 탐색 요소:"
+msgstr "터치 탐색 요소 (&O):"
 
 #. Translators: Title of the math settings panel.
 #: gui\settingsDialogs.py:2746
@@ -14652,7 +14658,7 @@ msgstr "빈 줄 들여쓰기 알림 무시 (&B)"
 #. to adjust the duration of indentation tones in milliseconds.
 #: gui\settingsDialogs.py:3374
 msgid "Indent tone &duration (ms):"
-msgstr ""
+msgstr "들여쓰기 알림음 길이 (ms) (&D):"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -14782,12 +14788,12 @@ msgstr "문서 탐색"
 #. Translators: This is a label for the paragraph navigation style in the document navigation dialog
 #: gui\settingsDialogs.py:3609
 msgid "&Paragraph style:"
-msgstr "문단 스타일:"
+msgstr "문단 스타일 (&P):"
 
 #. Translators: This is a label for the word segmentation standard in the document navigation dialog
 #: gui\settingsDialogs.py:3619
 msgid "&Word Segmentation Standard:"
-msgstr ""
+msgstr "단어 분할 기준 (&W):"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -15009,7 +15015,7 @@ msgstr "터치 타이핑 모드 (&T)"
 #. Translators: This is the label for a checkbox in the touch interaction settings panel.
 #: gui\settingsDialogs.py:4217
 msgid "Enable &edge gestures"
-msgstr ""
+msgstr "가장자리 제스처 사용 (&E)"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:4231
@@ -15024,7 +15030,7 @@ msgstr "문자 인식 언어 (&L)"
 #. Translators: Label for an option in the Windows OCR settings panel.
 #: gui\settingsDialogs.py:4260
 msgid "Periodically &refresh recognized content"
-msgstr "인식된 내용을 주기적으로 새로고침"
+msgstr "인식된 내용을 주기적으로 새로고침 (&R)"
 
 #. Translators: The label for a setting in OCR settings to automatically say all on result.
 #: gui\settingsDialogs.py:4268
@@ -15152,7 +15158,8 @@ msgstr "레거시"
 msgctxt "advanced.uiaWithChromium"
 msgid "Use UIA with Microsoft Edge and other \n"
 "&Chromium based browsers when available:"
-msgstr "적용 가능한 경우 마이크로소프트 엣지 및 다른 Chromium 브라우저를 사용하기 위해서 UI 자동화 사용 (&C)"
+msgstr "적용 가능한 경우 마이크로소프트 엣지 및 다른 \n"
+"Chromium 브라우저에서 UI 자동화 사용 (&C):"
 
 #. Translators: Label for the default value of the Use UIA with Chromium combobox,
 #. in the Advanced settings panel.
@@ -15229,7 +15236,7 @@ msgstr "Windows 콘솔에서 가능한 경우 입력한 글자 지원 기능을 
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4544
 msgid "Beep for &skipped lines"
-msgstr ""
+msgstr "건너뛴 줄에 비프음 출력 (&S)"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -15534,7 +15541,7 @@ msgstr "줄 또는 문단 단위 탐색 시 말하기 (&L)"
 #. (how to break lines that don't fit on the braille display).
 #: gui\settingsDialogs.py:5610
 msgid "Text &wrap"
-msgstr ""
+msgstr "줄 바꿈 방식 (&W)"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:5631
@@ -15549,7 +15556,7 @@ msgstr "자동 스크롤 속도 (&M)"
 #. Translators: The label for a checkbox in the Braille settings panel.
 #: gui\settingsDialogs.py:5661
 msgid "Use &Chinese word segmentation"
-msgstr ""
+msgstr "중국어 단어 분할 사용 (&C)"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -15903,7 +15910,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr "NVDA를 제어하는 대부분의 명령은 다른 키를 누르는 동안 NVDA 키를 눌러야 합니다. 기본적으로 Insert 키와 숫자 패드의 Insert 키를 NVDA 키로 사용할 수 있습니다. 또한 NVDA를 CapsLock 키를 NVDA 키로 사용하도록 구성할 수 있습니다. 언제든지 NVDA+n을 눌러 NVDA 메뉴를 활성화할 수 있습니다. 이 메뉴에서 NVDA를 구성하고, 도움말을 얻고, 다른 NVDA 기능에 접근할 수 있습니다."
+msgstr "NVDA를 제어하는 대부분의 명령은 다른 키를 누르는 동안 NVDA 키를 눌러야 합니다.\n"
+"기본적으로 Insert 키와 숫자 패드의 Insert 키를 NVDA 키로 사용할 수 있습니다.\n"
+"또한 CapsLock 키를 NVDA 키로 사용하도록 구성할 수도 있습니다.\n"
+"언제든지 NVDA+n을 눌러 NVDA 메뉴를 활성화할 수 있습니다.\n"
+"이 메뉴에서 NVDA를 구성하고, 도움말을 얻고, 다른 NVDA 기능에 접근할 수 있습니다."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -15919,12 +15930,12 @@ msgstr "NVDA에 오신 것을 환영합니다!"
 #. Translators: The label of a checkbox in the Welcome dialog.
 #: gui\startupDialogs.py:78
 msgid "&Use CapsLock as an NVDA modifier key"
-msgstr "CapsLock을 NVDA 보조 키로 사용"
+msgstr "CapsLock을 NVDA 보조 키로 사용 (&U)"
 
 #. Translators: The label of a checkbox in the Welcome dialog.
 #: gui\startupDialogs.py:92
 msgid "&Show this dialog when NVDA starts"
-msgstr "NVDA 시작 시 이 대화 상자 표시"
+msgstr "NVDA 시작 시 이 대화 상자 표시 (&S)"
 
 #. Translators: The title of an error message box displayed when validating the startup dialog
 #: gui\startupDialogs.py:122
@@ -15960,7 +15971,7 @@ msgstr "라이선스 보기 (&V)"
 #. Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
 #: gui\startupDialogs.py:228
 msgid "I have read and &agree to the license agreement"
-msgstr "라이선스 계약을 읽고 이에 동의합니다"
+msgstr "라이선스 계약을 읽고 이에 동의합니다 (&A)"
 
 #. Translators: The title of the dialog asking if usage data can be collected
 #: gui\startupDialogs.py:274
@@ -16006,7 +16017,7 @@ msgstr "선택한 추가기능 업데이트 (&U)"
 #: gui\addonStoreGui\controls\actions.py:230
 msgctxt "addonStore"
 msgid "&Update (and enable) selected add-ons"
-msgstr ""
+msgstr "선택한 추가기능 업데이트 (&U, 사용함으로 전환)"
 
 #. Translators: Label for an action that retries the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -16277,8 +16288,7 @@ msgstr "추가기능 제거"
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "경고: {name} {version} 추가기능이 호환되지 않습니다. 가능하다면 이 추가기능의 새 업데이트 버전이 있는지 확인하세요. 이 추가기능은 NVDA {lastTestedNVDAVersion} 버전에서 마지막으로 테스트했습니다.\n"
-"이 추가기능은 NVDA {nvdaVersion} 이상 버전에서의 테스트를 필요로 합니다. 설치하게 되면 NVDA에 불안정한 동작을 유발시킬 수 있습니다.\n"
+msgstr "경고: {name} {version} 추가기능이 호환되지 않습니다. 가능하다면 이 추가기능의 새 업데이트 버전이 있는지 확인하세요. 이 추가기능은 NVDA {lastTestedNVDAVersion} 버전에서 마지막으로 테스트했습니다. 이 추가기능은 NVDA {nvdaVersion} 이상 버전에서의 테스트를 필요로 합니다. 설치하게 되면 NVDA에 불안정한 동작을 유발시킬 수 있습니다.\n"
 "정말로 설치를 진행하시겠습니까? "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -16288,9 +16298,8 @@ msgstr "경고: {name} {version} 추가기능이 호환되지 않습니다. 가�
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "경고: {name} {version} 추가기능이 호환되지 않습니다. 가능하다면 이 추가기능의 새 업데이트 버전이 있는지 확인하세요. 이 추가기능은 NVDA {lastTestedNVDAVersion} 버전에서 마지막으로 테스트했습니다.\n"
-"이 추가기능은 NVDA {nvdaVersion} 이상 버전에서의 테스트를 필요로 합니다. 활성화하면 NVDA에 불안정한 동작을 유발시킬 수 있습니다.\n"
-"정말로 설치를 진행하시겠습니까? "
+msgstr "경고: {name} {version} 추가기능이 호환되지 않습니다. 가능하다면 이 추가기능의 새 업데이트 버전이 있는지 확인하세요. 이 추가기능은 NVDA {lastTestedNVDAVersion} 버전에서 마지막으로 테스트했습니다. 이 추가기능은 NVDA {nvdaVersion} 이상 버전에서의 테스트를 필요로 합니다. 활성화하면 NVDA에 불안정한 동작을 유발시킬 수 있습니다.\n"
+"정말로 활성화를 진행하시겠습니까? "
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:233
@@ -16317,7 +16326,8 @@ msgstr "추가기능 설치 실패"
 msgid "Are you sure you want to install this add-on?\n"
 "Only install add-ons from trusted sources.\n"
 "Addon: {summary} {version}"
-msgstr "\"NVDA 추가기능을 설치하시겠습니까? 신뢰받는 사이트의 추가기능 설치를 권장합니다.\n"
+msgstr "이 추가기능을 설치하시겠습니까?\n"
+"신뢰할 수 있는 곳의 추가기능만 설치하세요.\n"
 "추가기능: {summary} {version}"
 
 #. Translators: Title for message asking if the user really wishes to install an Addon.
@@ -16423,7 +16433,7 @@ msgstr "추가기능 스토어 열기 (&S)"
 #: gui\addonStoreGui\controls\messageDialogs.py:449
 msgctxt "addonStore"
 msgid "&Update (and enable) all"
-msgstr ""
+msgstr "전체 업데이트 (&U, 사용함으로 전환)"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:452
@@ -16576,7 +16586,7 @@ msgstr "추가기능 비활성화와 함께 NVDA가 다시 시작되었습니다
 #: gui\addonStoreGui\controls\storeDialog.py:156
 msgctxt "addonStore"
 msgid "Sort by colu&mn:"
-msgstr "열을 기준으로 정렬:"
+msgstr "열을 기준으로 정렬 (&M):"
 
 #. Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:165
@@ -16594,7 +16604,7 @@ msgstr "호환되지 않는 추가기능 포함 (&I)"
 #: gui\addonStoreGui\controls\storeDialog.py:187
 msgctxt "addonStore"
 msgid "Ena&bled/disabled:"
-msgstr "활성화/비활성화:"
+msgstr "활성화/비활성화 (&B):"
 
 #. Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 #: gui\addonStoreGui\controls\storeDialog.py:195
@@ -16754,7 +16764,7 @@ msgstr "업데이트 (&U)"
 #: gui\addonStoreGui\viewModels\store.py:141
 msgctxt "addonStore"
 msgid "&Update (and enable)"
-msgstr ""
+msgstr "업데이트 (&U, 사용함으로 전환)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:150
@@ -16767,7 +16777,7 @@ msgstr "업데이트 (&U, 비호환 재설정)"
 #: gui\addonStoreGui\viewModels\store.py:161
 msgctxt "addonStore"
 msgid "&Update (and enable, override incompatibility)"
-msgstr ""
+msgstr "업데이트 (&U, 사용함으로 전환 및 비호환 무시)"
 
 #. Translators: Label for an action that retries the selected addon
 #: gui\addonStoreGui\viewModels\store.py:171
@@ -16962,7 +16972,7 @@ msgstr "수식을 점자로 출력하는 도중 오류가 발생했습니다."
 #: mathPres\MathCAT\MathCAT.py:498
 msgctxt "math"
 msgid "Invalid MathML found."
-msgstr ""
+msgstr "잘못된 MathML이 발견되었습니다."
 
 #. Translators: {lang} is the name of the language in that language,
 #. and {code} is the code for that language variant,
@@ -18649,7 +18659,7 @@ msgstr "알 수 없는 색상"
 #. Excel controls the pattern.
 #: NVDAObjects\window\excel.py:246
 msgid "automatic"
-msgstr "자동 연결"
+msgstr "자동"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. Checkerboard
@@ -18863,8 +18873,7 @@ msgstr "취소선 켬"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1670
 msgid "Sets the current cell as start of column header. Pressing once will set this cell as the first column header for any cell lower and to the right of it within this region. Pressing twice will forget the current column header for this cell."
-msgstr "현재 셀을 열 제목의 시작점으로 지정. 한 번 누르면 이 셀을 열 제목으로 지정하며, 이 영역 내에서 이전 또는 다음 열 탐색 시 열 제목 알림. 두 번 누르면 열 제목이\n"
-" 삭제됨."
+msgstr "현재 셀을 열 제목의 시작점으로 지정. 한 번 누르면 이 셀을 열 제목으로 지정하며, 이 영역 내에서 이전 또는 다음 열 탐색 시 열 제목 알림. 두 번 누르면 열 제목이 삭제됨."
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1682
@@ -19656,7 +19665,7 @@ msgstr "문단 앞에 {val:g} 포인트 여백이 있음"
 #: screenCurtain\_screenCurtain.py:30
 msgctxt "screenCurtain"
 msgid "Always &show a warning when enabling Screen Curtain"
-msgstr "화면 커튼 활성화 시 항상 경고 대화상자 열기"
+msgstr "화면 커튼 활성화 시 항상 경고 대화상자 열기 (&S)"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: screenCurtain\_screenCurtain.py:35
@@ -19681,7 +19690,7 @@ msgstr "화면 커튼을 키는 데에 문제가 있었습니다. 화면 속 내
 #: screenCurtain\_screenCurtain.py:74
 msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
 "Do you wish to continue?"
-msgstr "화면 커튼을 설정하면 컴퓨터의 화면이 완전히 검은색으로 바뀝니다. 활성화하기 전에 화면을 사용하지 않고 탐색할 수 있는지 확인하시기 바랍니다. \\m\n\n"
+msgstr "화면 커튼을 설정하면 컴퓨터의 화면이 완전히 검은색으로 바뀝니다. 활성화하기 전에 화면을 사용하지 않고 탐색할 수 있는지 확인하시기 바랍니다. \n\n"
 "화면 커튼을 활성화하시겠습니까?"
 
 #. Translators: Reported when the language of the text being read is not supported by the current synthesizer.
@@ -20682,13 +20691,13 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}배"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:89
+#: _magnifier\fullscreenMagnifier.py:91
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "돋보기를 시작할 수 없습니다. 다른 돋보기 응용 프로그램이 이미 실행 중일 수 있습니다."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:240
+#: _magnifier\fullscreenMagnifier.py:242
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "오류로 인해 돋보기가 중지되었습니다. 다시 시작하십시오."
@@ -20805,7 +20814,7 @@ msgstr "주적 모드 변경"
 #: _magnifier\utils\types.py:89
 msgctxt "magnifier action"
 msgid "move mouse to view"
-msgstr ""
+msgstr "마우스를 확대 영역으로 이동"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:91
@@ -20954,7 +20963,7 @@ msgstr "원격 컴퓨터에 연결할 수 없음"
 #: _remoteClient\client.py:345
 msgctxt "remote"
 msgid "Unable to connect to the Remote Access server. Retrying"
-msgstr ""
+msgstr "원격제어 서버에 연결할 수 없습니다. 다시 시도 중"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:368 _remoteClient\client.py:719
@@ -21146,8 +21155,9 @@ msgid "The certificate of this server could not be verified. Using the wrong fin
 "Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 "Server SHA256 fingerprint: {fingerprint}\n\n"
 "Continue connecting anyway?"
-msgstr "이 서버의 인증서가 확인되지 않습니다. 잘못된 인증은 제 3자가 원격제어 세션에 접근할 수 있습니다.\n"
-"SHA256 인증서: {fingerprint}\n\n"
+msgstr "이 서버의 인증서를 확인할 수 없습니다. 잘못된 지문을 사용하면 제3자가 원격제어 세션에 접근할 수 있습니다.\n\n"
+"계속하기 전에 아래 서버 인증서 지문이 올바른지 확인하시기 바랍니다.\n"
+"서버 SHA256 지문: {fingerprint}\n\n"
 "계속 연결하시겠습니까?"
 
 #. Translators: A button to connect and remember the server with unauthorized certificate.

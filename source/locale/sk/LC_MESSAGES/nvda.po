@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 23:47+0000\n"
-"PO-Revision-Date: 2026-09-07 00:22\n"
+"POT-Creation-Date: 2026-09-11 08:24+0000\n"
+"PO-Revision-Date: 2026-09-14 00:24\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -110,23 +110,23 @@ msgid "Unlabeled"
 msgstr "Nepomenované"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
-#: browseMode.py:459
+#: browseMode.py:468
 msgid "Single letter navigation off"
 msgstr "Rýchla navigácia vypnutá"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
-#: browseMode.py:463
+#: browseMode.py:472
 msgid "Single letter navigation on"
 msgstr "Rýchla navigácia zapnutá"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-#: browseMode.py:467
+#: browseMode.py:476
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
 msgstr "Zapína a vypína rýchlu navigáciu. Ak je zapnutá, môžete po jednotlivých prvkoch v režime prehliadania prechádzať konkrétnymi písmenami. Ak je vypnutá, písmená NVDA prepúšťa do aktívneho programu"
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
-#: browseMode.py:564 appModules\kindle.py:257 appModules\kindle.py:261
+#: browseMode.py:573 appModules\kindle.py:257 appModules\kindle.py:261
 #: appModules\kindle.py:265 contentRecog\recogUi.py:159
 #: contentRecog\recogUi.py:163 contentRecog\recogUi.py:167
 msgid "Not supported in this document"
@@ -134,996 +134,996 @@ msgstr "Nie je podporovaný v tomto dokumente"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:648
+#: browseMode.py:657
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
 msgstr "Prejde na nasledujúci nadpis úrovne {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:651
+#: browseMode.py:660
 #, python-brace-format
 msgid "No next heading at level {i}"
 msgstr "Žiadny ďalší nadpis úrovne {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:654
+#: browseMode.py:663
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
 msgstr "Prejde na predchádzajúci nadpis úrovne {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:657
+#: browseMode.py:666
 #, python-brace-format
 msgid "No previous heading at level {i}"
 msgstr "Žiadny predchádzajúci nadpis úrovne {i}"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #. {i} will be replaced with the heading level number.
-#: browseMode.py:660
+#: browseMode.py:669
 #, python-brace-format
 msgid "headings level {i}"
 msgstr "nadpisi úrovne {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
-#: browseMode.py:675
+#: browseMode.py:684
 msgid "Lists various types of elements in this document"
 msgstr "Zobrazí rôzne typy prvkov v tomto dokumente"
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#: browseMode.py:733
+#: browseMode.py:742
 msgid "Activates the current object in the document"
 msgstr "Aktivuje aktuálny objekt v dokumente"
 
 #. Translators: The default element type in browse mode touch navigation (navigates all content).
-#: browseMode.py:807
+#: browseMode.py:816
 msgid "default"
 msgstr "predvolený"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:816
+#: browseMode.py:825
 msgid "Selects the next element type for browse mode touch navigation"
 msgstr "Vyberie nasledujúci typ prvku pre dotykovú navigáciu v režime prehliadania"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:835
+#: browseMode.py:844
 msgid "Selects the previous element type for browse mode touch navigation"
 msgstr "Vyberie predchádzajúci typ prvku pre dotykovú navigáciu v režime prehliadania"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:854
+#: browseMode.py:863
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
 msgstr "Prejde na nasledujúci typ prvku vybratý pre dotykovú navigáciu v režime prehliadania"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:871
+#: browseMode.py:880
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
 msgstr "Prejde na predchádzajúci typ prvku vybratý pre dotykovú navigáciu v režime prehliadania"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:912
+#: browseMode.py:921
 msgid "moves to the next heading"
 msgstr "Prejde na nasledujúci nadpis."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:914
+#: browseMode.py:923
 msgid "no next heading"
 msgstr "Žiadny ďalší nadpis"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:916
+#: browseMode.py:925
 msgid "moves to the previous heading"
 msgstr "Prejde na predchádzajúci nadpis."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:918
+#: browseMode.py:927
 msgid "no previous heading"
 msgstr "Žiadny predchádzajúci nadpis"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:920
+#: browseMode.py:929
 msgid "headings"
 msgstr "nadpisy"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:927
+#: browseMode.py:936
 msgid "moves to the next table"
 msgstr "Prejde do nasledujúcej tabuľky."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:929
+#: browseMode.py:938
 msgid "no next table"
 msgstr "Žiadna ďalšia tabuľka"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:931
+#: browseMode.py:940
 msgid "moves to the previous table"
 msgstr "Prejde do predchádzajúcej tabuľky."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:933
+#: browseMode.py:942
 msgid "no previous table"
 msgstr "Žiadna predchádzajúca tabuľka"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:936
+#: browseMode.py:945
 msgid "tables"
 msgstr "tabuľky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:942
+#: browseMode.py:951
 msgid "moves to the next link"
 msgstr "Prejde na nasledujúci odkaz."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:944
+#: browseMode.py:953
 msgid "no next link"
 msgstr "Žiadny ďalší odkaz"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:946
+#: browseMode.py:955
 msgid "moves to the previous link"
 msgstr "Prejde na predchádzajúci odkaz."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:948
+#: browseMode.py:957
 msgid "no previous link"
 msgstr "Žiadny predchádzajúci odkaz"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:950
+#: browseMode.py:959
 msgid "links"
 msgstr "odkazy"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:956
+#: browseMode.py:965
 msgid "moves to the next visited link"
 msgstr "Prejde na nasledujúci navštívený odkaz."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:958
+#: browseMode.py:967
 msgid "no next visited link"
 msgstr "Žiadny ďalší navštívený odkaz"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:960
+#: browseMode.py:969
 msgid "moves to the previous visited link"
 msgstr "Prejde na predchádzajúci navštívený odkaz."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:962
+#: browseMode.py:971
 msgid "no previous visited link"
 msgstr "Žiadny predchádzajúci navštívený odkaz"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:964
+#: browseMode.py:973
 msgid "visited links"
 msgstr "navštívené odkazy"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:970
+#: browseMode.py:979
 msgid "moves to the next unvisited link"
 msgstr "Prejde na nasledujúci nenavštívený odkaz."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:972
+#: browseMode.py:981
 msgid "no next unvisited link"
 msgstr "Žiadny ďalší nenavštívený odkaz"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:974
+#: browseMode.py:983
 msgid "moves to the previous unvisited link"
 msgstr "Prejde na predchádzajúci nenavštívený odkaz."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:976
+#: browseMode.py:985
 msgid "no previous unvisited link"
 msgstr "Žiadny predchádzajúci nenavštívený odkaz"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:978
+#: browseMode.py:987
 msgid "unvisited links"
 msgstr "nenavštívené odkazy"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:984
+#: browseMode.py:993
 msgid "moves to the next form field"
 msgstr "Prejde na nasledujúci prvok formulára."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:986
+#: browseMode.py:995
 msgid "no next form field"
 msgstr "Žiadny ďalší prvok formulára"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:988
+#: browseMode.py:997
 msgid "moves to the previous form field"
 msgstr "Prejde na predchádzajúci prvok formulára."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:990
+#: browseMode.py:999
 msgid "no previous form field"
 msgstr "Žiadny predchádzajúci prvok formulára"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:992
+#: browseMode.py:1001
 msgid "form fields"
 msgstr "formulárové prvky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:998
+#: browseMode.py:1007
 msgid "moves to the next list"
 msgstr "Prejde na nasledujúci zoznam."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1000
+#: browseMode.py:1009
 msgid "no next list"
 msgstr "Žiadny ďalší zoznam"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1002
+#: browseMode.py:1011
 msgid "moves to the previous list"
 msgstr "Prejde na predchádzajúci zoznam."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1004
+#: browseMode.py:1013
 msgid "no previous list"
 msgstr "Žiadny predchádzajúci zoznam"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1007
+#: browseMode.py:1016
 msgid "lists"
 msgstr "zoznamy"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1013
+#: browseMode.py:1022
 msgid "moves to the next list item"
 msgstr "Prejde na nasledujúcu položku zoznamu."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1015
+#: browseMode.py:1024
 msgid "no next list item"
 msgstr "Žiadna ďalšia položka zoznamu"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1017
+#: browseMode.py:1026
 msgid "moves to the previous list item"
 msgstr "Prejde na predchádzajúcu položku zoznamu."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1019
+#: browseMode.py:1028
 msgid "no previous list item"
 msgstr "Žiadna predchádzajúca položka zoznamu"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1021
+#: browseMode.py:1030
 msgid "list items"
 msgstr "položky zoznamu"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1027
+#: browseMode.py:1036
 msgid "moves to the next button"
 msgstr "Prejde na nasledujúce tlačidlo."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1029
+#: browseMode.py:1038
 msgid "no next button"
 msgstr "Žiadne ďalšie tlačidlo"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1031
+#: browseMode.py:1040
 msgid "moves to the previous button"
 msgstr "Prejde na predchádzajúce tlačidlo."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1033
+#: browseMode.py:1042
 msgid "no previous button"
 msgstr "Žiadne predchádzajúce tlačidlo"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1035
+#: browseMode.py:1044
 msgid "buttons"
 msgstr "tlačidlá"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1041
+#: browseMode.py:1050
 msgid "moves to the next edit field"
 msgstr "Prejde na nasledujúce editačné pole."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1043
+#: browseMode.py:1052
 msgid "no next edit field"
 msgstr "Žiadne ďalšie editačné pole"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1045
+#: browseMode.py:1054
 msgid "moves to the previous edit field"
 msgstr "Prejde na predchádzajúce editačné pole."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1047
+#: browseMode.py:1056
 msgid "no previous edit field"
 msgstr "Žiadne predchádzajúce editačné pole"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1050
+#: browseMode.py:1059
 msgid "edit fields"
 msgstr "editačné polia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1056
+#: browseMode.py:1065
 msgid "moves to the next frame"
 msgstr "Prejde do nasledujúceho rámika."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1058
+#: browseMode.py:1067
 msgid "no next frame"
 msgstr "Žiadny ďalší rámik"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1060
+#: browseMode.py:1069
 msgid "moves to the previous frame"
 msgstr "Prejde do predchádzajúceho rámika."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1062
+#: browseMode.py:1071
 msgid "no previous frame"
 msgstr "Žiadny predchádzajúci rámik"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1065
+#: browseMode.py:1074
 msgid "frames"
 msgstr "rámce"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1071
+#: browseMode.py:1080
 msgid "moves to the next separator"
 msgstr "Prejde na nasledujúci oddeľovač."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1073
+#: browseMode.py:1082
 msgid "no next separator"
 msgstr "Žiadny ďalší oddeľovač"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1075
+#: browseMode.py:1084
 msgid "moves to the previous separator"
 msgstr "Prejde na predchádzajúci oddeľovač."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1077
+#: browseMode.py:1086
 msgid "no previous separator"
 msgstr "Žiadny predchádzajúci oddeľovač"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1079
+#: browseMode.py:1088
 msgid "separators"
 msgstr "oddeľovače"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1085
+#: browseMode.py:1094
 msgid "moves to the next radio button"
 msgstr "Prejde na nasledujúci prepínač."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1087
+#: browseMode.py:1096
 msgid "no next radio button"
 msgstr "Žiadny ďalší prepínač"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1089
+#: browseMode.py:1098
 msgid "moves to the previous radio button"
 msgstr "Prejde na predchádzajúci prepínač."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1091
+#: browseMode.py:1100
 msgid "no previous radio button"
 msgstr "Žiadny predchádzajúci prepínač"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1093
+#: browseMode.py:1102
 msgid "radio buttons"
 msgstr "prepínače"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1099
+#: browseMode.py:1108
 msgid "moves to the next combo box"
 msgstr "Prejde na nasledujúci zoznamový rámik."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1101
+#: browseMode.py:1110
 msgid "no next combo box"
 msgstr "Žiadny ďalší zoznamový rámik"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1103
+#: browseMode.py:1112
 msgid "moves to the previous combo box"
 msgstr "Prejde na predchádzajúci zoznamový rámik."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1105
+#: browseMode.py:1114
 msgid "no previous combo box"
 msgstr "Žiadny predchádzajúci zoznamový rámik"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1107
+#: browseMode.py:1116
 msgid "combo boxes"
 msgstr "zoznamové rámiky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1113
+#: browseMode.py:1122
 msgid "moves to the next check box"
 msgstr "Prejde na nasledujúce začiarkavacie políčko."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1115
+#: browseMode.py:1124
 msgid "no next check box"
 msgstr "Žiadne ďalšie začiarkavacie políčko"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1117
+#: browseMode.py:1126
 msgid "moves to the previous check box"
 msgstr "Prejde na predchádzajúce začiarkavacie políčko."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1119
+#: browseMode.py:1128
 msgid "no previous check box"
 msgstr "Žiadne predchádzajúce začiarkavacie políčko"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1121
+#: browseMode.py:1130
 msgid "check boxes"
 msgstr "začiarkavacie polia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1127
+#: browseMode.py:1136
 msgid "moves to the next graphic"
 msgstr "Prejde na nasledujúcu grafiku."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1129
+#: browseMode.py:1138
 msgid "no next graphic"
 msgstr "Žiadna ďalšia grafika"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1131
+#: browseMode.py:1140
 msgid "moves to the previous graphic"
 msgstr "Prejde na predchádzajúcu grafiku."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1133
+#: browseMode.py:1142
 msgid "no previous graphic"
 msgstr "Žiadna predchádzajúca grafika"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1135
+#: browseMode.py:1144
 msgid "graphics"
 msgstr "grafické prvky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1141
+#: browseMode.py:1150
 msgid "moves to the next block quote"
 msgstr "Prejde na nasledujúcu citáciu."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1143
+#: browseMode.py:1152
 msgid "no next block quote"
 msgstr "Žiadna ďalšia citácia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1145
+#: browseMode.py:1154
 msgid "moves to the previous block quote"
 msgstr "Prejde na predchádzajúcu citáciu."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1147
+#: browseMode.py:1156
 msgid "no previous block quote"
 msgstr "Žiadna predchádzajúca citácia"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1149
+#: browseMode.py:1158
 msgid "block quotes"
 msgstr "citácie"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1155
+#: browseMode.py:1164
 msgid "skips forward past a block of links"
 msgstr "Preskočí skupinu odkazov"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1157
+#: browseMode.py:1166
 msgid "no more text after a block of links"
 msgstr "Žiadny ďalší text za skupinou odkazov"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1159
+#: browseMode.py:1168
 msgid "skips backward past a block of links"
 msgstr "Preskočí skupinu odkazov (smerom hore)"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1161
+#: browseMode.py:1170
 msgid "no more text before a block of links"
 msgstr "Žiadny predchádzajúci text pred skupinou odkazov"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1164
+#: browseMode.py:1173
 msgid "non-link blocks"
 msgstr "bloky textu neobsahujúce odkazy"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1170
+#: browseMode.py:1179
 msgid "moves to the next landmark"
 msgstr "Prejde do nasledujúcej oblasti stránky."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1172
+#: browseMode.py:1181
 msgid "no next landmark"
 msgstr "Žiadna ďalšia oblasť"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1174
+#: browseMode.py:1183
 msgid "moves to the previous landmark"
 msgstr "Prejde do predchádzajúcej oblasti stránky."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1176
+#: browseMode.py:1185
 msgid "no previous landmark"
 msgstr "Žiadna predchádzajúca oblasť"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1179
+#: browseMode.py:1188
 msgid "landmarks"
 msgstr "oblasti stránky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1185
+#: browseMode.py:1194
 msgid "moves to the next embedded object"
 msgstr "Prejde na nasledujúci vnorený objekt"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1187
+#: browseMode.py:1196
 msgid "no next embedded object"
 msgstr "Žiadny ďalší vnorený objekt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1189
+#: browseMode.py:1198
 msgid "moves to the previous embedded object"
 msgstr "prejde na predchádzajúci vnorený objekt"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1191
+#: browseMode.py:1200
 msgid "no previous embedded object"
 msgstr "Žiadny predchádzajúci vnorený objekt"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1193
+#: browseMode.py:1202
 msgid "embedded objects"
 msgstr "vnorené objekty"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1199
+#: browseMode.py:1208
 msgid "moves to the next annotation"
 msgstr "Prejde na nasledujúci komentár alebo nasledujúcu revíziu."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1201
+#: browseMode.py:1210
 msgid "no next annotation"
 msgstr "Žiadna ďalšia revízia alebo komentár"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1203
+#: browseMode.py:1212
 msgid "moves to the previous annotation"
 msgstr "Prejde na predchádzajúci komentár alebo predchádzajúcu revíziu."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1205
+#: browseMode.py:1214
 msgid "no previous annotation"
 msgstr "Žiadna predchádzajúca revízia alebo komentár"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1207
+#: browseMode.py:1216
 msgid "annotations"
 msgstr "revízie a komentáre"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1213
+#: browseMode.py:1222
 msgid "moves to the next error"
 msgstr "Prejde na nasledujúcu chybu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1215
+#: browseMode.py:1224
 msgid "no next error"
 msgstr "Žiadne ďalšie chyby"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1217
+#: browseMode.py:1226
 msgid "moves to the previous error"
 msgstr "Prejde na predchádzajúcu chybu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1219
+#: browseMode.py:1228
 msgid "no previous error"
 msgstr "Žiadne predchádzajúce chyby"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1221
+#: browseMode.py:1230
 msgid "errors"
 msgstr "chyby"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1227
+#: browseMode.py:1236
 msgid "moves to the next slider"
 msgstr "prejde na nasledujúci posuvník"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1229
+#: browseMode.py:1238
 msgid "no next slider"
 msgstr "žiadny ďalší posuvník"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1231
+#: browseMode.py:1240
 msgid "moves to the previous slider"
 msgstr "prejde na predchádzajúci posuvník"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1233
+#: browseMode.py:1242
 msgid "no previous slider"
 msgstr "žiadny predchádzajúci posuvník"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1235
+#: browseMode.py:1244
 msgid "sliders"
 msgstr "posuvníky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1241
+#: browseMode.py:1250
 msgid "moves to the next clickable element"
 msgstr ""
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1243
+#: browseMode.py:1252
 msgid "no next clickable element"
 msgstr ""
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1245
+#: browseMode.py:1254
 msgid "moves to the previous clickable element"
 msgstr ""
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1247
+#: browseMode.py:1256
 msgid "no previous clickable element"
 msgstr ""
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1250
+#: browseMode.py:1259
 msgid "clickable elements"
 msgstr ""
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1256
+#: browseMode.py:1265
 msgid "moves to the next article"
 msgstr "Prejde na nasledujúci článok."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1258
+#: browseMode.py:1267
 msgid "no next article"
 msgstr "Žiadny ďalší článok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1260
+#: browseMode.py:1269
 msgid "moves to the previous article"
 msgstr "Prejde na predchádzajúci článok."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1262
+#: browseMode.py:1271
 msgid "no previous article"
 msgstr "Žiadny predchádzajúci článok"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1264
+#: browseMode.py:1273
 msgid "articles"
 msgstr "články"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1270
+#: browseMode.py:1279
 msgid "moves to the next grouping"
 msgstr "Prejde na nasledujúce zoskupenie"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1272
+#: browseMode.py:1281
 msgid "no next grouping"
 msgstr "Žiadne nasledujúce zoskupenie"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1274
+#: browseMode.py:1283
 msgid "moves to the previous grouping"
 msgstr "Prejde na predchádzajúce zoskupenie"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1276
+#: browseMode.py:1285
 msgid "no previous grouping"
 msgstr "Žiadne predchádzajúce zoskupenie"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1278
+#: browseMode.py:1287
 msgid "groupings"
 msgstr "zoskupenia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1284
+#: browseMode.py:1293
 msgid "moves to the next tab"
 msgstr "Prejde na nasledujúcu záložku"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1286
+#: browseMode.py:1295
 msgid "no next tab"
 msgstr "Žiadna ďalšia záložka"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1288
+#: browseMode.py:1297
 msgid "moves to the previous tab"
 msgstr "Prejde na predchádzajúcu záložku"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1290
+#: browseMode.py:1299
 msgid "no previous tab"
 msgstr "Žiadna predchádzajúca záložka"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1292
+#: browseMode.py:1301
 msgid "tabs"
 msgstr "záložky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1298
+#: browseMode.py:1307
 msgid "moves to the next figure"
 msgstr "prejde na nasledujúcu ilustráciu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1300
+#: browseMode.py:1309
 msgid "no next figure"
 msgstr "žiadna ďalšia ilustrácia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1302
+#: browseMode.py:1311
 msgid "moves to the previous figure"
 msgstr "prejde na predchádzajúcu ilustráciu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1304
+#: browseMode.py:1313
 msgid "no previous figure"
 msgstr "žiadna predchádzajúca ilustrácia"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1306
+#: browseMode.py:1315
 msgid "figures"
 msgstr "ilustrácie"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1312
+#: browseMode.py:1321
 msgid "moves to the next menu item"
 msgstr "prejde na nasledujúcu položku v menu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1314
+#: browseMode.py:1323
 msgid "no next menu item"
 msgstr "žiadna ďalšia položka ponuky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1316
+#: browseMode.py:1325
 msgid "moves to the previous menu item"
 msgstr "prejde na predchádzajúcu položku ponuky"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1318
+#: browseMode.py:1327
 msgid "no previous menu item"
 msgstr "žiadna predchádzajúca položka ponuky"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1320
+#: browseMode.py:1329
 msgid "menu items"
 msgstr "položky ponuky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1326
+#: browseMode.py:1335
 msgid "moves to the next toggle button"
 msgstr "prejde na nasledujúce prepínacie tlačidlo"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1328
+#: browseMode.py:1337
 msgid "no next toggle button"
 msgstr "žiadne ďalšie prepínacie tlačidlo"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1330
+#: browseMode.py:1339
 msgid "moves to the previous toggle button"
 msgstr "prejde na predchádzajúce prepínacie tlačidlo"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1332
+#: browseMode.py:1341
 msgid "no previous toggle button"
 msgstr "žiadne predchádzajúce prepínacie tlačidlo"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1334
+#: browseMode.py:1343
 msgid "toggle buttons"
 msgstr "prepínacie tlačidlá"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1340
+#: browseMode.py:1349
 msgid "moves to the next progress bar"
 msgstr "prejde na nasledujúci indikátor priebehu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1342
+#: browseMode.py:1351
 msgid "no next progress bar"
 msgstr "žiadny ďalší indikátor priebehu"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1344
+#: browseMode.py:1353
 msgid "moves to the previous progress bar"
 msgstr "prejde na predchádzajúci indikátor priebehu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1346
+#: browseMode.py:1355
 msgid "no previous progress bar"
 msgstr "žiadny predchádzajúci indikátor priebehu"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1348
+#: browseMode.py:1357
 msgid "progress bars"
 msgstr "indikátory priebehu"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1354
+#: browseMode.py:1363
 msgid "moves to the next math formula"
 msgstr "prejde na nasledujúci matematický obsah"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1356
+#: browseMode.py:1365
 msgid "no next math formula"
 msgstr "žiadny ďalší matematický obsah"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1358
+#: browseMode.py:1367
 msgid "moves to the previous math formula"
 msgstr "prejde na predchádzajúci matematický obsah"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1360
+#: browseMode.py:1369
 msgid "no previous math formula"
 msgstr "žiadny predchádzajúci matematický obsah"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1362
+#: browseMode.py:1371
 msgid "math formulas"
 msgstr "matematický obsah"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1368
+#: browseMode.py:1377
 msgid "moves to the next text paragraph"
 msgstr "prejde na nasledujúci textový odsek"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1370
+#: browseMode.py:1379
 msgid "no next text paragraph"
 msgstr "žiadny ďalší textový odsek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1372
+#: browseMode.py:1381
 msgid "moves to the previous text paragraph"
 msgstr "prejde na predchádzajúci textový odsek"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1374
+#: browseMode.py:1383
 msgid "no previous text paragraph"
 msgstr "žiadny predchádzajúci textový odsek"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1377
+#: browseMode.py:1386
 msgid "text paragraphs"
 msgstr "textové odseky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1383
+#: browseMode.py:1392
 msgid "moves to the next vertically aligned paragraph"
 msgstr "prejde na nasledujúci vertikálne zarovnaný odsek"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1385
+#: browseMode.py:1394
 msgid "no next vertically aligned paragraph"
 msgstr "žiadny ďalší vertikálne zarovnaný odsek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1387
+#: browseMode.py:1396
 msgid "moves to the previous vertically aligned paragraph"
 msgstr "prejde na predchádzajúci vertikálne zarovnaný odsek"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1389
+#: browseMode.py:1398
 msgid "no previous vertically aligned paragraph"
 msgstr "žiadny predchádzajúci vertikálne zarovnaný odsek"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1392
+#: browseMode.py:1401
 msgid "vertical paragraphs"
 msgstr "vertikálne zarovnané odseky"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1398
+#: browseMode.py:1407
 msgid "moves to the next same style text"
 msgstr "prejde na nasledujúci text s rovnakým formátovaním"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1400
+#: browseMode.py:1409
 msgid "No next same style text"
 msgstr "Žiadny ďalší text s rovnakým formátovaním"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1402
+#: browseMode.py:1411
 msgid "moves to the previous same style text"
 msgstr "prejde na predchádzajúci text s rovnakým formátovaním"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1404
+#: browseMode.py:1413
 msgid "No previous same style text"
 msgstr "Žiadny predchádzajúci text s rovnakým formátovaním"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1406
+#: browseMode.py:1415
 msgid "same style"
 msgstr "text s rovnakým formátovaním"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1412
+#: browseMode.py:1421
 msgid "moves to the next different style text"
 msgstr "prejde na nasledujúci text s odlišným formátovaním"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1414
+#: browseMode.py:1423
 msgid "No next different style text"
 msgstr "Žiadny ďalší text s odlišným formátovaním"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1416
+#: browseMode.py:1425
 msgid "moves to the previous different style text"
 msgstr "prejde na predchádzajúci text s odlišným formátovaním"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1418
+#: browseMode.py:1427
 msgid "No previous different style text"
 msgstr "Žiadny predchádzajúci text s odlišným formátovaním"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1420
+#: browseMode.py:1429
 msgid "different style"
 msgstr "text s odlišným formátovaním"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1426
+#: browseMode.py:1435
 msgid "moves to the next reference"
 msgstr "prejde na nasledujúcu referenciu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1428
+#: browseMode.py:1437
 msgid "no next reference"
 msgstr "žiadna nasledujúca referencia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1430
+#: browseMode.py:1439
 msgid "moves to the previous reference"
 msgstr "prejde na predchádzajúcu referenciu"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1432
+#: browseMode.py:1441
 msgid "no previous reference"
 msgstr "žiadna predchádzajúca referencia"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1435
+#: browseMode.py:1444
 msgid "references"
 msgstr "referencie"
 
@@ -1131,7 +1131,7 @@ msgstr "referencie"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1454 gui\settingsDialogs.py:3466
+#: browseMode.py:1463 gui\settingsDialogs.py:3466
 msgid "Lin&ks"
 msgstr "Odk&azy"
 
@@ -1139,42 +1139,42 @@ msgstr "Odk&azy"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1457 gui\settingsDialogs.py:3461
+#: browseMode.py:1466 gui\settingsDialogs.py:3461
 msgid "&Headings"
 msgstr "&Nadpisy"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1460 NVDAObjects\window\excel.py:768
+#: browseMode.py:1469 NVDAObjects\window\excel.py:768
 msgid "&Form fields"
 msgstr "&Formuláre"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1463
+#: browseMode.py:1472
 msgid "&Buttons"
 msgstr "&tlačidlá"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1466
+#: browseMode.py:1475
 msgid "Lan&dmarks"
 msgstr "Ob&lasti stránky"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: browseMode.py:1479
+#: browseMode.py:1488
 msgid "Elements List"
 msgstr "Zoznam prvkov"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1490
+#: browseMode.py:1499
 msgid "Type:"
 msgstr "Typ:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1519
+#: browseMode.py:1528
 msgid "Filter b&y:"
 msgstr "Filt&er:"
 
@@ -1182,34 +1182,34 @@ msgstr "Filt&er:"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1530 globalCommands.py:1856
+#: browseMode.py:1539 globalCommands.py:1856
 msgid "Activate"
 msgstr "Aktivovať"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1535
+#: browseMode.py:1544
 msgid "&Move to"
 msgstr "&Prejsť na"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: browseMode.py:2003
+#: browseMode.py:2012
 msgid "No long description"
 msgstr "Bez dlhého popisu"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
-#: browseMode.py:2006
+#: browseMode.py:2015
 msgid "Shows the long description at this position if one is found."
 msgstr "Zobrazí dlhý popis pre aktuálny prvok, ak existuje."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
-#: browseMode.py:2521 browseMode.py:2542
+#: browseMode.py:2537 browseMode.py:2558
 msgid "Not in a container"
 msgstr "nepodporovaný prvok"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: browseMode.py:2532
+#: browseMode.py:2548
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "Prejde na začiatok prvku, ktorý zoskupuje viaceré prvky rovnakého typu napr. na začiatok tabuľky alebo zoznamu."
 
@@ -1219,53 +1219,53 @@ msgstr "Prejde na začiatok prvku, ktorý zoskupuje viaceré prvky rovnakého ty
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2551 globalCommands.py:2006 globalCommands.py:2084
+#: browseMode.py:2567 globalCommands.py:2006 globalCommands.py:2084
 #: globalCommands.py:2204 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "Spodok"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: browseMode.py:2560
+#: browseMode.py:2576
 msgid "Moves past the end of the container element, such as a list or table"
 msgstr "Prejde za prvok, ktorý zoskupuje viaceré prvky rovnakého typu napr. za tabuľku alebo zoznam."
 
 #. Translators: the description for the toggleScreenLayout script.
-#: browseMode.py:2895
+#: browseMode.py:2911
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "Prepína zachovanie vzhľadu ako na obrazovke pri spracovaní dokumentu"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#: browseMode.py:2904
+#: browseMode.py:2920
 msgid "Not supported in this document."
 msgstr "Nepodporované v tomto dokumente."
 
 #. Translators: input help message for toggle native selection command
-#: browseMode.py:2930
+#: browseMode.py:2946
 msgid "Toggles native selection mode on and off"
 msgstr "Zapína a vypína režim formátovaného výberu"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2936
+#: browseMode.py:2952
 msgid "Native selection mode unsupported in this browse mode document"
 msgstr "Nie je podporovaný režim formátovaného výberu v tomto dokumente"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
-#: browseMode.py:2939
+#: browseMode.py:2955
 msgid "Native selection mode cannot be turned off in this browse mode document"
 msgstr "Nie je možné vypnúť formátovaný výber v tomto dokumente"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2951
+#: browseMode.py:2967
 msgid "Native selection mode unsupported in this document"
 msgstr "Formátovaný výber nie je podporovaný v tomto dokumente"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2955
+#: browseMode.py:2971
 msgid "Native app selection mode enabled"
 msgstr "Formátovaný výber"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2963
+#: browseMode.py:2979
 msgid "Native app selection mode disabled"
 msgstr "Štandardný výber"
 
@@ -20842,13 +20842,13 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:89
+#: _magnifier\fullscreenMagnifier.py:91
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "Nie je možné spustiť zväčšenie. Pravdepodobne je spustená iná aplikácia na zväčšovanie."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:240
+#: _magnifier\fullscreenMagnifier.py:242
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "Zväčšenie bolo zastavené z dôvodu chyby. Skúste ho reštartovať."
