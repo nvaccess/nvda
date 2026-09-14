@@ -79,9 +79,13 @@ Install the python version listed in [.python-versions](../../.python-versions)
 ### Git Submodules
 
 Some of the dependencies are contained in [Git submodules](https://git-scm.com/docs/gitsubmodules).
-If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
-Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
-If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
+If you didn't pass the `--recursive` option to `git clone`, you will need to run `git submodule update --init --recursive`.
+Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update --recursive`.
+If a new submodule is added (e.g. after git pull), you will need to run `git submodule update --init --recursive` instead to initialize it as well.
+If you aren't sure, run `git submodule update --init --recursive` after every git pull, merge or checkout.
+
+Very rarely, the URL of a submodule may change, for example if the submodule repository is moved, renamed, or replaced with another repository.
+In this case, run `git submodule sync --recursive` to update the local submodule configuration before initializing or updating the submodules.
 
 #### Run time dependencies
 
