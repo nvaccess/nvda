@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
+# Copyright (C) 2006-2026 NV Access Limited, Rui Batista, Aleksey Sadovoy, Peter Vagner,
 # Mozilla Corporation, Babbage B.V., Joseph Lee, Łukasz Golonka
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
@@ -69,6 +69,9 @@ __getattr__ = _deprecate.handleDeprecations(
 		"winBindings.kernel32",
 	),
 	_deprecate.MovedSymbol("advapi32", "winBindings.advapi32", "dll"),
+	_deprecate.MovedSymbol("DUPLICATE_SAME_ACCESS", "winBindings.kernel32", "DUPLICATE", "SAME_ACCESS"),
+	_deprecate.MovedSymbol("GENERIC_READ", "winBindings.kernel32", "GENERIC", "READ"),
+	_deprecate.MovedSymbol("GENERIC_WRITE", "winBindings.kernel32", "GENERIC", "WRITE"),
 )
 
 
@@ -117,8 +120,6 @@ def GetStdHandle(handleID):
 	return h
 
 
-GENERIC_READ = 0x80000000
-GENERIC_WRITE = 0x40000000
 FILE_SHARE_READ = 1
 FILE_SHARE_WRITE = 2
 FILE_SHARE_DELETE = 4
@@ -469,9 +470,6 @@ def OpenProcessToken(ProcessHandle, DesiredAccess):
 	if winBindings.advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
 		raise WinError()
 	return token.value
-
-
-DUPLICATE_SAME_ACCESS = 0x00000002
 
 
 def DuplicateHandle(

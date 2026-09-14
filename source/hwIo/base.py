@@ -1,8 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
 # Copyright (C) 2015-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Selvas Healthcare
-
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
@@ -363,7 +362,7 @@ class Bulk(IoBase):
 		writePath = f"{path}\\{epOut}"
 		readHandle = CreateFile(
 			readPath,
-			winKernel.GENERIC_READ,
+			winBindings.kernel32.GENERIC.READ,
 			0,
 			None,
 			winKernel.OPEN_EXISTING,
@@ -376,7 +375,7 @@ class Bulk(IoBase):
 			raise ctypes.WinError()
 		writeHandle = CreateFile(
 			writePath,
-			winKernel.GENERIC_WRITE,
+			winBindings.kernel32.GENERIC.WRITE,
 			0,
 			None,
 			winKernel.OPEN_EXISTING,
