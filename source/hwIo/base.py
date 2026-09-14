@@ -112,6 +112,10 @@ class IoBase:
 		self._readOl = OVERLAPPED()
 		self._recvEvt = winKernel.createEvent()
 		self._writeOl = OVERLAPPED()
+		self._writeEvt = winKernel.createEvent(manualReset=True)
+		"""Manual-reset event signaled when a pending write completes."""
+		self._writeOl.hEvent = self._writeEvt
+		self._closed = False
 		if ioThread is None:
 			from . import bgThread as ioThread
 		self._ioThreadRef = weakref.ref(ioThread)
@@ -165,28 +169,36 @@ class IoBase:
 
 		size, data = self._prepareWriteBuffer(data)
 		if not winBindings.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
-			if ctypes.GetLastError() != ERROR_IO_PENDING:
+			if (error := ctypes.GetLastError()) != ERROR_IO_PENDING:
 				if _isDebug():
-					log.debug("Write failed: %s" % ctypes.WinError())  # noqa: UP031
-				raise ctypes.WinError()
+					log.debug(f"Write failed: {ctypes.WinError(error)}")
+				raise ctypes.WinError(error)
 			byteData = DWORD()
-			winBindings.kernel32.GetOverlappedResult(
+			if not winBindings.kernel32.GetOverlappedResult(
 				self._writeFile,
 				byref(self._writeOl),
 				byref(byteData),
 				True,
-			)
+			):
+				error = ctypes.GetLastError()
+				if _isDebug():
+					log.debug(f"Write failed: {ctypes.WinError(error)}")
+				raise ctypes.WinError(error)
 
 	def close(self):
+		if getattr(self, "_closed", False):
+			return
+		self._closed = True
 		if _isDebug():
 			log.debug("Closing")
 		self._onReceive = None
 		self._onReadError = None
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			winBindings.kernel32.CancelIoEx(self._file, byref(self._readOl))
-		if hasattr(self, "_writeFile") and self._writeFile not in (self._file, INVALID_HANDLE_VALUE):
-			winBindings.kernel32.CancelIoEx(self._writeFile, byref(self._readOl))
+		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:
+			winBindings.kernel32.CancelIoEx(self._writeFile, byref(self._writeOl))
 		winKernel.closeHandle(self._recvEvt)
+		winKernel.closeHandle(self._writeEvt)
 
 	def __del__(self):
 		try:
@@ -202,13 +214,18 @@ class IoBase:
 		# Wait for _readSize bytes of data.
 		# _ioDone will call onReceive once it is received.
 		# onReceive can then optionally read additional bytes if it knows these are coming.
-		winBindings.kernel32.ReadFileEx(
+		if not winBindings.kernel32.ReadFileEx(
 			self._file,
 			self._readBuf,
 			self._readSize,
 			byref(self._readOl),
 			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl),
-		)
+		):
+			# The completion routine queued for a read that failed to start never runs.
+			error = ctypes.GetLastError()
+			ioThread._completionRoutineStore.pop(ctypes.addressof(self._readOl), None)
+			if not self._onReadError or not self._onReadError(error):
+				raise ctypes.WinError(error)
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
 		if not self._onReceive:
@@ -405,8 +422,10 @@ class Bulk(IoBase):
 		super().close()
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			winKernel.closeHandle(self._file)
+			self._file = INVALID_HANDLE_VALUE
 		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:
 			winKernel.closeHandle(self._writeFile)
+			self._writeFile = INVALID_HANDLE_VALUE
 
 
 def boolToByte(arg: bool) -> bytes:
