@@ -160,16 +160,8 @@ class PROCESS(IntEnum):
 		https://learn.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 	"""
 
-	#: PROCESS_ALL_ACCESS: All possible access rights for a process object.
-	ALL_ACCESS = 0x001FFFFF
 	#: PROCESS_TERMINATE: Required to terminate a process using TerminateProcess.
 	TERMINATE = 0x0001
-	#: PROCESS_VM_OPERATION: Required to perform an operation on the address space of a process.
-	VM_OPERATION = 0x0008
-	#: PROCESS_VM_READ: Required to read memory in a process using ReadProcessMemory.
-	VM_READ = 0x0010
-	#: PROCESS_VM_WRITE: Required to write to memory in a process using WriteProcessMemory.
-	VM_WRITE = 0x0020
 	#: PROCESS_DUP_HANDLE: Required to duplicate a handle using DuplicateHandle.
 	DUP_HANDLE = 0x0040
 	#: PROCESS_QUERY_INFORMATION: Required to retrieve certain information about a process, such as its token, exit code, and priority class.
