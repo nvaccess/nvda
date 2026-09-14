@@ -3,7 +3,6 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-
 """Raw input/output for braille displays via serial and HID.
 See the L{Serial} and L{Hid} classes.
 Braille display drivers must be thread-safe to use this, as it utilises a background thread.
@@ -380,7 +379,7 @@ class Bulk(IoBase):
 		writePath = f"{path}\\{epOut}"
 		readHandle = CreateFile(
 			readPath,
-			winKernel.GENERIC_READ,
+			winBindings.kernel32.GENERIC.READ,
 			0,
 			None,
 			winKernel.OPEN_EXISTING,
@@ -393,7 +392,7 @@ class Bulk(IoBase):
 			raise ctypes.WinError()
 		writeHandle = CreateFile(
 			writePath,
-			winKernel.GENERIC_WRITE,
+			winBindings.kernel32.GENERIC.WRITE,
 			0,
 			None,
 			winKernel.OPEN_EXISTING,

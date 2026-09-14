@@ -40,7 +40,7 @@ class SpotlightManager:
 		"""
 		Start the spotlight
 		"""
-		self._originalZoomLevel = self._fullscreenMagnifier.zoomLevel
+		self._originalZoomLevel = int(self._fullscreenMagnifier.zoomLevel)
 		self._currentZoomLevel = self._fullscreenMagnifier.zoomLevel
 
 		log.debug("start spotlight")
@@ -171,7 +171,7 @@ class SpotlightManager:
 			savedZoom = self._fullscreenMagnifier.zoomLevel
 			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
 			endCoordinates = self._fullscreenMagnifier._relativePos(focus)
-			self._fullscreenMagnifier.zoomLevel = savedZoom
+			self._fullscreenMagnifier.zoomLevel = int(savedZoom)
 		else:
 			endCoordinates = focus
 			self._fullscreenMagnifier._lastScreenPosition = endCoordinates

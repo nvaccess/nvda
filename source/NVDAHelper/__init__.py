@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2025 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Copyright (C) 2008-2026 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
 # Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations  # noqa: I001
 from ctypes.wintypes import (
@@ -781,7 +781,14 @@ class _RemoteLoader:
 
 	def _duplicateAsInheritable(self, handle):
 		curProc = winKernel.GetCurrentProcess()
-		return winKernel.DuplicateHandle(curProc, handle, curProc, 0, True, winKernel.DUPLICATE_SAME_ACCESS)
+		return winKernel.DuplicateHandle(
+			curProc,
+			handle,
+			curProc,
+			0,
+			True,
+			winBindings.kernel32.DUPLICATE.SAME_ACCESS,
+		)
 
 	def terminate(self):
 		# Closing the write end of the pipe will cause EOF for the waiting loader process, which will then exit gracefully.

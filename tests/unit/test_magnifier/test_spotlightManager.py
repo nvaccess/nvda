@@ -174,7 +174,7 @@ class TestSpotlightManager(_TestMagnifier):
 		spotlightManager = magnifier._spotlightManager
 
 		# Set original zoom level
-		spotlightManager._originalZoomLevel = 3.0
+		spotlightManager._originalZoomLevel = 300
 
 		# Mock getCurrentFocusCoordinates to return expected position
 		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
@@ -186,7 +186,7 @@ class TestSpotlightManager(_TestMagnifier):
 		# Should call _animateZoom with original zoom and mouse position
 		spotlightManager._animateZoom.assert_called_once()
 		args = spotlightManager._animateZoom.call_args[0]
-		self.assertEqual(args[0].zoomLevel, 3.0)  # Original zoom level
+		self.assertEqual(args[0].zoomLevel, 300)  # Original zoom level
 		self.assertEqual(args[0].coordinates, Coordinates(500, 400))  # Mouse position for CENTER mode
 
 		magnifier._stopMagnifier()
@@ -194,25 +194,23 @@ class TestSpotlightManager(_TestMagnifier):
 	def testZoomBackRelativeMode(self):
 		"""Test zoom back in RELATIVE mode."""
 		magnifier = FullScreenMagnifier()
-		magnifier._fullscreenMode = FullScreenMode.RELATIVE
 		spotlightManager = magnifier._spotlightManager
+		spotlightManager._originalMode = FullScreenMode.RELATIVE
+		spotlightManager._originalZoomLevel = 300
+		savedZoom = 350
+		magnifier.zoomLevel = savedZoom
+		magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(return_value=Coordinates(500, 400))
+		magnifier._relativePos = MagicMock(return_value=Coordinates(550, 450))
+		spotlightManager._animateZoom = MagicMock()
 
-		# Set original zoom level
-		spotlightManager._originalZoomLevel = 3.0
+		spotlightManager.zoomBack()
 
-		# Mock wx.GetMousePosition and _getCoordinatesForMode
-		with patch("wx.GetMousePosition") as mockGetMousePosition:
-			mockGetMousePosition.return_value = (500, 400)
-			magnifier._getCoordinatesForMode = MagicMock(return_value=(550, 450))
-			spotlightManager._animateZoom = MagicMock()
-
-			# Trigger zoom back
-			spotlightManager.zoomBack()
-
-			# Should use _getCoordinatesForMode for RELATIVE mode
-			# Note: The code has a bug checking magnifier.FullScreenMode instead of magnifier._fullscreenMode
-			# But we test the current behavior
-			spotlightManager._animateZoom.assert_called_once()
+		magnifier._relativePos.assert_called_once_with(Coordinates(500, 400))
+		self.assertEqual(magnifier.zoomLevel, int(savedZoom))
+		spotlightManager._animateZoom.assert_called_once()
+		args = spotlightManager._animateZoom.call_args[0]
+		self.assertEqual(args[0].zoomLevel, 300)
+		self.assertEqual(args[0].coordinates, Coordinates(550, 450))
 
 		magnifier._stopMagnifier()
 
