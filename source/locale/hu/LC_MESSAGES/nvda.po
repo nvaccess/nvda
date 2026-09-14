@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 23:47+0000\n"
-"PO-Revision-Date: 2026-09-07 00:22\n"
+"POT-Creation-Date: 2026-09-11 08:24+0000\n"
+"PO-Revision-Date: 2026-09-14 00:24\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -110,23 +110,23 @@ msgid "Unlabeled"
 msgstr "Címkézetlen"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
-#: browseMode.py:459
+#: browseMode.py:468
 msgid "Single letter navigation off"
 msgstr "Egykarakteres navigáció kikapcsolva"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
-#: browseMode.py:463
+#: browseMode.py:472
 msgid "Single letter navigation on"
 msgstr "Egykarakteres navigáció bekapcsolva"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-#: browseMode.py:467
+#: browseMode.py:476
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
 msgstr "Egykarakteres navigáció be és kikapcsolása. Bekapcsolt állapotban böngészőmódban mozoghat a webes dokumentum egyes elemein, kikapcsolva a navigációs billentyűket is az aktív alkalmazás kezeli."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
-#: browseMode.py:564 appModules\kindle.py:257 appModules\kindle.py:261
+#: browseMode.py:573 appModules\kindle.py:257 appModules\kindle.py:261
 #: appModules\kindle.py:265 contentRecog\recogUi.py:159
 #: contentRecog\recogUi.py:163 contentRecog\recogUi.py:167
 msgid "Not supported in this document"
@@ -134,996 +134,996 @@ msgstr "Ebben a dokumentumban nem támogatott."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:648
+#: browseMode.py:657
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
 msgstr "A következő, {i}. szintű címsorra lép"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:651
+#: browseMode.py:660
 #, python-brace-format
 msgid "No next heading at level {i}"
 msgstr "Nincs következő {i}. szintű címsor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:654
+#: browseMode.py:663
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
 msgstr "Az előző, {i}. szintű címsorra lép"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:657
+#: browseMode.py:666
 #, python-brace-format
 msgid "No previous heading at level {i}"
 msgstr "Nincs előző {i}. szintű címsor"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #. {i} will be replaced with the heading level number.
-#: browseMode.py:660
+#: browseMode.py:669
 #, python-brace-format
 msgid "headings level {i}"
 msgstr "{i}. szintű címsorok"
 
 #. Translators: the description for the Elements List command in browse mode.
-#: browseMode.py:675
+#: browseMode.py:684
 msgid "Lists various types of elements in this document"
 msgstr "Listázza a különböző típusú elemeket ebben a dokumentumban."
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#: browseMode.py:733
+#: browseMode.py:742
 msgid "Activates the current object in the document"
 msgstr "Aktiválja az aktuális elemet a dokumentumban."
 
 #. Translators: The default element type in browse mode touch navigation (navigates all content).
-#: browseMode.py:807
+#: browseMode.py:816
 msgid "default"
 msgstr "alapértelmezett"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:816
+#: browseMode.py:825
 msgid "Selects the next element type for browse mode touch navigation"
 msgstr "A következő érintőnavigációs elemtípus kiválasztása a böngészőmódhoz"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:835
+#: browseMode.py:844
 msgid "Selects the previous element type for browse mode touch navigation"
 msgstr "Az előző érintőnavigációs elemtípus kiválasztása a böngészőmódhoz"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:854
+#: browseMode.py:863
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
 msgstr "A következő érintőnavigációs elemre lép a kiválasztott típusban, böngészőmódban"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:871
+#: browseMode.py:880
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
 msgstr "Az előző érintőnavigációs elemre lép a kiválasztott típusban, böngészőmódban"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:912
+#: browseMode.py:921
 msgid "moves to the next heading"
 msgstr "A következő címsorhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:914
+#: browseMode.py:923
 msgid "no next heading"
 msgstr "nincs következő címsor"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:916
+#: browseMode.py:925
 msgid "moves to the previous heading"
 msgstr "Az előző címsorhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:918
+#: browseMode.py:927
 msgid "no previous heading"
 msgstr "nincs előző címsor"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:920
+#: browseMode.py:929
 msgid "headings"
 msgstr "címsorok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:927
+#: browseMode.py:936
 msgid "moves to the next table"
 msgstr "A következő táblázathoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:929
+#: browseMode.py:938
 msgid "no next table"
 msgstr "Nincs következő táblázat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:931
+#: browseMode.py:940
 msgid "moves to the previous table"
 msgstr "Az előző táblázathoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:933
+#: browseMode.py:942
 msgid "no previous table"
 msgstr "nincs előző táblázat"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:936
+#: browseMode.py:945
 msgid "tables"
 msgstr "táblázatok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:942
+#: browseMode.py:951
 msgid "moves to the next link"
 msgstr "A következő hivatkozáshoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:944
+#: browseMode.py:953
 msgid "no next link"
 msgstr "nincs következő hivatkozás"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:946
+#: browseMode.py:955
 msgid "moves to the previous link"
 msgstr "Az előző hivatkozáshoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:948
+#: browseMode.py:957
 msgid "no previous link"
 msgstr "nincs előző hivatkozás"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:950
+#: browseMode.py:959
 msgid "links"
 msgstr "hivatkozások"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:956
+#: browseMode.py:965
 msgid "moves to the next visited link"
 msgstr "A következő, meglátogatott hivatkozáshoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:958
+#: browseMode.py:967
 msgid "no next visited link"
 msgstr "nincs következő, meglátogatott hivatkozás"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:960
+#: browseMode.py:969
 msgid "moves to the previous visited link"
 msgstr "Az előző, meglátogatott hivatkozáshoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:962
+#: browseMode.py:971
 msgid "no previous visited link"
 msgstr "nincs előző, meglátogatott hivatkozás"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:964
+#: browseMode.py:973
 msgid "visited links"
 msgstr "meglátogatott hivatkozások"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:970
+#: browseMode.py:979
 msgid "moves to the next unvisited link"
 msgstr "A következő, nem meglátogatott hivatkozáshoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:972
+#: browseMode.py:981
 msgid "no next unvisited link"
 msgstr "nincs következő, nem meglátogatott hivatkozás"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:974
+#: browseMode.py:983
 msgid "moves to the previous unvisited link"
 msgstr "Az előző, nem meglátogatott hivatkozáshoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:976
+#: browseMode.py:985
 msgid "no previous unvisited link"
 msgstr "nincs előző, nem meglátogatott hivatkozás"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:978
+#: browseMode.py:987
 msgid "unvisited links"
 msgstr "nem meglátogatott hivatkozás"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:984
+#: browseMode.py:993
 msgid "moves to the next form field"
 msgstr "A következő űrlapmezőhöz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:986
+#: browseMode.py:995
 msgid "no next form field"
 msgstr "nincs következő űrlapmező"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:988
+#: browseMode.py:997
 msgid "moves to the previous form field"
 msgstr "az előző űrlapmezőhöz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:990
+#: browseMode.py:999
 msgid "no previous form field"
 msgstr "nincs előző űrlapmező"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:992
+#: browseMode.py:1001
 msgid "form fields"
 msgstr "űrlapmezők"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:998
+#: browseMode.py:1007
 msgid "moves to the next list"
 msgstr "a következő listához lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1000
+#: browseMode.py:1009
 msgid "no next list"
 msgstr "nincs következő lista"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1002
+#: browseMode.py:1011
 msgid "moves to the previous list"
 msgstr "az előző listához lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1004
+#: browseMode.py:1013
 msgid "no previous list"
 msgstr "nincs előző lista"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1007
+#: browseMode.py:1016
 msgid "lists"
 msgstr "listák"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1013
+#: browseMode.py:1022
 msgid "moves to the next list item"
 msgstr "a következő listaelemhez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1015
+#: browseMode.py:1024
 msgid "no next list item"
 msgstr "nincs következő listaelem"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1017
+#: browseMode.py:1026
 msgid "moves to the previous list item"
 msgstr "az előző listaelemhez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1019
+#: browseMode.py:1028
 msgid "no previous list item"
 msgstr "nincs előző listaelem"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1021
+#: browseMode.py:1030
 msgid "list items"
 msgstr "listaelemek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1027
+#: browseMode.py:1036
 msgid "moves to the next button"
 msgstr "A következő gombhoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1029
+#: browseMode.py:1038
 msgid "no next button"
 msgstr "nincs következő gomb"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1031
+#: browseMode.py:1040
 msgid "moves to the previous button"
 msgstr "Az előző gombhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1033
+#: browseMode.py:1042
 msgid "no previous button"
 msgstr "nincs előző gomb"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1035
+#: browseMode.py:1044
 msgid "buttons"
 msgstr "gombok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1041
+#: browseMode.py:1050
 msgid "moves to the next edit field"
 msgstr "A következő szerkesztőmezőhöz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1043
+#: browseMode.py:1052
 msgid "no next edit field"
 msgstr "nincs következő szerkesztőmező"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1045
+#: browseMode.py:1054
 msgid "moves to the previous edit field"
 msgstr "az előző szerkesztőmezőhöz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1047
+#: browseMode.py:1056
 msgid "no previous edit field"
 msgstr "nincs előző szerkesztőmező"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1050
+#: browseMode.py:1059
 msgid "edit fields"
 msgstr "szerkesztőmezők"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1056
+#: browseMode.py:1065
 msgid "moves to the next frame"
 msgstr "A következő kerethez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1058
+#: browseMode.py:1067
 msgid "no next frame"
 msgstr "Nincs következő keret"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1060
+#: browseMode.py:1069
 msgid "moves to the previous frame"
 msgstr "Az előző kerethez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1062
+#: browseMode.py:1071
 msgid "no previous frame"
 msgstr "Nincs előző keret"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1065
+#: browseMode.py:1074
 msgid "frames"
 msgstr "keretek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1071
+#: browseMode.py:1080
 msgid "moves to the next separator"
 msgstr "A következő elválasztóhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1073
+#: browseMode.py:1082
 msgid "no next separator"
 msgstr "nincs következő elválasztó"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1075
+#: browseMode.py:1084
 msgid "moves to the previous separator"
 msgstr "Az előző elválasztóhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1077
+#: browseMode.py:1086
 msgid "no previous separator"
 msgstr "nincs előző elválasztó"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1079
+#: browseMode.py:1088
 msgid "separators"
 msgstr "elválasztók"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1085
+#: browseMode.py:1094
 msgid "moves to the next radio button"
 msgstr "A következő választógombhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1087
+#: browseMode.py:1096
 msgid "no next radio button"
 msgstr "nincs következő választógomb"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1089
+#: browseMode.py:1098
 msgid "moves to the previous radio button"
 msgstr "Az előző választógombhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1091
+#: browseMode.py:1100
 msgid "no previous radio button"
 msgstr "nincs előző választógomb"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1093
+#: browseMode.py:1102
 msgid "radio buttons"
 msgstr "választógombok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1099
+#: browseMode.py:1108
 msgid "moves to the next combo box"
 msgstr "A következő kombinált listamezőhöz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1101
+#: browseMode.py:1110
 msgid "no next combo box"
 msgstr "Nincs következő kombinált listamező"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1103
+#: browseMode.py:1112
 msgid "moves to the previous combo box"
 msgstr "Az előző kombinált listamezőhöz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1105
+#: browseMode.py:1114
 msgid "no previous combo box"
 msgstr "nincs előző kombinált listamező"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1107
+#: browseMode.py:1116
 msgid "combo boxes"
 msgstr "kombinált listamezők"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1113
+#: browseMode.py:1122
 msgid "moves to the next check box"
 msgstr "A következő jelölőnégyzethez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1115
+#: browseMode.py:1124
 msgid "no next check box"
 msgstr "Nincs következő jelölőnégyzet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1117
+#: browseMode.py:1126
 msgid "moves to the previous check box"
 msgstr "Az előző jelölőnégyzethez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1119
+#: browseMode.py:1128
 msgid "no previous check box"
 msgstr "nincs előző jelölőnégyzet"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1121
+#: browseMode.py:1130
 msgid "check boxes"
 msgstr "jelölőnégyzetek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1127
+#: browseMode.py:1136
 msgid "moves to the next graphic"
 msgstr "A következő ábrához lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1129
+#: browseMode.py:1138
 msgid "no next graphic"
 msgstr "Nincs következő ábra"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1131
+#: browseMode.py:1140
 msgid "moves to the previous graphic"
 msgstr "Az előző ábrához lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1133
+#: browseMode.py:1142
 msgid "no previous graphic"
 msgstr "nincs előző ábra"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1135
+#: browseMode.py:1144
 msgid "graphics"
 msgstr "ábrák"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1141
+#: browseMode.py:1150
 msgid "moves to the next block quote"
 msgstr "A következő idézetblokkhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1143
+#: browseMode.py:1152
 msgid "no next block quote"
 msgstr "Nincs következő idézetblokk"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1145
+#: browseMode.py:1154
 msgid "moves to the previous block quote"
 msgstr "Az előző idézetblokkhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1147
+#: browseMode.py:1156
 msgid "no previous block quote"
 msgstr "Nincs előző idézetblokk"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1149
+#: browseMode.py:1158
 msgid "block quotes"
 msgstr "idézetblokkok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1155
+#: browseMode.py:1164
 msgid "skips forward past a block of links"
 msgstr "Átugrik egy hivatkozásblokkot"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1157
+#: browseMode.py:1166
 msgid "no more text after a block of links"
 msgstr "Nincs több szöveg a hivatkozásblokk után"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1159
+#: browseMode.py:1168
 msgid "skips backward past a block of links"
 msgstr "a hivatkozásblokk elé ugrik."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1161
+#: browseMode.py:1170
 msgid "no more text before a block of links"
 msgstr "Nincs több szöveg a hivatkozásblokk előtt"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1164
+#: browseMode.py:1173
 msgid "non-link blocks"
 msgstr "statikus blokkok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1170
+#: browseMode.py:1179
 msgid "moves to the next landmark"
 msgstr "A következő jelzőponthoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1172
+#: browseMode.py:1181
 msgid "no next landmark"
 msgstr "nincs következő jelzőpont"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1174
+#: browseMode.py:1183
 msgid "moves to the previous landmark"
 msgstr "Az előző jelzőponthoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1176
+#: browseMode.py:1185
 msgid "no previous landmark"
 msgstr "nincs előző jelzőpont"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1179
+#: browseMode.py:1188
 msgid "landmarks"
 msgstr "jelzőpontok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1185
+#: browseMode.py:1194
 msgid "moves to the next embedded object"
 msgstr "A következő beágyazott objektumhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1187
+#: browseMode.py:1196
 msgid "no next embedded object"
 msgstr "Nincs következő beágyazott objektum"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1189
+#: browseMode.py:1198
 msgid "moves to the previous embedded object"
 msgstr "Az előző beágyazott objektumhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1191
+#: browseMode.py:1200
 msgid "no previous embedded object"
 msgstr "Nincs előző beágyazott objektum"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1193
+#: browseMode.py:1202
 msgid "embedded objects"
 msgstr "beágyazott objektumok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1199
+#: browseMode.py:1208
 msgid "moves to the next annotation"
 msgstr "A következő mellékszöveghez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1201
+#: browseMode.py:1210
 msgid "no next annotation"
 msgstr "Nincs következő mellékszöveg."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1203
+#: browseMode.py:1212
 msgid "moves to the previous annotation"
 msgstr "Az előző mellékszöveghez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1205
+#: browseMode.py:1214
 msgid "no previous annotation"
 msgstr "Nincs előző mellékszöveg."
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1207
+#: browseMode.py:1216
 msgid "annotations"
 msgstr "mellékszövegek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1213
+#: browseMode.py:1222
 msgid "moves to the next error"
 msgstr "A következő hibához lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1215
+#: browseMode.py:1224
 msgid "no next error"
 msgstr "Nincs következő hiba"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1217
+#: browseMode.py:1226
 msgid "moves to the previous error"
 msgstr "Az előző hibához lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1219
+#: browseMode.py:1228
 msgid "no previous error"
 msgstr "Nincs előző hiba"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1221
+#: browseMode.py:1230
 msgid "errors"
 msgstr "hibák"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1227
+#: browseMode.py:1236
 msgid "moves to the next slider"
 msgstr "a következő csúszkához lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1229
+#: browseMode.py:1238
 msgid "no next slider"
 msgstr "nincs következő csúszka"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1231
+#: browseMode.py:1240
 msgid "moves to the previous slider"
 msgstr "az előző csúszkához lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1233
+#: browseMode.py:1242
 msgid "no previous slider"
 msgstr "nincs előző csúszka"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1235
+#: browseMode.py:1244
 msgid "sliders"
 msgstr "csúszkák"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1241
+#: browseMode.py:1250
 msgid "moves to the next clickable element"
-msgstr ""
+msgstr "A következő kattintható elemhez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1243
+#: browseMode.py:1252
 msgid "no next clickable element"
-msgstr ""
+msgstr "Nincs következő kattintható elem"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1245
+#: browseMode.py:1254
 msgid "moves to the previous clickable element"
-msgstr ""
+msgstr "Az előző kattintható elemhez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1247
+#: browseMode.py:1256
 msgid "no previous clickable element"
-msgstr ""
+msgstr "nincs előző kattintható elem"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1250
+#: browseMode.py:1259
 msgid "clickable elements"
-msgstr ""
+msgstr "Kattintható elemek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1256
+#: browseMode.py:1265
 msgid "moves to the next article"
 msgstr "A következő cikkhez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1258
+#: browseMode.py:1267
 msgid "no next article"
 msgstr "Nincs következő cikk"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1260
+#: browseMode.py:1269
 msgid "moves to the previous article"
 msgstr "Az előző cikkhez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1262
+#: browseMode.py:1271
 msgid "no previous article"
 msgstr "Nincs előző cikk"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1264
+#: browseMode.py:1273
 msgid "articles"
 msgstr "cikkek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1270
+#: browseMode.py:1279
 msgid "moves to the next grouping"
 msgstr "A következő elemcsoporthoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1272
+#: browseMode.py:1281
 msgid "no next grouping"
 msgstr "Nincs következő elemcsoport"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1274
+#: browseMode.py:1283
 msgid "moves to the previous grouping"
 msgstr "Az előző elemcsoporthoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1276
+#: browseMode.py:1285
 msgid "no previous grouping"
 msgstr "nincs előző elemcsoport"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1278
+#: browseMode.py:1287
 msgid "groupings"
 msgstr "elemcsoportok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1284
+#: browseMode.py:1293
 msgid "moves to the next tab"
 msgstr "A következő fülhöz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1286
+#: browseMode.py:1295
 msgid "no next tab"
 msgstr "Nincs következő fül"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1288
+#: browseMode.py:1297
 msgid "moves to the previous tab"
 msgstr "Az előző fülhöz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1290
+#: browseMode.py:1299
 msgid "no previous tab"
 msgstr "nincs előző fül"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1292
+#: browseMode.py:1301
 msgid "tabs"
 msgstr "fülek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1298
+#: browseMode.py:1307
 msgid "moves to the next figure"
 msgstr "A következő alakzathoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1300
+#: browseMode.py:1309
 msgid "no next figure"
 msgstr "Nincs több alakzat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1302
+#: browseMode.py:1311
 msgid "moves to the previous figure"
 msgstr "Az előző alakzathoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1304
+#: browseMode.py:1313
 msgid "no previous figure"
 msgstr "Nincs előző alakzat"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1306
+#: browseMode.py:1315
 msgid "figures"
 msgstr "alakzatok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1312
+#: browseMode.py:1321
 msgid "moves to the next menu item"
 msgstr "A következő menüelemre lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1314
+#: browseMode.py:1323
 msgid "no next menu item"
 msgstr "Nincs több menüelem."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1316
+#: browseMode.py:1325
 msgid "moves to the previous menu item"
 msgstr "Az előző menüelemre lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1318
+#: browseMode.py:1327
 msgid "no previous menu item"
 msgstr "Nincs előző menüelem."
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1320
+#: browseMode.py:1329
 msgid "menu items"
 msgstr "menüelemek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1326
+#: browseMode.py:1335
 msgid "moves to the next toggle button"
 msgstr "A következő többállapotú gombhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1328
+#: browseMode.py:1337
 msgid "no next toggle button"
 msgstr "Nincs több többállapotú gomb."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1330
+#: browseMode.py:1339
 msgid "moves to the previous toggle button"
 msgstr "Az előző többállapotú gombhoz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1332
+#: browseMode.py:1341
 msgid "no previous toggle button"
 msgstr "Nincs előző többállapotú gomb."
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1334
+#: browseMode.py:1343
 msgid "toggle buttons"
 msgstr "többállapotú gombok"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1340
+#: browseMode.py:1349
 msgid "moves to the next progress bar"
 msgstr "A következő folyamatjelzőhöz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1342
+#: browseMode.py:1351
 msgid "no next progress bar"
 msgstr "nincs több folyamatjelző."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1344
+#: browseMode.py:1353
 msgid "moves to the previous progress bar"
 msgstr "Az előző folyamatjelzőhöz lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1346
+#: browseMode.py:1355
 msgid "no previous progress bar"
 msgstr "Nincs előző folyamatjelző. "
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1348
+#: browseMode.py:1357
 msgid "progress bars"
 msgstr "folyamatjelzők"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1354
+#: browseMode.py:1363
 msgid "moves to the next math formula"
 msgstr "A következő matematikai képlethez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1356
+#: browseMode.py:1365
 msgid "no next math formula"
 msgstr "Nincs több matematikai képlet."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1358
+#: browseMode.py:1367
 msgid "moves to the previous math formula"
 msgstr "Az előző matematikai képlethez lép."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1360
+#: browseMode.py:1369
 msgid "no previous math formula"
 msgstr "Nincs előző matematikai képlet."
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1362
+#: browseMode.py:1371
 msgid "math formulas"
 msgstr "matematikai képletek"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1368
+#: browseMode.py:1377
 msgid "moves to the next text paragraph"
 msgstr "A következő bekezdéshez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1370
+#: browseMode.py:1379
 msgid "no next text paragraph"
 msgstr "Nincs több bekezdés"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1372
+#: browseMode.py:1381
 msgid "moves to the previous text paragraph"
 msgstr "Az előző bekezdéshez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1374
+#: browseMode.py:1383
 msgid "no previous text paragraph"
 msgstr "Nincs előző bekezdés"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1377
+#: browseMode.py:1386
 msgid "text paragraphs"
 msgstr "bekezdések"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1383
+#: browseMode.py:1392
 msgid "moves to the next vertically aligned paragraph"
 msgstr "A következő függőlegesen igazított bekezdéshez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1385
+#: browseMode.py:1394
 msgid "no next vertically aligned paragraph"
 msgstr "Nincs több függőlegesen igazított bekezdés"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1387
+#: browseMode.py:1396
 msgid "moves to the previous vertically aligned paragraph"
 msgstr "Az előző függőlegesen igazított bekezdéshez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1389
+#: browseMode.py:1398
 msgid "no previous vertically aligned paragraph"
 msgstr "Nincs előző függőlegesen igazított bekezdés"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1392
+#: browseMode.py:1401
 msgid "vertical paragraphs"
 msgstr "függőleges bekezdések"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1398
+#: browseMode.py:1407
 msgid "moves to the next same style text"
 msgstr "A következő azonos stílusú szöveghez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1400
+#: browseMode.py:1409
 msgid "No next same style text"
 msgstr "Nincs több azonos stílusú szöveg"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1402
+#: browseMode.py:1411
 msgid "moves to the previous same style text"
 msgstr "Az előző azonos stílusú szöveghez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1404
+#: browseMode.py:1413
 msgid "No previous same style text"
 msgstr "Nincs előző azonos stílusú szöveg"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1406
+#: browseMode.py:1415
 msgid "same style"
 msgstr "azonos stílusú"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1412
+#: browseMode.py:1421
 msgid "moves to the next different style text"
 msgstr "A következő eltérő stílusú szöveghez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1414
+#: browseMode.py:1423
 msgid "No next different style text"
 msgstr "Nincs több eltérő stílusú szöveg"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1416
+#: browseMode.py:1425
 msgid "moves to the previous different style text"
 msgstr "Az előző eltérő stílusú szöveghez lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1418
+#: browseMode.py:1427
 msgid "No previous different style text"
 msgstr "Nincs előző eltérő stílusú szöveg"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1420
+#: browseMode.py:1429
 msgid "different style"
 msgstr "eltérő stílusú"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1426
+#: browseMode.py:1435
 msgid "moves to the next reference"
 msgstr "A következő utaláshoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1428
+#: browseMode.py:1437
 msgid "no next reference"
 msgstr "Nincs több utalás ebben az irányban"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1430
+#: browseMode.py:1439
 msgid "moves to the previous reference"
 msgstr "Az előző utaláshoz lép"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1432
+#: browseMode.py:1441
 msgid "no previous reference"
 msgstr "Nincs több utalás ebben az irányban"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1435
+#: browseMode.py:1444
 msgid "references"
 msgstr "utalások"
 
@@ -1131,7 +1131,7 @@ msgstr "utalások"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1454 gui\settingsDialogs.py:3466
+#: browseMode.py:1463 gui\settingsDialogs.py:3466
 msgid "Lin&ks"
 msgstr "&Hivatkozások"
 
@@ -1139,42 +1139,42 @@ msgstr "&Hivatkozások"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1457 gui\settingsDialogs.py:3461
+#: browseMode.py:1466 gui\settingsDialogs.py:3461
 msgid "&Headings"
 msgstr "&Címsorok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1460 NVDAObjects\window\excel.py:768
+#: browseMode.py:1469 NVDAObjects\window\excel.py:768
 msgid "&Form fields"
 msgstr "&Űrlapmezők"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1463
+#: browseMode.py:1472
 msgid "&Buttons"
 msgstr "&Gombok"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1466
+#: browseMode.py:1475
 msgid "Lan&dmarks"
 msgstr "&Jelzőpontok"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: browseMode.py:1479
+#: browseMode.py:1488
 msgid "Elements List"
 msgstr "Elemlista"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1490
+#: browseMode.py:1499
 msgid "Type:"
 msgstr "Típus:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1519
+#: browseMode.py:1528
 msgid "Filter b&y:"
 msgstr "&Szűrés:"
 
@@ -1182,34 +1182,34 @@ msgstr "&Szűrés:"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1530 globalCommands.py:1856
+#: browseMode.py:1539 globalCommands.py:1856
 msgid "Activate"
 msgstr "Aktiválás"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1535
+#: browseMode.py:1544
 msgid "&Move to"
 msgstr "&Ugrás"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: browseMode.py:2003
+#: browseMode.py:2012
 msgid "No long description"
 msgstr "Nincs bővebb leírás"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
-#: browseMode.py:2006
+#: browseMode.py:2015
 msgid "Shows the long description at this position if one is found."
 msgstr "Megmutatja a bővebb leírást, ha létezik a jelenlegi pozíciónál."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
-#: browseMode.py:2521 browseMode.py:2542
+#: browseMode.py:2537 browseMode.py:2558
 msgid "Not in a container"
 msgstr "Ez a parancs csak elemblokkban használható"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: browseMode.py:2532
+#: browseMode.py:2548
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "Egy elemblokk (pl. lista vagy táblázat) elejéhez lép"
 
@@ -1219,53 +1219,53 @@ msgstr "Egy elemblokk (pl. lista vagy táblázat) elejéhez lép"
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2551 globalCommands.py:2006 globalCommands.py:2084
+#: browseMode.py:2567 globalCommands.py:2006 globalCommands.py:2084
 #: globalCommands.py:2204 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "Vége"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: browseMode.py:2560
+#: browseMode.py:2576
 msgid "Moves past the end of the container element, such as a list or table"
 msgstr "Egy elemblokk (pl. lista vagy táblázat) végére ugrik"
 
 #. Translators: the description for the toggleScreenLayout script.
-#: browseMode.py:2895
+#: browseMode.py:2911
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "Képernyő-elrendezés megtartása be és kikapcsolása. Böngészőmódban megtekintett dokumentumok esetén."
 
 #. Translators: The message reported for not supported toggling of screen layout
-#: browseMode.py:2904
+#: browseMode.py:2920
 msgid "Not supported in this document."
 msgstr "Ebben a dokumentumban nem támogatott."
 
 #. Translators: input help message for toggle native selection command
-#: browseMode.py:2930
+#: browseMode.py:2946
 msgid "Toggles native selection mode on and off"
 msgstr "Hagyományos kijelölési mód beállítása"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2936
+#: browseMode.py:2952
 msgid "Native selection mode unsupported in this browse mode document"
 msgstr "A hagyományos kijelölési mód nem támogatott ebben a böngészőmódú dokumentumban"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
-#: browseMode.py:2939
+#: browseMode.py:2955
 msgid "Native selection mode cannot be turned off in this browse mode document"
 msgstr "A hagyományos kijelölési mód nem kapcsolható ki ebben a böngészőmódú dokumentumban"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2951
+#: browseMode.py:2967
 msgid "Native selection mode unsupported in this document"
 msgstr "A hagyományos kijelölési mód nem támogatott ebben a dokumentumban"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2955
+#: browseMode.py:2971
 msgid "Native app selection mode enabled"
 msgstr "Hagyományos kijelölési mód engedélyezve"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2963
+#: browseMode.py:2979
 msgid "Native app selection mode disabled"
 msgstr "Hagyományos szerkesztési mód letiltva"
 
@@ -3962,17 +3962,17 @@ msgstr "Formázási információk a braille cellánál található szöveghez"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4294
 msgid "Selects the text from the first up to the last braille cell"
-msgstr ""
+msgstr "Szöveg kijelölése az első Braille cellától az utolsóig"
 
 #. Translators: Reported when selection via multiple routing keys is not possible.
 #: globalCommands.py:4306
 msgid "Cannot select from braille routing keys"
-msgstr ""
+msgstr "Nem lehet kijelölni a Braille navigációs gombokkal"
 
 #. Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 #: globalCommands.py:4313
 msgid "Selection not supported here"
-msgstr ""
+msgstr "A kijelölés itt nem támogatott"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4317
@@ -4355,7 +4355,7 @@ msgstr "Nagyítási nézet eltolása az alsó széléhez"
 #. Translators: Describes a command.
 #: globalCommands.py:5272
 msgid "Moves the mouse cursor to the center of the magnified view"
-msgstr ""
+msgstr "Az egérkurzor mozgatása a nagyítási nézet közepére"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5285
@@ -4511,12 +4511,12 @@ msgstr "A legutóbb kimondott információ"
 #. Translators: Input help mode message for the command to copy the last spoken information.
 #: globalCommands.py:5577
 msgid "Copies the last spoken information to the clipboard."
-msgstr ""
+msgstr "Az utolsó kimondott információ másolása  a vágólapra"
 
 #. Translators: Reported when there is no last spoken information to copy.
 #: globalCommands.py:5586
 msgid "Nothing to copy"
-msgstr ""
+msgstr "Nincs másolható adat"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6537,7 +6537,7 @@ msgstr "Négyszeres {action}"
 #: touchHandler.py:396
 #, python-brace-format
 msgid "{edgeLabel} {action}"
-msgstr ""
+msgstr "{action} {edgeLabel}"
 
 #. Translators: a touch screen action using multiple fingers
 #: touchHandler.py:405
@@ -6623,97 +6623,97 @@ msgstr "nyújtás"
 #: touchTracker.py:78
 msgctxt "touch action"
 msgid "flick right then left"
-msgstr ""
+msgstr "pöccintés jobbra majd balra"
 
 #. Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:80
 msgctxt "touch action"
 msgid "flick left then right"
-msgstr ""
+msgstr "pöccintés balra majd jobbra"
 
 #. Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:82
 msgctxt "touch action"
 msgid "flick up then down"
-msgstr ""
+msgstr "pöccintés fel majd le"
 
 #. Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:84
 msgctxt "touch action"
 msgid "flick down then up"
-msgstr ""
+msgstr "pöccintés le majd fel"
 
 #. Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:86
 msgctxt "touch action"
 msgid "flick right then up"
-msgstr ""
+msgstr "pöccintés jobbra majd fel"
 
 #. Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:88
 msgctxt "touch action"
 msgid "flick right then down"
-msgstr ""
+msgstr "pöccintés jobbra majd le"
 
 #. Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:90
 msgctxt "touch action"
 msgid "flick left then up"
-msgstr ""
+msgstr "pöccintés balra majd fel"
 
 #. Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:92
 msgctxt "touch action"
 msgid "flick left then down"
-msgstr ""
+msgstr "pöccintés balra majd le"
 
 #. Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:94
 msgctxt "touch action"
 msgid "flick up then right"
-msgstr ""
+msgstr "pöccintés fel majd jobbra"
 
 #. Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:96
 msgctxt "touch action"
 msgid "flick up then left"
-msgstr ""
+msgstr "pöccintés fel majd balra"
 
 #. Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:98
 msgctxt "touch action"
 msgid "flick down then right"
-msgstr ""
+msgstr "pöccintés le majd jobbra"
 
 #. Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:100
 msgctxt "touch action"
 msgid "flick down then left"
-msgstr ""
+msgstr "pöccintés le majd balra"
 
 #. Translators: describes a touch gesture that started from the left edge of the screen
 #: touchTracker.py:124
 msgctxt "touch edge"
 msgid "left edge"
-msgstr ""
+msgstr "a bal szélétől"
 
 #. Translators: describes a touch gesture that started from the right edge of the screen
 #: touchTracker.py:126
 msgctxt "touch edge"
 msgid "right edge"
-msgstr ""
+msgstr "a jobb szélétől"
 
 #. Translators: describes a touch gesture that started from the top edge of the screen
 #: touchTracker.py:128
 msgctxt "touch edge"
 msgid "top edge"
-msgstr ""
+msgstr "a tetejétől"
 
 #. Translators: describes a touch gesture that started from the bottom edge of the screen
 #: touchTracker.py:130
 msgctxt "touch edge"
 msgid "bottom edge"
-msgstr ""
+msgstr "az aljától"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
@@ -6751,7 +6751,7 @@ msgstr "NVDA üzenet"
 #. Translators: The label of a button to copy the text of the window to the clipboard.
 #: ui.py:148
 msgid "&Copy"
-msgstr ""
+msgstr "&Másolás"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -9618,13 +9618,13 @@ msgstr "Angol észak-amerikai braille számítógépes kód"
 #. braille settings dialog.
 #: brailleTables\__tables.py:180
 msgid "English (New Zealand) grade 1"
-msgstr ""
+msgstr "Angol (új-zélandi) rövidítési fokozat 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:183
 msgid "English (New Zealand) grade 2"
-msgstr ""
+msgstr "Angol (új-zélandi) rövidítési fokozat 2"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9690,7 +9690,7 @@ msgstr "Spanyol, rövidítési fokozat 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:221
 msgid "Spanish (Norway)"
-msgstr ""
+msgstr "Spanyol (Norvégia)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9846,7 +9846,7 @@ msgstr "Horvát, rövidítési fokozat 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:335
 msgid "Haitian Creole Braille"
-msgstr ""
+msgstr "Haiti kreol Braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9996,7 +9996,7 @@ msgstr "Lett, rövidítési fokozat 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:438
 msgid "Māori Braille"
-msgstr ""
+msgstr "Maori Braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10128,13 +10128,13 @@ msgstr "Oriya, rövidítési fokozat 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:536
 msgid "Elfdalian 6 dot"
-msgstr ""
+msgstr "Elfdalian 6 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:539
 msgid "Elfdalian 8 dot"
-msgstr ""
+msgstr "Elfdalian 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10266,13 +10266,13 @@ msgstr "Szlovén, rövidítési fokozat 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:622
 msgid "Sami 6 dot"
-msgstr ""
+msgstr "Számi 6 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:625
 msgid "Sami 8 dot"
-msgstr ""
+msgstr "Számi 8 pontos"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10308,13 +10308,13 @@ msgstr "Svéd rövidítési fokozat 1"
 #. braille settings dialog.
 #: brailleTables\__tables.py:646
 msgid "Swedish uncontracted braille (detailed)"
-msgstr ""
+msgstr "Svéd teljes írásos braille (részletes)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:652
 msgid "Swedish uncontracted braille (phonetics)"
-msgstr ""
+msgstr "Svéd teljes írásos braille (fonetikus)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10326,7 +10326,7 @@ msgstr "Svéd részben rövidírásos Braille"
 #. braille settings dialog.
 #: brailleTables\__tables.py:661
 msgid "Swedish partially contracted braille (detailed)"
-msgstr ""
+msgstr "Svéd részben rövidírásos braille (részletes)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10338,43 +10338,43 @@ msgstr "Svéd rövidítési fokozat 2"
 #. braille settings dialog.
 #: brailleTables\__tables.py:671
 msgid "Swedish contracted braille (detailed)"
-msgstr ""
+msgstr "Svéd rövidírásos braille (részletes)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:676
 msgid "Swedish 8 dot uncontracted braille"
-msgstr ""
+msgstr "Svéd 8 pontos teljes írásos braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:681
 msgid "Swedish 8 dot uncontracted braille (detailed)"
-msgstr ""
+msgstr "Svéd 8 pontos teljes írásos braille (részletes)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:687
 msgid "Swedish 8 dot partially contracted braille"
-msgstr ""
+msgstr "Svéd 8 pontos részben rövidírásos braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:694
 msgid "Swedish 8 dot partially contracted braille (detailed)"
-msgstr ""
+msgstr "Svéd 8 pontos részben rövidírásos braille (részletes)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:701
 msgid "Swedish 8 dot contracted braille"
-msgstr ""
+msgstr "Svéd 8 pontos rövidírásos braille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:708
 msgid "Swedish 8 dot contracted braille (detailed)"
-msgstr ""
+msgstr "Svéd 8 pontos rövidírásos braille (részletes)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10998,59 +10998,59 @@ msgstr "címkék"
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:155
 msgid "Chinese"
-msgstr ""
+msgstr "Kínai"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:157
 msgid "Unicode (ICU)"
-msgstr ""
+msgstr "Unikód (ICU)"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:159
 msgid "Legacy (Uniscribe)"
-msgstr ""
+msgstr "Hagyományos (Uniscribe)"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:180
 msgctxt "braille text wrap"
 msgid "Off"
-msgstr ""
+msgstr "Ki"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:182
 msgctxt "braille text wrap"
 msgid "Show mark when words are cut"
-msgstr ""
+msgstr "Jelzés a szavak elválasztásánál"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:184
 msgctxt "braille text wrap"
 msgid "At word boundaries"
-msgstr ""
+msgstr "Szóhatároknál"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:188
 msgctxt "braille text wrap"
 msgid "At word or syllable boundaries"
-msgstr ""
+msgstr "Szó és szótaghatároknál"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:205
 msgctxt "sayAll"
 msgid "Sentence where possible"
-msgstr ""
+msgstr "Mondat, ahol lehetséges"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:207
 msgctxt "sayAll"
 msgid "Paragraph"
-msgstr ""
+msgstr "Bekezdés"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:209
 msgctxt "sayAll"
 msgid "Line"
-msgstr ""
+msgstr "Sor"
 
 #. Translators: The title of the document used to present the result of content recognition.
 #: contentRecog\recogUi.py:104
@@ -11104,7 +11104,7 @@ msgstr "A tartalom nem látható"
 #. is enabled, but the system does not support the required screen capture API.
 #: contentRecog\recogUi.py:326
 msgid "Content recognition is unavailable while Screen Curtain is enabled on this system. Please disable Screen Curtain and try again."
-msgstr ""
+msgstr "A tartalom felismerése nem lehetséges, amíg a képernyőfüggöny aktív. Előbb kapcsolja ki a képernyőfüggönyt és próbálja meg újra."
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 #: contentRecog\recogUi.py:334
@@ -13294,7 +13294,7 @@ msgstr "&Hozzáadás"
 #. Translators: Context menu item label to change a gesture
 #: gui\inputGestures.py:632 gui\inputGestures.py:688
 msgid "C&hange"
-msgstr ""
+msgstr "&megváltoztatás"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: Context menu item label to remove a gesture
@@ -13948,7 +13948,7 @@ msgstr "Unicode &normalizáció"
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #: gui\settingsDialogs.py:1753
 msgid "Say all reads by"
-msgstr ""
+msgstr "Folyamatos felolvasás egysége"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
@@ -14373,12 +14373,12 @@ msgstr "A nem NVDA-parancsnak minősülő &egyéb parancsok blokkolása"
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2680
 msgid "&Keep search history"
-msgstr ""
+msgstr "&Keresési előzmények megőrzése"
 
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2691
 msgid "Nati&ve selection mode"
-msgstr ""
+msgstr "&Hagyományos kijelölési mód"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2707
@@ -14683,7 +14683,7 @@ msgstr "&Üres sorok figyelmen kívül hagyása a behúzás bejelentésénél"
 #. to adjust the duration of indentation tones in milliseconds.
 #: gui\settingsDialogs.py:3374
 msgid "Indent tone &duration (ms):"
-msgstr ""
+msgstr "&Behúzást jelző hang hossza (ms):"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -14818,7 +14818,7 @@ msgstr "&Bekezdések stílusa"
 #. Translators: This is a label for the word segmentation standard in the document navigation dialog
 #: gui\settingsDialogs.py:3619
 msgid "&Word Segmentation Standard:"
-msgstr ""
+msgstr "Szóelválasztási mód"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -15040,7 +15040,7 @@ msgstr "&Érintéses bevitel"
 #. Translators: This is the label for a checkbox in the touch interaction settings panel.
 #: gui\settingsDialogs.py:4217
 msgid "Enable &edge gestures"
-msgstr ""
+msgstr "A képernyő széleitől induló parancsok engedélyezése"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:4231
@@ -15261,7 +15261,7 @@ msgstr "Használja a továbbfejlesztett beírt karakterek bemondását a hagyom�
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4544
 msgid "Beep for &skipped lines"
-msgstr ""
+msgstr "&Hangjelzés az átugrott soroknál"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -15566,7 +15566,7 @@ msgstr "&Beszéd soronkénti vagy bekezdésenkénti navigáció esetén"
 #. (how to break lines that don't fit on the braille display).
 #: gui\settingsDialogs.py:5610
 msgid "Text &wrap"
-msgstr ""
+msgstr "&Szövegelválasztás"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:5631
@@ -15581,7 +15581,7 @@ msgstr "&Automatikus görgetési sebesség"
 #. Translators: The label for a checkbox in the Braille settings panel.
 #: gui\settingsDialogs.py:5661
 msgid "Use &Chinese word segmentation"
-msgstr ""
+msgstr "&Kínai szóelválasztás használata"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -16042,7 +16042,7 @@ msgstr "&Frissítse a kijelölt bővítményeket"
 #: gui\addonStoreGui\controls\actions.py:230
 msgctxt "addonStore"
 msgid "&Update (and enable) selected add-ons"
-msgstr ""
+msgstr "&A kijelölt bővítmények frissítése (és engedélyezése)"
 
 #. Translators: Label for an action that retries the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -16459,7 +16459,7 @@ msgstr "Bővítménykezelő megnyitása"
 #: gui\addonStoreGui\controls\messageDialogs.py:449
 msgctxt "addonStore"
 msgid "&Update (and enable) all"
-msgstr ""
+msgstr "&Minden bővítmény frissítése (és engedélyezése)"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:452
@@ -16794,7 +16794,7 @@ msgstr "&Frissítés"
 #: gui\addonStoreGui\viewModels\store.py:141
 msgctxt "addonStore"
 msgid "&Update (and enable)"
-msgstr ""
+msgstr "&Frissítés (és engedélyezés)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:150
@@ -16807,7 +16807,7 @@ msgstr "Frissítés a kompatibilitási &problémák ellenére"
 #: gui\addonStoreGui\viewModels\store.py:161
 msgctxt "addonStore"
 msgid "&Update (and enable, override incompatibility)"
-msgstr ""
+msgstr "&Frissítés (és engedélyezés a kompatibilitási problémák felülírásával)"
 
 #. Translators: Label for an action that retries the selected addon
 #: gui\addonStoreGui\viewModels\store.py:171
@@ -17002,7 +17002,7 @@ msgstr "Hiba történt a matematikai tartalom braille megjelenítése során"
 #: mathPres\MathCAT\MathCAT.py:498
 msgctxt "math"
 msgid "Invalid MathML found."
-msgstr ""
+msgstr "Érvénytelen MathML"
 
 #. Translators: {lang} is the name of the language in that language,
 #. and {code} is the code for that language variant,
@@ -20741,13 +20741,13 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:89
+#: _magnifier\fullscreenMagnifier.py:91
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "Nem lehet elindítani a nagyítót, valószínű egy másik nagyító alkalmazás fut."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:240
+#: _magnifier\fullscreenMagnifier.py:242
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "A nagyító egy hiba miatt leállt, indítsa el újra."
@@ -20864,7 +20864,7 @@ msgstr "követési mód váltása"
 #: _magnifier\utils\types.py:89
 msgctxt "magnifier action"
 msgid "move mouse to view"
-msgstr ""
+msgstr "Egérkurzor mozgatása a nagyítási nézetbe"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:91
@@ -21013,7 +21013,7 @@ msgstr "Nem sikerült csatlakozni a távoli számítógéphez"
 #: _remoteClient\client.py:345
 msgctxt "remote"
 msgid "Unable to connect to the Remote Access server. Retrying"
-msgstr ""
+msgstr "Nem sikerült csatlakozni a távelérési szerverhez. Újrapróbálkozás"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:368 _remoteClient\client.py:719

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 23:47+0000\n"
-"PO-Revision-Date: 2026-09-07 00:22\n"
+"POT-Creation-Date: 2026-09-11 08:24+0000\n"
+"PO-Revision-Date: 2026-09-14 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -110,23 +110,23 @@ msgid "Unlabeled"
 msgstr "Nimetön"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
-#: browseMode.py:459
+#: browseMode.py:468
 msgid "Single letter navigation off"
 msgstr "Pikanavigointi pois"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
-#: browseMode.py:463
+#: browseMode.py:472
 msgid "Single letter navigation on"
 msgstr "Pikanavigointi käytössä"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-#: browseMode.py:467
+#: browseMode.py:476
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
 msgstr "Ottaa käyttöön pikanavigointinäppäimet tai poistaa ne käytöstä. Kun ne ovat käytössä, tiettyjen kirjainten painaminen selaustilassa siirtää sivulla oleviin eri tyyppisiin elementteihin. Kun ne eivät ole käytössä, niiden painallukset välitetään suoraan sovellukselle."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
-#: browseMode.py:564 appModules\kindle.py:257 appModules\kindle.py:261
+#: browseMode.py:573 appModules\kindle.py:257 appModules\kindle.py:261
 #: appModules\kindle.py:265 contentRecog\recogUi.py:159
 #: contentRecog\recogUi.py:163 contentRecog\recogUi.py:167
 msgid "Not supported in this document"
@@ -134,996 +134,996 @@ msgstr "Ei tueta tässä asiakirjassa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:648
+#: browseMode.py:657
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
 msgstr "Siirtää seuraavaan otsikkoon tasolla {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:651
+#: browseMode.py:660
 #, python-brace-format
 msgid "No next heading at level {i}"
 msgstr "Ei seuraavaa otsikkoa tasolla {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:654
+#: browseMode.py:663
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
 msgstr "Siirtää edelliseen otsikkoon tasolla {i}"
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:657
+#: browseMode.py:666
 #, python-brace-format
 msgid "No previous heading at level {i}"
 msgstr "Ei edellistä otsikkoa tasolla {i}"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #. {i} will be replaced with the heading level number.
-#: browseMode.py:660
+#: browseMode.py:669
 #, python-brace-format
 msgid "headings level {i}"
 msgstr "otsikkotaso {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
-#: browseMode.py:675
+#: browseMode.py:684
 msgid "Lists various types of elements in this document"
 msgstr "Näyttää luettelon asiakirjan elementeistä."
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#: browseMode.py:733
+#: browseMode.py:742
 msgid "Activates the current object in the document"
 msgstr "Aktivoi asiakirjan nykyisen objektin."
 
 #. Translators: The default element type in browse mode touch navigation (navigates all content).
-#: browseMode.py:807
+#: browseMode.py:816
 msgid "default"
 msgstr "oletus"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:816
+#: browseMode.py:825
 msgid "Selects the next element type for browse mode touch navigation"
 msgstr "Valitsee seuraavan elementtityypin selaustilan kosketusnavigointia käytettäessä."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:835
+#: browseMode.py:844
 msgid "Selects the previous element type for browse mode touch navigation"
 msgstr "Valitsee edellisen elementtityypin selaustilan kosketusnavigointia käytettäessä."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:854
+#: browseMode.py:863
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
 msgstr "Siirtää seuraavaan valittua tyyppiä olevaan elementtiin selaustilan kosketusnavigointia käytettäessä."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:871
+#: browseMode.py:880
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
 msgstr "Siirtää edelliseen valittua tyyppiä olevaan elementtiin selaustilan kosketusnavigointia käytettäessä."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:912
+#: browseMode.py:921
 msgid "moves to the next heading"
 msgstr "Siirtää seuraavaan otsikkoon."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:914
+#: browseMode.py:923
 msgid "no next heading"
 msgstr "Ei seuraavaa otsikkoa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:916
+#: browseMode.py:925
 msgid "moves to the previous heading"
 msgstr "Siirtää edelliseen otsikkoon."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:918
+#: browseMode.py:927
 msgid "no previous heading"
 msgstr "Ei edellistä otsikkoa"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:920
+#: browseMode.py:929
 msgid "headings"
 msgstr "otsikot"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:927
+#: browseMode.py:936
 msgid "moves to the next table"
 msgstr "Siirtää seuraavaan taulukkoon."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:929
+#: browseMode.py:938
 msgid "no next table"
 msgstr "Ei seuraavaa taulukkoa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:931
+#: browseMode.py:940
 msgid "moves to the previous table"
 msgstr "Siirtää edelliseen taulukkoon."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:933
+#: browseMode.py:942
 msgid "no previous table"
 msgstr "Ei edellistä taulukkoa"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:936
+#: browseMode.py:945
 msgid "tables"
 msgstr "taulukot"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:942
+#: browseMode.py:951
 msgid "moves to the next link"
 msgstr "Siirtää seuraavaan linkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:944
+#: browseMode.py:953
 msgid "no next link"
 msgstr "Ei seuraavaa linkkiä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:946
+#: browseMode.py:955
 msgid "moves to the previous link"
 msgstr "Siirtää edelliseen linkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:948
+#: browseMode.py:957
 msgid "no previous link"
 msgstr "Ei edellistä linkkiä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:950
+#: browseMode.py:959
 msgid "links"
 msgstr "linkit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:956
+#: browseMode.py:965
 msgid "moves to the next visited link"
 msgstr "Siirtää seuraavaan vierailtuun linkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:958
+#: browseMode.py:967
 msgid "no next visited link"
 msgstr "Ei seuraavaa vierailtua linkkiä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:960
+#: browseMode.py:969
 msgid "moves to the previous visited link"
 msgstr "Siirtää edelliseen vierailtuun linkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:962
+#: browseMode.py:971
 msgid "no previous visited link"
 msgstr "Ei edellistä vierailtua linkkiä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:964
+#: browseMode.py:973
 msgid "visited links"
 msgstr "vieraillut linkit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:970
+#: browseMode.py:979
 msgid "moves to the next unvisited link"
 msgstr "Siirtää seuraavaan vierailemattomaan linkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:972
+#: browseMode.py:981
 msgid "no next unvisited link"
 msgstr "Ei seuraavaa vierailematonta linkkiä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:974
+#: browseMode.py:983
 msgid "moves to the previous unvisited link"
 msgstr "Siirtää edelliseen vierailemattomaan linkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:976
+#: browseMode.py:985
 msgid "no previous unvisited link"
 msgstr "Ei edellistä vierailematonta linkkiä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:978
+#: browseMode.py:987
 msgid "unvisited links"
 msgstr "vierailemattomat linkit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:984
+#: browseMode.py:993
 msgid "moves to the next form field"
 msgstr "Siirtää seuraavaan lomakekenttään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:986
+#: browseMode.py:995
 msgid "no next form field"
 msgstr "Ei seuraavaa lomakekenttää"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:988
+#: browseMode.py:997
 msgid "moves to the previous form field"
 msgstr "Siirtää edelliseen lomakekenttään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:990
+#: browseMode.py:999
 msgid "no previous form field"
 msgstr "Ei edellistä lomakekenttää"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:992
+#: browseMode.py:1001
 msgid "form fields"
 msgstr "lomakekentät"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:998
+#: browseMode.py:1007
 msgid "moves to the next list"
 msgstr "Siirtää seuraavaan luetteloon."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1000
+#: browseMode.py:1009
 msgid "no next list"
 msgstr "Ei seuraavaa luetteloa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1002
+#: browseMode.py:1011
 msgid "moves to the previous list"
 msgstr "Siirtää edelliseen luetteloon."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1004
+#: browseMode.py:1013
 msgid "no previous list"
 msgstr "Ei edellistä luetteloa"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1007
+#: browseMode.py:1016
 msgid "lists"
 msgstr "luettelot"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1013
+#: browseMode.py:1022
 msgid "moves to the next list item"
 msgstr "Siirtää seuraavaan luettelokohteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1015
+#: browseMode.py:1024
 msgid "no next list item"
 msgstr "Ei seuraavaa luettelokohdetta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1017
+#: browseMode.py:1026
 msgid "moves to the previous list item"
 msgstr "Siirtää edelliseen luettelokohteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1019
+#: browseMode.py:1028
 msgid "no previous list item"
 msgstr "Ei edellistä luettelokohdetta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1021
+#: browseMode.py:1030
 msgid "list items"
 msgstr "luettelokohteet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1027
+#: browseMode.py:1036
 msgid "moves to the next button"
 msgstr "Siirtää seuraavaan painikkeeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1029
+#: browseMode.py:1038
 msgid "no next button"
 msgstr "Ei seuraavaa painiketta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1031
+#: browseMode.py:1040
 msgid "moves to the previous button"
 msgstr "Siirtää edelliseen painikkeeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1033
+#: browseMode.py:1042
 msgid "no previous button"
 msgstr "Ei edellistä painiketta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1035
+#: browseMode.py:1044
 msgid "buttons"
 msgstr "painikkeet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1041
+#: browseMode.py:1050
 msgid "moves to the next edit field"
 msgstr "Siirtää seuraavaan muokkauskenttään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1043
+#: browseMode.py:1052
 msgid "no next edit field"
 msgstr "Ei seuraavaa muokkauskenttää"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1045
+#: browseMode.py:1054
 msgid "moves to the previous edit field"
 msgstr "Siirtää edelliseen muokkauskenttään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1047
+#: browseMode.py:1056
 msgid "no previous edit field"
 msgstr "Ei edellistä muokkauskenttää"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1050
+#: browseMode.py:1059
 msgid "edit fields"
 msgstr "muokkauskentät"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1056
+#: browseMode.py:1065
 msgid "moves to the next frame"
 msgstr "Siirtää seuraavaan kehykseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1058
+#: browseMode.py:1067
 msgid "no next frame"
 msgstr "Ei seuraavaa kehystä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1060
+#: browseMode.py:1069
 msgid "moves to the previous frame"
 msgstr "Siirtää edelliseen kehykseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1062
+#: browseMode.py:1071
 msgid "no previous frame"
 msgstr "Ei edellistä kehystä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1065
+#: browseMode.py:1074
 msgid "frames"
 msgstr "kehykset"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1071
+#: browseMode.py:1080
 msgid "moves to the next separator"
 msgstr "Siirtää seuraavaan erottimeen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1073
+#: browseMode.py:1082
 msgid "no next separator"
 msgstr "Ei seuraavaa erotinta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1075
+#: browseMode.py:1084
 msgid "moves to the previous separator"
 msgstr "Siirtää edelliseen erottimeen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1077
+#: browseMode.py:1086
 msgid "no previous separator"
 msgstr "Ei edellistä erotinta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1079
+#: browseMode.py:1088
 msgid "separators"
 msgstr "erottimet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1085
+#: browseMode.py:1094
 msgid "moves to the next radio button"
 msgstr "Siirtää seuraavaan valintapainikkeeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1087
+#: browseMode.py:1096
 msgid "no next radio button"
 msgstr "Ei seuraavaa valintapainiketta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1089
+#: browseMode.py:1098
 msgid "moves to the previous radio button"
 msgstr "Siirtää edelliseen valintapainikkeeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1091
+#: browseMode.py:1100
 msgid "no previous radio button"
 msgstr "Ei edellistä valintapainiketta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1093
+#: browseMode.py:1102
 msgid "radio buttons"
 msgstr "valintapainikkeet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1099
+#: browseMode.py:1108
 msgid "moves to the next combo box"
 msgstr "Siirtää seuraavaan yhdistelmäruutuun."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1101
+#: browseMode.py:1110
 msgid "no next combo box"
 msgstr "Ei seuraavaa yhdistelmäruutua"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1103
+#: browseMode.py:1112
 msgid "moves to the previous combo box"
 msgstr "Siirtää edelliseen yhdistelmäruutuun."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1105
+#: browseMode.py:1114
 msgid "no previous combo box"
 msgstr "Ei edellistä yhdistelmäruutua"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1107
+#: browseMode.py:1116
 msgid "combo boxes"
 msgstr "yhdistelmäruudut"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1113
+#: browseMode.py:1122
 msgid "moves to the next check box"
 msgstr "Siirtää seuraavaan valintaruutuun."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1115
+#: browseMode.py:1124
 msgid "no next check box"
 msgstr "Ei seuraavaa valintaruutua"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1117
+#: browseMode.py:1126
 msgid "moves to the previous check box"
 msgstr "Siirtää edelliseen valintaruutuun."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1119
+#: browseMode.py:1128
 msgid "no previous check box"
 msgstr "Ei edellistä valintaruutua"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1121
+#: browseMode.py:1130
 msgid "check boxes"
 msgstr "valintaruudut"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1127
+#: browseMode.py:1136
 msgid "moves to the next graphic"
 msgstr "Siirtää seuraavaan grafiikkaan."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1129
+#: browseMode.py:1138
 msgid "no next graphic"
 msgstr "Ei seuraavaa grafiikkaa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1131
+#: browseMode.py:1140
 msgid "moves to the previous graphic"
 msgstr "Siirtää edelliseen grafiikkaan."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1133
+#: browseMode.py:1142
 msgid "no previous graphic"
 msgstr "Ei edellistä grafiikkaa"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1135
+#: browseMode.py:1144
 msgid "graphics"
 msgstr "grafiikat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1141
+#: browseMode.py:1150
 msgid "moves to the next block quote"
 msgstr "Siirtää seuraavaan sisennettyyn lainaukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1143
+#: browseMode.py:1152
 msgid "no next block quote"
 msgstr "Ei seuraavaa sisennettyä lainausta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1145
+#: browseMode.py:1154
 msgid "moves to the previous block quote"
 msgstr "Siirtää edelliseen sisennettyyn lainaukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1147
+#: browseMode.py:1156
 msgid "no previous block quote"
 msgstr "Ei edellistä sisennettyä lainausta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1149
+#: browseMode.py:1158
 msgid "block quotes"
 msgstr "sisennetyt lainaukset"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1155
+#: browseMode.py:1164
 msgid "skips forward past a block of links"
 msgstr "Siirtää eteenpäin linkkilohkon  jälkeiseen tekstiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1157
+#: browseMode.py:1166
 msgid "no more text after a block of links"
 msgstr "Ei enempää linkkilohkon jälkeistä tekstiä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1159
+#: browseMode.py:1168
 msgid "skips backward past a block of links"
 msgstr "Siirtää taaksepäin linkkilohkoa edeltävään tekstiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1161
+#: browseMode.py:1170
 msgid "no more text before a block of links"
 msgstr "Ei enempää  linkkilohkoa edeltävää tekstiä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1164
+#: browseMode.py:1173
 msgid "non-link blocks"
 msgstr "linkittömät lohkot"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1170
+#: browseMode.py:1179
 msgid "moves to the next landmark"
 msgstr "Siirtää seuraavaan kiintopisteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1172
+#: browseMode.py:1181
 msgid "no next landmark"
 msgstr "Ei seuraavaa kiintopistettä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1174
+#: browseMode.py:1183
 msgid "moves to the previous landmark"
 msgstr "Siirtää edelliseen kiintopisteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1176
+#: browseMode.py:1185
 msgid "no previous landmark"
 msgstr "Ei edellistä kiintopistettä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1179
+#: browseMode.py:1188
 msgid "landmarks"
 msgstr "kiintopisteet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1185
+#: browseMode.py:1194
 msgid "moves to the next embedded object"
 msgstr "Siirtää seuraavaan upotettuun objektiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1187
+#: browseMode.py:1196
 msgid "no next embedded object"
 msgstr "Ei seuraavaa upotettua objektia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1189
+#: browseMode.py:1198
 msgid "moves to the previous embedded object"
 msgstr "Siirtää edelliseen upotettuun objektiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1191
+#: browseMode.py:1200
 msgid "no previous embedded object"
 msgstr "Ei edellistä upotettua objektia"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1193
+#: browseMode.py:1202
 msgid "embedded objects"
 msgstr "upotetut objektit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1199
+#: browseMode.py:1208
 msgid "moves to the next annotation"
 msgstr "Siirtää seuraavaan merkintään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1201
+#: browseMode.py:1210
 msgid "no next annotation"
 msgstr "Ei seuraavaa merkintää"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1203
+#: browseMode.py:1212
 msgid "moves to the previous annotation"
 msgstr "Siirtää edelliseen merkintään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1205
+#: browseMode.py:1214
 msgid "no previous annotation"
 msgstr "Ei edellistä merkintää"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1207
+#: browseMode.py:1216
 msgid "annotations"
 msgstr "merkinnät"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1213
+#: browseMode.py:1222
 msgid "moves to the next error"
 msgstr "Siirtää seuraavaan virheeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1215
+#: browseMode.py:1224
 msgid "no next error"
 msgstr "Ei seuraavaa virhettä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1217
+#: browseMode.py:1226
 msgid "moves to the previous error"
 msgstr "Siirtää edelliseen virheeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1219
+#: browseMode.py:1228
 msgid "no previous error"
 msgstr "Ei edellistä virhettä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1221
+#: browseMode.py:1230
 msgid "errors"
 msgstr "virheet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1227
+#: browseMode.py:1236
 msgid "moves to the next slider"
 msgstr "Siirtää seuraavaan liukusäätimeen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1229
+#: browseMode.py:1238
 msgid "no next slider"
 msgstr "Ei seuraavaa liukusäädintä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1231
+#: browseMode.py:1240
 msgid "moves to the previous slider"
 msgstr "Siirtää edelliseen liukusäätimeen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1233
+#: browseMode.py:1242
 msgid "no previous slider"
 msgstr "Ei edellistä liukusäädintä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1235
+#: browseMode.py:1244
 msgid "sliders"
 msgstr "liukusäätimet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1241
+#: browseMode.py:1250
 msgid "moves to the next clickable element"
 msgstr "Siirtää seuraavaan napsautettavaan kohteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1243
+#: browseMode.py:1252
 msgid "no next clickable element"
 msgstr "Ei seuraavaa napsautettavaa kohdetta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1245
+#: browseMode.py:1254
 msgid "moves to the previous clickable element"
 msgstr "Siirtää edelliseen napsautettavaan kohteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1247
+#: browseMode.py:1256
 msgid "no previous clickable element"
 msgstr "Ei edellistä napsautettavaa kohdetta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1250
+#: browseMode.py:1259
 msgid "clickable elements"
 msgstr "napsautettavat kohteet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1256
+#: browseMode.py:1265
 msgid "moves to the next article"
 msgstr "Siirtää seuraavaan artikkeliin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1258
+#: browseMode.py:1267
 msgid "no next article"
 msgstr "Ei seuraavaa artikkelia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1260
+#: browseMode.py:1269
 msgid "moves to the previous article"
 msgstr "Siirtää edelliseen artikkeliin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1262
+#: browseMode.py:1271
 msgid "no previous article"
 msgstr "Ei edellistä artikkelia"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1264
+#: browseMode.py:1273
 msgid "articles"
 msgstr "artikkelit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1270
+#: browseMode.py:1279
 msgid "moves to the next grouping"
 msgstr "Siirtää seuraavaan ryhmään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1272
+#: browseMode.py:1281
 msgid "no next grouping"
 msgstr "Ei seuraavaa ryhmää"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1274
+#: browseMode.py:1283
 msgid "moves to the previous grouping"
 msgstr "Siirtää edelliseen ryhmään."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1276
+#: browseMode.py:1285
 msgid "no previous grouping"
 msgstr "Ei edellistä ryhmää"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1278
+#: browseMode.py:1287
 msgid "groupings"
 msgstr "ryhmät"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1284
+#: browseMode.py:1293
 msgid "moves to the next tab"
 msgstr "Siirtää seuraavaan välilehteen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1286
+#: browseMode.py:1295
 msgid "no next tab"
 msgstr "Ei seuraavaa välilehteä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1288
+#: browseMode.py:1297
 msgid "moves to the previous tab"
 msgstr "Siirtää edelliseen välilehteen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1290
+#: browseMode.py:1299
 msgid "no previous tab"
 msgstr "Ei edellistä välilehteä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1292
+#: browseMode.py:1301
 msgid "tabs"
 msgstr "välilehdet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1298
+#: browseMode.py:1307
 msgid "moves to the next figure"
 msgstr "Siirtää seuraavaan kuvitukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1300
+#: browseMode.py:1309
 msgid "no next figure"
 msgstr "Ei seuraavaa kuvitusta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1302
+#: browseMode.py:1311
 msgid "moves to the previous figure"
 msgstr "Siirtää edelliseen kuvitukseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1304
+#: browseMode.py:1313
 msgid "no previous figure"
 msgstr "Ei edellistä kuvitusta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1306
+#: browseMode.py:1315
 msgid "figures"
 msgstr "kuvitukset"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1312
+#: browseMode.py:1321
 msgid "moves to the next menu item"
 msgstr "Siirtää seuraavaan valikkokohteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1314
+#: browseMode.py:1323
 msgid "no next menu item"
 msgstr "Ei seuraavaa valikkokohdetta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1316
+#: browseMode.py:1325
 msgid "moves to the previous menu item"
 msgstr "Siirtää edelliseen valikkokohteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1318
+#: browseMode.py:1327
 msgid "no previous menu item"
 msgstr "Ei edellistä valikkokohdetta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1320
+#: browseMode.py:1329
 msgid "menu items"
 msgstr "valikkokohteet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1326
+#: browseMode.py:1335
 msgid "moves to the next toggle button"
 msgstr "Siirtää seuraavaan vaihtopainikkeeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1328
+#: browseMode.py:1337
 msgid "no next toggle button"
 msgstr "Ei seuraavaa vaihtopainiketta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1330
+#: browseMode.py:1339
 msgid "moves to the previous toggle button"
 msgstr "Siirtää edelliseen vaihtopainikkeeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1332
+#: browseMode.py:1341
 msgid "no previous toggle button"
 msgstr "Ei edellistä vaihtopainiketta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1334
+#: browseMode.py:1343
 msgid "toggle buttons"
 msgstr "vaihtopainikkeet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1340
+#: browseMode.py:1349
 msgid "moves to the next progress bar"
 msgstr "Siirtää seuraavaan edistymispalkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1342
+#: browseMode.py:1351
 msgid "no next progress bar"
 msgstr "Ei seuraavaa edistymispalkkia"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1344
+#: browseMode.py:1353
 msgid "moves to the previous progress bar"
 msgstr "Siirtää edelliseen edistymispalkkiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1346
+#: browseMode.py:1355
 msgid "no previous progress bar"
 msgstr "Ei edellistä edistymispalkkia"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1348
+#: browseMode.py:1357
 msgid "progress bars"
 msgstr "edistymispalkit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1354
+#: browseMode.py:1363
 msgid "moves to the next math formula"
 msgstr "Siirtää seuraavaan matemaattiseen kaavaan."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1356
+#: browseMode.py:1365
 msgid "no next math formula"
 msgstr "Ei seuraavaa matemaattista kaavaa"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1358
+#: browseMode.py:1367
 msgid "moves to the previous math formula"
 msgstr "Siirtää edelliseen matemaattiseen kaavaan."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1360
+#: browseMode.py:1369
 msgid "no previous math formula"
 msgstr "Ei edellistä matemaattista kaavaa"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1362
+#: browseMode.py:1371
 msgid "math formulas"
 msgstr "matemaattiset kaavat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1368
+#: browseMode.py:1377
 msgid "moves to the next text paragraph"
 msgstr "Siirtää seuraavaan tekstikappaleeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1370
+#: browseMode.py:1379
 msgid "no next text paragraph"
 msgstr "Ei seuraavaa tekstikappaletta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1372
+#: browseMode.py:1381
 msgid "moves to the previous text paragraph"
 msgstr "Siirtää edelliseen tekstikappaleeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1374
+#: browseMode.py:1383
 msgid "no previous text paragraph"
 msgstr "Ei edellistä tekstikappaletta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1377
+#: browseMode.py:1386
 msgid "text paragraphs"
 msgstr "tekstikappaleet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1383
+#: browseMode.py:1392
 msgid "moves to the next vertically aligned paragraph"
 msgstr "Siirtää seuraavaan pystysuunnassa tasattuun kappaleeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1385
+#: browseMode.py:1394
 msgid "no next vertically aligned paragraph"
 msgstr "Ei seuraavaa pystysuunnassa tasattua kappaletta"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1387
+#: browseMode.py:1396
 msgid "moves to the previous vertically aligned paragraph"
 msgstr "Siirtää edelliseen pystysuunnassa tasattuun kappaleeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1389
+#: browseMode.py:1398
 msgid "no previous vertically aligned paragraph"
 msgstr "Ei edellistä pystysuunnassa tasattua kappaletta"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1392
+#: browseMode.py:1401
 msgid "vertical paragraphs"
 msgstr "pystysuuntaiset kappaleet"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1398
+#: browseMode.py:1407
 msgid "moves to the next same style text"
 msgstr "Siirtää seuraavaan samantyyliseen tekstiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1400
+#: browseMode.py:1409
 msgid "No next same style text"
 msgstr "Ei seuraavaa samantyylistä tekstiä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1402
+#: browseMode.py:1411
 msgid "moves to the previous same style text"
 msgstr "Siirtää edelliseen samantyyliseen tekstiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1404
+#: browseMode.py:1413
 msgid "No previous same style text"
 msgstr "Ei edellistä samantyylistä tekstiä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1406
+#: browseMode.py:1415
 msgid "same style"
 msgstr "sama tyyli"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1412
+#: browseMode.py:1421
 msgid "moves to the next different style text"
 msgstr "Siirtää seuraavaan eri tyyliseen tekstiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1414
+#: browseMode.py:1423
 msgid "No next different style text"
 msgstr "Ei seuraavaa eri tyylistä tekstiä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1416
+#: browseMode.py:1425
 msgid "moves to the previous different style text"
 msgstr "Siirtää edelliseen eri tyyliseen tekstiin."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1418
+#: browseMode.py:1427
 msgid "No previous different style text"
 msgstr "Ei edellistä eri tyylistä tekstiä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1420
+#: browseMode.py:1429
 msgid "different style"
 msgstr "eri tyyli"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1426
+#: browseMode.py:1435
 msgid "moves to the next reference"
 msgstr "Siirtää seuraavaan viitteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1428
+#: browseMode.py:1437
 msgid "no next reference"
 msgstr "Ei seuraavaa viitettä"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1430
+#: browseMode.py:1439
 msgid "moves to the previous reference"
 msgstr "Siirtää edelliseen viitteeseen."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1432
+#: browseMode.py:1441
 msgid "no previous reference"
 msgstr "Ei edellistä viitettä"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1435
+#: browseMode.py:1444
 msgid "references"
 msgstr "viitteet"
 
@@ -1131,7 +1131,7 @@ msgstr "viitteet"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1454 gui\settingsDialogs.py:3466
+#: browseMode.py:1463 gui\settingsDialogs.py:3466
 msgid "Lin&ks"
 msgstr "Lin&kit"
 
@@ -1139,42 +1139,42 @@ msgstr "Lin&kit"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1457 gui\settingsDialogs.py:3461
+#: browseMode.py:1466 gui\settingsDialogs.py:3461
 msgid "&Headings"
 msgstr "&Otsikot"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1460 NVDAObjects\window\excel.py:768
+#: browseMode.py:1469 NVDAObjects\window\excel.py:768
 msgid "&Form fields"
 msgstr "Lom&akekentät"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1463
+#: browseMode.py:1472
 msgid "&Buttons"
 msgstr "&Painikkeet"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1466
+#: browseMode.py:1475
 msgid "Lan&dmarks"
 msgstr "Kii&ntopisteet"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: browseMode.py:1479
+#: browseMode.py:1488
 msgid "Elements List"
 msgstr "Elementtilista"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1490
+#: browseMode.py:1499
 msgid "Type:"
 msgstr "Tyyppi:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1519
+#: browseMode.py:1528
 msgid "Filter b&y:"
 msgstr "Suo&data:"
 
@@ -1182,34 +1182,34 @@ msgstr "Suo&data:"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1530 globalCommands.py:1856
+#: browseMode.py:1539 globalCommands.py:1856
 msgid "Activate"
 msgstr "Aktivoi"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1535
+#: browseMode.py:1544
 msgid "&Move to"
 msgstr "&Siirry"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: browseMode.py:2003
+#: browseMode.py:2012
 msgid "No long description"
 msgstr "Ei pitkää kuvausta"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
-#: browseMode.py:2006
+#: browseMode.py:2015
 msgid "Shows the long description at this position if one is found."
 msgstr "Näyttää nykyisestä kohdasta pitkän kuvauksen, mikäli sellainen on saatavilla."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
-#: browseMode.py:2521 browseMode.py:2542
+#: browseMode.py:2537 browseMode.py:2558
 msgid "Not in a container"
 msgstr "Ei säilöelementissä"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: browseMode.py:2532
+#: browseMode.py:2548
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, alkuun."
 
@@ -1219,53 +1219,53 @@ msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, alkuun."
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2551 globalCommands.py:2006 globalCommands.py:2084
+#: browseMode.py:2567 globalCommands.py:2006 globalCommands.py:2084
 #: globalCommands.py:2204 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "Alareuna"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: browseMode.py:2560
+#: browseMode.py:2576
 msgid "Moves past the end of the container element, such as a list or table"
 msgstr "Siirtää säilöelementin, kuten luettelon tai taulukon, lopun jälkeiseen kohtaan."
 
 #. Translators: the description for the toggleScreenLayout script.
-#: browseMode.py:2895
+#: browseMode.py:2911
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "Ottaa käyttöön tai poistaa käytöstä asetuksen, joka määrittää, säilytetäänkö näytön ulkoasu asiakirjan sisältöä näytettäessä."
 
 #. Translators: The message reported for not supported toggling of screen layout
-#: browseMode.py:2904
+#: browseMode.py:2920
 msgid "Not supported in this document."
 msgstr "Ei tueta tässä asiakirjassa"
 
 #. Translators: input help message for toggle native selection command
-#: browseMode.py:2930
+#: browseMode.py:2946
 msgid "Toggles native selection mode on and off"
 msgstr "Ottaa alkuperäisen valintatilan käyttöön tai poistaa sen käytöstä."
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2936
+#: browseMode.py:2952
 msgid "Native selection mode unsupported in this browse mode document"
 msgstr "Alkuperäistä valintatilaa ei tueta tässä selaustila-asiakirjassa"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
-#: browseMode.py:2939
+#: browseMode.py:2955
 msgid "Native selection mode cannot be turned off in this browse mode document"
 msgstr "Alkuperäistä valintatilaa ei voi poistaa käytöstä tässä selaustila-asiakirjassa"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2951
+#: browseMode.py:2967
 msgid "Native selection mode unsupported in this document"
 msgstr "Alkuperäistä valintatilaa ei tueta tässä asiakirjassa"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2955
+#: browseMode.py:2971
 msgid "Native app selection mode enabled"
 msgstr "Alkuperäinen valintatila käytössä"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2963
+#: browseMode.py:2979
 msgid "Native app selection mode disabled"
 msgstr "Alkuperäinen valintatila poistettu käytöstä"
 
@@ -1931,7 +1931,7 @@ msgstr "Näkö"
 #: globalCommands.py:112 gui\settingsDialogs.py:6167
 #: gui\settingsDialogs.py:6400
 msgid "Magnifier"
-msgstr "Suurennus"
+msgstr "Näytönsuurennus"
 
 #. Translators: The name of a category of NVDA commands.
 #: globalCommands.py:115
@@ -3633,7 +3633,7 @@ msgstr "Avaa Näppäinkomennot-valintaikkunan."
 #. Translators: Input help mode message for go to magnifier settings command.
 #: globalCommands.py:3688
 msgid "Shows NVDA's magnifier settings"
-msgstr "Näyttää NVDA:n suurennusasetukset."
+msgstr "Näyttää NVDA:n näytönsuurennuksen asetukset."
 
 #. Translators: Input help mode message for the report current configuration profile command.
 #: globalCommands.py:3698
@@ -4300,7 +4300,7 @@ msgstr "Ilmoittaa näyttöverhon tilan."
 #. Translators: Describes a command.
 #: globalCommands.py:5118
 msgid "Toggle the magnifier on and off"
-msgstr "Ottaa suurennuksen käyttöön tai poistaa sen käytöstä."
+msgstr "Ottaa näytönsuurennuksen käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5132
@@ -4315,47 +4315,47 @@ msgstr "Pienentää suurennuksen tasoa."
 #. Translators: Describes a command.
 #: globalCommands.py:5160
 msgid "Pan the magnified view left"
-msgstr "Panoroi suurennusnäkymää vasemmalle."
+msgstr "Vierittää suurennusnäkymää vasemmalle."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5174
 msgid "Pan the magnified view right"
-msgstr "Panoroi suurennusnäkymää oikealle."
+msgstr "Vierittää suurennusnäkymää oikealle."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5188
 msgid "Pan the magnified view up"
-msgstr "Panoroi suurennusnäkymää ylöspäin."
+msgstr "Vierittää suurennusnäkymää ylöspäin."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5202
 msgid "Pan the magnified view down"
-msgstr "Panoroi suurennusnäkymää alaspäin."
+msgstr "Vierittää suurennusnäkymää alaspäin."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5216
 msgid "Pan the magnified view to left edge"
-msgstr "Panoroi suurennusnäkymän näytön vasempaan reunaan."
+msgstr "Vierittää suurennusnäkymän näytön vasempaan reunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5230
 msgid "Pan the magnified view to right edge"
-msgstr "Panoroi suurennusnäkymän näytön oikeaan reunaan."
+msgstr "Vierittää suurennusnäkymän näytön oikeaan reunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5244
 msgid "Pan the magnified view to top edge"
-msgstr "Panoroi suurennusnäkymän näytön yläreunaan."
+msgstr "Vierittää suurennusnäkymän näytön yläreunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5258
 msgid "Pan the magnified view to bottom edge"
-msgstr "Panoroi suurennusnäkymän näytön alareunaan."
+msgstr "Vierittää suurennusnäkymän näytön alareunaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5272
 msgid "Moves the mouse cursor to the center of the magnified view"
-msgstr "Siirtää hiiren osoittimen suurennetun näkymän keskikohtaan."
+msgstr "Siirtää hiiren osoittimen suurennusnäkymän keskikohtaan."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5285
@@ -4365,27 +4365,27 @@ msgstr "Vaihtaa värisuodatinta."
 #. Translators: Describes a command.
 #: globalCommands.py:5299
 msgid "Toggle magnifier mouse tracking"
-msgstr "Ottaa suurennuksen hiiren seurannan käyttöön tai poistaa sen käytöstä."
+msgstr "Ottaa näytönsuurennuksen hiiren seurannan käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5312
 msgid "Toggle magnifier system focus tracking"
-msgstr "Ottaa suurennuksen kohdistuksen seurannan käyttöön tai poistaa sen käytöstä."
+msgstr "Ottaa näytönsuurennuksen kohdistuksen seurannan käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5325
 msgid "Toggle magnifier review cursor tracking"
-msgstr "Ottaa suurennuksen tarkastelukohdistimen seurannan käyttöön tai poistaa sen käytöstä."
+msgstr "Ottaa näytönsuurennuksen tarkastelukohdistimen seurannan käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5338
 msgid "Toggle magnifier navigator object tracking"
-msgstr "Ottaa suurennuksen navigointiobjektin seurannan käyttöön tai poistaa sen käytöstä."
+msgstr "Ottaa näytönsuurennuksen navigointiobjektin seurannan käyttöön tai poistaa sen käytöstä."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5351
 msgid "Toggle all magnifier tracking settings"
-msgstr "Ottaa kaikki suurennuksen seuranta-asetukset käyttöön tai poistaa ne käytöstä."
+msgstr "Ottaa kaikki näytönsuurennuksen seuranta-asetukset käyttöön tai poistaa ne käytöstä."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5364
@@ -4395,7 +4395,7 @@ msgstr "Vaihtaa seurantatilaa."
 #. Translators: Describe a command.
 #: globalCommands.py:5377
 msgid "Temporarily show an overview of the entire screen"
-msgstr "Näyttää hetkellisesti koko näytön yleisnäkymän."
+msgstr "Näyttää tilapäisesti koko näytön yleisnäkymän."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5391
@@ -14819,7 +14819,7 @@ msgstr "Ka&ppaletyyli:"
 #. Translators: This is a label for the word segmentation standard in the document navigation dialog
 #: gui\settingsDialogs.py:3619
 msgid "&Word Segmentation Standard:"
-msgstr "&Sanajaon menetelmä:"
+msgstr "&Sanojen erottelumenetelmä:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -14924,7 +14924,7 @@ msgstr "Salli etäkäyttö"
 #: gui\settingsDialogs.py:3957
 msgctxt "remote"
 msgid "Confirm before disconnecting when controlled"
-msgstr "Pyydä vahvistus yhteyden katkaisulle, kun tätä konetta hallitaan"
+msgstr "Pyydä vahvistus yhteyden katkaisulle tätä konetta hallittaessa"
 
 #. Translators: A checkbox in Remote Access settings to mute speech and sounds from the remote computer
 #. when controlling the local computer.
@@ -15262,7 +15262,7 @@ msgstr "Käytä vanhassa Windows-konsolissa laajennettua k&irjoitettujen merkkie
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:4544
 msgid "Beep for &skipped lines"
-msgstr "Ilmoita o&hitetuista riveistä äänimerkillä"
+msgstr "Ilmoita o&hitetuista riveistä merkkiäänellä"
 
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
@@ -15572,7 +15572,7 @@ msgstr "Tekstin r&ivitys"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:5631
 msgid "I&nterrupt speech while scrolling"
-msgstr "Keskeyt&ä puhe vieritettäessä"
+msgstr "Keskeyt&ä puhe pistenäyttöä vieritettäessä"
 
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
 #: gui\settingsDialogs.py:5640
@@ -15582,7 +15582,7 @@ msgstr "Auto&maattisen vierityksen nopeus"
 #. Translators: The label for a checkbox in the Braille settings panel.
 #: gui\settingsDialogs.py:5661
 msgid "Use &Chinese word segmentation"
-msgstr "Käytä &kiinalaista sanajaon menetelmää"
+msgstr "Erottele &kiinankieliset sanat toisistaan"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -15646,7 +15646,7 @@ msgstr "Näönparannuksen tarjoajaa ei voida ottaa käyttöön, koska sen kkäyt
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
 #: gui\settingsDialogs.py:6220
 msgid "&Enable magnifier (immediate effect)"
-msgstr "&Ota suurennus käyttöön (vaikuttaa heti)"
+msgstr "&Käytä näytönsuurennusta (vaikuttaa heti)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
 #: gui\settingsDialogs.py:6234
@@ -15661,7 +15661,7 @@ msgstr "Värisu&odatin:"
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
 #: gui\settingsDialogs.py:6273
 msgid "&Panning step size (%):"
-msgstr "&Panoroinnin askelkoko (%):"
+msgstr "V&ierityksen askelkoko (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
 #: gui\settingsDialogs.py:6295
@@ -15701,7 +15701,7 @@ msgstr "Tietosuoja ja suojaus"
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
 #: gui\settingsDialogs.py:6421
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
-msgstr "Jos lokitasoksi määritetään ”vianmääritys (sensuroimaton)”, lokiin tallennetaan sensuroimattomina luottamuksellisia tietoja, kuten salasanoja tai API-avaimia. Ota tämä käyttöön vain tilapäisesti, jos tarvitset nimenomaan sensuroimattomia vianmäärityslokeja. Haluatko jatkaa?"
+msgstr "Jos lokitasoksi määritetään ”vianmääritys (sensuroimaton)”, lokiin tallennetaan sensuroimattomina luottamuksellisia tietoja, kuten salasanoja tai rajapinta-avaimia. Ota tämä käyttöön vain tilapäisesti, jos tarvitset nimenomaan sensuroimattomia vianmäärityslokeja. Haluatko jatkaa?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
 #: gui\settingsDialogs.py:6428
@@ -15722,7 +15722,7 @@ msgstr "Näyttöverho"
 #. Translators: option to enable screen curtain in the privacy and security settings panel
 #: gui\settingsDialogs.py:6467
 msgid "Make screen black (immediate effect)"
-msgstr "Pimennä näyttö"
+msgstr "Pimennä näyttö (vaikuttaa heti)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 #: gui\settingsDialogs.py:6496
@@ -16231,7 +16231,7 @@ msgstr "Julkaisupäivä:"
 #: gui\addonStoreGui\controls\details.py:416
 msgctxt "addonStore"
 msgid "VirusTotal scan results:"
-msgstr "VirusTotal-tarkistuksen tulokset:"
+msgstr "Virustarkistuksen tulokset:"
 
 #. Translators: Summary of VirusTotal scan results for the selected add-on.
 #. {malicious} is the number of vendors that detected the add-on as malicious,
@@ -16242,14 +16242,14 @@ msgstr "VirusTotal-tarkistuksen tulokset:"
 msgctxt "addonStore"
 msgid "{malicious} malware scanner detected this add-on as potentially malicious (out of {total})."
 msgid_plural "{malicious} malware scanners detected this add-on as potentially malicious (out of {total})."
-msgstr[0] "{malicious} / {total} haittaohjelmaskanneri havaitsi tämän lisäosan mahdollisesti haitalliseksi."
-msgstr[1] "{malicious} / {total} haittaohjelmaskanneria havaitsi tämän lisäosan mahdollisesti haitalliseksi."
+msgstr[0] "{malicious} haittaohjelmatarkistin {total}:stä havaitsi tämän lisäosan mahdollisesti haitalliseksi."
+msgstr[1] "{malicious} haittaohjelmatarkistinta {total}:stä havaitsi tämän lisäosan mahdollisesti haitalliseksi."
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:433
 msgctxt "addonStore"
 msgid "VirusTotal scan URL:"
-msgstr "VirusTotal-tarkistuksen osoite:"
+msgstr "Virustarkistuksen osoite:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -16888,7 +16888,7 @@ msgstr "Yhteisön &arvostelut"
 #: gui\addonStoreGui\viewModels\store.py:289
 msgctxt "addonStore"
 msgid "VirusTotal scan results"
-msgstr "VirusTotal-tarkistuksen tulokset"
+msgstr "Virustarkistuksen tulokset"
 
 #. Translators: Label for an action that shows changelog for the selected addon
 #: gui\addonStoreGui\viewModels\store.py:298
@@ -20334,7 +20334,7 @@ msgstr "ei mitään"
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\oneCore.py:176
 msgid "Windows OneCore voices"
-msgstr "Windows OneCore"
+msgstr "OneCore"
 
 #. Translators: Description for a speech synthesizer.
 #: synthDrivers\sapi4_32.py:18
@@ -20649,13 +20649,13 @@ msgstr "alareuna"
 #: _magnifier\commands.py:110
 msgctxt "magnifier"
 msgid "Magnifier disabled"
-msgstr "Suurennus poistettu käytöstä"
+msgstr "Näytönsuurennus poistettu käytöstä"
 
 #. Translators: Message announced when starting the NVDA magnifier.
 #: _magnifier\commands.py:125
 msgctxt "magnifier"
 msgid "Magnifier enabled"
-msgstr "Suurennus otettu käyttöön"
+msgstr "Näytönsuurennus otettu käyttöön"
 
 #. Translators: Message announced when changing the color filter with {filter} being the new color filter.
 #: _magnifier\commands.py:194
@@ -20726,14 +20726,14 @@ msgstr "Koko näytön yleisnäkymä"
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not active."
-msgstr "Toimintoa {action} ei voi suorittaa, kun suurennus ei ole aktiivisena."
+msgstr "Toimintoa {action} ei voi suorittaa, kun näytönsuurennus ei ole aktiivisena."
 
 #. Translators: Message announced when the magnifier is not full-screen.
 #: _magnifier\commands.py:391
 #, python-brace-format
 msgctxt "magnifier"
 msgid "Cannot {action} when Magnifier is not full-screen."
-msgstr "Toimintoa {action} ei voi suorittaa, kun suurennus ei ole koko näytön tilassa."
+msgstr "Toimintoa {action} ei voi suorittaa, kun näytönsuurennus ei ole koko näytön tilassa."
 
 #. Translators: Message announced when zooming in with {zoomLevel} being the target zoom level.
 #: _magnifier\config.py:49
@@ -20743,34 +20743,34 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:89
+#: _magnifier\fullscreenMagnifier.py:91
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
-msgstr "Suurennusta ei voi ottaa käyttöön. Toinen suurennussovellus saattaa olla jo käynnissä."
+msgstr "Näytönsuurennusta ei voi ottaa käyttöön. Toinen näytönsuurennussovellus saattaa olla jo käynnissä."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:240
+#: _magnifier\fullscreenMagnifier.py:242
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
-msgstr "Suurennus lopetettu virheen vuoksi. Ota se uudelleen käyttöön."
+msgstr "Näytönsuurennus lopetettu virheen vuoksi. Ota se uudelleen käyttöön."
 
 #. Translators: Message when trying to enable magnifier while screen curtain is active
 #: _magnifier\magnifier.py:197
 msgctxt "magnifier"
 msgid "Cannot enable magnifier. Please disable screen curtain first."
-msgstr "Suurennusta ei voi ottaa käyttöön. Poista ensin näyttöverho käytöstä."
+msgstr "Näytönsuurennusta ei voi ottaa käyttöön. Poista ensin näyttöverho käytöstä."
 
 #. Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
 #: _magnifier\magnifier.py:339
 msgctxt "magnifier"
 msgid "Disabling magnifier"
-msgstr "Suurennus poistetaan käytöstä"
+msgstr "Näytönsuurennus poistetaan käytöstä"
 
 #. Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
 #: _magnifier\magnifier.py:358
 msgctxt "magnifier"
 msgid "Re-enabling magnifier"
-msgstr "Suurennus otetaan uudelleen käyttöön"
+msgstr "Näytönsuurennus otetaan uudelleen käyttöön"
 
 #. Translators: Message announced when turning back to normal view after entire screen overview.
 #: _magnifier\utils\spotlightManager.py:71
@@ -20794,49 +20794,49 @@ msgstr "loitonna"
 #: _magnifier\utils\types.py:65
 msgctxt "magnifier action"
 msgid "pan left"
-msgstr "panoroi vasemmalle"
+msgstr "vieritä vasemmalle"
 
 #. Translators: Action description for panning right.
 #: _magnifier\utils\types.py:67
 msgctxt "magnifier action"
 msgid "pan right"
-msgstr "panoroi oikealle"
+msgstr "vieritä oikealle"
 
 #. Translators: Action description for panning up.
 #: _magnifier\utils\types.py:69
 msgctxt "magnifier action"
 msgid "pan up"
-msgstr "panoroi ylös"
+msgstr "vieritä ylös"
 
 #. Translators: Action description for panning down.
 #: _magnifier\utils\types.py:71
 msgctxt "magnifier action"
 msgid "pan down"
-msgstr "panoroi alas"
+msgstr "vieritä alas"
 
 #. Translators: Action description for panning to left edge.
 #: _magnifier\utils\types.py:73
 msgctxt "magnifier action"
 msgid "pan to left edge"
-msgstr "panoroi vasempaan reunaan"
+msgstr "vieritä vasempaan reunaan"
 
 #. Translators: Action description for panning to right edge.
 #: _magnifier\utils\types.py:75
 msgctxt "magnifier action"
 msgid "pan to right edge"
-msgstr "panoroi oikeaan reunaan"
+msgstr "vieritä oikeaan reunaan"
 
 #. Translators: Action description for panning to top edge.
 #: _magnifier\utils\types.py:77
 msgctxt "magnifier action"
 msgid "pan to top edge"
-msgstr "panoroi yläreunaan"
+msgstr "vieritä yläreunaan"
 
 #. Translators: Action description for panning to bottom edge.
 #: _magnifier\utils\types.py:79
 msgctxt "magnifier action"
 msgid "pan to bottom edge"
-msgstr "panoroi alareunaan"
+msgstr "vieritä alareunaan"
 
 #. Translators: Action description for toggling settings.
 #: _magnifier\utils\types.py:81
