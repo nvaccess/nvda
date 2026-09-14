@@ -346,6 +346,7 @@ class Gecko_ia2(VirtualBuffer):
 		try:
 			pacc = self.rootNVDAObject.IAccessibleObject.accChild(ID)
 		except COMError:
+			log.debug(f"accChild({ID}) failed", exc_info=True)
 			return None
 		return NVDAObjects.IAccessible.IAccessible(
 			windowHandle=docHandle,
