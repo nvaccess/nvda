@@ -3075,7 +3075,9 @@ When enabled, the magnified area will automatically move to follow the mouse poi
 ##### Follow system focus {#MagnifierFollowSystemFocus}
 
 This checkbox controls whether the magnifier should follow the system focus.
-When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+When enabled, the magnified area will automatically move to follow the system focus and the system text cursor, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+It also moves to follow alternative cursors replacing the system cursor in specific situations such as browse mode cursor in browse mode or current subpart  when navigating math content.
+Math navigation trackinng is only supported on the web.
 
 | . {.hideHeaderRow} |.|
 |---|---|

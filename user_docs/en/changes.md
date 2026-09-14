@@ -9,6 +9,8 @@
 
 ### Changes
 
+* The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+
 ### Bug Fixes
 
 #### Performance
