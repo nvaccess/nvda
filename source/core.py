@@ -882,15 +882,6 @@ def main():
 	_initializeObjectCaches()
 
 	import JABHandler
-
-	log.debug("initializing Java Access Bridge support")
-	try:
-		JABHandler.initialize()
-		log.info("Java Access Bridge support initialized")
-	except NotImplementedError:
-		log.warning("Java Access Bridge not available")
-	except:  # noqa: E722
-		log.error("Error initializing Java Access Bridge support", exc_info=True)  # noqa: G201
 	import winConsoleHandler
 
 	log.debug("Initializing legacy winConsole support")
@@ -987,6 +978,18 @@ def main():
 	# Queue the handling of initial focus,
 	# as API handlers might need to be pumped to get the first focus event.
 	queueHandler.queueFunction(queueHandler.eventQueue, _setInitialFocus)
+
+	def _initJAB():
+		log.debug("initializing Java Access Bridge support")
+		try:
+			JABHandler.initialize()
+			log.info("Java Access Bridge support initialized")
+		except NotImplementedError:
+			log.warning("Java Access Bridge not available")
+		except Exception:
+			log.exception("Error initializing Java Access Bridge support")
+
+	queueHandler.queueFunction(queueHandler.eventQueue, _initJAB)
 	import baseObject
 
 	# Doing this here is a bit ugly, but we don't want these modules imported
