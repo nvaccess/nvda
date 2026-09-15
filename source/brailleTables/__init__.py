@@ -226,7 +226,7 @@ def _loadTablesFromManifestSection(source: str, directory: str, tablesDict: dict
 
 
 def initialize():
-	if config.isAppX or globalVars.appArgs.disableAddons:
+	if globalVars.appArgs.disableAddons:
 		return
 	# The builtin tables were added at import time to the parent map.
 	# Now, add the custom tables to the first map.
