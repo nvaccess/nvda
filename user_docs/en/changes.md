@@ -16,12 +16,12 @@ The dialog used to present browseable messages has been modernized and now bette
 
 Touch screen input has been significantly expanded.
 Sequential two-flick gestures now combine two flicks in quick succession into a single gesture, greatly increasing the number of bindable touch gestures.
-Edge gestures are also now supported, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the center of the screen.
+Edge gestures are also now supported, allowing gestures that start from any screen edge to be bound independently from the same gesture performed in the center of the screen.
 
 A new unassigned command has been added to move the mouse cursor to the center of the magnified view.
 Windows OCR can now be used while the Screen Curtain or NVDA's built-in Magnifier is active.
 
-Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 
 ### New Features
@@ -47,15 +47,14 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
 * Support for the myBraille family of Help Tech Braille displays has been added. (#20426)
 * The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
-  * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
-  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
+  * In all modes other than Off, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
 
 #### Touch screen input
 
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
   * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
-* Added edge gesture support for touch screens, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
+* Added edge gesture support for touch screens, allowing gestures that start from any screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
   * Edge gestures are disabled by default and can be enabled in the Touch Interaction settings panel.
   * All four edges are supported.
   Note that the Windows taskbar may override gestures on an edge.
@@ -73,7 +72,7 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 ### Changes
 
 * Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
-  * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+  * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 * Updated eSpeak NG to [commit `f13549940`](https://github.com/espeak-ng/espeak-ng/commit/f1354994057fa9b85001675732e7fed2d437292b). (#20691, #20816)
   * Added Ligurian and Abkhaz support.
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
@@ -87,14 +86,14 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 
 ### Bug Fixes
 
-* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
-* Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
+* Fixed UAC slider not being read when changing values with arrow keys. (#9356, @tareh7z)
 * After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
 * Only one browse mode Find dialog can be open at a time.
 Executing the find command while the dialog is open brings it to the foreground and points it at the document you executed the command from. (#20484, @LeonarddeR)
-* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop). (#20255, @rezabakhshilaktasaraei)
 * NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
 * Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
 * NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
@@ -153,7 +152,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated dependencies:
   * Python to 3.13.15. (#20634, @dpy013)
   * ruff to 0.16.3. (#20732)
-  * prek to 0.4.14. (#20732)
   * pyright to 1.1.411. (#20732)
   * ty to 0.0.73. (#20732)
   * comtypes to 1.4.16. (#20707)
