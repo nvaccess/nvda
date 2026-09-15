@@ -2180,7 +2180,16 @@ class BrowseModeDocumentTreeInterceptor(
 	def event_focusEntered(self, obj, nextHandler):
 		if obj == self.rootNVDAObject:
 			self._enteringFromOutside = True
-		# Even if passThrough is enabled, we still completely drop focusEntered events here.
+		focusTreeInterceptor = api.getFocusObject().treeInterceptor
+		if focusTreeInterceptor is not self:
+			# #20753: Focus is outside this document (e.g. in an application), so our gainFocus
+			# handler won't run to replay these ancestor events,
+			# and therefore  we need to call the nextHandler immediately.
+			# Howevr, if the focused treeInterceptor is in focus mode, we should not call nextHandler immediately,
+			# because its own replay will walk all focus ancestors.
+			if not focusTreeInterceptor or not focusTreeInterceptor.passThrough:
+				return nextHandler()
+		# For focus within this document, drop focusEntered events even if passThrough is enabled.
 		# In order to get them back when passThrough is enabled, we replay them with the _replayFocusEnteredEvents method in event_gainFocus.
 		# The reason for this is to ensure that focusEntered events are delayed until a focus event has had a chance to disable passthrough mode.
 		# As in this case we would  not want them.
