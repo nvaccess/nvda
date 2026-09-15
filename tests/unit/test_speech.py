@@ -9,6 +9,7 @@ import gettext  # noqa: I001
 import unittest
 
 import config
+from speech import speech as speechModule
 from characterProcessing import processSpeechSymbol
 from speech import (
 	_getSpellingCharAddCapNotification,
@@ -26,6 +27,7 @@ from speech.commands import (
 	LangChangeCommand,
 	PitchCommand,
 )
+from speech.extensions import filter_speechSequence, pre_speech
 
 from .extensionPointTestHelpers import actionTester
 
@@ -634,6 +636,39 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 
 
 class SpeechExtensionPoints(unittest.TestCase):
+	def test_preSpeechReceivesOriginalSequence(self):
+		originalItem = EndUtteranceCommand()
+		originalSequence = [originalItem]
+		received = {}
+
+		def mutateSpeechSequence(speechSequence):
+			speechSequence.append("filtered")
+			return speechSequence
+
+		def oldHandler(speechSequence):
+			received["filtered"] = speechSequence
+
+		def newHandler(speechSequence, originalSpeechSequence):
+			received["original"] = originalSpeechSequence
+
+		filter_speechSequence.register(mutateSpeechSequence)
+		pre_speech.register(oldHandler)
+		pre_speech.register(newHandler)
+		originalMode = speechModule.getState().speechMode
+		speechModule.setSpeechMode(speechModule.SpeechMode.off)
+		try:
+			speechModule.speak(originalSequence)
+		finally:
+			speechModule.setSpeechMode(originalMode)
+			filter_speechSequence.unregister(mutateSpeechSequence)
+			pre_speech.unregister(oldHandler)
+			pre_speech.unregister(newHandler)
+
+		self.assertEqual(originalSequence, [originalItem])
+		self.assertEqual(received["filtered"], [originalItem, "filtered"])
+		self.assertEqual(received["original"], originalSequence)
+		self.assertIs(received["original"][0], originalItem)
+
 	def test_speechCanceledExtensionPoint(self):
 		with actionTester(
 			self,
