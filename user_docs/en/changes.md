@@ -11,7 +11,7 @@
 
 ### Bug Fixes
 
-* Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸. (#20632)
+* Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 
 #### Performance
 
