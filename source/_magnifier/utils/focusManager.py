@@ -105,6 +105,7 @@ class FocusManager:
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
 			navObj = api.getNavigatorObject()
 			import mathPres
+
 			if isinstance(navObj, mathPres.MathInteractionNVDAObject):
 				pass
 			else:
@@ -173,10 +174,12 @@ class FocusManager:
 		:return: The (x, y) coordinates of the system focus position
 		"""
 		import mathPres
+
 		focusObj = api.getFocusObject()
 		try:
 			# Math is followed as a browse mode cursor so try it first
 			import mathPres
+
 			if isinstance(focusObj, mathPres.MathInteractionNVDAObject):
 				try:
 					mathRect = focusObj.getMathSourceObjectRect()
@@ -186,7 +189,7 @@ class FocusManager:
 					coords = mathRect.left, mathRect.top
 					if coords != Coordinates(0, 0):
 						self._lastValidSystemFocusPosition = coords
-					return coords	
+					return coords
 			# Get caret position (works for both browse mode and regular caret)
 			caretPosition = api.getCaretPosition()
 			point = self._getPointAtStart(caretPosition)

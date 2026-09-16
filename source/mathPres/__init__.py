@@ -177,7 +177,7 @@ class MathInteractionNVDAObject(Window):
 
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Exit math interaction")
-	
+
 	def getMathSourceObjectRect(self) -> "RectLTRB | None":
 		"""Get the navigation rectangle for a supported web math source object."""
 		raise NotImplementedError
