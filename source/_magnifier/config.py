@@ -128,7 +128,7 @@ def getFilter() -> Filter:
 
 def setFilter(filter: Filter) -> None:
 	"""
-	Set  filter from settings.
+	Set filter from settings.
 
 	:param filter: The filter to set.
 	"""
