@@ -86,7 +86,6 @@ __getattr__ = _deprecate.handleDeprecations(
 INFINITE = 0xFFFFFFFF
 # Process control
 SYNCHRONIZE = 0x100000
-PROCESS_DUP_HANDLE = 0x0040
 READ_CONTROL = 0x20000
 MEM_COMMIT = 0x1000
 MEM_RELEASE = 0x8000
@@ -472,9 +471,6 @@ def OpenProcessToken(ProcessHandle, DesiredAccess):
 	if winBindings.advapi32.OpenProcessToken(ProcessHandle, DesiredAccess, byref(token)) == 0:
 		raise WinError()
 	return token.value
-
-
-DUPLICATE_CLOSE_SOURCE = 0x00000001
 
 
 def DuplicateHandle(

@@ -30,10 +30,17 @@ from typing import Final, Protocol
 
 import globalVars
 import NVDAState
-import winKernel
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
-from winBindings.kernel32 import DUPLICATE, GENERIC, CloseHandle, CreatePipe, DuplicateHandle, OpenProcess
+from winBindings.kernel32 import (
+	DUPLICATE,
+	GENERIC,
+	PROCESS,
+	CloseHandle,
+	CreatePipe,
+	DuplicateHandle,
+	OpenProcess,
+)
 
 from .._winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
@@ -209,7 +216,7 @@ class SubprocessHostController:
 		"""
 		if self._process is None:
 			raise RuntimeError("Cannot create a pipe pair before the host has started")
-		targetProcess = OpenProcess(winKernel.PROCESS_DUP_HANDLE, False, self._process.pid)
+		targetProcess = OpenProcess(PROCESS.DUP_HANDLE, False, self._process.pid)
 		if not targetProcess:
 			raise WinError()
 		hostRead: HANDLE | None = None
