@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2025 NV Access Limited
+# Copyright (C) 2014-2026 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -102,7 +102,11 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 
 	Returns False on failure
 	"""
-	return EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
+	try:
+		return EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
+	except (OSError, TypeError):
+		log.error(f"Unable to read {autoStartContext} auto-start configuration", exc_info=True)  # noqa: G201
+		return False
 
 
 def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
@@ -110,40 +114,28 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> list[str]:
 	 - AutoStartContext.ON_LOGON_SCREEN : on the logon screen
 	 - AutoStartContext.AFTER_LOGON : after logging on
 
-	Returns an empty list on failure.
+	Returns an empty list if the registry key or value does not exist.
+
+	:raises OSError: For other registry errors.
+	:raises TypeError: If the configuration data is not a string.
 	"""
 	try:
-		k = winreg.OpenKey(
+		with winreg.OpenKey(
 			autoStartContext.value,
 			_RegistryKey.EASE_OF_ACCESS.value,
 			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
-		)
-	except FileNotFoundError:
-		log.debug(f"Unable to find existing {autoStartContext} {_RegistryKey.EASE_OF_ACCESS}")
-		return []
-	except OSError:
-		log.error(  # noqa: G201
-			f"Unable to open {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} for reading",
-			exc_info=True,
-		)
-		return []
-
-	try:
-		conf: list[str] = winreg.QueryValueEx(k, "Configuration")[0].split(",")
+		) as k:
+			value = winreg.QueryValueEx(k, "Configuration")[0]
 	except FileNotFoundError:
 		log.debug(f"Unable to find {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration")
-	except OSError:
-		log.error(  # noqa: G201
-			f"Unable to query {autoStartContext} {_RegistryKey.EASE_OF_ACCESS} configuration",
-			exc_info=True,
-		)
-	else:
-		k.Close()
-		if not conf[0]:
-			# "".split(",") returns [""], so remove the empty string.
-			del conf[0]
-		return conf
-	return []
+		return []
+	if not isinstance(value, str):
+		raise TypeError(f"Expected a string for {autoStartContext} auto-start configuration")
+	conf: list[str] = value.split(",")
+	if not conf[0]:
+		# "".split(",") returns [""], so remove the empty string.
+		del conf[0]
+	return conf
 
 
 def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
@@ -152,9 +144,10 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 	 - AutoStartContext.ON_LOGON_SCREEN : on the logon screen
 	 - AutoStartContext.AFTER_LOGON : after logging on
 
-	May incorrectly set autoStart to False upon failing to fetch the previously set value from the registry.
+	Does not write if the existing configuration cannot be read.
 
-	Raises `Union[WindowsError, FileNotFoundError]`
+	:raises OSError: For registry errors.
+	:raises TypeError: If the configuration data is not a string.
 	"""
 	conf = _getAutoStartConfiguration(autoStartContext)
 	currentlyEnabled = EASE_OF_ACCESS_APP_KEY_NAME in conf
@@ -168,7 +161,7 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 		changed = True
 
 	if changed:
-		with winreg.OpenKey(
+		with winreg.CreateKeyEx(
 			autoStartContext.value,
 			_RegistryKey.EASE_OF_ACCESS.value,
 			access=winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,

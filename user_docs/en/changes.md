@@ -11,6 +11,9 @@
 
 ### Bug Fixes
 
+* NVDA can now enable automatic startup when Windows has no existing accessibility startup settings.
+* NVDA now reports errors when saving automatic startup settings, preserves settings it cannot read, and continues saving other general settings.
+
 #### Performance
 
 #### Braille

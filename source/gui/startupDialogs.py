@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,7 +106,7 @@ class WelcomeDialog(
 		self.kbdList.SetFocus()
 		self.CentreOnScreen()
 
-	def onOk(self, evt):
+	def onOk(self, evt: wx.CommandEvent) -> None:
 		layout = self.kbdNames[self.kbdList.GetSelection()]
 		config.conf["keyboard"]["keyboardLayout"] = layout
 		NVDAKeysVal = (
@@ -130,7 +130,22 @@ class WelcomeDialog(
 		else:
 			config.conf["keyboard"]["NVDAModifierKeys"] = NVDAKeysVal
 		if self.startAfterLogonCheckBox.Enabled:
-			config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
+			try:
+				config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
+			except (OSError, TypeError):
+				log.error("Unable to set start after sign-in", exc_info=True)  # noqa: G201
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically after signing in.
+							"Unable to change the setting to start NVDA after you sign in. "
+							"Please check the NVDA log for more information.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
 		config.conf["general"]["showWelcomeDialogAtStartup"] = (
 			self.showWelcomeDialogAtStartupCheckBox.IsChecked()
 		)

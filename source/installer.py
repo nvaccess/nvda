@@ -598,7 +598,7 @@ def _unregisterEaseOfAccessApp():
 		log.debug("Ease of Access app key not found. Nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
-	except OSError:
+	except (OSError, TypeError):
 		log.debug("Could not disable auto start on logon screen.")
 
 

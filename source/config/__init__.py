@@ -279,9 +279,10 @@ def setStartAfterLogon(enable: bool) -> None:
 
 	Toggle if NVDA automatically starts after a logon.
 	Sets easeOfAccess related registry keys.
+
+	:raises OSError: For registry errors.
+	:raises TypeError: If the configuration data is not a string.
 	"""
-	if getStartAfterLogon() == enable:
-		return
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
 
 
@@ -436,16 +437,16 @@ def setStartOnLogonScreen(enable: bool) -> None:
 	Not to be confused with setStartAfterLogon.
 
 	Toggle whether NVDA starts on the logon screen automatically.
-	On failure to set, retries with escalated permissions.
+	On permission errors, retries with escalated permissions.
 
-	Raises a RuntimeError on failure.
+	:raises RuntimeError: If the elevated process fails.
+	:raises OSError: For registry or elevation errors.
+	:raises TypeError: If the configuration data is not a string.
 	"""
-	if getStartOnLogonScreen() == enable:
-		return
 	try:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
-	except OSError:
+	except PermissionError:
 		log.debugWarning(
 			"Failed to set start on logon screen's config, retrying elevated.",
 			exc_info=True,

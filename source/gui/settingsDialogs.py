@@ -882,6 +882,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsStartOnLogOnScreen", self.startOnLogonScreenCheckBox)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartOnLogonScreenChanged: bool = False
+		self.startOnLogonScreenCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartOnLogonScreenChanged)
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
@@ -1049,7 +1052,11 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
-	def onSave(self):
+	def _onStartOnLogonScreenChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartOnLogonScreenChanged = True
+		evt.Skip()
+
+	def onSave(self) -> None:
 		if (
 			not languageHandler.isLanguageForced()
 			or self.languageList.GetSelection() != len(self.languageNames) - 1
@@ -1060,17 +1067,40 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["askToExit"] = self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"] = self.playStartAndExitSoundsCheckBox.IsChecked()
 		if self.startAfterLogonCheckBox.IsEnabled():
-			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
-		if self.startOnLogonScreenCheckBox.IsEnabled():
+			try:
+				config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
+			except (OSError, TypeError):
+				log.error("Unable to set start after sign-in", exc_info=True)  # noqa: G201
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically after signing in.
+							"Unable to change the setting to start NVDA after you sign in. "
+							"Please check the NVDA log for more information.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
+		if self.startOnLogonScreenCheckBox.IsEnabled() and self._hasStartOnLogonScreenChanged:
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-			except (OSError, RuntimeError):
-				gui.messageBox(
-					_("This change requires administrator privileges."),
-					_("Insufficient Privileges"),
-					style=wx.OK | wx.ICON_ERROR,
-					parent=self,
-				)
+				self._hasStartOnLogonScreenChanged = False
+			except (OSError, RuntimeError, TypeError):
+				log.error("Unable to set start during sign-in", exc_info=True)  # noqa: G201
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
+							"Unable to change the setting to use NVDA during sign-in. "
+							"Please check the NVDA log for more information.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
 		if updateCheck:
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
