@@ -27,7 +27,7 @@ from rpyc.core.stream import PipeStream, Stream
 from winBindings.kernel32 import CloseHandle
 
 from .. import _HOST_MARKER_ENV
-from ..winHandles import claimHandleFromDescriptor
+from .._winHandles import claimHandleFromDescriptor
 
 #: Name of the host's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART host control"
@@ -116,7 +116,7 @@ def _claimControlStream() -> Stream:
 
 	The duplicated descriptors are then converted into handles the returned stream solely owns,
 	so that nothing else closes them out from under it
-	(see :func:`_art.winHandles.claimHandleFromDescriptor`).
+	(see :func:`_art._winHandles.claimHandleFromDescriptor`).
 
 	:returns: The host's end of the control connection.
 	:raises OSError: If the descriptors cannot be duplicated, redirected, or claimed.
