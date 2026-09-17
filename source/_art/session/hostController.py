@@ -35,7 +35,7 @@ from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
 from winBindings.kernel32 import DUPLICATE, GENERIC, CloseHandle, CreatePipe, DuplicateHandle, OpenProcess
 
-from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
+from .._winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
 #: The module run to boot a host process.
 _HOST_ENTRYPOINT_MODULE: Final[str] = "_art.host.entrypoint"
