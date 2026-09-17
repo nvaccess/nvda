@@ -868,6 +868,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		# start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("St&art NVDA after I sign in"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartAfterLogonChanged: bool = False
+		self.startAfterLogonCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartAfterLogonChanged)
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startAfterLogonCheckBox)
@@ -1052,6 +1055,10 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
+	def _onStartAfterLogonChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartAfterLogonChanged = True
+		evt.Skip()
+
 	def _onStartOnLogonScreenChanged(self, evt: wx.CommandEvent) -> None:
 		self._hasStartOnLogonScreenChanged = True
 		evt.Skip()
@@ -1066,9 +1073,10 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["saveConfigurationOnExit"] = self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"] = self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"] = self.playStartAndExitSoundsCheckBox.IsChecked()
-		if self.startAfterLogonCheckBox.IsEnabled():
+		if self.startAfterLogonCheckBox.IsEnabled() and self._hasStartAfterLogonChanged:
 			try:
 				config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
+				self._hasStartAfterLogonChanged = False
 			except (OSError, TypeError):
 				log.error("Unable to set start after sign-in", exc_info=True)  # noqa: G201
 				if not core._hasShutdownBeenTriggered:

@@ -101,9 +101,27 @@ class TestAutoStartDialogs(unittest.TestCase):
 		self.afterLogon = self.enterContext(patch.object(config, "setStartAfterLogon"))
 		self.messageDialog = self.enterContext(patch("gui.message.MessageDialog"))
 		self.enterContext(patch.object(settingsDialogs, "updateCheck", None))
-		self.panel = Mock(languageNames=[("en", "English")], _hasStartOnLogonScreenChanged=False)
+		self.panel = Mock(
+			languageNames=[("en", "English")],
+			_hasStartAfterLogonChanged=False,
+			_hasStartOnLogonScreenChanged=False,
+		)
 		self.panel.languageList.GetSelection.return_value = 0
 		self.panel.startOnLogonScreenCheckBox.IsEnabled.return_value = True
+
+	def test_unreadableAfterLogonSettingIsNotSavedWithoutUserAction(self) -> None:
+		with patch("easeOfAccess.winreg.OpenKey", side_effect=PermissionError()):
+			initialValue = config.getStartAfterLogon()
+		self.assertFalse(initialValue)
+		self.panel.startAfterLogonCheckBox.GetValue.return_value = initialValue
+		settingsDialogs.GeneralSettingsPanel.onSave(self.panel)
+		self.afterLogon.assert_not_called()
+
+		dialog = Mock(kbdNames=["desktop"], _hasStartAfterLogonChanged=False)
+		dialog.kbdList.GetSelection.return_value = 0
+		dialog.startAfterLogonCheckBox.Value = initialValue
+		startupDialogs.WelcomeDialog.onOk(dialog, Mock())
+		self.afterLogon.assert_not_called()
 
 	def test_unreadableLogonSettingNeedsUserActionBeforeElevation(self) -> None:
 		self.enterContext(patch("easeOfAccess.winreg.OpenKey", side_effect=PermissionError()))
@@ -140,6 +158,7 @@ class TestAutoStartDialogs(unittest.TestCase):
 	def test_firstSettingFailureDoesNotPreventSavingSecond(self) -> None:
 		setter = self.enterContext(patch.object(config, "setStartOnLogonScreen"))
 		self.afterLogon.side_effect = PermissionError()
+		settingsDialogs.GeneralSettingsPanel._onStartAfterLogonChanged(self.panel, Mock())
 		self.panel.startOnLogonScreenCheckBox.GetValue.return_value = True
 		settingsDialogs.GeneralSettingsPanel._onStartOnLogonScreenChanged(self.panel, Mock())
 		settingsDialogs.GeneralSettingsPanel.onSave(self.panel)
@@ -151,6 +170,7 @@ class TestAutoStartDialogs(unittest.TestCase):
 		dialog = Mock(kbdNames=["desktop"])
 		dialog.kbdList.GetSelection.return_value = 0
 		self.afterLogon.side_effect = TypeError("Invalid auto-start configuration")
+		startupDialogs.WelcomeDialog._onStartAfterLogonChanged(dialog, Mock())
 		startupDialogs.WelcomeDialog.onOk(dialog, Mock())
 		self.messageDialog.assert_called_once()
 		self.messageDialog.return_value.ShowModal.assert_called_once()

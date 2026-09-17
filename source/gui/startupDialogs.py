@@ -86,6 +86,9 @@ class WelcomeDialog(
 		startAfterLogonText = _("St&art NVDA after I sign in")
 		self.startAfterLogonCheckBox = sHelper.addItem(wx.CheckBox(optionsBox, label=startAfterLogonText))
 		self.startAfterLogonCheckBox.Value = config.getStartAfterLogon()
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartAfterLogonChanged: bool = False
+		self.startAfterLogonCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartAfterLogonChanged)
 		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
@@ -105,6 +108,10 @@ class WelcomeDialog(
 		self.SetSizer(mainSizer)
 		self.kbdList.SetFocus()
 		self.CentreOnScreen()
+
+	def _onStartAfterLogonChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartAfterLogonChanged = True
+		evt.Skip()
 
 	def onOk(self, evt: wx.CommandEvent) -> None:
 		layout = self.kbdNames[self.kbdList.GetSelection()]
@@ -129,9 +136,10 @@ class WelcomeDialog(
 			)
 		else:
 			config.conf["keyboard"]["NVDAModifierKeys"] = NVDAKeysVal
-		if self.startAfterLogonCheckBox.Enabled:
+		if self.startAfterLogonCheckBox.Enabled and self._hasStartAfterLogonChanged:
 			try:
 				config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
+				self._hasStartAfterLogonChanged = False
 			except (OSError, TypeError):
 				log.error("Unable to set start after sign-in", exc_info=True)  # noqa: G201
 				if not core._hasShutdownBeenTriggered:
