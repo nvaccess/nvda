@@ -39,7 +39,8 @@ class TestAutoStartRegistry(unittest.TestCase):
 				winreg.SetValueEx(key, "Configuration", 0, winreg.REG_SZ, "Narrator")
 				config.setStartAfterLogon(True)
 				self.assertEqual(
-					winreg.QueryValueEx(key, "Configuration")[0], f"Narrator,{EASE_OF_ACCESS_APP_KEY_NAME}"
+					winreg.QueryValueEx(key, "Configuration")[0],
+					f"Narrator,{EASE_OF_ACCESS_APP_KEY_NAME}",
 				)
 				config.setStartAfterLogon(False)
 				self.assertEqual(winreg.QueryValueEx(key, "Configuration")[0], "Narrator")
