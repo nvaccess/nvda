@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">
-<file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/d37d08eadbf1f13406bbb121cb367a0bf933fb2a/user_docs/en/changes.md">
+<file id="changes.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a86a40aac1ce1401ac3941ad2a93f7758c9d9f4f/user_docs/en/changes.md">
 <skeleton>
 # $(ID:4bf3ec03-2d43-474a-aef0-92b334e594ed)
 
@@ -131,6 +131,7 @@ $(ID:71516045-0c52-4316-827e-b668d3ae88be)
 * $(ID:d8cd8a4e-2ba0-469d-a884-630a785643ab)
 * $(ID:d90350d2-8661-4a70-95bd-4b23e43675c3)
 * $(ID:1b3326d7-c061-4fc1-8c5d-bc6e8816d025)
+* $(ID:f49b2e03-6320-4833-8e88-63b4f48bf7c3)
 
 #### $(ID:cc944143-5881-4f0c-9e6c-e9ca5c77421e)
 
@@ -147,7 +148,6 @@ $(ID:f4b223a9-8ffe-4e08-96a4-65c51ef5011c)
 * $(ID:da7d0370-c2fd-45b7-9f32-33d0bb62892e)
 * $(ID:57e6033f-ea2d-45d2-925d-4c5352350090)
 $(ID:85299ca2-af25-4a3e-b6a4-527ff28b53b2)
-* $(ID:11b45adc-7908-4cba-9c26-529b8bc8ca63)
 
 ### $(ID:241d703e-0e2e-4b76-bea6-7516629410bc)
 
@@ -192,7 +192,7 @@ $(ID:bd00fdcc-c594-4159-9864-ed7c5837f6d9)
 $(ID:f831991e-7534-472e-978f-11d0f0f16d7d)
 * $(ID:29ba5961-ec21-4c10-9928-3aea94163a2f)
 * $(ID:31f9afcd-f767-40a6-be5a-2ba4e71c87f5)
-  * $(ID:a5600efb-be32-490b-b362-0d5684bdb12c)
+  * $(ID:b4049e66-8122-4a5f-a8d8-adbdd25ca926)
 $(ID:830e9528-981d-4969-9fd1-9a227e532089)
   * $(ID:450a27fe-a26f-46c6-9f16-5e9d7c9891f8)
 * $(ID:1b99d41d-4a52-4ce2-87fa-1c89933777fe)
@@ -7391,9 +7391,18 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 <source>In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)</source>
 </segment>
 </unit>
+<unit id="f49b2e03-6320-4833-8e88-63b4f48bf7c3">
+<notes>
+<note appliesTo="source">line: 131</note>
+<note appliesTo="source">prefix: * </note>
+</notes>
+<segment>
+<source>In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)</source>
+</segment>
+</unit>
 <unit id="cc944143-5881-4f0c-9e6c-e9ca5c77421e">
 <notes>
-<note appliesTo="source">line: 132</note>
+<note appliesTo="source">line: 133</note>
 <note appliesTo="source">prefix: #### </note>
 </notes>
 <segment>
@@ -7402,7 +7411,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="bc7ca61e-e849-4b19-a6ff-f84147e19fc6">
 <notes>
-<note appliesTo="source">line: 134</note>
+<note appliesTo="source">line: 135</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7411,7 +7420,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="3c1839d1-c67e-4dd9-b2ae-666d53179a7d">
 <notes>
-<note appliesTo="source">line: 135</note>
+<note appliesTo="source">line: 136</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
@@ -7420,7 +7429,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="f4b223a9-8ffe-4e08-96a4-65c51ef5011c">
 <notes>
-<note appliesTo="source">line: 136</note>
+<note appliesTo="source">line: 137</note>
 </notes>
 <segment>
 <source>  This can be disabled in the Advanced settings panel.</source>
@@ -7428,7 +7437,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="18d32f92-31e1-46b3-87ba-3ea88b40ff0b">
 <notes>
-<note appliesTo="source">line: 137</note>
+<note appliesTo="source">line: 138</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7437,7 +7446,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="e12e8f49-4727-492a-ad7d-82bd7944ec59">
 <notes>
-<note appliesTo="source">line: 138</note>
+<note appliesTo="source">line: 139</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7446,7 +7455,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="1f931e8f-2e83-4210-9806-9c01f3a35edc">
 <notes>
-<note appliesTo="source">line: 140</note>
+<note appliesTo="source">line: 141</note>
 <note appliesTo="source">prefix: #### </note>
 </notes>
 <segment>
@@ -7455,7 +7464,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="b32d7b69-b451-485f-91f1-29569e0340e7">
 <notes>
-<note appliesTo="source">line: 142</note>
+<note appliesTo="source">line: 143</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7464,7 +7473,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="c368e9ef-0ea5-40c1-9089-275e44525e5b">
 <notes>
-<note appliesTo="source">line: 143</note>
+<note appliesTo="source">line: 144</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7473,7 +7482,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="da7d0370-c2fd-45b7-9f32-33d0bb62892e">
 <notes>
-<note appliesTo="source">line: 144</note>
+<note appliesTo="source">line: 145</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7482,7 +7491,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="57e6033f-ea2d-45d2-925d-4c5352350090">
 <notes>
-<note appliesTo="source">line: 145</note>
+<note appliesTo="source">line: 146</note>
 <note appliesTo="source">prefix: * </note>
 </notes>
 <segment>
@@ -7491,19 +7500,10 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 </unit>
 <unit id="85299ca2-af25-4a3e-b6a4-527ff28b53b2">
 <notes>
-<note appliesTo="source">line: 146</note>
+<note appliesTo="source">line: 147</note>
 </notes>
 <segment>
 <source>This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)</source>
-</segment>
-</unit>
-<unit id="11b45adc-7908-4cba-9c26-529b8bc8ca63">
-<notes>
-<note appliesTo="source">line: 147</note>
-<note appliesTo="source">prefix: * </note>
-</notes>
-<segment>
-<source>In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)</source>
 </segment>
 </unit>
 <unit id="241d703e-0e2e-4b76-bea6-7516629410bc">
@@ -7872,13 +7872,13 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
 <source>The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)</source>
 </segment>
 </unit>
-<unit id="a5600efb-be32-490b-b362-0d5684bdb12c">
+<unit id="b4049e66-8122-4a5f-a8d8-adbdd25ca926">
 <notes>
 <note appliesTo="source">line: 192</note>
 <note appliesTo="source">prefix:   * </note>
 </notes>
 <segment>
-<source>The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.</source>
+<source>The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely.</source>
 </segment>
 </unit>
 <unit id="830e9528-981d-4969-9fd1-9a227e532089">
