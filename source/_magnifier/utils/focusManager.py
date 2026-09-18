@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -54,8 +54,8 @@ class FocusManager:
 		Get the current focus coordinates based on priority.
 		Priority: Mouse (drag) > Mouse > System Focus > Review > Navigator Object.
 		Special case: when both the system focus and navigator object change simultaneously
-		but the review cursor does not (e.g. table cell navigation via numpad), the navigator
-		object takes priority over system focus.
+		but the review cursor does not in the case of vertical table cell navigation in list views,
+		the navigator object takes priority over system focus
 
 		Each source is only considered when its corresponding setting is enabled.
 
@@ -96,13 +96,21 @@ class FocusManager:
 			self._lastFocusedObject = MagnifierTrackingType.MOUSE
 			return self._rememberAndReturnCoordinates(mousePosition)
 
-		# Special case: table cell navigation (numpad).
+		# Special case: vertical table cell navigation in list views.
 		# When both the system focus and the navigator object change simultaneously but the
 		# review cursor does not, the navigator object reflects the user's explicit navigation
 		# intent and therefore takes priority over the system focus.
+		# Though this may also occur when entering math, but in this case, the normal pattern is expected, i.e.
+		# the intent is to follow the browse mode cursor, not the whole navigator object.
 		if navigatorChanged and systemFocusChanged and not reviewChanged and isFollowNavigatorObject:
-			self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
-			return self._rememberAndReturnCoordinates(navigatorPosition)
+			navObj = api.getNavigatorObject()
+			import mathPres
+
+			if isinstance(navObj, mathPres.MathInteractionNVDAObject):
+				pass
+			else:
+				self._lastFocusedObject = MagnifierTrackingType.NAVIGATOR_OBJECT
+				return self._rememberAndReturnCoordinates(navigatorPosition)
 
 		# Priority 2: System focus (focus object + browse mode cursor)
 		if systemFocusChanged and isFollowSystemFocus:
@@ -160,13 +168,29 @@ class FocusManager:
 
 	def _getSystemFocusPosition(self) -> Coordinates:
 		"""
-		Get the current system focus position (focus object + browse mode cursor).
-		This includes both the system focus and the browse mode cursor if active.
+		Get the current system focus position (focus object + caret / browse mode cursor).
+		This includes both the system focus and the caret or browse mode cursor if active.
 
 		:return: The (x, y) coordinates of the system focus position
 		"""
+		import mathPres
+
+		focusObj = api.getFocusObject()
 		try:
-			# Get caret position (works for both browse mode and regular focus)
+			# Math is followed as a browse mode cursor so try it first
+			import mathPres
+
+			if isinstance(focusObj, mathPres.MathInteractionNVDAObject):
+				try:
+					mathRect = focusObj.getMathSourceObjectRect()
+				except NotImplementedError:
+					mathRect = None
+				if mathRect:
+					coords = mathRect.left, mathRect.top
+					if coords != Coordinates(0, 0):
+						self._lastValidSystemFocusPosition = coords
+					return coords
+			# Get caret position (works for both browse mode and regular caret)
 			caretPosition = api.getCaretPosition()
 			point = self._getPointAtStart(caretPosition)
 			coords = Coordinates(point.x, point.y)
@@ -183,7 +207,6 @@ class FocusManager:
 					exc_info=True,
 				)
 			try:
-				focusObj = api.getFocusObject()
 				if focusObj and focusObj.location:
 					left, top, width, _height = focusObj.location
 					x = left + width if _isWindowRTL(focusObj) else left
