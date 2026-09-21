@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-11 08:24+0000\n"
-"PO-Revision-Date: 2026-09-14 00:23\n"
+"POT-Creation-Date: 2026-09-18 07:07+0000\n"
+"PO-Revision-Date: 2026-09-21 00:23\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -780,27 +780,27 @@ msgstr "أشرطة سحب"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1250
 msgid "moves to the next clickable element"
-msgstr ""
+msgstr "الانتقال للعنصر اللاحق القابل للنقر"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1252
 msgid "no next clickable element"
-msgstr ""
+msgstr "لا يوجد عنصر لاحق قابل للنقر"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1254
 msgid "moves to the previous clickable element"
-msgstr ""
+msgstr "الانتقال للعنصر السابق القابل للنقر"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1256
 msgid "no previous clickable element"
-msgstr ""
+msgstr "لا يوجد عنصر سابق قابل للنقر"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1259
 msgid "clickable elements"
-msgstr ""
+msgstr "العناصر القابلة للنقر"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1265
@@ -3979,17 +3979,17 @@ msgstr "الإعلان عن تنسيق النص الواقع تحت خلية ا�
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4294
 msgid "Selects the text from the first up to the last braille cell"
-msgstr ""
+msgstr "تحديد النص ابتداءً من مفتاح توجيه المؤشّر الأول لآخر خلية برايل يُضغَط عندها مفتاح توجيه المؤشّر"
 
 #. Translators: Reported when selection via multiple routing keys is not possible.
 #: globalCommands.py:4306
 msgid "Cannot select from braille routing keys"
-msgstr ""
+msgstr "لا يمكن التحديد عبر مفاتيح توجيه مؤشّر برايل"
 
 #. Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 #: globalCommands.py:4313
 msgid "Selection not supported here"
-msgstr ""
+msgstr "التحديد هنا لا يعمل"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4317
@@ -4372,7 +4372,7 @@ msgstr "تحريك العرض المكبَّر للحافة السفلى"
 #. Translators: Describes a command.
 #: globalCommands.py:5272
 msgid "Moves the mouse cursor to the center of the magnified view"
-msgstr ""
+msgstr "نقل مؤشّر الفأرة إلى منتصف المنطقة المكبَّرة"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5285
@@ -4528,12 +4528,12 @@ msgstr "الرسالة المقروءة الأخيرة"
 #. Translators: Input help mode message for the command to copy the last spoken information.
 #: globalCommands.py:5577
 msgid "Copies the last spoken information to the clipboard."
-msgstr ""
+msgstr "نسخ آخر رسالة مقروءة للحافظة."
 
 #. Translators: Reported when there is no last spoken information to copy.
 #: globalCommands.py:5586
 msgid "Nothing to copy"
-msgstr ""
+msgstr "لا شيء محدد لنسخه"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6541,7 +6541,7 @@ msgstr "مزدوجة {action}"
 #: touchHandler.py:332
 #, python-brace-format
 msgid "triple {action}"
-msgstr "ضغطة ثلاثية {action}"
+msgstr "{action} ثلاثية"
 
 #. Translators: a touch screen action performed 4 times
 #: touchHandler.py:334
@@ -6554,7 +6554,7 @@ msgstr "أربع {action}"
 #: touchHandler.py:396
 #, python-brace-format
 msgid "{edgeLabel} {action}"
-msgstr ""
+msgstr "{edgeLabel} {action}"
 
 #. Translators: a touch screen action using multiple fingers
 #: touchHandler.py:405
@@ -6644,97 +6644,97 @@ msgstr "إبعاد الإصبعين عن بعضهما"
 #: touchTracker.py:78
 msgctxt "touch action"
 msgid "flick right then left"
-msgstr ""
+msgstr "سحب لليمين ثم لليسار"
 
 #. Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:80
 msgctxt "touch action"
 msgid "flick left then right"
-msgstr ""
+msgstr "سحب لليسار ثم لليمين"
 
 #. Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:82
 msgctxt "touch action"
 msgid "flick up then down"
-msgstr ""
+msgstr "سحب لأعلى ثم لأسفل"
 
 #. Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:84
 msgctxt "touch action"
 msgid "flick down then up"
-msgstr ""
+msgstr "سحب لأسفل ثم لأعلى"
 
 #. Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:86
 msgctxt "touch action"
 msgid "flick right then up"
-msgstr ""
+msgstr "سحب لليمين ثم لأعلى"
 
 #. Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:88
 msgctxt "touch action"
 msgid "flick right then down"
-msgstr ""
+msgstr "سحب لليمين ثم لأسفل"
 
 #. Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:90
 msgctxt "touch action"
 msgid "flick left then up"
-msgstr ""
+msgstr "سحب لليسار ثم لأعلى"
 
 #. Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:92
 msgctxt "touch action"
 msgid "flick left then down"
-msgstr ""
+msgstr "سحب لليسار ثم لأسفل"
 
 #. Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:94
 msgctxt "touch action"
 msgid "flick up then right"
-msgstr ""
+msgstr "سحب لأعلى ثم لليمين"
 
 #. Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:96
 msgctxt "touch action"
 msgid "flick up then left"
-msgstr ""
+msgstr "سحب لأعلى ثم لليسار"
 
 #. Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:98
 msgctxt "touch action"
 msgid "flick down then right"
-msgstr ""
+msgstr "سحب لليمين ثم لليسار"
 
 #. Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:100
 msgctxt "touch action"
 msgid "flick down then left"
-msgstr ""
+msgstr "سحب لأسفل ثم لليمين"
 
 #. Translators: describes a touch gesture that started from the left edge of the screen
 #: touchTracker.py:124
 msgctxt "touch edge"
 msgid "left edge"
-msgstr ""
+msgstr "الحافة اليسرى"
 
 #. Translators: describes a touch gesture that started from the right edge of the screen
 #: touchTracker.py:126
 msgctxt "touch edge"
 msgid "right edge"
-msgstr ""
+msgstr "الحافة اليمنى"
 
 #. Translators: describes a touch gesture that started from the top edge of the screen
 #: touchTracker.py:128
 msgctxt "touch edge"
 msgid "top edge"
-msgstr ""
+msgstr "الحافة العلوية"
 
 #. Translators: describes a touch gesture that started from the bottom edge of the screen
 #: touchTracker.py:130
 msgctxt "touch edge"
 msgid "bottom edge"
-msgstr ""
+msgstr "الحافة السفلية"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
@@ -6772,7 +6772,7 @@ msgstr "رسالة من البرنامج"
 #. Translators: The label of a button to copy the text of the window to the clipboard.
 #: ui.py:148
 msgid "&Copy"
-msgstr ""
+msgstr "&نسخ"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -9727,13 +9727,13 @@ msgstr "شفرة برايل الحاسوبية الإنجليزية لأمريك
 #. braille settings dialog.
 #: brailleTables\__tables.py:180
 msgid "English (New Zealand) grade 1"
-msgstr ""
+msgstr "إنجليزي (نيوزلندي) الدرجة الأولى"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:183
 msgid "English (New Zealand) grade 2"
-msgstr ""
+msgstr "إنجليزي (نيوزلندي) الدرجة الثانية"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9799,7 +9799,7 @@ msgstr "إسباني باختصارات (الدرجة الثانية)"
 #. braille settings dialog.
 #: brailleTables\__tables.py:221
 msgid "Spanish (Norway)"
-msgstr ""
+msgstr "إسباني (نرويجي)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10417,13 +10417,13 @@ msgstr "سويدي دون اختصارات"
 #. braille settings dialog.
 #: brailleTables\__tables.py:646
 msgid "Swedish uncontracted braille (detailed)"
-msgstr ""
+msgstr "سويدي دون اختصارات (مفصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:652
 msgid "Swedish uncontracted braille (phonetics)"
-msgstr ""
+msgstr "سويدي دون اختصارات (صوتي)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10435,7 +10435,7 @@ msgstr "سويدي مختصر جزئيا"
 #. braille settings dialog.
 #: brailleTables\__tables.py:661
 msgid "Swedish partially contracted braille (detailed)"
-msgstr ""
+msgstr "سويدي مختصر جزئيا (مُفصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10447,43 +10447,43 @@ msgstr "سويدي باختصارات"
 #. braille settings dialog.
 #: brailleTables\__tables.py:671
 msgid "Swedish contracted braille (detailed)"
-msgstr ""
+msgstr "سويدي باختصارات (مُفصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:676
 msgid "Swedish 8 dot uncontracted braille"
-msgstr ""
+msgstr "سويدي ذو ثمان نقاط دون اختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:681
 msgid "Swedish 8 dot uncontracted braille (detailed)"
-msgstr ""
+msgstr "سويدي ذو ثمان نقاط دون اختصارات (مفصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:687
 msgid "Swedish 8 dot partially contracted braille"
-msgstr ""
+msgstr "سويدي ذو ثمان نقاط مختصر جزئيا"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:694
 msgid "Swedish 8 dot partially contracted braille (detailed)"
-msgstr ""
+msgstr "سويدي ذو ثمان نقاط  مختصر جزئيا (مُفصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:701
 msgid "Swedish 8 dot contracted braille"
-msgstr ""
+msgstr "سويدي ذو ثمان نقاط باختصارات"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:708
 msgid "Swedish 8 dot contracted braille (detailed)"
-msgstr ""
+msgstr "سويدي ذو ثمان نقاط باختصارات (مُفصَّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -11107,7 +11107,7 @@ msgstr "علامات"
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:155
 msgid "Chinese"
-msgstr ""
+msgstr "صيني"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:157
@@ -11123,43 +11123,43 @@ msgstr ""
 #: config\featureFlagEnums.py:180
 msgctxt "braille text wrap"
 msgid "Off"
-msgstr ""
+msgstr "تعطيل"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:182
 msgctxt "braille text wrap"
 msgid "Show mark when words are cut"
-msgstr ""
+msgstr "عرض علامة للإشارة لتقسيم الكلمة"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:184
 msgctxt "braille text wrap"
 msgid "At word boundaries"
-msgstr ""
+msgstr "عند حدود الكلمات"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:188
 msgctxt "braille text wrap"
 msgid "At word or syllable boundaries"
-msgstr ""
+msgstr "عند حدود الكلمات أو المقاطع"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:205
 msgctxt "sayAll"
 msgid "Sentence where possible"
-msgstr ""
+msgstr "جملة عند الإمكان"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:207
 msgctxt "sayAll"
 msgid "Paragraph"
-msgstr ""
+msgstr "فقرة"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:209
 msgctxt "sayAll"
 msgid "Line"
-msgstr ""
+msgstr "سطر"
 
 #. Translators: The title of the document used to present the result of content recognition.
 #: contentRecog\recogUi.py:104
@@ -13410,7 +13410,7 @@ msgstr "إ&ضافة"
 #. Translators: Context menu item label to change a gesture
 #: gui\inputGestures.py:632 gui\inputGestures.py:688
 msgid "C&hange"
-msgstr ""
+msgstr "&تغيير"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: Context menu item label to remove a gesture
@@ -14065,7 +14065,7 @@ msgstr "تسوية &Unicode"
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #: gui\settingsDialogs.py:1753
 msgid "Say all reads by"
-msgstr ""
+msgstr "الوحدة النصية للقراءة المتواصلة"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
@@ -14490,12 +14490,12 @@ msgstr "منع غيرم&فاتيح الحركة السريعة من الوصول
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2680
 msgid "&Keep search history"
-msgstr ""
+msgstr "الا&حتفاظ بسجل البحث"
 
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2691
 msgid "Nati&ve selection mode"
-msgstr ""
+msgstr "&نمط التحديد الأصلي"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2707
@@ -14800,7 +14800,7 @@ msgstr "تجاهل الإعلان عن المسافات البادئة للأس�
 #. to adjust the duration of indentation tones in milliseconds.
 #: gui\settingsDialogs.py:3374
 msgid "Indent tone &duration (ms):"
-msgstr ""
+msgstr "مدة الإشارة الصوتية للمسافات البادئة (ملي في الثانية):"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -15157,7 +15157,7 @@ msgstr "نمط الكتابة اللمسية"
 #. Translators: This is the label for a checkbox in the touch interaction settings panel.
 #: gui\settingsDialogs.py:4217
 msgid "Enable &edge gestures"
-msgstr ""
+msgstr "تفعيل إيماءات ال&حواف"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:4231
@@ -15682,7 +15682,7 @@ msgstr "ال&نُطق عند التنقُّل حرفا حرفا أو سطرا س
 #. (how to break lines that don't fit on the braille display).
 #: gui\settingsDialogs.py:5610
 msgid "Text &wrap"
-msgstr ""
+msgstr "التفاف النص"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:5631
@@ -15697,7 +15697,7 @@ msgstr "&سرعة التمرير الآلي"
 #. Translators: The label for a checkbox in the Braille settings panel.
 #: gui\settingsDialogs.py:5661
 msgid "Use &Chinese word segmentation"
-msgstr ""
+msgstr "استخدام نظام تجزئة الكلمات في اللغة ال&صينية"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
@@ -16158,7 +16158,7 @@ msgstr "ت&حديث الإضافات المختارة"
 #: gui\addonStoreGui\controls\actions.py:230
 msgctxt "addonStore"
 msgid "&Update (and enable) selected add-ons"
-msgstr ""
+msgstr "&تحديث (وتفعيل) الإضافات المختارة"
 
 #. Translators: Label for an action that retries the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -16585,7 +16585,7 @@ msgstr "&فتح مستودع الإضافات"
 #: gui\addonStoreGui\controls\messageDialogs.py:449
 msgctxt "addonStore"
 msgid "&Update (and enable) all"
-msgstr ""
+msgstr "تحديث (وتفعيل) &كل الإضافات"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:452
@@ -16936,7 +16936,7 @@ msgstr "ت&حديث"
 #: gui\addonStoreGui\viewModels\store.py:141
 msgctxt "addonStore"
 msgid "&Update (and enable)"
-msgstr ""
+msgstr "&تحديث (وتفعيل)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:150
@@ -16949,7 +16949,7 @@ msgstr "&تحديث (مع تجاوز عدم التوافُق)"
 #: gui\addonStoreGui\viewModels\store.py:161
 msgctxt "addonStore"
 msgid "&Update (and enable, override incompatibility)"
-msgstr ""
+msgstr "تحديث (وتفعيل مع تجاوز عدم توافُق الإضافات)"
 
 #. Translators: Label for an action that retries the selected addon
 #: gui\addonStoreGui\viewModels\store.py:171
@@ -21086,7 +21086,7 @@ msgstr "تغيير نمط التتبُّع"
 #: _magnifier\utils\types.py:89
 msgctxt "magnifier action"
 msgid "move mouse to view"
-msgstr ""
+msgstr "تحريك مؤشّر الفأرة للمنطقة المكبَّرة"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:91
@@ -21235,7 +21235,7 @@ msgstr "يتعذر الاتصال بالحاسوب البعيد"
 #: _remoteClient\client.py:345
 msgctxt "remote"
 msgid "Unable to connect to the Remote Access server. Retrying"
-msgstr ""
+msgstr "يتعذّر الاتصال بخادم التحكُّم عن بُعد. أعِدِ المحاولة"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:368 _remoteClient\client.py:719

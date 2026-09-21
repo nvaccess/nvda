@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="ru">
-  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/e88f01b27f09b5ec2333cc91a7a27244b8baf6f8/user_docs/en/userGuide.md">
+  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a86a40aac1ce1401ac3941ad2a93f7758c9d9f4f/user_docs/en/userGuide.md">
     <skeleton>
 # $(ID:f5169acb-2803-46c6-8e4c-7c1aaf973723)
 
@@ -1232,7 +1232,7 @@ $(ID:83202642-35db-40fb-a987-90107d68dcf6)
 * $(ID:8252f830-c763-4e24-917f-93202a61aaa3)
 * $(ID:e35d37db-1dfe-4ef9-9bad-3cad14cc3dc9)
 
-$(ID:8da5132f-3792-42ba-a1f5-7b06c90d0234)
+$(ID:5d5a047d-ddb8-49f2-8553-1c7933c2f6c6)
 
 &lt;!-- KC:beginInclude --&gt;
 
@@ -8087,9 +8087,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 205</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.</source>
-        <target>From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.</target>
+        <target>В любом диалоге NVDA нажмите клавишу `f1`, чтобы открыть руководство пользователя по теме, относящейся к текущему элементу управления.</target>
       </segment>
     </unit>
     <unit id="e6e23bc7-8c74-4127-b4e6-74478e82ba5c">
@@ -8430,9 +8430,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | Copies the last information spoken by NVDA to the clipboard </source>
-        <target> Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | Copies the last information spoken by NVDA to the clipboard </target>
+        <target> Копировать последнюю произнесённую информацию | `NVDA+control+x` | `NVDA+control+x` | Копирует последнюю произнесённую NVDA информацию в буфер обмена </target>
       </segment>
     </unit>
     <unit id="dc126fc4-503c-4e99-a501-cb2817d26b60">
@@ -9388,9 +9388,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 378</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.</source>
-        <target>If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.</target>
+        <target>Если дополнение отключено, действие будет называться "Обновить (и включить)", поскольку для установки дополнений их необходимо включить; обновление отключённого дополнения повторно включает его.</target>
       </segment>
     </unit>
     <unit id="1318394c-807b-43b5-b039-4fc7b06acd30">
@@ -9527,9 +9527,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 399</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.</source>
-        <target>From within any NVDA dialog, press `f1` to open the User Guide to the topic on the current control.</target>
+        <target>В любом диалоге NVDA нажмите клавишу `f1`, чтобы открыть руководство пользователя по теме, относящейся к текущему элементу управления.</target>
       </segment>
     </unit>
     <unit id="66650ab1-b49d-4742-832b-545a9dc3227f">
@@ -10261,9 +10261,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 509</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA ignores touch input (gestures are passed through).</source>
-        <target>NVDA ignores touch input (gestures are passed through).</target>
+        <target>NVDA игнорирует сенсорный ввод (жесты пропускаются).</target>
       </segment>
     </unit>
     <unit id="e595b705-01ac-4dad-95f3-65541f8d43f3">
@@ -10271,9 +10271,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 510</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Mouse and touch input will not work correctly with the NVDA magnifier enabled (i.e. inaccurate input).</source>
-        <target>Mouse and touch input will not work correctly with the NVDA magnifier enabled (i.e. inaccurate input).</target>
+        <target>При включённой лупе NVDA ввод с помощью мыши и сенсорного экрана будет работать неправильно (т.е. будет неточным).</target>
       </segment>
     </unit>
     <unit id="fec543b9-d54e-4c7b-8d28-8a0d5f583062">
@@ -10893,7 +10893,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Flicks</source>
-        <target>Пролистывания</target>
+        <target>Смахивания</target>
       </segment>
     </unit>
     <unit id="82ee155b-c64b-4fe9-a3bd-f0ff4dbead14">
@@ -10911,7 +10911,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>There are 4 possible flick gestures depending on the direction: flick left, flick right, flick up and flick down.</source>
-        <target>В зависимости от направления возможны 4 жеста пролистывания: пролистать влево, пролистать вправо, пролистать вверх и пролистать вниз.</target>
+        <target>В зависимости от направления возможны 4 жеста смахивания: смахнуть влево, смахнуть вправо, смахнуть вверх и смахнуть вниз.</target>
       </segment>
     </unit>
     <unit id="04a8a613-af06-404d-b121-372eee8c3e24">
@@ -10929,7 +10929,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Therefore, gestures such as 2-finger flick up and 4-finger flick left are all possible.</source>
-        <target>Поэтому, жесты, подобные пролистыванию вверх двумя пальцами и пролистыванию влево четырьмя пальцами, вполне возможны.</target>
+        <target>Поэтому, жесты, подобные смахиванию вверх двумя пальцами и смахиванию влево четырьмя пальцами, вполне возможны.</target>
       </segment>
     </unit>
     <unit id="f844efac-9d2e-4ff7-896f-cea877def5b7">
@@ -10967,36 +10967,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#SequentialFlicks}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Sequential Flicks</source>
-        <target>Sequential Flicks</target>
+        <target>Последовательные смахивания</target>
       </segment>
     </unit>
     <unit id="2c4b6de8-0650-4576-b097-c258330fb21a">
       <notes>
         <note appliesTo="source">line: 625</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can perform two flicks in quick succession to trigger a sequential flick gesture.</source>
-        <target>You can perform two flicks in quick succession to trigger a sequential flick gesture.</target>
+        <target>Для запуска последовательного жеста смахивания можно выполнить два быстрых движения подряд.</target>
       </segment>
     </unit>
     <unit id="7cc4a858-4adb-4640-acf7-1835569a3e3d">
       <notes>
         <note appliesTo="source">line: 626</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This greatly expands the number of touch gestures that can be assigned to NVDA commands.</source>
-        <target>This greatly expands the number of touch gestures that can be assigned to NVDA commands.</target>
+        <target>Это значительно расширяет количество сенсорных жестов, которые можно назначить командам NVDA.</target>
       </segment>
     </unit>
     <unit id="df7a721c-22bb-4049-9852-f5096b740630">
       <notes>
         <note appliesTo="source">line: 628</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Both flicks can be performed in two ways:</source>
-        <target>Both flicks can be performed in two ways:</target>
+        <target>Оба смахивания можно выполнить двумя способами:</target>
       </segment>
     </unit>
     <unit id="d3e2031a-13cb-46dc-8236-637b37a5eb6f">
@@ -11004,9 +11004,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 630</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Lifting your finger after the first flick and then performing the second flick before the gesture times out.</source>
-        <target>Lifting your finger after the first flick and then performing the second flick before the gesture times out.</target>
+        <target>Поднимите палец после первого смахивания, а затем выполните второе смахивание до истечения времени действия жеста.</target>
       </segment>
     </unit>
     <unit id="980c5809-8315-46f8-8071-cb9dc01ee125">
@@ -11014,18 +11014,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 631</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Or as a single continuous swipe that sharply changes direction, without lifting your finger.</source>
-        <target>Or as a single continuous swipe that sharply changes direction, without lifting your finger.</target>
+        <target>Или же одним непрерывным движением, резко меняющим направление, без отрыва пальца от экрана.</target>
       </segment>
     </unit>
     <unit id="20c7ba4f-fa6b-4fde-b58e-ba6161d18668">
       <notes>
         <note appliesTo="source">line: 633</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Twelve combinations are recognised: the four opposite-direction pairs (such as flick right then flick left), and the eight perpendicular L-shaped pairs (such as flick right then flick up).</source>
-        <target>Twelve combinations are recognised: the four opposite-direction pairs (such as flick right then flick left), and the eight perpendicular L-shaped pairs (such as flick right then flick up).</target>
+        <target>Распознаются двенадцать комбинаций: четыре пары, направленные в противоположные стороны (например, смахнуть вправо, затем смахнуть влево), и восемь пар, образующих перпендикулярную L-образную форму (например, смахнуть вправо, затем смахнуть вверх).</target>
       </segment>
     </unit>
     <unit id="1e3c9e38-6f8b-4303-b2ba-23fb70e702fe">
@@ -11072,7 +11072,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For example, flick up (text mode) means that the command will be performed if you flick up, but only while in text mode.</source>
-        <target>Например, жест "Пролистать вверх (текстовый режим)" означает, что команда выполнится при жесте "Пролистать вверх", но только в текстовом режиме.</target>
+        <target>Например, жест "Смахивание вверх (текстовый режим)" означает, что команда выполнится при жесте "Смахнуть вверх", но только в текстовом режиме.</target>
       </segment>
     </unit>
     <unit id="bc16097b-ac46-47dd-89c0-2e41f104ca27">
@@ -11383,9 +11383,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | None | Copies the last information spoken by NVDA to the clipboard </source>
-        <target> Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | None | Copies the last information spoken by NVDA to the clipboard </target>
+        <target> Копировать последнюю произнесённую информацию | `NVDA+control+x` | `NVDA+control+x` | | Отсутствует | Копирует последнюю произнесённую NVDA информацию в буфер обмена </target>
       </segment>
     </unit>
     <unit id="8b767a3a-276c-462e-a73a-66691666d7b9">
@@ -11982,9 +11982,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Next sentence | `alt+downArrow` | `alt+downArrow` | Moves the caret to the next sentence and announces it. Some documents are not supported </source>
-        <target> Next sentence | `alt+downArrow` | `alt+downArrow` | Moves the caret to the next sentence and announces it. Some documents are not supported </target>
+        <target> Следующее предложение | `alt+стрелкаВниз` | `alt+стрелкаВниз` | Перемещает каретку к следующему предложению и объявляет его. Некоторые документы не поддерживаются </target>
       </segment>
     </unit>
     <unit id="07d4d4ae-17cd-44b5-a336-b92206037d66">
@@ -11993,9 +11993,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Previous sentence | `alt+upArrow` | `alt+upArrow` | Moves the caret to the previous sentence and announces it. Some documents are not supported </source>
-        <target> Previous sentence | `alt+upArrow` | `alt+upArrow` | Moves the caret to the previous sentence and announces it. Some documents are not supported </target>
+        <target> Предыдущее предложение | `alt+стрелкаВверх` | `alt+стрелкаВверх` | Перемещает каретку к предыдущему предложению и объявляет его. Некоторые документы не поддерживаются </target>
       </segment>
     </unit>
     <unit id="f2c5e713-d2a2-4c3e-8d24-898fa503ee8e">
@@ -12416,7 +12416,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to containing object |NVDA+numpad8 |NVDA+shift+upArrow |flick up (object mode) |Moves to the object containing the current navigator object</source>
-        <target>Перейти на родительский объект |NVDA+8 на цифровом блоке |NVDA+Shift+↑ |Пролистать вверх (просмотр объекта) |Устанавливает навигатор на объект, который содержит в себе текущий</target>
+        <target>Перейти на родительский объект |NVDA+8 на цифровом блоке |NVDA+Shift+↑ |смахивание вверх (просмотр объекта) |Устанавливает навигатор на объект, который содержит в себе текущий</target>
       </segment>
     </unit>
     <unit id="8fb6b8fa-e7b4-4937-9ef0-02ffd3f2b79d">
@@ -12427,7 +12427,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to previous object |NVDA+numpad4 |NVDA+shift+leftArrow |none |Moves to the object before the current navigator object</source>
-        <target>Перейти на предыдущий объект |NVDA+4 на цифровом блоке |NVDA+Shift+← |Пролистать влево (просмотр объекта) |Устанавливает навигатор на предыдущий объект того же логического уровня</target>
+        <target>Перейти на предыдущий объект |NVDA+4 на цифровом блоке |NVDA+Shift+← |отсутствует |Перемещается к объекту, расположенному перед текущим объектом навигатора</target>
       </segment>
     </unit>
     <unit id="54c108f3-9659-44ba-9387-74319d43c206">
@@ -12449,7 +12449,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to next object |NVDA+numpad6 |NVDA+shift+rightArrow |none |Moves to the object after the current navigator object</source>
-        <target>Перейти на следующий объект |NVDA+6 на цифровом блоке |NVDA+Shift+→ |Пролистать вправо (просмотр объекта) |Устанавливает навигатор на следующий объект того же логического уровня</target>
+        <target>Перейти на следующий объект |NVDA+6 на цифровом блоке |NVDA+Shift+→ |отсутствует |Перемещается к объекту, следующему за текущим объектом навигатора</target>
       </segment>
     </unit>
     <unit id="d67372e6-9150-41fc-945b-ad639d95485d">
@@ -12471,7 +12471,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to first contained object |NVDA+numpad2 |NVDA+shift+downArrow |flick down (object mode) |Moves to the first object contained by the current navigator object</source>
-        <target>Перейти на первый дочерний объект |NVDA+2 на цифровом блоке|NVDA+Shift+↓ |Пролистать вниз (просмотр объекта) |Устанавливает навигатор на первый объект, который содержится в текущем</target>
+        <target>Перейти на первый дочерний объект |NVDA+2 на цифровом блоке|NVDA+Shift+↓ |смахивание вниз (просмотр объекта) |Устанавливает навигатор на первый объект, который содержится в текущем</target>
       </segment>
     </unit>
     <unit id="201af03b-8c31-4973-b218-202be0930980">
@@ -12493,7 +12493,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Activate current navigator object |NVDA+numpadEnter |NVDA+enter |double-tap |Activates the current navigator object (similar to clicking with the mouse or pressing space when it has the system focus)</source>
-        <target>Активировать текущий объект навигатора |NVDA+Enter на цифровом блоке |NVDA+Enter |Коснуться дважды |Активирует текущий объект навигатора (подобно щелчку мыши или нажатию "Пробел", когда объект находится в системном фокусе)</target>
+        <target>Активировать текущий объект навигатора |NVDA+Enter на цифровом блоке |NVDA+Enter |Коснуться дважды |Активирует текущий объект навигатора (подобно щелчку мыши или нажатию пробела, когда объект находится в системном фокусе)</target>
       </segment>
     </unit>
     <unit id="d975a8f8-28ca-43c7-8fb5-9c7e8e5184db">
@@ -12651,7 +12651,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to previous line in review |numpad7 |NVDA+upArrow |flick up (text mode) |Moves the review cursor to the previous line of text</source>
-        <target>Перейти к предыдущей строке в режиме текстового просмотра |7 на цифровом блоке |NVDA+↑ |Пролистать вверх (просмотр текста) |Перемещает просмотровый курсор на предыдущую строку текста и читает её</target>
+        <target>Перейти к предыдущей строке в режиме текстового просмотра |7 на цифровом блоке |NVDA+↑ |смахивание вверх (просмотр текста) |Перемещает просмотровый курсор на предыдущую строку текста и читает её</target>
       </segment>
     </unit>
     <unit id="0f09458d-5583-4c88-af04-f98d600abadf">
@@ -12673,7 +12673,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to next line in review |numpad9 |NVDA+downArrow |flick down (text mode) |Move the review cursor to the next line of text</source>
-        <target>Перейти к следующей строке в режиме текстового просмотра |9 на цифровом блоке |NVDA+↓ |Пролистать вниз (просмотр текста) |Перемещает просмотровый курсор на следующую строку текста и читает её</target>
+        <target>Перейти к следующей строке в режиме текстового просмотра |9 на цифровом блоке |NVDA+↓ |смахивание вниз (просмотр текста) |Перемещает просмотровый курсор на следующую строку текста и читает её</target>
       </segment>
     </unit>
     <unit id="b73ccebf-9024-4728-830e-cd1e07daeb3e">
@@ -12695,7 +12695,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to previous word in review |numpad4 |NVDA+control+leftArrow |2-finger flick left (text mode) |Moves the review cursor to the previous word in the text</source>
-        <target>Перейти к предыдущему слову в режиме текстового просмотра |4 на цифровом блоке |NVDA+Control+← |Пролистать двумя пальцами влево (просмотр текста) |Перемещает просмотровый курсор на предыдущее слово в тексте и читает его</target>
+        <target>Перейти к предыдущему слову в режиме текстового просмотра |4 на цифровом блоке |NVDA+Control+← |смахнуть двумя пальцами влево (просмотр текста) |Перемещает просмотровый курсор на предыдущее слово в тексте и читает его</target>
       </segment>
     </unit>
     <unit id="2d3bc5b1-1764-4ca0-863b-5d0040afa464">
@@ -12717,7 +12717,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to next word in review |numpad6 |NVDA+control+rightArrow |2-finger flick right (text mode) |Move the review cursor to the next word in the text</source>
-        <target>Перейти к следующему слову в режиме текстового просмотра |6 на цифровом блоке|NVDA+Control+→ |Пролистать двумя пальцами вправо (просмотр текста) |Перемещает просмотровый курсор на следующее слово в тексте и читает его</target>
+        <target>Перейти к следующему слову в режиме текстового просмотра |6 на цифровом блоке|NVDA+Control+→ |смахнуть двумя пальцами вправо (просмотр текста) |Перемещает просмотровый курсор на следующее слово в тексте и читает его</target>
       </segment>
     </unit>
     <unit id="ea10e2c1-3dc7-441b-96c6-b3aadaf2cdf2">
@@ -12739,7 +12739,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to previous character in review |numpad1 |NVDA+leftArrow |flick left (text mode) |Moves the review cursor to the previous character on the current line in the text</source>
-        <target>Перейти к предыдущему символу в режиме текстового просмотра |1 на цифровом блоке |NVDA+← |Пролистать влево (просмотр текста) |Перемещает просмотровый курсор на предыдущий символ в текущей строке текста и читает его</target>
+        <target>Перейти к предыдущему символу в режиме текстового просмотра |1 на цифровом блоке |NVDA+← |смахивание влево (просмотр текста) |Перемещает просмотровый курсор на предыдущий символ в текущей строке текста и читает его</target>
       </segment>
     </unit>
     <unit id="5b1be9b0-d3dc-4c53-9012-874bc1792b64">
@@ -12761,7 +12761,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move to next character in review |numpad3 |NVDA+rightArrow |flick right (text mode) |Move the review cursor to the next character on the current line of text</source>
-        <target>Перейти к следующему символу в режиме текстового просмотра |3 на цифровом блоке |NVDA+→ |Пролистать вправо (просмотр текста) |Перемещает просмотровый курсор на следующий символ в текущей строке текста и читает его</target>
+        <target>Перейти к следующему символу в режиме текстового просмотра |3 на цифровом блоке |NVDA+→ |смахивание вправо (просмотр текста) |Перемещает просмотровый курсор на следующий символ в текущей строке текста и читает его</target>
       </segment>
     </unit>
     <unit id="335ab625-868e-4d7f-8d36-adec77457dcf">
@@ -12827,7 +12827,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Say all with review |numpadPlus |NVDA+shift+a |3-finger flick down (text mode) |Reads from the current position of the review cursor, moving it as it goes</source>
-        <target>Читать всё в режиме текстового просмотра |плюс на цифровом блоке |NVDA+Shift+A |Пролистать тремя пальцами вниз (просмотр текста) |Читает от просмотрового курсора до конца текста, с перемещением просмотрового курсора по тексту</target>
+        <target>Читать всё в режиме текстового просмотра |плюс на цифровом блоке |NVDA+Shift+A |Смахнуть тремя пальцами вниз (просмотр текста) |Читает от просмотрового курсора до конца текста, с перемещением просмотрового курсора по тексту</target>
       </segment>
     </unit>
     <unit id="025c1550-198b-4c73-9234-53de940dccf0">
@@ -12993,7 +12993,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Switch to next review mode |NVDA+numpad7 |NVDA+pageUp |2-finger flick up |switches to the next available review mode</source>
-        <target>Переключиться на следующий режим просмотра |NVDA+7 на цифровом блоке |NVDA+PageUp |Пролистать двумя пальцами вверх |Переключается на следующий доступный режим просмотра</target>
+        <target>Переключиться на следующий режим просмотра |NVDA+7 на цифровом блоке |NVDA+PageUp |смахнуть двумя пальцами вверх |Переключается на следующий доступный режим просмотра</target>
       </segment>
     </unit>
     <unit id="a376f2b5-800b-4db9-a201-b8e06eac4e12">
@@ -13004,7 +13004,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Switch to previous review mode |NVDA+numpad1 |NVDA+pageDown |2-finger flick down |switches to the previous available review mode</source>
-        <target>Переключиться на предыдущий режим просмотра |NVDA+1 на цифровом блоке |NVDA+PageDown |Пролистать двумя пальцами вниз |Переключается на предыдущий доступный режим просмотра</target>
+        <target>Переключиться на предыдущий режим просмотра |NVDA+1 на цифровом блоке |NVDA+PageDown |смахнуть двумя пальцами вниз |Переключается на предыдущий доступный режим просмотра</target>
       </segment>
     </unit>
     <unit id="773c7460-5fb9-4dfb-b5f3-b131021782f6">
@@ -14094,7 +14094,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In browse touch mode, flick gestures are used to move between common document elements such as links, buttons, headings, form fields, landmarks, and other document structures.</source>
-        <target>В сенсорном режиме обзора жесты пролистывания используются для перемещения между общими элементами документа, такими как ссылки, кнопки, заголовки, поля форм, ориентиры и другие структуры документа.</target>
+        <target>В сенсорном режиме обзора жесты смахивания используются для перемещения между общими элементами документа, такими как ссылки, кнопки, заголовки, поля форм, ориентиры и другие структуры документа.</target>
       </segment>
     </unit>
     <unit id="c74904c4-7ee4-412d-a52f-e2f62c56e219">
@@ -14126,7 +14126,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source> Select next element type | flick down | Switches to the next browse mode navigation element type </source>
-        <target> Выбрать следующий тип элемента | пролистать вниз | Переключается на следующий тип элемента навигации режима обзора </target>
+        <target> Выбрать следующий тип элемента | смахнуть вниз | Переключается на следующий тип элемента навигации режима обзора </target>
       </segment>
     </unit>
     <unit id="4e28b03b-4d2e-4635-a063-563ca924fba1">
@@ -14137,7 +14137,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source> Select previous element type | flick up | Switches to the previous browse mode navigation element type </source>
-        <target> Выбрать предыдущий тип элемента | пролистать вверх | Переключается на предыдущий тип элемента навигации режима обзора </target>
+        <target> Выбрать предыдущий тип элемента | смахнуть вверх | Переключается на предыдущий тип элемента навигации режима обзора </target>
       </segment>
     </unit>
     <unit id="b930b0bf-d18c-46a7-86fe-99e175e68a8d">
@@ -14148,7 +14148,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source> Move to next element | flick right | Moves to the next browse mode element of the selected type </source>
-        <target> Перейти к следующему элементу | пролистать вправо | Переходит к следующему элементу режима обзора выбранного типа </target>
+        <target> Перейти к следующему элементу | смахнуть вправо | Переходит к следующему элементу режима обзора выбранного типа </target>
       </segment>
     </unit>
     <unit id="2f19f32e-a8bd-4d77-8dd7-ab051a218a81">
@@ -14159,7 +14159,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source> Move to previous element | flick left | Moves to the previous browse mode element of the selected type </source>
-        <target> Перейти к предыдущему элементу | пролистать влево | Переходит к предыдущему элементу режима обзора выбранного типа </target>
+        <target> Перейти к предыдущему элементу | смахнуть влево | Переходит к предыдущему элементу режима обзора выбранного типа </target>
       </segment>
     </unit>
     <unit id="c4eb3601-03f4-4dae-9e70-8257358bb9b4">
@@ -14168,7 +14168,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When the "default" element type is selected, flicking left or right moves through all elements in the document.</source>
-        <target>Когда выбран тип элемента "по умолчанию", пролистывание влево или вправо позволяет перемещаться по всем элементам документа.</target>
+        <target>Когда выбран тип элемента "по умолчанию", смахивание влево или вправо позволяет перемещаться по всем элементам документа.</target>
       </segment>
     </unit>
     <unit id="b349402c-d7c9-4ab1-81dd-6b9f7c5c44d4">
@@ -14177,7 +14177,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When any other element type is selected, flicking left or right moves to the previous or next element of that type.</source>
-        <target>Когда выбран любой другой тип элемента, пролистывание влево или вправо позволяет перейти к предыдущему или следующему элементу этого типа.</target>
+        <target>Когда выбран любой другой тип элемента, смахивание влево или вправо позволяет перейти к предыдущему или следующему элементу этого типа.</target>
       </segment>
     </unit>
     <unit id="119467db-a1c9-43e7-b31a-0bc6935f4b61">
@@ -14186,7 +14186,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Flicking up or down cycles through the available element types.</source>
-        <target>Пролистывание вверх или вниз позволяет переключаться по кругу между доступными типами элементов.</target>
+        <target>Смахивание вверх или вниз позволяет переключаться по кругу между доступными типами элементов.</target>
       </segment>
     </unit>
     <unit id="0111bc1b-23a7-40d8-8be0-cd03bffebea6">
@@ -14473,9 +14473,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1154</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Clickable element</source>
-        <target>Clickable element</target>
+        <target>Интерактивный элемент</target>
       </segment>
     </unit>
     <unit id="125751a0-7c42-4440-aba6-53a4788f58f2">
@@ -14725,9 +14725,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1191</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When the [Keep search history](#SearchHistory) browse mode setting is enabled, this field is a combo box that also offers the terms you have recently searched for (up to 20), which are cleared when NVDA restarts.</source>
-        <target>When the [Keep search history](#SearchHistory) browse mode setting is enabled, this field is a combo box that also offers the terms you have recently searched for (up to 20), which are cleared when NVDA restarts.</target>
+        <target>Когда включена настройка режима обзора [Сохранить историю поиска](#SearchHistory), это поле представляет собой выпадающий список, в котором также отображаются недавно использованные поисковые запросы (до 20), которые удаляются при перезапуске NVDA.</target>
       </segment>
     </unit>
     <unit id="7b7daada-42a3-42a7-ae00-f3d6e097518b">
@@ -14903,9 +14903,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1223</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>However, NVDA has a Native Selection Mode which can be toggled on or off in Browse Mode documents that support it.</source>
-        <target>However, NVDA has a Native Selection Mode which can be toggled on or off in Browse Mode documents that support it.</target>
+        <target>Однако в NVDA есть режим исходного выделения, который можно включать или выключать в документах режима обзора, поддерживающих его.</target>
       </segment>
     </unit>
     <unit id="7657ffc2-f9a7-40ee-a0e8-e888bdc9407d">
@@ -14961,18 +14961,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1230</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Microsoft Word and Outlook, where it cannot be toggled off</source>
-        <target>Microsoft Word and Outlook, where it cannot be toggled off</target>
+        <target>Microsoft Word и Outlook, где эту функцию нельзя отключить</target>
       </segment>
     </unit>
-    <unit id="8da5132f-3792-42ba-a1f5-7b06c90d0234">
+    <unit id="5d5a047d-ddb8-49f2-8553-1c7933c2f6c6">
       <notes>
         <note appliesTo="source">line: 1232</note>
       </notes>
       <segment state="initial">
-        <source>Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.</source>
-        <target>Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.</target>
+        <source>Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.</source>
+        <target>Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.</target>
       </segment>
     </unit>
     <unit id="0c220da6-bf37-40be-b1a7-95859acd96c7">
@@ -15397,9 +15397,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1302</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When [Visual Highlight](#VisionFocusHighlight) is enabled and the browse mode cursor highlighter is enabled, the current subpart of MathML on the web is also exposed visually.</source>
-        <target>When [Visual Highlight](#VisionFocusHighlight) is enabled and the browse mode cursor highlighter is enabled, the current subpart of MathML on the web is also exposed visually.</target>
+        <target>Когда включена [визуальная подсветка](#VisionFocusHighlight) и включена подсветка курсора в режиме обзора, текущая часть MathML в обзоре также отображается визуально.</target>
       </segment>
     </unit>
     <unit id="704098d5-1145-4741-bfa0-0d6755f2905f">
@@ -16296,7 +16296,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The toggle automatic braille scrolling key is pressed</source>
-        <target>нажата клавиша переключения автоматической прокрутки брайлевского дисплея</target>
+        <target>Нажата клавиша переключения автоматической прокрутки брайлевского дисплея</target>
       </segment>
     </unit>
     <unit id="41ef37df-b334-4fe4-8f60-fa672ecd9043">
@@ -16306,7 +16306,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The user presses a key or gesture which would display a new message</source>
-        <target>пользователь нажал клавишу или выполнил жест, вызывающий отображение нового сообщения</target>
+        <target>Пользователь нажал клавишу или выполнил жест, вызывающий отображение нового сообщения</target>
       </segment>
     </unit>
     <unit id="019bad15-0216-4d50-889e-491248a98a40">
@@ -16316,7 +16316,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The focus is moved (including with braille display panning keys)</source>
-        <target>фокус перемещён, в том числе с помощью клавиш прокрутки брайлевского дисплея</target>
+        <target>Фокус перемещён, в том числе с помощью клавиш прокрутки брайлевского дисплея</target>
       </segment>
     </unit>
     <unit id="0acca453-d6d5-4e35-8e30-2e0c404ca603">
@@ -16326,7 +16326,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The end of the document is reached</source>
-        <target>достигнут конец документа</target>
+        <target>Достигнут конец документа</target>
       </segment>
     </unit>
     <unit id="9a60043e-42ce-4d81-b75d-9424b9865757">
@@ -16336,7 +16336,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The state of the lock or secure screen is changed (such as the computer being locked)</source>
-        <target>изменилось состояние блокировки или защищённого экрана, например компьютер был заблокирован</target>
+        <target>Изменилось состояние блокировки или защищённого экрана (например, компьютер был заблокирован)</target>
       </segment>
     </unit>
     <unit id="3c6ba3bd-781a-47f9-8051-d1e1934c46ac">
@@ -18020,9 +18020,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 1627</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.</source>
-        <target>Solid yellow highlights the virtual caret used in browse mode (where there is no physical caret such as in web browsers), the cursor in OCR recognition results, and the current subpart while navigating math on the web.</target>
+        <target>Сплошным жёлтым цветом выделены виртуальный курсор, используемый в режиме обзора (где нет физического курсора, например, в веб-браузерах), курсор в результатах распознавания текста и текущий подраздел при навигации по математическим формулам в интернете.</target>
       </segment>
     </unit>
     <unit id="88d4faf1-1fcf-41f2-929d-888fc923bb74">
@@ -18118,27 +18118,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1648</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.</source>
-        <target>When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.</target>
+        <target>При включении затемнения экрана некоторые функции, зависящие от того, что буквально отображается на экране, работать не будут.</target>
       </segment>
     </unit>
     <unit id="fa989819-1408-40e0-9c30-9a097d0f849e">
       <notes>
         <note appliesTo="source">line: 1649</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.</source>
-        <target>On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.</target>
+        <target>На поддерживаемых системах [Windows OCR](#Win10Ocr) может использоваться даже при включённом затемнении экрана.</target>
       </segment>
     </unit>
     <unit id="7e4f34bb-a1be-4fcd-a64b-a422ff75d148">
       <notes>
         <note appliesTo="source">line: 1650</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Some screenshot utilities may not work.</source>
-        <target>Some screenshot utilities may not work.</target>
+        <target>Некоторые утилиты для создания снимков экрана могут не работать.</target>
       </segment>
     </unit>
     <unit id="002145a3-909c-48ef-90c3-a591cb9905a3">
@@ -18435,9 +18435,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Move mouse to view | None | Move the mouse cursor to the center of the magnified view </source>
-        <target> Move mouse to view | None | Move the mouse cursor to the center of the magnified view </target>
+        <target> Переместить мышь к просмотру | Отсутствует | Переместить курсор мыши в центр увеличенного просмотра </target>
       </segment>
     </unit>
     <unit id="d807d2a3-540f-4ae6-9f96-167a4f143cbd">
@@ -18918,27 +18918,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 1772</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>On supported systems, Windows OCR can still be used while [Screen Curtain](#VisionScreenCurtain) or NVDA's built-in [Magnifier](#Magnifier) is active.</source>
-        <target>On supported systems, Windows OCR can still be used while [Screen Curtain](#VisionScreenCurtain) or NVDA's built-in [Magnifier](#Magnifier) is active.</target>
+        <target>На поддерживаемых системах распознавание текста Windows OCR может использоваться даже при активном [затемнении экрана](#VisionScreenCurtain) или встроенной в NVDA [лупе](#Magnifier).</target>
       </segment>
     </unit>
     <unit id="c680e9d2-3909-49b8-9ff2-64465bece811">
       <notes>
         <note appliesTo="source">line: 1773</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>External visual aids may be partially or fully incompatible with Windows OCR.</source>
-        <target>External visual aids may be partially or fully incompatible with Windows OCR.</target>
+        <target>Внешние визуальные средства могут быть частично или полностью несовместимы с функцией распознавания текста в Windows.</target>
       </segment>
     </unit>
     <unit id="c2e8777a-e9bf-4127-9e66-116b7dec92f0">
       <notes>
         <note appliesTo="source">line: 1774</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You may need to disable these aids before proceeding to a recognition.</source>
-        <target>You may need to disable these aids before proceeding to a recognition.</target>
+        <target>Возможно, вам потребуется отключить эти вспомогательные средства перед распознаванием.</target>
       </segment>
     </unit>
     <unit id="0ac3a78f-d6c6-41b2-84fd-4c464189cf76">
@@ -20245,36 +20245,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2021</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>In some cases, such as when connected over SSH, caret updates may be delayed.</source>
-        <target>In some cases, such as when connected over SSH, caret updates may be delayed.</target>
+        <target>В некоторых случаях, например, при подключении по SSH, обновление каретки может происходить с задержкой.</target>
       </segment>
     </unit>
     <unit id="f2aa2a3e-add5-427b-b547-cb64be02cc1e">
       <notes>
         <note appliesTo="source">line: 2022</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA waits slightly longer for caret movement in Windows Terminal, so it is less likely to report stale characters.</source>
-        <target>NVDA waits slightly longer for caret movement in Windows Terminal, so it is less likely to report stale characters.</target>
+        <target>В терминале Windows NVDA ожидает перемещения каретки немного дольше, поэтому вероятность обнаружения устаревших символов снижается.</target>
       </segment>
     </unit>
     <unit id="f6301205-a2af-4800-8562-a4e1111113fd">
       <notes>
         <note appliesTo="source">line: 2023</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If caret reporting is still inaccurate, try increasing [Caret move timeout](#AdvancedSettingsCaretMoveTimeout) in Advanced settings.</source>
-        <target>If caret reporting is still inaccurate, try increasing [Caret move timeout](#AdvancedSettingsCaretMoveTimeout) in Advanced settings.</target>
+        <target>Если объявление каретки по-прежнему неточное, попробуйте увеличить значение параметра [тайм-аута перемещения каретки](#AdvancedSettingsCaretMoveTimeout) в дополнительных настройках.</target>
       </segment>
     </unit>
     <unit id="568ce591-9139-4df3-9a8d-33be6e5ed878">
       <notes>
         <note appliesTo="source">line: 2024</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Increasing this value may make caret movement feel slower, so consider changing it in a configuration profile for terminal applications.</source>
-        <target>Increasing this value may make caret movement feel slower, so consider changing it in a configuration profile for terminal applications.</target>
+        <target>Увеличение этого значения может привести к замедлению перемещения каретки, поэтому рекомендуется изменить его в профиле конфигурации для терминальных приложений.</target>
       </segment>
     </unit>
     <unit id="8dd52f52-6113-4aed-b410-32e528650d79">
@@ -22017,16 +22017,16 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#SpeechSettingsSayAllReadingUnit}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Say all reads by</source>
-        <target>Say all reads by</target>
+        <target>Режим непрерывного чтения читает по</target>
       </segment>
     </unit>
     <unit id="f75f3f3c-8e81-4199-872f-b27acc4627be">
       <notes>
         <note appliesTo="source">line: 2321</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This combo box lets you choose the unit of text that say all (continuous reading) advances by.</source>
         <target>This combo box lets you choose the unit of text that say all (continuous reading) advances by.</target>
       </segment>
@@ -22035,54 +22035,54 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2322</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This affects how frequently the text caret and view move during say all, and can also affect intonation in long blocks of text.</source>
-        <target>This affects how frequently the text caret and view move during say all, and can also affect intonation in long blocks of text.</target>
+        <target>Это влияет на частоту перемещения курсора и точки обзора текста во время произнесения всего текста, а также может влиять на интонацию в длинных блоках текста.</target>
       </segment>
     </unit>
     <unit id="179d01ff-04bd-4220-b0dc-3e30eb5e4d3f">
       <notes>
         <note appliesTo="source">line: 2323</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When set to "Sentence where possible", NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.</source>
-        <target>When set to "Sentence where possible", NVDA reads sentence by sentence in controls and documents that support sentence boundaries, and automatically falls back to reading by line where sentence boundaries are not supported.</target>
+        <target>При выборе параметра "По предложениям (по возможности)" NVDA считывает предложения по одному в элементах управления и документах, поддерживающих границы предложений, и автоматически переключается на построчное чтение в тех случаях, когда границы предложений не поддерживаются.</target>
       </segment>
     </unit>
     <unit id="507f0e81-42df-49b8-9b3d-37588cc4d9b7">
       <notes>
         <note appliesTo="source">line: 2324</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Sentence boundaries are supported in Microsoft Word and Outlook, in several edit controls, and in most browse mode documents such as web pages.</source>
-        <target>Sentence boundaries are supported in Microsoft Word and Outlook, in several edit controls, and in most browse mode documents such as web pages.</target>
+        <target>В Microsoft Word и Outlook, в некоторых элементах управления редактирования, а также в большинстве документов в режиме обзора, таких как веб-страницы, поддерживаются границы предложений.</target>
       </segment>
     </unit>
     <unit id="57e647fa-9653-4a0e-b971-4e6a132418aa">
       <notes>
         <note appliesTo="source">line: 2325</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When set to "Paragraph", NVDA reads paragraph by paragraph.</source>
-        <target>When set to "Paragraph", NVDA reads paragraph by paragraph.</target>
+        <target>При выборе параметра "По абзацам" NVDA читает абзац за абзацем.</target>
       </segment>
     </unit>
     <unit id="90ad0097-f14f-4277-bae3-6e2ea606702c">
       <notes>
         <note appliesTo="source">line: 2326</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When set to "Line", NVDA always reads line by line.</source>
-        <target>When set to "Line", NVDA always reads line by line.</target>
+        <target>При выборе параметра "По строкам" NVDA всегда читает текст построчно.</target>
       </segment>
     </unit>
     <unit id="b82f768b-2246-4196-a8d2-0984708b90fd">
       <notes>
         <note appliesTo="source">line: 2327</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, when set to "Line", say all reads by line in Rich Edit controls such as NVDA's log viewer, whereas the default reads these by sentence.</source>
-        <target>For example, when set to "Line", say all reads by line in Rich Edit controls such as NVDA's log viewer, whereas the default reads these by sentence.</target>
+        <target>Например, если установлено значение "По строкам", режим непрерывного чтения будет произносить построчно в элементах управления Rich Edit, таких как средство просмотра журналов NVDA, тогда как по умолчанию они будут считываться по предложениям.</target>
       </segment>
     </unit>
     <unit id="7b7c73cf-9d8e-4d63-8025-c8567a1c7b3d">
@@ -22091,9 +22091,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Default (Sentence where possible), Sentence where possible, Paragraph, Line </source>
-        <target> Options | Default (Sentence where possible), Sentence where possible, Paragraph, Line </target>
+        <target> Опции | По умолчанию (По предложениям (по возможности)), По предложениям (по возможности), По абзацам, По строкам </target>
       </segment>
     </unit>
     <unit id="87f2450a-1462-40c4-9a30-51a99ea078fe">
@@ -22102,9 +22102,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Sentence where possible </source>
-        <target> Default | Sentence where possible </target>
+        <target> По умолчанию | По предложениям (по возможности) </target>
       </segment>
     </unit>
     <unit id="50f3a4ca-fb8b-4154-b9ed-44d4aecc86b6">
@@ -24215,27 +24215,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2684</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.</source>
-        <target>While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.</target>
+        <target>Пока включена функция автоматической прокрутки, вы по-прежнему можете использовать команду прокрутки назад, чтобы снова прочитать предыдущее содержимое, и прокрутить вперёд, например, чтобы пропустить пустую строку или если читаемая строка слишком короткая.</target>
       </segment>
     </unit>
     <unit id="9f7eafae-e383-4ef2-8e42-84d78de49b09">
       <notes>
         <note appliesTo="source">line: 2686</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.</source>
-        <target>Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.</target>
+        <target>Автоматическая прокрутка будет отключена при нажатии клавиши маршрутизации, при отображении сообщения по брайлю, при появлении нового объекта, при входе на защищённый экран, при блокировке сессии или при достижении конца окна.</target>
       </segment>
     </unit>
     <unit id="39c16359-560b-4581-ac94-32c33dbe125a">
       <notes>
         <note appliesTo="source">line: 2688</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).</source>
-        <target>Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).</target>
+        <target>Команды для переключения автоматической прокрутки, а также для увеличения или уменьшения скорости прокрутки можно назначить в разделе "Брайль" диалога [жестов ввода](#InputGestures).</target>
       </segment>
     </unit>
     <unit id="1785ddd6-6f69-4132-b757-fa2d6d5fd9c3">
@@ -24244,36 +24244,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#BrailleSettingsWordWrap}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Text wrap</source>
-        <target>Text wrap</target>
+        <target>Перенос текста</target>
       </segment>
     </unit>
     <unit id="2d1d2579-b607-45ce-9fc9-7424877cc300">
       <notes>
         <note appliesTo="source">line: 2692</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.</source>
-        <target>This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.</target>
+        <target>Этот комбинированный список позволяет настроить обработку текста NVDA, который слишком длинный для отображения на брайлевском дисплее.</target>
       </segment>
     </unit>
     <unit id="33a7226c-baf1-4851-b1c5-4d004e11e6fd">
       <notes>
         <note appliesTo="source">line: 2693</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When a word is cut across rows, the continuation mark (dots 7 and 8) is shown in the last cell of the row, unless otherwise noted below.</source>
-        <target>When a word is cut across rows, the continuation mark (dots 7 and 8) is shown in the last cell of the row, unless otherwise noted below.</target>
+        <target>Если слово пересекает строку, знак продолжения (точки 7 и 8) отображается в последней ячейке строки, если не указано иное ниже.</target>
       </segment>
     </unit>
     <unit id="caa3cd93-4df1-4ed1-ab98-6087a9cffe70">
       <notes>
         <note appliesTo="source">line: 2694</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The following options are available:</source>
-        <target>The following options are available:</target>
+        <target>Доступны следующие варианты:</target>
       </segment>
     </unit>
     <unit id="818bfd3a-a1b8-4efa-a735-b46758a62b92">
@@ -24281,27 +24281,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2696</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Off: Text wraps at the display edge, cutting words mid-way if necessary, without showing any continuation mark.</source>
-        <target>Off: Text wraps at the display edge, cutting words mid-way if necessary, without showing any continuation mark.</target>
+        <target>Выключен: Текст переносится по краю дисплея, при необходимости обрывая слова посередине, без отображения знака продолжения.</target>
       </segment>
     </unit>
     <unit id="3f465aeb-8d18-4aec-bb56-8b6e3a5fc5b9">
       <notes>
         <note appliesTo="source">line: 2697</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>As much of the text as possible will be displayed on each row.</source>
-        <target>As much of the text as possible will be displayed on each row.</target>
+        <target>В каждой строке будет отображено как можно больше текста.</target>
       </segment>
     </unit>
     <unit id="b45b5d1e-67a0-4f68-8e54-5f51abc87277">
       <notes>
         <note appliesTo="source">line: 2698</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When you scroll the display, you will be able to read the rest of the text.</source>
-        <target>When you scroll the display, you will be able to read the rest of the text.</target>
+        <target>Прокрутив дисплей, вы сможете прочитать остальную часть текста.</target>
       </segment>
     </unit>
     <unit id="e9ba066c-85ae-45a4-99bc-47d12ec1a4f1">
@@ -24309,18 +24309,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2699</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Show mark when words are cut: Text is not wrapped, but whenever a word is cut at the end of the display, a continuation mark is shown.</source>
-        <target>Show mark when words are cut: Text is not wrapped, but whenever a word is cut at the end of the display, a continuation mark is shown.</target>
+        <target>Отметить , когда слова обрезаны: Текст не переносится по строкам, но всякий раз, когда слово обрезается в конце экрана, отображается знак продолжения.</target>
       </segment>
     </unit>
     <unit id="c63ba117-bb6b-49d9-beb3-ef040f0443b6">
       <notes>
         <note appliesTo="source">line: 2700</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When you scroll the display, you will be able to read the rest of the word.</source>
-        <target>When you scroll the display, you will be able to read the rest of the word.</target>
+        <target>Прокрутив дисплей, вы сможете прочитать остальную часть слова.</target>
       </segment>
     </unit>
     <unit id="688a1087-4c2b-4084-a649-c04494d3d3d4">
@@ -24328,9 +24328,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2701</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>At word boundaries: A word which is too large to fit at the end of the braille display will not be split.</source>
-        <target>At word boundaries: A word which is too large to fit at the end of the braille display will not be split.</target>
+        <target>По границам слов: Слово, которое слишком велико, чтобы поместиться в конце брайлевского дисплея, не будет разделено.</target>
       </segment>
     </unit>
     <unit id="2225f79a-a139-43ad-8d56-e77db9f030e2">
@@ -24355,18 +24355,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 2704</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note that if the word is too large to fit on the display even by itself, the word must still be split; the continuation mark is then shown.</source>
-        <target>Note that if the word is too large to fit on the display even by itself, the word must still be split; the continuation mark is then shown.</target>
+        <target>Обратите внимание, что если слово слишком велико, чтобы поместиться на экране даже само по себе, его всё равно необходимо разделить; в этом случае отобразится знак продолжения.</target>
       </segment>
     </unit>
     <unit id="ec18ac7f-04a6-4c4c-838c-9ad12bd26387">
       <notes>
         <note appliesTo="source">line: 2705</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option may allow for more fluent reading, but generally requires you to scroll the display more.</source>
-        <target>This option may allow for more fluent reading, but generally requires you to scroll the display more.</target>
+        <target>Этот вариант может обеспечить более плавное чтение, но, как правило, требует большей прокрутки экрана.</target>
       </segment>
     </unit>
     <unit id="6ba19c47-c374-4177-b2b3-37fa62eb7f82">
@@ -24374,27 +24374,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2706</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>At word or syllable boundaries: Like "At word boundaries", but long words that don't fit are split at a syllable boundary when possible, using the language of the word if known.</source>
-        <target>At word or syllable boundaries: Like "At word boundaries", but long words that don't fit are split at a syllable boundary when possible, using the language of the word if known.</target>
+        <target>По границам слов или слогов: Аналогично методу "По границам слов", но длинные слова, которые не помещаются в слово, разделяются по границе слога, если это возможно, с использованием языка слова, если он известен.</target>
       </segment>
     </unit>
     <unit id="87e1224f-1732-404c-9695-c7aa5305ae80">
       <notes>
         <note appliesTo="source">line: 2707</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, the word `behave` may be split between `be` and `have`.</source>
-        <target>For example, the word `behave` may be split between `be` and `have`.</target>
+        <target>Например, слово `behave` может быть разделено на части `be` и `have`.</target>
       </segment>
     </unit>
     <unit id="07cf9761-d7f2-4aa3-ae4f-bd8c92f17899">
       <notes>
         <note appliesTo="source">line: 2708</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The continuation mark is shown whenever a word is split.</source>
-        <target>The continuation mark is shown whenever a word is split.</target>
+        <target>Знак продолжения слова отображается всякий раз, когда слово разделяется.</target>
       </segment>
     </unit>
     <unit id="4bd1a767-eada-4513-a64c-a86731f2ed02">
@@ -24550,45 +24550,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#ChineseBrailleWordSegmentation}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Use Chinese word segmentation</source>
-        <target>Use Chinese word segmentation</target>
+        <target>Использовать китайскую сегментацию слов</target>
       </segment>
     </unit>
     <unit id="7a2b95a5-1182-41a7-b276-121d2d4500f9">
       <notes>
         <note appliesTo="source">line: 2740</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting controls whether NVDA uses Chinese word segmentation when translating text into braille.</source>
-        <target>This setting controls whether NVDA uses Chinese word segmentation when translating text into braille.</target>
+        <target>Этот параметр определяет, будет ли NVDA использовать сегментацию китайских слов при переводе текста в брайль.</target>
       </segment>
     </unit>
     <unit id="3ce0a898-f01f-4e93-847a-a405af277e30">
       <notes>
         <note appliesTo="source">line: 2741</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When enabled and a Chinese braille output table other than "Chinese (Taiwan, Mandarin)" is in use, NVDA inserts spaces between Chinese words before translation.</source>
-        <target>When enabled and a Chinese braille output table other than "Chinese (Taiwan, Mandarin)" is in use, NVDA inserts spaces between Chinese words before translation.</target>
+        <target>При включении этой функции и использовании китайской брайлевской таблицы вывода, отличной от "Китайский (Тайвань, Мандарин)", NVDA вставляет пробелы между китайскими словами перед переводом.</target>
       </segment>
     </unit>
     <unit id="4fe157a5-9c9d-4dbc-98a7-4d6015d594d2">
       <notes>
         <note appliesTo="source">line: 2742</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When disabled, NVDA passes text directly to the output table without inserting spaces between words.</source>
-        <target>When disabled, NVDA passes text directly to the output table without inserting spaces between words.</target>
+        <target>При отключении этой функции NVDA передаёт текст непосредственно в таблицу вывода без вставки пробелов между словами.</target>
       </segment>
     </unit>
     <unit id="5cff7def-bbd7-4c02-9c1f-2298ac286cda">
       <notes>
         <note appliesTo="source">line: 2743</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting has no effect with the "Chinese (Taiwan, Mandarin)" table or other non-Chinese output tables.</source>
-        <target>This setting has no effect with the "Chinese (Taiwan, Mandarin)" table or other non-Chinese output tables.</target>
+        <target>Этот параметр не влияет на таблицу "Китайский (Тайвань, Мандарин)" или другие таблицы вывода, не относящиеся к китайскому языку.</target>
       </segment>
     </unit>
     <unit id="c2f79fd8-afb0-4eb2-931b-6efc543bbb08">
@@ -24597,9 +24597,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Enabled, Disabled </source>
-        <target> Options | Enabled, Disabled </target>
+        <target> Опции | Включено, Выключено </target>
       </segment>
     </unit>
     <unit id="469256a2-2da1-447a-b01a-55f294cd28da">
@@ -24608,9 +24608,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Enabled </source>
-        <target> Default | Enabled </target>
+        <target> По умолчанию | Включено </target>
       </segment>
     </unit>
     <unit id="5b7765ac-52bc-4f3f-b358-c0fca9c5839c">
@@ -25972,9 +25972,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 2980</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted, including the cursor in OCR recognition results and the current subpart while navigating math on the web.</source>
-        <target>Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted, including the cursor in OCR recognition results and the current subpart while navigating math on the web.</target>
+        <target>Подсвечивать курсор режима обзора: Переключает подсветку виртуального курсора [режима обзора](#BrowseMode), включая курсор в результатах распознавания текста и текущий фрагмент при навигации по математическим формулам в интернете.</target>
       </segment>
     </unit>
     <unit id="fe43547e-810d-4094-9bcb-fa8547848ab6">
@@ -26978,27 +26978,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3175</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If on, this option will cause speech to be interrupted each time a character is typed.</source>
-        <target>If on, this option will cause speech to be interrupted each time a character is typed.</target>
+        <target>Если эта опция включена, речь будет прерываться каждый раз при наборе символа.</target>
       </segment>
     </unit>
     <unit id="9c1d9ff1-e5eb-46a8-9c78-ab5daa7a4928">
       <notes>
         <note appliesTo="source">line: 3176</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is enabled by default.</source>
-        <target>This option is enabled by default.</target>
+        <target>Эта опция включена по умолчанию.</target>
       </segment>
     </unit>
     <unit id="74c1df32-b800-4e11-aa64-ed22151bb7cf">
       <notes>
         <note appliesTo="source">line: 3177</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option affects all NVDA speech, including in browse mode, focus mode, and say all.</source>
-        <target>This option affects all NVDA speech, including in browse mode, focus mode, and say all.</target>
+        <target>Эта опция влияет на всю речь NVDA, включая режим обзора, режим фокуса и режим непрерывного чтения.</target>
       </segment>
     </unit>
     <unit id="c36b4346-470e-42e8-a324-71522c127902">
@@ -27016,27 +27016,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3181</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If on, this option will cause speech to be interrupted each time the Enter key is pressed.</source>
-        <target>If on, this option will cause speech to be interrupted each time the Enter key is pressed.</target>
+        <target>Если эта опция включена, речь будет прерываться каждый раз при нажатии клавиши Enter.</target>
       </segment>
     </unit>
     <unit id="136fd6b1-4a93-42e0-b6ef-7e5702835443">
       <notes>
         <note appliesTo="source">line: 3182</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option is enabled by default.</source>
-        <target>This option is enabled by default.</target>
+        <target>Эта опция включена по умолчанию.</target>
       </segment>
     </unit>
     <unit id="fe3040ce-ff3c-40d3-9979-6998358a9c40">
       <notes>
         <note appliesTo="source">line: 3183</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option affects all NVDA speech, including in browse mode, focus mode, and say all.</source>
-        <target>This option affects all NVDA speech, including in browse mode, focus mode, and say all.</target>
+        <target>Эта опция влияет на всю речь NVDA, включая режим обзора, режим фокуса и режим непрерывного чтения.</target>
       </segment>
     </unit>
     <unit id="07faa9fc-deb8-4f8f-9549-f754c6d006f0">
@@ -27675,72 +27675,72 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#TouchEdgeGestures}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Enable edge gestures</source>
-        <target>Enable edge gestures</target>
+        <target>Включить жесты края</target>
       </segment>
     </unit>
     <unit id="b7e25875-f001-41ef-95eb-8b2131523659">
       <notes>
         <note appliesTo="source">line: 3298</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This checkbox enables edge gesture support.</source>
-        <target>This checkbox enables edge gesture support.</target>
+        <target>Этот флажок включает поддержку жестов по краям экрана.</target>
       </segment>
     </unit>
     <unit id="a87ff587-1112-4815-9538-4698ac0bb0f1">
       <notes>
         <note appliesTo="source">line: 3299</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).</source>
-        <target>When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).</target>
+        <target>При включении этой функции жесты, начинающиеся в пределах 15 мм от любого края экрана, рассматриваются как отдельные жесты и могут быть независимо привязаны в диалоге [жестов ввода](#InputGestures).</target>
       </segment>
     </unit>
     <unit id="36ed2834-c73e-422c-aa01-8fca7c2291d1">
       <notes>
         <note appliesTo="source">line: 3300</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.</source>
-        <target>For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.</target>
+        <target>Например, смахивание вправо, начинающееся от левого края экрана, может быть привязано к другой команде, нежели смахивание вправо, выполняемое в центре экрана.</target>
       </segment>
     </unit>
     <unit id="3fdb1f43-34eb-4064-a211-88856891ac6c">
       <notes>
         <note appliesTo="source">line: 3301</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.</source>
-        <target>If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.</target>
+        <target>Если жесты по краям экрана отключены после установки привязок, эти привязки сохранятся, но никогда не будут активированы.</target>
       </segment>
     </unit>
     <unit id="cf9127f9-f1c9-40f6-b898-92bd71e183db">
       <notes>
         <note appliesTo="source">line: 3302</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.</source>
-        <target>Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.</target>
+        <target>Примечание: Windows или панель задач могут перехватывать жесты на определённых участках экрана до того, как они достигнут NVDA.</target>
       </segment>
     </unit>
     <unit id="6926bce3-d226-4e63-8ece-c1b73db58edf">
       <notes>
         <note appliesTo="source">line: 3303</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, swiping from the bottom edge typically opens the Start menu or Action Center, and if the taskbar is positioned on another edge, touches on that edge will similarly be intercepted.</source>
-        <target>For example, swiping from the bottom edge typically opens the Start menu or Action Center, and if the taskbar is positioned on another edge, touches on that edge will similarly be intercepted.</target>
+        <target>Например, проведение пальцем от нижнего края обычно открывает главное меню или Центр уведомлений, и если панель задач расположена на другом краю, касания на этом краю также будут перехвачены.</target>
       </segment>
     </unit>
     <unit id="55051501-45b9-4aac-9a6f-e296476a1151">
       <notes>
         <note appliesTo="source">line: 3304</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If a gesture on a particular edge does not work, check whether Windows is intercepting it, and consider leaving that edge unbound.</source>
-        <target>If a gesture on a particular edge does not work, check whether Windows is intercepting it, and consider leaving that edge unbound.</target>
+        <target>Если жест на определённом краю не работает, проверьте, не перехватывает ли его Windows, и подумайте о том, чтобы оставить этот край незакреплённым.</target>
       </segment>
     </unit>
     <unit id="3e08d2c9-926e-46a2-bd40-9c29501117fc">
@@ -29026,36 +29026,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#SearchHistory}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Keep search history</source>
-        <target>Keep search history</target>
+        <target>Сохранять историю поиска</target>
       </segment>
     </unit>
     <unit id="2ab4f0c8-e003-49e9-9f61-ed98e5f719a4">
       <notes>
         <note appliesTo="source">line: 3540</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Enabled by default, this option determines whether the [Find dialog](#SearchingForText) remembers the terms you have searched for during the current NVDA session.</source>
-        <target>Enabled by default, this option determines whether the [Find dialog](#SearchingForText) remembers the terms you have searched for during the current NVDA session.</target>
+        <target>Эта опция, включённая по умолчанию, определяет, будет ли [диалог поиска](#SearchingForText) запоминать поисковые запросы, выполненный вами в ходе текущей сессии NVDA.</target>
       </segment>
     </unit>
     <unit id="b6ec66fb-5e33-47d0-9da5-dd46e9b55b56">
       <notes>
         <note appliesTo="source">line: 3541</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When enabled, the Find dialog offers up to 20 recently used search terms from a combo box; this history is kept in memory only and is cleared when NVDA restarts.</source>
-        <target>When enabled, the Find dialog offers up to 20 recently used search terms from a combo box; this history is kept in memory only and is cleared when NVDA restarts.</target>
+        <target>При включении диалог поиска отображает до 20 недавно использованных поисковых запросов в выпадающем списке; эта история хранится только в памяти и очищается при перезапуске NVDA.</target>
       </segment>
     </unit>
     <unit id="98044c8d-a677-42ae-848c-1c449fab8996">
       <notes>
         <note appliesTo="source">line: 3542</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If the combo box interferes with your input method, such as with some IMEs, you can set this option to Disabled to return the Find dialog to a plain edit field.</source>
-        <target>If the combo box interferes with your input method, such as with some IMEs, you can set this option to Disabled to return the Find dialog to a plain edit field.</target>
+        <target>Если выпадающий список мешает вашему способу ввода, например, с некоторыми способами ввода текста, вы можете выключить этот параметр, чтобы вернуть диалог поиска к обычному полю редактирования.</target>
       </segment>
     </unit>
     <unit id="d07be643-a027-468d-96cf-810967dde6aa">
@@ -29064,9 +29064,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Default (Enabled), Disabled, Enabled </source>
-        <target> Options | Default (Enabled), Disabled, Enabled </target>
+        <target> Опции | По умолчанию (Включено), Отключено, Включено </target>
       </segment>
     </unit>
     <unit id="3f47a03c-3792-499e-af98-e7519a446455">
@@ -29075,9 +29075,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Enabled </source>
-        <target> Default | Enabled </target>
+        <target> По умолчанию | Включено </target>
       </segment>
     </unit>
     <unit id="ba11363c-8918-4ab9-a3c8-dd4df38e33b2">
@@ -29086,45 +29086,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#NativeSelectionModeSetting}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Native selection mode</source>
-        <target>Native selection mode</target>
+        <target>Режим исходного выделения</target>
       </segment>
     </unit>
     <unit id="db954d0d-14a6-47bd-83ae-07f1b20be7cb">
       <notes>
         <note appliesTo="source">line: 3551</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.</source>
-        <target>Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.</target>
+        <target>Этот параметр по умолчанию выключен и определяет, будет ли автоматически включён [режим исходного выделения](#NativeSelectionMode) в документах, поддерживающих режим просмотра.</target>
       </segment>
     </unit>
     <unit id="8b9c0f07-3a4e-489c-b6d6-de7dede1f500">
       <notes>
         <note appliesTo="source">line: 3552</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.</source>
-        <target>This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.</target>
+        <target>Этот параметр не влияет на Microsoft Word и Outlook, где всегда используется собственный режим выделения.</target>
       </segment>
     </unit>
     <unit id="fdb1dad3-9d1c-48e8-b66c-61537d026608">
       <notes>
         <note appliesTo="source">line: 3553</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.</source>
-        <target>When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.</target>
+        <target>Даже если эта функция отключена, вы всё равно можете вручную включать режим выделения для каждого документа с помощью комбинации клавиш `NVDA+Shift+F10`.</target>
       </segment>
     </unit>
     <unit id="77b02798-0255-4048-8a3d-10a785db5d04">
       <notes>
         <note appliesTo="source">line: 3554</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Changing this option takes effect for newly loaded documents.</source>
-        <target>Changing this option takes effect for newly loaded documents.</target>
+        <target>Изменение этого параметра вступает в силу для вновь загруженных документов.</target>
       </segment>
     </unit>
     <unit id="75acede4-bd40-4ea8-8aae-252775640872">
@@ -29133,9 +29133,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Default (Disabled), Disabled, Enabled </source>
-        <target> Options | Default (Disabled), Disabled, Enabled </target>
+        <target> Опции | По умолчанию (Отключено), Отключено, Включено </target>
       </segment>
     </unit>
     <unit id="6a5fb6ca-5bb9-4b3f-b8e1-4ee2962f1b92">
@@ -29144,9 +29144,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Disabled </source>
-        <target> Default | Disabled </target>
+        <target> По умолчанию | Отключено </target>
       </segment>
     </unit>
     <unit id="ea7aba20-559d-469c-9a29-682ca521a6ac">
@@ -29184,7 +29184,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Only the checked element types will appear when flicking up or down to cycle through browse mode navigation elements.</source>
-        <target>При пролистывании вверх или вниз для переключения между элементами навигации в режиме обзора будут отображаться только отмеченные типы элементов.</target>
+        <target>При смахивании вверх или вниз для переключения между элементами навигации в режиме обзора будут отображаться только отмеченные типы элементов.</target>
       </segment>
     </unit>
     <unit id="70bbd2f6-2eac-478d-8e55-03dab261d682">
@@ -29457,9 +29457,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 3602</note>
         <note appliesTo="source">prefix:   * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Indent tone duration (ms)</source>
-        <target>Indent tone duration (ms)</target>
+        <target>Длительность звукового сигнала отступа (мс)</target>
       </segment>
     </unit>
     <unit id="b3500d8e-ae50-4cdf-a4a4-52e29385dfc7">
@@ -30040,36 +30040,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#IndentToneDuration}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Indent tone duration</source>
-        <target>Indent tone duration</target>
+        <target>Длительность звукового сигнала отступа</target>
       </segment>
     </unit>
     <unit id="8fe258f3-ef74-47ff-8f1b-57203226066f">
       <notes>
         <note appliesTo="source">line: 3684</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.</source>
-        <target>This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.</target>
+        <target>Эта опция позволяет настроить длительность звуковых сигналов отступа при выборе параметра "Звуковые сигналы" или "Речь и звуковые сигналы" в комбинированном списке ["Чтение отступа строк"](#DocumentFormattingSettingsLineIndentation).</target>
       </segment>
     </unit>
     <unit id="3b85e1ca-5ade-49b5-8516-f890101e9f0c">
       <notes>
         <note appliesTo="source">line: 3685</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The value can range from 10 ms to 2000 ms.</source>
-        <target>The value can range from 10 ms to 2000 ms.</target>
+        <target>Значение может варьироваться от 10 мс до 2000 мс.</target>
       </segment>
     </unit>
     <unit id="08789ed1-3a7f-4d2b-ad24-d664e967f61b">
       <notes>
         <note appliesTo="source">line: 3686</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The default is 40 ms.</source>
-        <target>The default is 40 ms.</target>
+        <target>Значение по умолчанию — 40 мс.</target>
       </segment>
     </unit>
     <unit id="603616f5-4091-4d86-8c9a-81f9a3e2c11d">
@@ -30224,36 +30224,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#WordSegmentationStandard}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Word Segmentation Standard</source>
-        <target>Word Segmentation Standard</target>
+        <target>Стандарт сегментации слов</target>
       </segment>
     </unit>
     <unit id="6d8433ce-523d-4164-a538-3d04d1be50a1">
       <notes>
         <note appliesTo="source">line: 3714</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting controls how NVDA determines word boundaries when navigating by word.</source>
-        <target>This setting controls how NVDA determines word boundaries when navigating by word.</target>
+        <target>Этот параметр определяет, как NVDA определяет границы слов при навигации по тексту.</target>
       </segment>
     </unit>
     <unit id="f0a4cb75-9ba5-4ff1-9f69-d3d07d19d489">
       <notes>
         <note appliesTo="source">line: 3715</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This affects how script languages without spaces break up text into words, sentences and paragraphs</source>
-        <target>This affects how script languages without spaces break up text into words, sentences and paragraphs</target>
+        <target>Это влияет на то, как в языках с алфавитом без пробелов текст разбивается на слова, предложения и абзацы</target>
       </segment>
     </unit>
     <unit id="b61c0388-14b0-4c41-bec2-2d17cf1731ad">
       <notes>
         <note appliesTo="source">line: 3716</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation), except with the "Chinese (Taiwan, Mandarin)" output table.</source>
-        <target>Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation), except with the "Chinese (Taiwan, Mandarin)" output table.</target>
+        <target>При выводе текста по брайлю на китайский язык используется отдельная [настройка сегментации китайских слов](#ChineseBrailleWordSegmentation), за исключением таблицы вывода "Китайский (Тайвань, Мандарин)".</target>
       </segment>
     </unit>
     <unit id="08b74539-869d-4cdb-9e15-c1e256b60bd1">
@@ -30262,9 +30262,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Default (Automatic), Automatic, Chinese, Unicode (ICU), Legacy (Uniscribe) </source>
-        <target> Options | Default (Automatic), Automatic, Chinese, Unicode (ICU), Legacy (Uniscribe) </target>
+        <target> Опции | По умолчанию (Автоматическая), Автоматическая, Китайский, Юникод (ICU), Устаревшая (подпись) </target>
       </segment>
     </unit>
     <unit id="93892737-d196-4090-ab10-9e56f65cc08a">
@@ -30273,9 +30273,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Automatic </source>
-        <target> Default | Automatic </target>
+        <target> По умолчанию | Автоматическая </target>
       </segment>
     </unit>
     <unit id="44dbb1ea-e212-465d-b697-da974671e888">
@@ -30284,9 +30284,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Option | Behaviour </source>
-        <target> Option | Behaviour </target>
+        <target> Параметр | Поведение </target>
       </segment>
     </unit>
     <unit id="99e72298-a8d2-441c-93a8-cade996d3543">
@@ -30295,9 +30295,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Automatic | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. </source>
-        <target> Automatic | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. </target>
+        <target> Автоматическая | Для китайского текста используйте сегментацию слов по синтаксису Unicode (ICU), если она доступна. В противном случае, если доступна сегментация слов по синтаксису Unicode (ICU), используйте устаревшую сегментацию слов Windows. </target>
       </segment>
     </unit>
     <unit id="45a70605-a1e9-4f79-9df2-2681adad6156">
@@ -30306,9 +30306,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Automatic`. </source>
-        <target> Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Automatic`. </target>
+        <target> Китайский | Использовать сегментацию по китайским словам. Если сегментация по китайским словам недоступна, NVDA использует резервный путь, как в режиме `Автоматически`. </target>
       </segment>
     </unit>
     <unit id="0b7dab44-a57d-4526-95b1-3594be78d588">
@@ -30317,9 +30317,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. </source>
-        <target> Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. </target>
+        <target> Юникод (ICU) | Для сегментации слов используется встроенная в Windows библиотека ICU, доступная в Windows 10 версии 1703 (Creators Update) и выше, с возможностью возврата к устаревшему варианту. </target>
       </segment>
     </unit>
     <unit id="54843f3d-dbc1-4b54-8fee-343588bd447b">
@@ -30328,9 +30328,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Legacy (Uniscribe) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. </source>
-        <target> Legacy (Uniscribe) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. </target>
+        <target> Устаревшая (подпись) | Используется устаревшая функция сегментации текста Windows, как в классическом Блокноте и других устаревших элементах управления редактирования Win32. </target>
       </segment>
     </unit>
     <unit id="777df247-4d82-442d-b105-903b6a5600f8">
@@ -33831,27 +33831,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#BeepForSkippedLines}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Beep for skipped lines</source>
-        <target>Beep for skipped lines</target>
+        <target>Сигнал для пропущенных строк</target>
       </segment>
     </unit>
     <unit id="2e4defaf-fbde-4fa7-85e8-7267af9b5df8">
       <notes>
         <note appliesTo="source">line: 4329</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.</source>
-        <target>This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.</target>
+        <target>Этот параметр определяет, будет ли NVDA воспроизводить короткий звуковой сигнал, когда поступает слишком много новых строк, прежде чем все они будут прочтены.</target>
       </segment>
     </unit>
     <unit id="f7af3c51-c7e0-453a-b6b0-60e8d0c25fd8">
       <notes>
         <note appliesTo="source">line: 4330</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.</source>
-        <target>The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.</target>
+        <target>Звуковой сигнал указывает на пропуск нескольких строк и становится немного длиннее по мере пропуска большего количества строк.</target>
       </segment>
     </unit>
     <unit id="dc6db480-4671-41f7-9683-98ddcbfc861e">
@@ -33860,9 +33860,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Disabled, Enabled </source>
-        <target> Options | Disabled, Enabled </target>
+        <target> Опции | Отключено, Включено </target>
       </segment>
     </unit>
     <unit id="81b04197-d2a1-4e26-be46-b9a90d09527a">
@@ -33871,9 +33871,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Enabled </source>
-        <target> Default | Enabled </target>
+        <target> По умолчанию | Включено </target>
       </segment>
     </unit>
     <unit id="00ff1ee8-413e-4344-808d-4021c850aaff">
@@ -34638,18 +34638,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4458</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can use a context menu to edit or remove rules.</source>
-        <target>You can use a context menu to edit or remove rules.</target>
+        <target>Для редактирования или удаления правил можно использовать контекстное меню.</target>
       </segment>
     </unit>
     <unit id="cc2e4789-4271-4fe2-8158-fe9b2d983caa">
       <notes>
         <note appliesTo="source">line: 4459</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can also use the `delete` key to remove a selected rule.</source>
-        <target>You can also use the `delete` key to remove a selected rule.</target>
+        <target>Также для удаления выбранного правила можно использовать клавишу `delete`.</target>
       </segment>
     </unit>
     <unit id="2d219db3-f9dd-40a8-b669-94e7610bae84">
@@ -35319,36 +35319,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4550</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can also use the context menu to add, change, or remove gestures for each command.</source>
-        <target>You can also use the context menu to add, change, or remove gestures for each command.</target>
+        <target>Также вы можете использовать контекстное меню для добавления, изменения или удаления жестов для каждой команды.</target>
       </segment>
     </unit>
     <unit id="886b8f47-91a7-4ec9-a06f-9118447241db">
       <notes>
         <note appliesTo="source">line: 4551</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To change an input gesture of a command, select the gesture and press the change button.</source>
-        <target>To change an input gesture of a command, select the gesture and press the change button.</target>
+        <target>Чтобы изменить жест ввода команды, выберите жест и нажмите кнопку изменить.</target>
       </segment>
     </unit>
     <unit id="907a0dd2-848c-4601-b529-6c5577fb97b9">
       <notes>
         <note appliesTo="source">line: 4552</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Then, perform the new input gesture you wish to associate; that will replace the old one.</source>
-        <target>Then, perform the new input gesture you wish to associate; that will replace the old one.</target>
+        <target>Затем выполните новый жест ввода, который вы хотите связать с предыдущим; он заменит старый.</target>
       </segment>
     </unit>
     <unit id="6947698e-bd51-4207-80b8-9bc42fedbadb">
       <notes>
         <note appliesTo="source">line: 4553</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To remove a gesture from a command, you can press the `delete` key or the remove button.</source>
-        <target>To remove a gesture from a command, you can press the `delete` key or the remove button.</target>
+        <target>Чтобы удалить жест команды, можно нажать клавишу `delete` или кнопку удаления.</target>
       </segment>
     </unit>
     <unit id="d25f2974-f029-4c43-a344-97cec52bd230">
@@ -35703,18 +35703,18 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 4617</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>You can also manage profiles by opening the context menu on a profile in the list to rename or delete it.</source>
-        <target>You can also manage profiles by opening the context menu on a profile in the list to rename or delete it.</target>
+        <target>Вы также можете управлять профилями, открыв контекстное меню профиля в списке, чтобы переименовать или удалить его.</target>
       </segment>
     </unit>
     <unit id="133743d7-7c45-4bc1-86fd-a30063b383ab">
       <notes>
         <note appliesTo="source">line: 4618</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Additionally, you can press `f2` to rename the selected profile or `delete` to remove it.</source>
-        <target>Additionally, you can press `f2` to rename the selected profile or `delete` to remove it.</target>
+        <target>Кроме того, вы можете нажать `f2`, чтобы переименовать выбранный профиль, или `delete`, чтобы удалить его.</target>
       </segment>
     </unit>
     <unit id="bfd9e6dd-357a-45f2-97f1-3d87ee284994">
@@ -36846,7 +36846,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If connected as the controlling computer, send `control+alt+delete` to the controlled computer by opening the NVDA menu, then selecting Tools, then "Remote Access", then "Send control+alt+delete".</source>
-        <target>Если компьютер подключён как управляющий, отправьте `control+alt+delete` на управляемый компьютер, выбрав в меню NVDA Сервис → Удалённый доступ → Отправить control+alt+delete.</target>
+        <target>Если компьютер подключён как управляющий, отправьте `control+alt+delete` на управляемый компьютер, выбрав в меню NVDA Инструменты → Удалённый доступ → Отправить control+alt+delete.</target>
       </segment>
     </unit>
     <unit id="c5ef1a06-f5d5-43bc-b521-628adccd7cb6">
@@ -39484,9 +39484,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 5204</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Help Tech displays (formerly Handy Tech)</source>
-        <target>Help Tech displays (formerly Handy Tech)</target>
+        <target>Дисплеи Help Tech (ранее Handy Tech)</target>
       </segment>
     </unit>
     <unit id="593fd58a-7e22-4df3-8f67-fea0c7faf82b">
@@ -39859,9 +39859,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="32d4e54f-a099-49ef-b180-abeee6ceb762">
@@ -40504,9 +40504,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="8ab64c83-f10c-4afb-b04e-594f7df9e9fc">
@@ -40812,27 +40812,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#HandyTech}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Help Tech Displays</source>
-        <target>Help Tech Displays</target>
+        <target>Дисплеи Help Tech</target>
       </segment>
     </unit>
     <unit id="65f10b2c-e5a4-4205-9227-97b516f33a54">
       <notes>
         <note appliesTo="source">line: 5358</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA supports most displays from [Help Tech](https://www.helptech.de/) (formerly Handy Tech) when connected via USB, serial port or Bluetooth.</source>
-        <target>NVDA supports most displays from [Help Tech](https://www.helptech.de/) (formerly Handy Tech) when connected via USB, serial port or Bluetooth.</target>
+        <target>NVDA поддерживает большинство дисплеев [Help Tech](https://www.helptech.de/) (ранее Handy Tech) при подключении через USB, последовательный порт или Bluetooth.</target>
       </segment>
     </unit>
     <unit id="0aca4c8f-c7f8-4b34-9737-e39932386bd3">
       <notes>
         <note appliesTo="source">line: 5360</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The following displays are no longer supported:</source>
-        <target>The following displays are no longer supported:</target>
+        <target>Следующие дисплеи больше не поддерживаются:</target>
       </segment>
     </unit>
     <unit id="a4f5d9b1-8723-4b0b-973f-bff09a897783">
@@ -40860,27 +40860,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 5364</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Modular displays with firmware version 1.13 or lower.</source>
-        <target>Modular displays with firmware version 1.13 or lower.</target>
+        <target>Модульные дисплеи с версией прошивки 1.13 или ниже.</target>
       </segment>
     </unit>
     <unit id="33b14f66-032e-4666-bd7e-56b3b40c8609">
       <notes>
         <note appliesTo="source">line: 5365</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Please note that the firmware of these displays can be updated.</source>
-        <target>Please note that the firmware of these displays can be updated.</target>
+        <target>Обратите внимание, что прошивку этих дисплеев можно обновить.</target>
       </segment>
     </unit>
     <unit id="7a4da984-e2eb-4a40-a9be-a4c64b3cf5af">
       <notes>
         <note appliesTo="source">line: 5367</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Following are the key assignments for Help Tech displays with NVDA.</source>
-        <target>Following are the key assignments for Help Tech displays with NVDA.</target>
+        <target>Ниже перечислены назначения клавиш для дисплеев Help Tech с NVDA.</target>
       </segment>
     </unit>
     <unit id="e0af6e14-583d-4915-a94a-afaba0eecbd4">
@@ -40964,9 +40964,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="bb4210a8-c1f1-4a4b-91f2-aba4c4816c2f">
@@ -41493,9 +41493,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="72e24c2e-a0b4-4245-a9b4-4ea8c08a901b">
@@ -42148,9 +42148,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="4d36c134-cc87-45ab-bd07-4fa34ce40b37">
@@ -42324,9 +42324,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: #### </note>
         <note appliesTo="source">suffix:  {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Key assignments for Brailliant BI 32, BI 40, B 80, BI 20X and BI 40X</source>
-        <target>Key assignments for Brailliant BI 32, BI 40, B 80, BI 20X and BI 40X</target>
+        <target>Комбинации клавиш для Brailliant BI 32, BI 40, B 80, BI 20X и BI 40X</target>
       </segment>
     </unit>
     <unit id="1d969676-0e1c-4d9f-82a0-fc22b6de776d">
@@ -42346,9 +42346,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Move braille display to previous line | `c1` </source>
-        <target> Move braille display to previous line | `c1` </target>
+        <target> Перемещение брайлевского дисплея к предыдущей строке | `c1` </target>
       </segment>
     </unit>
     <unit id="bc01c026-5698-4500-aad0-b6f9073e7e9b">
@@ -42357,9 +42357,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Scroll braille display back | `c2` </source>
-        <target> Scroll braille display back | `c2` </target>
+        <target> Прокрутить брайлевский дисплей назад | `c2` </target>
       </segment>
     </unit>
     <unit id="562e23a8-f121-4c1f-95e8-07c5d5f132f5">
@@ -42368,9 +42368,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Move braille display to next line | `c3` </source>
-        <target> Move braille display to next line | `c3` </target>
+        <target> Перемещение брайлевского дисплея к следующей строке | `c3` </target>
       </segment>
     </unit>
     <unit id="106f8a8e-3eb6-446e-a87b-b6f8b9768711">
@@ -42379,9 +42379,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Scroll braille display forward | `c5` </source>
-        <target> Scroll braille display forward | `c5` </target>
+        <target> Прокрутить брайлевский дисплей вперёд | `c5` </target>
       </segment>
     </unit>
     <unit id="dc19df25-e546-47ff-852a-1cf39989ef6d">
@@ -42527,9 +42527,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 5598</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>On Windows 11 systems where this driver cannot be installed, Braille Sense and Braille EDGE displays connected via USB can still be detected if you instead install the [HIMS WinUSB driver package](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe).</source>
-        <target>On Windows 11 systems where this driver cannot be installed, Braille Sense and Braille EDGE displays connected via USB can still be detected if you instead install the [HIMS WinUSB driver package](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe).</target>
+        <target>В системах Windows 11, где этот драйвер установить невозможно, дисплеи Braille Sense и Braille EDGE, подключённые через USB, по-прежнему могут быть обнаружены, если вместо этого установить [пакет драйверов HIMS WinUSB](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe).</target>
       </segment>
     </unit>
     <unit id="9cce24b5-bbd6-4ec2-ac8d-ec574b21d502">
@@ -43711,9 +43711,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="5df4e006-d83f-46b3-a9ae-1b4c0e5d23ac">
@@ -48761,9 +48761,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` </source>
-        <target> Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `home1+multiRouting`, `home2+multiRouting` </target>
       </segment>
     </unit>
     <unit id="cd4d4f54-920c-4856-9458-2a8f7f17552f">
@@ -49286,9 +49286,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="e5443642-4760-484a-8f91-c0e8e58faeff">
@@ -49443,9 +49443,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | multiple routing set 1 keys </source>
-        <target> Select range from first up to last braille cell | multiple routing set 1 keys </target>
+        <target> Выбрать диапазон от первой до последней брайлевской ячейки | multiple routing set 1 keys </target>
       </segment>
     </unit>
     <unit id="2da4f244-8e9a-4d8d-8755-617bd598b7bf">
@@ -50151,43 +50151,43 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#DownloadingNVDA}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Downloading NVDA</source>
-        <target>Downloading NVDA</target>
+        <target>Загрузка NVDA</target>
       </segment>
     </unit>
     <unit id="5e2af35b-29b7-4289-b706-44db5c88b772">
       <notes>
         <note appliesTo="source">line: 6545</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).</source>
-        <target>The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).</target>
+        <target>Рекомендуемое место для загрузки NVDA — страница загрузки NV Access [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).</target>
       </segment>
     </unit>
     <unit id="75c1fc38-30be-4ff7-97dd-167d57d6d0cd">
       <notes>
         <note appliesTo="source">line: 6547</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).</source>
-        <target>NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).</target>
+        <target>NVDA также можно загрузить и установить с помощью диспетчера пакетов Windows (WinGet).</target>
       </segment>
     </unit>
     <unit id="0c110b3a-4430-4868-a11e-019817948920">
       <notes>
         <note appliesTo="source">line: 6548</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:</source>
-        <target>Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:</target>
+        <target>Выполните следующую команду в командной строке (`cmd`) или PowerShell для установки последней версии NVDA:</target>
       </segment>
     </unit>
     <unit id="428a65f2-4d38-4392-97e4-eeb1b12332cf">
       <notes>
         <note appliesTo="source">line: 6550</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`winget install --id NVAccess.NVDA`</source>
         <target>`winget install --id NVAccess.NVDA`</target>
       </segment>
@@ -50196,9 +50196,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 6552</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To install beta or RC versions, use the following commands:</source>
-        <target>To install beta or RC versions, use the following commands:</target>
+        <target>Для установки версий beta или RC используйте следующие команды:</target>
       </segment>
     </unit>
     <unit id="1147a0af-bc9c-40a6-bb09-22378c048c40">
@@ -50206,7 +50206,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 6554</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Beta: `winget install --id NVAccess.NVDA.Beta`</source>
         <target>Beta: `winget install --id NVAccess.NVDA.Beta`</target>
       </segment>
@@ -50216,7 +50216,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 6555</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>RC: `winget install --id NVAccess.NVDA.RC`</source>
         <target>RC: `winget install --id NVAccess.NVDA.RC`</target>
       </segment>

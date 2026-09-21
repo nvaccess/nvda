@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="de">
-  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/e88f01b27f09b5ec2333cc91a7a27244b8baf6f8/user_docs/en/userGuide.md">
+  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a86a40aac1ce1401ac3941ad2a93f7758c9d9f4f/user_docs/en/userGuide.md">
     <skeleton>
 # $(ID:f5169acb-2803-46c6-8e4c-7c1aaf973723)
 
@@ -1232,7 +1232,7 @@ $(ID:83202642-35db-40fb-a987-90107d68dcf6)
 * $(ID:8252f830-c763-4e24-917f-93202a61aaa3)
 * $(ID:e35d37db-1dfe-4ef9-9bad-3cad14cc3dc9)
 
-$(ID:8da5132f-3792-42ba-a1f5-7b06c90d0234)
+$(ID:5d5a047d-ddb8-49f2-8553-1c7933c2f6c6)
 
 &lt;!-- KC:beginInclude --&gt;
 
@@ -14966,13 +14966,13 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <target>Microsoft Word and Outlook, where it cannot be toggled off</target>
       </segment>
     </unit>
-    <unit id="8da5132f-3792-42ba-a1f5-7b06c90d0234">
+    <unit id="5d5a047d-ddb8-49f2-8553-1c7933c2f6c6">
       <notes>
         <note appliesTo="source">line: 1232</note>
       </notes>
       <segment state="initial">
-        <source>Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.</source>
-        <target>Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.</target>
+        <source>Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.</source>
+        <target>Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.</target>
       </segment>
     </unit>
     <unit id="0c220da6-bf37-40be-b1a7-95859acd96c7">
@@ -42527,9 +42527,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 5598</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>On Windows 11 systems where this driver cannot be installed, Braille Sense and Braille EDGE displays connected via USB can still be detected if you instead install the [HIMS WinUSB driver package](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe).</source>
-        <target>On Windows 11 systems where this driver cannot be installed, Braille Sense and Braille EDGE displays connected via USB can still be detected if you instead install the [HIMS WinUSB driver package](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe).</target>
+        <target>Auf Windows 11-Systemen, auf denen dieser Treiber nicht installiert werden kann, können Braille Sense- und Braille EDGE-Braillezeilen, die über USB angeschlossen sind, weiterhin erkannt werden, indem Sie stattdessen das [HIMS WinUSB-Treiberpaket](https://hims-product.s3.ap-northeast-2.amazonaws.com/Util/HIMS_Braille_Driver_V3_1.exe) installieren.</target>
       </segment>
     </unit>
     <unit id="9cce24b5-bbd6-4ec2-ac8d-ec574b21d502">
@@ -43711,9 +43711,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Markiert einen Bereich von der ersten bis zur letzten Braillezelle | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="5df4e006-d83f-46b3-a9ae-1b4c0e5d23ac">
@@ -48761,9 +48761,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` </source>
-        <target> Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` </target>
+        <target> Markiert den Bereich von der ersten bis zur letzten Braillezelle | `home1+multiRouting`, `home2+multiRouting` </target>
       </segment>
     </unit>
     <unit id="cd4d4f54-920c-4856-9458-2a8f7f17552f">
@@ -49286,9 +49286,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | `multiRouting` </source>
-        <target> Select range from first up to last braille cell | `multiRouting` </target>
+        <target> Bereich von erster bis letzter Braillezelle auswählen | `multiRouting` </target>
       </segment>
     </unit>
     <unit id="e5443642-4760-484a-8f91-c0e8e58faeff">
@@ -49434,7 +49434,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing set 1</source>
-        <target>Cursor zum Braille-Modul wechseln |Routing set 1</target>
+        <target>Cursor zum Braille-Modul wechseln | Routing set 1</target>
       </segment>
     </unit>
     <unit id="495ffcc2-6f88-47bd-8496-e94086dd2247">
@@ -49443,9 +49443,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Select range from first up to last braille cell | multiple routing set 1 keys </source>
-        <target> Select range from first up to last braille cell | multiple routing set 1 keys </target>
+        <target> Textbereich von der ersten bis zur letzten Braille-Zelle auswählen | Routing-Tasten für Mehrfachauswahl (Satz 1) </target>
       </segment>
     </unit>
     <unit id="2da4f244-8e9a-4d8d-8755-617bd598b7bf">
@@ -50151,43 +50151,43 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ### </note>
         <note appliesTo="source">suffix:  {#DownloadingNVDA}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Downloading NVDA</source>
-        <target>Downloading NVDA</target>
+        <target>NVDA herunterladen</target>
       </segment>
     </unit>
     <unit id="5e2af35b-29b7-4289-b706-44db5c88b772">
       <notes>
         <note appliesTo="source">line: 6545</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).</source>
-        <target>The recommended place to download NVDA is from the NV Access download page at [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/).</target>
+        <target>Am besten laden Sie NVDA von der NV Access Download-Seite unter [https://www.nvaccess.org/download/](https://www.nvaccess.org/download/) herunter.</target>
       </segment>
     </unit>
     <unit id="75c1fc38-30be-4ff7-97dd-167d57d6d0cd">
       <notes>
         <note appliesTo="source">line: 6547</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).</source>
-        <target>NVDA can also be downloaded and installed using the Windows Package Manager (WinGet).</target>
+        <target>NVDA kann auch über den Windows-Paketmanager (WinGet) heruntergeladen und installiert werden.</target>
       </segment>
     </unit>
     <unit id="0c110b3a-4430-4868-a11e-019817948920">
       <notes>
         <note appliesTo="source">line: 6548</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:</source>
-        <target>Run the following command in Command Prompt (`cmd`) or PowerShell to install the latest version of NVDA:</target>
+        <target>Führen Sie den folgenden Befehl in der Eingabeaufforderung (`cmd`) oder PowerShell aus, um die neueste Version von NVDA zu installieren:</target>
       </segment>
     </unit>
     <unit id="428a65f2-4d38-4392-97e4-eeb1b12332cf">
       <notes>
         <note appliesTo="source">line: 6550</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>`winget install --id NVAccess.NVDA`</source>
         <target>`winget install --id NVAccess.NVDA`</target>
       </segment>
@@ -50196,9 +50196,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 6552</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>To install beta or RC versions, use the following commands:</source>
-        <target>To install beta or RC versions, use the following commands:</target>
+        <target>Um Beta- oder RC-Versionen zu installieren, verwenden Sie die folgenden Befehle:</target>
       </segment>
     </unit>
     <unit id="1147a0af-bc9c-40a6-bb09-22378c048c40">
@@ -50206,7 +50206,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 6554</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Beta: `winget install --id NVAccess.NVDA.Beta`</source>
         <target>Beta: `winget install --id NVAccess.NVDA.Beta`</target>
       </segment>
@@ -50216,9 +50216,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">line: 6555</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>RC: `winget install --id NVAccess.NVDA.RC`</source>
-        <target>RC: `winget install --id NVAccess.NVDA.RC`</target>
+        <target>Release Candidate (RC)-Version: `winget install --id NVAccess.NVDA.RC`</target>
       </segment>
     </unit>
     <unit id="a8007df1-6160-404f-80d7-0e43900f9bb4">

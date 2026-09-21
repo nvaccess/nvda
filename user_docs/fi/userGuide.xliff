@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fi">
-  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/e88f01b27f09b5ec2333cc91a7a27244b8baf6f8/user_docs/en/userGuide.md">
+  <file id="userGuide.md" original="https://raw.githubusercontent.com/nvaccess/nvda/a86a40aac1ce1401ac3941ad2a93f7758c9d9f4f/user_docs/en/userGuide.md">
     <skeleton>
 # $(ID:f5169acb-2803-46c6-8e4c-7c1aaf973723)
 
@@ -1232,7 +1232,7 @@ $(ID:83202642-35db-40fb-a987-90107d68dcf6)
 * $(ID:8252f830-c763-4e24-917f-93202a61aaa3)
 * $(ID:e35d37db-1dfe-4ef9-9bad-3cad14cc3dc9)
 
-$(ID:8da5132f-3792-42ba-a1f5-7b06c90d0234)
+$(ID:5d5a047d-ddb8-49f2-8553-1c7933c2f6c6)
 
 &lt;!-- KC:beginInclude --&gt;
 
@@ -7313,7 +7313,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>[Running NVDA](#RunningNVDA): Commonly used keystrokes and NVDA features</source>
-        <target>[NVDA:n käyttö](#RunningNVDA): Yleisimmät näppäinkomennot ja ominaisuudet</target>
+        <target>[Käyttö](#RunningNVDA): Yleisimmät näppäinkomennot ja ominaisuudet</target>
       </segment>
     </unit>
     <unit id="a5c7b6a1-8347-4874-b1d7-38cd5d6fc355">
@@ -14727,7 +14727,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When the [Keep search history](#SearchHistory) browse mode setting is enabled, this field is a combo box that also offers the terms you have recently searched for (up to 20), which are cleared when NVDA restarts.</source>
-        <target>Kun selaustilan [Säilytä hakuhistoria](#SearchHistory) -asetus on käytössä, tämä kenttä toimii yhdistelmäruutuna, johon tallentuu myös enintään 20 viimeksi haettua hakusanaa, jotka tyhjennetään NVDA:n uudelleenkäynnistyksen yhteydessä.</target>
+        <target>Kun selaustilan [Hakuhistorian säilyttäminen](#SearchHistory) -asetus on käytössä, tämä kenttä muuttuu yhdistelmäruuduksi, jossa näytetään enintään 20 viimeisintä etsittyä hakusanaa NVDA:n uudelleenkäynnistykseen asti.</target>
       </segment>
     </unit>
     <unit id="7b7daada-42a3-42a7-ae00-f3d6e097518b">
@@ -14966,13 +14966,13 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <target>Microsoft Word ja Outlook, joissa sen käytöstä poistaminen ei ole mahdollista</target>
       </segment>
     </unit>
-    <unit id="8da5132f-3792-42ba-a1f5-7b06c90d0234">
+    <unit id="5d5a047d-ddb8-49f2-8553-1c7933c2f6c6">
       <notes>
         <note appliesTo="source">line: 1232</note>
       </notes>
       <segment state="final">
-        <source>Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.</source>
-        <target>Alkuperäinen valintatila voidaan [ottaa automaattisesti käyttöön](#BrowseModeSettingsNativeSelectionMode) NVDA:n selaustilan asetuksista sitä tukevissa asiakirjoissa.</target>
+        <source>Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.</source>
+        <target>Alkuperäinen valintatila voidaan [ottaa automaattisesti käyttöön](#NativeSelectionModeSetting) NVDA:n selaustilan asetuksista sitä tukevissa asiakirjoissa.</target>
       </segment>
     </unit>
     <unit id="0c220da6-bf37-40be-b1a7-95859acd96c7">
@@ -28733,7 +28733,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Enable browse mode on page load</source>
-        <target>Ota selaustila käyttöön sivua ladattaessa</target>
+        <target>Ota selaustila käyttöön sivua avattaessa</target>
       </segment>
     </unit>
     <unit id="ce9a4204-fb24-42f5-880a-a8a55d1d3eb5">
@@ -28818,7 +28818,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Include layout tables</source>
-        <target>Sisällytä asettelutaulukot</target>
+        <target>Näytä asettelutaulukot</target>
       </segment>
     </unit>
     <unit id="77717467-abf3-4d3a-94db-39defb34b141">
@@ -33253,7 +33253,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>However, for basic spreadsheet navigating / editing, this option may provide a vast performance improvement.</source>
-        <target>Laskentataulukon perusnavigointiin ja muokkaukseen tämä asetus saattaa kuitenkin tarjota merkittävän suorituskyvyn parannuksen.</target>
+        <target>Laskentataulukon perusnavigoinnin ja muokkauksen suorituskykyä tämä asetus saattaa kuitenkin parantaa merkittävästi.</target>
       </segment>
     </unit>
     <unit id="3429bdf3-e55e-485c-bd9e-d9b5201a1b5e">
@@ -33262,7 +33262,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>We still do not recommend that the majority of users turn this on by default, though we do welcome users of Microsoft Excel build 16.0.13522.10000 or higher to test this feature and provide feedback.</source>
-        <target>Emme vielä suosittele tämän asetuksen oletusarvoista käyttöön ottoa suurimmalle osalle käyttäjistä, mutta Excel 16.0.13522.10000 tai uudemman käyttäjiltä palaute on tervetullutta.</target>
+        <target>Emme vielä suosittele tämän asetuksen oletusarvoista käyttöönottoa suurimmalle osalle käyttäjistä, mutta Excel 16.0.13522.10000 tai uudemman käyttäjiltä palaute on tervetullutta.</target>
       </segment>
     </unit>
     <unit id="ace82b80-e620-4b1b-a01f-ad72ade80e1c">
@@ -35687,7 +35687,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Additional information is also shown for active profiles, indicating whether they are manually activated, triggered and/or being edited.</source>
-        <target>Käytössä olevista profiileista näytetään myös lisätietoa, joka ilmaisee, ovatko ne manuaalisesti tai käynnistimellä käyttöönotettavia ja/tai muokattavia.</target>
+        <target>Käytössä olevista profiileista näytetään myös lisätietoa, joka ilmaisee, ovatko ne manuaalisesti tai käynnistimellä käyttöön otettavia ja/tai muokattavia.</target>
       </segment>
     </unit>
     <unit id="e4417518-69d1-4507-8c55-0b37140cb49b">
@@ -35835,7 +35835,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Once activated, other profiles can still be activated due to triggers, but any settings in the manually activated profile will override them.</source>
-        <target>Tämän jälkeen voidaan edelleen ottaa käyttöön muita profiileja käynnistimien avulla, mutta manuaalisesti käyttöönotetun profiilin asetukset ovat etusijalla.</target>
+        <target>Tämän jälkeen muita profiileja voidaan edelleen ottaa käyttöön käynnistimien avulla, mutta manuaalisesti käyttöön otetun profiilin asetukset ovat aina ensisijaisia.</target>
       </segment>
     </unit>
     <unit id="65034260-5b7c-4c0c-b68b-35848122551e">
@@ -35844,7 +35844,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For example, if a profile is triggered for the current application and reporting of links is enabled in that profile but disabled it in the manually activated profile, links will not be reported.</source>
-        <target>Jos esim. linkkien ilmoittaminen on käytössä nykyiselle sovellukselle käynnistimen avulla käyttöön otetussa profiilissa mutta poissa käytöstä manuaalisesti käyttöönotetussa, linkkejä ei tällöin ilmoiteta.</target>
+        <target>Jos esim. linkkien ilmoittaminen on käytössä nykyiselle sovellukselle käynnistimen avulla käyttöön otetussa profiilissa mutta poissa käytöstä manuaalisesti käyttöön otetussa, linkkejä ei tällöin ilmoiteta.</target>
       </segment>
     </unit>
     <unit id="df7d0d57-eb79-48ce-96c5-4f95a8265702">
@@ -35853,7 +35853,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>However, if you have changed the voice in the triggered profile but have never changed it in the manually activated profile, the voice from the triggered profile will be used.</source>
-        <target>Jos puheääntä on kuitenkin vaihdettu käynnistimellä käyttöönotetussa profiilissa muttei manuaalisesti käyttöönotetussa, tällöin käytetään käynnistimellä käyttöönotetun profiilin puheääntä.</target>
+        <target>Jos puheääntä on kuitenkin vaihdettu käynnistimellä käyttöön otetussa profiilissa muttei manuaalisesti käyttöön otetussa, tällöin käytetään käynnistimellä käyttöön otetun profiilin puheääntä.</target>
       </segment>
     </unit>
     <unit id="7dd9eeee-da5a-4da4-9458-bd78b50e74ff">
@@ -35862,7 +35862,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Any settings you change will be saved in the manually activated profile.</source>
-        <target>Kaikki muokatut asetukset tallennetaan manuaalisesti käyttöönotettuun profiiliin.</target>
+        <target>Kaikki muokatut asetukset tallennetaan manuaalisesti käyttöön otettuun profiiliin.</target>
       </segment>
     </unit>
     <unit id="74f6b7e9-4ded-4629-803e-8c94d35f8034">
@@ -35871,7 +35871,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To deactivate a manually activated profile, select it in the Configuration Profiles dialog and press the Manual deactivate button.</source>
-        <target>Manuaalisesti käyttöönotettu profiili poistetaan käytöstä valitsemalla se Asetusprofiilit-valintaikkunasta ja painamalla Poista käytöstä manuaalisesti -painiketta.</target>
+        <target>Manuaalisesti käyttöön otettu profiili poistetaan käytöstä valitsemalla se Asetusprofiilit-valintaikkunasta ja painamalla Poista käytöstä manuaalisesti -painiketta.</target>
       </segment>
     </unit>
     <unit id="1b625868-c9ed-47c2-8009-ff983e77f6b2">
@@ -35929,7 +35929,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>To change the profile which should be automatically activated for a trigger, select the trigger and then select the desired profile from the Profile list.</source>
-        <target>Käynnistimen avulla automaattisesti käyttöönotettavaa profiilia vaihdetaan valitsemalla ensin käynnistin ja sen jälkeen Profiili-yhdistelmäruudusta haluttu profiili.</target>
+        <target>Käynnistimen avulla automaattisesti käyttöön otettavaa profiilia vaihdetaan valitsemalla ensin käynnistin ja sen jälkeen Profiili-yhdistelmäruudusta haluttu profiili.</target>
       </segment>
     </unit>
     <unit id="e08f7aad-c3b4-4669-980a-35fa5a58170c">
@@ -35938,7 +35938,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>You can select "(normal configuration)" if you don't want a profile to be used.</source>
-        <target>Jos profiilia ei haluta käyttää, valitaan (normaalit asetukset) -vaihtoehto.</target>
+        <target>Jos profiilia ei haluta käyttää, valitaan (yleiset asetukset) -vaihtoehto.</target>
       </segment>
     </unit>
     <unit id="8c0cab6a-4486-4b3e-97b3-c606140da5eb">
@@ -35976,7 +35976,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Otherwise, any settings you change will be saved to the most recently triggered profile.</source>
-        <target>Muussa tapauksessa asetukset tallennetaan viimeisimpään käynnistimen avulla käyttöönotettuun profiiliin.</target>
+        <target>Muussa tapauksessa asetukset tallennetaan viimeisimpään käynnistimen avulla käyttöön otettuun profiiliin.</target>
       </segment>
     </unit>
     <unit id="7718b2e7-d72c-4fe8-b03d-e227d922c1e6">
@@ -35994,7 +35994,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Finally, if there is neither a manually activated nor a triggered profile, any settings you change will be saved to your normal configuration.</source>
-        <target>Jos sen sijaan mikään manuaalisesti tai käynnistimellä käyttöönotettu profiili ei ole käytössä, muutetut asetukset tallennetaan normaaleihin asetuksiin.</target>
+        <target>Jos sen sijaan mikään manuaalisesti tai käynnistimellä käyttöön otettu profiili ei ole käytössä, muutetut asetukset tallennetaan yleisiin asetuksiin.</target>
       </segment>
     </unit>
     <unit id="af55e547-3e72-4e0a-b406-095c3bb7b37c">
@@ -36032,7 +36032,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For example, you might wish to edit a manually activated profile or your normal configuration without triggered profiles interfering.</source>
-        <target>Esimerkiksi manuaalisesti käyttöön otettua profiilia tai normaaleja asetuksia saattaa olla tarpeen muokata niin, etteivät käynnistimien avulla käyttöönotettavat profiilit vaikuta taustalla.</target>
+        <target>Esimerkiksi manuaalisesti käyttöön otettua profiilia tai yleisiä asetuksia saattaa olla tarpeen muokata niin, etteivät käynnistimien avulla käyttöön otettavat profiilit vaikuta taustalla.</target>
       </segment>
     </unit>
     <unit id="b60fecef-600f-4ad2-8482-36c08388756d">
