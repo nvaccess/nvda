@@ -28,6 +28,8 @@ from speech import sayAll
 import queueHandler
 import core
 from scriptHandler import script
+from winAPI.winUser.constants import SystemMetrics
+from winBindings import user32
 from . import RecogImageInfo, ContentRecognizer, RecognitionResult, onRecognizeResultCallbackT
 
 if TYPE_CHECKING:
@@ -72,6 +74,22 @@ def _captureWithWgc(imageInfo: RecogImageInfo) -> ctypes.Array:
 	return _wgcCapture.captureImage(imageInfo)
 
 
+def _isImageOnScreen(imageInfo: RecogImageInfo) -> bool:
+	"""Check whether an image intersects the virtual screen."""
+	virtualScreenLeft: int = user32.GetSystemMetrics(SystemMetrics.X_VIRTUAL_SCREEN)
+	virtualScreenTop: int = user32.GetSystemMetrics(SystemMetrics.Y_VIRTUAL_SCREEN)
+	virtualScreenRight: int = virtualScreenLeft + user32.GetSystemMetrics(SystemMetrics.CX_VIRTUAL_SCREEN)
+	virtualScreenBottom: int = virtualScreenTop + user32.GetSystemMetrics(SystemMetrics.CY_VIRTUAL_SCREEN)
+	imageRight: int = imageInfo.screenLeft + imageInfo.screenWidth
+	imageBottom: int = imageInfo.screenTop + imageInfo.screenHeight
+	return (
+		imageInfo.screenLeft < virtualScreenRight
+		and imageRight > virtualScreenLeft
+		and imageInfo.screenTop < virtualScreenBottom
+		and imageBottom > virtualScreenTop
+	)
+
+
 def _shouldBlockScreenCurtainEnable(focusObj: NVDAObjects.NVDAObject) -> bool:
 	"""Return whether enabling Screen Curtain should be blocked for an active recognition result."""
 	return (
@@ -82,6 +100,8 @@ def _shouldBlockScreenCurtainEnable(focusObj: NVDAObjects.NVDAObject) -> bool:
 
 
 def _captureImage(imageInfo: RecogImageInfo) -> ctypes.Array:
+	if not _isImageOnScreen(imageInfo):
+		raise RuntimeError("Image is outside the virtual screen")
 	if _shouldUseWgcCapture():
 		try:
 			return _captureWithWgc(imageInfo)

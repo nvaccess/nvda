@@ -37,6 +37,19 @@ class TestCaptureImage(unittest.TestCase):
 		captureWithWgc.assert_not_called()
 		captureWithGdi.assert_called_once_with(self.imageInfo)
 
+	def test_imageOutsideVirtualScreenFailsWithoutCapture(self):
+		offScreenImage: contentRecog.RecogImageInfo = contentRecog.RecogImageInfo(0, 1080, 100, 100, 1)
+		with (
+			patch.object(recogUi.user32, "GetSystemMetrics", side_effect=(0, 0, 1920, 1080)),
+			patch.object(recogUi, "_captureWithWgc") as captureWithWgc,
+			patch.object(recogUi, "_captureWithGdi") as captureWithGdi,
+			self.assertRaisesRegex(RuntimeError, "outside the virtual screen"),
+		):
+			recogUi._captureImage(offScreenImage)
+
+		captureWithWgc.assert_not_called()
+		captureWithGdi.assert_not_called()
+
 	def test_screenCurtainWgcFailureDoesNotFallBackToGdi(self):
 		captureError = RuntimeError("capture failed")
 		with (
