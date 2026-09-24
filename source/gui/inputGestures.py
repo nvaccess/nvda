@@ -119,14 +119,21 @@ class _ScriptVM:
 
 	def finalisePending(self, normalizedGestureIdentifier: str) -> _GestureVM:
 		assert self.pending is not None
-		self.gestures.remove(self.pending)
-		return self._addGesture(normalizedGestureIdentifier)
+		pending = self.pending
+		self.gestures.remove(pending)
+		try:
+			gesture = self._addGesture(normalizedGestureIdentifier)
+		except ValueError:
+			self.gestures.append(pending)
+			raise
+		self.pending = None
+		return gesture
 
 	def _addGesture(self, normalizedGestureIdentifier: str) -> _GestureVM:
 		gesture = self.removedGestures.pop(normalizedGestureIdentifier, None)
 		if not gesture:
 			gesture = _GestureVM(normalizedGestureIdentifier)
-			for g in self.addedGestures:
+			for g in self.gestures:
 				if g.normalizedGestureIdentifier == gesture.normalizedGestureIdentifier:
 					raise ValueError("Gesture already added!")
 			self.addedGestures.append(gesture)
@@ -837,10 +844,34 @@ class InputGesturesDialog(SettingsDialog):
 		:param gid:  Normalized gesture ID to be added.
 		:return:
 		"""
-		newItem = scriptVM.finalisePending(gid)
-		log.debug(f"New: {catVM}, {scriptVM}, {newItem}")
-		self.gesturesVM.isExpectingNewGesture = None
-		self.tree.doRefresh(focus=(catVM, scriptVM, newItem))
+		try:
+			newItem = scriptVM.finalisePending(gid)
+		except ValueError:
+			gui.messageBox(
+				# Translators: An error displayed when a gesture is already assigned.
+				_("This gesture is already assigned to this script."),
+				# Translators: An error displayed when a gesture is already assigned.
+				caption=_("Gesture already assigned"),
+				style=wx.OK | wx.ICON_ERROR,
+			)
+			# Prevent the popup-menu fallback from calling _addChoice again synchronously.
+			self.gesturesVM.isExpectingNewGesture = None
+
+			def _reenterPending() -> None:
+				"""Re-enter pending-add mode after a failed add."""
+				pending = getattr(scriptVM, "pending", None)
+				assert pending is not None
+				self.gesturesVM.isExpectingNewGesture = scriptVM
+				inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
+				self.tree.doRefresh(focus=(catVM, scriptVM, pending))
+				self._refreshButtonState()
+
+			wx.CallAfter(_reenterPending)
+		else:
+			log.debug(f"New: {catVM}, {scriptVM}, {newItem}")
+			self.gesturesVM.isExpectingNewGesture = None
+			self.tree.doRefresh(focus=(catVM, scriptVM, newItem))
+
 		self._refreshButtonState()
 
 	def _addCapturedKbEmu(self, gesture: inputCore.InputGesture, catVM: _EmulatedGestureVM):
