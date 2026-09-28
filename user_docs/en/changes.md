@@ -48,6 +48,8 @@ A read completing on the same handle no longer ends the wait while the write is 
   * For example, `alt+b+control` now creates the same gesture as `alt+control+b`.
   * When the name contains only modifiers, the last key remains the main key.
   * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
+* The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
+Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 
 #### API Breaking Changes
 
