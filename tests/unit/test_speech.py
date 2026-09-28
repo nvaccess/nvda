@@ -28,6 +28,7 @@ from speech.commands import (
 	PitchCommand,
 )
 from speech.extensions import filter_speechSequence, pre_speech
+from speech.types import SpeechSequence
 
 from .extensionPointTestHelpers import actionTester
 
@@ -638,17 +639,20 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 class SpeechExtensionPoints(unittest.TestCase):
 	def test_preSpeechReceivesOriginalSequence(self):
 		originalItem = EndUtteranceCommand()
-		originalSequence = [originalItem]
-		received = {}
+		originalSequence: SpeechSequence = [originalItem]
+		received: dict[str, SpeechSequence] = {}
 
-		def mutateSpeechSequence(speechSequence):
+		def mutateSpeechSequence(speechSequence: SpeechSequence) -> SpeechSequence:
 			speechSequence.append("filtered")
 			return speechSequence
 
-		def oldHandler(speechSequence):
+		def oldHandler(speechSequence: SpeechSequence) -> None:
 			received["filtered"] = speechSequence
 
-		def newHandler(speechSequence, originalSpeechSequence):
+		def newHandler(
+			speechSequence: SpeechSequence,
+			originalSpeechSequence: SpeechSequence,
+		) -> None:
 			received["original"] = originalSpeechSequence
 
 		filter_speechSequence.register(mutateSpeechSequence)
