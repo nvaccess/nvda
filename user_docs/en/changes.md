@@ -18,6 +18,7 @@
 #### Web browsers
 
 * In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
+* In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
 
 #### Applications
 
