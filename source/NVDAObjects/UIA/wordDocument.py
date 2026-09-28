@@ -3,10 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Generator  # noqa: I001
+from collections.abc import Generator, Iterable  # noqa: I001
 
 import enum
 from dataclasses import dataclass
+from functools import cached_property
 from comtypes import COMError
 import inputCore
 import mathPres
@@ -36,6 +37,7 @@ from NVDAObjects.window.winword import (
 	WordDocumentTextInfo as LegacyWordDocumentTextInfo,
 )
 from NVDAObjects import NVDAObject
+from baseObject import AutoPropertyObject
 from scriptHandler import script
 import eventHandler
 from globalCommands import SCRCAT_SYSTEMCARET
@@ -80,8 +82,16 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 	)
 
 
-class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+class _AnnotationUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	"""An annotation, which is never nested under a reply to a comment in the elements list."""
+
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
+
+	def isChild(self, parent: browseMode.QuickNavItem) -> bool:
+		return not isinstance(parent, CommentReplyUIATextInfoQuickNavItem) and super().isChild(parent)
+
+
+class RevisionUIATextInfoQuickNavItem(_AnnotationUIATextInfoQuickNavItem):
 	wantedAttribValues = {  # noqa: RUF012
 		UIAHandler.AnnotationType_InsertionChange,
 		UIAHandler.AnnotationType_DeletionChange,
@@ -385,13 +395,58 @@ __getattr__ = handleDeprecations(
 )
 
 
-class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
-	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {UIAHandler.AnnotationType_Comment}  # noqa: RUF012
+class CommentUIATextInfoQuickNavItem(_AnnotationUIATextInfoQuickNavItem, AutoPropertyObject):
+	@classmethod
+	def _get_wantedAttribValues(cls) -> set[int]:
+		wantedAttribValues = {UIAHandler.AnnotationType_Comment}
+		resolvedCommentId = UIA._UIACustomAnnotationTypes.microsoftWord_resolvedComment.id
+		if resolvedCommentId:
+			wantedAttribValues.add(resolvedCommentId)
+		return wantedAttribValues
+
+	@cached_property
+	def commentInfo(self) -> _CommentInfo | None:
+		"""Information about the comment, as returned by :func:`_getCommentInfoFromPosition`."""
+		return _getCommentInfoFromPosition(self.textInfo, resolved=_isResolvedComment(self.attribValues))
 
 	@property
 	def label(self):
-		return _getCommentInfoFromPosition(self.textInfo).getPresentation()
+		return self.commentInfo.getPresentation()
+
+
+class CommentReplyUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
+	"""A reply in a comment thread, sharing the position of the comment it replies to."""
+
+	def __init__(self, comment: CommentUIATextInfoQuickNavItem, replyInfo: _CommentInfo):
+		"""
+		:param comment: The item of the comment this reply belongs to.
+		:param replyInfo: Information about the reply.
+		"""
+		super().__init__(comment.itemType, comment.document, comment.textInfo.copy())
+		self.comment = comment
+		self.replyInfo = replyInfo
+
+	@property
+	def label(self) -> str:
+		return self.replyInfo.getPresentation()
+
+	def isChild(self, parent: browseMode.QuickNavItem) -> bool:
+		return parent is self.comment
+
+
+def _iterWithCommentReplies(
+	items: Iterable[browseMode.QuickNavItem],
+) -> Generator[browseMode.QuickNavItem]:
+	"""
+	Yields each item, followed by an item for each reply when the item is a comment.
+	:param items: The items to yield.
+	"""
+	for item in items:
+		yield item
+		if not isinstance(item, CommentUIATextInfoQuickNavItem) or item.commentInfo is None:
+			continue
+		for replyInfo in item.commentInfo.replies:
+			yield CommentReplyUIATextInfoQuickNavItem(item, replyInfo)
 
 
 class WordDocumentTextInfo(UIATextInfo):
@@ -916,7 +971,9 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 				pos,
 				direction=direction,
 			)
-			return browseMode.mergeQuickNavItemIterators([comments, revisions], direction)
+			return _iterWithCommentReplies(
+				browseMode.mergeQuickNavItemIterators([comments, revisions], direction),
+			)
 		elif nodeType == "reference":
 			return UIATextAttributeQuicknavIterator(
 				ReferenceUIATextInfoQuickNavItem,
