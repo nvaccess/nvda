@@ -153,6 +153,21 @@ class GENERIC(IntEnum):
 	READ = 0x80000000
 
 
+class PROCESS(IntEnum):
+	"""Process-specific access rights.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
+	"""
+
+	#: PROCESS_TERMINATE: Required to terminate a process using TerminateProcess.
+	TERMINATE = 0x0001
+	#: PROCESS_DUP_HANDLE: Required to duplicate a handle using DuplicateHandle.
+	DUP_HANDLE = 0x0040
+	#: PROCESS_QUERY_INFORMATION: Required to retrieve certain information about a process, such as its token, exit code, and priority class.
+	QUERY_INFORMATION = 0x0400
+
+
 GetModuleHandle = WINFUNCTYPE(None)(("GetModuleHandleW", dll))
 """
 Retrieves a module handle for the specified module, which must have been loaded by the calling process.
