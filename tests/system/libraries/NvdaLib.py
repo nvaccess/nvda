@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2026 NV Access Limited
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2020-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """This file provides robot library functions for NVDA system tests.
 It contains helper methods for system tests, most specifically related to NVDA
@@ -51,6 +51,14 @@ from robot.libraries.Remote import Remote as _Remote
 builtIn: BuiltIn = BuiltIn()
 opSys: _OpSysLib = _getLib("OperatingSystem")
 process: _Process = _getLib("Process")
+
+SPY_CONNECTION_TIMEOUT_SECS = 15
+"""The number of seconds to wait for the spy server when NVDA is started from source or installed."""
+
+INSTALLER_SPY_CONNECTION_TIMEOUT_SECS = 60
+"""The number of seconds to wait for the spy server when NVDA is started from the installer.
+The installer takes longer to reach the point where the spy is available.
+"""
 
 
 class _NvdaLocationData:
@@ -203,7 +211,7 @@ class NvdaLib:
 		)
 		return handle
 
-	def _connectToRemoteServer(self, connectionTimeoutSecs: int = 15) -> None:
+	def _connectToRemoteServer(self, connectionTimeoutSecs: int = SPY_CONNECTION_TIMEOUT_SECS) -> None:
 		"""Connects to the nvdaSpyServer
 		Because we do not know how far through the startup NVDA is, we have to poll
 		to check that the server is available. Importing the library immediately seems
@@ -274,7 +282,7 @@ class NvdaLib:
 		nvdaProcessHandle = self._startNVDAInstallerProcess()
 		process.process_should_be_running(nvdaProcessHandle)
 		# Timeout is increased due to the installer load time and start up splash sound
-		self._connectToRemoteServer(connectionTimeoutSecs=30)
+		self._connectToRemoteServer(connectionTimeoutSecs=INSTALLER_SPY_CONNECTION_TIMEOUT_SECS)
 		self.nvdaSpy.wait_for_NVDA_startup_to_complete()
 		return nvdaProcessHandle
 

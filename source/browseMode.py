@@ -444,6 +444,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	singleLetterNavEnabled = True  #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
 	def getAlternativeScript(self, gesture, script):
+		"""Replace the script bound to a gesture before it is queued for execution.
+
+		This method is called on the input hook thread while the script for a gesture is being resolved.
+
+		:param gesture: The triggering gesture.
+		:param script: The script bound to the gesture, or ``None`` if there is none.
+		:return: The script to queue, which may be the one that was passed in,
+			or ``None`` to pass the gesture on to the application.
+		"""
 		if self.passThrough or not gesture.isCharacter:
 			return script
 		if not self.singleLetterNavEnabled:
@@ -2072,12 +2081,19 @@ class BrowseModeDocumentTreeInterceptor(
 
 		:return: ``True`` to collapse/expand the control, ``False`` to navigate by sentence.
 		"""
-		obj = self.currentFocusableNVDAObject
-		if obj is None or obj == self.rootNVDAObject:
-			return False
-		return obj.role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or not obj.states.isdisjoint(
-			self._EXPAND_OR_POPUP_STATES,
-		)
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		info.expand(textInfos.UNIT_CHARACTER)
+		for field in reversed(info.getTextWithFields()):
+			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
+				continue
+			states = field.field.get("states") or set()
+			if controlTypes.State.FOCUSABLE not in states:
+				continue
+			role = field.field.get("role")
+			return role in self.ALWAYS_SWITCH_TO_PASS_THROUGH_ROLES or not states.isdisjoint(
+				self._EXPAND_OR_POPUP_STATES,
+			)
+		return False
 
 	def getAlternativeScript(
 		self,
@@ -2164,7 +2180,15 @@ class BrowseModeDocumentTreeInterceptor(
 	def event_focusEntered(self, obj, nextHandler):
 		if obj == self.rootNVDAObject:
 			self._enteringFromOutside = True
-		# Even if passThrough is enabled, we still completely drop focusEntered events here.
+		focusTreeInterceptor = api.getFocusObject().treeInterceptor
+		if focusTreeInterceptor is not self and (
+			not focusTreeInterceptor or not focusTreeInterceptor.passThrough
+		):
+			# #20753: Focus is outside this document (e.g. in an application), so our gainFocus
+			# handler won't run to replay these ancestor events. Call nextHandler immediately
+			# unless the focused treeInterceptor is in focus mode and will replay all ancestors itself.
+			return nextHandler()
+		# For focus within this document, drop focusEntered events even if passThrough is enabled.
 		# In order to get them back when passThrough is enabled, we replay them with the _replayFocusEnteredEvents method in event_gainFocus.
 		# The reason for this is to ensure that focusEntered events are delayed until a focus event has had a chance to disable passthrough mode.
 		# As in this case we would  not want them.

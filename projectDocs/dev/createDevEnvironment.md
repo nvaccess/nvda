@@ -79,13 +79,17 @@ Install the python version listed in [.python-versions](../../.python-versions)
 ### Git Submodules
 
 Some of the dependencies are contained in [Git submodules](https://git-scm.com/docs/gitsubmodules).
-If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
-Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
-If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
+If you didn't pass the `--recursive` option to `git clone`, you will need to run `git submodule update --init --recursive`.
+Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update --recursive`.
+If a new submodule is added (e.g. after git pull), you will need to run `git submodule update --init --recursive` instead to initialize it as well.
+If you aren't sure, run `git submodule update --init --recursive` after every git pull, merge or checkout.
+
+Very rarely, the URL of a submodule may change, for example if the submodule repository is moved, renamed, or replaced with another repository.
+In this case, run `git submodule sync --recursive` to update the local submodule configuration before initializing or updating the submodules.
 
 #### Run time dependencies
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `56f2e9c730e2438787103168c0412c80c25d014e`
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `f1354994057fa9b85001675732e7fed2d437292b`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
 * [liblouis](http://www.liblouis.io/), version 3.39.0
@@ -97,7 +101,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8 Zulu (17.60.17)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [Windows Implementation Library (WIL)](https://github.com/microsoft/wil/), commit `7cf41936c5b4ab79daf0d9437211380dc69fa958`
-* [cppjieba - Chinese word segmentation](https://github.com/yanyiwu/cppjieba), commit `9408c1d08facc6e324dc90260e8cb20ecceebf70`
+* [cppjieba - Chinese word segmentation](https://github.com/yanyiwu/cppjieba), commit `b3602bef7d1f67521a61788a74fb5801a0e62cd3`
 
 #### Build time dependencies
 
