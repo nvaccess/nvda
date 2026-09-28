@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-18 07:07+0000\n"
-"PO-Revision-Date: 2026-09-21 00:24\n"
+"POT-Creation-Date: 2026-09-22 05:06+0000\n"
+"PO-Revision-Date: 2026-09-28 00:25\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -3962,12 +3962,12 @@ msgstr "Liest Informationen zur Formatierung des Textes unter dem aktuellen Brai
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4294
 msgid "Selects the text from the first up to the last braille cell"
-msgstr ""
+msgstr "Wählt den Text von der ersten bis zur letzten Braille-Zelle aus."
 
 #. Translators: Reported when selection via multiple routing keys is not possible.
 #: globalCommands.py:4306
 msgid "Cannot select from braille routing keys"
-msgstr ""
+msgstr "Eine Auswahl über die Braille-Routingtasten ist nicht möglich."
 
 #. Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 #: globalCommands.py:4313
@@ -7170,22 +7170,22 @@ msgstr "Nicht aktualisieren"
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:110
 msgid "Stable"
-msgstr "Stable"
+msgstr "Stabil"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:112
 msgid "Beta or dev"
-msgstr "Beta oder Dev"
+msgstr "Beta- oder Entwicklerversion "
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:114
 msgid "Beta"
-msgstr "Beta"
+msgstr "Betaversion"
 
 #. Translators: Update channel for an addon
 #: addonStore\models\channel.py:116
 msgid "Dev"
-msgstr "Dev"
+msgstr "Entwicklerversion "
 
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
 #. Translators: Status for addons shown in the add-on store dialog
@@ -10308,13 +10308,13 @@ msgstr "Schwedische Basisschrift"
 #. braille settings dialog.
 #: brailleTables\__tables.py:646
 msgid "Swedish uncontracted braille (detailed)"
-msgstr ""
+msgstr "Schwedisches Braille (ungekürzt, detailliert)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:652
 msgid "Swedish uncontracted braille (phonetics)"
-msgstr ""
+msgstr "Schwedisches Braille (ungekürzt, Phonetik)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10326,7 +10326,7 @@ msgstr "Schwedische Vollschrift"
 #. braille settings dialog.
 #: brailleTables\__tables.py:661
 msgid "Swedish partially contracted braille (detailed)"
-msgstr ""
+msgstr "Schwedisches Braille (teilweise gekürzt, detailliert)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10338,43 +10338,43 @@ msgstr "Schwedische Kurzschrift"
 #. braille settings dialog.
 #: brailleTables\__tables.py:671
 msgid "Swedish contracted braille (detailed)"
-msgstr ""
+msgstr "Schwedische Kurzschrift (detailliert)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:676
 msgid "Swedish 8 dot uncontracted braille"
-msgstr ""
+msgstr "Schwedische 8-Punkt Vollschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:681
 msgid "Swedish 8 dot uncontracted braille (detailed)"
-msgstr ""
+msgstr "Schwedische 8-Punkt-Brailleschrift (detailliert)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:687
 msgid "Swedish 8 dot partially contracted braille"
-msgstr ""
+msgstr "Schwedische 8-Punkt-Braille (teilweise gekürzt)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:694
 msgid "Swedish 8 dot partially contracted braille (detailed)"
-msgstr ""
+msgstr "Schwedische 8-Punkt-Braille, teilweise verkürzt (detailliert)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:701
 msgid "Swedish 8 dot contracted braille"
-msgstr ""
+msgstr "Schwedische 8-Punkt, Kurzschrift"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:708
 msgid "Swedish 8 dot contracted braille (detailed)"
-msgstr ""
+msgstr "Schwedische 8-Punkt-Kurzschrift (detailliert)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -11008,7 +11008,7 @@ msgstr "Unicode (ICU)"
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:159
 msgid "Legacy (Uniscribe)"
-msgstr ""
+msgstr "Ältere Methode (Uniscribe)"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:180
@@ -14959,7 +14959,7 @@ msgstr "&Modus:"
 #: gui\settingsDialogs.py:4006 _remoteClient\dialogs.py:335
 msgctxt "remote"
 msgid "&Server:"
-msgstr "&Server:"
+msgstr "Se&rver:"
 
 #. Translators: Label for the host field in Remote Access settings.
 #. This is where users should enter the URL of the Remote Access server they want to use if they are not hosting their own.
@@ -15041,7 +15041,7 @@ msgstr "&Touch-Eingabemodus"
 #. Translators: This is the label for a checkbox in the touch interaction settings panel.
 #: gui\settingsDialogs.py:4217
 msgid "Enable &edge gestures"
-msgstr ""
+msgstr "Kantengesten &aktivieren"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:4231
@@ -21230,7 +21230,7 @@ msgstr "Konnte Strg + alt + entfernen nicht auslösen"
 #. Translators: Menu item in Remote Access submenu to mute speech and sounds from the remote computer.
 #: _remoteClient\menu.py:32
 msgid "Mute remote"
-msgstr "Computer via Fernzugriff stummschalten"
+msgstr "Fernen Computer stummschalten"
 
 #. Translators: Tooltip for the Mute Remote menu item in the Remote Access submenu.
 #: _remoteClient\menu.py:34
