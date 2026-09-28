@@ -18,6 +18,17 @@ if TYPE_CHECKING:
 	import bleak
 	from bleak.backends.device import BLEDevice
 	from bleak.backends.scanner import AdvertisementData
+else:
+
+	class _BleakProxy:
+		"""Lazily import the bleak module while still exposing its attributes for patching."""
+
+		def __getattr__(self, name: str):
+			import bleak
+
+			return getattr(bleak, name)
+
+	bleak = _BleakProxy()
 
 
 class Scanner:

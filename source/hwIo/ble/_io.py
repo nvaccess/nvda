@@ -23,6 +23,17 @@ if TYPE_CHECKING:
 	import bleak
 	from bleak.backends.characteristic import BleakGATTCharacteristic
 	from bleak.backends.device import BLEDevice
+else:
+
+	class _BleakProxy:
+		"""Lazily import the bleak module while still exposing its attributes for patching."""
+
+		def __getattr__(self, name: str):
+			import bleak
+
+			return getattr(bleak, name)
+
+	bleak = _BleakProxy()
 
 CONNECT_TIMEOUT_SECONDS: int = 2
 
