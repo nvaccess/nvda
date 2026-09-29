@@ -6736,9 +6736,14 @@ class EditSymbolDialog(
 	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog used to add a new symbol, or edit the pronunciation of an existing one.
-	When C{symbol} is C{None}, the dialog is in "add" mode.
-	The symbol identifier can be entered/changed whenever C{identifierEditable} is C{True};
-	built-in symbols should keep it C{False}, since renaming them would not affect the built-in symbol at all.
+
+	:param parent: The parent window.
+	:param symbol: The symbol to edit, or ``None`` to add a new symbol.
+	:param existingIdentifiers: Identifiers already in use, to reject duplicates when adding
+		or renaming a symbol.
+	:param identifierEditable: Whether the symbol identifier can be entered or changed.
+		This should be ``False`` for built-in symbols, since renaming one would not affect
+		the built-in symbol at all.
 	"""
 
 	helpId = "SymbolPronunciation"
@@ -6746,8 +6751,8 @@ class EditSymbolDialog(
 	def __init__(
 		self,
 		parent,
-		symbol: "characterProcessing.SpeechSymbol|None" = None,
-		existingIdentifiers: "Container[str]|None" = None,
+		symbol: "characterProcessing.SpeechSymbol | None" = None,
+		existingIdentifiers: "Container[str] | None" = None,
 		identifierEditable: bool = True,
 	):
 		self.isNew = symbol is None
@@ -6774,7 +6779,7 @@ class EditSymbolDialog(
 		self.symbolTextCtrl = sHelper.addLabeledControl(
 			symbolText,
 			wx.TextCtrl,
-			value=symbol.displayName or "",
+			value=(symbol.identifier if self.identifierEditable else symbol.displayName) or "",
 			style=0 if self.identifierEditable else wx.TE_READONLY,
 		)
 
@@ -6813,19 +6818,29 @@ class EditSymbolDialog(
 		self.CentreOnScreen()
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
-	def onOk(self, evt):
+	def onOk(self, evt: wx.CommandEvent) -> None:
 		if self.identifierEditable:
 			identifier = self.symbolTextCtrl.GetValue()
 			if not identifier:
+				gui.messageBox(
+					# Translators: An error reported when no symbol is entered in the add/edit symbol dialog.
+					_("A symbol is required."),
+					# Translators: title of an error message
+					_("Error"),
+					wx.OK | wx.ICON_ERROR,
+					self,
+				)
+				self.symbolTextCtrl.SetFocus()
 				return
 			if identifier in self.existingIdentifiers:
 				gui.messageBox(
 					# Translators: An error reported in the Symbol Pronunciation dialog
 					# when adding a symbol that is already present.
-					_('Symbol "%s" is already present.') % identifier,
+					_('Symbol "{identifier}" is already present.').format(identifier=identifier),
 					# Translators: title of an error message
 					_("Error"),
 					wx.OK | wx.ICON_ERROR,
+					self,
 				)
 				self.symbolTextCtrl.SetFocus()
 				return
