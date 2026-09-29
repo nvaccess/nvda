@@ -9,19 +9,30 @@
 
 ### Changes
 
+* The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+
 ### Bug Fixes
+
+* Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 
 #### Performance
 
 #### Braille
 
+* The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
+
 #### Web browsers
 
 * In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
+* In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
 
 #### Applications
 
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+
+#### Add-on Store
+
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
 
 ### Changes for Developers
 
@@ -29,13 +40,29 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* Updated components:
+  * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
 * The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
+* Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
+A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
+  * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
+  * Closing a device now cancels a pending write, and repeated `close()` calls are safe.
+  * A failure to start a background read is now reported through the driver's read error callback, instead of silently ending the read loop.
+* `keyboardHandler.KeyboardInputGesture.fromName` now treats the non modifier key as the main key, regardless of its position in the name. (#8201, @LeonarddeR)
+  * For example, `alt+b+control` now creates the same gesture as `alt+control+b`.
+  * When the name contains only modifiers, the last key remains the main key.
+  * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
+* The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
+Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 
 #### API Breaking Changes
 
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* APIs that wxWidgets deprecated in version 3.0 are no longer available.
+Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPython-4.3.1/CHANGES.rst) for details. (#20700, @LeonarddeR)
+* `gui.nvdaControls.CustomCheckListBox.notifyIAccessible` has been removed with no public replacement. (#20700, @LeonarddeR)
 * The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
 * `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
 * `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
