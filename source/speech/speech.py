@@ -1441,7 +1441,12 @@ def isFocusEditable() -> bool:
 
 
 def speakTypedCharacters(ch: str):
-	typingIsProtected = api.isTypingProtected()
+	# With both echoes off, only the buffer length is needed for terminal echo filtering.
+	# Mask its contents without querying the focus object, which can block on a slow provider.
+	typingIsProtected = (
+		config.conf["keyboard"]["speakTypedCharacters"] == TypingEcho.OFF.value
+		and config.conf["keyboard"]["speakTypedWords"] == TypingEcho.OFF.value
+	) or api.isTypingProtected()
 	if typingIsProtected:
 		realChar = PROTECTED_CHAR
 	else:
