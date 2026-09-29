@@ -35,7 +35,7 @@ from .utils.types import (
 class FullScreenMagnifier(Magnifier):
 	"""Magnifier that uses the Windows Magnification API to magnify the entire screen."""
 
-	_MAX_RECOVERY_ATTEMPTS: int = 3
+	_MAX_RECOVERY_ATTEMPTS: int = 1
 	_MAGNIFIED_VIEW = MagnifiedView.FULLSCREEN
 
 	def __init__(self):
