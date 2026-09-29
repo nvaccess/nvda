@@ -42,7 +42,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 Add-ons will need to be re-tested and have their manifest updated.
 * Updated components:
   * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
-
+* The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
 * Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
 A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
   * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
@@ -60,10 +60,12 @@ Existing handlers which only accept `speechSequence` remain compatible. (#20766,
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
-* The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
 * APIs that wxWidgets deprecated in version 3.0 are no longer available.
 Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPython-4.3.1/CHANGES.rst) for details. (#20700, @LeonarddeR)
 * `gui.nvdaControls.CustomCheckListBox.notifyIAccessible` has been removed with no public replacement. (#20700, @LeonarddeR)
+* The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
+* `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
+* `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
 
 #### Deprecations
 
