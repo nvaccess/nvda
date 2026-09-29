@@ -856,22 +856,21 @@ class InputGesturesDialog(SettingsDialog):
 			)
 			# Prevent the popup-menu fallback from calling _addChoice again synchronously.
 			self.gesturesVM.isExpectingNewGesture = None
-
-			def _reenterPending() -> None:
-				"""Re-enter pending-add mode after a failed add."""
-				pending = getattr(scriptVM, "pending", None)
-				assert pending is not None
-				self.gesturesVM.isExpectingNewGesture = scriptVM
-				inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
-				self.tree.doRefresh(focus=(catVM, scriptVM, pending))
-				self._refreshButtonState()
-
-			wx.CallAfter(_reenterPending)
+			wx.CallAfter(self._reenterPending, catVM, scriptVM)
 		else:
 			log.debug(f"New: {catVM}, {scriptVM}, {newItem}")
 			self.gesturesVM.isExpectingNewGesture = None
 			self.tree.doRefresh(focus=(catVM, scriptVM, newItem))
 
+		self._refreshButtonState()
+
+	def _reenterPending(self, catVM: _CategoryVMTypes, scriptVM: _ScriptVMTypes) -> None:
+		"""Re-enter pending-add mode after a failed add."""
+		pending = getattr(scriptVM, "pending", None)
+		assert pending is not None
+		self.gesturesVM.isExpectingNewGesture = scriptVM
+		inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
+		self.tree.doRefresh(focus=(catVM, scriptVM, pending))
 		self._refreshButtonState()
 
 	def _addCapturedKbEmu(self, gesture: inputCore.InputGesture, catVM: _EmulatedGestureVM):
