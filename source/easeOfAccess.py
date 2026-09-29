@@ -105,7 +105,7 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 	try:
 		return EASE_OF_ACCESS_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 	except (OSError, TypeError):
-		log.error(f"Unable to read {autoStartContext} auto-start configuration", exc_info=True)  # noqa: G201
+		log.exception(f"Unable to read {autoStartContext} auto-start configuration")
 		return False
 
 

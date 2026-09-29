@@ -1076,39 +1076,39 @@ class GeneralSettingsPanel(SettingsPanel):
 		if self.startAfterLogonCheckBox.IsEnabled() and self._hasStartAfterLogonChanged:
 			try:
 				config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
-				self._hasStartAfterLogonChanged = False
 			except (OSError, TypeError):
-				log.error("Unable to set start after sign-in", exc_info=True)  # noqa: G201
+				log.exception("Unable to set start after sign-in")
 				if not core._hasShutdownBeenTriggered:
 					gui.message.MessageDialog(
 						parent=self,
 						message=_(
 							# Translators: An error when changing whether NVDA starts automatically after signing in.
-							"Unable to change the setting to start NVDA after you sign in. "
-							"Please check the NVDA log for more information.",
+							"Unable to change the setting to start NVDA after you sign in.",
 						),
 						# Translators: The title of an error message dialog.
 						title=_("Error"),
 						dialogType=gui.message.DialogType.ERROR,
 					).ShowModal()
+			else:
+				self._hasStartAfterLogonChanged = False
 		if self.startOnLogonScreenCheckBox.IsEnabled() and self._hasStartOnLogonScreenChanged:
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-				self._hasStartOnLogonScreenChanged = False
 			except (OSError, RuntimeError, TypeError):
-				log.error("Unable to set start during sign-in", exc_info=True)  # noqa: G201
+				log.exception("Unable to set start during sign-in")
 				if not core._hasShutdownBeenTriggered:
 					gui.message.MessageDialog(
 						parent=self,
 						message=_(
 							# Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
-							"Unable to change the setting to use NVDA during sign-in. "
-							"Please check the NVDA log for more information.",
+							"Unable to change the setting to use NVDA during sign-in.",
 						),
 						# Translators: The title of an error message dialog.
 						title=_("Error"),
 						dialogType=gui.message.DialogType.ERROR,
 					).ShowModal()
+			else:
+				self._hasStartOnLogonScreenChanged = False
 		if updateCheck:
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()

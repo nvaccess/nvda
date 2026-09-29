@@ -11,10 +11,10 @@
 
 ### Bug Fixes
 
-* Automatic startup settings:
-  * NVDA can now enable automatic startup when the Windows accessibility registry key is missing.
-  * NVDA no longer changes startup settings that the user has not modified, even if their current state could not be read.
-  * NVDA now reports errors when saving automatic startup settings and continues saving other settings.
+* The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings:
+  * Fixed an issue that could prevent these settings from being enabled on some systems.
+  * NVDA no longer changes these settings when the user has not modified them, even if their current state could not be read.
+  * NVDA now reports errors when saving these settings and continues saving other settings.
 
 #### Performance
 

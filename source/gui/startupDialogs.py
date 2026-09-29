@@ -139,21 +139,21 @@ class WelcomeDialog(
 		if self.startAfterLogonCheckBox.Enabled and self._hasStartAfterLogonChanged:
 			try:
 				config.setStartAfterLogon(self.startAfterLogonCheckBox.Value)
-				self._hasStartAfterLogonChanged = False
 			except (OSError, TypeError):
-				log.error("Unable to set start after sign-in", exc_info=True)  # noqa: G201
+				log.exception("Unable to set start after sign-in")
 				if not core._hasShutdownBeenTriggered:
 					gui.message.MessageDialog(
 						parent=self,
 						message=_(
 							# Translators: An error when changing whether NVDA starts automatically after signing in.
-							"Unable to change the setting to start NVDA after you sign in. "
-							"Please check the NVDA log for more information.",
+							"Unable to change the setting to start NVDA after you sign in.",
 						),
 						# Translators: The title of an error message dialog.
 						title=_("Error"),
 						dialogType=gui.message.DialogType.ERROR,
 					).ShowModal()
+			else:
+				self._hasStartAfterLogonChanged = False
 		config.conf["general"]["showWelcomeDialogAtStartup"] = (
 			self.showWelcomeDialogAtStartupCheckBox.IsChecked()
 		)

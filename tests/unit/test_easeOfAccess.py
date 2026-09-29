@@ -5,15 +5,15 @@
 
 """Regression tests for saving Windows auto-start settings."""
 
-from types import SimpleNamespace  # noqa: I001
 import unittest
+import winreg
+from types import SimpleNamespace
 from unittest.mock import MagicMock, Mock, patch
 from uuid import uuid4
-import winreg
 
 import config
-from config.registry import EASE_OF_ACCESS_APP_KEY_NAME
 import easeOfAccess
+from config.registry import EASE_OF_ACCESS_APP_KEY_NAME
 from gui import settingsDialogs, startupDialogs
 
 
