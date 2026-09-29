@@ -208,9 +208,6 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 
 #### Terminals
 
-* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177, #20649, @ethindp, @codeofdusk)
-  * By default, when lines are skipped in a large text flood, NVDA emits a beep proportional to the length of the skipped material.
-  This can be disabled in the Advanced settings panel.
 * In Windows Terminal, NVDA is less likely to report stale characters when moving the caret in delayed remote sessions such as SSH. (#19503, @sheldon-im)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
