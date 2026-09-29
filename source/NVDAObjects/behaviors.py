@@ -31,7 +31,6 @@ import braille.regions.properties
 import core
 import nvwave
 import globalVars
-from collections.abc import Generator
 import diffHandler
 from config.configFlags import (
 	TypingEcho,
