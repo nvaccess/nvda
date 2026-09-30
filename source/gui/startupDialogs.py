@@ -89,7 +89,7 @@ class WelcomeDialog(
 		# A failed read appears unchecked; only an explicit user action should request a change.
 		self._hasStartAfterLogonChanged: bool = False
 		self.startAfterLogonCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartAfterLogonChanged)
-		if globalVars.appArgs.secure or config.isAppX or not config.isInstalledCopy():
+		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		# Translators: The label of a checkbox in the Welcome dialog.
 		showWelcomeDialogAtStartupText = _("&Show this dialog when NVDA starts")

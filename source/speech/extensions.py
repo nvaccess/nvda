@@ -34,14 +34,17 @@ pre_speech = Action()
 """
 Notifies when code attempts to speak text.
 
-@param speechSequence: the sequence of text and L{SpeechCommand} objects to speak
-@type speechSequence: speech.SpeechSequence
+:param speechSequence: The filtered sequence of text and SpeechCommand objects to speak.
+:type speechSequence: speech.SpeechSequence
 
-@param symbolLevel: The symbol verbosity level; C{None} (default) to use the user's configuration.
-@type symbolLevel: characterProcessing.SymbolLevel
+:param originalSpeechSequence: The original sequence passed to speech.speak, before speech filters are applied.
+:type originalSpeechSequence: speech.SpeechSequence
 
-@param priority: The speech priority.
-@type priority: priorities.Spri
+:param symbolLevel: The symbol verbosity level; ``None`` (default) to use the user's configuration.
+:type symbolLevel: characterProcessing.SymbolLevel
+
+:param priority: The speech priority.
+:type priority: priorities.Spri
 """
 
 filter_speechSequence = Filter[SpeechSequence]()
