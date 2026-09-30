@@ -8,7 +8,6 @@ Several performance improvements have been made to reduce lag and improve respon
 NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
 NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
 NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
-In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
 
 Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
 It is also now possible to change an existing gesture directly in the Input Gestures dialog.
