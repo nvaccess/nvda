@@ -197,6 +197,8 @@ class _CommentInfo:
 	"""Whether the comment is a reply in a comment thread."""
 	replies: tuple["_CommentInfo", ...] = ()
 	"""The replies to the comment, in the order of the comment thread."""
+	threadRuntimeId: tuple[int, ...] | None = None
+	"""The UIA runtime ID of the element of the comment thread, or ``None`` if the comment is not its root."""
 
 	def getPresentation(self) -> str:
 		"""
@@ -288,7 +290,12 @@ def _getCommentThreadInfo(threadElement: UIAHandler.IUIAutomationElement, resolv
 		_getCachedCommentInfo(replyElements.getElement(index), isReply=True)
 		for index in range(replyElements.length)
 	)
-	return _getCachedCommentInfo(threadElement, resolved=resolved, replies=replies)
+	return _getCachedCommentInfo(
+		threadElement,
+		resolved=resolved,
+		replies=replies,
+		threadRuntimeId=threadElement.getRuntimeId(),
+	)
 
 
 def _isResolvedComment(annotationTypes: tuple[int, ...]) -> bool:
@@ -410,6 +417,11 @@ class CommentUIATextInfoQuickNavItem(_AnnotationUIATextInfoQuickNavItem, AutoPro
 		return _getCommentInfoFromPosition(self.textInfo, resolved=_isResolvedComment(self.attribValues))
 
 	@property
+	def threadRuntimeId(self) -> tuple[int, ...] | None:
+		"""The UIA runtime ID of the element of the comment thread, or ``None`` if the comment has no such element."""
+		return self.commentInfo.threadRuntimeId if self.commentInfo else None
+
+	@property
 	def label(self):
 		return self.commentInfo.getPresentation()
 
@@ -439,11 +451,23 @@ def _iterWithCommentReplies(
 ) -> Generator[browseMode.QuickNavItem]:
 	"""
 	Yields each item, followed by an item for each reply when the item is a comment.
+	A comment is skipped with its replies when it belongs to the same comment thread as the previous comment.
 	:param items: The items to yield.
 	"""
+	previousComment: CommentUIATextInfoQuickNavItem | None = None
 	for item in items:
+		if not isinstance(item, CommentUIATextInfoQuickNavItem):
+			yield item
+			continue
+		if (
+			previousComment is not None
+			and item.threadRuntimeId is not None
+			and item.threadRuntimeId == previousComment.threadRuntimeId
+		):
+			continue
+		previousComment = item
 		yield item
-		if not isinstance(item, CommentUIATextInfoQuickNavItem) or item.commentInfo is None:
+		if item.commentInfo is None:
 			continue
 		for replyInfo in item.commentInfo.replies:
 			yield CommentReplyUIATextInfoQuickNavItem(item, replyInfo)
