@@ -22,7 +22,9 @@ class TestSeikaTermination(unittest.TestCase):
 		driver._dev = Mock()
 		with (
 			patch.object(
-				braille.display.driver.BrailleDisplayDriver, "terminate", side_effect=RuntimeError()
+				braille.display.driver.BrailleDisplayDriver,
+				"terminate",
+				side_effect=RuntimeError(),
 			),
 			self.assertRaises(RuntimeError),
 		):
@@ -34,7 +36,9 @@ class TestSeikaTermination(unittest.TestCase):
 		driver._dev = None
 		with (
 			patch.object(
-				braille.display.driver.BrailleDisplayDriver, "terminate", side_effect=RuntimeError()
+				braille.display.driver.BrailleDisplayDriver,
+				"terminate",
+				side_effect=RuntimeError(),
 			),
 			self.assertRaises(RuntimeError),
 		):
@@ -70,19 +74,21 @@ class TestKeyDownRecovery(unittest.TestCase):
 			stack.enter_context(patch.object(keyboardHandler, name, value))
 		stack.enter_context(patch.object(keyboardHandler.inputCore, "manager", self.manager))
 		self.decide = stack.enter_context(
-			patch.object(keyboardHandler.inputCore.decide_handleRawKey, "decide", return_value=True)
+			patch.object(keyboardHandler.inputCore.decide_handleRawKey, "decide", return_value=True),
 		)
 		stack.enter_context(
 			patch.object(
-				keyboardHandler.winUser, "getSystemStickyKeys", return_value=SimpleNamespace(dwFlags=0)
-			)
+				keyboardHandler.winUser,
+				"getSystemStickyKeys",
+				return_value=SimpleNamespace(dwFlags=0),
+			),
 		)
 		stack.enter_context(
 			patch.object(
 				keyboardHandler,
 				"KeyboardInputGesture",
 				return_value=SimpleNamespace(isModifier=False, isNVDAModifierKey=False),
-			)
+			),
 		)
 		stack.enter_context(patch.object(keyboardHandler, "shouldUseToUnicodeEx", return_value=False))
 		self.getFocus = stack.enter_context(patch.object(keyboardHandler.api, "getFocusObject"))
@@ -124,7 +130,7 @@ class TestScreenCurtainDisable(unittest.TestCase):
 				stack.enter_context(patch.object(screenCurtain, "screenCurtain", curtain))
 				stack.enter_context(patch.object(globalCommands, "getLastScriptRepeatCount", return_value=0))
 				stack.enter_context(
-					patch.object(globalCommands.GlobalCommands, "_tempEnableScreenCurtain", True)
+					patch.object(globalCommands.GlobalCommands, "_tempEnableScreenCurtain", True),
 				)
 				message = stack.enter_context(patch.object(globalCommands.ui, "message"))
 				commands = globalCommands.GlobalCommands()
