@@ -6,6 +6,7 @@
 """Unit tests for the speechDictHandler module."""
 
 import unittest  # noqa: I001
+from unittest.mock import patch
 
 import config
 
@@ -232,6 +233,19 @@ class TestSpeechDictEntry(unittest.TestCase):
 		expected = "replaced abc"
 		actual = entry.sub("test abc")
 		self.assertEqual(expected, actual)
+
+	def test_entryTypeUnix_partialMatchWithEitherEndAnchor(self):
+		"""Both fnmatch end anchors must allow matches before the end of the text."""
+		for anchor in (r"\Z", r"\z"):
+			with self.subTest(anchor=anchor):
+				with patch("speechDictHandler.types.fnmatch.translate", return_value=rf"(?s:t.st){anchor}"):
+					entry = SpeechDictEntry("t?st", "replaced", type=EntryType.UNIX)
+				self.assertEqual("prefix replaced suffix", entry.sub("prefix test suffix"))
+
+	def test_entryTypeUnix_partialMatchPreservesLiteralBackslash(self):
+		"""Removing the final anchor must not change escaped characters in the pattern."""
+		entry = SpeechDictEntry(r"test\?", "replaced", type=EntryType.UNIX)
+		self.assertEqual("prefix replaced suffix", entry.sub(r"prefix test\x suffix"))
 
 	def test_entryTypeUnix_caseSensitive(self):
 		"""Should be case sensitive by default."""

@@ -5025,7 +5025,7 @@ class GlobalCommands(ScriptableObject):
 			finally:
 				self._toggleScreenCurtainMessage = message
 				ui.message(message, speechPriority=speech.priorities.Spri.NOW)
-				return  # noqa: B012
+			return
 		elif (  # enable it
 			scriptCount in (0, 1)  # 1 press (temp enable) or 2 presses (enable)
 		):

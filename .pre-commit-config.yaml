@@ -19,7 +19,7 @@ ci:
   submodules: true
 
 default_language_version:
-  python: python3.13
+  python: python3.14
 
 repos:
 - repo: https://github.com/pre-commit-ci/pre-commit-ci-config
@@ -131,12 +131,12 @@ repos:
       name: Verify uv lock file
       groups: [autofix]
       # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
-      args: ["-p3.13"]
+      args: ["-p3.14"]
     - id: uv-lock
       name: Verify uv lock file (synthDriverHost32)
       groups: [autofix]
       files: ^runtime-builders/synthDriverHost32/
-      args: ["--project", "runtime-builders/synthDriverHost32", "-p3.13"]
+      args: ["--project", "runtime-builders/synthDriverHost32", "-p3.14"]
 
 - repo: https://github.com/DavidAnson/markdownlint-cli2
   rev: v0.23.2

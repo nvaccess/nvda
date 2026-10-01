@@ -219,6 +219,12 @@ def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: 
 		injected=injected,
 	):
 		return False
+	shouldPassKey = _processKeyDownEvent(vkCode, scanCode, extended, injected)
+	# Recovery must pass keys to the OS, even when an action trapped the key.
+	return _watchdogObserver.isAttemptingRecovery or shouldPassKey
+
+
+def _processKeyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: bool) -> bool:
 	gestureExecuted = False
 	try:
 		global lastNVDAModifier, lastNVDAModifierReleaseTime, bypassNVDAModifier, passKeyThroughCount, lastPassThroughKeyDown, currentModifiers, keyCounter, stickyNVDAModifier, stickyNVDAModifierLocked  # noqa: PLW0602
@@ -321,38 +327,37 @@ def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: 
 	except:  # noqa: E722
 		log.error("internal_keyDownEvent", exc_info=True)  # noqa: G201
 	finally:
-		if _watchdogObserver.isAttemptingRecovery:
-			return True  # noqa: B012
-		# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process
-		# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
-		focus = api.getFocusObject()
-		if (
-			shouldUseToUnicodeEx(focus)
-			# And we only want to do this if the gesture did not result in an executed action
-			and not gestureExecuted
-			# and not if this gesture is a modifier key
-			and not isNVDAModifierKey(vkCode, extended)
-			and vkCode not in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
-		):
-			keyStates = (ctypes.c_ubyte * 256)()
-			for k in range(256):
-				keyStates[k] = user32.GetKeyState(k)
-			charBuf = ctypes.create_unicode_buffer(5)
-			hkl = user32.GetKeyboardLayout(focus.windowThreadID)
-			# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
-			# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
-			res = user32.ToUnicodeEx(
-				vkCode,
-				scanCode,
-				keyStates,
-				charBuf,
-				len(charBuf),
-				0x4,
-				hkl,
-			)
-			if res > 0:
-				for ch in charBuf[:res]:
-					eventHandler.queueEvent("typedCharacter", focus, ch=ch)
+		if not _watchdogObserver.isAttemptingRecovery:
+			# #6017: handle typed characters in Win10 RS2 and above where we can't detect typed characters in-process
+			# This code must be in the 'finally' block as code above returns in several places yet we still want to execute this particular code.
+			focus = api.getFocusObject()
+			if (
+				shouldUseToUnicodeEx(focus)
+				# And we only want to do this if the gesture did not result in an executed action
+				and not gestureExecuted
+				# and not if this gesture is a modifier key
+				and not isNVDAModifierKey(vkCode, extended)
+				and vkCode not in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
+			):
+				keyStates = (ctypes.c_ubyte * 256)()
+				for k in range(256):
+					keyStates[k] = user32.GetKeyState(k)
+				charBuf = ctypes.create_unicode_buffer(5)
+				hkl = user32.GetKeyboardLayout(focus.windowThreadID)
+				# In previous Windows builds, calling ToUnicodeEx would destroy keyboard buffer state and therefore cause the app to not produce the right WM_CHAR message.
+				# However, ToUnicodeEx now can take a new flag of 0x4, which stops it from destroying keyboard state, thus allowing us to safely call it here.
+				res = user32.ToUnicodeEx(
+					vkCode,
+					scanCode,
+					keyStates,
+					charBuf,
+					len(charBuf),
+					0x4,
+					hkl,
+				)
+				if res > 0:
+					for ch in charBuf[:res]:
+						eventHandler.queueEvent("typedCharacter", focus, ch=ch)
 	return True
 
 

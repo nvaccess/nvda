@@ -202,8 +202,8 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 		finally:
 			if self._dev is None:
 				log.debugWarning("Seika Notetaker driver not initialized when attempting to terminate")
-				return  # noqa: B012
-			self._dev.close()
+			else:
+				self._dev.close()
 
 	def display(self, cells: list[int]):
 		if self._dev is None:

@@ -150,11 +150,11 @@ class SpeechDictEntry:
 			case EntryType.END_OF_WORD:
 				tempPattern = rf"(?<=\w){engine.escape(self.pattern)}\b"
 			case EntryType.UNIX:
-				# fnmatch.translate appends \Z to the end of the pattern; discard that anchor.
+				# Python 3.14 uses \z; earlier versions use \Z. Speech dictionaries
+				# replace matching substrings, so discard either end-of-string anchor.
 				translated = fnmatch.translate(self.pattern)
-				suffix = r"\Z"
-				if translated.endswith(suffix):
-					tempPattern = translated.removesuffix(suffix)
+				if translated.endswith((r"\Z", r"\z")):
+					tempPattern = translated[:-2]
 				else:
 					tempPattern = translated
 			case _:

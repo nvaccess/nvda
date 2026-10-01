@@ -45,7 +45,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Updated components:
+  * Python to 3.14.7.
   * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
+* Control flow no longer exits `finally` blocks, for compatibility with Python 3.14 diagnostics.
+  Errors from Seika driver termination and process-exit exceptions in the screen curtain command are no longer suppressed by cleanup.
 * The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
 * Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
 A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)

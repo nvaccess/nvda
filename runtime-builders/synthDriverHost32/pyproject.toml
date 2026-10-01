@@ -9,7 +9,7 @@ description = "NVDA 32 bit synth driver host"
 maintainers = [
 	{name = "NV Access", email = "info@nvaccess.org"},
 ]
-requires-python = ">=3.13,<3.14"
+requires-python = ">=3.13,<3.15"
 classifiers = [
 	"Development Status :: 5 - Production/Stable",
 	"Intended Audience :: End Users/Desktop",
@@ -21,10 +21,10 @@ classifiers = [
 readme = "readme.md"
 license = {file = "copying.txt"}
 dependencies = [
-	"comtypes==1.4.11",
+	"comtypes==1.4.16",
 	"pyserial==3.5",
 	"rpyc==6.0.2",
-	"pywin32==311",
+	"pywin32==312",
 	"configobj",
 ]
 
@@ -35,14 +35,14 @@ Issues = "https://github.com/nvaccess/nvda/issues"
 
 [tool.uv]
 default-groups = "all"
-python-preference = "only-system"
+python-preference = "system"
 environments = ["sys_platform == 'win32'"]
 required-version = ">=0.7.9"
 
 [dependency-groups]
 dev = [
 	# Packaging NVDA
-	"py2exe==0.14.1.1",
+	"py2exe==0.14.2.0",
 	"setuptools~=84.0.0",
 ]
 
