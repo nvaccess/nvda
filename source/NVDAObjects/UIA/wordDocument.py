@@ -3,46 +3,49 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Generator, Iterable  # noqa: I001
-
 import enum
+from collections.abc import Generator, Iterable
 from dataclasses import dataclass
 from functools import cached_property
-from comtypes import COMError
-import inputCore
-import mathPres
-import scriptHandler
-from scriptHandler import isScriptWaiting
-import textInfos
-import UIAHandler
-import UIAHandler.remote as UIARemote
-from logHandler import log
-import controlTypes
-import ui
-import speech
-from speech.commands import EndUtteranceCommand
-import review
+
 import braille
 import browseMode
+import controlTypes
+import documentBase
+import eventHandler
+import inputCore
+import mathPres
+import review
+import scriptHandler
+import speech
+import textInfos
+import ui
+import UIAHandler
+import UIAHandler.remote as UIARemote
+from baseObject import AutoPropertyObject
+from comtypes import COMError
+from globalCommands import SCRCAT_SYSTEMCARET
+from logHandler import log
+from scriptHandler import isScriptWaiting, script
+from speech.commands import EndUtteranceCommand
 from UIAHandler.browseMode import (
+	TextAttribUIATextInfoQuickNavItem,
 	UIABrowseModeDocument,
 	UIADocumentWithTableNavigation,
 	UIATextAttributeQuicknavIterator,
-	TextAttribUIATextInfoQuickNavItem,
 )
 from UIAHandler.utils import CacheableUIAElementArray, createUIAMultiPropertyCondition
-from . import UIA, UIATextInfo
+from utils._deprecate import RemovedSymbol, handleDeprecations
+
+from NVDAObjects import NVDAObject
 from NVDAObjects.window.winword import (
 	WordDocument as WordDocumentBase,
+)
+from NVDAObjects.window.winword import (
 	WordDocumentTextInfo as LegacyWordDocumentTextInfo,
 )
-from NVDAObjects import NVDAObject
-from baseObject import AutoPropertyObject
-from scriptHandler import script
-import eventHandler
-from globalCommands import SCRCAT_SYSTEMCARET
-import documentBase
-from utils._deprecate import RemovedSymbol, handleDeprecations
+
+from . import UIA, UIATextInfo
 
 """Support for Microsoft Word via UI Automation."""
 
