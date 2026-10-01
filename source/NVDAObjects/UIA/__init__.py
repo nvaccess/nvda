@@ -7,6 +7,7 @@
 """Support for UI Automation (UIA) controls."""
 
 from __future__ import annotations  # noqa: I001
+from re import L
 import typing
 from typing import (  # noqa: UP035
 	List,  # noqa: F401
@@ -232,6 +233,17 @@ class UIATextInfo(textInfos.TextInfo):
 				textPosition = TextPosition.BASELINE
 		formatField["text-position"] = textPosition
 
+
+	def _getFormatFieldSmallCaps(
+			self,
+			fetch: Callable[[int], int],
+			formatField: textInfos.FormatField
+	):
+		val = fetch(UIAHandler.UIA_CapStyleAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+		#if isinstance(val, int):
+			formatField["smallCaps"] = val == 1
+								 	                             
 	def _getFormatFieldStyle(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_StyleNameAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
@@ -398,6 +410,8 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportSuperscriptsAndSubscripts"]:
 				IDs.add(UIAHandler.UIA_IsSuperscriptAttributeId)
 				IDs.add(UIAHandler.UIA_IsSubscriptAttributeId)
+			if (formatConfig["reportSmallCaps"]):
+				IDs.add(UIAHandler.UIA_CapStyleAttributeId)
 			if formatConfig["reportParagraphIndentation"]:
 				IDs.update(set(paragraphIndentIDs))
 			if formatConfig["reportAlignment"]:
@@ -430,6 +444,8 @@ class UIATextInfo(textInfos.TextInfo):
 			self._getFormatFieldFontAttributes(fetch, formatField)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			self._getFormatFieldSuperscriptsAndSubscripts(fetch, formatField)
+		if formatConfig["reportSmallCaps"]:
+			self._getFormatFieldSmallCaps(fetch, formatField)
 		if formatConfig["reportStyle"]:
 			self._getFormatFieldStyle(fetch, formatField)
 		if formatConfig["reportParagraphIndentation"]:
