@@ -56,7 +56,14 @@ constexpr int formatConfig_reportHighlightColor = 0x200000;
 constexpr int formatConfig_reportSmallCaps = 0x400000;
 
 
-constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor|formatConfig_reportSuperscriptsAndSubscripts|formatConfig_reportSmallCaps);
+constexpr int formatConfig_fontFlags = (
+	formatConfig_reportFontName |
+	formatConfig_reportFontSize |
+	formatConfig_reportFontAttributes |
+	formatConfig_reportColor |
+	formatConfig_reportSuperscriptsAndSubscripts |
+	formatConfig_reportSmallCaps
+);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
