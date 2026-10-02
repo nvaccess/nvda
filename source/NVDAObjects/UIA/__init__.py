@@ -7,7 +7,6 @@
 """Support for UI Automation (UIA) controls."""
 
 from __future__ import annotations  # noqa: I001
-from re import L
 import typing
 from typing import (  # noqa: UP035
 	List,  # noqa: F401

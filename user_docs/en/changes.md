@@ -1,5 +1,11 @@
 # What's New in NVDA
 
+## 2027.2
+
+### New Features
+
+* Small Caps has been added to font reporting. (#20922, @burrm)
+
 ## 2027.1
 
 ### Important notes
