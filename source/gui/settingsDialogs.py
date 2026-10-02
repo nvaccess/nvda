@@ -6829,6 +6829,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 		self.symbolsList.AppendColumn(_("Preserve"))
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
+		self.symbolsList.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
+		self.symbolsList.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
@@ -7037,6 +7039,30 @@ class SpeechSymbolsDialog(SettingsDialog):
 			# We don't get a new focus event with the new index.
 			self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
+
+	def onCharHook(self, evt: wx.KeyEvent):
+		key = evt.GetKeyCode()
+		# Get the selected symbol, if there is one.
+		index = self.symbolsList.GetFirstSelected()
+		if index >= 0:
+			symbol = self.filteredSymbols[index]
+			if key == wx.WXK_DELETE and not self.symbolProcessor.isBuiltin(symbol.identifier):
+				self.OnRemoveClick(None)
+		evt.Skip()
+
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
+		# Get the selected symbol, if there is one.
+		index = self.symbolsList.GetFirstSelected()
+		menu = wx.Menu()
+		if index >= 0:
+			symbol = self.filteredSymbols[index]
+			# Built-in symbols can't be removed.
+			if not self.symbolProcessor.isBuiltin(symbol.identifier):
+				# Translators: Context menu item label to remove a symbol
+				removeItem = menu.Append(wx.ID_ANY, _("Re&move"))
+				self.Bind(wx.EVT_MENU, self.OnRemoveClick, removeItem)
+		self.PopupMenu(menu)
+		menu.Destroy()
 
 	def onOk(self, evt):
 		self.onSymbolEdited()
