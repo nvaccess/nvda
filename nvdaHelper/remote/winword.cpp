@@ -674,8 +674,8 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 					formatAttribsStream<<L"hidden=\"1\" ";
 				}
 			}
-			if(formatConfig&formatConfig_reportSmallCaps) {
-				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SMALLCAPS,VT_I4,&iVal)==S_OK&&iVal) {
+			if (formatConfig & formatConfig_reportSmallCaps) {
+				if (_com_dispatch_raw_propget(pDispatchFont, wdDISPID_FONT_SMALLCAPS, VT_I4, &iVal) == S_OK && iVal) {
 					formatAttribsStream<<L"smallCaps=\"1\" ";
 				}
 			}

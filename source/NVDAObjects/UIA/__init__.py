@@ -241,9 +241,7 @@ class UIATextInfo(textInfos.TextInfo):
 	):
 		val = fetch(UIAHandler.UIA_CapStyleAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
-		#if isinstance(val, int):
 			formatField["smallCaps"] = val == 1
-								 	                             
 	def _getFormatFieldStyle(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_StyleNameAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
