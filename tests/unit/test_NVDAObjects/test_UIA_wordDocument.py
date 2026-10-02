@@ -449,10 +449,21 @@ class TestCommentQuickNavItems(unittest.TestCase):
 			self.document,
 			_makeRange(10, 20),
 		)
-		with patch.object(wordDocument, "_getCommentInfoFromPosition") as getCommentInfo:
+		with (
+			_patchResolvedCommentId(),
+			patch.object(
+				wordDocument,
+				"_getCommentInfoFromPosition",
+				return_value=_CommentInfo(_ROOT.comment, _ROOT.author, _ROOT.date, replies=(_REPLY,)),
+			) as getCommentInfo,
+		):
 			items = wordDocument._iterWithCommentReplies(iter([comment]))
 			self.assertIs(comment, next(items))
 			getCommentInfo.assert_not_called()
+			reply = next(items)
+		getCommentInfo.assert_called_once()
+		self.assertIsInstance(reply, CommentReplyUIATextInfoQuickNavItem)
+		self.assertIs(_REPLY, reply.replyInfo)
 
 	def test_commentWithoutInfoHasNoReplies(self):
 		"""A comment item without comment information yields no reply items."""
