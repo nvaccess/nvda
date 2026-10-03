@@ -36,6 +36,7 @@
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
   * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+* In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
 
 #### Add-on Store
 
