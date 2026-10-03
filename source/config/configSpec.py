@@ -42,6 +42,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	symbolDictionaries = string_list(default=list("cldr"))
 	speechDictionaries = string_list(default=list("default", "voice"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
+ 	symbolRepeatAnnounceThreshold = integer(default=4, min=0, max=100)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
 	reportLanguage = boolean(default=false)
@@ -51,7 +52,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trimLeadingSilence = boolean(default=true)
 	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	sayAllReadingUnit = featureFlag(optionsEnum="SayAllReadingUnitFlag", behaviorOfDefault="sentence")
-
+	
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
 		sayCapForCapitals = boolean(default=false)
