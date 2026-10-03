@@ -234,13 +234,14 @@ class UIATextInfo(textInfos.TextInfo):
 
 
 	def _getFormatFieldSmallCaps(
-			self,
-			fetch: Callable[[int], int],
-			formatField: textInfos.FormatField
+		self,
+		fetch: Callable[[int], int],
+		formatField: textInfos.FormatField,
 	):
 		val = fetch(UIAHandler.UIA_CapStyleAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			formatField["smallCaps"] = val == 1
+
 	def _getFormatFieldStyle(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_StyleNameAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
@@ -407,7 +408,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportSuperscriptsAndSubscripts"]:
 				IDs.add(UIAHandler.UIA_IsSuperscriptAttributeId)
 				IDs.add(UIAHandler.UIA_IsSubscriptAttributeId)
-			if (formatConfig["reportSmallCaps"]):
+			if formatConfig["reportSmallCaps"]:
 				IDs.add(UIAHandler.UIA_CapStyleAttributeId)
 			if formatConfig["reportParagraphIndentation"]:
 				IDs.update(set(paragraphIndentIDs))

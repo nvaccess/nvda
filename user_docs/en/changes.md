@@ -4,7 +4,7 @@
 
 ### New Features
 
-* Small Caps has been added to font reporting. (#20922, @burrm)
+* Small Caps has been added to font reporting and is known to work with recent Microsoft Word versions using UI Automation. The current setting will not currently work with non UIA applications, including browsers like Firefox and Microsoft Edge, nor will it work with Word versions that do not support UIA (currently believed to be versions prior to Office 2016). (#20922, @burrm)
 
 ## 2027.1
 
