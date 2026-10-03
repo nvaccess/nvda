@@ -232,7 +232,6 @@ class UIATextInfo(textInfos.TextInfo):
 				textPosition = TextPosition.BASELINE
 		formatField["text-position"] = textPosition
 
-
 	def _getFormatFieldSmallCaps(
 		self,
 		fetch: Callable[[int], int],
