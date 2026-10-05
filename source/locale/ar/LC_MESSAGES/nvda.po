@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 05:06+0000\n"
-"PO-Revision-Date: 2026-09-28 00:25\n"
+"POT-Creation-Date: 2026-10-04 23:36+0000\n"
+"PO-Revision-Date: 2026-10-05 00:25\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1654,7 +1654,7 @@ msgstr "أخفقت بعض العمليات المتعلقة بالإضافات،
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:171 gui\settingsDialogs.py:1041
-#: gui\settingsDialogs.py:6133 gui\settingsDialogs.py:6979
+#: gui\settingsDialogs.py:6112 gui\settingsDialogs.py:6958
 #: gui\startupDialogs.py:126 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -1791,7 +1791,7 @@ msgstr "لستَ ضمن خلية جدول"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: documentBase.py:392 NVDAObjects\behaviors.py:772
+#: documentBase.py:392 NVDAObjects\behaviors.py:722
 #: NVDAObjects\IAccessible\winword.py:431
 msgid "Edge of table"
 msgstr "حافة الجدول"
@@ -1908,7 +1908,7 @@ msgstr "الفأرة"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: globalCommands.py:97 config\configFlags.py:314 gui\settingsDialogs.py:1143
-#: gui\settingsDialogs.py:4612
+#: gui\settingsDialogs.py:4596
 msgid "Speech"
 msgstr "النُطق"
 
@@ -1928,21 +1928,21 @@ msgstr "الأوضاع"
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
 #: globalCommands.py:106 config\configFlags.py:316 gui\settingsDialogs.py:4502
-#: gui\settingsDialogs.py:5043
+#: gui\settingsDialogs.py:5022
 msgid "Braille"
 msgstr "الخط البارز Braille"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:109 gui\settingsDialogs.py:5901
+#: globalCommands.py:109 gui\settingsDialogs.py:5880
 msgid "Vision"
 msgstr "الرؤية"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
-#: globalCommands.py:112 gui\settingsDialogs.py:6167
-#: gui\settingsDialogs.py:6400
+#: globalCommands.py:112 gui\settingsDialogs.py:6146
+#: gui\settingsDialogs.py:6379
 msgid "Magnifier"
 msgstr "التكبير"
 
@@ -6998,7 +6998,7 @@ msgstr "قد لا يستمر الاتصال النشط حاليًا أثناء �
 #. Translators: Title of warning dialog
 #: updateCheck.py:1023 gui\_SetURLDialog.py:113 gui\configProfiles.py:539
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1973
-#: gui\settingsDialogs.py:6440 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6419 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "تحذير"
@@ -9955,7 +9955,7 @@ msgstr "كرواتي بدون اختصارات"
 #. braille settings dialog.
 #: brailleTables\__tables.py:335
 msgid "Haitian Creole Braille"
-msgstr ""
+msgstr "كريولي هايتي"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10105,7 +10105,7 @@ msgstr "لاتفي بدون اختصارات"
 #. braille settings dialog.
 #: brailleTables\__tables.py:438
 msgid "Māori Braille"
-msgstr ""
+msgstr "ماوري"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10237,13 +10237,13 @@ msgstr "إوريا بدون اختصارات"
 #. braille settings dialog.
 #: brailleTables\__tables.py:536
 msgid "Elfdalian 6 dot"
-msgstr ""
+msgstr "إلفدالي ذو ست نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:539
 msgid "Elfdalian 8 dot"
-msgstr ""
+msgstr "إلفدالي ذو ثمان نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10375,13 +10375,13 @@ msgstr "سلوفيني بدون اختصارات"
 #. braille settings dialog.
 #: brailleTables\__tables.py:622
 msgid "Sami 6 dot"
-msgstr ""
+msgstr "سامي ذو ست نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:625
 msgid "Sami 8 dot"
-msgstr ""
+msgstr "سامي ذو ثمان نقاط"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -11112,12 +11112,12 @@ msgstr "صيني"
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:157
 msgid "Unicode (ICU)"
-msgstr ""
+msgstr "Unicode (ICU)"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:159
 msgid "Legacy (Uniscribe)"
-msgstr ""
+msgstr "النظام القديم (Uniscribe)"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:180
@@ -11213,7 +11213,8 @@ msgstr "محتوى غير مرئيّ"
 #. is enabled, but the system does not support the required screen capture API.
 #: contentRecog\recogUi.py:326
 msgid "Content recognition is unavailable while Screen Curtain is enabled on this system. Please disable Screen Curtain and try again."
-msgstr ""
+msgstr "التعرُّف على المحتوى لا يعمل أثناء تفعيل خاصية سِتار الشاشة في هذا النظام.\n"
+"يُرجى تعطيل سِتار الشاشة، ثم حاوِلْ مجددا."
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 #: contentRecog\recogUi.py:334
@@ -13402,7 +13403,7 @@ msgstr "تص&فية حسب:"
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #: gui\inputGestures.py:627 gui\inputGestures.py:684
-#: gui\settingsDialogs.py:6867 gui\speechDict.py:218
+#: gui\settingsDialogs.py:6846 gui\speechDict.py:218
 msgid "&Add"
 msgstr "إ&ضافة"
 
@@ -13831,8 +13832,8 @@ msgstr "التصنيفات:"
 #. magnifier settings panel
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:806 gui\settingsDialogs.py:6212
-#: gui\settingsDialogs.py:6504
+#: gui\settingsDialogs.py:806 gui\settingsDialogs.py:6191
+#: gui\settingsDialogs.py:6483
 msgid "General"
 msgstr "عام"
 
@@ -13998,7 +13999,7 @@ msgstr "آلة النُطق"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1171 gui\settingsDialogs.py:5064
+#: gui\settingsDialogs.py:1171 gui\settingsDialogs.py:5043
 msgid "C&hange..."
 msgstr "ت&غيير..."
 
@@ -14058,7 +14059,7 @@ msgstr "الاع&تماد على لغة آلة النطق عند معالجة ا
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5620
+#: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5599
 msgid "Unicode normali&zation"
 msgstr "تسوية &Unicode"
 
@@ -14673,7 +14674,7 @@ msgstr "استخدام نمط دعم محتوى الرياضيات المضمّ�
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3199 gui\settingsDialogs.py:4716
+#: gui\settingsDialogs.py:3199 gui\settingsDialogs.py:4700
 msgid "Document Formatting"
 msgstr "تنسيق المستند"
 
@@ -14935,7 +14936,7 @@ msgstr "&نمط الفقرة:"
 #. Translators: This is a label for the word segmentation standard in the document navigation dialog
 #: gui\settingsDialogs.py:3619
 msgid "&Word Segmentation Standard:"
-msgstr ""
+msgstr "&معيار تجزئة الكلمة:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -15088,7 +15089,7 @@ msgstr "ال&مُستضيف:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:4025 gui\settingsDialogs.py:5142
+#: gui\settingsDialogs.py:4025 gui\settingsDialogs.py:5121
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "المنفذ:"
@@ -15373,342 +15374,336 @@ msgstr "نُطق &كلمات المرور في كافة وحدات توجيه ا
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "استخدام الدعم المحسَّن للأحرف الم&كتوبة في نوافذ توجيه الأوامر القديمة عند توفّره"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-#: gui\settingsDialogs.py:4544
-msgid "Beep for &skipped lines"
-msgstr ""
-
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4563
+#: gui\settingsDialogs.py:4547
 msgid "&Diff algorithm:"
 msgstr "&خوارزمية Diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4568
+#: gui\settingsDialogs.py:4552
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "تلقائي (الأولوية ل(Diff Match Patch))"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4572
+#: gui\settingsDialogs.py:4556
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4576
+#: gui\settingsDialogs.py:4560
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4602
+#: gui\settingsDialogs.py:4586
 msgid "Speak new text in Windows Terminal via:"
 msgstr "نُطق النص الجديد في Windows Terminal  عبر:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4621
+#: gui\settingsDialogs.py:4605
 msgid "Default (Yes)"
 msgstr "الافتراضي (نعم)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4624
+#: gui\settingsDialogs.py:4608
 msgid "Yes"
 msgstr "نعم"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4627
+#: gui\settingsDialogs.py:4611
 msgid "No"
 msgstr "لا"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4631
+#: gui\settingsDialogs.py:4615
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "محاولة إلغاء الإعلان عن الأحداث والمعلومات منتهية الصلاحية:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4647
+#: gui\settingsDialogs.py:4631
 msgid "Trim leading silence in speech audio"
 msgstr "إزالة فترات الصمت التي تسبق النُطق"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4655
+#: gui\settingsDialogs.py:4639
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "استخدام WASAPI لإخراج أصوات SAPI 4:"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4666
+#: gui\settingsDialogs.py:4650
 msgid "Use modern regular expression engine for speech dictionary entries:"
 msgstr "استخدام محرك التعبيرات النمطية الحديث لمدخلات قاموس النطق:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4677
+#: gui\settingsDialogs.py:4661
 msgid "Virtual Buffers"
 msgstr "الجلسات الافتراضية"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4685
+#: gui\settingsDialogs.py:4669
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "تحميل الجلسة افتراضيا في متصفحات Chrumium عندما يكون المستند قيد العمل"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4694
+#: gui\settingsDialogs.py:4678
 msgid "Editable Text"
 msgstr "نصٌّ يمكن تحريره"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4701
+#: gui\settingsDialogs.py:4685
 msgid "Caret movement timeout (in ms)"
 msgstr "المعدل الزمني لحركة مؤشر التحرير (ملي في الثانية)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4724
+#: gui\settingsDialogs.py:4708
 msgid "Report transparent color values"
 msgstr "الإعلان عن قيم الألوان الشفافة"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4738
+#: gui\settingsDialogs.py:4722
 msgid "Debug logging"
 msgstr "تسجيل الأخطاء البرمجية"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4766
+#: gui\settingsDialogs.py:4750
 msgid "Enabled logging categories"
 msgstr "إتاحةُ التصنيفات لسجل الأخطاء البرمجية"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4786
+#: gui\settingsDialogs.py:4770
 msgid "Play a sound for logged e&rrors:"
 msgstr "إصدار &صوت للأخطاء المسجلة في سجلّ الأخطاء:"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4799
+#: gui\settingsDialogs.py:4783
 msgid "Regular expression for text paragraph navigation"
 msgstr "التعبير القياسي لأمر التنقُّل السريع بين الفقرات النصية"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4821
+#: gui\settingsDialogs.py:4805
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "خطأ في كتابة التعبير القياسي للفقرة النصية: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4959
+#: gui\settingsDialogs.py:4938
 msgid "Advanced"
 msgstr "متقدم"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4964
+#: gui\settingsDialogs.py:4943
 msgid "Warning!"
 msgstr "تحذير!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4968
+#: gui\settingsDialogs.py:4947
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "الإعدادات الآتية للمستخدمين المتقدمين، وقد يؤدي تغييرُها لعمل NVDA بشكل غير صحيح. يُرجى تغيير هذه الإعدادات فقط في حال كنت مدركا لحقيقة ما تجريه، أو في حال توجيه خاص من قِبَل المطورين."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4995
+#: gui\settingsDialogs.py:4974
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "أتفهّمُ أن تغيير هذه الإعدادات قد يتسبب في عمل NVDA على غير الوجه الصحيح."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:5006
+#: gui\settingsDialogs.py:4985
 msgid "Restore defaults"
 msgstr "استعادة الإعدادات الافتراضية"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:5049
+#: gui\settingsDialogs.py:5028
 msgid "Braille display"
 msgstr "شاشة عرضُ برايل"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:5118
+#: gui\settingsDialogs.py:5097
 msgid "Select Braille Display"
 msgstr "اختَر سطر برايل الإلكتروني"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:5127
+#: gui\settingsDialogs.py:5106
 msgid "Braille &display:"
 msgstr "السطر الإلكت&روني:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:5133
+#: gui\settingsDialogs.py:5112
 msgid "&Displays to detect automatically:"
 msgstr "أسطر برايل التي ستُكتشَف آليا:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5249
+#: gui\settingsDialogs.py:5228
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "يتعذر تحميل السطر الإلكتروني {display}"
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5252
+#: gui\settingsDialogs.py:5231
 msgid "Braille Display Error"
 msgstr "خلل في تشغيل السطر الإلكتروني"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5285
+#: gui\settingsDialogs.py:5264
 msgid "&Output table:"
 msgstr "جد&ول الإخراج:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5293 gui\settingsDialogs.py:5320
+#: gui\settingsDialogs.py:5272 gui\settingsDialogs.py:5299
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "تلقائي ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5312
+#: gui\settingsDialogs.py:5291
 msgid "&Input table:"
 msgstr "&جدول الإدخال:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5338
+#: gui\settingsDialogs.py:5317
 msgid "Braille mode:"
 msgstr "وضع برايل:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5353
+#: gui\settingsDialogs.py:5332
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "مد الكلمة الحالية ب&شفرة برايل الحاسوبية"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5361
+#: gui\settingsDialogs.py:5340
 msgid "&Show cursor"
 msgstr "ظهور المؤشر"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5370
+#: gui\settingsDialogs.py:5349
 msgid "Blink cursor"
 msgstr "وميض المؤشر"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5381
+#: gui\settingsDialogs.py:5360
 msgid "Cursor blink rate (ms)"
 msgstr "معدل وميض المؤشر (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5403
+#: gui\settingsDialogs.py:5382
 msgid "Cursor shape for &focus:"
 msgstr "شكلُ المؤشّر للتحديد الحالي:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5419
+#: gui\settingsDialogs.py:5398
 msgid "Cursor shape for &review:"
 msgstr "شكلُ المؤشّر لمؤشّر الاستعراض:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5441
+#: gui\settingsDialogs.py:5420
 msgid "Show messages"
 msgstr "ظهورُ الرسائل"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5463
+#: gui\settingsDialogs.py:5442
 msgid "Message &timeout (sec)"
 msgstr "مدة ظهور ال&رسالة (بالثواني)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5482
+#: gui\settingsDialogs.py:5461
 msgid "Tether B&raille:"
 msgstr "&إرفاق برايل:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5506
+#: gui\settingsDialogs.py:5485
 msgid "Move system caret when ro&uting review cursor"
 msgstr "&نقل مؤشّر التحرير عند نقل مؤشّر الاستعراض عبر مفاتيح توجيه المؤشّر"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5522
+#: gui\settingsDialogs.py:5501
 msgid "Read by &paragraph"
 msgstr "القراءة وِفقًا للفق&رة"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5531
+#: gui\settingsDialogs.py:5510
 msgid "Paragraph start marker:"
 msgstr "علامة بداية الفقرة:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5546
+#: gui\settingsDialogs.py:5525
 msgid "Focus context presentation:"
 msgstr "عرض المعلومات وِفقا للسياق:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5567
+#: gui\settingsDialogs.py:5546
 msgid "Show se&lection"
 msgstr "إظهار مؤشّر ال&تحديد"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5579
+#: gui\settingsDialogs.py:5558
 msgid "Formatting &display"
 msgstr "&عرض التنسيق"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5588
+#: gui\settingsDialogs.py:5567
 msgid "Spea&k character when routing cursor in text"
 msgstr "نُطق الحرف عند نقل مؤشّر برايل إليه"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5596
+#: gui\settingsDialogs.py:5575
 msgid "Speak when navigating by &line or paragraph"
 msgstr "ال&نُطق عند التنقُّل حرفا حرفا أو سطرا سطرا"
 
 #. Translators: The label for a setting in braille settings to configure text wrap behaviour
 #. (how to break lines that don't fit on the braille display).
-#: gui\settingsDialogs.py:5610
+#: gui\settingsDialogs.py:5589
 msgid "Text &wrap"
 msgstr "التفاف النص"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5631
+#: gui\settingsDialogs.py:5610
 msgid "I&nterrupt speech while scrolling"
 msgstr "&وَقْفُ النُطق أثناء  التمرير"
 
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
-#: gui\settingsDialogs.py:5640
+#: gui\settingsDialogs.py:5619
 msgid "Auto&matic scroll rate"
 msgstr "&سرعة التمرير الآلي"
 
 #. Translators: The label for a checkbox in the Braille settings panel.
-#: gui\settingsDialogs.py:5661
+#: gui\settingsDialogs.py:5640
 msgid "Use &Chinese word segmentation"
 msgstr "استخدام نظام تجزئة الكلمات في اللغة ال&صينية"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5767
+#: gui\settingsDialogs.py:5746
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "يتعذّر تحميل مزوّد تعزيز الرؤية {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5774
+#: gui\settingsDialogs.py:5753
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15716,20 +15711,20 @@ msgstr "يتعذّر تحميل مزوّدي تعزيز الرؤية الآتي�
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5780 gui\settingsDialogs.py:5810
+#: gui\settingsDialogs.py:5759 gui\settingsDialogs.py:5789
 msgid "Vision Enhancement Provider Error"
 msgstr "خطأ في مزوِّد تعزيز الرؤية"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5797
+#: gui\settingsDialogs.py:5776
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "يتعذّر إنهاء موفِّر تعزيز الرؤية {providerName}"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5805
+#: gui\settingsDialogs.py:5784
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15737,214 +15732,214 @@ msgstr "يتعذّر إنهاء مزوِّدي تعزيز الرؤية الآت�
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5905
+#: gui\settingsDialogs.py:5884
 msgid "Configure visual aids."
 msgstr "ضبط مُعينات الرؤية."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:6077
+#: gui\settingsDialogs.py:6056
 msgid "Enable"
 msgstr "تفعيل"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:6084
+#: gui\settingsDialogs.py:6063
 #: visionEnhancementProviders\NVDAHighlighter.py:396
 msgid "Options:"
 msgstr "خيارات:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:6130
+#: gui\settingsDialogs.py:6109
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "يتعذّر ضبطُ واجهة المستخدم لمزوِّد تعزيز الرؤية. لا يمكنُ تفعيلُه."
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6220
+#: gui\settingsDialogs.py:6199
 msgid "&Enable magnifier (immediate effect)"
 msgstr "تفعيل المكبِّر (فوري التأثير)."
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6234
+#: gui\settingsDialogs.py:6213
 msgid "&Zoom (%):"
 msgstr "&نسبة التكبير (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
-#: gui\settingsDialogs.py:6256
+#: gui\settingsDialogs.py:6235
 msgid "Color f&ilter:"
 msgstr "ت&صفية الألوان:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6273
+#: gui\settingsDialogs.py:6252
 msgid "&Panning step size (%):"
 msgstr "مقدار التحريك (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#: gui\settingsDialogs.py:6295
+#: gui\settingsDialogs.py:6274
 msgid "Tracking"
 msgstr "التتبُّع"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6303
+#: gui\settingsDialogs.py:6282
 msgid "Follow &mouse"
 msgstr "مصاحبة الفأرة"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6305
+#: gui\settingsDialogs.py:6284
 msgid "Follow &system focus"
 msgstr "مصاحبة مؤشّر النظام (موضع التركيز)"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6307
+#: gui\settingsDialogs.py:6286
 msgid "Follow &review cursor"
 msgstr "مصاحبة مؤشّر الاستعراض"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6289
 msgid "Follow &navigator object"
 msgstr "مصاحبة مؤشّر استعراض الكائن"
 
 #. Translators: The label for a setting in magnifier settings to select the tracking mode
-#: gui\settingsDialogs.py:6327
+#: gui\settingsDialogs.py:6306
 msgid "&Tracking mode:"
 msgstr "&نمط التتبُّع:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6408
+#: gui\settingsDialogs.py:6387
 msgid "Privacy and Security"
 msgstr "الخصوصية والأمان"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6421
+#: gui\settingsDialogs.py:6400
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "تعيين مستوى التقارير إلى مستوى إعداد التقرير: \"فحص الخطأ البرمجي (مع عدم حجب المعلومات السرية)\" قد يسجّل في التقرير معلومات حساسة مثل: النصوص المكتوبة، والمخرجات المنطوقة، أو أية بيانات خاصة أخرى قد ترد في التقرير. اختَرْ المستويات الأعلى من التقارير لسجلات الأخطاء فقط في حالات استكشاف الأخطاء وإصلاحها. هل ترغب في المتابعة؟"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6428
+#: gui\settingsDialogs.py:6407
 msgid "High risk logging level"
 msgstr "مستوى تقرير فائق الخطورة"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6433
+#: gui\settingsDialogs.py:6412
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "تعيين مستوى التقارير إلى بيانات قد يسجّل في التقرير معلومات حساسة مثل: النصوص المكتوبة، والمخرجات المنطوقة، أو أية بيانات خاصة أخرى قد ترد في التقرير. اختَرْ المستويات الأعلى من التقارير لسجلات الأخطاء فقط في حالات استكشاف الأخطاء وإصلاحها. هل ترغب في المتابعة؟"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6458
+#: gui\settingsDialogs.py:6437
 msgid "Screen Curtain"
 msgstr "سِتار الشاشة"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6467
+#: gui\settingsDialogs.py:6446
 msgid "Make screen black (immediate effect)"
 msgstr "إحالة الشاشةِ سوداء (فوريّ التأثير)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6496
+#: gui\settingsDialogs.py:6475
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&تشغيل صوت عند تبديل حالة سِتار الشاشة"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6511
+#: gui\settingsDialogs.py:6490
 msgid "L&ogging level:"
 msgstr "&مستوى إعداد التقرير:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6534
+#: gui\settingsDialogs.py:6513
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "السماح لمؤسسة NV Access بجمع إحصائيات استخدام NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6655
+#: gui\settingsDialogs.py:6634
 msgid "NVDA Settings"
 msgstr "إعدادات NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6711
+#: gui\settingsDialogs.py:6690
 msgid "normal configuration"
 msgstr "الوضع العام"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6742
+#: gui\settingsDialogs.py:6721
 msgid "Add Symbol"
 msgstr "إضافة رمزالرمز"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6747
+#: gui\settingsDialogs.py:6726
 msgid "&Symbol:"
 msgstr "الرمز:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6777
+#: gui\settingsDialogs.py:6756
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "نطق الرموز (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6791
+#: gui\settingsDialogs.py:6770
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "التص&فية حسب:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6800
+#: gui\settingsDialogs.py:6779
 msgid "&Symbols"
 msgstr "ال&رموز"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6810
+#: gui\settingsDialogs.py:6789
 msgid "Symbol"
 msgstr "الرمز"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6812 gui\speechDict.py:194
+#: gui\settingsDialogs.py:6791 gui\speechDict.py:194
 msgid "Replacement"
 msgstr "الكلمة البديلة"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6814
+#: gui\settingsDialogs.py:6793
 msgid "Level"
 msgstr "مستوى"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6817
+#: gui\settingsDialogs.py:6796
 msgid "Preserve"
 msgstr "الإرسال لآلة النُطق"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6821
+#: gui\settingsDialogs.py:6800
 msgid "Change selected symbol"
 msgstr "تغيير الرمز المحدد"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6839 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6818 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&الكلمة البديلة"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6848
+#: gui\settingsDialogs.py:6827
 msgid "&Level"
 msgstr "مس&توى"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6855
+#: gui\settingsDialogs.py:6834
 msgid "&Send actual symbol to synthesizer"
 msgstr "إر&سال الرمز الفعلي لآلة النطق"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6849
 msgid "Re&move"
 msgstr "إ&زالة"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6977
+#: gui\settingsDialogs.py:6956
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "الرمز \"%s\" موجود بالفعل."
@@ -16899,7 +16894,7 @@ msgstr "أحدث إصدار اختُبِر من NVDA"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:455
+#: gui\addonStoreGui\viewModels\addonList.py:458
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
@@ -16907,7 +16902,7 @@ msgstr "{column} (تصاعدي)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:465
+#: gui\addonStoreGui\viewModels\addonList.py:468
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
@@ -17144,7 +17139,7 @@ msgstr "خطأ في عرض صيغ الرياضيات عبر برايل."
 #: mathPres\MathCAT\MathCAT.py:498
 msgctxt "math"
 msgid "Invalid MathML found."
-msgstr ""
+msgstr "توجد صيغة MathML  غير صحيحة."
 
 #. Translators: {lang} is the name of the language in that language,
 #. and {code} is the code for that language variant,
@@ -17576,7 +17571,7 @@ msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top
 msgstr "موضع الكائن {left:.1f} بالمائة من الحافة اليسرى للشاشة، {top:.1f} بالمائة من الحافة العلوية للشاشة، العرض يغطي {width:.1f} بالمائة من الشاشة، والارتفاع {height:.1f} بالمائة من الشاشة"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
-#: NVDAObjects\behaviors.py:87 winAPI\_powerTracking.py:213
+#: NVDAObjects\behaviors.py:84 winAPI\_powerTracking.py:213
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -17589,59 +17584,59 @@ msgstr[5] "%d في المائة"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered
 #. in various search fields such as Start search box in Windows 10.
-#: NVDAObjects\behaviors.py:222
+#: NVDAObjects\behaviors.py:219
 msgid "Suggestions"
 msgstr "مقترحات"
 
 #. Translators: a message announcing a candidate's character and description.
-#: NVDAObjects\behaviors.py:704
+#: NVDAObjects\behaviors.py:654
 #, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} كما في {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#: NVDAObjects\behaviors.py:710
+#: NVDAObjects\behaviors.py:660
 #, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:789
+#: NVDAObjects\behaviors.py:739
 msgid "Moves the navigator object to the next column"
 msgstr "تحريك الكائن والتحديد الحالي للعمود التالي"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:808
+#: NVDAObjects\behaviors.py:758
 msgid "Moves the navigator object to the previous column"
 msgstr "تحريك الكائن والتحديد الحالي إلى العمود السابق"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:841
+#: NVDAObjects\behaviors.py:791
 msgid "Moves the navigator object and focus to the next row"
 msgstr "تحريك الكائن والتحديد الحالي إلى الصف التالي"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:850
+#: NVDAObjects\behaviors.py:800
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "تحريك الكائن والتحديد الحالي إلى الصف السابق"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:860
+#: NVDAObjects\behaviors.py:810
 msgid "Moves the navigator object to the first column"
 msgstr "نقل مؤشّر استعراض الكائن للعمود الأول في الجدول"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:874
+#: NVDAObjects\behaviors.py:824
 msgid "Moves the navigator object to the last column"
 msgstr "نقل مؤشّر استعراض الكائن لعمود الأخير في الجدول"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:891
+#: NVDAObjects\behaviors.py:841
 msgid "Moves the navigator object and focus to the first row"
 msgstr "نقل مؤشّر استعراض الكائن ومؤشّر النظام للصف الأول"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:902
+#: NVDAObjects\behaviors.py:852
 msgid "Moves the navigator object and focus to the last row"
 msgstr "نقل مؤشّر استعراض الكائن ومؤشّر النظام للصف الأخير"
 
@@ -20963,13 +20958,13 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:91
+#: _magnifier\fullscreenMagnifier.py:94
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "لا يمكن تفعيل المكبِّر. هناك تطبيق آخر خاص بالتطبيق قيد العمل"
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:242
+#: _magnifier\fullscreenMagnifier.py:245
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "حدث خطأ أدّى لتعطيل المكبِّر. يُرجى إعادة تشغيله."

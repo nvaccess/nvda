@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 05:06+0000\n"
-"PO-Revision-Date: 2026-09-28 00:25\n"
+"POT-Creation-Date: 2026-10-04 23:36+0000\n"
+"PO-Revision-Date: 2026-10-05 00:25\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
 "Language: fa_IR\n"
@@ -780,27 +780,27 @@ msgstr "لغزنده‌ها"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1250
 msgid "moves to the next clickable element"
-msgstr ""
+msgstr "به عنصرِ کلیک‌شدنیِ بعدی می‌بَرَد"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1252
 msgid "no next clickable element"
-msgstr ""
+msgstr "هیچ عنصرِ کلیک‌شدنیِ بعدی‌ای نیست"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1254
 msgid "moves to the previous clickable element"
-msgstr ""
+msgstr "به عنصرِ کلیک‌شدنیِ قبلی می‌بَرَد"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1256
 msgid "no previous clickable element"
-msgstr ""
+msgstr "هیچ عنصرِ کلیک‌شدنیِ قبلی‌ای نیست"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1259
 msgid "clickable elements"
-msgstr ""
+msgstr "عنصرهای کلیک‌شدنی"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1265
@@ -1577,8 +1577,8 @@ msgstr "قهوه‌ای-زرد"
 #: core.py:86
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
-msgstr[0] "افزونه‌ی زیر هنگامِ بروزرسانی دچارِ خطا شد: {}."
-msgstr[1] "افزونه‌های زیر هنگامِ بروزرسانی دچارِ خطا شدند: {}."
+msgstr[0] "افزونه‌ی زیر هنگامِ به‌روزرسانی دچارِ خطا شد: {}."
+msgstr[1] "افزونه‌های زیر هنگامِ به‌روزرسانی دچارِ خطا شدند: {}."
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
 #: core.py:95
@@ -1642,7 +1642,7 @@ msgstr "بعضی کارها روی افزونه‌ها انجام نشد. برا
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:171 gui\settingsDialogs.py:1041
-#: gui\settingsDialogs.py:6133 gui\settingsDialogs.py:6979
+#: gui\settingsDialogs.py:6112 gui\settingsDialogs.py:6958
 #: gui\startupDialogs.py:126 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -1778,7 +1778,7 @@ msgstr "در جدول نیستید"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: documentBase.py:392 NVDAObjects\behaviors.py:772
+#: documentBase.py:392 NVDAObjects\behaviors.py:722
 #: NVDAObjects\IAccessible\winword.py:431
 msgid "Edge of table"
 msgstr "لبه‌ی جدول"
@@ -1895,7 +1895,7 @@ msgstr "موس"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: globalCommands.py:97 config\configFlags.py:314 gui\settingsDialogs.py:1143
-#: gui\settingsDialogs.py:4612
+#: gui\settingsDialogs.py:4596
 msgid "Speech"
 msgstr "گفتار"
 
@@ -1915,21 +1915,21 @@ msgstr "پروفایل‌های پیکربندی"
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
 #: globalCommands.py:106 config\configFlags.py:316 gui\settingsDialogs.py:4502
-#: gui\settingsDialogs.py:5043
+#: gui\settingsDialogs.py:5022
 msgid "Braille"
 msgstr "بریل"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:109 gui\settingsDialogs.py:5901
+#: globalCommands.py:109 gui\settingsDialogs.py:5880
 msgid "Vision"
 msgstr "بینایی"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
-#: globalCommands.py:112 gui\settingsDialogs.py:6167
-#: gui\settingsDialogs.py:6400
+#: globalCommands.py:112 gui\settingsDialogs.py:6146
+#: gui\settingsDialogs.py:6379
 msgid "Magnifier"
 msgstr "ذره‌بین"
 
@@ -3407,7 +3407,7 @@ msgstr "پوشه‌ی پیکربندیِ کاربرِ فعلی را باز می�
 #. Translators: Input help mode message for toggle progress bar output command.
 #: globalCommands.py:3332
 msgid "Toggles between beeps, speech, beeps and speech, and off, for reporting progress bar updates"
-msgstr "چگونگیِ اعلامِ بروزرسانیِ نوارِ پیشرفت را بین بوق، گفتار، بوق و گفتار، و هیچکدام تغییر می‌دهد"
+msgstr "چگونگیِ اعلامِ به‌روزرسانیِ نوارِ پیشرفت را بین بوق، گفتار، بوق و گفتار، و هیچکدام تغییر می‌دهد"
 
 #. Translators: A mode where no progress bar updates are given.
 #: globalCommands.py:3342
@@ -3417,7 +3417,7 @@ msgstr "هیچ پیشرفتی اعلام نمی‌شود"
 #. Translators: A mode where progress bar updates will be spoken.
 #: globalCommands.py:3346
 msgid "Speak progress bar updates"
-msgstr "بروزرسانیِ نوارِ پیش‌رفت خوانده می‌شود"
+msgstr "به‌روزرسانیِ نوارِ پیش‌رفت خوانده می‌شود"
 
 #. Translators: A mode where beeps will indicate progress bar updates (beeps rise in pitch as progress bar updates).
 #: globalCommands.py:3350
@@ -3962,17 +3962,17 @@ msgstr "اطلاعاتِ قالب‌بَندیِ متنی که در این خا�
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4294
 msgid "Selects the text from the first up to the last braille cell"
-msgstr ""
+msgstr "متن را از اولین تا آخرین خانه‌ی بریل انتخاب می‌کند"
 
 #. Translators: Reported when selection via multiple routing keys is not possible.
 #: globalCommands.py:4306
 msgid "Cannot select from braille routing keys"
-msgstr ""
+msgstr "نمی‌توانم از کلیدهای جانماییِ بریل انتخاب کنم"
 
 #. Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 #: globalCommands.py:4313
 msgid "Selection not supported here"
-msgstr ""
+msgstr "اینجا از انتخاب پشتیبانی نمی‌شود"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4317
@@ -4355,7 +4355,7 @@ msgstr "ذره‌بین را به لبه‌ی پایین حرکت می‌دهد"
 #. Translators: Describes a command.
 #: globalCommands.py:5272
 msgid "Moves the mouse cursor to the center of the magnified view"
-msgstr ""
+msgstr "مکان‌نمای موس را به مرکزِ ذره‌بین می‌بَرَد"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5285
@@ -4511,12 +4511,12 @@ msgstr "آخرین اطلاعاتِ گفته‌شده"
 #. Translators: Input help mode message for the command to copy the last spoken information.
 #: globalCommands.py:5577
 msgid "Copies the last spoken information to the clipboard."
-msgstr ""
+msgstr "آخرین اطلاعاتِ گفته‌شده را در کلیپبورد کپی می‌کند."
 
 #. Translators: Reported when there is no last spoken information to copy.
 #: globalCommands.py:5586
 msgid "Nothing to copy"
-msgstr ""
+msgstr "چیزی کپی نشد"
 
 #. Translators: a message indicating that configuration profiles can't be activated using gestures,
 #. due to profile activation being suspended.
@@ -6537,7 +6537,7 @@ msgstr "چهار {action}"
 #: touchHandler.py:396
 #, python-brace-format
 msgid "{edgeLabel} {action}"
-msgstr ""
+msgstr "{edgeLabel} {action}"
 
 #. Translators: a touch screen action using multiple fingers
 #: touchHandler.py:405
@@ -6623,97 +6623,97 @@ msgstr "دور کردنِ دو انگشت"
 #: touchTracker.py:78
 msgctxt "touch action"
 msgid "flick right then left"
-msgstr ""
+msgstr "کشش به راست سپس چپ"
 
 #. Translators: a quick swipe left followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:80
 msgctxt "touch action"
 msgid "flick left then right"
-msgstr ""
+msgstr "کشش به چپ سپس راست"
 
 #. Translators: a quick swipe up followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:82
 msgctxt "touch action"
 msgid "flick up then down"
-msgstr ""
+msgstr "کشش به بالا سپس پایین"
 
 #. Translators: a quick swipe down followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:84
 msgctxt "touch action"
 msgid "flick down then up"
-msgstr ""
+msgstr "کشش به پایین سپس بالا"
 
 #. Translators: a quick swipe right followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:86
 msgctxt "touch action"
 msgid "flick right then up"
-msgstr ""
+msgstr "کشش به راست سپس بالا"
 
 #. Translators: a quick swipe right followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:88
 msgctxt "touch action"
 msgid "flick right then down"
-msgstr ""
+msgstr "کشش به راست سپس پایین"
 
 #. Translators: a quick swipe left followed by a quick swipe up, on a touch screen.
 #: touchTracker.py:90
 msgctxt "touch action"
 msgid "flick left then up"
-msgstr ""
+msgstr "کشش به چپ سپس بالا"
 
 #. Translators: a quick swipe left followed by a quick swipe down, on a touch screen.
 #: touchTracker.py:92
 msgctxt "touch action"
 msgid "flick left then down"
-msgstr ""
+msgstr "کشش به چپ سپس پایین"
 
 #. Translators: a quick swipe up followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:94
 msgctxt "touch action"
 msgid "flick up then right"
-msgstr ""
+msgstr "کشش به بالا سپس راست"
 
 #. Translators: a quick swipe up followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:96
 msgctxt "touch action"
 msgid "flick up then left"
-msgstr ""
+msgstr "کشش به بالا سپس چپ"
 
 #. Translators: a quick swipe down followed by a quick swipe right, on a touch screen.
 #: touchTracker.py:98
 msgctxt "touch action"
 msgid "flick down then right"
-msgstr ""
+msgstr "کشش به پایین سپس راست"
 
 #. Translators: a quick swipe down followed by a quick swipe left, on a touch screen.
 #: touchTracker.py:100
 msgctxt "touch action"
 msgid "flick down then left"
-msgstr ""
+msgstr "کشش به پایین سپس چپ"
 
 #. Translators: describes a touch gesture that started from the left edge of the screen
 #: touchTracker.py:124
 msgctxt "touch edge"
 msgid "left edge"
-msgstr ""
+msgstr "لبه‌ی چپ"
 
 #. Translators: describes a touch gesture that started from the right edge of the screen
 #: touchTracker.py:126
 msgctxt "touch edge"
 msgid "right edge"
-msgstr ""
+msgstr "لبه‌ی راست"
 
 #. Translators: describes a touch gesture that started from the top edge of the screen
 #: touchTracker.py:128
 msgctxt "touch edge"
 msgid "top edge"
-msgstr ""
+msgstr "لبه‌ی بالا"
 
 #. Translators: describes a touch gesture that started from the bottom edge of the screen
 #: touchTracker.py:130
 msgctxt "touch edge"
 msgid "bottom edge"
-msgstr ""
+msgstr "لبه‌ی پایین"
 
 #. Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 #. when Windows is on a secure screen (sign-on screen / UAC prompt).
@@ -6751,7 +6751,7 @@ msgstr "پیام از NVDA"
 #. Translators: The label of a button to copy the text of the window to the clipboard.
 #: ui.py:148
 msgid "&Copy"
-msgstr ""
+msgstr "&کپی کردن"
 
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
@@ -6810,7 +6810,7 @@ msgstr "نمی‌توانم ارتباطی با سِروِرِ NV Access برق�
 msgctxt "updateCheck"
 msgid "Error checking for update.\n"
 "{tip}"
-msgstr "خطای بررسی برای بروزرسانی.\n"
+msgstr "خطای بررسی برای به‌روزرسانی.\n"
 "{tip}"
 
 #. Translators: The title of the dialog informing the user about an NVDA update.
@@ -6822,14 +6822,14 @@ msgstr "به‌روزرسانیِ NVDA"
 #. Translators: A message indicating that no update to NVDA is available.
 #: updateCheck.py:515
 msgid "No update available."
-msgstr "بروزرسانی در دسترس نیست."
+msgstr "به‌روزرسانی در دسترس نیست."
 
 #. Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 #. applied.
 #: updateCheck.py:520
 #, python-brace-format
 msgid "Update to NVDA version {version} has been downloaded and is ready to be applied."
-msgstr "بروزرسانی برای NVDA نسخه‌ی {version} دانلود شده و آماده‌ی اِعمال است."
+msgstr "به‌روزرسانی برای NVDA نسخه‌ی {version} دانلود شده و آماده‌ی اِعمال است."
 
 #. Translators: The label of a button to review add-ons prior to NVDA update.
 #. Translators: The label of a button to launch the add-on compatibility review dialog.
@@ -6842,7 +6842,7 @@ msgstr "&بازبینیِ افزونه‌ها..."
 #: updateCheck.py:551
 #, python-brace-format
 msgid "&Update to NVDA {version}"
-msgstr "&بروزرسانی به NVDA {version}"
+msgstr "&به‌روزرسانی به NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 #: updateCheck.py:561
@@ -6876,12 +6876,12 @@ msgstr "&بستن"
 #: updateCheck.py:643
 #, python-brace-format
 msgid "Update to NVDA version {version} is ready to be applied.\n"
-msgstr "بروزرسانی به NVDA نسخه‌ی {version} آماده‌ی اِعمال است.\n"
+msgstr "به‌روزرسانی به NVDA نسخه‌ی {version} آماده‌ی اِعمال است.\n"
 
 #. Translators: The label of a button to update NVDA.
 #: updateCheck.py:670
 msgid "&Update now"
-msgstr "حالا &بروزرسانی کن"
+msgstr "حالا &به‌روزرسانی کن"
 
 #. Translators: The label of a button to postpone an NVDA update.
 #: updateCheck.py:683
@@ -6954,14 +6954,14 @@ msgstr "&انجام شد"
 #. on a computer which is being remotely controlled via NVDA Remote Access
 #: updateCheck.py:1012 gui\installerGui.py:643
 msgid "Updating NVDA when connected to NVDA Remote Access as the controlled computer is not recommended. "
-msgstr "بروزرسانیِ NVDA هنگامی که به دسترسی از راهِ دورِ NVDA به عنوانِ رایانه‌ی کنترل‌شونده متصل هستید توصیه نمی‌شود. "
+msgstr "به‌روزرسانیِ NVDA هنگامی که به دسترسی از راهِ دورِ NVDA به عنوانِ رایانه‌ی کنترل‌شونده متصل هستید توصیه نمی‌شود. "
 
 #. Translators: Message shown to users when attempting to update NVDA from an installed copy
 #. on a computer which is being remotely controlled via NVDA Remote Access.
 #: updateCheck.py:1017
 msgid "The currently active connection may not be continued during or after the update. Even if the connection is continued, you will be unable to respond to User Account Control (UAC) prompts from the controlling computer. You should only proceed if you have physical access to the controlled computer.\n\n"
 "Are you sure you want to continue?"
-msgstr "اتصالِ فعالِ جاری نمی‌تواند در هنگام یا پس از بروزرسانی ادامه پیدا کند. حتی اگر اتصال ادامه یابد، شما نمی‌توانید به اعلان‌های کنترلِ حساب کاربری (UAC) از رایانه‌ی کنترل‌کننده پاسخ بدهید. تنها زمانی که بطور فیزیکی به رایانه‌ی کنترل‌شونده دسترسی دارید باید ادامه دهید.\n\n"
+msgstr "اتصالِ فعالِ جاری نمی‌تواند در هنگام یا پس از به‌روزرسانی ادامه پیدا کند. حتی اگر اتصال ادامه یابد، شما نمی‌توانید به اعلان‌های کنترلِ حساب کاربری (UAC) از رایانه‌ی کنترل‌کننده پاسخ بدهید. تنها زمانی که بطور فیزیکی به رایانه‌ی کنترل‌شونده دسترسی دارید باید ادامه دهید.\n\n"
 "آیا مطمئنید که می‌خواهید ادامه بدهید؟"
 
 #. Translators: The title of a dialog.
@@ -6973,7 +6973,7 @@ msgstr "اتصالِ فعالِ جاری نمی‌تواند در هنگام ی�
 #. Translators: Title of warning dialog
 #: updateCheck.py:1023 gui\_SetURLDialog.py:113 gui\configProfiles.py:539
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1973
-#: gui\settingsDialogs.py:6440 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6419 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "هشدار"
@@ -7030,7 +7030,7 @@ msgstr "نمی‌توانم افزونه‌ی NVDA را از {path} نصب کن�
 #: addonStore\dataManager.py:210
 msgctxt "addonStore"
 msgid "Add-on data update failure"
-msgstr "خطا در بروزرسانیِ داده‌های افزونه"
+msgstr "خطا در به‌روزرسانیِ داده‌های افزونه"
 
 #. Translators: A suggestion of what to do when fetching add-on data from the store fails and a metadata mirror is being used.
 #. {url} will be replaced with the mirror URL.
@@ -7218,13 +7218,13 @@ msgstr "موجود"
 #: addonStore\models\status.py:87
 msgctxt "addonStore"
 msgid "Update Available"
-msgstr "بروزرسانی موجود است"
+msgstr "به‌روزرسانی موجود است"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:89
 msgctxt "addonStore"
 msgid "Update Available (incompatible)"
-msgstr "بروزرسانی موجود (ناسازگار)"
+msgstr "به‌روزرسانی موجود (ناسازگار)"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:91
@@ -7328,7 +7328,7 @@ msgstr "افزونه های نصب شده"
 #: addonStore\models\status.py:175
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "افزونه‌های قابلِ بروزرسانی"
+msgstr "افزونه‌های قابلِ به‌روزرسانی"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -7358,7 +7358,7 @@ msgstr "&افزونه های نصب شده"
 #: addonStore\models\status.py:194
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
-msgstr "افزونه‌های قابلِ &بروزرسانی"
+msgstr "افزونه‌های قابلِ &به‌روزرسانی"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -9618,13 +9618,13 @@ msgstr "کدِ بریلِ رایانه‌ایِ انگلیسیِ آمریکای 
 #. braille settings dialog.
 #: brailleTables\__tables.py:180
 msgid "English (New Zealand) grade 1"
-msgstr ""
+msgstr "انگلیسی (نیوزیلند) درجه ۱"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:183
 msgid "English (New Zealand) grade 2"
-msgstr ""
+msgstr "انگلیسی (نیوزیلند) درجه ۲"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9690,7 +9690,7 @@ msgstr "اسپانیایی درجه ۲"
 #. braille settings dialog.
 #: brailleTables\__tables.py:221
 msgid "Spanish (Norway)"
-msgstr ""
+msgstr "اسپانیایی (نروژ)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9846,7 +9846,7 @@ msgstr "کرواتی درجه ۱"
 #. braille settings dialog.
 #: brailleTables\__tables.py:335
 msgid "Haitian Creole Braille"
-msgstr ""
+msgstr "بریلِ کریولِ هائیتیایی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -9996,7 +9996,7 @@ msgstr "لاتْویایی درجه ۱"
 #. braille settings dialog.
 #: brailleTables\__tables.py:438
 msgid "Māori Braille"
-msgstr ""
+msgstr "بریلِ مائوری"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10128,13 +10128,13 @@ msgstr "اوریا درجه ۱"
 #. braille settings dialog.
 #: brailleTables\__tables.py:536
 msgid "Elfdalian 6 dot"
-msgstr ""
+msgstr "اِلفْدالی شش نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:539
 msgid "Elfdalian 8 dot"
-msgstr ""
+msgstr "اِلفْدالی ۸ نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10266,13 +10266,13 @@ msgstr "اِسلُوِنیایی درجه ۱"
 #. braille settings dialog.
 #: brailleTables\__tables.py:622
 msgid "Sami 6 dot"
-msgstr ""
+msgstr "سامی ۶ نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:625
 msgid "Sami 8 dot"
-msgstr ""
+msgstr "سامی ۸ نقطه"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10308,13 +10308,13 @@ msgstr "بریلِ بلندنویسیِ سوئدی"
 #. braille settings dialog.
 #: brailleTables\__tables.py:646
 msgid "Swedish uncontracted braille (detailed)"
-msgstr ""
+msgstr "بریلِ بلندنویسیِ سوئدی (مفصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:652
 msgid "Swedish uncontracted braille (phonetics)"
-msgstr ""
+msgstr "بریلِ بلندنویسیِ سوئدی (آوانگاری)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10326,7 +10326,7 @@ msgstr "بریلِ نیمه‌کوتاهنویسیِ سوئدی"
 #. braille settings dialog.
 #: brailleTables\__tables.py:661
 msgid "Swedish partially contracted braille (detailed)"
-msgstr ""
+msgstr "بریلِ نیمه‌کوتاهنویسیِ سوئدی [مفصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10338,43 +10338,43 @@ msgstr "بریلِ کوتاهنویسیِ سوئدی"
 #. braille settings dialog.
 #: brailleTables\__tables.py:671
 msgid "Swedish contracted braille (detailed)"
-msgstr ""
+msgstr "بریلِ کوتاهنویسیِ سوئدی [مفصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:676
 msgid "Swedish 8 dot uncontracted braille"
-msgstr ""
+msgstr "بریلِ ۸ نقطه‌ی بلندنویسیِ سوئدی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:681
 msgid "Swedish 8 dot uncontracted braille (detailed)"
-msgstr ""
+msgstr "بریلِ ۸ نقطه‌ی بلندنویسیِ سوئدی (مفصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:687
 msgid "Swedish 8 dot partially contracted braille"
-msgstr ""
+msgstr "بریلِ ۸ نقطه‌ی نیمه‌کوتاهنویسیِ سوئدی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:694
 msgid "Swedish 8 dot partially contracted braille (detailed)"
-msgstr ""
+msgstr "بریلِ ۸ نقطه‌ی نیمه‌کوتاهنویسیِ سوئدی (مفصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:701
 msgid "Swedish 8 dot contracted braille"
-msgstr ""
+msgstr "بریلِ ۸ نقطه‌ی کوتاهنویسیِ سوئدی"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:708
 msgid "Swedish 8 dot contracted braille (detailed)"
-msgstr ""
+msgstr "بریلِ ۸ نقطه‌ی کوتاهنویسیِ سوئدی (مفصّل)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -10998,59 +10998,59 @@ msgstr "تگ"
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:155
 msgid "Chinese"
-msgstr ""
+msgstr "چینی"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:157
 msgid "Unicode (ICU)"
-msgstr ""
+msgstr "یونی‌کد (ICU)"
 
 #. Translators: Label for a method of word segmentation.
 #: config\featureFlagEnums.py:159
 msgid "Legacy (Uniscribe)"
-msgstr ""
+msgstr "قدیمی (Uniscribe)"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:180
 msgctxt "braille text wrap"
 msgid "Off"
-msgstr ""
+msgstr "خاموش"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:182
 msgctxt "braille text wrap"
 msgid "Show mark when words are cut"
-msgstr ""
+msgstr "علامتی نشان بده وقتی واژه‌ها بریده می‌شوند"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:184
 msgctxt "braille text wrap"
 msgid "At word boundaries"
-msgstr ""
+msgstr "در مرزهای واژه‌ها"
 
 #. Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
 #: config\featureFlagEnums.py:188
 msgctxt "braille text wrap"
 msgid "At word or syllable boundaries"
-msgstr ""
+msgstr "در مرزهای واژه‌ها یا هجا‌ها"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:205
 msgctxt "sayAll"
 msgid "Sentence where possible"
-msgstr ""
+msgstr "جمله هرجا ممکن باشد"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:207
 msgctxt "sayAll"
 msgid "Paragraph"
-msgstr ""
+msgstr "پاراگراف"
 
 #. Translators: Label for an option in the Speech settings (say all reading unit).
 #: config\featureFlagEnums.py:209
 msgctxt "sayAll"
 msgid "Line"
-msgstr ""
+msgstr "خط"
 
 #. Translators: The title of the document used to present the result of content recognition.
 #: contentRecog\recogUi.py:104
@@ -11104,7 +11104,7 @@ msgstr "محتوا دیده نمی‌شود"
 #. is enabled, but the system does not support the required screen capture API.
 #: contentRecog\recogUi.py:326
 msgid "Content recognition is unavailable while Screen Curtain is enabled on this system. Please disable Screen Curtain and try again."
-msgstr ""
+msgstr "بازشناسیِ محتوا تا زمانی که پرده‌ی صفحه نمایش روی این سیستم فعال است در دسترس نیست. لطفا پرده‌ی صفحه نمایش را غیرفعال و دوباره تلاش کنید."
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 #: contentRecog\recogUi.py:334
@@ -12642,7 +12642,7 @@ msgstr "&خروج"
 #. Translators: The title of the dialog to exit NVDA
 #: gui\__init__.py:751 gui\exit.py:79
 msgid "Exit NVDA"
-msgstr "از NVDA خارج می‌شود"
+msgstr "خروج از NVDA"
 
 #. Translators: The label for the menu item to open Default speech dictionary dialog.
 #: gui\__init__.py:786
@@ -13285,7 +13285,7 @@ msgstr "&فیلتر کردن با:"
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #: gui\inputGestures.py:627 gui\inputGestures.py:684
-#: gui\settingsDialogs.py:6867 gui\speechDict.py:218
+#: gui\settingsDialogs.py:6846 gui\speechDict.py:218
 msgid "&Add"
 msgstr "&افزودن"
 
@@ -13293,7 +13293,7 @@ msgstr "&افزودن"
 #. Translators: Context menu item label to change a gesture
 #: gui\inputGestures.py:632 gui\inputGestures.py:688
 msgid "C&hange"
-msgstr ""
+msgstr "ت&غییر دادن"
 
 #. Translators: The label of a button to remove a gesture in the Input Gestures dialog.
 #. Translators: Context menu item label to remove a gesture
@@ -13332,7 +13332,7 @@ msgstr "خطا در ذخیره‌سازیِ فرمان‌هایی که کارب�
 #. shown in the post-install dialog.
 #: gui\installerGui.py:130
 msgid "Successfully updated your installation of NVDA. It is recommended to restart Windows after updating. NVDA may malfunction without a restart."
-msgstr "نسخه‌ی نصب‌شده‌ی NVDAِ شما با موفقیت بروز شد. پیشنهاد می‌شود بعد از بروزرسانی، ویندوز را از نو راه‌اندازی کنید. NVDA ممکن است بدون راه‌اندازیِ مجددِ  ویندوز درست کار نکند."
+msgstr "نسخه‌ی نصب‌شده‌ی NVDAِ شما با موفقیت بروز شد. پیشنهاد می‌شود بعد از به‌روزرسانی، ویندوز را از نو راه‌اندازی کنید. NVDA ممکن است بدون راه‌اندازیِ مجددِ  ویندوز درست کار نکند."
 
 #. Translators: The message displayed when NVDA has been successfully installed,
 #. shown in the post-install dialog.
@@ -13714,8 +13714,8 @@ msgstr "&دسته‌ها:"
 #. magnifier settings panel
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:806 gui\settingsDialogs.py:6212
-#: gui\settingsDialogs.py:6504
+#: gui\settingsDialogs.py:806 gui\settingsDialogs.py:6191
+#: gui\settingsDialogs.py:6483
 msgid "General"
 msgstr "عمومی"
 
@@ -13783,12 +13783,12 @@ msgstr "بررسیِ خودکارِ &به‌روزرسانیها برای NVDA"
 #. for a pending NVDA update.
 #: gui\settingsDialogs.py:923
 msgid "Notify for &pending update on startup"
-msgstr "یادآوری برای بروزرسانی‌های &در انتظارِ نصب هنگامِ آغاز به کار"
+msgstr "یادآوری برای به‌روزرسانی‌های &در انتظارِ نصب هنگامِ آغاز به کار"
 
 #. Translators: The label for the update mirror on the General Settings panel.
 #: gui\settingsDialogs.py:933
 msgid "Update mirror"
-msgstr "جایگزینِ بروزرسانی"
+msgstr "جایگزینِ به‌روزرسانی"
 
 #. Translators: This is the label for the button used to change the NVDA update mirror URL,
 #. it appears in the context of the update mirror group on the General page of NVDA's settings.
@@ -13806,7 +13806,7 @@ msgstr "جلوگیری از خاموش شدنِ &نمایشگر هنگامِ خ�
 #. Translators: Title of the dialog used to change NVDA's update server mirror URL.
 #: gui\settingsDialogs.py:981
 msgid "Set NVDA Update Mirror"
-msgstr "تعیینِ سِروِرِ جایگزینِ بروزرسانیِ NVDA"
+msgstr "تعیینِ سِروِرِ جایگزینِ به‌روزرسانیِ NVDA"
 
 #. Translators: The title of the dialog presented while settings are being copied
 #: gui\settingsDialogs.py:1010
@@ -13881,7 +13881,7 @@ msgstr "موتورِ سخنگو"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1171 gui\settingsDialogs.py:5064
+#: gui\settingsDialogs.py:1171 gui\settingsDialogs.py:5043
 msgid "C&hange..."
 msgstr "ت&غییر دادن..."
 
@@ -13941,14 +13941,14 @@ msgstr "&اعتنا کردن به زبانِ صدای فعلی هنگامِ پر
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5620
+#: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5599
 msgid "Unicode normali&zation"
 msgstr "عادی‌&سازیِ یونیکُد"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #: gui\settingsDialogs.py:1753
 msgid "Say all reads by"
-msgstr ""
+msgstr "خواندنِ همه با"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
@@ -14373,12 +14373,12 @@ msgstr "&جلوگیری از رسیدنِ همه‌ی حرکت‌های غیرِ
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2680
 msgid "&Keep search history"
-msgstr ""
+msgstr "&نگه‌داشتنِ سابقه‌ی جستجو"
 
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2691
 msgid "Nati&ve selection mode"
-msgstr ""
+msgstr "حالتِ انتخابِ &بومی"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2707
@@ -14556,7 +14556,7 @@ msgstr "استفاده از پشتیبانیِ بومی از ریاضی در Wor
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3199 gui\settingsDialogs.py:4716
+#: gui\settingsDialogs.py:3199 gui\settingsDialogs.py:4700
 msgid "Document Formatting"
 msgstr "قالب‌بَندیِ اسناد"
 
@@ -14683,7 +14683,7 @@ msgstr "نادیده گرفتنِ خط‌های &خالی هنگامِ اعلا�
 #. to adjust the duration of indentation tones in milliseconds.
 #: gui\settingsDialogs.py:3374
 msgid "Indent tone &duration (ms):"
-msgstr ""
+msgstr "مدت زمانِ بوقِ تورفتگی (هزارمِ ثانیه)"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -14818,7 +14818,7 @@ msgstr "سبْکِ &پاراگراف:"
 #. Translators: This is a label for the word segmentation standard in the document navigation dialog
 #: gui\settingsDialogs.py:3619
 msgid "&Word Segmentation Standard:"
-msgstr ""
+msgstr "استانداردِ تقسیمبندیِ واژه‌ها:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -14891,17 +14891,17 @@ msgstr "فروشگاهِ افزونه‌ها"
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3817
 msgid "Automatic &updates:"
-msgstr "بروزرسانی‌های خودکار:"
+msgstr "به‌روزرسانی‌های خودکار:"
 
 #. Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:3829
 msgid "Default update &channel:"
-msgstr "&کانالِ پیش‌فرضِ بروزرسانی:"
+msgstr "&کانالِ پیش‌فرضِ به‌روزرسانی:"
 
 #. Translators: Mute other apps checkbox in settings
 #: gui\settingsDialogs.py:3843
 msgid "Allow automatic updates to install incompatible add-ons"
-msgstr "اجازه دادن به بروزرسانی‌های خودکار برای نصبِ افزونه‌های ناسازگار"
+msgstr "اجازه دادن به به‌روزرسانی‌های خودکار برای نصبِ افزونه‌های ناسازگار"
 
 #. Translators: The label for the mirror server on the Add-on Store Settings panel.
 #: gui\settingsDialogs.py:3849
@@ -14971,7 +14971,7 @@ msgstr "&میزبان:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:4025 gui\settingsDialogs.py:5142
+#: gui\settingsDialogs.py:4025 gui\settingsDialogs.py:5121
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "&درگاه:"
@@ -15040,7 +15040,7 @@ msgstr "حالتِ تایپِ &لمسی"
 #. Translators: This is the label for a checkbox in the touch interaction settings panel.
 #: gui\settingsDialogs.py:4217
 msgid "Enable &edge gestures"
-msgstr ""
+msgstr "فعال‌سازیِ حرکت‌های &لبه‌ای"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:4231
@@ -15258,342 +15258,336 @@ msgstr "خواندنِ گ&ذرواژه‌ها در همه‌ی پایانه‌ه
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "استفاده از پشتیبانیِ پیشرفته از نویسه‌های &تایپ‌شده در میزهای فرمانِ قدیمیِ ویندوز در صورت موجود بودن"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-#: gui\settingsDialogs.py:4544
-msgid "Beep for &skipped lines"
-msgstr ""
-
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4563
+#: gui\settingsDialogs.py:4547
 msgid "&Diff algorithm:"
 msgstr "ال&گوریتمِ Diff:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4568
+#: gui\settingsDialogs.py:4552
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "خودکار (Diff Match Patch را ترجیح بده)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4572
+#: gui\settingsDialogs.py:4556
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4576
+#: gui\settingsDialogs.py:4560
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4602
+#: gui\settingsDialogs.py:4586
 msgid "Speak new text in Windows Terminal via:"
 msgstr "گُفتنِ متنِ جدید در پایانه‌ی ویندوز از طریق:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4621
+#: gui\settingsDialogs.py:4605
 msgid "Default (Yes)"
 msgstr "پیش‌فرض (بله)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4624
+#: gui\settingsDialogs.py:4608
 msgid "Yes"
 msgstr "بله"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4627
+#: gui\settingsDialogs.py:4611
 msgid "No"
 msgstr "نه"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4631
+#: gui\settingsDialogs.py:4615
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "تلاش برای لغوِ گفتارِ رخدادهای فکوسِ منقضی‌شده:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4647
+#: gui\settingsDialogs.py:4631
 msgid "Trim leading silence in speech audio"
 msgstr "حذفِ سکوتِ ابتداییِ صدای گفتار"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4655
+#: gui\settingsDialogs.py:4639
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "استفاده از WASAPI برای خروجیِ صوتیِ SAPI4:"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4666
+#: gui\settingsDialogs.py:4650
 msgid "Use modern regular expression engine for speech dictionary entries:"
 msgstr "استفاده از موتورِ جدیدِ عبارت‌های مُنتظَم برای دیکشنری‌های گفتار:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4677
+#: gui\settingsDialogs.py:4661
 msgid "Virtual Buffers"
 msgstr "بافرهای مجازی"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4685
+#: gui\settingsDialogs.py:4669
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "هنگامی که سند مشغول است، بافرِ مجازیِ کرومیوم را بارگزاری کن."
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4694
+#: gui\settingsDialogs.py:4678
 msgid "Editable Text"
 msgstr "متنِ ویرایش‌شدنی"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4701
+#: gui\settingsDialogs.py:4685
 msgid "Caret movement timeout (in ms)"
 msgstr "مدت زمانِ حرکتِ نشانگر (به هزارمِ ثانیه)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4724
+#: gui\settingsDialogs.py:4708
 msgid "Report transparent color values"
 msgstr "اعلامِ مقدارهای رنگ‌های روشن"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4738
+#: gui\settingsDialogs.py:4722
 msgid "Debug logging"
 msgstr "ثبتِ آسیب‌یابی"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4766
+#: gui\settingsDialogs.py:4750
 msgid "Enabled logging categories"
 msgstr "دسته‌های فعال برای ثبتِ وقایع"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4786
+#: gui\settingsDialogs.py:4770
 msgid "Play a sound for logged e&rrors:"
 msgstr "پخش صدا برای خ&طاهای ثبت‌شده:"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4799
+#: gui\settingsDialogs.py:4783
 msgid "Regular expression for text paragraph navigation"
 msgstr "عبارتِ مُنتظم برای پیمایشِ پاراگرافِ متنی"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4821
+#: gui\settingsDialogs.py:4805
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "خطا هنگامِ تفسیرِ عبارتِ مُنتظم برای پاراگرافِ متنی: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4959
+#: gui\settingsDialogs.py:4938
 msgid "Advanced"
 msgstr "پیشرفته"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4964
+#: gui\settingsDialogs.py:4943
 msgid "Warning!"
 msgstr "هشدار!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4968
+#: gui\settingsDialogs.py:4947
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "تنظیماتِ زیر برای کاربرانِ پیشرفته است. ممکن است تغییر دادنشان باعث شود NVDA به‌درستی کار نکند. لطفا تنها در صورتی که می‌دانید چه می‌کنید یا مشخصا توسط توسعه‌دهندگانِ NVDA راهنمایی شده‌اید، این تنظیمات را تغییر دهید."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4995
+#: gui\settingsDialogs.py:4974
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "می‌دانم که تغییرِ این تنظیمات می‌تواند باعث شود NVDA درست کار نکند."
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:5006
+#: gui\settingsDialogs.py:4985
 msgid "Restore defaults"
 msgstr "برگرداندن به پیش‌فرض"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:5049
+#: gui\settingsDialogs.py:5028
 msgid "Braille display"
 msgstr "نمایشگرِ بریل"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:5118
+#: gui\settingsDialogs.py:5097
 msgid "Select Braille Display"
 msgstr "یک نمایشگرِ بریل انتخاب کنید"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:5127
+#: gui\settingsDialogs.py:5106
 msgid "Braille &display:"
 msgstr "&نمایشگر بریل:"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:5133
+#: gui\settingsDialogs.py:5112
 msgid "&Displays to detect automatically:"
 msgstr "نمایشگرهایی که خود&کار شناسایی می‌شوند:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5249
+#: gui\settingsDialogs.py:5228
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "نتوانستم نمایشگرِ {display} را بارگذاری کنم."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5252
+#: gui\settingsDialogs.py:5231
 msgid "Braille Display Error"
 msgstr "خطا در نمایشگرِ بریل"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5285
+#: gui\settingsDialogs.py:5264
 msgid "&Output table:"
 msgstr "جدولِ &خروجی:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5293 gui\settingsDialogs.py:5320
+#: gui\settingsDialogs.py:5272 gui\settingsDialogs.py:5299
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "خودکار ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5312
+#: gui\settingsDialogs.py:5291
 msgid "&Input table:"
 msgstr "جدولِ &ورودی:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5338
+#: gui\settingsDialogs.py:5317
 msgid "Braille mode:"
 msgstr "حالتِ بریل:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5353
+#: gui\settingsDialogs.py:5332
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "&گسترش دادَنِ واژه‌ی قرار گرفته روی مکان‌نما به صورتِ بریلِ رایانه"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5361
+#: gui\settingsDialogs.py:5340
 msgid "&Show cursor"
 msgstr "نمایشِ &مکان‌نما"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5370
+#: gui\settingsDialogs.py:5349
 msgid "Blink cursor"
 msgstr "چشمک زدنِ مکان‌نما"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5381
+#: gui\settingsDialogs.py:5360
 msgid "Cursor blink rate (ms)"
 msgstr "سرعتِ &چشمک زدنِ مکان‌نما (هزارمِ ثانیه)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5403
+#: gui\settingsDialogs.py:5382
 msgid "Cursor shape for &focus:"
 msgstr "شکلِ &فکوس:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5419
+#: gui\settingsDialogs.py:5398
 msgid "Cursor shape for &review:"
 msgstr "شکلِ مکان‌نمای &بازبینی:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5441
+#: gui\settingsDialogs.py:5420
 msgid "Show messages"
 msgstr "نمایشِ پیام‌ها"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5463
+#: gui\settingsDialogs.py:5442
 msgid "Message &timeout (sec)"
 msgstr "مدت زمانِ نمایشِ &پیام (ثانیه)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5482
+#: gui\settingsDialogs.py:5461
 msgid "Tether B&raille:"
 msgstr "اتصالِ ب&ریل:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5506
+#: gui\settingsDialogs.py:5485
 msgid "Move system caret when ro&uting review cursor"
 msgstr "&حرکت دادَنِ نشانگرِ سیستم هنگامِ جانماییِ مکان‌نمای بازبینی"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5522
+#: gui\settingsDialogs.py:5501
 msgid "Read by &paragraph"
 msgstr "خواندنِ پ&اراگراف به پاراگراف"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5531
+#: gui\settingsDialogs.py:5510
 msgid "Paragraph start marker:"
 msgstr "نشانه‌ی آغازِ پاراگراف:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5546
+#: gui\settingsDialogs.py:5525
 msgid "Focus context presentation:"
 msgstr "ارائه‌ی اطلاعاتِ زمینه‌ایِ فکوس:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5567
+#: gui\settingsDialogs.py:5546
 msgid "Show se&lection"
 msgstr "نمایشِ ان&تخاب"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5579
+#: gui\settingsDialogs.py:5558
 msgid "Formatting &display"
 msgstr "&نمایشِ قالب‌بندی"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5588
+#: gui\settingsDialogs.py:5567
 msgid "Spea&k character when routing cursor in text"
 msgstr "خوان&دنِ نویسه هنگامِ جانماییِ مکان‌نما در متن"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5596
+#: gui\settingsDialogs.py:5575
 msgid "Speak when navigating by &line or paragraph"
 msgstr "خواندن هنگامِ پیمایش با &خط یا پاراگراف"
 
 #. Translators: The label for a setting in braille settings to configure text wrap behaviour
 #. (how to break lines that don't fit on the braille display).
-#: gui\settingsDialogs.py:5610
+#: gui\settingsDialogs.py:5589
 msgid "Text &wrap"
-msgstr ""
+msgstr "انت&قالِ متن به سطرِ بعد"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5631
+#: gui\settingsDialogs.py:5610
 msgid "I&nterrupt speech while scrolling"
 msgstr "تو&قفِ گفتار هنگامِ جابجا کردنِ نمایشگر"
 
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
-#: gui\settingsDialogs.py:5640
+#: gui\settingsDialogs.py:5619
 msgid "Auto&matic scroll rate"
 msgstr "سرعتِ جابجاییِ خود&کار"
 
 #. Translators: The label for a checkbox in the Braille settings panel.
-#: gui\settingsDialogs.py:5661
+#: gui\settingsDialogs.py:5640
 msgid "Use &Chinese word segmentation"
-msgstr ""
+msgstr "استفاده از تقسیمبندیِ واژه‌ها در &چینی"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5767
+#: gui\settingsDialogs.py:5746
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "نتوانستم آسانسازِ بیناییِ {providerName} را بارگزاری کنم"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5774
+#: gui\settingsDialogs.py:5753
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15601,20 +15595,20 @@ msgstr "نتوانستم این آسانساز‌های بینایی را بار
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5780 gui\settingsDialogs.py:5810
+#: gui\settingsDialogs.py:5759 gui\settingsDialogs.py:5789
 msgid "Vision Enhancement Provider Error"
 msgstr "خطای آسانسازِ بینایی"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5797
+#: gui\settingsDialogs.py:5776
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "نتوانستم بدرستی آسانسازِ بیناییِ {providerName} را تمام کنم"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5805
+#: gui\settingsDialogs.py:5784
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15622,214 +15616,214 @@ msgstr "نتوانستم بدرستی این آسانساز‌های بینای�
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5905
+#: gui\settingsDialogs.py:5884
 msgid "Configure visual aids."
 msgstr "دستیارهای بینایی را پیکربندی کنید."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:6077
+#: gui\settingsDialogs.py:6056
 msgid "Enable"
 msgstr "فعال"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:6084
+#: gui\settingsDialogs.py:6063
 #: visionEnhancementProviders\NVDAHighlighter.py:396
 msgid "Options:"
 msgstr "گزینه ها:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:6130
+#: gui\settingsDialogs.py:6109
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "نمی‌توانم برای آسانسازِ بینایی رابطِ کاربری پیکربندی کنم. آسانساز فعال نمی‌شود."
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6220
+#: gui\settingsDialogs.py:6199
 msgid "&Enable magnifier (immediate effect)"
 msgstr "&فعال‌سازیِ ذره‌بین (اِعمالِ فوری)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6234
+#: gui\settingsDialogs.py:6213
 msgid "&Zoom (%):"
 msgstr "&بزرگنمایی (٪):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
-#: gui\settingsDialogs.py:6256
+#: gui\settingsDialogs.py:6235
 msgid "Color f&ilter:"
 msgstr "ف&یلترِ رنگ:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6273
+#: gui\settingsDialogs.py:6252
 msgid "&Panning step size (%):"
 msgstr "اندازه‌ی گام‌های جابجایی (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#: gui\settingsDialogs.py:6295
+#: gui\settingsDialogs.py:6274
 msgid "Tracking"
 msgstr "دنبال کردن"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6303
+#: gui\settingsDialogs.py:6282
 msgid "Follow &mouse"
 msgstr "دنبال کردنِ &موس"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6305
+#: gui\settingsDialogs.py:6284
 msgid "Follow &system focus"
 msgstr "دنبال کردنِ فکوسِ &سیستم"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6307
+#: gui\settingsDialogs.py:6286
 msgid "Follow &review cursor"
 msgstr "دنبال کردنِ مکان‌نمای &بازبینی"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6289
 msgid "Follow &navigator object"
 msgstr "دنبال کردنِ پیمایشگر"
 
 #. Translators: The label for a setting in magnifier settings to select the tracking mode
-#: gui\settingsDialogs.py:6327
+#: gui\settingsDialogs.py:6306
 msgid "&Tracking mode:"
 msgstr "حالتِ &دنبال کردن:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6408
+#: gui\settingsDialogs.py:6387
 msgid "Privacy and Security"
 msgstr "حریمِ شخصی و امنیت"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6421
+#: gui\settingsDialogs.py:6400
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "تنظیمِ ثبتِ وقایع روی «آسیب‌یابی (ویرایش‌نشده)» اطلاعاتِ حساس را بدون حذف و کاستی در لاگ خواهد نوشت؛ که شامل گذرواژه‌ها، کلیدهای API، یا داده‌های خصوصیِ دیگر می‌شوند. تنها زمانی که صراحتا به لاگ‌های تشخیصیِ ویرایش‌نشده نیاز دارید، این گزینه را موقتا فعال کنید. آیا می‌خواهید ادامه بدهید؟"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6428
+#: gui\settingsDialogs.py:6407
 msgid "High risk logging level"
 msgstr "سطحِ پرخطرِ ثبتِ وقایع"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6433
+#: gui\settingsDialogs.py:6412
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "تنظیمِ ثبتِ وقایع بالاتر از اطلاعات ممکن است اطلاعاتِ حساسی مانند ورودیِ تایپ‌شده، خروجیِ گفتار، یا داده‌ی خصوصیِ دیگری را در لاگ ضبط کند. تنها هنگامِ رفعِ مشکل موقتا سطوحِ بالاتری از ثبتِ وقایع را فعال کنید. آیا می‌خواهید ادامه بدهید؟"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6458
+#: gui\settingsDialogs.py:6437
 msgid "Screen Curtain"
 msgstr "پرده‌ی صفحه نمایش"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6467
+#: gui\settingsDialogs.py:6446
 msgid "Make screen black (immediate effect)"
 msgstr "&سیاه کردنِ آنیِ صفحه"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6496
+#: gui\settingsDialogs.py:6475
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "&پخش کردنِ صدا هنگامِ فعال یا غیرفعال کردنِ پرده"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6511
+#: gui\settingsDialogs.py:6490
 msgid "L&ogging level:"
 msgstr "سطحِ &ثبتِ وقایع:"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6534
+#: gui\settingsDialogs.py:6513
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "اجازه دادن به NV Access برای جمعآوریِ آمارِ استفاده از NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6655
+#: gui\settingsDialogs.py:6634
 msgid "NVDA Settings"
 msgstr "تنظیماتِ NVDA"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6711
+#: gui\settingsDialogs.py:6690
 msgid "normal configuration"
 msgstr "پیکربندیِ معمولی"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6742
+#: gui\settingsDialogs.py:6721
 msgid "Add Symbol"
 msgstr "افزودنِ نماد"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6747
+#: gui\settingsDialogs.py:6726
 msgid "&Symbol:"
 msgstr "&نماد:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6777
+#: gui\settingsDialogs.py:6756
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "تلفظِ نمادها (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6791
+#: gui\settingsDialogs.py:6770
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&محدود کردن به:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6800
+#: gui\settingsDialogs.py:6779
 msgid "&Symbols"
 msgstr "&نمادها"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6810
+#: gui\settingsDialogs.py:6789
 msgid "Symbol"
 msgstr "نماد"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6812 gui\speechDict.py:194
+#: gui\settingsDialogs.py:6791 gui\speechDict.py:194
 msgid "Replacement"
 msgstr "جایگزین"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6814
+#: gui\settingsDialogs.py:6793
 msgid "Level"
 msgstr "سطح"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6817
+#: gui\settingsDialogs.py:6796
 msgid "Preserve"
 msgstr "ارسالِ خودِ نماد به گفتار"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6821
+#: gui\settingsDialogs.py:6800
 msgid "Change selected symbol"
 msgstr "تغییرِ نمادِ انتخاب‌شده"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6839 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6818 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&جایگزین"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6848
+#: gui\settingsDialogs.py:6827
 msgid "&Level"
 msgstr "&سطح"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6855
+#: gui\settingsDialogs.py:6834
 msgid "&Send actual symbol to synthesizer"
 msgstr "ا&رسالِ نمادِ حقیقی به موتورِ سخن‌گو"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6849
 msgid "Re&move"
 msgstr "&حذف کردن"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6977
+#: gui\settingsDialogs.py:6956
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "نمادِ \"%s\" در حالِ حاضر موجود است."
@@ -16036,14 +16030,14 @@ msgstr "&نصبِ افزونه‌های انتخاب‌شده"
 #: gui\addonStoreGui\controls\actions.py:219
 msgctxt "addonStore"
 msgid "&Update selected add-ons"
-msgstr "&بروزرسانیِ افزونه‌های انتخاب‌شده"
+msgstr "&به‌روزرسانیِ افزونه‌های انتخاب‌شده"
 
 #. Translators: Label for an action that updates the selected add-ons,
 #. shown when the selection includes disabled add-ons, which updating re-enables.
 #: gui\addonStoreGui\controls\actions.py:230
 msgctxt "addonStore"
 msgid "&Update (and enable) selected add-ons"
-msgstr ""
+msgstr "ب&روزرسانی (و فعال‌سازیِ) افزونه‌های انتخاب‌شده"
 
 #. Translators: Label for an action that retries the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -16442,13 +16436,13 @@ msgstr "&تأیید"
 #: gui\addonStoreGui\controls\messageDialogs.py:401
 msgctxt "addonStore"
 msgid "Add-on updates available"
-msgstr "بروزرسانیِ افزونه‌ها موجود است"
+msgstr "به‌روزرسانیِ افزونه‌ها موجود است"
 
 #. Translators: Message displayed when updates are available for some installed add-ons.
 #: gui\addonStoreGui\controls\messageDialogs.py:429
 msgctxt "addonStore"
 msgid "Updates are available for some of your installed add-ons. "
-msgstr "بروزرسانی برای بعضی افزونه‌هایی که نصب کرده‌اید موجود است. "
+msgstr "به‌روزرسانی برای بعضی افزونه‌هایی که نصب کرده‌اید موجود است. "
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:442
@@ -16461,7 +16455,7 @@ msgstr "باز کردنِ &فروشگاهِ افزونه‌ها"
 #: gui\addonStoreGui\controls\messageDialogs.py:449
 msgctxt "addonStore"
 msgid "&Update (and enable) all"
-msgstr ""
+msgstr "بر&وزرسانی (و فعال‌سازیِ) همه"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:452
@@ -16481,7 +16475,7 @@ msgstr "&بستن"
 #: gui\addonStoreGui\controls\messageDialogs.py:593
 msgctxt "addonStore"
 msgid "Updating add-ons..."
-msgstr "در حالِ بروزرسانیِ افزونه‌ها..."
+msgstr "در حالِ به‌روزرسانیِ افزونه‌ها..."
 
 #. Translators: Message shown when updating add-ons automatically
 #: gui\addonStoreGui\controls\messageDialogs.py:631
@@ -16759,7 +16753,7 @@ msgstr "آخرین نسخه‌ی آزمایش‌شده‌ی NVDA"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:455
+#: gui\addonStoreGui\viewModels\addonList.py:458
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
@@ -16767,7 +16761,7 @@ msgstr "{column} (صعودی)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:465
+#: gui\addonStoreGui\viewModels\addonList.py:468
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
@@ -16789,27 +16783,27 @@ msgstr "&نصب کردن (نادیده‌گرفتنِ ناسازگاری)"
 #: gui\addonStoreGui\viewModels\store.py:131
 msgctxt "addonStore"
 msgid "&Update"
-msgstr "&بروزرسانی"
+msgstr "&به‌روزرسانی"
 
 #. Translators: Label for an action that updates the selected disabled or blocked addon,
 #. which also re-enables it.
 #: gui\addonStoreGui\viewModels\store.py:141
 msgctxt "addonStore"
 msgid "&Update (and enable)"
-msgstr ""
+msgstr "برو&زرسانی (و فعال‌سازی)"
 
 #. Translators: Label for an action that installs the selected addon
 #: gui\addonStoreGui\viewModels\store.py:150
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr "&بروزرسانی (نادیده گرفتنِ ناسازگاری)"
+msgstr "&به‌روزرسانی (نادیده گرفتنِ ناسازگاری)"
 
 #. Translators: Label for an action that updates the selected disabled or blocked addon,
 #. which also re-enables it.
 #: gui\addonStoreGui\viewModels\store.py:161
 msgctxt "addonStore"
 msgid "&Update (and enable, override incompatibility)"
-msgstr ""
+msgstr "به‌روزرسانی (و فعال‌سازی، &نادیده گرفتنِ ناسازگاری)"
 
 #. Translators: Label for an action that retries the selected addon
 #: gui\addonStoreGui\viewModels\store.py:171
@@ -17004,7 +16998,7 @@ msgstr "خطا در بریل کردنِ ریاضی."
 #: mathPres\MathCAT\MathCAT.py:498
 msgctxt "math"
 msgid "Invalid MathML found."
-msgstr ""
+msgstr "MathMLِ نامعتبر یافت شد"
 
 #. Translators: {lang} is the name of the language in that language,
 #. and {code} is the code for that language variant,
@@ -17436,7 +17430,7 @@ msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top
 msgstr "لبه‌های شیء {left:.1f} درصدِ چپِ صفحه، {top:.1f} درصدِ بالای صفحه، {width:.1f} درصدِ عرض و {height:.1f} درصدِ طولِ صفحه قرار دارد"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
-#: NVDAObjects\behaviors.py:87 winAPI\_powerTracking.py:213
+#: NVDAObjects\behaviors.py:84 winAPI\_powerTracking.py:213
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -17445,59 +17439,59 @@ msgstr[1] "%d درصد"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered
 #. in various search fields such as Start search box in Windows 10.
-#: NVDAObjects\behaviors.py:222
+#: NVDAObjects\behaviors.py:219
 msgid "Suggestions"
 msgstr "پیشنهادها"
 
 #. Translators: a message announcing a candidate's character and description.
-#: NVDAObjects\behaviors.py:704
+#: NVDAObjects\behaviors.py:654
 #, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "مانندِ {symbol} در {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#: NVDAObjects\behaviors.py:710
+#: NVDAObjects\behaviors.py:660
 #, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:789
+#: NVDAObjects\behaviors.py:739
 msgid "Moves the navigator object to the next column"
 msgstr "پیمایشگر را به ستونِ بعدی می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:808
+#: NVDAObjects\behaviors.py:758
 msgid "Moves the navigator object to the previous column"
 msgstr "پیمایشگر را به ستونِ قبلی می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:841
+#: NVDAObjects\behaviors.py:791
 msgid "Moves the navigator object and focus to the next row"
 msgstr "پیمایشگر و فکوس را به سطرِ بعدی می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:850
+#: NVDAObjects\behaviors.py:800
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "پیمایشگر و فکوس را به سطرِ قبلی می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:860
+#: NVDAObjects\behaviors.py:810
 msgid "Moves the navigator object to the first column"
 msgstr "پیمایشگر را به اولین ستون می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:874
+#: NVDAObjects\behaviors.py:824
 msgid "Moves the navigator object to the last column"
 msgstr "پیمایشگر را به آخرین ستون می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:891
+#: NVDAObjects\behaviors.py:841
 msgid "Moves the navigator object and focus to the first row"
 msgstr "پیمایشگر و فکوس را به اولین سطر می‌بَرَد"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:902
+#: NVDAObjects\behaviors.py:852
 msgid "Moves the navigator object and focus to the last row"
 msgstr "پیمایشگر و فکوس را به آخرین سطر می‌بَرَد"
 
@@ -20743,13 +20737,13 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel} برابر"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:91
+#: _magnifier\fullscreenMagnifier.py:94
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "نمی‌توانم ذره‌بین را اجرا کنم. ممکن است یک برنامه‌ی ذره‌بین دیگر از قبل در حال اجرا باشد."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:242
+#: _magnifier\fullscreenMagnifier.py:245
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "ذره بین به دلیلِ بُروزِ خطا متوقف شد. لطفا دوباره راه اندازیش کنید."
@@ -20866,7 +20860,7 @@ msgstr "تغییرِ حالتِ دنبال کردن"
 #: _magnifier\utils\types.py:89
 msgctxt "magnifier action"
 msgid "move mouse to view"
-msgstr ""
+msgstr "موس را به نما می‌بَرَد"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:91
@@ -21015,7 +21009,7 @@ msgstr "نمی‌توانم به رایانه‌ی راهِ دور متصل شو
 #: _remoteClient\client.py:345
 msgctxt "remote"
 msgid "Unable to connect to the Remote Access server. Retrying"
-msgstr ""
+msgstr "نمی‌توانم به سِروِرِ دسترسیِ راه دور متصل بشوم. دوباره تلاش می‌کنم"
 
 #. Translators: Message shown when trying to connect while already connected.
 #: _remoteClient\client.py:368 _remoteClient\client.py:719
