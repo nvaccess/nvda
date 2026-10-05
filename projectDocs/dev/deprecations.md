@@ -66,6 +66,7 @@ At this stage, `deprecatedSymbolName` will no longer be part of the NVDA API and
 ```python
 from addonAPIVersion import BACK_COMPAT_TO
 import NVDAState
+
 if BACK_COMPAT_TO < (NEXT_YEAR, 1, 0) and NVDAState._allowDeprecatedAPI():
 	deprecatedSymbolName = newSymbolName
 ```
@@ -94,6 +95,7 @@ To ensure a module retains the same symbol names being importable, check across 
 
 ```python
 import controlTypes
+
 dir(controlTypes)
 ```
 

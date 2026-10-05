@@ -492,7 +492,6 @@ import globalPluginHandler
 
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
@@ -522,10 +521,11 @@ Note though that if you move outside of Notepad - for instance, to Windows Explo
 
 import appModuleHandler
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	def event_gainFocus(self, obj, nextHandler):
 		import tones
+
 		tones.beep(550, 50)
 		nextHandler()
 ```
@@ -564,10 +564,11 @@ The following example is the same as the Notepad app module above, except this i
 
 from nvdaBuiltin.appModules.wwahost import *
 
-class AppModule(AppModule):
 
+class AppModule(AppModule):
 	def event_gainFocus(self, obj, nextHandler):
 		import tones
+
 		tones.beep(550, 50)
 		nextHandler()
 ```
@@ -586,6 +587,7 @@ The following example is an app module employing Edge WebView2 runtime with brow
 # msedgewebview2 example (modern Outlook/olk.py)
 
 import appModuleHandler
+
 
 class AppModule(appModuleHandler.AppModule):
 	disableBrowseModeByDefault: bool = True
@@ -821,19 +823,19 @@ Be very careful to keep all tabs and spaces intact.
 Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
 ```py
-#Window utility scripts for NVDA
-#Developer guide example 4
+# Window utility scripts for NVDA
+# Developer guide example 4
 
 import globalPluginHandler
 from scriptHandler import script
 import ui
 import api
 
-class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(
 		description=_("Announces the window class name of the current focus object"),
-		gesture="kb:NVDA+leftArrow"
+		gesture="kb:NVDA+leftArrow",
 	)
 	def script_announceWindowClassName(self, gesture):
 		focusObj = api.getFocusObject()
@@ -843,7 +845,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
 	@script(
 		description=_("Announces the window control ID of the current focus object"),
-		gesture="kb:NVDA+rightArrow"
+		gesture="kb:NVDA+rightArrow",
 	)
 	def script_announceWindowControlID(self, gesture):
 		focusObj = api.getFocusObject()
@@ -912,8 +914,8 @@ As always, the file must have a `.py` extension.
 ```py
 import appModuleHandler
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	sleepMode = True
 ```
 
@@ -961,14 +963,14 @@ from NVDAObjects.IAccessible import IAccessible
 import controlTypes
 import ui
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
 			clsList.insert(0, EnhancedEditField)
 
-class EnhancedEditField(IAccessible):
 
+class EnhancedEditField(IAccessible):
 	@script(gesture="kb:NVDA+l")
 	def script_reportLength(self, gesture):
 		ui.message(f"{len(self.value)}")
@@ -998,8 +1000,8 @@ The following code can be copied and pasted in to a text file, then saved in the
 import appModuleHandler
 from NVDAObjects.window import Window
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
 		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
 			obj.name = "Content"
@@ -1025,8 +1027,8 @@ Then the handler needs to be registered, preferably in the constructor of your g
 ```py
 import addonHandler
 
-class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	def __init__(self) -> None:
 		super().__init__()
 		addonHandler.isCLIParamKnown.register(processArgs)
@@ -1695,7 +1697,7 @@ saveDialog = MessageDialog(
 	mainFrame,
 	_("Would you like to save your changes before exiting?"),
 	_("Save changes?"),
-	buttons=DefaultButtonSet.SAVE_NO_CANCEL
+	buttons=DefaultButtonSet.SAVE_NO_CANCEL,
 )
 
 match saveDialog.ShowModal():
@@ -1712,30 +1714,26 @@ For non-modal dialogs, the easiest way to respond to the user pressing a button 
 ```py
 from gui.message import Payload
 
-def readChangelog(payload: Payload):
-	...  # Do something
 
-def downloadUpdate(payload: Payload):
-	...  # Do something
+def readChangelog(payload: Payload): ...  # Do something
 
-def remindLater(payload: Payload):
-	...  # Do something
 
-updateDialog = MessageDialog(
-	mainFrame,
-	"An update is available. "
-	"Would you like to download it now?",
-	"Update",
-	buttons=None,
-).addYesButton(
-	callback=downloadUpdate
-).addNoButton(
-	label=_("&Remind me later"),
-	fallbackAction=True,
-	callback=remindLater
-).addHelpButton(
-	label=_("What's &new"),
-	callback=readChangelog
+def downloadUpdate(payload: Payload): ...  # Do something
+
+
+def remindLater(payload: Payload): ...  # Do something
+
+
+updateDialog = (
+	MessageDialog(
+		mainFrame,
+		"An update is available. Would you like to download it now?",
+		"Update",
+		buttons=None,
+	)
+	.addYesButton(callback=downloadUpdate)
+	.addNoButton(label=_("&Remind me later"), fallbackAction=True, callback=remindLater)
+	.addHelpButton(label=_("What's &new"), callback=readChangelog)
 )
 
 updateDialog.Show()
@@ -1914,6 +1912,7 @@ For example, code performing a background task may raise a `DisplayableError`:
 ```py
 from gui.message import DisplayableError
 
+
 def fetchWidgetData() -> WidgetData:
 	try:
 		...
@@ -1929,6 +1928,7 @@ The component coordinating the work owns the extension point, and notifies it on
 ```py
 import core
 from gui.message import DisplayableError
+
 
 class WidgetDataUpdater:
 	onDisplayableError = DisplayableError.OnDisplayableErrorT()
@@ -1954,6 +1954,7 @@ Finally, the GUI component responsible for presentation registers a handler:
 ```py
 import gui
 from gui.message import DisplayableError
+
 
 class WidgetDialog(wx.Dialog):
 	def __init__(self, parent: wx.Window, updater: WidgetDataUpdater):

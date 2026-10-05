@@ -21,6 +21,7 @@ focusElement = api.getFocusObject().UIAElement
 # Create a new Remote Operation
 op = Operation()
 
+
 # Build the instructions for the remote operation.
 @op.buildFunction
 def code(ra: RemoteAPI):
@@ -39,6 +40,8 @@ def code(ra: RemoteAPI):
 	# Now back outside the while loop.
 	# Return the names array from the remote operation.
 	ra.Return(names)
+
+
 # Now the operation is built.
 
 # Actually execute the remote operation, which will return the names array to NVDA.
@@ -67,6 +70,8 @@ To return a value or values from a remote operation, use the `ra.Return` method,
 
 ```py
 op = Operation()
+
+
 @op.buildFunction
 def code(ra: RemoteAPI):
 	i = ra.newInt(10)
@@ -359,7 +364,10 @@ tempRange = textRange.clone()
 # Collapse the range to the start
 tempRange.moveEndpointByRange(TextPatternRangeEndpoint_End, tempRange, TextPatternRangeEndpoint_Start)
 with ra.whileBlock(lambda: tempRange.move(TextUnit_word, 1) == 1):
-	with ra.ifblock(tempRange.compareEndpoints(textPatternRangeEndpoint_Start, textRange, TextPatternRangeEndpoint_End) >= 0):
+	with ra.ifblock(
+		tempRange.compareEndpoints(textPatternRangeEndpoint_Start, textRange, TextPatternRangeEndpoint_End)
+		>= 0
+	):
 		ra.breakLoop()
 	wordCount += 1
 ra.Return(wordcount)
@@ -539,6 +547,7 @@ To actually execute an iterable function though, instead of using `Operation.exe
 ```py
 op = Operation()
 
+
 @op.buildIterfunction
 def code(ra: RemoteAPI):
 	counter = ra.newInt(0, static=True)
@@ -546,6 +555,7 @@ def code(ra: RemoteAPI):
 		with ra.ifBlock((counter % 1000) == 0):
 			ra.Yield(counter)
 		counter += 1
+
 
 for item in op.iterExecute(maxTries=10):
 	print(f"{item=}")

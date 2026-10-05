@@ -47,7 +47,6 @@ Adding the enum class to the `featureFlagEnums.py` file will automatically expos
 Example new `enum` class:
 
 ```python
-
 class AllowUiaInMSWordFlag(DisplayStringEnum):
 	"""Feature flag for UIA in MS Word.
 	The explicit DEFAULT option allows developers to differentiate between a value set that happens to be
@@ -56,8 +55,7 @@ class AllowUiaInMSWordFlag(DisplayStringEnum):
 
 	@property
 	def _displayStringLabels(self):
-		""" These labels will be used in the GUI when displaying the options.
-		"""
+		"""These labels will be used in the GUI when displaying the options."""
 		# To prevent duplication, self.DEFAULT is not included here.
 		return {
 			# Translators: Label for an option in NVDA settings.
@@ -94,13 +92,13 @@ newFlagValue: config.FeatureFlag = config.conf["virtualBuffers"]["newOptionForUs
 
 # BoolFlag converts to bool automatically, taking into account 'behaviorOfDefault'
 if newFlagValue:
-    print("The new option is enabled")
+	print("The new option is enabled")
 
 anotherFlagValue: config.FeatureFlag = config.conf["virtualBuffers"]["anotherOptionForUsers"]
 
 # Other "optionsEnum" types can compare with the value, the 'behaviorOfDefault' is taken into account.
 if flagValue == AllowUiaInMSWordFlag.ALWAYS:
-    print("Another option is enabled")
+	print("Another option is enabled")
 ```
 
 ## GUI
@@ -132,13 +130,13 @@ sHelper.addItem(vbufGroup)
 
 # creation
 self.newOptionForUsersCombo: nvdaControls.FeatureFlagCombo = vbufGroup.addLabeledControl(
-    labelText=_(
-        # Translators: Explanation of what the control does and where it is used.
-        "New option for users"
-    ),
-    wxCtrlClass=nvdaControls.FeatureFlagCombo,
-    keyPath=["virtualBuffers", "newOptionForUsers"], # The path of keys, see config spec.
-    conf=config.conf, # The configObj instance, allows getting / setting the value
+	labelText=_(
+		# Translators: Explanation of what the control does and where it is used.
+		"New option for users"
+	),
+	wxCtrlClass=nvdaControls.FeatureFlagCombo,
+	keyPath=["virtualBuffers", "newOptionForUsers"],  # The path of keys, see config spec.
+	conf=config.conf,  # The configObj instance, allows getting / setting the value
 )
 ...
 # is default

@@ -50,9 +50,11 @@ Indentation must be done with tabs (one per level), not spaces.
 
   ```python
   class ExampleGroupOfData(Enum):
-      CONSTANT_VALUE_MEMBER = auto()
-      @property
-      def _formatMember(self): pass
+  	CONSTANT_VALUE_MEMBER = auto()
+
+  	@property
+  	def _formatMember(self):
+  		pass
   ```
 
 ## Translatable Strings
@@ -82,7 +84,7 @@ self.copySettingsButton = wx.Button(
 		# Control (UAC) dialog).
 		"Use currently saved settings during sign-in and on secure screens"
 		" (requires administrator privileges)"
-	)
+	),
 )
 ```
 
