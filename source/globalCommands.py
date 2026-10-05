@@ -200,6 +200,7 @@ class GlobalCommands(ScriptableObject):
 		self._reviewCopyStartMarker: textInfos.TextInfo | None = None
 		self._reviewCopyStartMarkerObj: documentBase.TextContainerObject | None = None
 		self._reviewSelectThenCopyRange: textInfos.TextInfo | None = None
+		self._pendingBrailleAutoScroll: wx.CallLater | None = None
 
 	def _clearReviewCopyStartMarker(self) -> None:
 		self._reviewCopyStartMarker = None
@@ -894,7 +895,9 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+k",
 	)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
-		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
+		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None and (
+			self._pendingBrailleAutoScroll is None or not self._pendingBrailleAutoScroll.IsRunning()
+		)
 		timeout = 0
 		if shouldEnableAutoScroll:
 			# Translators: Message reported when automatic scrolling has been enabled in braille.
@@ -907,7 +910,12 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
 			ui.message(_("Automatic scrolling disabled"))
-		core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
+			self._pendingBrailleAutoScroll.Stop()
+		self._pendingBrailleAutoScroll = core.callLater(
+			timeout,
+			braille.handler.autoScroll,
+			shouldEnableAutoScroll,
+		)
 
 	@script(
 		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
