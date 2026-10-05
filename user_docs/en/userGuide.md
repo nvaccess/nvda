@@ -2684,8 +2684,6 @@ While the automatic scroll option is enabled, you can still use the scroll back 
 
 Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.
 
-Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
-
 ##### Text wrap {#BrailleSettingsWordWrap}
 
 This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.
