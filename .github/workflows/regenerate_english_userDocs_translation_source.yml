@@ -6,6 +6,12 @@ on:
       - beta
     paths:
       - 'user_docs/en/*.md'
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'SHA of the commit to diff from when finding changed user_docs/en markdown files'
+        required: true
+        type: string
 
 permissions:
   actions: write
@@ -46,13 +52,15 @@ jobs:
 
     - name: update xliff files
       shell: pwsh
+      env:
+        BASE_SHA: ${{ github.event_name == 'workflow_dispatch' && inputs.sha || github.event.before }}
       run: |
         # for any English markdown files changed within the commits of this push,
         # update the corresponding xliff file (if one exists) to reflect the current markdown file,
         # keeping existing translation IDs in tact.
         $PSNativeCommandUseErrorActionPreference = $true
         $ErrorActionPreference = 'Stop'
-        $changedFiles = git diff --name-only ${{github.event.before}}.. -- user_docs/en/*.md
+        $changedFiles = git diff --name-only "$env:BASE_SHA.." -- user_docs/en/*.md
         foreach ($file in $changedFiles) {
             Write-Host "$file has changed"
             $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
