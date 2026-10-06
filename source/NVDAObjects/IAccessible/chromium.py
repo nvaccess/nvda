@@ -10,8 +10,6 @@ from comtypes import COMError
 
 import config
 import controlTypes
-import eventHandler
-from comInterfaces import IAccessible2Lib as IA2
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
@@ -97,42 +95,7 @@ class ChromeVBuf(GeckoVBuf):
 		return not self._isNVDAObjectInApplication(obj)
 
 
-FOCUS_DELAY_AFTER_FOCUSED_NODE_REMOVED_MS = 150
-"""How long to wait, in milliseconds, before handling focus on a document
-after the element that had focus in it was removed.
-When a web app replaces content (e.g. during client side navigation), the focused element is often removed,
-and the app moves focus into the new content shortly afterward.
-In between, Chromium reports focus on the document.
-Waiting briefly lets NVDA skip that intermediate focus instead of reporting the document.
-"""
-
-
-def _isDefunct(obj: IAccessible) -> bool:
-	"""Whether the given object has been removed from its accessibility tree.
-	This queries the object directly, rather than using cached states.
-	"""
-	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
-		return False
-	try:
-		return bool(obj.IAccessibleObject.states & IA2.IA2_STATE_DEFUNCT)
-	except COMError:
-		return True
-
-
 class Document(ia2Web.Document):
-	def _get_focusEventDelay(self) -> int:
-		oldFocus = eventHandler.lastQueuedFocusObject
-		if (
-			isinstance(oldFocus, IAccessible)
-			# Only defer when focus was on an element within a page,
-			# not when moving between documents (e.g. on a full page load).
-			and not isinstance(oldFocus, ia2Web.Document)
-			and oldFocus.windowHandle == self.windowHandle
-			and _isDefunct(oldFocus)
-		):
-			return FOCUS_DELAY_AFTER_FOCUSED_NODE_REMOVED_MS
-		return 0
-
 	def _get_treeInterceptorClass(self) -> type["TreeInterceptor"]:
 		shouldLoadVBufOnBusyFeatureFlag = bool(
 			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"],

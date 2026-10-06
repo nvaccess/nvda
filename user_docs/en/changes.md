@@ -28,7 +28,8 @@
 #### Web browsers
 
 * In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
-* In Chromium based browsers such as Google Chrome and Microsoft Edge, NVDA no longer briefly reports the document when a web app removes the focused element and then moves focus to new content, such as during client side navigation. (#12284)
+* In Google Chrome, Microsoft Edge and Mozilla Firefox, NVDA no longer briefly reports the document when a web app removes the focused element and then moves focus to new content, such as during client side navigation. (#12284)
+  * This can be turned off with the new "Wait for new focus when the focused element is removed from a web page" option in Advanced settings.
 * In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
 
 #### Applications
@@ -62,6 +63,9 @@ A read completing on the same handle no longer ends the wait while the write is 
   * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
+* `NVDAObjects.IAccessible.IAccessible` has a new `focusEventDelay` property, the number of milliseconds to wait before handling a focus event for the object. (#12284)
+If another focus event is queued in the meantime, the delayed event is dropped.
+The default is 0, which handles focus events immediately as before.
 
 #### API Breaking Changes
 
