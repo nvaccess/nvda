@@ -11,6 +11,8 @@
 
 ### Bug Fixes
 
+* Fix for adding duplicate gesture for same script. (#20890, @theshippeys)
+
 #### Performance
 
 #### Braille
