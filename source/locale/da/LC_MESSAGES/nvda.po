@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-06 23:47+0000\n"
-"PO-Revision-Date: 2026-09-07 00:22\n"
+"POT-Creation-Date: 2026-10-04 23:36+0000\n"
+"PO-Revision-Date: 2026-10-05 00:25\n"
 "Last-Translator: \n"
 "Language-Team: Danish\n"
 "Language: da_DK\n"
@@ -110,23 +110,23 @@ msgid "Unlabeled"
 msgstr "Unavngivet"
 
 #. Translators: Reported when single letter navigation in browse mode is turned off.
-#: browseMode.py:459
+#: browseMode.py:468
 msgid "Single letter navigation off"
 msgstr "Bogstavnavigation fra"
 
 #. Translators: Reported when single letter navigation in browse mode is turned on.
-#: browseMode.py:463
+#: browseMode.py:472
 msgid "Single letter navigation on"
 msgstr "Bogstavnavigation til"
 
 #. Translators: the description for the toggleSingleLetterNavigation command in browse mode.
-#: browseMode.py:467
+#: browseMode.py:476
 msgid "Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application"
 msgstr "Slår bogstavnavigation til og fra. Når funktionen er slået til, kan du bruge enkelttaster i gennemsynstilstand til at springe til forskellige typer elementer på siden. Når funktionen er slået fra, sendes disse tastetryk videre til programmet."
 
 #. Translators: a message when a particular quick nav command is not supported in the current document.
 #. Translators: Reported when a user tries to use a find command when it isn't supported.
-#: browseMode.py:564 appModules\kindle.py:257 appModules\kindle.py:261
+#: browseMode.py:573 appModules\kindle.py:257 appModules\kindle.py:261
 #: appModules\kindle.py:265 contentRecog\recogUi.py:159
 #: contentRecog\recogUi.py:163 contentRecog\recogUi.py:167
 msgid "Not supported in this document"
@@ -134,996 +134,996 @@ msgstr "Ikke understøttet i dette dokument"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:648
+#: browseMode.py:657
 #, python-brace-format
 msgid "Moves to the next heading at level {i}"
 msgstr "Flytter til næste overskrift på niveau {i}."
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:651
+#: browseMode.py:660
 #, python-brace-format
 msgid "No next heading at level {i}"
 msgstr "Ingen næste overskrift på niveau {i}"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #. {i} will be replaced with the level number.
-#: browseMode.py:654
+#: browseMode.py:663
 #, python-brace-format
 msgid "Moves to the previous heading at level {i}"
 msgstr "Flytter til forrige overskrift på niveau {i}."
 
 #. Translators: Message presented when the browse mode element is not found.
 #. {i} will be replaced with the level number.
-#: browseMode.py:657
+#: browseMode.py:666
 #, python-brace-format
 msgid "No previous heading at level {i}"
 msgstr "Ingen forrige overskrift på niveau {i}"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #. {i} will be replaced with the heading level number.
-#: browseMode.py:660
+#: browseMode.py:669
 #, python-brace-format
 msgid "headings level {i}"
 msgstr "Overskriftsniveauer {i}"
 
 #. Translators: the description for the Elements List command in browse mode.
-#: browseMode.py:675
+#: browseMode.py:684
 msgid "Lists various types of elements in this document"
 msgstr "Viser forskellige typer elementer i det aktuelle dokument."
 
 #. Translators: the description for the activatePosition script on browseMode documents.
-#: browseMode.py:733
+#: browseMode.py:742
 msgid "Activates the current object in the document"
 msgstr "Aktiverer det aktuelle objekt i dokumentet"
 
 #. Translators: The default element type in browse mode touch navigation (navigates all content).
-#: browseMode.py:807
+#: browseMode.py:816
 msgid "default"
 msgstr "standard"
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:816
+#: browseMode.py:825
 msgid "Selects the next element type for browse mode touch navigation"
 msgstr "Skifter til den næste navigationselementtype i gennemsynstilstand."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:835
+#: browseMode.py:844
 msgid "Selects the previous element type for browse mode touch navigation"
 msgstr "Skifter til den forrige navigationselementtype i gennemsynstilstand."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:854
+#: browseMode.py:863
 msgid "Moves to the next element of the selected type in browse mode touch navigation"
 msgstr "Flytter til det næste element af den valgte type ved touchnavigation i gennemsynstilstand."
 
 #. Translators: Input help message for a browse mode touch navigation command in browse mode.
-#: browseMode.py:871
+#: browseMode.py:880
 msgid "Moves to the previous element of the selected type in browse mode touch navigation"
 msgstr "Flytter til det forrige element af den valgte type ved touchnavigation i gennemsynstilstand."
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:912
+#: browseMode.py:921
 msgid "moves to the next heading"
 msgstr "flytter til næste overskrift."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:914
+#: browseMode.py:923
 msgid "no next heading"
 msgstr "ingen næste overskrift"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:916
+#: browseMode.py:925
 msgid "moves to the previous heading"
 msgstr "flytter til forrige overskrift."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:918
+#: browseMode.py:927
 msgid "no previous heading"
 msgstr "ingen forrige overskrift"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:920
+#: browseMode.py:929
 msgid "headings"
 msgstr "overskrifter"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:927
+#: browseMode.py:936
 msgid "moves to the next table"
 msgstr "flytter til næste tabel."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:929
+#: browseMode.py:938
 msgid "no next table"
 msgstr "ingen næste tabel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:931
+#: browseMode.py:940
 msgid "moves to the previous table"
 msgstr "flytter til forrige tabel."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:933
+#: browseMode.py:942
 msgid "no previous table"
 msgstr "ingen forrige tabel"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:936
+#: browseMode.py:945
 msgid "tables"
 msgstr "tabeller"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:942
+#: browseMode.py:951
 msgid "moves to the next link"
 msgstr "flytter til næste link."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:944
+#: browseMode.py:953
 msgid "no next link"
 msgstr "intet næste link"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:946
+#: browseMode.py:955
 msgid "moves to the previous link"
 msgstr "flytter til forrige link."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:948
+#: browseMode.py:957
 msgid "no previous link"
 msgstr "intet forrige link"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:950
+#: browseMode.py:959
 msgid "links"
 msgstr "links"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:956
+#: browseMode.py:965
 msgid "moves to the next visited link"
 msgstr "flytter til næste besøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:958
+#: browseMode.py:967
 msgid "no next visited link"
 msgstr "intet næste besøgte link"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:960
+#: browseMode.py:969
 msgid "moves to the previous visited link"
 msgstr "flytter til forrige besøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:962
+#: browseMode.py:971
 msgid "no previous visited link"
 msgstr "intet forrige besøgte link"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:964
+#: browseMode.py:973
 msgid "visited links"
 msgstr "besøgte links"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:970
+#: browseMode.py:979
 msgid "moves to the next unvisited link"
 msgstr "flytter til næste ubesøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:972
+#: browseMode.py:981
 msgid "no next unvisited link"
 msgstr "intet næste ubesøgte link"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:974
+#: browseMode.py:983
 msgid "moves to the previous unvisited link"
 msgstr "flytter til forrige ubesøgte link."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:976
+#: browseMode.py:985
 msgid "no previous unvisited link"
 msgstr "intet forrige ubesøgte link"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:978
+#: browseMode.py:987
 msgid "unvisited links"
 msgstr "Ubesøgte links"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:984
+#: browseMode.py:993
 msgid "moves to the next form field"
 msgstr "flytter til næste formularfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:986
+#: browseMode.py:995
 msgid "no next form field"
 msgstr "intet næste formularfelt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:988
+#: browseMode.py:997
 msgid "moves to the previous form field"
 msgstr "flytter til forrige formularfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:990
+#: browseMode.py:999
 msgid "no previous form field"
 msgstr "intet forrige formularfelt"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:992
+#: browseMode.py:1001
 msgid "form fields"
 msgstr "formularfelter"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:998
+#: browseMode.py:1007
 msgid "moves to the next list"
 msgstr "flytter til næste liste."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1000
+#: browseMode.py:1009
 msgid "no next list"
 msgstr "ingen næste liste"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1002
+#: browseMode.py:1011
 msgid "moves to the previous list"
 msgstr "flytter til forrige liste."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1004
+#: browseMode.py:1013
 msgid "no previous list"
 msgstr "ingen forrige liste"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1007
+#: browseMode.py:1016
 msgid "lists"
 msgstr "lister"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1013
+#: browseMode.py:1022
 msgid "moves to the next list item"
 msgstr "flytter til næste listeemne."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1015
+#: browseMode.py:1024
 msgid "no next list item"
 msgstr "intet næste listeemne"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1017
+#: browseMode.py:1026
 msgid "moves to the previous list item"
 msgstr "flytter til forrige listeemne."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1019
+#: browseMode.py:1028
 msgid "no previous list item"
 msgstr "intet forrige listeemne"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1021
+#: browseMode.py:1030
 msgid "list items"
 msgstr "listeemner"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1027
+#: browseMode.py:1036
 msgid "moves to the next button"
 msgstr "flytter til næste knap."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1029
+#: browseMode.py:1038
 msgid "no next button"
 msgstr "ingen næste knap"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1031
+#: browseMode.py:1040
 msgid "moves to the previous button"
 msgstr "flytter til forrige knap."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1033
+#: browseMode.py:1042
 msgid "no previous button"
 msgstr "ingen forrige knap"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1035
+#: browseMode.py:1044
 msgid "buttons"
 msgstr "knapper"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1041
+#: browseMode.py:1050
 msgid "moves to the next edit field"
 msgstr "flytter til næste editfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1043
+#: browseMode.py:1052
 msgid "no next edit field"
 msgstr "intet næste editfelt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1045
+#: browseMode.py:1054
 msgid "moves to the previous edit field"
 msgstr "flytter til forrige editfelt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1047
+#: browseMode.py:1056
 msgid "no previous edit field"
 msgstr "intet forrige editfelt"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1050
+#: browseMode.py:1059
 msgid "edit fields"
 msgstr "edit-felter"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1056
+#: browseMode.py:1065
 msgid "moves to the next frame"
 msgstr "flytter til næste ramme."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1058
+#: browseMode.py:1067
 msgid "no next frame"
 msgstr "ingen næste ramme"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1060
+#: browseMode.py:1069
 msgid "moves to the previous frame"
 msgstr "flytter til forrige ramme."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1062
+#: browseMode.py:1071
 msgid "no previous frame"
 msgstr "ingen forrige ramme"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1065
+#: browseMode.py:1074
 msgid "frames"
 msgstr "rammer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1071
+#: browseMode.py:1080
 msgid "moves to the next separator"
 msgstr "flytter til næste separator."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1073
+#: browseMode.py:1082
 msgid "no next separator"
 msgstr "ingen næste separator"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1075
+#: browseMode.py:1084
 msgid "moves to the previous separator"
 msgstr "flytter til forrige separator."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1077
+#: browseMode.py:1086
 msgid "no previous separator"
 msgstr "ingen forrige separator"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1079
+#: browseMode.py:1088
 msgid "separators"
 msgstr "separatorer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1085
+#: browseMode.py:1094
 msgid "moves to the next radio button"
 msgstr "flytter til næste radioknap."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1087
+#: browseMode.py:1096
 msgid "no next radio button"
 msgstr "ingen næste radioknap"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1089
+#: browseMode.py:1098
 msgid "moves to the previous radio button"
 msgstr "flytter til forrige radioknap."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1091
+#: browseMode.py:1100
 msgid "no previous radio button"
 msgstr "ingen forrige radioknap"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1093
+#: browseMode.py:1102
 msgid "radio buttons"
 msgstr "radioknapper"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1099
+#: browseMode.py:1108
 msgid "moves to the next combo box"
 msgstr "flytter til næste combo box."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1101
+#: browseMode.py:1110
 msgid "no next combo box"
 msgstr "Ingen næste combo box"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1103
+#: browseMode.py:1112
 msgid "moves to the previous combo box"
 msgstr "flytter til forrige combo box."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1105
+#: browseMode.py:1114
 msgid "no previous combo box"
 msgstr "Ingen forrige combo box"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1107
+#: browseMode.py:1116
 msgid "combo boxes"
 msgstr "combo boxe"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1113
+#: browseMode.py:1122
 msgid "moves to the next check box"
 msgstr "flytter til næste check box."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1115
+#: browseMode.py:1124
 msgid "no next check box"
 msgstr "ingen næste check box"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1117
+#: browseMode.py:1126
 msgid "moves to the previous check box"
 msgstr "flytter til forrige check box."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1119
+#: browseMode.py:1128
 msgid "no previous check box"
 msgstr "ingen forrige check box"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1121
+#: browseMode.py:1130
 msgid "check boxes"
 msgstr "check boxe"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1127
+#: browseMode.py:1136
 msgid "moves to the next graphic"
 msgstr "flytter til næste grafik."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1129
+#: browseMode.py:1138
 msgid "no next graphic"
 msgstr "ingen næste grafik"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1131
+#: browseMode.py:1140
 msgid "moves to the previous graphic"
 msgstr "flytter til forrige grafik."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1133
+#: browseMode.py:1142
 msgid "no previous graphic"
 msgstr "ingen forrige grafik"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1135
+#: browseMode.py:1144
 msgid "graphics"
 msgstr "grafik"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1141
+#: browseMode.py:1150
 msgid "moves to the next block quote"
 msgstr "flytter til næste blokcitat."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1143
+#: browseMode.py:1152
 msgid "no next block quote"
 msgstr "intet næste blokcitat"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1145
+#: browseMode.py:1154
 msgid "moves to the previous block quote"
 msgstr "flytter til forrige blokcitat."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1147
+#: browseMode.py:1156
 msgid "no previous block quote"
 msgstr "intet forrige blokcitat"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1149
+#: browseMode.py:1158
 msgid "block quotes"
 msgstr "bloksitater"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1155
+#: browseMode.py:1164
 msgid "skips forward past a block of links"
 msgstr "springer fremad forbi en blok med links"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1157
+#: browseMode.py:1166
 msgid "no more text after a block of links"
 msgstr "ikke mere tekst efter en blok med links"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1159
+#: browseMode.py:1168
 msgid "skips backward past a block of links"
 msgstr "springer bagud forbi en blok med links"
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1161
+#: browseMode.py:1170
 msgid "no more text before a block of links"
 msgstr "ikke mere tekst før en blok med links"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1164
+#: browseMode.py:1173
 msgid "non-link blocks"
 msgstr "blokke uden links"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1170
+#: browseMode.py:1179
 msgid "moves to the next landmark"
 msgstr "flytter til næste landmærke."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1172
+#: browseMode.py:1181
 msgid "no next landmark"
 msgstr "intet næste landmærke"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1174
+#: browseMode.py:1183
 msgid "moves to the previous landmark"
 msgstr "flytter til forrige landmærke."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1176
+#: browseMode.py:1185
 msgid "no previous landmark"
 msgstr "intet forrige landmærke"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1179
+#: browseMode.py:1188
 msgid "landmarks"
 msgstr "landmærker"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1185
+#: browseMode.py:1194
 msgid "moves to the next embedded object"
 msgstr "flytter til næste indlejrede objekt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1187
+#: browseMode.py:1196
 msgid "no next embedded object"
 msgstr "intet næste indlejrede objekt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1189
+#: browseMode.py:1198
 msgid "moves to the previous embedded object"
 msgstr "flytter til forrige indlejrede objekt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1191
+#: browseMode.py:1200
 msgid "no previous embedded object"
 msgstr "intet forrige indlejrede objekt"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1193
+#: browseMode.py:1202
 msgid "embedded objects"
 msgstr "indlejrede objekter"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1199
+#: browseMode.py:1208
 msgid "moves to the next annotation"
 msgstr "flytter til næste annotation."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1201
+#: browseMode.py:1210
 msgid "no next annotation"
 msgstr "ingen næste annotation"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1203
+#: browseMode.py:1212
 msgid "moves to the previous annotation"
 msgstr "flytter til forrige annotation."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1205
+#: browseMode.py:1214
 msgid "no previous annotation"
 msgstr "ingen forrige annotation"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1207
+#: browseMode.py:1216
 msgid "annotations"
 msgstr "annotationer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1213
+#: browseMode.py:1222
 msgid "moves to the next error"
 msgstr "flytter til næste fejl."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1215
+#: browseMode.py:1224
 msgid "no next error"
 msgstr "ingen næste fejl"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1217
+#: browseMode.py:1226
 msgid "moves to the previous error"
 msgstr "flytter til forrige fejl."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1219
+#: browseMode.py:1228
 msgid "no previous error"
 msgstr "ingen forrige fejl"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1221
+#: browseMode.py:1230
 msgid "errors"
 msgstr "fejl"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1227
+#: browseMode.py:1236
 msgid "moves to the next slider"
 msgstr "flytter til næste skyder."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1229
+#: browseMode.py:1238
 msgid "no next slider"
 msgstr "inngen næste skyder"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1231
+#: browseMode.py:1240
 msgid "moves to the previous slider"
 msgstr "flytter til forrige skyder."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1233
+#: browseMode.py:1242
 msgid "no previous slider"
 msgstr "ingen forrige skyder"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1235
+#: browseMode.py:1244
 msgid "sliders"
 msgstr "skyderer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1241
+#: browseMode.py:1250
 msgid "moves to the next clickable element"
 msgstr ""
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1243
+#: browseMode.py:1252
 msgid "no next clickable element"
 msgstr ""
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1245
+#: browseMode.py:1254
 msgid "moves to the previous clickable element"
 msgstr ""
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1247
+#: browseMode.py:1256
 msgid "no previous clickable element"
 msgstr ""
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1250
+#: browseMode.py:1259
 msgid "clickable elements"
 msgstr ""
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1256
+#: browseMode.py:1265
 msgid "moves to the next article"
 msgstr "flytter til næste artikel."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1258
+#: browseMode.py:1267
 msgid "no next article"
 msgstr "ingen næste artikel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1260
+#: browseMode.py:1269
 msgid "moves to the previous article"
 msgstr "flytter til forrige artikel."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1262
+#: browseMode.py:1271
 msgid "no previous article"
 msgstr "ingen forrige artikel"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1264
+#: browseMode.py:1273
 msgid "articles"
 msgstr "artikler"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1270
+#: browseMode.py:1279
 msgid "moves to the next grouping"
 msgstr "flytter til næste gruppe."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1272
+#: browseMode.py:1281
 msgid "no next grouping"
 msgstr "ingen næste gruppe"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1274
+#: browseMode.py:1283
 msgid "moves to the previous grouping"
 msgstr "flytter til forrige gruppe."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1276
+#: browseMode.py:1285
 msgid "no previous grouping"
 msgstr "ingen forrige gruppe"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1278
+#: browseMode.py:1287
 msgid "groupings"
 msgstr "grupper"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1284
+#: browseMode.py:1293
 msgid "moves to the next tab"
 msgstr "flytter til næste fane."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1286
+#: browseMode.py:1295
 msgid "no next tab"
 msgstr "ingen næste fane"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1288
+#: browseMode.py:1297
 msgid "moves to the previous tab"
 msgstr "flytter til forrige fane."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1290
+#: browseMode.py:1299
 msgid "no previous tab"
 msgstr "ingen forrige fane"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1292
+#: browseMode.py:1301
 msgid "tabs"
 msgstr "faner"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1298
+#: browseMode.py:1307
 msgid "moves to the next figure"
 msgstr "flytter til næste figur."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1300
+#: browseMode.py:1309
 msgid "no next figure"
 msgstr "ingen næste figur"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1302
+#: browseMode.py:1311
 msgid "moves to the previous figure"
 msgstr "flytter til forrige figur."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1304
+#: browseMode.py:1313
 msgid "no previous figure"
 msgstr "ingen forrige figur"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1306
+#: browseMode.py:1315
 msgid "figures"
 msgstr "figurer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1312
+#: browseMode.py:1321
 msgid "moves to the next menu item"
 msgstr "flytter til næste menupunkt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1314
+#: browseMode.py:1323
 msgid "no next menu item"
 msgstr "intet næste menupunkt"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1316
+#: browseMode.py:1325
 msgid "moves to the previous menu item"
 msgstr "flytter til forrige menupunkt."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1318
+#: browseMode.py:1327
 msgid "no previous menu item"
 msgstr "intet forrige menupunkt"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1320
+#: browseMode.py:1329
 msgid "menu items"
 msgstr "menupunkter"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1326
+#: browseMode.py:1335
 msgid "moves to the next toggle button"
 msgstr "flytter til næste skifteknap."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1328
+#: browseMode.py:1337
 msgid "no next toggle button"
 msgstr "ingen næste skifteknap"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1330
+#: browseMode.py:1339
 msgid "moves to the previous toggle button"
 msgstr "flytter til forrige skifteknap."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1332
+#: browseMode.py:1341
 msgid "no previous toggle button"
 msgstr "ingen forrige skifteknap"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1334
+#: browseMode.py:1343
 msgid "toggle buttons"
 msgstr "skifteknapper"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1340
+#: browseMode.py:1349
 msgid "moves to the next progress bar"
 msgstr "flytter til næste behandlingslinje."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1342
+#: browseMode.py:1351
 msgid "no next progress bar"
 msgstr "ingen næste behandlingslinje"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1344
+#: browseMode.py:1353
 msgid "moves to the previous progress bar"
 msgstr "flytter til forrige behandlingslinje."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1346
+#: browseMode.py:1355
 msgid "no previous progress bar"
 msgstr "ingen forrige behandlingslinje"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1348
+#: browseMode.py:1357
 msgid "progress bars"
 msgstr "behandlingslinjer"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1354
+#: browseMode.py:1363
 msgid "moves to the next math formula"
 msgstr "flytter til næste matematikformel."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1356
+#: browseMode.py:1365
 msgid "no next math formula"
 msgstr "ingen næste matematikformel"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1358
+#: browseMode.py:1367
 msgid "moves to the previous math formula"
 msgstr "flytter til forrige matematikformel."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1360
+#: browseMode.py:1369
 msgid "no previous math formula"
 msgstr "ingen forrige matematikformel"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1362
+#: browseMode.py:1371
 msgid "math formulas"
 msgstr "matematikformler"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1368
+#: browseMode.py:1377
 msgid "moves to the next text paragraph"
 msgstr "flytter til næste tekstafsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1370
+#: browseMode.py:1379
 msgid "no next text paragraph"
 msgstr "intet næste tekstafsnit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1372
+#: browseMode.py:1381
 msgid "moves to the previous text paragraph"
 msgstr "flytter til forrige tekstafsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1374
+#: browseMode.py:1383
 msgid "no previous text paragraph"
 msgstr "intet forrige tekstafsnit"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1377
+#: browseMode.py:1386
 msgid "text paragraphs"
 msgstr "tekstafsnit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1383
+#: browseMode.py:1392
 msgid "moves to the next vertically aligned paragraph"
 msgstr "flytter til næste lodret justerede afsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1385
+#: browseMode.py:1394
 msgid "no next vertically aligned paragraph"
 msgstr "intet næste lodret tekstafsnit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1387
+#: browseMode.py:1396
 msgid "moves to the previous vertically aligned paragraph"
 msgstr "flytter til forrige lodret justerede afsnit."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1389
+#: browseMode.py:1398
 msgid "no previous vertically aligned paragraph"
 msgstr "intet forrige lodret tekstafsnit"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1392
+#: browseMode.py:1401
 msgid "vertical paragraphs"
 msgstr "lodrette afsnit"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1398
+#: browseMode.py:1407
 msgid "moves to the next same style text"
 msgstr "flytter til næste tekst med samme typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1400
+#: browseMode.py:1409
 msgid "No next same style text"
 msgstr "Ingen næste tekst med samme typografi"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1402
+#: browseMode.py:1411
 msgid "moves to the previous same style text"
 msgstr "flytter til forrige tekst med samme typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1404
+#: browseMode.py:1413
 msgid "No previous same style text"
 msgstr "Ingen forrige tekst med samme typografi"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1406
+#: browseMode.py:1415
 msgid "same style"
 msgstr "samme typografi"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1412
+#: browseMode.py:1421
 msgid "moves to the next different style text"
 msgstr "flytter til næste tekst med en anden typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1414
+#: browseMode.py:1423
 msgid "No next different style text"
 msgstr "Ingen tekst med en anden typografi"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1416
+#: browseMode.py:1425
 msgid "moves to the previous different style text"
 msgstr "flytter til forrige tekst med en anden typografi."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1418
+#: browseMode.py:1427
 msgid "No previous different style text"
 msgstr "Ingen forrige tekst med en anden typografi"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1420
+#: browseMode.py:1429
 msgid "different style"
 msgstr "anden typografi"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1426
+#: browseMode.py:1435
 msgid "moves to the next reference"
 msgstr "flytter til næste reference."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1428
+#: browseMode.py:1437
 msgid "no next reference"
 msgstr "ingen næste reference"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
-#: browseMode.py:1430
+#: browseMode.py:1439
 msgid "moves to the previous reference"
 msgstr "flytter til forrige reference."
 
 #. Translators: Message presented when the browse mode element is not found.
-#: browseMode.py:1432
+#: browseMode.py:1441
 msgid "no previous reference"
 msgstr "ingen forrige reference"
 
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
-#: browseMode.py:1435
+#: browseMode.py:1444
 msgid "references"
 msgstr "referencer"
 
@@ -1131,7 +1131,7 @@ msgstr "referencer"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1454 gui\settingsDialogs.py:3466
+#: browseMode.py:1463 gui\settingsDialogs.py:3466
 msgid "Lin&ks"
 msgstr "Lin&ks"
 
@@ -1139,42 +1139,42 @@ msgstr "Lin&ks"
 #. in the browse mode Elements List dialog.
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
-#: browseMode.py:1457 gui\settingsDialogs.py:3461
+#: browseMode.py:1466 gui\settingsDialogs.py:3461
 msgid "&Headings"
 msgstr "&Overskrifter"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1460 NVDAObjects\window\excel.py:768
+#: browseMode.py:1469 NVDAObjects\window\excel.py:768
 msgid "&Form fields"
 msgstr "&Formularfelter"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1463
+#: browseMode.py:1472
 msgid "&Buttons"
 msgstr "&Knapper"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1466
+#: browseMode.py:1475
 msgid "Lan&dmarks"
 msgstr "Lan&dmærker"
 
 #. Translators: The title of the browse mode Elements List dialog.
-#: browseMode.py:1479
+#: browseMode.py:1488
 msgid "Elements List"
 msgstr "Elementliste"
 
 #. Translators: The label of a group of radio buttons to select the type of element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1490
+#: browseMode.py:1499
 msgid "Type:"
 msgstr "Type:"
 
 #. Translators: The label of an editable text field to filter the elements
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1519
+#: browseMode.py:1528
 msgid "Filter b&y:"
 msgstr "Filtrér &efter:"
 
@@ -1182,34 +1182,34 @@ msgstr "Filtrér &efter:"
 #. Beware not to set an accelerator that would collide with other controls in this dialog, such as an
 #. element type radio label.
 #. Translators: a message reported when the action at the position of the review cursor or navigator object is performed.
-#: browseMode.py:1530 globalCommands.py:1856
+#: browseMode.py:1539 globalCommands.py:1856
 msgid "Activate"
 msgstr "Aktivér"
 
 #. Translators: The label of a button to move to an element
 #. in the browse mode Elements List dialog.
-#: browseMode.py:1535
+#: browseMode.py:1544
 msgid "&Move to"
 msgstr "&Flyt til"
 
 #. Translators: the message presented when the activateLongDescription script cannot locate a long description to activate.
-#: browseMode.py:2003
+#: browseMode.py:2012
 msgid "No long description"
 msgstr "Ingen lang beskrivelse tilgængelig"
 
 #. Translators: the description for the activateLongDescription script on browseMode documents.
-#: browseMode.py:2006
+#: browseMode.py:2015
 msgid "Shows the long description at this position if one is found."
 msgstr "Viser den lange beskrivelse på det pågældende sted, hvis en lang beskrivelse er tilgængelig."
 
 #. Translators: Reported when the user attempts to move to the start or end of a container
 #. (list, table, etc.) but there is no container.
-#: browseMode.py:2521 browseMode.py:2542
+#: browseMode.py:2537 browseMode.py:2558
 msgid "Not in a container"
 msgstr "ikke i en objektbeholder"
 
 #. Translators: Description for the Move to start of container command in browse mode.
-#: browseMode.py:2532
+#: browseMode.py:2548
 msgid "Moves to the start of the container element, such as a list or table"
 msgstr "Flytter til begyndelsen af en objektbeholder, eksempelvis en liste eller tabel."
 
@@ -1219,53 +1219,53 @@ msgstr "Flytter til begyndelsen af en objektbeholder, eksempelvis en liste eller
 #. Translators: a message reported when review cursor is at the bottom line of the current navigator object.
 #. Translators: Reported when attempting to move to the next result in the Python Console
 #. output pane while there is no next result.
-#: browseMode.py:2551 globalCommands.py:2006 globalCommands.py:2084
+#: browseMode.py:2567 globalCommands.py:2006 globalCommands.py:2084
 #: globalCommands.py:2204 appModules\nvda.py:146
 msgid "Bottom"
 msgstr "Bund"
 
 #. Translators: Description for the Move past end of container command in browse mode.
-#: browseMode.py:2560
+#: browseMode.py:2576
 msgid "Moves past the end of the container element, such as a list or table"
 msgstr "Flytter forbi slutningen af objektbeholderen, eksempelvis en liste eller tabel."
 
 #. Translators: the description for the toggleScreenLayout script.
-#: browseMode.py:2895
+#: browseMode.py:2911
 msgid "Toggles on and off if the screen layout is preserved while rendering the document content"
 msgstr "Slår bevaring af skærmlayout under visning af indholdet af dokumentet til og fra"
 
 #. Translators: The message reported for not supported toggling of screen layout
-#: browseMode.py:2904
+#: browseMode.py:2920
 msgid "Not supported in this document."
 msgstr "Ikke understøttet i dette dokument"
 
 #. Translators: input help message for toggle native selection command
-#: browseMode.py:2930
+#: browseMode.py:2946
 msgid "Toggles native selection mode on and off"
 msgstr "Slår oprindelig markeringstilstand til og fra."
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2936
+#: browseMode.py:2952
 msgid "Native selection mode unsupported in this browse mode document"
 msgstr "Oprindelig markeringstilstand understøttes ikke i dette dokument"
 
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
-#: browseMode.py:2939
+#: browseMode.py:2955
 msgid "Native selection mode cannot be turned off in this browse mode document"
 msgstr "Oprindelig markeringstilstand kan ikke deaktiveres i dette dokument"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
-#: browseMode.py:2951
+#: browseMode.py:2967
 msgid "Native selection mode unsupported in this document"
 msgstr "Oprindelig markeringstilstand understøttes ikke i dette dokument"
 
 #. Translators: reported when native selection mode is toggled on.
-#: browseMode.py:2955
+#: browseMode.py:2971
 msgid "Native app selection mode enabled"
 msgstr "Oprindelig markeringstilstand for app aktiveret"
 
 #. Translators: reported when native selection mode is toggled off.
-#: browseMode.py:2963
+#: browseMode.py:2979
 msgid "Native app selection mode disabled"
 msgstr "Oprindelig markeringstilstand for app deaktiveret"
 
@@ -1642,7 +1642,7 @@ msgstr "Nogle handlinger for tilføjelser kunne ikke udføres. Se logfilen for f
 #: gui\installerGui.py:181 gui\installerGui.py:265 gui\installerGui.py:759
 #: gui\installerGui.py:776 gui\installerGui.py:848 gui\logViewer.py:112
 #: gui\logViewer.py:143 gui\message.py:171 gui\settingsDialogs.py:1041
-#: gui\settingsDialogs.py:6133 gui\settingsDialogs.py:6979
+#: gui\settingsDialogs.py:6112 gui\settingsDialogs.py:6958
 #: gui\startupDialogs.py:126 _remoteClient\dialogs.py:67
 #: _remoteClient\dialogs.py:306 _remoteClient\dialogs.py:430
 msgid "Error"
@@ -1778,7 +1778,7 @@ msgstr "Ikke i en tabelcelle"
 
 #. Translators: The message reported when a user attempts to use a table movement command
 #. but the cursor can't be moved in that direction because it is at the edge of the table.
-#: documentBase.py:392 NVDAObjects\behaviors.py:772
+#: documentBase.py:392 NVDAObjects\behaviors.py:722
 #: NVDAObjects\IAccessible\winword.py:431
 msgid "Edge of table"
 msgstr "Kant af tabel"
@@ -1895,7 +1895,7 @@ msgstr "Mus"
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
 #: globalCommands.py:97 config\configFlags.py:314 gui\settingsDialogs.py:1143
-#: gui\settingsDialogs.py:4612
+#: gui\settingsDialogs.py:4596
 msgid "Speech"
 msgstr "Tale"
 
@@ -1915,21 +1915,21 @@ msgstr "Indstillingsprofiler"
 #. Advanced settings panel
 #. Translators: This is the label for the braille panel
 #: globalCommands.py:106 config\configFlags.py:316 gui\settingsDialogs.py:4502
-#: gui\settingsDialogs.py:5043
+#: gui\settingsDialogs.py:5022
 msgid "Braille"
 msgstr "Punkt"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the vision panel
-#: globalCommands.py:109 gui\settingsDialogs.py:5901
+#: globalCommands.py:109 gui\settingsDialogs.py:5880
 msgid "Vision"
 msgstr "Syn"
 
 #. Translators: The name of a category of NVDA commands.
 #. Translators: This is the label for the magnifier settings panel.
 #. Translators: The title of an error message box shown when the magnifier fails to start.
-#: globalCommands.py:112 gui\settingsDialogs.py:6167
-#: gui\settingsDialogs.py:6400
+#: globalCommands.py:112 gui\settingsDialogs.py:6146
+#: gui\settingsDialogs.py:6379
 msgid "Magnifier"
 msgstr "Forstørrelse"
 
@@ -6974,7 +6974,7 @@ msgstr "Den aktuelle forbindelse vil muligvis ikke kunne opretholdes under eller
 #. Translators: Title of warning dialog
 #: updateCheck.py:1023 gui\_SetURLDialog.py:113 gui\configProfiles.py:539
 #: gui\installerGui.py:502 gui\installerGui.py:660 gui\settingsDialogs.py:1973
-#: gui\settingsDialogs.py:6440 screenCurtain\_screenCurtain.py:70
+#: gui\settingsDialogs.py:6419 screenCurtain\_screenCurtain.py:70
 #: _remoteClient\dialogs.py:291
 msgid "Warning"
 msgstr "Advarsel"
@@ -13285,7 +13285,7 @@ msgstr "&Filtrér efter:"
 #. Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 #. Translators: The label for a button in speech dictionaries dialog to add new entries.
 #: gui\inputGestures.py:627 gui\inputGestures.py:684
-#: gui\settingsDialogs.py:6867 gui\speechDict.py:218
+#: gui\settingsDialogs.py:6846 gui\speechDict.py:218
 msgid "&Add"
 msgstr "&Tilføj"
 
@@ -13714,8 +13714,8 @@ msgstr "&Kategorier"
 #. magnifier settings panel
 #. Translators: name of a grouping in Privacy and Security settings
 #. which contains miscellaneous settings.
-#: gui\settingsDialogs.py:806 gui\settingsDialogs.py:6212
-#: gui\settingsDialogs.py:6504
+#: gui\settingsDialogs.py:806 gui\settingsDialogs.py:6191
+#: gui\settingsDialogs.py:6483
 msgid "General"
 msgstr "Generelt"
 
@@ -13881,7 +13881,7 @@ msgstr "Talesyntese"
 #. it appears in the context of a synthesizer group on the speech settings panel.
 #. Translators: This is the label for the button used to change braille display,
 #. it appears in the context of a braille display group on the braille settings panel.
-#: gui\settingsDialogs.py:1171 gui\settingsDialogs.py:5064
+#: gui\settingsDialogs.py:1171 gui\settingsDialogs.py:5043
 msgid "C&hange..."
 msgstr "S&kift..."
 
@@ -13941,7 +13941,7 @@ msgstr "Brug stemmens aktuelle sprog til behandling af specialtegn og symboler"
 
 #. Translators: This is a label for a combo-box in the Speech settings panel.
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5620
+#: gui\settingsDialogs.py:1741 gui\settingsDialogs.py:5599
 msgid "Unicode normali&zation"
 msgstr "Unicode-normali&sering"
 
@@ -14373,12 +14373,12 @@ msgstr "&Forhindre alle ikke-NVDA-kommandoer i at nå til dokumentet"
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2680
 msgid "&Keep search history"
-msgstr ""
+msgstr "&Bevar søgehistorik"
 
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2691
 msgid "Nati&ve selection mode"
-msgstr ""
+msgstr "Oprindelig &markeringstilstand"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2707
@@ -14556,7 +14556,7 @@ msgstr "Brug indbygget matematikunderstøttelse i Word og Outlook"
 #. Translators: This is the label for the document formatting panel.
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:3199 gui\settingsDialogs.py:4716
+#: gui\settingsDialogs.py:3199 gui\settingsDialogs.py:4700
 msgid "Document Formatting"
 msgstr "Dokumentformatering"
 
@@ -14683,7 +14683,7 @@ msgstr "Ignorer &blanke linjer ved rapportering af linjeindrykning"
 #. to adjust the duration of indentation tones in milliseconds.
 #: gui\settingsDialogs.py:3374
 msgid "Indent tone &duration (ms):"
-msgstr ""
+msgstr "Indrykningstonens &varighed (ms):"
 
 #. Translators: This message is presented in the document formatting settings panel
 #. If this option is selected, NVDA will report paragraph indentation if available.
@@ -14818,7 +14818,7 @@ msgstr "&Navigering af afsnit:"
 #. Translators: This is a label for the word segmentation standard in the document navigation dialog
 #: gui\settingsDialogs.py:3619
 msgid "&Word Segmentation Standard:"
-msgstr ""
+msgstr "&Standard for ordsegmentering:"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load the selected synthesizer.
@@ -14971,7 +14971,7 @@ msgstr "&Vært:"
 #. This is the port on which the local control server will be accessible,
 #. if the user has chosen to host their own.
 #. Translators: The label for a setting in braille settings to choose the connection port (if the selected braille display supports port selection).
-#: gui\settingsDialogs.py:4025 gui\settingsDialogs.py:5142
+#: gui\settingsDialogs.py:4025 gui\settingsDialogs.py:5121
 #: _remoteClient\dialogs.py:207
 msgid "&Port:"
 msgstr "&Port:"
@@ -15040,7 +15040,7 @@ msgstr "&Touchindtastning"
 #. Translators: This is the label for a checkbox in the touch interaction settings panel.
 #: gui\settingsDialogs.py:4217
 msgid "Enable &edge gestures"
-msgstr ""
+msgstr "Aktivér &kantbevægelser"
 
 #. Translators: The title of the Windows OCR panel.
 #: gui\settingsDialogs.py:4231
@@ -15257,342 +15257,336 @@ msgstr "Udtal &adgangskoder i alle forbedrede terminaler (kan forbedre ydeevnen)
 msgid "Use enhanced t&yped character support in legacy Windows Console when available"
 msgstr "Benyt udvidet understøttelse for indtastede &tegn i forældede Windows-konsoller"
 
-#. Translators: This is the label for a checkbox in the
-#. Advanced settings panel.
-#: gui\settingsDialogs.py:4544
-msgid "Beep for &skipped lines"
-msgstr ""
-
 #. Translators: This is the label for a combo box for selecting a
 #. method of detecting changed content in terminals in the advanced
 #. settings panel.
 #. Choices are automatic, Diff Match Patch, and Difflib.
-#: gui\settingsDialogs.py:4563
+#: gui\settingsDialogs.py:4547
 msgid "&Diff algorithm:"
 msgstr "&Diff-algoritme:"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA determine the method of detecting changed
 #. content in terminals automatically.
-#: gui\settingsDialogs.py:4568
+#: gui\settingsDialogs.py:4552
 msgid "Automatic (prefer Diff Match Patch)"
 msgstr "Automatisk (foretræk Diff Match Patch)"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by character, using the diff match patch algorithm.
-#: gui\settingsDialogs.py:4572
+#: gui\settingsDialogs.py:4556
 msgid "Diff Match Patch"
 msgstr "Diff Match Patch"
 
 #. Translators: A choice in a combo box in the advanced settings
 #. panel to have NVDA detect changes in terminals
 #. by line, using the difflib algorithm.
-#: gui\settingsDialogs.py:4576
+#: gui\settingsDialogs.py:4560
 msgid "Difflib"
 msgstr "Difflib"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4602
+#: gui\settingsDialogs.py:4586
 msgid "Speak new text in Windows Terminal via:"
 msgstr "Læs ny tekst i Windows Terminal via:"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4621
+#: gui\settingsDialogs.py:4605
 msgid "Default (Yes)"
 msgstr "Standard (Ja)"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4624
+#: gui\settingsDialogs.py:4608
 msgid "Yes"
 msgstr "Ja"
 
 #. Translators: Label for the 'Cancel speech for expired &focus events' combobox
 #. in the Advanced settings panel.
-#: gui\settingsDialogs.py:4627
+#: gui\settingsDialogs.py:4611
 msgid "No"
 msgstr "Nej"
 
 #. Translators: This is the label for combobox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4631
+#: gui\settingsDialogs.py:4615
 msgid "Attempt to cancel speech for expired focus events:"
 msgstr "Forsøg at annullere tale for udløbne fokushændelser:"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4647
+#: gui\settingsDialogs.py:4631
 msgid "Trim leading silence in speech audio"
 msgstr "Fjern indledende stilhed i talens lydoutput"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4655
+#: gui\settingsDialogs.py:4639
 msgid "Use WASAPI for SAPI 4 audio output:"
 msgstr "Brug WASAPI for SAPI 4 lydoutput:"
 
 #. Translators: This is the label for a combo-box control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4666
+#: gui\settingsDialogs.py:4650
 msgid "Use modern regular expression engine for speech dictionary entries:"
 msgstr "Brug moderne behandling af regulære udtryk i udtaleordbøger"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4677
+#: gui\settingsDialogs.py:4661
 msgid "Virtual Buffers"
 msgstr "Virtuelle buffere"
 
 #. Translators: This is the label for a combo-box in the Advanced settings panel.
-#: gui\settingsDialogs.py:4685
+#: gui\settingsDialogs.py:4669
 msgid "Load Chromium virtual buffer when document busy."
 msgstr "Indlæs Chromium virtuel buffer, når dokumentet er optaget:"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4694
+#: gui\settingsDialogs.py:4678
 msgid "Editable Text"
 msgstr "Redigerbar tekst"
 
 #. Translators: This is the label for a numeric control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4701
+#: gui\settingsDialogs.py:4685
 msgid "Caret movement timeout (in ms)"
 msgstr "Interval for systemmarkøren (i MS)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
-#: gui\settingsDialogs.py:4724
+#: gui\settingsDialogs.py:4708
 msgid "Report transparent color values"
 msgstr "Oplys gennemsigtige farveværdier"
 
 #. Translators: This is the label for a group of advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4738
+#: gui\settingsDialogs.py:4722
 msgid "Debug logging"
 msgstr "Fejllogning"
 
 #. Translators: This is the label for a list in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4766
+#: gui\settingsDialogs.py:4750
 msgid "Enabled logging categories"
 msgstr "Aktiverede logningskategorier"
 
 #. Translators: Label for the Play a sound for logged errors combobox, in the Advanced settings panel.
-#: gui\settingsDialogs.py:4786
+#: gui\settingsDialogs.py:4770
 msgid "Play a sound for logged e&rrors:"
 msgstr "Afspil en lyd, når &fejl opstår:"
 
 #. Translators: This is the label for a textfield in the
 #. advanced settings panel.
-#: gui\settingsDialogs.py:4799
+#: gui\settingsDialogs.py:4783
 msgid "Regular expression for text paragraph navigation"
 msgstr "Regulært udtryk for navigation af tekstafsnit"
 
 #. Translators: Message shown when invalid text paragraph regex entered
-#: gui\settingsDialogs.py:4821
+#: gui\settingsDialogs.py:4805
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
 msgstr "Kunne ikke kompilere regulært udtryk for tekstafsnit: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
-#: gui\settingsDialogs.py:4959
+#: gui\settingsDialogs.py:4938
 msgid "Advanced"
 msgstr "Avanceret"
 
 #. Translators: This is the label to warn users about the Advanced options in the
 #. Advanced settings panel
-#: gui\settingsDialogs.py:4964
+#: gui\settingsDialogs.py:4943
 msgid "Warning!"
 msgstr "Advarsel!"
 
 #. Translators: This is a label appearing on the Advanced settings panel.
-#: gui\settingsDialogs.py:4968
+#: gui\settingsDialogs.py:4947
 msgid "The following settings are for advanced users. Changing them may cause NVDA to function incorrectly. Please only change these if you know what you are doing or have been specifically instructed by NVDA developers."
 msgstr "Følgende indstillinger gælder for avancerede brugere. Hvis du ændrer disse, kan NVDA fungere uhensigtsmæssigt. Du skal kun ændre disse, hvis du ved hvad du laver eller er specifikt instrueret af NVDA-udviklere."
 
 #. Translators: This is the label for a checkbox in the Advanced settings panel.
-#: gui\settingsDialogs.py:4995
+#: gui\settingsDialogs.py:4974
 msgid "I understand that changing these settings may cause NVDA to function incorrectly."
 msgstr "Jeg forstår, at ændring af disse indstillinger kan få NVDA til at fungere uhensigtsmæssigt"
 
 #. Translators: This is the label for a button in the Advanced settings panel
-#: gui\settingsDialogs.py:5006
+#: gui\settingsDialogs.py:4985
 msgid "Restore defaults"
 msgstr "Gendan standarder"
 
 #. Translators: A label for the braille display on the braille panel.
-#: gui\settingsDialogs.py:5049
+#: gui\settingsDialogs.py:5028
 msgid "Braille display"
 msgstr "Punktdisplay"
 
 #. Translators: This is the label for the braille display selection dialog.
-#: gui\settingsDialogs.py:5118
+#: gui\settingsDialogs.py:5097
 msgid "Select Braille Display"
 msgstr "Vælg punktdisplay"
 
 #. Translators: The label for a setting in braille settings to choose a braille display.
-#: gui\settingsDialogs.py:5127
+#: gui\settingsDialogs.py:5106
 msgid "Braille &display:"
 msgstr "Punkt&display"
 
 #. Translators: The label for a setting in braille settings to enable displays for automatic detection.
-#: gui\settingsDialogs.py:5133
+#: gui\settingsDialogs.py:5112
 msgid "&Displays to detect automatically:"
 msgstr "&Displays, der skal detekteres automatisk:"
 
 #. Translators: The message in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5249
+#: gui\settingsDialogs.py:5228
 #, python-brace-format
 msgid "Could not load the {display} display."
 msgstr "Kunne ikke indlæse displayet {display}."
 
 #. Translators: The title in a dialog presented when NVDA is unable to load the selected
 #. braille display.
-#: gui\settingsDialogs.py:5252
+#: gui\settingsDialogs.py:5231
 msgid "Braille Display Error"
 msgstr "Punktdisplay-fejl"
 
 #. Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
-#: gui\settingsDialogs.py:5285
+#: gui\settingsDialogs.py:5264
 msgid "&Output table:"
 msgstr "&Oversættelsestabel:"
 
 #. Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-#: gui\settingsDialogs.py:5293 gui\settingsDialogs.py:5320
+#: gui\settingsDialogs.py:5272 gui\settingsDialogs.py:5299
 #, python-brace-format
 msgid "Automatic ({name})"
 msgstr "Automatisk ({name})"
 
 #. Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
-#: gui\settingsDialogs.py:5312
+#: gui\settingsDialogs.py:5291
 msgid "&Input table:"
 msgstr "&Indtastningstabel:"
 
 #. Translators: The label for a setting in braille settings to select which braille mode to use
-#: gui\settingsDialogs.py:5338
+#: gui\settingsDialogs.py:5317
 msgid "Braille mode:"
 msgstr "Punkttilstand:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
-#: gui\settingsDialogs.py:5353
+#: gui\settingsDialogs.py:5332
 msgid "E&xpand to computer braille for the word at the cursor"
 msgstr "U&dvid ordet ved markøren til computer-braille"
 
 #. Translators: The label for a setting in braille settings to show the cursor.
-#: gui\settingsDialogs.py:5361
+#: gui\settingsDialogs.py:5340
 msgid "&Show cursor"
 msgstr "&Vis markør"
 
 #. Translators: The label for a setting in braille settings to enable cursor blinking.
-#: gui\settingsDialogs.py:5370
+#: gui\settingsDialogs.py:5349
 msgid "Blink cursor"
 msgstr "Blinkende markør"
 
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
-#: gui\settingsDialogs.py:5381
+#: gui\settingsDialogs.py:5360
 msgid "Cursor blink rate (ms)"
 msgstr "Blinkhastighed for markør (ms)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
-#: gui\settingsDialogs.py:5403
+#: gui\settingsDialogs.py:5382
 msgid "Cursor shape for &focus:"
 msgstr "Markørform for &fokus:"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to review.
-#: gui\settingsDialogs.py:5419
+#: gui\settingsDialogs.py:5398
 msgid "Cursor shape for &review:"
 msgstr "Markørform til &læsning:"
 
 #. Translators: The label for a setting in braille settings to combobox enabling user
 #. to decide if braille messages should be shown and automatically disappear from braille display.
-#: gui\settingsDialogs.py:5441
+#: gui\settingsDialogs.py:5420
 msgid "Show messages"
 msgstr "Vis beskeder"
 
 #. Translators: The label for a setting in braille settings to change how long a message stays on the braille display (in seconds).
-#: gui\settingsDialogs.py:5463
+#: gui\settingsDialogs.py:5442
 msgid "Message &timeout (sec)"
 msgstr "&Besked vises i (sec)"
 
 #. Translators: The label for a setting in braille settings to set whether braille should be tethered to focus or review cursor.
-#: gui\settingsDialogs.py:5482
+#: gui\settingsDialogs.py:5461
 msgid "Tether B&raille:"
 msgstr "Punkt føl&ger:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5506
+#: gui\settingsDialogs.py:5485
 msgid "Move system caret when ro&uting review cursor"
 msgstr "Flyt systemmarkør, når læsemarkøren flyttes med &markørknapperne"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
-#: gui\settingsDialogs.py:5522
+#: gui\settingsDialogs.py:5501
 msgid "Read by &paragraph"
 msgstr "Læs efter &afsnit"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-#: gui\settingsDialogs.py:5531
+#: gui\settingsDialogs.py:5510
 msgid "Paragraph start marker:"
 msgstr "Startmarkør for afsnit:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
-#: gui\settingsDialogs.py:5546
+#: gui\settingsDialogs.py:5525
 msgid "Focus context presentation:"
 msgstr "Fokuskontekstpræsentation:"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5567
+#: gui\settingsDialogs.py:5546
 msgid "Show se&lection"
 msgstr "Vis &valgmarkør"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5579
+#: gui\settingsDialogs.py:5558
 msgid "Formatting &display"
 msgstr "&Visning af formatering"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
-#: gui\settingsDialogs.py:5588
+#: gui\settingsDialogs.py:5567
 msgid "Spea&k character when routing cursor in text"
 msgstr "Oplæs &tegn, når markørknapper flytter markøren i tekst"
 
 #. Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-#: gui\settingsDialogs.py:5596
+#: gui\settingsDialogs.py:5575
 msgid "Speak when navigating by &line or paragraph"
 msgstr "Læs op, når du navigerer efter &linje eller afsnit"
 
 #. Translators: The label for a setting in braille settings to configure text wrap behaviour
 #. (how to break lines that don't fit on the braille display).
-#: gui\settingsDialogs.py:5610
+#: gui\settingsDialogs.py:5589
 msgid "Text &wrap"
-msgstr ""
+msgstr "Tekst&ombrydning"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
-#: gui\settingsDialogs.py:5631
+#: gui\settingsDialogs.py:5610
 msgid "I&nterrupt speech while scrolling"
 msgstr "Afbryd talen, mens du &panorerer"
 
 #. Translators: The label for a setting in braille settings to change the rate for autoscroll.
-#: gui\settingsDialogs.py:5640
+#: gui\settingsDialogs.py:5619
 msgid "Auto&matic scroll rate"
 msgstr "Auto&matisk rullehastighed"
 
 #. Translators: The label for a checkbox in the Braille settings panel.
-#: gui\settingsDialogs.py:5661
+#: gui\settingsDialogs.py:5640
 msgid "Use &Chinese word segmentation"
-msgstr ""
+msgstr "Brug &kinesisk ordsegmentering"
 
 #. Translators: This message is presented when
 #. NVDA is unable to load a single vision enhancement provider.
-#: gui\settingsDialogs.py:5767
+#: gui\settingsDialogs.py:5746
 #, python-brace-format
 msgid "Could not load the {providerName} vision enhancement provider"
 msgstr "Kunne ikke indlæse synshjælpemidlet {providerName}"
 
 #. Translators: This message is presented when NVDA is unable to
 #. load multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5774
+#: gui\settingsDialogs.py:5753
 #, python-brace-format
 msgid "Could not load the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15600,20 +15594,20 @@ msgstr "Kunne ikke indlæse følgende synshjælpemidler:\n"
 "{providerNames}"
 
 #. Translators: The title of the vision enhancement provider error message box.
-#: gui\settingsDialogs.py:5780 gui\settingsDialogs.py:5810
+#: gui\settingsDialogs.py:5759 gui\settingsDialogs.py:5789
 msgid "Vision Enhancement Provider Error"
 msgstr "Fejl under afvikling af synshjælpemiddel"
 
 #. Translators: This message is presented when
 #. NVDA is unable to gracefully terminate a single vision enhancement provider.
-#: gui\settingsDialogs.py:5797
+#: gui\settingsDialogs.py:5776
 #, python-brace-format
 msgid "Could not gracefully terminate the {providerName} vision enhancement provider"
 msgstr "Kunne ikke afslutte synshjælpemidlet {providerName} korrekt"
 
 #. Translators: This message is presented when
 #. NVDA is unable to terminate multiple vision enhancement providers.
-#: gui\settingsDialogs.py:5805
+#: gui\settingsDialogs.py:5784
 #, python-brace-format
 msgid "Could not gracefully terminate the following vision enhancement providers:\n"
 "{providerNames}"
@@ -15621,214 +15615,214 @@ msgstr "Kunne ikke afslutte de følgende synshjælpemidler på korrekt vis:\n"
 "{providerNames}"
 
 #. Translators: This is a label appearing on the vision settings panel.
-#: gui\settingsDialogs.py:5905
+#: gui\settingsDialogs.py:5884
 msgid "Configure visual aids."
 msgstr "Konfigurér synshjælpemidler."
 
 #. Translators: Enable checkbox on a vision enhancement provider on the vision settings category panel
-#: gui\settingsDialogs.py:6077
+#: gui\settingsDialogs.py:6056
 msgid "Enable"
 msgstr "Aktivér"
 
 #. Translators: Options label on a vision enhancement provider on the vision settings category panel
 #. Translators: The label for a group box containing the NVDA highlighter options.
-#: gui\settingsDialogs.py:6084
+#: gui\settingsDialogs.py:6063
 #: visionEnhancementProviders\NVDAHighlighter.py:396
 msgid "Options:"
 msgstr "Indstillinger:"
 
 #. Translators: Shown when there is an error showing the GUI for a vision enhancement provider
-#: gui\settingsDialogs.py:6130
+#: gui\settingsDialogs.py:6109
 msgid "Unable to configure user interface for Vision Enhancement Provider, it can not be enabled."
 msgstr "Kunne ikke konfigurere brugergrænsefladen for det aktuelt valgte synshjælpemiddel. Funktionen kan ikke aktiveres."
 
 #. Translators: The label for a setting in magnifier settings to enable or disable the magnifier.
-#: gui\settingsDialogs.py:6220
+#: gui\settingsDialogs.py:6199
 msgid "&Enable magnifier (immediate effect)"
 msgstr "&Aktivér Forstørrelse (virker med det samme)"
 
 #. Translators: The label for a setting in magnifier settings to select the zoom level.
-#: gui\settingsDialogs.py:6234
+#: gui\settingsDialogs.py:6213
 msgid "&Zoom (%):"
 msgstr "&Zoom (%):"
 
 #. Translators: The label for a setting in magnifier settings to select the filter
-#: gui\settingsDialogs.py:6256
+#: gui\settingsDialogs.py:6235
 msgid "Color f&ilter:"
 msgstr "Farve&filter:"
 
 #. Translators: The label for a setting in magnifier settings to select the pan step size (in percentage).
-#: gui\settingsDialogs.py:6273
+#: gui\settingsDialogs.py:6252
 msgid "&Panning step size (%):"
 msgstr "&Panoreringstrin (%):"
 
 #. Translators: This is the label for a group of tracking options in the magnifier settings panel
-#: gui\settingsDialogs.py:6295
+#: gui\settingsDialogs.py:6274
 msgid "Tracking"
 msgstr "Følgning"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the mouse
-#: gui\settingsDialogs.py:6303
+#: gui\settingsDialogs.py:6282
 msgid "Follow &mouse"
 msgstr "Følg &musen"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the system focus
-#: gui\settingsDialogs.py:6305
+#: gui\settingsDialogs.py:6284
 msgid "Follow &system focus"
 msgstr "Følg system&fokus"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the review cursor
-#: gui\settingsDialogs.py:6307
+#: gui\settingsDialogs.py:6286
 msgid "Follow &review cursor"
 msgstr "Følg &læsemarkør"
 
 #. Translators: The label for a setting in magnifier settings to select whether the magnifier view should follow the navigator object
-#: gui\settingsDialogs.py:6310
+#: gui\settingsDialogs.py:6289
 msgid "Follow &navigator object"
 msgstr "Følg &navigatorobjekt"
 
 #. Translators: The label for a setting in magnifier settings to select the tracking mode
-#: gui\settingsDialogs.py:6327
+#: gui\settingsDialogs.py:6306
 msgid "&Tracking mode:"
 msgstr "&Følgefunktion:"
 
 #. Translators: The title of the privacy and security category in NVDA's settings.
-#: gui\settingsDialogs.py:6408
+#: gui\settingsDialogs.py:6387
 msgid "Privacy and Security"
 msgstr "Privatliv og sikkerhed"
 
 #. Translators: Warning shown when enabling the "debug (unredacted)" log level from NVDA settings.
-#: gui\settingsDialogs.py:6421
+#: gui\settingsDialogs.py:6400
 msgid "Setting the logging level to \"debug (unredacted)\" will write sensitive information to the log without redaction, including passwords, API keys, or other private data. Only enable this temporarily if you explicitly need unredacted diagnostic logs. Do you want to continue?"
 msgstr "Hvis logføringsniveauet sættes til \"fejlfinding (ucensureret)\", vil følsomme oplysninger blive skrevet til loggen uden at blive skjult. Dette kan omfatte adgangskoder, API-nøgler og andre private oplysninger. Aktivér kun dette midlertidigt, hvis du specifikt har brug for ucensurerede fejlfindingslogfiler. Vil du fortsætte?"
 
 #. Translators: Title of the warning dialog shown when enabling the "debug (unredacted)" log level.
-#: gui\settingsDialogs.py:6428
+#: gui\settingsDialogs.py:6407
 msgid "High risk logging level"
 msgstr "Følsomme data kan blive logført"
 
 #. Translators: Warning shown when enabling a logging level above info from NVDA settings.
-#: gui\settingsDialogs.py:6433
+#: gui\settingsDialogs.py:6412
 msgid "Setting the logging level above info may record sensitive information such as typed input, speech output, or other private data in the log. Only enable higher logging levels temporarily while troubleshooting. Do you want to continue?"
 msgstr "Hvis logføringsniveauet sættes højere end info, kan følsomme oplysninger som indtastet tekst, taleoutput eller andre private data blive registreret i loggen. Aktivér kun højere logføringsniveauer midlertidigt under fejlfinding. Vil du fortsætte?"
 
 #. Translators: Name for a feature that disables output to the screen,
 #. making it black.
-#: gui\settingsDialogs.py:6458
+#: gui\settingsDialogs.py:6437
 msgid "Screen Curtain"
 msgstr "Skærmtæppe"
 
 #. Translators: option to enable screen curtain in the privacy and security settings panel
-#: gui\settingsDialogs.py:6467
+#: gui\settingsDialogs.py:6446
 msgid "Make screen black (immediate effect)"
 msgstr "Gør skærmen sort (aktiveres øjeblikkeligt)"
 
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
-#: gui\settingsDialogs.py:6496
+#: gui\settingsDialogs.py:6475
 msgid "&Play sound when toggling Screen Curtain"
 msgstr "Afspil altid en &lyd, når skærmtæppet indlæses"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
-#: gui\settingsDialogs.py:6511
+#: gui\settingsDialogs.py:6490
 msgid "L&ogging level:"
 msgstr "L&ogningsniveau"
 
 #. Translators: The label of a checkbox in privacy and security settings to toggle allowing of usage stats gathering
-#: gui\settingsDialogs.py:6534
+#: gui\settingsDialogs.py:6513
 msgid "Allow NV Access to gather NVDA usage statistics"
 msgstr "Tillad, at NVDA-projektet indsamler brugsdata om NVDA"
 
 #. Translators: This is the label for the NVDA settings dialog.
-#: gui\settingsDialogs.py:6655
+#: gui\settingsDialogs.py:6634
 msgid "NVDA Settings"
 msgstr "NVDA-indstillinger"
 
 #. Translators: The profile name for normal configuration
-#: gui\settingsDialogs.py:6711
+#: gui\settingsDialogs.py:6690
 msgid "normal configuration"
 msgstr "Normal konfiguration"
 
 #. Translators: This is the label for the add symbol dialog.
-#: gui\settingsDialogs.py:6742
+#: gui\settingsDialogs.py:6721
 msgid "Add Symbol"
 msgstr "Tilføj symbol"
 
 #. Translators: This is the label for the edit field in the add symbol dialog.
-#: gui\settingsDialogs.py:6747
+#: gui\settingsDialogs.py:6726
 msgid "&Symbol:"
 msgstr "&Symbol:"
 
 #. Translators: This is the label for the symbol pronunciation dialog.
 #. %s is replaced by the language for which symbol pronunciation is being edited.
-#: gui\settingsDialogs.py:6777
+#: gui\settingsDialogs.py:6756
 #, python-format
 msgid "Symbol Pronunciation (%s)"
 msgstr "Udtale af symboler (%s)"
 
 #. Translators: The label of a text field to search for symbols in the speech symbols dialog.
-#: gui\settingsDialogs.py:6791
+#: gui\settingsDialogs.py:6770
 msgctxt "speechSymbols"
 msgid "&Filter by:"
 msgstr "&Filtrér efter:"
 
 #. Translators: The label for symbols list in symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6800
+#: gui\settingsDialogs.py:6779
 msgid "&Symbols"
 msgstr "&Symboler"
 
 #. Translators: The label for a column in symbols list used to identify a symbol.
-#: gui\settingsDialogs.py:6810
+#: gui\settingsDialogs.py:6789
 msgid "Symbol"
 msgstr "Symbol"
 
 #. Translators: The label for a column in symbols list used to identify a replacement.
 #. Translators: The label for a column in dictionary entries list and in a list of symbols
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
-#: gui\settingsDialogs.py:6812 gui\speechDict.py:194
+#: gui\settingsDialogs.py:6791 gui\speechDict.py:194
 msgid "Replacement"
 msgstr "Erstatning"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
-#: gui\settingsDialogs.py:6814
+#: gui\settingsDialogs.py:6793
 msgid "Level"
 msgstr "Niveau"
 
 #. Translators: The label for a column in symbols list which specifies when the actual symbol will be sent to the synthesizer (preserved).
 #. See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
-#: gui\settingsDialogs.py:6817
+#: gui\settingsDialogs.py:6796
 msgid "Preserve"
 msgstr "Bevar"
 
 #. Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-#: gui\settingsDialogs.py:6821
+#: gui\settingsDialogs.py:6800
 msgid "Change selected symbol"
 msgstr "Ændre valgte symbol"
 
 #. Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
 #. Translators: This is a label for an edit field in add dictionary entry dialog
 #. and in punctuation/symbol pronunciation dialog.
-#: gui\settingsDialogs.py:6839 gui\speechDict.py:52
+#: gui\settingsDialogs.py:6818 gui\speechDict.py:52
 msgid "&Replacement"
 msgstr "&Erstatning"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-#: gui\settingsDialogs.py:6848
+#: gui\settingsDialogs.py:6827
 msgid "&Level"
 msgstr "&Niveau"
 
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-#: gui\settingsDialogs.py:6855
+#: gui\settingsDialogs.py:6834
 msgid "&Send actual symbol to synthesizer"
 msgstr "&Send aktuelle symbol til talesyntese"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
-#: gui\settingsDialogs.py:6870
+#: gui\settingsDialogs.py:6849
 msgid "Re&move"
 msgstr "&Fjern"
 
 #. Translators: An error reported in the Symbol Pronunciation dialog
 #. when adding a symbol that is already present.
-#: gui\settingsDialogs.py:6977
+#: gui\settingsDialogs.py:6956
 #, python-format
 msgid "Symbol \"%s\" is already present."
 msgstr "Symbolet \"%s\" findes allerede."
@@ -16042,7 +16036,7 @@ msgstr "&Opdater valgte tilføjelser"
 #: gui\addonStoreGui\controls\actions.py:230
 msgctxt "addonStore"
 msgid "&Update (and enable) selected add-ons"
-msgstr ""
+msgstr "&Opdater (og aktivér) valgte tilføjelser"
 
 #. Translators: Label for an action that retries the selected add-ons
 #: gui\addonStoreGui\controls\actions.py:240
@@ -16758,7 +16752,7 @@ msgstr "Sidst testede NVDA-version"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:455
+#: gui\addonStoreGui\viewModels\addonList.py:458
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (ascending)"
@@ -16766,7 +16760,7 @@ msgstr "{column} (stigende)"
 
 #. Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 #. {column} will be replaced with the column display string.
-#: gui\addonStoreGui\viewModels\addonList.py:465
+#: gui\addonStoreGui\viewModels\addonList.py:468
 #, python-brace-format
 msgctxt "addonStore"
 msgid "{column} (descending)"
@@ -16808,7 +16802,7 @@ msgstr "&Opdatér (ignorér inkompatibilitet)"
 #: gui\addonStoreGui\viewModels\store.py:161
 msgctxt "addonStore"
 msgid "&Update (and enable, override incompatibility)"
-msgstr ""
+msgstr "&Opdater (og aktivér, ignorér inkompatibilitet)"
 
 #. Translators: Label for an action that retries the selected addon
 #: gui\addonStoreGui\viewModels\store.py:171
@@ -17435,7 +17429,7 @@ msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top
 msgstr "Kanter på objekt placeret {left:.1f} procent fra venstre kant af skærmen, {top:.1f} procent fra øverste kant af skærmen, bredden er {width:.1f} procent af skærmen, højde er {height:.1f} procent af skærmen"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
-#: NVDAObjects\behaviors.py:87 winAPI\_powerTracking.py:213
+#: NVDAObjects\behaviors.py:84 winAPI\_powerTracking.py:213
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -17444,59 +17438,59 @@ msgstr[1] "%d procent"
 
 #. Translators: Announced in braille when suggestions appear when search term is entered
 #. in various search fields such as Start search box in Windows 10.
-#: NVDAObjects\behaviors.py:222
+#: NVDAObjects\behaviors.py:219
 msgid "Suggestions"
 msgstr "Forslag"
 
 #. Translators: a message announcing a candidate's character and description.
-#: NVDAObjects\behaviors.py:704
+#: NVDAObjects\behaviors.py:654
 #, python-brace-format
 msgid "{symbol} as in {description}"
 msgstr "{symbol} som i {description}"
 
 #. Translators: a formatted message announcing a candidate's number and candidate text.
-#: NVDAObjects\behaviors.py:710
+#: NVDAObjects\behaviors.py:660
 #, python-brace-format
 msgid "{number} {candidate}"
 msgstr "{number} {candidate}"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:789
+#: NVDAObjects\behaviors.py:739
 msgid "Moves the navigator object to the next column"
 msgstr "Flytter navigatorobjektet til den næste kolonne"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:808
+#: NVDAObjects\behaviors.py:758
 msgid "Moves the navigator object to the previous column"
 msgstr "Flytter navigatorobjektet til den forrige kolonne"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:841
+#: NVDAObjects\behaviors.py:791
 msgid "Moves the navigator object and focus to the next row"
 msgstr "Flytter navigatorobjektet og fokus til den næste række "
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:850
+#: NVDAObjects\behaviors.py:800
 msgid "Moves the navigator object and focus to the previous row"
 msgstr "Flytter navigatorobjektet og fokus til den forrige række"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:860
+#: NVDAObjects\behaviors.py:810
 msgid "Moves the navigator object to the first column"
 msgstr "Flytter navigatorobjektet til den første kolonne"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:874
+#: NVDAObjects\behaviors.py:824
 msgid "Moves the navigator object to the last column"
 msgstr "Flytter navigatorobjektet til den sidste kolonne"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:891
+#: NVDAObjects\behaviors.py:841
 msgid "Moves the navigator object and focus to the first row"
 msgstr "Flytter navigatorobjektet og fokus til den første række"
 
 #. Translators: The description of an NVDA command.
-#: NVDAObjects\behaviors.py:902
+#: NVDAObjects\behaviors.py:852
 msgid "Moves the navigator object and focus to the last row"
 msgstr "Flytter navigatorobjektet og fokus til den sidste række"
 
@@ -20742,13 +20736,13 @@ msgid "{zoomLevel}x"
 msgstr "{zoomLevel}x"
 
 #. Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-#: _magnifier\fullscreenMagnifier.py:89
+#: _magnifier\fullscreenMagnifier.py:94
 msgctxt "magnifier"
 msgid "Cannot start magnifier. Another magnifier application may already be running."
 msgstr "Kan ikke starte forstørrelsesprogram. Et andet forstørrelsesprogram kører måske allerede."
 
 #. Translators: Message announced when the magnifier stops due to an unrecoverable error.
-#: _magnifier\fullscreenMagnifier.py:240
+#: _magnifier\fullscreenMagnifier.py:245
 msgctxt "magnifier"
 msgid "Magnifier stopped due to an error. Please restart it."
 msgstr "Forstørrelse stoppet på grund af en fejl. Genstart venligst forstørrelsen."

@@ -1223,11 +1223,10 @@ class HtmlMessageDialog(MessageDialog):
 	"""Identifier of the WebView backend to render the message with. Override in a subclass to use another.
 
 	.. note:: The Edge backend (wx.html2.WebViewBackendEdge) is preferred over IE for modern HTML support,
-		but incurs a ~4 second cold start on each new WebView instance because wxPython 4.2 does not expose
-		wx.html2.WebViewConfiguration, preventing reuse of the underlying CoreWebView2Environment across
-		instances. Once NVDA upgrades to wxPython 4.3.0, WebViewConfiguration can be created once, held
-		alive, and passed to each WebView.New() call to eliminate the cold start. Switch this backend to
-		wx.html2.WebViewBackendEdge at that point.
+		but incurs a ~4 second cold start on each new WebView instance.
+		Reusing the underlying CoreWebView2Environment across instances requires an Edge
+		wx.html2.WebViewConfiguration, which wxPython cannot create from Python:
+		wx.html2.WebView.NewConfiguration is not bound, and no function returns the Edge WebViewFactory.
 	"""
 
 	def __init__(self, *args, **kwargs):

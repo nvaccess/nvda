@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Bill Dengler, Joseph Lee
+# Copyright (C) 2006-2026 NV Access Limited, Bill Dengler, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -45,6 +45,7 @@ _BUILDS_TO_RELEASE_NAMES: dict[int, str] = {
 	22631: "Windows 11 23H2",
 	26100: "Windows 11 24H2",
 	26200: "Windows 11 25H2",
+	26300: "Windows 11 26H2",
 }
 
 
@@ -164,6 +165,7 @@ WIN11_22H2 = WinVersion(major=10, minor=0, build=22621)
 WIN11_23H2 = WinVersion(major=10, minor=0, build=22631)
 WIN11_24H2 = WinVersion(major=10, minor=0, build=26100)
 WIN11_25H2 = WinVersion(major=10, minor=0, build=26200)
+WIN11_26H2 = WinVersion(major=10, minor=0, build=26300)
 
 
 @functools.lru_cache(maxsize=1)
