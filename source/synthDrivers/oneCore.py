@@ -42,6 +42,7 @@ from speech.commands import (
 	RateCommand,
 	VolumeCommand,
 	PhonemeCommand,
+	CharacterModeCommand,
 )
 
 #: The number of 100-nanosecond units in 1 second.
@@ -90,11 +91,6 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume", 100)
-
-	def convertCharacterModeCommand(self, command):
-		# OneCore's character speech sounds weird and doesn't support pitch alteration.
-		# Therefore, we don't use it.
-		return None
 
 	def convertLangChangeCommand(self, command: LangChangeCommand) -> speechXml.SetAttrCommand | None:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
@@ -181,6 +177,7 @@ class OneCoreSynthDriver(SynthDriver):
 		RateCommand,
 		VolumeCommand,
 		PhonemeCommand,
+		CharacterModeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
