@@ -117,8 +117,9 @@ class _DataManager:
 
 	def _initialiseAvailableAddons(self):
 		# Load disk caches here so the main thread isn't blocked by JSON parsing
-		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
-		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		with self._cacheLock:
+			self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
+			self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self.getLatestCompatibleAddons()
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> bytes | None:
