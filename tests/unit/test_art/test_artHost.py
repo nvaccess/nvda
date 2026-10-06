@@ -16,6 +16,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 import globalVars
+from _art._winHandles import claimHandleFromDescriptor
 from _art.exceptions import CapabilityDeniedError, CapabilityUnavailableError, PermissionNotGrantedError
 from _art.host.entrypoint import CONTROL_CONNECTION_NAME
 from _art.host.rootService import HostRootService
@@ -26,7 +27,6 @@ from _art.session.hostController import (
 )
 from _art.session.rootService import CoreRootService
 from _art.transport import Connection
-from _art.winHandles import claimHandleFromDescriptor
 from rpyc.core.stream import PipeStream
 
 from .threadHostController import ThreadHostController

@@ -30,12 +30,19 @@ from typing import Final, Protocol
 
 import globalVars
 import NVDAState
-import winKernel
 from logHandler import log
 from rpyc.core.stream import PipeStream, Stream
-from winBindings.kernel32 import CloseHandle, CreatePipe, DuplicateHandle, OpenProcess
+from winBindings.kernel32 import (
+	DUPLICATE,
+	GENERIC,
+	PROCESS,
+	CloseHandle,
+	CreatePipe,
+	DuplicateHandle,
+	OpenProcess,
+)
 
-from ..winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
+from .._winHandles import duplicateHandleForSelf, duplicateHandleIntoProcess
 
 #: The module run to boot a host process.
 _HOST_ENTRYPOINT_MODULE: Final[str] = "_art.host.entrypoint"
@@ -209,7 +216,7 @@ class SubprocessHostController:
 		"""
 		if self._process is None:
 			raise RuntimeError("Cannot create a pipe pair before the host has started")
-		targetProcess = OpenProcess(winKernel.PROCESS_DUP_HANDLE, False, self._process.pid)
+		targetProcess = OpenProcess(PROCESS.DUP_HANDLE, False, self._process.pid)
 		if not targetProcess:
 			raise WinError()
 		hostRead: HANDLE | None = None
@@ -224,8 +231,8 @@ class SubprocessHostController:
 				if not CreatePipe(byref(coreRead), byref(hostWriteLocal), None, _PIPE_BUFFER_SIZE):
 					raise WinError()
 				openHandles += coreRead, hostWriteLocal
-				hostRead = duplicateHandleIntoProcess(hostReadLocal, winKernel.GENERIC_READ, targetProcess)
-				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, winKernel.GENERIC_WRITE, targetProcess)
+				hostRead = duplicateHandleIntoProcess(hostReadLocal, GENERIC.READ, targetProcess)
+				hostWrite = duplicateHandleIntoProcess(hostWriteLocal, GENERIC.WRITE, targetProcess)
 			except Exception:
 				for handle in openHandles:
 					CloseHandle(handle)
@@ -244,7 +251,7 @@ class SubprocessHostController:
 						None,
 						0,
 						False,
-						winKernel.DUPLICATE_CLOSE_SOURCE,
+						DUPLICATE.CLOSE_SOURCE,
 					)
 				raise
 			# The host has its own copies now; ours would otherwise hold the pipes open,
