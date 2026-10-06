@@ -779,8 +779,34 @@ def processFocusNVDAEvent(obj, force=False):
 			if isMSAADebugLoggingEnabled():
 				log.debug(f"IAccessible focus event not allowed by {obj}")
 			return False
+		delay = obj.focusEventDelay
+		if delay > 0:
+			if isMSAADebugLoggingEnabled():
+				log.debug(f"Deferring IAccessible focus event for {obj} by {delay} ms")
+			core.callLater(delay, _processDeferredFocusNVDAEvent, obj, focus)
+			return True
 	eventHandler.queueEvent("gainFocus", obj)
 	return True
+
+
+def _processDeferredFocusNVDAEvent(
+	obj: "NVDAObjects.IAccessible.IAccessible",
+	focusWhenDeferred: "NVDAObjects.NVDAObject | None",
+) -> None:
+	"""Queue a focus event that was deferred by L{processFocusNVDAEvent},
+	unless another focus event was queued in the meantime.
+	:param obj: The object whose focus event was deferred.
+	:param focusWhenDeferred: The last queued focus object at the time the event was deferred.
+	"""
+	if eventHandler.lastQueuedFocusObject is not focusWhenDeferred:
+		if isMSAADebugLoggingEnabled():
+			log.debug(f"Dropping deferred IAccessible focus event for {obj}, as focus has since moved")
+		return
+	if not obj.shouldAllowIAccessibleFocusEvent:
+		if isMSAADebugLoggingEnabled():
+			log.debug(f"Dropping deferred IAccessible focus event for {obj}, as it no longer has focus")
+		return
+	eventHandler.queueEvent("gainFocus", obj)
 
 
 def processDesktopSwitchWinEvent(window: int, objectID: int, childID: int) -> None:
