@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master", "beta", "rc" ]
   pull_request:
-    branches: [ "master", "beta", "rc" ]
+    branches: [ "master", "beta", "rc", "try-**" ]
   schedule:
     # Scheduled jobs only run on the default branch.
     - cron: '35 22 * * 3'

@@ -9,15 +9,38 @@
 
 ### Changes
 
+* The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+
 ### Bug Fixes
 
+* The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
+  * Fixed an issue that could prevent automatic startup from being enabled on some systems.
+  * Saving other settings no longer unexpectedly disables automatic startup.
+  * If saving fails, NVDA now reports the error and continues saving other settings.
+* Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 
 #### Performance
 
 #### Braille
 
+* The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
+
 #### Web browsers
+
+* In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
+* In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
+
+#### Applications
+
+* Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+* In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
+  * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
+  * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+
+#### Add-on Store
+
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
 
 ### Changes for Developers
 
@@ -25,6 +48,20 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* Updated components:
+  * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
+* The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
+* Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
+A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
+  * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
+  * Closing a device now cancels a pending write, and repeated `close()` calls are safe.
+  * A failure to start a background read is now reported through the driver's read error callback, instead of silently ending the read loop.
+* `keyboardHandler.KeyboardInputGesture.fromName` now treats the non modifier key as the main key, regardless of its position in the name. (#8201, @LeonarddeR)
+  * For example, `alt+b+control` now creates the same gesture as `alt+control+b`.
+  * When the name contains only modifiers, the last key remains the main key.
+  * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
+* The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
+Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 
 #### API Breaking Changes
@@ -32,7 +69,20 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* APIs that wxWidgets deprecated in version 3.0 are no longer available.
+Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPython-4.3.1/CHANGES.rst) for details. (#20700, @LeonarddeR)
+* `gui.nvdaControls.CustomCheckListBox.notifyIAccessible` has been removed with no public replacement. (#20700, @LeonarddeR)
+* The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
+* `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
+* `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
+
 #### Deprecations
+
+* The following symbols from `winKernel` are deprecated: (#20784, #20836)
+  * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
+  * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
+  * `PROCESS_QUERY_INFORMATION` and `PROCESS_TERMINATE`: use `winBindings.kernel32.PROCESS.QUERY_INFORMATION` and `winBindings.kernel32.PROCESS.TERMINATE` instead.
+* `getCommentInfoFromPosition` and `getPresentableCommentInfoFromPosition` in `NVDAObjects.UIA.wordDocument` are deprecated with no public replacement. (#14985, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -45,7 +95,6 @@ Several performance improvements have been made to reduce lag and improve respon
 NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
 NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
 NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
-In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
 
 Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
 It is also now possible to change an existing gesture directly in the Input Gestures dialog.
@@ -53,12 +102,12 @@ The dialog used to present browseable messages has been modernized and now bette
 
 Touch screen input has been significantly expanded.
 Sequential two-flick gestures now combine two flicks in quick succession into a single gesture, greatly increasing the number of bindable touch gestures.
-Edge gestures are also now supported, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the center of the screen.
+Edge gestures are also now supported, allowing gestures that start from any screen edge to be bound independently from the same gesture performed in the center of the screen.
 
 A new unassigned command has been added to move the mouse cursor to the center of the magnified view.
 Windows OCR can now be used while the Screen Curtain or NVDA's built-in Magnifier is active.
 
-Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+Liblouis has been updated with new Elfdalian, Sami, Maori, New Zealand Unified English Braille, Haitian Creole braille tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
 eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 
 ### New Features
@@ -84,15 +133,14 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
   * Drivers with built-in support for multi routing: ALVA, Albatross (only when combined with `home1` or `home2`), Baum (and compatible), Freedom Scientific Focus/PAC Mate, HumanWare Brailliant BI/B series, Handy Tech, NLS eReader Zoomax, Seika Notetaker, and Standard HID Braille displays.
 * Support for the myBraille family of Help Tech Braille displays has been added. (#20426)
 * The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)
-  * In modes that show a continuation mark, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
-  * The "At word or syllable boundaries" option uses hyphenation dictionaries to split long words at syllable boundaries when they do not fit on the display.
+  * In all modes other than Off, when a word is cut across rows, the last cell of the row now shows a continuation mark (braille dots 7-8) so it is clear that the word continues on the next row.
 
 #### Touch screen input
 
 * Added sequential two-flick touch gestures that combine two flicks performed in quick succession into a single gesture, increasing the number of touch gestures that can be bound to scripts. (#19938, @kefaslungu)
   * Twelve combinations are recognised: opposite-direction pairs (e.g. flick right then flick left) and perpendicular L-shaped pairs (e.g. flick right then flick up).
   * The two flicks can be performed either by lifting the finger between strokes or as a single continuous swipe with a sharp change in direction.
-* Added edge gesture support for touch screens, allowing gestures that begin within 15 mm of any screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
+* Added edge gesture support for touch screens, allowing gestures that start from any screen edge to be bound independently from the same gesture performed in the centre of the screen. (#19938, @kefaslungu)
   * Edge gestures are disabled by default and can be enabled in the Touch Interaction settings panel.
   * All four edges are supported.
   Note that the Windows taskbar may override gestures on an edge.
@@ -110,8 +158,8 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 ### Changes
 
 * Updated Liblouis Braille translator to [3.39.0](https://github.com/liblouis/liblouis/releases/tag/v3.39.0). (#20269, #20776, @codeofdusk)
-  * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, and Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
-* Updated eSpeak NG to [commit `56f2e9c73`](https://github.com/espeak-ng/espeak-ng/commit/56f2e9c730e2438787103168c0412c80c25d014e). (#20691)
+  * Added new Elfdalian, Sami, Maori, New Zealand Unified English Braille, Haitian Creole tables, a Norwegian table for Spanish text, and additional Swedish 6 and 8 dot variants.
+* Updated eSpeak NG to [commit `f13549940`](https://github.com/espeak-ng/espeak-ng/commit/f1354994057fa9b85001675732e7fed2d437292b). (#20691, #20816)
   * Added Ligurian and Abkhaz support.
 * Updated CLDR to version 48.2. (#20234, @OzancanKaratas)
 * The dialog used to present browseable messages (such as formatting information) has been modernized. (#18878, @LeonarddeR)
@@ -120,22 +168,24 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 * Improved speech responsiveness in long text with mixed capitalization or many digits. (#20433, @codeofdusk)
 * Windows OCR can now be used while Screen Curtain or NVDA's built-in Magnifier is active on supported systems. (#19164, #20630, @cary-rowen)
 * Reduced the number of cross-process UI Automation calls when processing events, reporting focus changes, reporting objects under the mouse and rendering browse mode content, by caching more properties and batching focus property fetches. (#20608, @LeonarddeR)
+* Limit the speed of rapid Magnifier filter updates to reduce the risk of triggering seizures. (#20750)
 
 ### Bug Fixes
 
-* 64-bit NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
+* NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
 * In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
-* Fixed UAC slider not being read when changing values with arrow keys in UI Automation. (#9356, @tareh7z)
+* Fixed UAC slider not being read when changing values with arrow keys. (#9356, @tareh7z)
 * After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
 * Only one browse mode Find dialog can be open at a time.
 Executing the find command while the dialog is open brings it to the foreground and points it at the document you executed the command from. (#20484, @LeonarddeR)
-* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop) when the item exposes the UIA SelectionItem pattern without an associated action interface. (#20255, @rezabakhshilaktasaraei)
+* Focus is no longer silent on list items in Qt-based applications (such as Telegram Desktop). (#20255, @rezabakhshilaktasaraei)
 * NVDA now reports checked ToolStrip menu items in .NET Framework Windows Forms applications using UI Automation. (#19335, @Cary-rowen)
 * Object descriptions are now reported for .NET Framework Windows Forms ToolStrip menu items exposed through UI Automation. (#20486, @Cary-rowen)
 * NVDA now reports the selected item when using the arrow keys in collapsed .NET Framework Windows Forms combo boxes. (#17454, @Cary-rowen)
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * Fixed an error when loading 32-bit synthesizers on some systems. (#20088)
+* Magnifier's "Show entire screen overview" feature now works when relative tracking mode is enabled. (#20746)
 
 #### Performance
 
@@ -163,23 +213,21 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 * NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)
 * In Mozilla Firefox, reporting annotation details now works correctly in focus mode on controls which are not editable text. (#20208, @jcsteh)
 * In Mozilla Firefox and Chromium based browsers with native selection mode enabled, the caret no longer gets stuck when switching to focus mode, and typing in edit fields works again. (#19075, #18028, @LeonarddeR)
+* In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)
 
 #### Terminals
 
-* In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen. (#20177, #20649, @ethindp, @codeofdusk)
-  * By default, when lines are skipped in a large text flood, NVDA emits a beep proportional to the length of the skipped material.
-  This can be disabled in the Advanced settings panel.
 * In Windows Terminal, NVDA is less likely to report stale characters when moving the caret in delayed remote sessions such as SSH. (#19503, @sheldon-im)
 * In Windows Terminal, mouse tracking now reports the line of text under the mouse pointer. (#20448, @DataTriny)
 
 #### Add-on Store
 
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
 * NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * Updating an add-on no longer leaves modules of the old version loaded.
 This could cause errors in the updated add-on on the first start of NVDA after the update. (#18971, @LeonarddeR)
-* In Chromium based browsers, NVDA no longer reports invalid math formatting for ARIA `role="math"` elements with an author-provided accessible name and no MathML. (#20727, @cary-rowen)
 
 ### Changes for Developers
 
@@ -188,7 +236,6 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Updated dependencies:
   * Python to 3.13.15. (#20634, @dpy013)
   * ruff to 0.16.3. (#20732)
-  * prek to 0.4.14. (#20732)
   * pyright to 1.1.411. (#20732)
   * ty to 0.0.73. (#20732)
   * comtypes to 1.4.16. (#20707)
@@ -212,6 +259,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   * robotframework to 7.4.2. (#20707)
   * unittest-xml-reporting to 4.0.0. (#20707)
   * setuptools to 84.0.0. (#20744)
+* Updated the NVDA Controller Client API to 3.0, adding a `nvdaController_isSpeaking` function. (#20188)
 * The remote Python console, available when running NVDA from source, works again. (#20626, @LeonarddeR)
 * The UIA remote operations framework now supports cache requests. (#20621, @LeonarddeR)
   * A remote operation can create a cache request with `ra.newCacheRequest`, add properties and patterns to it, and populate the cache of a remote element with `RemoteElement.populateCache`.
@@ -224,7 +272,7 @@ Math presentation providers can override `MathPresentationProvider.interactWithM
 The default implementation forwards to `interactWithMathMl`, preserving compatibility with existing providers. (#20372, @RyanMcCleary)
 * Vision enhancement providers can register with `vision.handler.extensionPoints.post_mathNavigation` to receive the screen rectangle of the current math navigation position, or `None` when no rectangle is available. (#20372, @RyanMcCleary)
 * The local Git hook runner has been switched from [pre-commit](https://pre-commit.com/) to [prek](https://prek.j178.dev/), a faster, drop-in compatible alternative. (#20305, @LeonarddeR)
-  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely;.
+  * The [pre-commit.ci](https://pre-commit.ci/) integration will be dropped entirely.
   Linting and autofixing now run via GitHub Actions, using an autofix-or-fail workflow plus an automatic `prek auto-update` workflow.
   * Developers who previously ran `pre-commit install` should run `uv run prek install -f` once to replace the installed Git hook.
 * `config.configSections.registerSection` and `config.configSections.unregisterSection` methods can be used to register and unregister configuration sections. (#7467, @nvdaes)

@@ -816,44 +816,68 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				winKernel.waitForSingleObject(_injectionDoneEvent, self._INJECTION_WAIT_TIMEOUT)
 
 	@classmethod
-	def fromName(cls, name):
-		"""Create an instance given a key name.
-		@param name: The key name.
-		@type name: str
-		@return: A gesture for the specified key.
-		@rtype: L{KeyboardInputGesture}
+	def _resolveKeyName(cls, keyName: str) -> list[tuple[int, bool | None]]:
+		"""Resolve a single key name to virtual key code / extended pairs.
+
+		:param keyName: The name of a single key.
+		:return: The keys the name resolves to.
+			Each entry pairs a virtual key code with an extended key flag.
+			The flag is None when the key name leaves it unspecified.
+			For a character, the modifiers required to produce it precede the key for the character itself.
+		:raises LookupError: If the key name is unknown.
 		"""
-		keyNames = name.split("+")
-		keys = []
-		for keyName in keyNames:
-			if keyName == "plus":
-				# A key name can't include "+" except as a separator.
-				keyName = "+"
-			if keyName == VK_WIN:
-				vk = winUser.VK_LWIN
-				ext = False
-			elif keyName.lower() == VK_NVDA.lower():
-				vk, ext = getNVDAModifierKeys()[0]
-			elif len(keyName) == 1:
-				ext = False
-				requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
-				if requiredMods & 1:
-					keys.append((winUser.VK_SHIFT, False))
-				if requiredMods & 2:
-					keys.append((winUser.VK_CONTROL, False))
-				if requiredMods & 4:
-					keys.append((winUser.VK_MENU, False))
-				# Not sure whether we need to support the Hankaku modifier (& 8).
-			else:
-				vk, ext = vkCodes.byName[keyName.lower()]
-				if ext is None:
-					ext = False
-			keys.append((vk, ext))
+		if keyName == "plus":
+			# A key name can't include "+" except as a separator.
+			keyName = "+"
+		if keyName == VK_WIN:
+			return [(winUser.VK_LWIN, False)]
+		if keyName.lower() == VK_NVDA.lower():
+			return [getNVDAModifierKeys()[0]]
+		keys: list[tuple[int, bool | None]] = []
+		if len(keyName) == 1:
+			requiredMods, vk = winUser.VkKeyScanEx(keyName, getInputHkl())
+			if requiredMods & 1:
+				keys.append((winUser.VK_SHIFT, False))
+			if requiredMods & 2:
+				keys.append((winUser.VK_CONTROL, False))
+			if requiredMods & 4:
+				keys.append((winUser.VK_MENU, False))
+			# Not sure whether we need to support the Hankaku modifier (& 8).
+			keys.append((vk, False))
+		else:
+			vk, ext = vkCodes.byName[keyName.lower()]
+			keys.append((vk, ext if ext is not None else False))
+		return keys
 
-		if not keys:
-			raise ValueError
+	@classmethod
+	def fromName(cls, name: str) -> "KeyboardInputGesture":
+		"""Create an instance given a key name.
 
-		return cls(keys[:-1], vk, 0, ext)
+		The main key is the non modifier key, regardless of its position in the name.
+		When the name contains only modifiers, the last key is the main key.
+
+		:param name: The key name, consisting of one or more key names separated by "+".
+		:return: A gesture for the specified key.
+		:raises ValueError: If the name contains multiple non modifier keys,
+			an unknown key name, or no keys at all.
+		"""
+		keys: list[tuple[int, bool | None]] = []
+		for keyName in name.split("+"):
+			try:
+				keys.extend(cls._resolveKeyName(keyName))
+			except LookupError as e:
+				raise ValueError(f"Unknown key name: {keyName!r}") from e
+		mainKeys = [
+			(vk, ext)
+			for vk, ext in keys
+			if vk not in cls.NORMAL_MODIFIER_KEYS and not isNVDAModifierKey(vk, ext)
+		]
+		if len(mainKeys) > 1:
+			raise ValueError(f"Multiple main keys in name: {name!r}")
+		mainKey = mainKeys[0] if mainKeys else keys[-1]
+		modifiers = list(keys)
+		modifiers.remove(mainKey)
+		return cls(modifiers, mainKey[0], 0, mainKey[1])
 
 	RE_IDENTIFIER = re.compile(r"^kb(?:\((.+?)\))?:(.*)$")
 

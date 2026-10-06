@@ -1228,7 +1228,7 @@ Currently, Native Selection Mode is supported in:
 * Chrome, Edge, and any browser based on Chromium 134 or newer
 * Microsoft Word and Outlook, where it cannot be toggled off
 
-Native Selection Mode can also be [turned on automatically](#BrowseModeSettingsNativeSelectionMode) in supporting documents via NVDA's Browse Mode settings.
+Native Selection Mode can also be [turned on automatically](#NativeSelectionModeSetting) in supporting documents via NVDA's Browse Mode settings.
 
 <!-- KC:beginInclude -->
 
@@ -2684,8 +2684,6 @@ While the automatic scroll option is enabled, you can still use the scroll back 
 
 Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.
 
-Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
-
 ##### Text wrap {#BrailleSettingsWordWrap}
 
 This combo box allows you to configure how NVDA handles text that is too long to fit on the braille display.
@@ -3075,7 +3073,9 @@ When enabled, the magnified area will automatically move to follow the mouse poi
 ##### Follow system focus {#MagnifierFollowSystemFocus}
 
 This checkbox controls whether the magnifier should follow the system focus.
-When enabled, the magnified area will automatically move to follow the system focus, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+When enabled, the magnified area will automatically move to follow the system focus and the system text cursor, which can be helpful for users who navigate primarily using the keyboard and want the magnifier to track their navigation.
+It also moves to follow alternative cursors replacing the system cursor in specific situations such as browse mode cursor in browse mode or current subpart when navigating math content.
+Math navigation trackinng is only supported on the web.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4322,16 +4322,6 @@ While it improves performance and prevents some console output from being spelle
 This feature is available and enabled by default on Windows 10 versions 1607 and later when UI Automation is unavailable or disabled.
 Warning: with this option enabled, typed characters that do not appear onscreen, such as passwords, will not be suppressed.
 In untrusted environments, you may temporarily disable [speak typed characters](#KeyboardSettingsSpeakTypedCharacters) and [speak typed words](#KeyboardSettingsSpeakTypedWords) when entering passwords.
-
-##### Beep for skipped lines {#BeepForSkippedLines}
-
-This setting controls whether NVDA plays a short beep when too many new lines arrive before they can all be reported.
-The beep indicates that some lines were skipped, and becomes slightly longer as more lines are skipped.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-| Options | Disabled, Enabled |
-| Default | Enabled |
 
 ##### Diff algorithm {#DiffAlgo}
 
