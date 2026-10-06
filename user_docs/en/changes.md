@@ -28,7 +28,7 @@
 #### Web browsers
 
 * In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
-* In Chromium based browsers such as Google Chrome and Microsoft Edge, NVDA no longer briefly reports the document when a web app removes the focused element and then moves focus to new content, such as during client side navigation. (#xxxxx)
+* In Chromium based browsers such as Google Chrome and Microsoft Edge, NVDA no longer briefly reports the document when a web app removes the focused element and then moves focus to new content, such as during client side navigation. (#12284)
 * In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
 
 #### Applications
