@@ -14,6 +14,7 @@ from comtypes import COMError
 from comtypes.hresult import E_FAIL
 
 import IAccessibleHandler
+import config
 import eventHandler
 import oleacc
 from comInterfaces import IAccessible2Lib as IA2
@@ -45,26 +46,29 @@ def _removedOldFocus(**kwargs) -> Mock:
 
 
 class TestWebDocumentFocusEventDelay(unittest.TestCase):
+	def setUp(self):
+		# Use the spec default unless a test sets the feature flag explicitly.
+		self._origFlagValue = config.conf["virtualBuffers"]["delayDocumentFocusAfterFocusRemoved"]
+		config.conf["virtualBuffers"]["delayDocumentFocusAfterFocusRemoved"] = "default"
+
+	def tearDown(self):
+		config.conf["virtualBuffers"]["delayDocumentFocusAfterFocusRemoved"] = self._origFlagValue
+
 	def _getDelay(
 		self,
 		oldFocus,
 		*,
 		role: int = oleacc.ROLE_SYSTEM_DOCUMENT,
 		isFocusAncestor: bool = True,
-		flagEnabled: bool = True,
 	) -> int:
 		document = cast(
 			ia2Web.Document,
 			SimpleNamespace(IAccessibleRole=role, windowHandle=_WINDOW),
 		)
 		ancestors = [document] if isFocusAncestor else []
-		fakeConfig = SimpleNamespace(
-			conf={"virtualBuffers": {"delayDocumentFocusAfterFocusRemoved": flagEnabled}},
-		)
 		with (
 			patch.object(eventHandler, "lastQueuedFocusObject", oldFocus),
 			patch.object(ia2Web.api, "getFocusAncestors", return_value=ancestors),
-			patch.object(ia2Web, "config", fakeConfig),
 		):
 			return ia2Web.Document._get_focusEventDelay(document)
 
@@ -96,8 +100,17 @@ class TestWebDocumentFocusEventDelay(unittest.TestCase):
 	def test_dialogRole_doesNotDefer(self):
 		self.assertEqual(0, self._getDelay(_removedOldFocus(), role=oleacc.ROLE_SYSTEM_DIALOG))
 
+	def test_featureFlagDefault_defers(self):
+		"""behaviorOfDefault="enabled", so the default turns the delay on."""
+		self.assertEqual(_DELAY, self._getDelay(_removedOldFocus()))
+
+	def test_featureFlagEnabled_defers(self):
+		config.conf["virtualBuffers"]["delayDocumentFocusAfterFocusRemoved"] = "enabled"
+		self.assertEqual(_DELAY, self._getDelay(_removedOldFocus()))
+
 	def test_featureFlagDisabled_doesNotDefer(self):
-		self.assertEqual(0, self._getDelay(_removedOldFocus(), flagEnabled=False))
+		config.conf["virtualBuffers"]["delayDocumentFocusAfterFocusRemoved"] = "disabled"
+		self.assertEqual(0, self._getDelay(_removedOldFocus()))
 
 
 def _makeFocusTarget(*, delay: int, allowFocus: bool = True) -> Mock:
