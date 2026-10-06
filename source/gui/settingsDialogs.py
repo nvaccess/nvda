@@ -868,6 +868,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		# start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("St&art NVDA after I sign in"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartAfterLogonChanged: bool = False
+		self.startAfterLogonCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartAfterLogonChanged)
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startAfterLogonCheckBox)
@@ -882,6 +885,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsStartOnLogOnScreen", self.startOnLogonScreenCheckBox)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartOnLogonScreenChanged: bool = False
+		self.startOnLogonScreenCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartOnLogonScreenChanged)
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
@@ -1049,7 +1055,15 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
-	def onSave(self):
+	def _onStartAfterLogonChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartAfterLogonChanged = True
+		evt.Skip()
+
+	def _onStartOnLogonScreenChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartOnLogonScreenChanged = True
+		evt.Skip()
+
+	def onSave(self) -> None:
 		if (
 			not languageHandler.isLanguageForced()
 			or self.languageList.GetSelection() != len(self.languageNames) - 1
@@ -1059,18 +1073,42 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["saveConfigurationOnExit"] = self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"] = self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"] = self.playStartAndExitSoundsCheckBox.IsChecked()
-		if self.startAfterLogonCheckBox.IsEnabled():
-			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
-		if self.startOnLogonScreenCheckBox.IsEnabled():
+		if self.startAfterLogonCheckBox.IsEnabled() and self._hasStartAfterLogonChanged:
+			try:
+				config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
+			except (OSError, TypeError):
+				log.exception("Unable to set start after sign-in")
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically after signing in.
+							"Unable to change the setting to start NVDA after you sign in.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
+			else:
+				self._hasStartAfterLogonChanged = False
+		if self.startOnLogonScreenCheckBox.IsEnabled() and self._hasStartOnLogonScreenChanged:
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-			except (OSError, RuntimeError):
-				gui.messageBox(
-					_("This change requires administrator privileges."),
-					_("Insufficient Privileges"),
-					style=wx.OK | wx.ICON_ERROR,
-					parent=self,
-				)
+			except (OSError, RuntimeError, TypeError):
+				log.exception("Unable to set start during sign-in")
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
+							"Unable to change the setting to use NVDA during sign-in.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
+			else:
+				self._hasStartOnLogonScreenChanged = False
 		if updateCheck:
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
@@ -4314,8 +4352,6 @@ class AdvancedPanelControls(
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked()),
 		)
-		if config.isAppX:
-			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label = _("Open developer scratchpad directory")
@@ -4323,8 +4359,6 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("AdvancedSettingsOpenScratchpadDir", self.openScratchpadButton)
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON, self.onOpenScratchpadDir)
-		if config.isAppX:
-			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -4539,22 +4573,6 @@ class AdvancedPanelControls(
 			["terminals", "keyboardSupportInLegacy"],
 		)
 		self.keyboardSupportInLegacyCheckBox.Enable(winVersion.getWinVer() >= winVersion.WIN10_1607)
-		# Translators: This is the label for a checkbox in the
-		# Advanced settings panel.
-		label = _("Beep for &skipped lines")
-		self.beepForSkippedLinesCheckBox = terminalsGroup.addItem(
-			wx.CheckBox(terminalsBox, label=label),
-		)
-		self.bindHelpEvent(
-			"BeepForSkippedLines",
-			self.beepForSkippedLinesCheckBox,
-		)
-		self.beepForSkippedLinesCheckBox.SetValue(
-			config.conf["terminals"]["beepForSkippedLines"],
-		)
-		self.beepForSkippedLinesCheckBox.defaultValue = self._getDefaultValue(
-			["terminals", "beepForSkippedLines"],
-		)
 
 		# Translators: This is the label for a combo box for selecting a
 		# method of detecting changed content in terminals in the advanced
@@ -4851,7 +4869,6 @@ class AdvancedPanelControls(
 			== self.keyboardSupportInLegacyCheckBox.defaultValue
 			and self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 			== self.winConsoleSpeakPasswordsCheckBox.defaultValue
-			and self.beepForSkippedLinesCheckBox.IsChecked() == self.beepForSkippedLinesCheckBox.defaultValue
 			and self.diffAlgoCombo.GetSelection() == self.diffAlgoCombo.defaultValue
 			and self.wtStrategyCombo.isValueConfigSpecDefault()
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
@@ -4884,9 +4901,6 @@ class AdvancedPanelControls(
 		self.brailleLiveRegionsCombo.resetToConfigSpecDefault()
 		self.winConsoleSpeakPasswordsCheckBox.SetValue(self.winConsoleSpeakPasswordsCheckBox.defaultValue)
 		self.keyboardSupportInLegacyCheckBox.SetValue(self.keyboardSupportInLegacyCheckBox.defaultValue)
-		self.beepForSkippedLinesCheckBox.SetValue(
-			self.beepForSkippedLinesCheckBox.defaultValue,
-		)
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
@@ -4929,7 +4943,6 @@ class AdvancedPanelControls(
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
 		config.conf["terminals"]["keyboardSupportInLegacy"] = self.keyboardSupportInLegacyCheckBox.IsChecked()
-		config.conf["terminals"]["beepForSkippedLines"] = self.beepForSkippedLinesCheckBox.IsChecked()
 		diffAlgoChoice = self.diffAlgoCombo.GetSelection()
 		config.conf["terminals"]["diffAlgo"] = self.diffAlgoVals[diffAlgoChoice]
 		self.wtStrategyCombo.saveCurrentValueToConf()

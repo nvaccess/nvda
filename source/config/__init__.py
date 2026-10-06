@@ -50,9 +50,6 @@ from .registry import RegistryKey as _RegistryKey
 import NVDAState
 from NVDAState import WritePaths
 
-#: True if NVDA is running as a Windows Store Desktop Bridge application
-isAppX = False
-
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigManager
 conf = None
@@ -198,15 +195,8 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	"""
 	installedUserConfigPath = getInstalledUserConfigPath()
 	if installedUserConfigPath and (
-		isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))
+		isInstalledCopy() or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))
 	):
-		if isAppX:
-			# NVDA is running as a Windows Store application.
-			# Although Windows will redirect %APPDATA% to a user directory specific to the Windows Store application,
-			# It also makes existing %APPDATA% files available here.
-			# We cannot share NVDA user config directories  with other copies of NVDA as their config may be using add-ons
-			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
-			installedUserConfigPath += "_appx"
 		return installedUserConfigPath
 	return os.path.join(globalVars.appDir, "userConfig")
 
@@ -256,9 +246,7 @@ def initConfigPath(configPath: str | None = None) -> None:
 				except OSError as ex:
 					if ex.errno == errno.ENOTEMPTY:
 						log.info("Failed to remove old plugins dir: %s. Directory not empty.", dir)
-	subdirs = ["speechDicts", "profiles"]
-	if not isAppX:
-		subdirs.append("addons")
+	subdirs = ["speechDicts", "profiles", "addons"]
 	for subdir in subdirs:
 		subdir = os.path.join(configPath, subdir)
 		if not os.path.isdir(subdir):
@@ -279,9 +267,10 @@ def setStartAfterLogon(enable: bool) -> None:
 
 	Toggle if NVDA automatically starts after a logon.
 	Sets easeOfAccess related registry keys.
+
+	:raises OSError: For registry errors.
+	:raises TypeError: If the configuration data is not a string.
 	"""
-	if getStartAfterLogon() == enable:
-		return
 	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
 
 
@@ -436,16 +425,16 @@ def setStartOnLogonScreen(enable: bool) -> None:
 	Not to be confused with setStartAfterLogon.
 
 	Toggle whether NVDA starts on the logon screen automatically.
-	On failure to set, retries with escalated permissions.
+	On permission errors, retries with escalated permissions.
 
-	Raises a RuntimeError on failure.
+	:raises RuntimeError: If the elevated process fails.
+	:raises OSError: For registry or elevation errors.
+	:raises TypeError: If the configuration data is not a string.
 	"""
-	if getStartOnLogonScreen() == enable:
-		return
 	try:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
-	except OSError:
+	except PermissionError:
 		log.debugWarning(
 			"Failed to set start on logon screen's config, retrying elevated.",
 			exc_info=True,
