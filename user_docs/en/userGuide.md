@@ -4392,6 +4392,18 @@ The [modern engine](https://pypi.org/project/regex/) has better support for non-
 | Options | Default (Disabled), Disabled, Enabled |
 | Default | Disabled |
 
+##### Wait for new focus when the focused element is removed from a web page {#DelayDocumentFocusAfterFocusRemoved}
+
+When a web page removes the element that has focus, for example when a web app switches to a new view, the web browser briefly moves focus to the whole document.
+Most web apps then move focus to an element in the new content.
+When this option is enabled, NVDA waits briefly before reporting the document, so that it reports only the element that receives focus next.
+If no other element receives focus, NVDA reports the document as usual, slightly later.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Enabled), Disabled, Enabled |
+| Default | Enabled |
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.

@@ -4707,6 +4707,17 @@ class AdvancedPanelControls(
 			conf=config.conf,
 		)
 
+		self.delayDocumentFocusCombo: nvdaControls.FeatureFlagCombo = vBufGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo-box in the Advanced settings panel.
+				"Wait for new focus when the focused element is removed from a web page:",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["virtualBuffers", "delayDocumentFocusAfterFocusRemoved"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("DelayDocumentFocusAfterFocusRemoved", self.delayDocumentFocusCombo)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Editable Text")
@@ -4877,6 +4888,7 @@ class AdvancedPanelControls(
 			and self.useWASAPIForSAPI4Combo.isValueConfigSpecDefault()
 			and self.speechDictsUseModernRegexCombo.isValueConfigSpecDefault()
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
+			and self.delayDocumentFocusCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue()
 			== self.reportTransparentColorCheckBox.defaultValue
@@ -4908,6 +4920,7 @@ class AdvancedPanelControls(
 		self.useWASAPIForSAPI4Combo.resetToConfigSpecDefault()
 		self.speechDictsUseModernRegexCombo.resetToConfigSpecDefault()
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
+		self.delayDocumentFocusCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
 		self.logCategoriesList.CheckedItems = self.logCategoriesList.defaultCheckedItems
@@ -4954,6 +4967,7 @@ class AdvancedPanelControls(
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
 		self.loadChromeVBufWhenBusyCombo.saveCurrentValueToConf()
+		self.delayDocumentFocusCombo.saveCurrentValueToConf()
 
 		for index, key in enumerate(self.logCategories):
 			config.conf["debugLog"][key] = self.logCategoriesList.IsChecked(index)

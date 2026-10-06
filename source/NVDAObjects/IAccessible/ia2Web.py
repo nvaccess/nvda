@@ -30,6 +30,7 @@ from . import IAccessible, Groupbox
 from .ia2TextMozilla import MozillaCompoundTextInfo
 import aria
 import api
+import eventHandler
 import speech
 import config
 import NVDAObjects
@@ -254,11 +255,55 @@ class Ia2Web(IAccessible):
 			super().liveRegionPoliteness  # noqa: B018
 
 
+FOCUS_DELAY_AFTER_FOCUS_REMOVED_MS = 150
+"""How long to wait, in milliseconds, before handling focus on a document
+after the element that had focus in it was removed.
+When a web app replaces content (e.g. during client side navigation), the focused element is often removed,
+and the app moves focus into the new content shortly afterward.
+In between, the browser reports focus on the document.
+Waiting briefly lets NVDA skip that intermediate focus instead of reporting the document.
+"""
+
+
+def _isDefunct(obj: IAccessible) -> bool:
+	"""Whether the given object has been removed from its accessibility tree.
+	This queries the object directly, rather than using cached states.
+	"""
+	if not isinstance(obj.IAccessibleObject, IA2.IAccessible2):
+		return False
+	try:
+		return bool(obj.IAccessibleObject.states & IA2.IA2_STATE_DEFUNCT)
+	except COMError:
+		return True
+
+
 class Document(Ia2Web):
 	value = None
 
 	def _get_shouldCreateTreeInterceptor(self):
 		return controlTypes.State.READONLY in self.states
+
+	def _get_focusEventDelay(self) -> int:
+		"""Delay focus on this document if it is likely to be a brief fallback,
+		because the element that had focus within it was just removed.
+		"""
+		if not config.conf["virtualBuffers"]["delayDocumentFocusAfterFocusRemoved"]:
+			return 0
+		# Subclasses such as Application and WebDialog are often the real target of a focus change.
+		if self.IAccessibleRole != oleacc.ROLE_SYSTEM_DOCUMENT:
+			return 0
+		oldFocus = eventHandler.lastQueuedFocusObject
+		if (
+			isinstance(oldFocus, IAccessible)
+			and not isinstance(oldFocus, Document)
+			and oldFocus.windowHandle == self.windowHandle
+			and _isDefunct(oldFocus)
+			# Only when focus fell back to the document that contained the removed element.
+			# A different document gaining focus, such as after a full page load, is handled immediately.
+			and self in api.getFocusAncestors()
+		):
+			return FOCUS_DELAY_AFTER_FOCUS_REMOVED_MS
+		return 0
 
 
 class Application(Document):
