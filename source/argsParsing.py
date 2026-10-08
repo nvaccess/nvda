@@ -164,7 +164,7 @@ def _createNVDAArgParser() -> NoConsoleOptionParser:
 		dest="debugLogging",
 		default=False,
 		help="Enable debug level logging just for this run.\n"
-		"This setting will override any other log level (--loglevel, -l) argument given, "
+		"This setting will override any other log level (--log-level, -l) argument given, "
 		"as well as no logging option.",
 	)
 	parser.add_argument(
@@ -173,7 +173,7 @@ def _createNVDAArgParser() -> NoConsoleOptionParser:
 		dest="noLogging",
 		default=False,
 		help="Disable logging completely for this run.\n"
-		"This setting can be overwritten with other log level (--loglevel, -l) "
+		"This setting can be overwritten with other log level (--log-level, -l) "
 		"switch or if debug logging is specified.",
 	)
 	parser.add_argument(
