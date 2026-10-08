@@ -18,6 +18,7 @@
   * Saving other settings no longer unexpectedly disables automatic startup.
   * If saving fails, NVDA now reports the error and continues saving other settings.
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
+* When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 
 #### Performance
 
@@ -62,6 +63,7 @@ A read completing on the same handle no longer ends the wait while the write is 
   * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
+* `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 
 #### API Breaking Changes
 
