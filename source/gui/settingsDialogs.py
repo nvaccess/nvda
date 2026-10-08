@@ -6744,29 +6744,125 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		super().Destroy()
 
 
-class AddSymbolDialog(
+class EditSymbolDialog(
 	gui.contextHelp.ContextHelpMixin,
 	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
+	"""A dialog used to add a new symbol, or edit the pronunciation of an existing one.
+
+	:param parent: The parent window.
+	:param symbol: The symbol to edit, or ``None`` to add a new symbol.
+	:param existingIdentifiers: Identifiers already in use, to reject duplicates when adding
+		or renaming a symbol.
+	:param identifierEditable: Whether the symbol identifier can be entered or changed.
+		This should be ``False`` for built-in symbols, since renaming one would not affect
+		the built-in symbol at all.
+	"""
+
 	helpId = "SymbolPronunciation"
 
-	def __init__(self, parent):
-		# Translators: This is the label for the add symbol dialog.
-		super().__init__(parent, title=_("Add Symbol"))
+	def __init__(
+		self,
+		parent,
+		symbol: "characterProcessing.SpeechSymbol | None" = None,
+		existingIdentifiers: "Container[str] | None" = None,
+		identifierEditable: bool = True,
+	):
+		self.isNew = symbol is None
+		if self.isNew:
+			symbol = characterProcessing.SpeechSymbol("")
+			symbol.replacement = ""
+			symbol.level = characterProcessing.SymbolLevel.ALL
+			symbol.preserve = characterProcessing.SYMPRES_NEVER
+		self.symbol = symbol
+		self.existingIdentifiers = existingIdentifiers or ()
+		self.identifierEditable = identifierEditable
+		if self.isNew:
+			# Translators: This is the label for the add symbol dialog.
+			title = _("Add Symbol")
+		else:
+			# Translators: This is the label for the edit symbol dialog.
+			title = _("Edit Symbol")
+		super().__init__(parent, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		# Translators: This is the label for the edit field in the add symbol dialog.
+		# Translators: This is the label for the edit field in the add/edit symbol dialog.
 		symbolText = _("&Symbol:")
-		self.identifierTextCtrl = sHelper.addLabeledControl(symbolText, wx.TextCtrl)
+		self.symbolTextCtrl = sHelper.addLabeledControl(
+			symbolText,
+			wx.TextCtrl,
+			value=(symbol.identifier if self.identifierEditable else symbol.displayName) or "",
+			style=0 if self.identifierEditable else wx.TE_READONLY,
+		)
+
+		# Translators: This is a label for an edit field in the add/edit symbol dialog
+		# and in punctuation/symbol pronunciation dialog.
+		replacementText = _("&Replacement")
+		self.replacementTextCtrl = sHelper.addLabeledControl(
+			replacementText,
+			wx.TextCtrl,
+			value=symbol.replacement or "",
+		)
+
+		# Translators: This is a label for a choice box in the add/edit symbol dialog to change the speech level of a symbol.
+		levelText = _("&Level")
+		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
+		levelChoices = [symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS]
+		self.levelList = sHelper.addLabeledControl(levelText, wx.Choice, choices=levelChoices)
+		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
+
+		# Translators: This is a label for a choice box in the add/edit symbol dialog to change when a symbol is sent to the synthesizer.
+		preserveText = _("&Send actual symbol to synthesizer")
+		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
+		preserveChoices = [symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES]
+		self.preserveList = sHelper.addLabeledControl(preserveText, wx.Choice, choices=preserveChoices)
+		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
 
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.identifierTextCtrl.SetFocus()
+		if self.identifierEditable:
+			self.symbolTextCtrl.SetFocus()
+		else:
+			self.replacementTextCtrl.SetFocus()
 		self.CentreOnScreen()
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+
+	def onOk(self, evt: wx.CommandEvent) -> None:
+		if self.identifierEditable:
+			identifier = self.symbolTextCtrl.GetValue()
+			if not identifier:
+				gui.messageBox(
+					# Translators: An error reported when no symbol is entered in the add/edit symbol dialog.
+					_("A symbol is required."),
+					# Translators: title of an error message
+					_("Error"),
+					wx.OK | wx.ICON_ERROR,
+					self,
+				)
+				self.symbolTextCtrl.SetFocus()
+				return
+			if identifier in self.existingIdentifiers:
+				gui.messageBox(
+					# Translators: An error reported in the Symbol Pronunciation dialog
+					# when adding a symbol that is already present.
+					_('Symbol "{identifier}" is already present.').format(identifier=identifier),
+					# Translators: title of an error message
+					_("Error"),
+					wx.OK | wx.ICON_ERROR,
+					self,
+				)
+				self.symbolTextCtrl.SetFocus()
+				return
+			self.symbol.identifier = identifier
+			self.symbol.displayName = identifier
+		self.symbol.replacement = self.replacementTextCtrl.GetValue()
+		self.symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
+		self.symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
+		evt.Skip()
 
 
 class SpeechSymbolsDialog(SettingsDialog):
@@ -6829,61 +6925,24 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 		self.symbolsList.AppendColumn(_("Preserve"))
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
-
-		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
-		changeSymbolText = _("Change selected symbol")
-		changeSymbolSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=changeSymbolText)
-		changeSymbolGroup = guiHelper.BoxSizerHelper(self, sizer=changeSymbolSizer)
-		changeSymbolHelper = sHelper.addItem(changeSymbolGroup)
-
-		# Used to ensure that event handlers call Skip(). Not calling skip can cause focus problems for controls. More
-		# generally the advice on the wx documentation is: "In general, it is recommended to skip all non-command events
-		# to allow the default handling to take place. The command events are, however, normally not skipped as usually
-		# a single command such as a button click or menu item selection must only be processed by one handler."
-		def skipEventAndCall(handler):
-			def wrapWithEventSkip(event):
-				if event:
-					event.Skip()
-				return handler()
-
-			return wrapWithEventSkip
-
-		# Translators: The label for the edit field in symbol pronunciation dialog to change the replacement text of a symbol.
-		replacementText = _("&Replacement")
-		self.replacementEdit = changeSymbolHelper.addLabeledControl(
-			labelText=replacementText,
-			wxCtrlClass=wx.TextCtrl,
-			size=(self.scaleSize(300), -1),
-		)
-		self.replacementEdit.Bind(wx.EVT_TEXT, skipEventAndCall(self.onSymbolEdited))
-
-		# Translators: The label for the combo box in symbol pronunciation dialog to change the speech level of a symbol.
-		levelText = _("&Level")
-		symbolLevelLabels = characterProcessing.SPEECH_SYMBOL_LEVEL_LABELS
-		levelChoices = [symbolLevelLabels[level] for level in characterProcessing.SPEECH_SYMBOL_LEVELS]
-		self.levelList = changeSymbolHelper.addLabeledControl(levelText, wx.Choice, choices=levelChoices)
-		self.levelList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
-
-		# Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
-		preserveText = _("&Send actual symbol to synthesizer")
-		symbolPreserveLabels = characterProcessing.SPEECH_SYMBOL_PRESERVE_LABELS
-		preserveChoices = [symbolPreserveLabels[mode] for mode in characterProcessing.SPEECH_SYMBOL_PRESERVES]
-		self.preserveList = changeSymbolHelper.addLabeledControl(
-			preserveText,
-			wx.Choice,
-			choices=preserveChoices,
-		)
-		self.preserveList.Bind(wx.EVT_CHOICE, skipEventAndCall(self.onSymbolEdited))
+		self.symbolsList.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnEditClick)
+		self.symbolsList.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
+		self.symbolsList.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 
 		bHelper = sHelper.addItem(guiHelper.ButtonHelper(orientation=wx.HORIZONTAL))
 		# Translators: The label for a button in the Symbol Pronunciation dialog to add a new symbol.
 		addButton = bHelper.addButton(self, label=_("&Add"))
+
+		# Translators: The label for a button in the Symbol Pronunciation dialog to edit a symbol.
+		self.editButton = bHelper.addButton(self, label=_("&Edit"))
+		self.editButton.Disable()
 
 		# Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 		self.removeButton = bHelper.addButton(self, label=_("Re&move"))
 		self.removeButton.Disable()
 
 		addButton.Bind(wx.EVT_BUTTON, self.OnAddClick)
+		self.editButton.Bind(wx.EVT_BUTTON, self.OnEditClick)
 		self.removeButton.Bind(wx.EVT_BUTTON, self.OnRemoveClick)
 
 		# Populate the unfiltered list with symbols.
@@ -6913,11 +6972,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 		# sometimes filtering may result in an empty list.
 		if not self.symbolsList.ItemCount:
-			self.editingItem = None
-			# disable the "change symbol" controls, since there are no items in the list.
-			self.replacementEdit.Disable()
-			self.levelList.Disable()
-			self.preserveList.Disable()
+			# disable the "edit" and "remove" buttons, since there are no items in the list.
+			self.editButton.Disable()
 			self.removeButton.Disable()
 			return  # exit early, no need to select an item.
 
@@ -6948,63 +7004,27 @@ class SpeechSymbolsDialog(SettingsDialog):
 		else:
 			raise ValueError("Unknown column: %d" % column)  # noqa: UP031
 
-	def onSymbolEdited(self):
-		if self.editingItem is not None:
-			# Update the symbol the user was just editing.
-			item = self.editingItem
-			symbol = self.filteredSymbols[item]
-			symbol.replacement = self.replacementEdit.Value
-			symbol.level = characterProcessing.SPEECH_SYMBOL_LEVELS[self.levelList.Selection]
-			symbol.preserve = characterProcessing.SPEECH_SYMBOL_PRESERVES[self.preserveList.Selection]
-
 	def onListItemFocused(self, evt):
-		# Update the editing controls to reflect the newly selected symbol.
+		# Update the "edit" and "remove" buttons to reflect the newly selected symbol.
 		item = evt.GetIndex()
 		symbol = self.filteredSymbols[item]
-		self.editingItem = item
-		# ChangeValue and Selection property used because they do not cause EVNT_CHANGED to be fired.
-		self.replacementEdit.ChangeValue(symbol.replacement)
-		self.levelList.Selection = characterProcessing.SPEECH_SYMBOL_LEVELS.index(symbol.level)
-		self.preserveList.Selection = characterProcessing.SPEECH_SYMBOL_PRESERVES.index(symbol.preserve)
+		self.editButton.Enable()
 		self.removeButton.Enabled = not self.symbolProcessor.isBuiltin(symbol.identifier)
-		self.replacementEdit.Enable()
-		self.levelList.Enable()
-		self.preserveList.Enable()
 		evt.Skip()
 
 	def OnAddClick(self, evt):
-		with AddSymbolDialog(self) as entryDialog:
+		existingIdentifiers = {symbol.identifier for symbol in self.symbols}
+		with EditSymbolDialog(self, existingIdentifiers=existingIdentifiers) as entryDialog:
 			if entryDialog.ShowModal() != wx.ID_OK:
 				return
-			identifier = entryDialog.identifierTextCtrl.GetValue()
-			if not identifier:
-				return
+			addedSymbol = entryDialog.symbol
+		try:
+			del self.pendingRemovals[addedSymbol.identifier]
+		except KeyError:
+			pass
 		# Clean the filter, so we can select the new entry.
 		self.filterEdit.Value = ""
 		self.filter()
-		for index, symbol in enumerate(self.symbols):
-			if identifier == symbol.identifier:
-				gui.messageBox(
-					# Translators: An error reported in the Symbol Pronunciation dialog
-					# when adding a symbol that is already present.
-					_('Symbol "%s" is already present.') % identifier,
-					# Translators: title of an error message
-					_("Error"),
-					wx.OK | wx.ICON_ERROR,
-				)
-				self.symbolsList.Select(index)
-				self.symbolsList.Focus(index)
-				self.symbolsList.SetFocus()
-				return
-		addedSymbol = characterProcessing.SpeechSymbol(identifier)
-		try:
-			del self.pendingRemovals[identifier]
-		except KeyError:
-			pass
-		addedSymbol.displayName = identifier
-		addedSymbol.replacement = ""
-		addedSymbol.level = characterProcessing.SymbolLevel.ALL
-		addedSymbol.preserve = characterProcessing.SYMPRES_NEVER
 		self.symbols.append(addedSymbol)
 		self.symbolsList.ItemCount = len(self.symbols)
 		index = self.symbolsList.ItemCount - 1
@@ -7012,6 +7032,34 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.Focus(index)
 		# We don't get a new focus event with the new index.
 		self.symbolsList.sendListItemFocusedEvent(index)
+		self.symbolsList.SetFocus()
+
+	def OnEditClick(self, evt):
+		index = self.symbolsList.GetFirstSelected()
+		if index < 0:
+			return
+		symbol = self.filteredSymbols[index]
+		oldIdentifier = symbol.identifier
+		isBuiltinSymbol = self.symbolProcessor.isBuiltin(symbol.identifier)
+		existingIdentifiers = {s.identifier for s in self.symbols if s is not symbol}
+		with EditSymbolDialog(
+			self,
+			symbol,
+			existingIdentifiers=existingIdentifiers,
+			identifierEditable=not isBuiltinSymbol,
+		) as entryDialog:
+			if entryDialog.ShowModal() != wx.ID_OK:
+				return
+		if symbol.identifier != oldIdentifier:
+			# The symbol was renamed; queue removal of any persisted data left under the old identifier,
+			# and cancel any pending removal for the identifier it was renamed to (e.g. if reusing a
+			# just-removed identifier).
+			self.pendingRemovals[oldIdentifier] = characterProcessing.SpeechSymbol(oldIdentifier)
+			try:
+				del self.pendingRemovals[symbol.identifier]
+			except KeyError:
+				pass
+		self.symbolsList.RefreshItem(index)
 		self.symbolsList.SetFocus()
 
 	def OnRemoveClick(self, evt):
@@ -7024,11 +7072,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.symbolsList.ItemCount = len(self.filteredSymbols)
 		# sometimes removing may result in an empty list.
 		if not self.symbolsList.ItemCount:
-			self.editingItem = None
-			# disable the "change symbol" controls, since there are no items in the list.
-			self.replacementEdit.Disable()
-			self.levelList.Disable()
-			self.preserveList.Disable()
+			# disable the "edit" and "remove" buttons, since there are no items in the list.
+			self.editButton.Disable()
 			self.removeButton.Disable()
 		else:
 			index = min(index, self.symbolsList.ItemCount - 1)
@@ -7038,14 +7083,37 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
 
+	def onCharHook(self, evt: wx.KeyEvent):
+		key = evt.GetKeyCode()
+		# Get the selected symbol, if there is one.
+		index = self.symbolsList.GetFirstSelected()
+		if index >= 0:
+			symbol = self.filteredSymbols[index]
+			if key == wx.WXK_DELETE and not self.symbolProcessor.isBuiltin(symbol.identifier):
+				self.OnRemoveClick(None)
+		evt.Skip()
+
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
+		# Get the selected symbol, if there is one.
+		index = self.symbolsList.GetFirstSelected()
+		menu = wx.Menu()
+		if index >= 0:
+			symbol = self.filteredSymbols[index]
+			# Translators: Context menu item label to edit a symbol
+			editItem = menu.Append(wx.ID_ANY, _("&Edit"))
+			self.Bind(wx.EVT_MENU, self.OnEditClick, editItem)
+			# Built-in symbols can't be removed.
+			if not self.symbolProcessor.isBuiltin(symbol.identifier):
+				# Translators: Context menu item label to remove a symbol
+				removeItem = menu.Append(wx.ID_ANY, _("Re&move"))
+				self.Bind(wx.EVT_MENU, self.OnRemoveClick, removeItem)
+		self.PopupMenu(menu)
+		menu.Destroy()
+
 	def onOk(self, evt):
-		self.onSymbolEdited()
-		self.editingItem = None
 		for symbol in self.pendingRemovals.values():
 			self.symbolProcessor.deleteSymbol(symbol)
 		for symbol in self.symbols:
-			if not symbol.replacement:
-				continue
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
 			self.symbolProcessor.userSymbols.save()
