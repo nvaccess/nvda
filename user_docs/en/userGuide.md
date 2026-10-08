@@ -2350,6 +2350,23 @@ You can add, edit or remove symbol descriptions in NVDA's [punctuation/symbol pr
 
 To toggle Unicode Consortium data inclusion from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+##### Count repeated symbols from {#RepeatedSymbolCount}
+
+When the same symbol is repeated this many times or more, NVDA speaks a count instead of each symbol.
+For example, with the default of 4, "😭😭😭😭" is spoken as "4 loudly crying face".
+This applies to all symbols, not only emoji.
+Set this to 0 to turn counting off, so each symbol is spoken every time.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |0, or 2 to 100|
+|Default |4|
+
+|Option |Behaviour |
+|---|---|
+|0 |Counting is off. Each symbol is spoken every time. |
+|2 to 100 |Runs of the same symbol this long or longer are spoken as a count. |
+
 ##### Capital pitch change percentage {#SpeechSettingsCapPitchChange}
 
 This edit field allows you to type the amount that the pitch of the voice will change when speaking a capital letter.
