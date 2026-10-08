@@ -11,6 +11,7 @@ from characterProcessing import SpeechSymbolProcessor
 from characterProcessing import SymbolLevel
 from characterProcessing import processSpeechSymbols as process
 from characterProcessing import processSpeechSymbol
+import config
 
 
 class TestComplex(unittest.TestCase):
@@ -183,3 +184,54 @@ class TestUsingCLDR(unittest.TestCase):
 				CHAR_IN_SYMB_FILE_DESC,
 				msg=f'Test failure for locale={locale} with "{CHAR_IN_SYMB_FILE_DESC}"',
 			)
+
+
+class TestRepeatedSymbols(unittest.TestCase):
+	"""Tests for the symbolRepeatAnnounceThreshold setting."""
+
+	EMOJI = "😭"
+	EMOJI_NAME = "loudly crying face"
+
+	def setUp(self):
+		self._old = config.conf["speech"]["symbolRepeatAnnounceThreshold"]
+		self.addCleanup(self._restore)
+
+	def _restore(self):
+		config.conf["speech"]["symbolRepeatAnnounceThreshold"] = self._old
+
+	def _setThreshold(self, value: int):
+		config.conf["speech"]["symbolRepeatAnnounceThreshold"] = value
+
+	def _speak(self, text: str) -> str:
+		"""Process text and collapse extra spaces, so tests don't depend on spacing."""
+		return " ".join(process("en", text, SymbolLevel.ALL).split())
+
+	def test_default_counts_four(self):
+		"""With threshold 4, a run of 4 is spoken as a count."""
+		self._setThreshold(4)
+		self.assertEqual(self._speak(self.EMOJI * 4), f"4 {self.EMOJI_NAME}")
+
+	def test_below_threshold_not_counted(self):
+		"""With threshold 4, a run of 3 is spoken one by one."""
+		self._setThreshold(4)
+		self.assertEqual(self._speak(self.EMOJI * 3), " ".join([self.EMOJI_NAME] * 3))
+
+	def test_above_threshold_counted(self):
+		"""With threshold 4, a run of 6 is spoken as a count."""
+		self._setThreshold(4)
+		self.assertEqual(self._speak(self.EMOJI * 6), f"6 {self.EMOJI_NAME}")
+
+	def test_zero_turns_counting_off(self):
+		"""With threshold 0, every symbol is spoken."""
+		self._setThreshold(0)
+		self.assertEqual(self._speak(self.EMOJI * 4), " ".join([self.EMOJI_NAME] * 4))
+
+	def test_threshold_two(self):
+		"""With threshold 2, a run of 2 is spoken as a count."""
+		self._setThreshold(2)
+		self.assertEqual(self._speak(self.EMOJI * 2), f"2 {self.EMOJI_NAME}")
+
+	def test_non_emoji_symbol(self):
+		"""Counting applies to all symbols, not only emoji."""
+		self._setThreshold(4)
+		self.assertEqual(self._speak("----"), "4 dash")
