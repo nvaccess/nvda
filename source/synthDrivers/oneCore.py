@@ -109,7 +109,10 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 
 		return super().convertLangChangeCommand(command)
 
-	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any]:
+	def generateBalancerCommands(
+		self,
+		speechSequence: SpeechSequence,
+	) -> Generator[speechXml.XmlBalancerCommand]:
 		yield from super().generateBalancerCommands(self._fixSingleCharacters(speechSequence))
 
 	@staticmethod
