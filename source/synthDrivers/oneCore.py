@@ -131,8 +131,8 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			# We cannot insert the substitution character before the terminating CharacterModeCommand,
 			# as speech sequences are often generated in the wrong order.
 			# For instance, [CharacterModeCommand(True), 'e', EndUtteranceCommand(), CharacterModeCommand(False)].
-			# Since convertCharacterModeCommand uses an EncloseTextCommand,
-			# doing so would result in the substitution character appearing outside the <say-as> tag.
+			# The premature EndUtteranceCommand() causes all tags to be closed,
+			# and a new <speak> tag containing the remaining commands to be opened.
 			if isinstance(item, CharacterModeCommand) and item.state:
 				yield "\x1a"
 
