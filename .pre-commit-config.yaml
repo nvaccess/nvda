@@ -98,7 +98,7 @@ repos:
         )
 
 - repo: https://github.com/kjanat/actionlint
-  rev: v1.12.0
+  rev: v1.17.0
   hooks:
     # Lint GitHub Actions workflow files.
     - id: actionlint
@@ -114,7 +114,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in pyproject.
-  rev: v0.16.3
+  rev: v0.16.10
   hooks:
     - id: ruff
       name: lint with ruff
@@ -125,7 +125,7 @@ repos:
       groups: [autofix]
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.12.5
+  rev: 0.12.23
   hooks:
     - id: uv-lock
       name: Verify uv lock file
@@ -139,7 +139,7 @@ repos:
       args: ["--project", "runtime-builders/synthDriverHost32", "-p3.13"]
 
 - repo: https://github.com/DavidAnson/markdownlint-cli2
-  rev: v0.23.2
+  rev: v0.23.3
   hooks:
   - id: markdownlint-cli2
     name: Lint markdown files
@@ -148,7 +148,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ty-pre-commit
   # Matches ty version in pyproject.
-  rev: v0.0.73
+  rev: v0.0.84
   hooks:
     - id: ty
       name: type check with ty

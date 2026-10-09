@@ -37,6 +37,7 @@ Inspecting this should give you a fair idea of where the issue is occurring.
 
    ``` python
    import gc
+
    gc.set_debug(gc.DEBUG_SAVEALL)
    ```
 
