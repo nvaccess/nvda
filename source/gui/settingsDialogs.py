@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, eilatc.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
