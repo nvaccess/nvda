@@ -6587,8 +6587,8 @@ Following are the command line options for NVDA:
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|
 |`-s` |`--secure` |Starts NVDA in [Secure Mode](#SecureMode)|
 |`-d` |`--disable-addons` |Add-ons will have no effect|
-|None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--loglevel`, `-l`) argument given, including no logging option.|
-|None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--loglevel`, `-l`) is specified from command line or if debug logging is turned on.|
+|None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--log-level`, `-l`) argument given, including no logging option.|
+|None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--log-level`, `-l`) is specified from command line or if debug logging is turned on.|
 |None |`--no-sr-flag` |Don't change the global system screen reader flag|
 |None |`--install` |Installs NVDA (starting the newly installed copy)|
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|
