@@ -3585,6 +3585,7 @@ You can configure reporting of:
   * Font size
   * Font attributes [(Off, Speech, Braille, Speech and braille)](#DocumentFormattingFontAttributes)
   * Superscripts and subscripts
+  * Small Caps (Microsoft Word with UIA)
   * Emphasis
   * Highlighted (Marked) text
   * Style
