@@ -29,7 +29,7 @@ from logHandler import log
 import config
 import nvwave
 import queueHandler
-from speech.types import SpeechSequence
+from speech.types import SpeechSequence, SequenceItemT
 import speechXml
 import languageHandler
 import NVDAHelper
@@ -42,6 +42,7 @@ from speech.commands import (
 	RateCommand,
 	VolumeCommand,
 	PhonemeCommand,
+	CharacterModeCommand,
 )
 
 #: The number of 100-nanosecond units in 1 second.
@@ -91,11 +92,6 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume", 100)
 
-	def convertCharacterModeCommand(self, command):
-		# OneCore's character speech sounds weird and doesn't support pitch alteration.
-		# Therefore, we don't use it.
-		return None
-
 	def convertLangChangeCommand(self, command: LangChangeCommand) -> speechXml.SetAttrCommand | None:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
@@ -112,6 +108,33 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 			return None
 
 		return super().convertLangChangeCommand(command)
+
+	def generateBalancerCommands(
+		self,
+		speechSequence: SpeechSequence,
+	) -> Generator[speechXml.XmlBalancerCommand]:
+		yield from super().generateBalancerCommands(self._fixSingleCharacters(speechSequence))
+
+	@staticmethod
+	def _fixSingleCharacters(sequence: SpeechSequence) -> Generator[SequenceItemT]:
+		"""Insert the substitute character after starting character mode.
+
+		Hack: Some OneCore voices exhibit strange pronunciation, timbre and volume when interpreting text as characters.
+		Adding a character that should never be spoken, but nevertheless will not be stripped, seems to fix the problem.
+
+		For English voices, this only seems to be a problem when a speech sequence contains a single character to be spoken in character mode.
+		Nevertheless, inserting the substitution character does not seem to make a difference in other cases,
+		and is much simpler than attempting to do so only in cases where this behaviour is seen.
+		"""
+		for item in sequence:
+			yield item
+			# We cannot insert the substitution character before the terminating CharacterModeCommand,
+			# as speech sequences are often generated in the wrong order.
+			# For instance, [CharacterModeCommand(True), 'e', EndUtteranceCommand(), CharacterModeCommand(False)].
+			# The premature EndUtteranceCommand() causes all tags to be closed,
+			# and a new <speak> tag containing the remaining commands to be opened.
+			if isinstance(item, CharacterModeCommand) and item.state:
+				yield "\x1a"
 
 
 class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
@@ -181,6 +204,7 @@ class OneCoreSynthDriver(SynthDriver):
 		RateCommand,
 		VolumeCommand,
 		PhonemeCommand,
+		CharacterModeCommand,
 	}
 	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
