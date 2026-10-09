@@ -65,6 +65,8 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 
+* Added [nvdaL10n](https://github.com/nvaccess/nvdaL10n) as a submodule for translations management. (#20777, @nvdaes)
+
 #### API Breaking Changes
 
 These are breaking API changes.
