@@ -19,6 +19,7 @@
   * If saving fails, NVDA now reports the error and continues saving other settings.
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
+* Fix for adding duplicate gesture for same script. (#20890, @theshippeys)
 
 #### Performance
 
