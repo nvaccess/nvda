@@ -3295,7 +3295,7 @@ If this is unchecked, you need to double-tap on the key of the touch keyboard to
 ##### Enable edge gestures {#TouchEdgeGestures}
 
 This checkbox enables edge gesture support.
-When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
+When enabled, gestures that start from any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
 For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
 If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
 Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.
@@ -3545,12 +3545,11 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
-##### Native selection mode {#NativeSelectionModeSetting}
+##### Native selection mode on page load {#NativeSelectionModeSetting}
 
-Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
+Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it when loaded.
 This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.
 When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.
-Changing this option takes effect for newly loaded documents.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -5234,7 +5233,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | two `routing` keys simultaneously |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
@@ -5311,7 +5310,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to next line |t4|
 |Scroll braille display forward |t5, etouch3|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | two `routing` keys simultaneously |
 |Report text formatting under braille cell |secondary routing|
 |Toggle HID keyboard simulation |t1+spEnter|
 |Move to top line in review |t1+t2|
@@ -5364,7 +5363,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |b4|
 |Move braille display to next line |b5|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | two `routing` keys simultaneously |
 |shift+tab key |esc, left triple action key up+down|
 |alt key |b2+b4+b5|
 |escape key |b4+b6|
@@ -5435,7 +5434,7 @@ Please see your display's documentation for descriptions of where these keys can
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | two `routing` keys simultaneously |
 |`shift+tab` key |`space+dot1+dot3`|
 |`tab` key |`space+dot4+dot6`|
 |`alt` key |`space+dot1+dot3+dot4` (`space+m`)|
@@ -5531,7 +5530,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |up|
 |Move braille display to next line |down|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | two `routing` keys simultaneously |
 |Toggle braille tethered to |up+down|
 |upArrow key |space+dot1|
 |downArrow key |space+dot4|
@@ -5718,7 +5717,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |leftArrow key |RJ left|
 |rightArrow key |RJ right|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | two `routing` keys simultaneously |
 |shift+upArrow key |Space+RJ up, Backspace+RJ up|
 |shift+downArrow key |Space+RJ down, Backspace+RJ down|
 |shift+leftArrow key |Space+RJ left, Backspace+RJ left|
@@ -6196,7 +6195,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |Scroll braille display back |`leftKeypadLeft`|
 |Scroll braille display forward |`leftKeypadRight`|
 |Route to braille cell |`routing`|
-|Report text formatting under braille cell |`doubleRouting`|
+| Report text formatting under braille cell | double press on `routing` |
 |Move to next line in review |`leftKeypadDown`|
 |Switch to previous review mode |`leftKeypadLeft+leftKeypadUp`|
 |Switch to next review mode |`leftKeypadRight+leftKeypadDown`|
@@ -6219,7 +6218,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |Scroll braille display forward |`switch1Right`|
 |Move to current focus |`switch1Center`|
 |Route to braille cell |`routing`|
-|Report text formatting under braille cell |`doubleRouting`|
+| Report text formatting under braille cell | double press on `routing` |
 |Move to previous line in review |`joystick1Up`|
 |Move to next line in review |`joystick1Down`|
 |Move to previous character in review |`joystick1Left`|
@@ -6242,7 +6241,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |Scroll braille display forward |`l8`|
 |Move to current focus |`l1+l8`|
 |Route to braille cell |`routing`|
-|Report text formatting under braille cell |`doubleRouting`|
+| Report text formatting under braille cell | double press on `routing` |
 |Move to previous line in review |`joystick1Up`|
 |Move to next line in review |`joystick1Down`|
 |Move to previous character in review |`joystick1Left`|
@@ -6346,7 +6345,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Scroll braille display back |`left`, `lWheelLeft`, `rWheelLeft`|
 |Scroll braille display forward |`right`, `lWheelRight`, `rWheelRight`|
 |Route to braille cell |`routing`|
-| Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` |
+| Select range from first up to last braille cell | `home1` or `home2` and two `routing` keys simultaneously |
 |Report text formatting under braille cell |`secondary routing`|
 |Toggle the way context information is presented in braille |`attribute1+attribute3`|
 |Cycles between speech modes |`attribute2+attribute4`|
@@ -6404,7 +6403,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
-| Select range from first up to last braille cell | `multiRouting` |
+| Select range from first up to last braille cell | and two `routing` keys simultaneously |
 |Up arrow key |`up`|
 |Down arrow key |`down`|
 |Left arrow key |`left`|
@@ -6428,7 +6427,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
-| Select range from first up to last braille cell | multiple routing set 1 keys |
+| Select range from first up to last braille cell | two routing set 1 keys simultaneously |
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
