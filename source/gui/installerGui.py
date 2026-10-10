@@ -7,6 +7,7 @@
 from ctypes import FormatError, GetLastError, byref  # noqa: I001
 from ctypes.wintypes import HANDLE
 import os
+import re
 import subprocess
 import sys
 
@@ -668,6 +669,24 @@ def _warnAndConfirmIfInstallingRemotely(isUpdate: bool) -> bool:
 	return True
 
 
+def _normalizePortablePath(path: str) -> str:
+	"""Normalize and expand environment variables in a portable destination path.
+
+	Bare drive letters without a trailing separator (e.g. 'c:' or 'D:') are normalized
+	to the drive root by appending a separator (e.g. 'C:\\'), ensuring they are treated
+	as valid absolute paths rather than drive-relative paths on Windows (#20159).
+
+	:param path: The target destination path.
+	:return: The normalized destination path with environment variables expanded.
+	"""
+	if not path:
+		return path
+	expandedPath = os.path.expandvars(path.strip())
+	if re.match(r"^[a-zA-Z]:$", expandedPath):
+		expandedPath += os.sep
+	return expandedPath
+
+
 def _getUniqueNewPortableDirectory(basePath: str) -> str:
 	"""
 	Generate a new directory name for a portable copy of NVDA.
@@ -750,7 +769,7 @@ class PortableCreaterDialog(
 		self.CentreOnScreen()
 
 	def onCreatePortable(self, evt):
-		if not self.portableDirectoryEdit.Value:
+		if not self.portableDirectoryEdit.Value or not self.portableDirectoryEdit.Value.strip():
 			gui.messageBox(
 				# Translators: The message displayed when the user has not specified a destination directory
 				# in the Create Portable NVDA dialog.
@@ -760,7 +779,7 @@ class PortableCreaterDialog(
 				wx.OK | wx.ICON_ERROR,
 			)
 			return
-		expandedPortableDirectory = os.path.expandvars(self.portableDirectoryEdit.Value)
+		expandedPortableDirectory = _normalizePortablePath(self.portableDirectoryEdit.Value)
 		if not os.path.isabs(expandedPortableDirectory):
 			gui.messageBox(
 				_(
@@ -817,6 +836,7 @@ def doCreatePortable(
 	:param startAfterCreate: Whether to start the new portable copy after creation. Ignored if running elevated.
 	:param warnForNonEmptyDirectory: Whether to warn if the destination directory is not empty.
 	"""
+	portableDirectory = _normalizePortablePath(portableDirectory)
 	if warnForNonEmptyDirectory and not _warnAndConfirmForNonEmptyDirectory(portableDirectory):
 		# Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 		ui.message(_("Portable copy creation cancelled."))

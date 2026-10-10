@@ -5,6 +5,7 @@
 
 """Unit tests for the installer module."""
 
+import os
 import pathlib  # noqa: I001
 import tempfile
 from typing import NamedTuple
@@ -482,3 +483,38 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_NormalizePortablePath(unittest.TestCase):
+	"""Tests for installerGui._normalizePortablePath (#20159)."""
+
+	@parameterized.expand(
+		[
+			("bare_upper_drive", "D:", "D:\\"),
+			("bare_lower_drive", "c:", "c:\\"),
+			("bare_drive_with_spaces", "  e:  ", "e:\\"),
+			("drive_with_backslash", "E:\\", "E:\\"),
+			("drive_with_subpath", "D:\\NVDA", "D:\\NVDA"),
+			("unc_path", r"\\server\share", r"\\server\share"),
+		]
+	)
+	def test_normalizesPaths(self, name: str, inputPath: str, expectedPath: str):
+		self.assertEqual(installerGui._normalizePortablePath(inputPath), expectedPath)
+
+	def test_expandsSystemDrive(self):
+		with patch.dict("os.environ", {"SYSTEMDRIVE": "C:"}):
+			normalized = installerGui._normalizePortablePath("%SYSTEMDRIVE%")
+			self.assertEqual(normalized, "C:\\")
+
+	def test_expandsTemp(self):
+		normalized = installerGui._normalizePortablePath("%temp%")
+		self.assertTrue(os.path.isabs(normalized))
+
+	def test_isabsValidation(self):
+		# Verify that bare drive inputs are properly normalized and recognized as valid absolute paths (#20159).
+		self.assertTrue(os.path.isabs(installerGui._normalizePortablePath("D:")))
+		self.assertTrue(os.path.isabs(installerGui._normalizePortablePath("c:")))
+		self.assertTrue(os.path.isabs(installerGui._normalizePortablePath("E:\\")))
+		self.assertTrue(os.path.isabs(installerGui._normalizePortablePath("%temp%")))
+		self.assertFalse(os.path.isabs(installerGui._normalizePortablePath("relative/path")))
+		self.assertFalse(os.path.isabs(installerGui._normalizePortablePath("D:relative")))
