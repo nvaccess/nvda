@@ -133,7 +133,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 			self._shouldUpdateMathHighlight = False
 			self._updateMathHighlight()
 
-	def _getHighlightRect(self) -> "RectLTRB | None":
+	def getMathSourceObjectRect(self) -> "RectLTRB | None":
 		"""Get the navigation rectangle for a supported web math source object."""
 		sourceObj = self.sourceObj
 		if not sourceObj:
@@ -162,7 +162,7 @@ class MathCATInteraction(mathPres.MathInteractionNVDAObject):
 
 	def _updateMathHighlight(self) -> None:
 		if vision.handler:
-			vision.handler.handleMathNavigation(self._getHighlightRect())
+			vision.handler.handleMathNavigation(self.getMathSourceObjectRect())
 
 	def _clearMathHighlight(self) -> None:
 		if vision.handler:

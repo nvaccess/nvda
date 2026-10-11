@@ -331,6 +331,10 @@ freeze(
 			"mdx_truly_sane_lists",
 			"mdx_gh_links",
 			"pymdownx",
+			# The compiled winrt projection modules import this at C level, where
+			# modulefinder cannot see it, so bleak raises ModuleNotFoundError as soon as
+			# a Bluetooth Low Energy device is discovered.
+			"winrt.windows.foundation.collections",
 		],
 		"includes": [
 			"nvdaBuiltin",

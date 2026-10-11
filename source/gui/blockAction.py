@@ -52,12 +52,6 @@ class Context(_Context, Enum):
 		# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 		_("Action unavailable in secure context"),
 	)
-	WINDOWS_STORE_VERSION = (
-		lambda: config.isAppX,
-		# Translators: Reported when an action cannot be performed because NVDA has been installed
-		# from the Windows Store.
-		_("Action unavailable in NVDA Windows Store version"),
-	)
 	MODAL_DIALOG_OPEN = (
 		_isModalMessageBoxActive,
 		# Translators: Reported when an action cannot be performed because NVDA is waiting
@@ -94,9 +88,9 @@ def when(*contexts: Context):
 	The first supplied context to block will be reported as a message.
 	Consider supplying permanent conditions first.
 
-	For example, to block a function when a modal dialog is open (a temporary condition)
-	and in the Windows Store version (per installation), decorate it with
-	`@blockAction.when(blockAction.Context.WINDOWS_STORE_VERSION, blockAction.Context.MODAL_DIALOG_OPEN)`.
+	For example, to block a function in secure mode (a permanent condition)
+	and when a modal dialog is open (a temporary condition), decorate it with
+	`@blockAction.when(blockAction.Context.SECURE_MODE, blockAction.Context.MODAL_DIALOG_OPEN)`.
 	"""
 
 	def _wrap(func):

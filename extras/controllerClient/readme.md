@@ -1,4 +1,4 @@
-# NVDA Controller Client API 2.0 Documentation
+# NVDA Controller Client API 3.0 Documentation
 
 ## Introduction
 
