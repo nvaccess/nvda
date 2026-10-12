@@ -10,7 +10,7 @@ Error handling helpers for the magnifier module.
 from collections.abc import Callable  # noqa: I001
 from functools import wraps
 from logHandler import log
-from typing import ParamSpec, TypeVar, cast
+from typing import ParamSpec, TypeVar
 from ..config import _isDebug
 
 
@@ -39,7 +39,7 @@ class MagnifierStartError(Exception):
 		self.message = message
 
 
-def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R]:  # noqa: UP047
+def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R | None]:  # noqa: UP047
 	"""
 	Decorator for native magnifier API calls.
 
@@ -55,13 +55,13 @@ def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R]:  # n
 	# onto _wrapped, so the wrapped method keeps its original identity in
 	# logs, debuggers and stack traces.
 	@wraps(func)
-	def _wrapped(*args: _P.args, **kwargs: _P.kwargs) -> _R:
+	def _wrapped(*args: _P.args, **kwargs: _P.kwargs) -> _R | None:
 		try:
 			return func(*args, **kwargs)
 		except OSError:
 			if _isDebug():
 				functionPath = f"{func.__module__}.{func.__qualname__}"
 				log.debug(f"Native magnifier operation failed: {functionPath}", exc_info=True)
-			return cast(_R, None)
+			return None
 
 	return _wrapped
