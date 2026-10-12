@@ -8420,7 +8420,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source> Copy last spoken information | `NVDA+control+x` | `NVDA+control+x` | Copies the last information spoken by NVDA to the clipboard </source>
-        <target> Copier la dernière information annoncée | `NVDA+contrôle+x` | `NVDA+contrôle+x` | Copier la dernière information annoncée par NVDA dans le presse-papiers </target>
+        <target> Copier la dernière information annoncée | `NVDA+contrôle+x` | `NVDA+contrôle+x` | Copie dans le presse-papiers la dernière information annoncées par NVDA </target>
       </segment>
     </unit>
     <unit id="dc126fc4-503c-4e99-a501-cb2817d26b60">
@@ -9378,7 +9378,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>If the add-on is disabled, the action will instead be labelled "Update (and enable)", as add-ons must be enabled to be installed; updating a disabled add-on re-enables it.</source>
-        <target>Si l'extension est désactivée, l'action sera alors intitulée « Mettre à jour (et activer) », car les extensions doivent être activées pour être installées ; la mise à jour d'une extension désactivée la réactive.</target>
+        <target>Si l'extension est désactivée, l'action sera alors intitulée "Mettre à jour (et activer)", car les extensions doivent être activées pour être installées ; la mise à jour d'une extension désactivée la réactive.</target>
       </segment>
     </unit>
     <unit id="1318394c-807b-43b5-b039-4fc7b06acd30">
@@ -27663,9 +27663,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3296</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This checkbox enables edge gesture support.</source>
-        <target>This checkbox enables edge gesture support.</target>
+        <target>Cette case à cocher active la prise en charge des gestes depuis le bord.</target>
       </segment>
     </unit>
     <unit id="a87ff587-1112-4815-9538-4698ac0bb0f1">
@@ -27681,45 +27681,45 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3298</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.</source>
-        <target>For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.</target>
+        <target>Par exemple, un glissé vers la droite effectué depuis le bord gauche de l'écran peut être associé à une commande différente de celle utilisée pour un glissé vers la droite effectué au centre de l'écran.</target>
       </segment>
     </unit>
     <unit id="3fdb1f43-34eb-4064-a211-88856891ac6c">
       <notes>
         <note appliesTo="source">line: 3299</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.</source>
-        <target>If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.</target>
+        <target>Si les gestes depuis le bord sont désactivés après avoir été assignés à des commandes, ces assignations resteront en place mais ne seront jamais déclenchées.</target>
       </segment>
     </unit>
     <unit id="cf9127f9-f1c9-40f6-b898-92bd71e183db">
       <notes>
         <note appliesTo="source">line: 3300</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.</source>
-        <target>Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.</target>
+        <target>Remarque : Windows ou la barre des tâches peuvent intercepter les gestes depuis certains bords avant qu'ils n'atteignent NVDA.</target>
       </segment>
     </unit>
     <unit id="6926bce3-d226-4e63-8ece-c1b73db58edf">
       <notes>
         <note appliesTo="source">line: 3301</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>For example, swiping from the bottom edge typically opens the Start menu or Action Center, and if the taskbar is positioned on another edge, touches on that edge will similarly be intercepted.</source>
-        <target>For example, swiping from the bottom edge typically opens the Start menu or Action Center, and if the taskbar is positioned on another edge, touches on that edge will similarly be intercepted.</target>
+        <target>Par exemple, un glissé depuis le bord inférieur ouvre généralement le menu Démarrer ou le Centre de notifications, et si la barre des tâches est positionnée sur un autre bord, les interactions tactiles sur ce bord seront interceptées de la même manière.</target>
       </segment>
     </unit>
     <unit id="55051501-45b9-4aac-9a6f-e296476a1151">
       <notes>
         <note appliesTo="source">line: 3302</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>If a gesture on a particular edge does not work, check whether Windows is intercepting it, and consider leaving that edge unbound.</source>
-        <target>If a gesture on a particular edge does not work, check whether Windows is intercepting it, and consider leaving that edge unbound.</target>
+        <target>Si un geste effectué sur un bord particulier ne fonctionne pas, vérifiez si Windows l'intercepte et envisagez de ne pas assigner de gestes depuis ce bord.</target>
       </segment>
     </unit>
     <unit id="3e08d2c9-926e-46a2-bd40-9c29501117fc">
@@ -30028,27 +30028,27 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       <notes>
         <note appliesTo="source">line: 3682</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.</source>
-        <target>This option allows you to configure the duration of indentation tones when the "Tones" or "Both Speech and Tones" option is selected in the ["Report line indentation with"](#DocumentFormattingSettingsLineIndentation) combo box.</target>
+        <target>Cette option vous permet de configurer la durée des sons d'indentation lorsque l'option "Sons" et "Parole et sons" est sélectionnée dans la liste déroulante ["Annonce de la mise en retrait des lignes"](#DocumentFormattingSettingsLineIndentation).</target>
       </segment>
     </unit>
     <unit id="3b85e1ca-5ade-49b5-8516-f890101e9f0c">
       <notes>
         <note appliesTo="source">line: 3683</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The value can range from 10 ms to 2000 ms.</source>
-        <target>The value can range from 10 ms to 2000 ms.</target>
+        <target>La valeur peut aller de 10 ms à 2000 ms.</target>
       </segment>
     </unit>
     <unit id="08789ed1-3a7f-4d2b-ad24-d664e967f61b">
       <notes>
         <note appliesTo="source">line: 3684</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The default is 40 ms.</source>
-        <target>The default is 40 ms.</target>
+        <target>La valeur par défaut est de 40 ms.</target>
       </segment>
     </unit>
     <unit id="603616f5-4091-4d86-8c9a-81f9a3e2c11d">
@@ -30203,36 +30203,36 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: ##### </note>
         <note appliesTo="source">suffix:  {#WordSegmentationStandard}</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Word Segmentation Standard</source>
-        <target>Word Segmentation Standard</target>
+        <target>Norme de segmentation des mots</target>
       </segment>
     </unit>
     <unit id="6d8433ce-523d-4164-a538-3d04d1be50a1">
       <notes>
         <note appliesTo="source">line: 3712</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This setting controls how NVDA determines word boundaries when navigating by word.</source>
-        <target>This setting controls how NVDA determines word boundaries when navigating by word.</target>
+        <target>Ce paramètre contrôle la façon dont NVDA détermine les limites des mots lors de la navigation par mot.</target>
       </segment>
     </unit>
     <unit id="f0a4cb75-9ba5-4ff1-9f69-d3d07d19d489">
       <notes>
         <note appliesTo="source">line: 3713</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>This affects how script languages without spaces break up text into words, sentences and paragraphs</source>
-        <target>This affects how script languages without spaces break up text into words, sentences and paragraphs</target>
+        <target>Cela influe sur la façon dont les langues à écriture sans espaces découpent le texte en mots, phrases et paragraphes.</target>
       </segment>
     </unit>
     <unit id="b61c0388-14b0-4c41-bec2-2d17cf1731ad">
       <notes>
         <note appliesTo="source">line: 3714</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation), except with the "Chinese (Taiwan, Mandarin)" output table.</source>
-        <target>Chinese braille output uses a separate [Chinese word segmentation setting](#ChineseBrailleWordSegmentation), except with the "Chinese (Taiwan, Mandarin)" output table.</target>
+        <target>L'affichage du Chinois en braille utilise un [paramètre de segmentation chinoise des mots](#ChineseBrailleWordSegmentation) séparé, sauf avec la table d'affichage "Chinois (Taïwan, Mandarin)".</target>
       </segment>
     </unit>
     <unit id="08b74539-869d-4cdb-9e15-c1e256b60bd1">
@@ -30241,9 +30241,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Options | Default (Automatic), Automatic, Chinese, Unicode (ICU), Legacy (Uniscribe) </source>
-        <target> Options | Default (Automatic), Automatic, Chinese, Unicode (ICU), Legacy (Uniscribe) </target>
+        <target> Options | Défaut (Automatique), Automatique, Chinoise, Unicode (ICU), Héritée (Uniscribe) </target>
       </segment>
     </unit>
     <unit id="93892737-d196-4090-ab10-9e56f65cc08a">
@@ -30252,9 +30252,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Default | Automatic </source>
-        <target> Default | Automatic </target>
+        <target> Défaut | Automatique </target>
       </segment>
     </unit>
     <unit id="44dbb1ea-e212-465d-b697-da974671e888">
@@ -30263,9 +30263,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Option | Behaviour </source>
-        <target> Option | Behaviour </target>
+        <target> Option | Comportement </target>
       </segment>
     </unit>
     <unit id="99e72298-a8d2-441c-93a8-cade996d3543">
@@ -30274,9 +30274,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Automatic | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. </source>
-        <target> Automatic | Use Chinese word segmentation for Chinese text when available. Otherwise, prefer Unicode (ICU) word segmentation when available, falling back to the legacy Windows word segmentation. </target>
+        <target> Automatique | Utilisez la segmentation chinoise des mots pour le texte chinois lorsqu'elle est disponible. Sinon, privilégiez la segmentation Unicode (ICU) lorsqu'elle est disponible, et utilisez en dernier recours la segmentation Windows héritée. </target>
       </segment>
     </unit>
     <unit id="45a70605-a1e9-4f79-9df2-2681adad6156">
@@ -30285,9 +30285,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Automatic`. </source>
-        <target> Chinese | Use Chinese word segmentation. If Chinese word segmentation is not available, NVDA uses the fallback path as in `Automatic`. </target>
+        <target> Chinoise | Utilisez la segmentation chinoise des mots. Si la segmentation des chinoise mots n'est pas disponible, NVDA utilise la méthode de repli telle que décrite dans le mode `Automatique`. </target>
       </segment>
     </unit>
     <unit id="0b7dab44-a57d-4526-95b1-3594be78d588">
@@ -30296,9 +30296,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. </source>
-        <target> Unicode (ICU) | Use the Windows built-in ICU library for word segmentation available in Windows 10 version 1703 (Creators Update) and later, falling back to legacy. </target>
+        <target> Unicode (ICU) | Utilisez la bibliothèque ICU intégrée à Windows pour la segmentation des mots, disponible à partir de Windows 10 version 1703 (Creators Update) et versions ultérieures, sinon Héritée. </target>
       </segment>
     </unit>
     <unit id="54843f3d-dbc1-4b54-8fee-343588bd447b">
@@ -30307,9 +30307,9 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
         <note appliesTo="source">prefix: |</note>
         <note appliesTo="source">suffix: |</note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source> Legacy (Uniscribe) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. </source>
-        <target> Legacy (Uniscribe) | Use the legacy Windows word segmentation as used in Notepad classic and other legacy Win32 edit controls. </target>
+        <target> Héritée (Uniscribe) | Utilisez la segmentation de mots Windows héritée, telle qu'elle est utilisée dans le Bloc-notes classique et d'autres contrôles d'édition Win32 hérités. </target>
       </segment>
     </unit>
     <unit id="777df247-4d82-442d-b105-903b6a5600f8">
