@@ -1471,7 +1471,7 @@ class UIAHandler(COMObject):
 		if getattr(element, "_isNetUIEmbeddedInWordDoc", False):
 			return True
 		windowHandle = self.getNearestWindowHandle(element)
-		if winUser.getClassName(windowHandle) != MS_WORD_DOCUMENT_WINDOW_CLASS:
+		if winUser.getClassName(windowHandle) not in (MS_WORD_DOCUMENT_WINDOW_CLASS, "EXCEL7"):
 			return False
 		condition = utils.createUIAMultiPropertyCondition(
 			{UIA.UIA_ClassNamePropertyId: "NetUIHWNDElement"},
@@ -1497,21 +1497,34 @@ class UIAHandler(COMObject):
 		import NVDAObjects.UIA
 
 		oldFocus = eventHandler.lastQueuedFocusObject
-		if (
-			isinstance(oldFocus, NVDAObjects.UIA.UIA)
-			and getattr(oldFocus.UIAElement, "_isNetUIEmbeddedInWordDoc", False)
-			and element.CachedClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
-			and element.CachedControlType == UIA.UIA_DocumentControlTypeId
-			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
-			and not self.isUIAWindow(oldFocus.windowHandle)
+		if isinstance(oldFocus, NVDAObjects.UIA.UIA) and getattr(
+			oldFocus.UIAElement,
+			"_isNetUIEmbeddedInWordDoc",
+			False,
 		):
-			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
-				winUser.EVENT_OBJECT_FOCUS,
-				oldFocus.windowHandle,
-				winUser.OBJID_CLIENT,
-				0,
-				oldFocus.windowThreadID,
-			)
+			elementClassName = element.CachedClassName
+			elementControlType = element.CachedControlType
+			if (
+				(
+					(
+						elementClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
+						and elementControlType == UIA.UIA_DocumentControlTypeId
+					)
+					or (
+						elementClassName == "XLSpreadsheetCell"
+						and elementControlType == UIA.UIA_DataItemControlTypeId
+					)
+				)
+				and self.getNearestWindowHandle(element) == oldFocus.windowHandle
+				and not self.isUIAWindow(oldFocus.windowHandle)
+			):
+				IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
+					winUser.EVENT_OBJECT_FOCUS,
+					oldFocus.windowHandle,
+					winUser.OBJID_CLIENT,
+					0,
+					oldFocus.windowThreadID,
+				)
 
 	def isNativeUIAElement(self, UIAElement):
 		if _isDebug():
