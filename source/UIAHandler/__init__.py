@@ -3,61 +3,61 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes  # noqa: I001
+import ctypes
 import ctypes.wintypes
-from ctypes import (
-	POINTER,
-	CFUNCTYPE,  # noqa: F401
-	c_voidp,  # noqa: F401
-)
-
-import comtypes.client
-from comtypes.automation import VT_EMPTY
-from comtypes import (
-	COMError,
-	COMObject,
-	byref,
-	CLSCTX_INPROC_SERVER,
-	CoCreateInstance,
-	IUnknown,
-)
-
 import threading
 import time
-import core
-import IAccessibleHandler.internalWinEventHandler
-import config
-from config import (
-	AllowUiaInChromium,
-	AllowUiaInMSWord,
+from ctypes import (
+	CFUNCTYPE,  # noqa: F401
+	POINTER,
+	c_voidp,  # noqa: F401
 )
+from queue import Queue
+from typing import Dict, Final  # noqa: F401, UP035
+
 import api
 import appModuleHandler
+import aria
+import comtypes.client
+import config
 import controlTypes
+import core
+import eventHandler
+import exceptions
 import globalVars
-from winBindings import user32
-import winBindings.ole32
+import IAccessibleHandler.internalWinEventHandler
+import textInfos
+import watchdog
 import winBindings.kernel32
+import winBindings.ole32
+import winBindings.uiAutomationCore
 import winKernel
 import winUser
 import winVersion
-import eventHandler
-import exceptions
-import watchdog
-from logHandler import log
-import winBindings.uiAutomationCore
-from . import utils
 from comInterfaces import UIAutomationClient as UIA
 
 # F403: unable to detect undefined names
 from comInterfaces.UIAutomationClient import *
-import textInfos
-from typing import Final, Dict  # noqa: F401, UP035
-from queue import Queue
-import aria
-import NVDAHelper
-from . import remote as UIARemote
+from comtypes import (
+	CLSCTX_INPROC_SERVER,
+	CoCreateInstance,
+	COMError,
+	COMObject,
+	IUnknown,
+	byref,
+)
+from comtypes.automation import VT_EMPTY
+from config import (
+	AllowUiaInChromium,
+	AllowUiaInMSWord,
+)
+from logHandler import log
+from winBindings import user32
 
+import NVDAHelper
+
+from . import remote as UIARemote
+from . import utils
 
 baseCachePropertyIDs = {
 	UIA.UIA_FrameworkIdPropertyId,
