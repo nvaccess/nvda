@@ -52,7 +52,7 @@ from comInterfaces import UIAutomationClient as UIA
 # F403: unable to detect undefined names
 from comInterfaces.UIAutomationClient import *
 import textInfos
-from typing import Dict  # noqa: F401, UP035
+from typing import Final, Dict  # noqa: F401, UP035
 from queue import Queue
 import aria
 import NVDAHelper
@@ -82,6 +82,9 @@ so event senders and elements fetched through them carry these properties in the
 # Microsoft Word's UI Automation implementation
 # also exposes this value as the document UIA element's classname property.
 MS_WORD_DOCUMENT_WINDOW_CLASS = "_WwG"
+
+#: Window class for Microsoft Excel
+_MS_EXCEL_WINDOW_CLASS: Final[str] = "EXCEL7"
 
 HorizontalTextAlignment_Left = 0
 HorizontalTextAlignment_Centered = 1
@@ -1309,7 +1312,7 @@ class UIAHandler(COMObject):
 			# back to the MS Excel object model.
 			elif (
 				# An MS Excel spreadsheet window
-				windowClass == "EXCEL7"
+				windowClass == _MS_EXCEL_WINDOW_CLASS
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and appModule.helperLocalBindingHandle
 				# Allow the user to explicitly force UIA support for MS Excel spreadsheets
@@ -1472,7 +1475,7 @@ class UIAHandler(COMObject):
 		if getattr(element, "_isNetUIEmbeddedInWordDoc", False):
 			return True
 		windowHandle = self.getNearestWindowHandle(element)
-		if winUser.getClassName(windowHandle) not in (MS_WORD_DOCUMENT_WINDOW_CLASS, "EXCEL7"):
+		if winUser.getClassName(windowHandle) not in (MS_WORD_DOCUMENT_WINDOW_CLASS, _MS_EXCEL_WINDOW_CLASS):
 			return False
 		condition = utils.createUIAMultiPropertyCondition(
 			{UIA.UIA_ClassNamePropertyId: "NetUIHWNDElement"},
