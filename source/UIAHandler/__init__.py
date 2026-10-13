@@ -1462,16 +1462,16 @@ class UIAHandler(COMObject):
 		UIAElement._nearestWindowHandle = window
 		return window
 
-	def _isNetUIEmbeddedInWordDoc(self, element: UIA.IUIAutomationElement) -> bool:
+	def _isNetUIEmbeddedInMSOffice(self, element: UIA.IUIAutomationElement) -> bool:
 		"""
 		Detects if the given UIA element represents a control in a NetUI container
-		embedded within a MS Word document window.
-		E.g. the Modern Comments side track pane.
+		embedded within a MS Word or Excel window.
+		E.g. the Modern Comments side track pane in Word, or the Copilot button in Excel.
 		This method also caches the answer on the element itself
 		to both speed up checking later and to allow checking on an already dead element
 		E.g. a previous focus.
 		"""
-		if getattr(element, "_isNetUIEmbeddedInWordDoc", False):
+		if getattr(element, "_isNetUIEmbeddedInMSOffice", False):
 			return True
 		windowHandle = self.getNearestWindowHandle(element)
 		if winUser.getClassName(windowHandle) not in (MS_WORD_DOCUMENT_WINDOW_CLASS, _MS_EXCEL_WINDOW_CLASS):
@@ -1485,10 +1485,10 @@ class UIAHandler(COMObject):
 		cacheRequest.AddProperty(UIA.UIA_ClassNamePropertyId)
 		cacheRequest.AddProperty(UIA.UIA_NativeWindowHandlePropertyId)
 		ancestor = walker.NormalizeElementBuildCache(element, cacheRequest)
-		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word document window
+		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word/Excel window
 		if ancestor.CachedClassName != "NetUIHWNDElement":
 			return False
-		element._isNetUIEmbeddedInWordDoc = True
+		element._isNetUIEmbeddedInMSOffice = True
 		return True
 
 	def _emitMSAAFocusForMSOfficeIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
@@ -1502,7 +1502,7 @@ class UIAHandler(COMObject):
 		oldFocus = eventHandler.lastQueuedFocusObject
 		if isinstance(oldFocus, NVDAObjects.UIA.UIA) and getattr(
 			oldFocus.UIAElement,
-			"_isNetUIEmbeddedInWordDoc",
+			"_isNetUIEmbeddedInMSOffice",
 			False,
 		):
 			elementClassName = element.CachedClassName
@@ -1558,16 +1558,16 @@ class UIAHandler(COMObject):
 						f"windowHandle {self.getWindowHandleDebugString(windowHandle)}. ",
 					)
 				return True
-			# #12982: although NVDA by default may not treat this element's window as native UIA,
+			# #12982, #20979: although NVDA by default may not treat this element's window as native UIA,
 			# E.g. it is proxied from MSAA, or NVDA has specifically black listed it,
-			# It may be an element from a NetUIcontainer embedded in a Word document,
-			# such as the MS Word Modern Comments side track pane.
+			# It may be an element from a NetUIcontainer embedded in Word or Excel,
+			# such as the MS Word Modern Comments side track pane or the Excel Copilot button.
 			# These elements are only exposed via UIA, and not MSAA,
 			# thus we must treat these elements as native UIA.
-			if self._isNetUIEmbeddedInWordDoc(UIAElement):
+			if self._isNetUIEmbeddedInMSOffice(UIAElement):
 				if _isDebug():
 					log.debug(
-						"treating as native as is a netUI embedded in word doc. ",
+						"treating as native as is a netUI embedded in MS Office. ",
 					)
 				return True
 			if (
