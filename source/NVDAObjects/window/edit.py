@@ -696,6 +696,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			else:
 				log.debugWarning(f"Unsupported text-align: {alignment}")
 				formatField["text-align"] = TextAlign.UNDEFINED
+		if formatConfig["reportHeadings"]:
+			if not paraFormatObj:
+				paraFormatObj = textRange.para
+			style = paraFormatObj.style
+			if comInterfaces.tom.tomParaStyleHeading9 <= style <= comInterfaces.tom.tomParaStyleHeading1:
+				formatField["heading-level"] = comInterfaces.tom.tomParaStyleHeading1 - style + 1
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:
