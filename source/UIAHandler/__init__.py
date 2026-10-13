@@ -24,6 +24,7 @@ from comtypes import (
 
 import threading
 import time
+import core
 import IAccessibleHandler.internalWinEventHandler
 import config
 from config import (
@@ -1525,6 +1526,7 @@ class UIAHandler(COMObject):
 					0,
 					oldFocus.windowThreadID,
 				)
+				core.requestPump(immediate=True)
 
 	def isNativeUIAElement(self, UIAElement):
 		if _isDebug():
