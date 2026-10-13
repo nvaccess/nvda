@@ -889,15 +889,14 @@ class UIAHandler(COMObject):
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
-			# #12982: This element may be the root of an MS Word document
+			# #12982, #20979: This element may be the root of an MS Word document or Excel worksheet
 			# for which we may be refusing to use UIA as its implementation may be incomplete.
-			# However, there are some controls embedded in the MS Word document window
-			# such as the Modern comments side track pane
-			# for which we do have to use UIA.
-			# But, if focus jumps from one of these controls back to the document (E.g. the user presses escape),
+			# However, Office has some embedded controls for which we do have to use UIA,
+			# such as the Modern comments side track pane in Word or the Copilot button in Excel.
+			# If focus jumps from one of these controls back to the document (E.g. the user presses escape),
 			# we receive no MSAA focus event, only a UIA focus event.
-			# As we are not treating the Word doc as UIA, we need to manually fire an MSAA focus event on the document.
-			self._emitMSAAFocusForWordDocIfNecessary(sender)
+			# As we are not treating the application as UIA, we need to manually fire an MSAA focus event on the document.
+			self._emitMSAAFocusForMSOfficeIfNecessary(sender)
 			if _isDebug():
 				log.debug(f"Ignoring for non native element {self.getUIAElementDebugString(sender)}")
 			return
@@ -1492,11 +1491,11 @@ class UIAHandler(COMObject):
 		element._isNetUIEmbeddedInWordDoc = True
 		return True
 
-	def _emitMSAAFocusForWordDocIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
+	def _emitMSAAFocusForMSOfficeIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
 		"""
 		Fires an MSAA focus event on the given UIA element
-		if the element is the root of a Word document,
-		and the focus was previously in a NetUI container embedded in this Word document.
+		if the element is the root of a Word document or a cell in an Excell spreadsheet,
+		and the focus was previously in a NetUI container embedded in the document.
 		"""
 		import NVDAObjects.UIA
 
