@@ -31,8 +31,6 @@ import winKernel
 import winUser
 import winVersion
 from comInterfaces import UIAutomationClient as UIA
-
-# F403: unable to detect undefined names
 from comInterfaces.UIAutomationClient import *
 from comtypes import (
 	CLSCTX_INPROC_SERVER,
