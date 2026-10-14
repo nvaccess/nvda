@@ -38,6 +38,7 @@
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
   * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+* In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
 
 #### Add-on Store
 
