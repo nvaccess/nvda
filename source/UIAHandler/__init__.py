@@ -7,13 +7,9 @@ import ctypes
 import ctypes.wintypes
 import threading
 import time
-from ctypes import (
-	CFUNCTYPE,  # noqa: F401
-	POINTER,
-	c_voidp,  # noqa: F401
-)
+from ctypes import POINTER
 from queue import Queue
-from typing import Dict, Final  # noqa: F401, UP035
+from typing import Final
 
 import api
 import appModuleHandler
