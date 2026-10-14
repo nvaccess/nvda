@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2025 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2012-2026 NV Access Limited, Leonard de Ruijter, Christos Bouronikos
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -331,7 +331,9 @@ class DocumentWindow(PaneClassDC):
 			return super(PaneClassDC, self).name
 		slide = self.currentSlide
 		if slide:
-			label = " - ".join([slide.name, label])  # noqa: FLY002
+			# The selected slide or title shape reports the title itself.
+			slideLabel = slide.slideNumberLabel if isinstance(slide, Slide) else slide.name
+			label = " - ".join([slideLabel, label])  # noqa: FLY002
 		return label
 
 	def _get_currentSlide(self):
@@ -526,6 +528,25 @@ class PpObject(Window):
 	def _get_parent(self):
 		return self.documentWindow
 
+	def reportFocus(self):
+		# Announce the content section once when leaving the title or entering a new slide.
+		slide = self if isinstance(self, Slide) else self.documentWindow.currentSlide
+		shape = self.parent if isinstance(self, TextFrame) else self
+		while isinstance(shape, PpObject) and not isinstance(shape, (Slide, Shape)):
+			shape = shape.parent
+		if (
+			isinstance(slide, Slide)
+			and isinstance(shape, (Slide, Shape))
+			and self.documentWindow.ppActivePaneViewType != ppViewNotesPage
+		):
+			isTitle = isinstance(shape, Slide) or shape.isSlideTitle
+			section = (slide.ppObject.slideID, isTitle)
+			if not isTitle and section != getattr(self.documentWindow, "_lastReportedSlideSection", None):
+				# Translators: Announced before reading the non-title content of a PowerPoint slide.
+				speech.speakMessage(_("Slide contents"))
+			self.documentWindow._lastReportedSlideSection = section
+		super().reportFocus()
+
 	def script_selectionChange(self, gesture):
 		return self.documentWindow.script_selectionChange(gesture)
 
@@ -559,19 +580,35 @@ class SlideBase(PpObject):
 class Slide(SlideBase):
 	"""Represents a single slide in Powerpoint."""
 
-	def _get_name(self):
+	def _get_titleShape(self):
 		try:
-			title = self.ppObject.shapes.title.textFrame.textRange.text
+			return self.ppObject.shapes.title
 		except comtypes.COMError:
-			title = None
+			return None
+
+	def _get_titleText(self):
+		shape = self.titleShape
+		if shape:
+			try:
+				return shape.textFrame.textRange.text.replace("\x0b", "\n").replace("\r", "\n").strip()
+			except comtypes.COMError:
+				pass
+		return ""
+
+	def _get_slideNumberLabel(self):
 		try:
 			number = self.ppObject.slideNumber
 		except comtypes.COMError:
 			number = ""
 		# Translators: the label for a slide in Microsoft PowerPoint.
-		name = _("Slide {slideNumber}").format(slideNumber=number)
+		return _("Slide {slideNumber}").format(slideNumber=number)
+
+	def _get_name(self):
+		name = self.slideNumberLabel
+		title = self.titleText
 		if title:
-			name += " (%s)" % title  # noqa: UP031
+			# Translators: The title text of a PowerPoint slide, preceded by its label.
+			name += " - " + _("Slide title: {title}").format(title=title)
 		return name
 
 	def _get_positionInfo(self):
@@ -926,6 +963,13 @@ class Shape(PpObject):
 		self.ppMediaType = self.ppObject.mediaType
 		return self.ppMediaType
 
+	def _get_isSlideTitle(self):
+		slide = self.documentWindow.currentSlide
+		if not isinstance(slide, Slide) or self.documentWindow.ppActivePaneViewType == ppViewNotesPage:
+			return False
+		titleShape = slide.titleShape
+		return bool(titleShape and self.ppObject.ID == titleShape.ID)
+
 	def _get_name(self):
 		"""The name is calculated firstly from the object's title, otherwize if its a generic shape, then  part of its programmatic name is used."""
 		# Powerpoint 2003 shape objects do not have a title property
@@ -935,6 +979,9 @@ class Shape(PpObject):
 			title = None
 		if title:
 			return title
+		if self.isSlideTitle:
+			# Translators: The label for the title text box of a PowerPoint slide while editing.
+			return _("Slide title")
 		# Provide a meaningful label for placeholders from slide templates
 		if self.ppShapeType == msoPlaceholder:
 			label = ppPlaceholderLabels.get(self.ppPlaceholderType)
@@ -1499,7 +1546,7 @@ class SlideShowWindow(PaneClassDC):
 				return _("Slide show notes - {slideName}").format(slideName=self.currentSlide.name)
 			else:
 				# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-				return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
+				return _("Slide show - {slideName}").format(slideName=self.currentSlide.slideNumberLabel)
 		else:
 			# Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 			return _("Slide Show - complete")
@@ -1559,15 +1606,33 @@ class SlideShowWindow(PaneClassDC):
 			return self.name
 		chunks = []
 		ppObject = self.currentSlide.ppObject
+		titleShape = None
+		title = ""
 		if self.notesMode:
 			ppObject = ppObject.notesPage
+		else:
+			titleShape = self.currentSlide.titleShape
+			title = self.currentSlide.titleText
+			if title:
+				# Translators: The title text of a PowerPoint slide, preceded by its label.
+				chunks.append(_("Slide title: {title}").format(title=title))
 		# Maintain a list of fields and the offsets at which they occur.
 		# For now, these are only control fields that consume a space.
 		fields = self.basicTextFields = []
 		# Incrementation of textLen must include line feed added by join.
-		textLen = 0
+		textLen = sum(len(chunk) + 1 for chunk in chunks)
+		hasContents = False
 		for shape in ppObject.shapes:
+			# Only skip the designated title shape; identical text in other shapes is still content.
+			if title and titleShape and shape.ID == titleShape.ID:
+				continue
 			for chunk in self._getShapeText(shape):
+				if not self.notesMode and not hasContents:
+					# Translators: Announced before reading the non-title content of a PowerPoint slide.
+					contentLabel = _("Slide contents")
+					chunks.append(contentLabel)
+					textLen += len(contentLabel) + 1
+					hasContents = True
 				if isinstance(chunk, textInfos.ControlField):
 					fields.append((textLen, chunk))
 					chunks.append(" ")
@@ -1590,7 +1655,8 @@ class SlideShowWindow(PaneClassDC):
 			del self.__dict__["currentSlide"]
 		except KeyError:
 			pass
-		curSlideChangeID = self.name
+		# The window name no longer includes the title, but title changes must still be detected.
+		curSlideChangeID = (self.name, self.currentSlide.name if self.currentSlide else None)
 		if curSlideChangeID == self._lastSlideChangeID:
 			return
 		self._lastSlideChangeID = curSlideChangeID

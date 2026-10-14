@@ -87,6 +87,8 @@ eSpeak NG has been updated with added support for Ligurian and Abkhaz.
 
 * NVDA now reports the correct location and label for Win32 menu items of 32-bit applications when display scaling is above 100%. (#19225, #20158, @christopherpross)
 * In PowerPoint and other Office applications, NVDA will now correctly read and navigate the edit fields in the insert hyperlink dialog. (#17390, @aryanchoudharypro)
+* In Microsoft PowerPoint, NVDA no longer reads the slide title twice. (#9379, @ChristosBouronikos)
+  * The slide title is now announced with a "Slide title" label, and the rest of the slide is introduced with "Slide contents".
 * In Notepad++, NVDA now continues to report IME composition text in speech and braille while selecting or navigating within Chinese IME composition. (#14140, #14152, @keyang556)
 * Fixed UAC slider not being read when changing values with arrow keys. (#9356, @tareh7z)
 * After marking the start of text for review cursor copy with `NVDA+f9`, moving with Find or Go To no longer causes `NVDA+f10` to report that no start marker is set. (#13864, @Cary-rowen)
