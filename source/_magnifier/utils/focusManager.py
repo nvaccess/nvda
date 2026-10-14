@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Christos Bouronikos
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -207,17 +207,20 @@ class FocusManager:
 
 		:return: The (x, y) coordinates of the review cursor, or ``None`` if not available.
 		"""
-		reviewPosition = api.getReviewPosition()
-		if reviewPosition:
-			try:
+		try:
+			# Fetching the review position can itself fail,
+			# e.g. with a COMError when the review object's text cannot be retrieved.
+			reviewPosition = api.getReviewPosition()
+			if reviewPosition:
 				point = self._getPointAtStart(reviewPosition)
 				coords = Coordinates(point.x, point.y)
 				if coords != Coordinates(0, 0):
 					self._lastValidReviewPosition = coords
 				return coords
-			except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError):
-				# Review position may not support pointAtStart, or COM object may not be IAccessible
-				pass
+		except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError):
+			# Review position may not support pointAtStart, or COM object may not be IAccessible
+			if _isDebug():
+				log.debug("Failed to get review position", exc_info=True)
 		return None
 
 	def _getPointAtStart(self, textInfo: textInfos.TextInfo) -> locationHelper.Point:

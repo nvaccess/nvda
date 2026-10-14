@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot, Christos Bouronikos
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -128,6 +128,30 @@ class TestFocusManager(unittest.TestCase):
 		with patch("_magnifier.utils.focusManager.api.getReviewPosition", return_value=mockReviewPos):
 			result = self.focusManager._getReviewPosition()
 			self.assertIsNone(result)
+
+	def testGetReviewPositionSurvivesCOMErrorFromGetReviewPosition(self):
+		"""_getReviewPosition catches COMError raised while fetching the review position itself."""
+		comError = _ctypes.COMError(-2147024809, "Paramètre incorrect.", None)
+		with patch("_magnifier.utils.focusManager.api.getReviewPosition", side_effect=comError):
+			self.assertIsNone(self.focusManager._getReviewPosition())
+
+	def testGetCurrentFocusCoordinatesSurvivesReviewPositionError(self):
+		"""A failing review position must not break tracking; the last tracked coordinates are kept."""
+		comError = _ctypes.COMError(-2147024809, "Paramètre incorrect.", None)
+		self.focusManager._lastReportedCoordinates = Coordinates(10, 20)
+		self.focusManager._getMousePosition = MagicMock(return_value=self.focusManager._lastMousePosition)
+		self.focusManager._getSystemFocusPosition = MagicMock(
+			return_value=self.focusManager._lastSystemFocusPosition,
+		)
+		self.focusManager._getNavigatorObjectPosition = MagicMock(
+			return_value=self.focusManager._lastNavigatorObjectPosition,
+		)
+		with (
+			patch("_magnifier.utils.focusManager.api.getReviewPosition", side_effect=comError),
+			patch("_magnifier.utils.focusManager.getFollowState", side_effect=_makeFollowStateSideEffect()),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+		):
+			self.assertEqual(self.focusManager.getCurrentFocusCoordinates(), Coordinates(10, 20))
 
 	def testGetSystemFocusPosition(self):
 		"""Getting system focus position with different API responses."""
