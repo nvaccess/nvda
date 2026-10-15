@@ -11,6 +11,9 @@ import braille
 import braille.display
 import braille.display.gesture
 
+# The gesture map only resolves scripts for loaded modules.
+import globalCommands  # noqa: F401
+
 
 class FakeSeikantkDriver(seikantk.BrailleDisplayDriver):
 	def __init__(self, isHid: bool):
@@ -359,9 +362,6 @@ class TestModelSpecificGestures(unittest.TestCase):
 	"""Model specific gesture bindings must take priority over generic bindings for the same key."""
 
 	def test_modelSpecificBindingWins(self):
-		# The gesture map only resolves scripts for loaded modules.
-		import globalCommands  # noqa: F401
-
 		gmap = braille.display._getDisplayDriver("eurobraille").gestureMap
 		scripts = [
 			scriptName
