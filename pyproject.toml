@@ -36,6 +36,8 @@ dependencies = [
 	"fast-diff-match-patch==2.1.0",
 	# pycaw is a Core Audio Windows Library used for sound split
 	"pycaw==20251023",
+	# Finding and ending running copies of NVDA when installing
+	"psutil==7.2.2",
 	# NVDA bridge for 32 bit shim
 	"rpyc==6.0.2",
 	"pywin32==312",

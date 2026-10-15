@@ -1,20 +1,21 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2024-2025 NV Access Limited
+# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the installer module."""
 
-import pathlib  # noqa: I001
+import os
+import pathlib
 import tempfile
-from typing import NamedTuple
 import unittest
-from unittest.mock import patch, PropertyMock
+from typing import NamedTuple
+from unittest.mock import MagicMock, PropertyMock, patch
 
-from parameterized import parameterized
-
-from gui import installerGui
 import installer
+import psutil
+from gui import installerGui
+from parameterized import parameterized
 
 
 class Test_BatchDeletion(unittest.TestCase):
@@ -69,6 +70,161 @@ class Test_BatchDeletion(unittest.TestCase):
 		installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 		for file in self._sampleFiles:
 			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
+
+
+class Test_terminateRunningNVDA(unittest.TestCase):
+	"""Tests for finding and ending copies of NVDA which run from the installation folder."""
+
+	_installDir = "C:\\Program Files\\NVDA"
+	_installDirX86 = "C:\\Program Files (x86)\\NVDA"
+
+	@parameterized.expand(
+		(
+			("nvda", "C:\\Program Files\\NVDA\\nvda.exe", True),
+			("noUIAccess", "C:\\Program Files\\NVDA\\nvda_noUIAccess.exe", True),
+			("differentCase", "c:\\program files\\nvda\\NVDA.EXE", True),
+			("x86Dir", "C:\\Program Files (x86)\\NVDA\\nvda.exe", True),
+			("slave", "C:\\Program Files\\NVDA\\nvda_slave.exe", False),
+			("subfolder", "C:\\Program Files\\NVDA\\lib\\nvda.exe", False),
+			("otherFolder", "C:\\Temp\\launcher\\nvda.exe", False),
+			("unknown", None, False),
+		),
+	)
+	def test_isTerminableNVDAImage(self, _name: str, imagePath: str | None, expected: bool):
+		self.assertEqual(
+			installer._isTerminableNVDAImage(imagePath, [self._installDir, self._installDirX86]),
+			expected,
+		)
+
+	@staticmethod
+	def _fakeProcess(pid: int, exe: str | None) -> MagicMock:
+		"""Create a stand-in for a process as returned by :func:`psutil.process_iter` with exe."""
+		process = MagicMock(spec=psutil.Process)
+		process.pid = pid
+		process.info = {"exe": exe}
+		return process
+
+	def test_getRunningNVDAProcesses(self):
+		processes = [
+			self._fakeProcess(100, f"{self._installDir}\\nvda.exe"),
+			self._fakeProcess(200, f"{self._installDir}\\NVDA_noUIAccess.exe"),
+			self._fakeProcess(300, "C:\\Temp\\launcher\\nvda.exe"),
+			self._fakeProcess(400, f"{self._installDir}\\notepad.exe"),
+			self._fakeProcess(500, None),
+			self._fakeProcess(os.getpid(), f"{self._installDir}\\nvda.exe"),
+		]
+		with patch("installer.psutil.process_iter", return_value=iter(processes)) as processIterMock:
+			found = list(installer._getRunningNVDAProcesses([self._installDir]))
+		processIterMock.assert_called_once_with(["exe"])
+		self.assertEqual([process.pid for process in found], [100, 200])
+
+	def _terminate(self, processes: list[MagicMock]) -> MagicMock:
+		"""Run :func:`installer._terminateNVDAProcesses` with the given processes found.
+
+		:param processes: The processes :func:`installer._getRunningNVDAProcesses` finds.
+		:return: The mock standing in for :func:`psutil.wait_procs`.
+		"""
+		with (
+			patch("installer._getRunningNVDAProcesses", return_value=processes),
+			patch("installer.psutil.wait_procs", return_value=([], [])) as waitProcsMock,
+		):
+			installer._terminateNVDAProcesses([self._installDir])
+		return waitProcsMock
+
+	def test_terminatesFoundProcesses(self):
+		processes = [
+			self._fakeProcess(100, f"{self._installDir}\\nvda.exe"),
+			self._fakeProcess(200, f"{self._installDir}\\nvda_noUIAccess.exe"),
+		]
+		waitProcsMock = self._terminate(processes)
+		for process in processes:
+			process.kill.assert_called_once_with()
+		waitProcsMock.assert_called_once_with(processes, timeout=2)
+
+	def test_continuesAfterFailedTermination(self):
+		processes = [
+			self._fakeProcess(100, f"{self._installDir}\\nvda.exe"),
+			self._fakeProcess(200, f"{self._installDir}\\nvda.exe"),
+		]
+		processes[0].kill.side_effect = psutil.AccessDenied(100)
+		waitProcsMock = self._terminate(processes)
+		processes[1].kill.assert_called_once_with()
+		waitProcsMock.assert_called_once_with([processes[1]], timeout=2)
+
+	def _runInstallUntilDelete(self, **installKwargs: bool) -> MagicMock:
+		"""Run :func:`installer.install` up to the first file deletion, recording the calls of interest in order."""
+		calls = MagicMock()
+		calls._deleteFileGroupOrFail.side_effect = installer.RetriableFailure
+		with (
+			patch("installer._getInstallDirs", return_value=[self._installDir]),
+			patch("installer.time.sleep"),
+			patch("installer._terminateNVDAProcesses", calls._terminateNVDAProcesses),
+			patch("installer._deleteFileGroupOrFail", calls._deleteFileGroupOrFail),
+			self.assertRaises(installer.RetriableFailure),
+		):
+			installer.install(**installKwargs)
+		return calls
+
+	def test_installTerminatesBeforeDeleting(self):
+		calls = self._runInstallUntilDelete(shouldTerminateRunningNVDA=True)
+		self.assertEqual(
+			[c[0] for c in calls.mock_calls],
+			["_terminateNVDAProcesses", "_deleteFileGroupOrFail"],
+		)
+		calls._terminateNVDAProcesses.assert_called_once_with([self._installDir])
+
+	def test_installDoesNotTerminateByDefault(self):
+		calls = self._runInstallUntilDelete()
+		calls._terminateNVDAProcesses.assert_not_called()
+		calls._deleteFileGroupOrFail.assert_called_once()
+
+
+class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
+	"""Tests for asking the user whether to end running copies of NVDA before installing."""
+
+	def _doInstall(
+		self,
+		isRunning: bool,
+		confirm: bool,
+		silent: bool = False,
+	) -> tuple[MagicMock, MagicMock]:
+		"""Run :func:`installerGui.doInstall` until it starts the elevated installer.
+
+		:return: The mocks standing in for :func:`installerGui._confirmTerminateRunningNVDA`
+			and :func:`systemUtils.execElevated`.
+		"""
+		with (
+			patch("gui.installerGui.installer._getInstallDirs", return_value=["C:\\Program Files\\NVDA"]),
+			patch(
+				"gui.installerGui.installer._getRunningNVDAProcesses",
+				return_value=[MagicMock(spec=psutil.Process)] if isRunning else [],
+			),
+			patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=confirm) as confirmMock,
+			patch("gui.installerGui.gui.IndeterminateProgressDialog"),
+			patch("gui.installerGui.systemUtils.execElevated", return_value=1) as execElevatedMock,
+			patch("gui.installerGui.gui.messageBox"),
+		):
+			installerGui.doInstall(silent=silent)
+		return confirmMock, execElevatedMock
+
+	def test_noRunningCopies_doesNotAsk(self):
+		confirmMock, execElevatedMock = self._doInstall(isRunning=False, confirm=False)
+		confirmMock.assert_not_called()
+		self.assertEqual(execElevatedMock.call_args.args[1][-1], "0")
+
+	def test_runningCopies_userAgrees_passesTerminateFlag(self):
+		confirmMock, execElevatedMock = self._doInstall(isRunning=True, confirm=True)
+		confirmMock.assert_called_once()
+		self.assertEqual(execElevatedMock.call_args.args[1][-1], "1")
+
+	def test_runningCopies_userDeclines_cancelsInstall(self):
+		_confirmMock, execElevatedMock = self._doInstall(isRunning=True, confirm=False)
+		execElevatedMock.assert_not_called()
+
+	def test_silentInstall_neverAsksOrTerminates(self):
+		confirmMock, execElevatedMock = self._doInstall(isRunning=True, confirm=True, silent=True)
+		confirmMock.assert_not_called()
+		self.assertEqual(execElevatedMock.call_args.args[1][-1], "0")
 
 
 class _ShouldWarnBeforeUpdateFactors(NamedTuple):

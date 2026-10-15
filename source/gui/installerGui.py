@@ -1,6 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
-# Bill Dengler, Joseph Lee, Takuya Nishimoto
+# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions, Bill Dengler, Joseph Lee, Takuya Nishimoto, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -198,6 +197,29 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 			log.error(f"Unexpected return code from post-install dialog: {returnCode}")
 
 
+def _confirmTerminateRunningNVDA() -> bool:
+	"""Ask the user whether running copies of NVDA that block the installation may be ended.
+
+	:return: ``True`` if the user agrees to end them.
+	"""
+	message = _(
+		# Translators: a message dialog asking whether to end running copies of NVDA before installing
+		"Other copies of NVDA are running on this system. "
+		"This can be a copy on the sign-in screen or on another logged-on user account. "
+		"They must be ended to continue the installation. "
+		"They will not be restarted automatically. "
+		"Do you want to end them now?",
+	)
+	# Translators: the title of a yes no dialog asking whether to end running copies of NVDA before installing
+	title = _("NVDA Still Running")
+	dialog = (
+		MessageDialog(gui.mainFrame, message, title, buttons=None)
+		.addYesButton(defaultFocus=True)
+		.addNoButton(fallbackAction=True)
+	)
+	return dialog.ShowModal() == ReturnCode.YES
+
+
 def doInstall(
 	createDesktopShortcut: bool = True,
 	startOnLogon: bool = False,
@@ -206,6 +228,11 @@ def doInstall(
 	silent: bool = False,
 	startAfterInstall: bool = True,
 ):
+	shouldTerminateRunningNVDA = not silent and any(
+		installer._getRunningNVDAProcesses(installer._getInstallDirs()),
+	)
+	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
+		return
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
@@ -222,7 +249,12 @@ def doInstall(
 	try:
 		res = systemUtils.execElevated(
 			config.SLAVE_FILENAME,
-			["install", str(int(createDesktopShortcut)), str(int(startOnLogon))],
+			[
+				"install",
+				str(int(createDesktopShortcut)),
+				str(int(startOnLogon)),
+				str(int(shouldTerminateRunningNVDA)),
+			],
 			wait=True,
 			handleAlreadyElevated=True,
 		)
