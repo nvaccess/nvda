@@ -3295,7 +3295,7 @@ If this is unchecked, you need to double-tap on the key of the touch keyboard to
 ##### Enable edge gestures {#TouchEdgeGestures}
 
 This checkbox enables edge gesture support.
-When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
+When enabled, gestures that start from any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
 For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
 If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
 Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.
@@ -3545,12 +3545,11 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
-##### Native selection mode {#NativeSelectionModeSetting}
+##### Native selection mode on page load {#NativeSelectionModeSetting}
 
-Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
+Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it when loaded.
 This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.
 When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.
-Changing this option takes effect for newly loaded documents.
 
 | . {.hideHeaderRow} |.|
 |---|---|
