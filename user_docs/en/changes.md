@@ -21,7 +21,9 @@
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
-* Magnifier no longer flickers and stops when NVDA cannot get the review cursor position, such as when opening some browseable messages or closing a Firefox tab. (#20860, @ChristosBouronikos)
+* Magnifier no longer flickers and stops when NVDA cannot get the review cursor position, such as when opening some browseable messages, closing a Firefox tab, or switching to Windows Terminal. (#20860, @ChristosBouronikos)
+* The review cursor now works in HTML messages containing characters such as 𝔓. (#20860, @ChristosBouronikos)
+* NVDA no longer sometimes fails to handle the focus when switching to Windows Terminal. (#20860, @ChristosBouronikos)
 
 #### Performance
 
@@ -68,6 +70,7 @@ A read completing on the same handle no longer ends the wait while the write is 
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
+* Added `exceptions.LocationUnavailableError`, a subclass of `LookupError`, raised when a cursor position or its screen location cannot currently be retrieved. (#20860)
 
 #### API Breaking Changes
 
@@ -80,6 +83,9 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 * The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
 * `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
 * `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
+* `api.getReviewPosition` and `vision.util.getContextRect` now raise `exceptions.LocationUnavailableError` when the position or location cannot be retrieved, instead of the underlying error, such as `COMError` or `RuntimeError`. (#20860)
+The underlying error is available as the cause.
+* `review.setCurrentMode` no longer fetches a review position when `updateReviewPosition` is `False`, so the mode is set without checking that a position is available. (#20860)
 
 #### Deprecations
 

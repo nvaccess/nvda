@@ -324,8 +324,13 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			if not activeElement or self.obj.HTMLNode.uniqueNumber != activeElement.uniqueNumber:
 				raise RuntimeError("Only works with currently selected element")
 			if not editableBody:
-				mark = self.obj.HTMLNode.document.selection.createRange().GetBookmark()
-				self._rangeObj.MoveToBookmark(mark)
+				if self.obj.HTMLNodeName == "BODY":
+					# #20860: The BODY range covers the whole document, so use the selection range directly.
+					# Moving the BODY range to the selection's bookmark fails for some text, such as "𝔓".
+					self._rangeObj = self.obj.HTMLNode.document.selection.createRange()
+				else:
+					mark = self.obj.HTMLNode.document.selection.createRange().GetBookmark()
+					self._rangeObj.MoveToBookmark(mark)
 			if position == textInfos.POSITION_CARET:
 				self._rangeObj.collapse()
 			return

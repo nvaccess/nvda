@@ -21,6 +21,7 @@ import wx
 from autoSettingsUtils.autoSettings import SupportedSettingType
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from colors import RGB
+from exceptions import LocationUnavailableError
 from gui.settingsDialogs import (
 	AutoSettingsMixin,
 	SettingsPanel,
@@ -582,7 +583,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		if rect is None:
 			try:
 				rect = getContextRect(context, obj=obj)
-			except (LookupError, ValueError, RuntimeError, TypeError):
+			except (LocationUnavailableError, ValueError, TypeError):
 				rect = None
 		self.contextToRectMap[context] = rect
 

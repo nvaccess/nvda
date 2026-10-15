@@ -8,6 +8,7 @@ from _magnifier.magnifier import Magnifier
 from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Filter, Direction, Coordinates, MagnifierAction
 from comtypes import COMError
+from exceptions import LocationUnavailableError
 import unittest
 from winAPI._displayTracking import getPrimaryDisplayOrientation
 from unittest.mock import MagicMock, patch
@@ -210,6 +211,43 @@ class TestMagnifier(_TestMagnifier):
 
 		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
 		self.assertEqual(self.magnifier._consecutiveErrors, 1)
+
+	def testUpdateMagnifierKeepsViewWhenTrackingUnavailable(self):
+		"""#20860: An unavailable tracked location keeps the current view without counting as an error."""
+		self.magnifier._isActive = True
+		self.magnifier.currentCoordinates = self.focusCoords
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			side_effect=LocationUnavailableError(),
+		)
+		self.magnifier._doUpdate = MagicMock()
+		self.magnifier._startTimer = MagicMock()
+		self.magnifier._attemptRecovery = MagicMock()
+
+		self.magnifier._updateMagnifier()
+
+		self.assertEqual(self.magnifier.currentCoordinates, self.focusCoords)
+		self.magnifier._doUpdate.assert_called_once()
+		self.magnifier._attemptRecovery.assert_not_called()
+		self.assertEqual(self.magnifier._consecutiveErrors, 0)
+		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
+
+	def testUpdateMagnifierDoesNotCountTrackingErrors(self):
+		"""#20860: Only Magnification API errors trigger recovery; the timer keeps running after other errors."""
+		self.magnifier._isActive = True
+		self.magnifier._consecutiveErrors = Magnifier._MAX_CONSECUTIVE_ERRORS - 1
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			side_effect=COMError(-2147467259, "Unspecified error", None),
+		)
+		self.magnifier._doUpdate = MagicMock()
+		self.magnifier._startTimer = MagicMock()
+		self.magnifier._attemptRecovery = MagicMock()
+
+		with self.assertRaises(COMError):
+			self.magnifier._updateMagnifier()
+
+		self.magnifier._attemptRecovery.assert_not_called()
+		self.assertEqual(self.magnifier._consecutiveErrors, Magnifier._MAX_CONSECUTIVE_ERRORS - 1)
+		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
 
 	def testUpdateMagnifierRecoveryFailureSafelyRestartsTimer(self):
 		"""If _attemptRecovery itself raises, the timer must still be restarted to prevent a freeze."""

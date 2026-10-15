@@ -9,6 +9,7 @@ Functions should mostly refer to getting an object (NVDAObject) or a position (T
 """
 
 import typing  # noqa: I001
+from comtypes import COMError
 
 import config
 import textInfos
@@ -235,13 +236,22 @@ def setDesktopObject(obj: NVDAObjects.NVDAObject) -> None:
 def getReviewPosition() -> textInfos.TextInfo:
 	"""Retrieves the current TextInfo instance representing the user's review position.
 	If it is not set, it uses navigator object to create a TextInfo.
+	@raises exceptions.LocationUnavailableError: No review position is currently available.
+		A failed retrieval is not cached, so subsequent calls can retry.
 	"""
 	if globalVars.reviewPosition:
 		return globalVars.reviewPosition
-	else:
-		obj = globalVars.navigatorObject
-		globalVars.reviewPosition, globalVars.reviewPositionObj = review.getPositionForCurrentMode(obj)
-		return globalVars.reviewPosition
+	obj = globalVars.navigatorObject
+	if obj is None:
+		raise exceptions.LocationUnavailableError("No navigator object available")
+	try:
+		position = review.getPositionForCurrentMode(obj)
+	except (COMError, LookupError, OSError, RuntimeError) as error:
+		raise exceptions.LocationUnavailableError("Unable to retrieve review position") from error
+	if position is None:
+		raise exceptions.LocationUnavailableError("No review position available")
+	globalVars.reviewPosition, globalVars.reviewPositionObj = position
+	return globalVars.reviewPosition
 
 
 def setReviewPosition(
@@ -348,8 +358,13 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 		if reviewMode == "object":
 			review.setCurrentMode("document", False)
 		if isFocus:
-			globalVars.reviewPosition = obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
-			globalVars.reviewPositionObj = globalVars.reviewPosition
+			try:
+				globalVars.reviewPosition = obj.treeInterceptor.makeTextInfo(textInfos.POSITION_CARET)
+			except (COMError, LookupError, OSError, RuntimeError):
+				# #20860: Don't abort focus handling; the review position is fetched again when needed.
+				log.debugWarning("Unable to get caret position for review", exc_info=True)
+			else:
+				globalVars.reviewPositionObj = globalVars.reviewPosition
 	eventHandler.executeEvent("becomeNavigatorObject", obj, isFocus=isFocus)
 	return True
 

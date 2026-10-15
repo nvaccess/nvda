@@ -118,6 +118,7 @@ def setCurrentMode(
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
+	@param updateReviewPosition: If False, only the mode is set, without fetching a review position.
 	@return: a presentable label for the new current mode (suitable for speaking or braille)
 	"""
 	global _currentMode
@@ -130,12 +131,15 @@ def setCurrentMode(
 				break
 		else:
 			raise LookupError("mode %s not found" % mode)  # noqa: UP031
+	if not updateReviewPosition:
+		# #20860: Fetching a position that is discarded can fail and abort focus handling.
+		_currentMode = mode
+		return label
 	obj = api.getNavigatorObject()
 	pos = func(obj)
 	if pos:
 		_currentMode = mode
-		if updateReviewPosition:
-			api.setReviewPosition(pos[0], clearNavigatorObject=False)
+		api.setReviewPosition(pos[0], clearNavigatorObject=False)
 		return label
 
 
