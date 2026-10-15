@@ -220,6 +220,17 @@ def _confirmTerminateRunningNVDA() -> bool:
 	return dialog.ShowModal() == ReturnCode.YES
 
 
+def _showInstallationFailedError() -> None:
+	"""Tell the user that the installation of NVDA failed."""
+	gui.messageBox(
+		# Translators: The message displayed when an error occurs during installation of NVDA.
+		_("The installation of NVDA failed. Please check the Log Viewer for more information."),
+		# Translators: The title of a dialog presented when an error occurs.
+		_("Error"),
+		wx.OK | wx.ICON_ERROR,
+	)
+
+
 def doInstall(
 	createDesktopShortcut: bool = True,
 	startOnLogon: bool = False,
@@ -227,12 +238,8 @@ def doInstall(
 	copyPortableConfig: bool = False,
 	silent: bool = False,
 	startAfterInstall: bool = True,
+	shouldTerminateRunningNVDA: bool = False,
 ):
-	shouldTerminateRunningNVDA = not silent and any(
-		installer._getRunningNVDAProcesses(installer._getInstallDirs()),
-	)
-	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
-		return
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
@@ -287,16 +294,11 @@ def doInstall(
 				isUpdate=isUpdate,
 				silent=silent,
 				startAfterInstall=startAfterInstall,
+				shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 			)
 	if res != 0:
 		log.error("Installation failed: %s" % res)  # noqa: UP031
-		gui.messageBox(
-			# Translators: The message displayed when an error occurs during installation of NVDA.
-			_("The installation of NVDA failed. Please check the Log Viewer for more information."),
-			# Translators: The title of a dialog presented when an error occurs.
-			_("Error"),
-			wx.OK | wx.ICON_ERROR,
-		)
+		_showInstallationFailedError()
 		return
 
 	startAfterInstall = startAfterInstall and not isRunningElevated()
@@ -337,6 +339,13 @@ def doSilentInstall(
 	copyPortableConfig=False,
 	startAfterInstall=True,
 ):
+	shouldTerminateRunningNVDA = not globalVars.appArgs.installSilent and any(
+		installer._getRunningNVDAProcesses(installer._getInstallDirs()),
+	)
+	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
+		log.info("Installation cancelled, the user chose not to end the running copies of NVDA")
+		_showInstallationFailedError()
+		return
 	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
@@ -351,6 +360,7 @@ def doSilentInstall(
 		copyPortableConfig=copyPortableConfig,
 		silent=globalVars.appArgs.installSilent,
 		startAfterInstall=startAfterInstall,
+		shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 	)
 
 
@@ -480,12 +490,16 @@ class InstallerDialog(
 	def onInstall(self, evt):
 		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
+		shouldTerminateRunningNVDA = any(installer._getRunningNVDAProcesses(installer._getInstallDirs()))
+		if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
+			return
 		self.Hide()
 		doInstall(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
 			isUpdate=self.isUpdate,
+			shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 		)
 		wx.GetApp().ScheduleForDestruction(self)
 
