@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2025 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Copyright (C) 2008-2026 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
 # Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations  # noqa: I001
 from ctypes.wintypes import (
@@ -781,7 +781,14 @@ class _RemoteLoader:
 
 	def _duplicateAsInheritable(self, handle):
 		curProc = winKernel.GetCurrentProcess()
-		return winKernel.DuplicateHandle(curProc, handle, curProc, 0, True, winKernel.DUPLICATE_SAME_ACCESS)
+		return winKernel.DuplicateHandle(
+			curProc,
+			handle,
+			curProc,
+			0,
+			True,
+			winBindings.kernel32.DUPLICATE.SAME_ACCESS,
+		)
 
 	def terminate(self):
 		# Closing the write end of the pipe will cause EOF for the waiting loader process, which will then exit gracefully.
@@ -842,10 +849,6 @@ def initialize() -> None:
 			)
 			raise e  # noqa: TRY201
 	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
-	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
-	if config.isAppX:
-		log.info("Remote injection disabled due to running as a Windows Store Application")
-		return
 	# Load nvdaHelperRemote.dll
 	h = winBindings.kernel32.LoadLibraryEx(
 		ReadPaths.nvdaHelperRemoteDll,
@@ -885,18 +888,17 @@ def initialize() -> None:
 
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	if not config.isAppX:
-		if not _remoteLib.uninstallIA2Support():
-			log.debugWarning("Error uninstalling IA2 support")
-		if _remoteLib.injection_terminate() == 0:
-			raise RuntimeError("Error terminating NVDAHelperRemote")
-		_remoteLib = None
-		if _remoteLoaderAMD64:
-			_remoteLoaderAMD64.terminate()
-			_remoteLoaderAMD64 = None
-		if _remoteLoaderARM64:
-			_remoteLoaderARM64.terminate()
-			_remoteLoaderARM64 = None
+	if not _remoteLib.uninstallIA2Support():
+		log.debugWarning("Error uninstalling IA2 support")
+	if _remoteLib.injection_terminate() == 0:
+		raise RuntimeError("Error terminating NVDAHelperRemote")
+	_remoteLib = None
+	if _remoteLoaderAMD64:
+		_remoteLoaderAMD64.terminate()
+		_remoteLoaderAMD64 = None
+	if _remoteLoaderARM64:
+		_remoteLoaderARM64.terminate()
+		_remoteLoaderARM64 = None
 	localLib.nvdaHelperLocal_terminate()
 
 

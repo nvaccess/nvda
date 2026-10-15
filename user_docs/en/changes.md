@@ -1,5 +1,97 @@
 # What's New in NVDA
 
+## 2027.1
+
+### Important notes
+
+### New Features
+<!-- Note we are in a feature freeze, only features related to API breaking changes should be listed here -->
+
+### Changes
+
+* The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+* Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+
+### Bug Fixes
+
+* The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
+  * Fixed an issue that could prevent automatic startup from being enabled on some systems.
+  * Saving other settings no longer unexpectedly disables automatic startup.
+  * If saving fails, NVDA now reports the error and continues saving other settings.
+* Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
+* When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
+* Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* Magnifier no longer flickers and stops when NVDA cannot get the review cursor position, such as when opening some browseable messages or closing a Firefox tab. (#20860, @ChristosBouronikos)
+
+#### Performance
+
+#### Braille
+
+* The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
+* Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+
+#### Web browsers
+
+* In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
+* In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
+
+#### Applications
+
+* Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+* In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
+  * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
+  * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+* In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
+
+#### Add-on Store
+
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+* Updated components:
+  * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
+* The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
+* Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
+A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
+  * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
+  * Closing a device now cancels a pending write, and repeated `close()` calls are safe.
+  * A failure to start a background read is now reported through the driver's read error callback, instead of silently ending the read loop.
+* `keyboardHandler.KeyboardInputGesture.fromName` now treats the non modifier key as the main key, regardless of its position in the name. (#8201, @LeonarddeR)
+  * For example, `alt+b+control` now creates the same gesture as `alt+control+b`.
+  * When the name contains only modifiers, the last key remains the main key.
+  * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
+* The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
+Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
+* `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+* APIs that wxWidgets deprecated in version 3.0 are no longer available.
+Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPython-4.3.1/CHANGES.rst) for details. (#20700, @LeonarddeR)
+* `gui.nvdaControls.CustomCheckListBox.notifyIAccessible` has been removed with no public replacement. (#20700, @LeonarddeR)
+* The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
+* `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
+* `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
+
+#### Deprecations
+
+* The following symbols from `winKernel` are deprecated: (#20784, #20836)
+  * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
+  * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
+  * `PROCESS_QUERY_INFORMATION` and `PROCESS_TERMINATE`: use `winBindings.kernel32.PROCESS.QUERY_INFORMATION` and `winBindings.kernel32.PROCESS.TERMINATE` instead.
+* `getCommentInfoFromPosition` and `getPresentableCommentInfoFromPosition` in `NVDAObjects.UIA.wordDocument` are deprecated with no public replacement. (#14985, @LeonarddeR)
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.3
 
 This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
@@ -99,7 +191,6 @@ Executing the find command while the dialog is open brings it to the foreground 
 * Remote Access: NVDA now reports when connecting as the controlled computer fails, while continuing to retry the connection in the background. (#19103, @danielw97)
 * Fixed an error when loading 32-bit synthesizers on some systems. (#20088)
 * Magnifier's "Show entire screen overview" feature now works when relative tracking mode is enabled. (#20746)
-* Magnifier no longer flickers and stops when NVDA cannot get the review cursor position, such as when opening some browseable messages or closing a Firefox tab. (#20860, @ChristosBouronikos)
 
 #### Performance
 

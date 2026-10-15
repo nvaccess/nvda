@@ -79,9 +79,13 @@ Install the python version listed in [.python-versions](../../.python-versions)
 ### Git Submodules
 
 Some of the dependencies are contained in [Git submodules](https://git-scm.com/docs/gitsubmodules).
-If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
-Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
-If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
+If you didn't pass the `--recursive` option to `git clone`, you will need to run `git submodule update --init --recursive`.
+Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update --recursive`.
+If a new submodule is added (e.g. after git pull), you will need to run `git submodule update --init --recursive` instead to initialize it as well.
+If you aren't sure, run `git submodule update --init --recursive` after every git pull, merge or checkout.
+
+Very rarely, the URL of a submodule may change, for example if the submodule repository is moved, renamed, or replaced with another repository.
+In this case, run `git submodule sync --recursive` to update the local submodule configuration before initializing or updating the submodules.
 
 #### Run time dependencies
 
@@ -92,7 +96,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.2
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
-* brlapi Python bindings, version 0.8.7 or later, built with [GitHub Actions in the NV Access fork of the brlTTY repository](https://github.com/nvaccess/brltty/actions)
+* [BrlAPI Python bindings from BRLTTY](https://github.com/brltty/brltty), commit `34571edfcbe2d47a952fcab58587a9fa46b6e29e` (BrlAPI version 0.8.8), built against Python's limited API
 * lilli.dll, version 2.1.0.0
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8 Zulu (17.60.17)](https://github.com/nvaccess/javaAccessBridge32-bin)
