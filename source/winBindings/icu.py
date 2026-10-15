@@ -30,10 +30,10 @@ from enum import IntEnum
 # ubrk_* functions are part of the "common" library, present in both.
 try:
 	dll = windll.icu
-except OSError:
+except (OSError, AttributeError):
 	try:
 		dll = windll.icuuc
-	except OSError:
+	except (OSError, AttributeError):
 		dll = None
 
 ICU_AVAILABLE: bool = dll is not None

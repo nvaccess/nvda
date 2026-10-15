@@ -2726,7 +2726,7 @@ class BrowseModePanel(SettingsPanel):
 		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is the label for a combo box in the browse mode settings panel.
-				"Nati&ve selection mode",
+				"Nati&ve selection mode on page load",
 			),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["virtualBuffers", "nativeSelectionMode"],
