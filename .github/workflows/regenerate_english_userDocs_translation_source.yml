@@ -18,6 +18,7 @@ permissions:
 
 jobs:
   rebuild-translation-source:
+    if: github.ref == 'refs/heads/beta'
     runs-on: windows-2025-vs2026
 
     steps:

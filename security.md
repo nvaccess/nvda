@@ -23,6 +23,10 @@ This information will help us triage your report more quickly.
 
 Examples of handled security issues in NVDA can be found in the [NVDA GitHub Security Advisories page](https://github.com/nvaccess/nvda/security/advisories).
 
+Note for security researchers:
+We are a small, not-for-profit organisation, dedicated to creating and freely providing the NVDA screen reader, which enables blind people around the world to access the PC, for free.
+As such, we do not have a bug bounty program, however we will gratefully receive any reports of genuine issues.
+
 ## Security Advisory Group
 
 NV Access is committed to maintaining the highest standards of security in NVDA. In line with this commitment, we have established a Security Advisory Group. This group plays a pivotal role in enhancing the security of NVDA.

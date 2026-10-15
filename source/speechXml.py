@@ -104,6 +104,15 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 #: An XmlBalancer command to output a stand-alone tag.
 #: That is, it will not enclose subsequent output.
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
+type XmlBalancerCommand = (
+	EncloseAllCommand
+	| SetAttrCommand
+	| DelAttrCommand
+	| EncloseTextCommand
+	| StopEnclosingTextCommand
+	| StandAloneTagCommand
+	| str
+)
 
 
 def _escapeXml(text):
@@ -238,10 +247,8 @@ class SpeechXmlConverter:
 	e.g. to add an L{EncloseAllCommand} at the start.
 	"""
 
-	def generateBalancerCommands(self, speechSequence):
-		"""Generate appropriate XmlBalancer commands for a given speech sequence.
-		@rtype: generator
-		"""
+	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[XmlBalancerCommand]:
+		"""Generate appropriate XmlBalancer commands for a given speech sequence."""
 		for item in speechSequence:
 			if isinstance(item, str):
 				yield item
@@ -271,7 +278,7 @@ class SsmlConverter(SpeechXmlConverter):
 	def __init__(self, defaultLanguage: str):
 		self.defaultLanguage = toXmlLang(defaultLanguage)
 
-	def generateBalancerCommands(self, speechSequence):
+	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[XmlBalancerCommand]:
 		attrs = OrderedDict(
 			(
 				("version", "1.0"),
