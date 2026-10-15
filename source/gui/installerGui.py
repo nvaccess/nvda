@@ -214,8 +214,8 @@ def _confirmTerminateRunningNVDA() -> bool:
 	title = _("NVDA Still Running")
 	dialog = (
 		MessageDialog(gui.mainFrame, message, title, buttons=None)
-		.addYesButton(defaultFocus=True)
-		.addNoButton(fallbackAction=True)
+		.addNoButton(defaultFocus=True, fallbackAction=True)
+		.addYesButton()
 	)
 	return dialog.ShowModal() == ReturnCode.YES
 
@@ -336,17 +336,29 @@ def _generate_executionParameters() -> str:
 
 
 def doSilentInstall(
-	copyPortableConfig=False,
-	startAfterInstall=True,
-):
-	shouldTerminateRunningNVDA = not globalVars.appArgs.installSilent and any(
-		installer._getRunningNVDAProcesses(installer._getInstallDirs()),
+	copyPortableConfig: bool = False,
+	startAfterInstall: bool = True,
+) -> None:
+	"""Install NVDA without showing the Install NVDA screen.
+	``core.main`` calls this for both the ``--install`` and ``--install-silent`` command line parameters.
+	Updates use ``--install``.
+	Only ``--install-silent`` makes the installation really silent in principle.
+	Otherwise, the post-installation dialog is shown.
+	When an existing installation is replaced, the user is also asked whether to end other running copies of NVDA.
+
+	:param copyPortableConfig: Whether to copy the configuration of the running copy to the installed copy.
+	:param startAfterInstall: Whether to start the installed copy after the installation.
+	"""
+	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
+	shouldTerminateRunningNVDA = (
+		not freshInstall
+		and not globalVars.appArgs.installSilent
+		and any(installer._getRunningNVDAProcesses(installer._getInstallDirs()))
 	)
 	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
-		log.info("Installation cancelled, the user chose not to end the running copies of NVDA")
+		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
 		_showInstallationFailedError()
 		return
-	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
@@ -490,7 +502,9 @@ class InstallerDialog(
 	def onInstall(self, evt):
 		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
-		shouldTerminateRunningNVDA = any(installer._getRunningNVDAProcesses(installer._getInstallDirs()))
+		shouldTerminateRunningNVDA = self.isUpdate and any(
+			installer._getRunningNVDAProcesses(installer._getInstallDirs()),
+		)
 		if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
 			return
 		self.Hide()

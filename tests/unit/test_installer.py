@@ -222,14 +222,19 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 			installerGui.doInstall(shouldTerminateRunningNVDA=shouldTerminateRunningNVDA)
 		self.assertEqual(execElevatedMock.call_args.args[1][-1], expected)
 
-	def _onInstall(self, isRunning: bool, confirm: bool) -> tuple[MagicMock, MagicMock, MagicMock]:
+	def _onInstall(
+		self,
+		isRunning: bool,
+		confirm: bool,
+		isUpdate: bool = True,
+	) -> tuple[MagicMock, MagicMock, MagicMock]:
 		"""Press Install on the install screen.
 
 		:return: The mocks standing in for the install screen,
 			:func:`installerGui._confirmTerminateRunningNVDA` and :func:`installerGui.doInstall`.
 		"""
 		dialog = MagicMock()
-		dialog.isUpdate = False
+		dialog.isUpdate = isUpdate
 		stack, confirmMock = self._patchRunningNVDA(isRunning, confirm)
 		with (
 			stack,
@@ -258,11 +263,18 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 		doInstallMock.assert_not_called()
 		dialog.Hide.assert_not_called()
 
+	def test_onInstall_freshInstall_doesNotAsk(self):
+		"""A fresh installation from the install screen never asks and never ends running copies."""
+		_dialog, confirmMock, doInstallMock = self._onInstall(isRunning=True, confirm=True, isUpdate=False)
+		confirmMock.assert_not_called()
+		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
+
 	def _doSilentInstall(
 		self,
 		isRunning: bool,
 		confirm: bool,
 		installSilent: bool = False,
+		freshInstall: bool = False,
 	) -> tuple[MagicMock, MagicMock, MagicMock]:
 		"""Run :func:`installerGui.doSilentInstall`, as for an update or a silent installation.
 
@@ -276,8 +288,12 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 			patch.object(installerGui.globalVars.appArgs, "enableStartOnLogon", None),
 			patch(
 				"gui.installerGui.installer._comparePreviousInstall",
-				return_value=installer.ComparisonState.FRESH_INSTALL,
+				return_value=installer.ComparisonState.FRESH_INSTALL
+				if freshInstall
+				else installer.ComparisonState.UPGRADE,
 			),
+			patch("gui.installerGui.installer.isDesktopShortcutInstalled", return_value=True),
+			patch("gui.installerGui.config.getStartOnLogonScreen", return_value=False),
 			patch("gui.installerGui.doInstall") as doInstallMock,
 			patch("gui.installerGui._showInstallationFailedError") as errorMock,
 		):
@@ -302,6 +318,16 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 			isRunning=True,
 			confirm=True,
 			installSilent=True,
+		)
+		confirmMock.assert_not_called()
+		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
+
+	def test_doSilentInstall_freshInstall_neverAsksOrTerminates(self):
+		"""A fresh installation from the command line never asks and never ends running copies."""
+		confirmMock, doInstallMock, _errorMock = self._doSilentInstall(
+			isRunning=True,
+			confirm=True,
+			freshInstall=True,
 		)
 		confirmMock.assert_not_called()
 		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
