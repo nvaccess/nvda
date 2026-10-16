@@ -16,9 +16,9 @@ import re
 from typing import (
 	Generic,
 	TypeVar,
+	cast,
 )
 from collections.abc import Callable
-
 import NVDAState
 from logHandler import log
 import globalVars
@@ -547,8 +547,8 @@ class SpeechSymbolProcessor:
 			[
 				# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 				r"(?P<rstripSpace>  +$)",
-				# Repeated characters: more than 3 repeats.
-				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters,  # noqa: UP031
+				# Whether characters are counted is decided by the symbolRepeatAnnouceThreshold setting.
+				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp)+)" % characters,  # noqa: UP031
 			],
 		)
 		# Simple symbols.
@@ -606,6 +606,9 @@ class SpeechSymbolProcessor:
 			# Repeated character.
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
+			threshold = cast(int, config.conf["speech"]["symbolRepeatAnnounceThreshold"])
+			if threshold == 0 or len(text) < threshold:
+				return "".join(self._regexp.sub(self._regexpRepl, char) for char in text)
 			if self._level >= symbol.level:
 				return f"  {len(text)} {symbol.replacement} "
 			elif symbol.preserve in [SYMPRES_ALWAYS, SYMPRES_NOREP]:

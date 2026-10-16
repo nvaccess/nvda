@@ -1815,6 +1815,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		self._appendSymbolDictionariesList(settingsSizerHelper)
 
+		self._appendRepeatedSymbolsThreshold(settingsSizerHelper)
+
 		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
 
 		self._appendSpeechDictionariesList(settingsSizerHelper)
@@ -1942,6 +1944,21 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["delayedCharacterDescriptions"],
 		)
 
+	def _appendRepeatedSymbolsThreshold(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		validation = config.conf.getConfigValidation(("speech", "symbolRepeatAnnounceThreshold"))
+		# Translators: This is the label for a spin box in the speech settings panel.
+		# Runs of the same symbol at least this long are spoken as a count, such as "4 star".
+		# 0 turns counting off.
+		repeatedSymbolsLabelText = _("Count repeated symbols from (0 = off)")
+		self.repeatedSymbolsThresholdEdit = settingsSizerHelper.addLabeledControl(
+			repeatedSymbolsLabelText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=int(validation.kwargs["min"]),
+			max=int(validation.kwargs["max"]),
+			initial=config.conf["speech"]["symbolRepeatAnnounceThreshold"],
+		)
+		self.bindHelpEvent("SpeechSettingsRepeatedSymbols", self.repeatedSymbolsThresholdEdit)
+
 	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
 		"""Take action when the autoLanguageSwitching checkbox is pressed."""
 		self.reportNotSupportedLanguageCombo.Enable(self.autoLanguageSwitchingCheckbox.IsChecked())
@@ -1961,6 +1978,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		self.sayAllReadingUnitCombo.saveCurrentValueToConf()
+		config.conf["speech"]["symbolRepeatAnnounceThreshold"] = self.repeatedSymbolsThresholdEdit.Value
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
@@ -2025,20 +2043,29 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			bool(self.unicodeNormalizationCombo._getControlCurrentFlag()),
 		)
 
-	def isValid(self) -> bool:
-		enabledSpeechModes = self.speechModesList.CheckedItems
-		if len(enabledSpeechModes) < 2:
-			log.debugWarning("Too few speech modes enabled.")
-			self._validationErrorMessageBox(
-				# Translators: Message shown when not enough speech modes are enabled.
-				message=_("At least two speech modes have to be checked."),
-				# Translators: Same as the label for the list of checkboxes where user can select speech modes that will
-				# be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
-				option=_("Modes available in the Cycle speech mode command"),
-				category=self.Parent.title,
-			)
-			return False
-		return super().isValid()
+		def isValid(self) -> bool:
+			if self.repeatedSymbolsThresholdEdit.Value == 1:
+				self._validationErrorMessageBox(
+					# Translators: Message shown when the repeated symbols count is set to 1.
+					message=_("Count repeated symbols from must be 0 (off), or 2 or more."),
+					# Translators: Same as the label for the repeated symbols spin box, without the final colon.
+					option=_("Count repeated symbols from (0 = off)"),
+					category=self.Parent.title,
+				)
+				return False
+			enabledSpeechModes = self.speechModesList.CheckedItems
+			if len(enabledSpeechModes) < 2:
+				log.debugWarning("Too few speech modes enabled.")
+				self._validationErrorMessageBox(
+					# Translators: Message shown when not enough speech modes are enabled.
+					message=_("At least two speech modes have to be checked."),
+					# Translators: Same as the label for the list of checkboxes where user can select speech modes that will
+					# be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
+					option=_("Modes available in the Cycle speech mode command"),
+					category=self.Parent.title,
+				)
+				return False
+			return super().isValid()
 
 
 class KeyboardSettingsPanel(SettingsPanel):
