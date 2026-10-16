@@ -271,6 +271,19 @@ def getBulletText(ppBulletFormat):
 		return chr(ppBulletFormat.character)
 
 
+def getNotesBodyShape(slide: comtypes.client.lazybind.Dispatch) -> comtypes.client.lazybind.Dispatch | None:
+	"""Finds the shape holding the speaker notes of a slide.
+	It is found by its placeholder type, as its position among the shapes of the notes page depends on the template.
+	"""
+	for shape in slide.notesPage.shapes:
+		try:
+			if shape.placeholderFormat.type == ppPlaceholderBody and shape.hasTextFrame:
+				return shape
+		except (AttributeError, comtypes.COMError):
+			continue
+	return None
+
+
 def walkPpShapeRange(ppShapeRange):
 	for ppShape in ppShapeRange:
 		if ppShape.type == msoGroup:
@@ -419,12 +432,13 @@ class DocumentWindow(PaneClassDC):
 			# TextRange object did not have a parent, and we're not in a table.
 			if self.ppActivePaneViewType == ppViewNotesPage and self.ppDocumentViewType == ppViewNormal:
 				# We're in the notes page in normal view
-				# The TextFrame in this case will be located in the notes page's second shape.
-				slide = sel.slideRange[1]
-				notesPage = slide.notesPage[1]
-				shape = notesPage.shapes[2]
-				ppObj = shape.textFrame
-				return NotesTextFrame(windowHandle=self.windowHandle, documentWindow=self, ppObject=ppObj)
+				notesBody = getNotesBodyShape(sel.slideRange[1])
+				if notesBody is not None:
+					return NotesTextFrame(
+						windowHandle=self.windowHandle,
+						documentWindow=self,
+						ppObject=notesBody.textFrame,
+					)
 			if ppObj:
 				return TextFrame(windowHandle=self.windowHandle, documentWindow=self, ppObject=ppObj)
 		if selType == ppSelectionSlides:
@@ -1554,19 +1568,22 @@ class SlideShowWindow(PaneClassDC):
 			else:
 				yield label
 
-	def _get_basicText(self):
+	def _get_basicText(self) -> str:
 		if not self.currentSlide:
 			return self.name
 		chunks = []
 		ppObject = self.currentSlide.ppObject
+		shapes = ppObject.shapes
 		if self.notesMode:
-			ppObject = ppObject.notesPage
+			# The notes page also holds the slide image, headers, footers and page numbers, which are not notes.
+			notesBody = getNotesBodyShape(ppObject)
+			shapes = [notesBody] if notesBody is not None else []
 		# Maintain a list of fields and the offsets at which they occur.
 		# For now, these are only control fields that consume a space.
 		fields = self.basicTextFields = []
 		# Incrementation of textLen must include line feed added by join.
 		textLen = 0
-		for shape in ppObject.shapes:
+		for shape in shapes:
 			for chunk in self._getShapeText(shape):
 				if isinstance(chunk, textInfos.ControlField):
 					fields.append((textLen, chunk))
