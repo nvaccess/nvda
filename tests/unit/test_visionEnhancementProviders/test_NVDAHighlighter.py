@@ -15,7 +15,7 @@ from visionEnhancementProviders import NVDAHighlighter
 
 
 class TestUpdateContextRect(unittest.TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		# Avoid __init__, which starts the highlighter window thread.
 		self.highlighter = NVDAHighlighter.NVDAHighlighter.__new__(NVDAHighlighter.NVDAHighlighter)
 		self.highlighter.contextToRectMap = {Context.REVIEW: RectLTRB(10, 20, 30, 40)}
@@ -23,7 +23,7 @@ class TestUpdateContextRect(unittest.TestCase):
 		patcher.start()
 		self.addCleanup(patcher.stop)
 
-	def test_unavailableLocationClearsHighlight(self):
+	def test_unavailableLocationClearsHighlight(self) -> None:
 		"""#20860: An unavailable location clears the highlight instead of raising."""
 		with patch.object(NVDAHighlighter, "getContextRect", side_effect=LocationUnavailableError()):
 			self.highlighter.updateContextRect(Context.REVIEW)

@@ -212,7 +212,7 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
 		self.assertEqual(self.magnifier._consecutiveErrors, 1)
 
-	def testUpdateMagnifierKeepsViewWhenTrackingUnavailable(self):
+	def testUpdateMagnifierKeepsViewWhenTrackingUnavailable(self) -> None:
 		"""#20860: An unavailable tracked location keeps the current view without counting as an error."""
 		self.magnifier._isActive = True
 		self.magnifier.currentCoordinates = self.focusCoords
@@ -231,7 +231,7 @@ class TestMagnifier(_TestMagnifier):
 		self.assertEqual(self.magnifier._consecutiveErrors, 0)
 		self.magnifier._startTimer.assert_called_once_with(self.magnifier._updateMagnifier)
 
-	def testUpdateMagnifierDoesNotCountTrackingErrors(self):
+	def testUpdateMagnifierDoesNotCountTrackingErrors(self) -> None:
 		"""#20860: Only Magnification API errors trigger recovery; the timer keeps running after other errors."""
 		self.magnifier._isActive = True
 		self.magnifier._consecutiveErrors = Magnifier._MAX_CONSECUTIVE_ERRORS - 1

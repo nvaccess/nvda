@@ -14,7 +14,7 @@ from comtypes import COMError
 
 
 class TestSetCurrentMode(unittest.TestCase):
-	def test_modeOnlyChangeDoesNotFetchPosition(self):
+	def test_modeOnlyChangeDoesNotFetchPosition(self) -> None:
 		"""#20860: Without updating the review position, no position is fetched, so none can fail."""
 		getPosition = Mock(side_effect=COMError(-2147467259, "Unspecified error", None))
 		with (
@@ -27,7 +27,7 @@ class TestSetCurrentMode(unittest.TestCase):
 		getPosition.assert_not_called()
 		setReviewPosition.assert_not_called()
 
-	def test_modeChangeChecksPositionIsAvailable(self):
+	def test_modeChangeChecksPositionIsAvailable(self) -> None:
 		getPosition = Mock(return_value=None)
 		with (
 			patch.object(review, "modes", [("object", "Object", getPosition)]),
@@ -40,6 +40,6 @@ class TestSetCurrentMode(unittest.TestCase):
 		getPosition.assert_called_once()
 		setReviewPosition.assert_not_called()
 
-	def test_unknownModeRaises(self):
+	def test_unknownModeRaises(self) -> None:
 		with self.assertRaises(LookupError):
 			review.setCurrentMode("invalid", updateReviewPosition=False)

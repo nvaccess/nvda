@@ -208,7 +208,7 @@ class TestNetFrameworkWinFormsComboBox(unittest.TestCase):
 
 
 class TestUIATextInfoCaret(unittest.TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.obj = Mock()
 		self.obj.UIATextPattern.GetSelection.return_value.length = 1
 		# #20860: Windows Terminal can fail to collapse the selection to the caret.
@@ -220,11 +220,11 @@ class TestUIATextInfoCaret(unittest.TestCase):
 		patcher.start()
 		self.addCleanup(patcher.stop)
 
-	def test_collapseFailureRaisesRuntimeError(self):
+	def test_collapseFailureRaisesRuntimeError(self) -> None:
 		with self.assertRaises(RuntimeError):
 			UIATextInfo(self.obj, textInfos.POSITION_CARET)
 
-	def test_objectReviewFallsBackToFirstPosition(self):
+	def test_objectReviewFallsBackToFirstPosition(self) -> None:
 		first = Mock()
 		self.obj.makeTextInfo.side_effect = lambda position: (
 			first if position == textInfos.POSITION_FIRST else UIATextInfo(self.obj, position)

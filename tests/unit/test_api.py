@@ -18,7 +18,7 @@ from NVDAObjects import NVDAObject
 
 
 class TestGetReviewPosition(unittest.TestCase):
-	def setUp(self):
+	def setUp(self) -> None:
 		self.obj = Mock()
 		for name, value in (
 			("navigatorObject", self.obj),
@@ -29,13 +29,13 @@ class TestGetReviewPosition(unittest.TestCase):
 			patcher.start()
 			self.addCleanup(patcher.stop)
 
-	def test_cachedPositionIsReturned(self):
+	def test_cachedPositionIsReturned(self) -> None:
 		position = globalVars.reviewPosition = Mock()
 		with patch.object(review, "getPositionForCurrentMode") as getPosition:
 			self.assertIs(api.getReviewPosition(), position)
 		getPosition.assert_not_called()
 
-	def test_failureIsNotCachedAndKeepsCause(self):
+	def test_failureIsNotCachedAndKeepsCause(self) -> None:
 		"""#20860: A failure raises LocationUnavailableError, and a later call can succeed."""
 		position = Mock()
 		for error in (
@@ -59,12 +59,12 @@ class TestGetReviewPosition(unittest.TestCase):
 					self.assertIs(api.getReviewPosition(), position)
 				self.assertIs(globalVars.reviewPositionObj, self.obj)
 
-	def test_noNavigatorObject(self):
+	def test_noNavigatorObject(self) -> None:
 		globalVars.navigatorObject = None
 		with self.assertRaises(exceptions.LocationUnavailableError):
 			api.getReviewPosition()
 
-	def test_unexpectedErrorsPropagate(self):
+	def test_unexpectedErrorsPropagate(self) -> None:
 		for error in (AttributeError(), TypeError(), exceptions.CallCancelled()):
 			with (
 				self.subTest(error=error),
@@ -75,7 +75,7 @@ class TestGetReviewPosition(unittest.TestCase):
 
 
 class TestSetNavigatorObject(unittest.TestCase):
-	def test_caretFailureDoesNotAbortFocusHandling(self):
+	def test_caretFailureDoesNotAbortFocusHandling(self) -> None:
 		"""#20860: Failing to get the caret for the review position must not stop focus handling."""
 		treeInterceptor = Mock(spec=treeInterceptorHandler.DocumentTreeInterceptor)
 		treeInterceptor.isReady = True

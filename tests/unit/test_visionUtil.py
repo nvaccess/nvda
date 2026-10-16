@@ -15,7 +15,7 @@ from vision.constants import Context
 
 
 class TestGetContextRect(unittest.TestCase):
-	def test_unavailableReviewPositionPropagates(self):
+	def test_unavailableReviewPositionPropagates(self) -> None:
 		error = LocationUnavailableError()
 		with (
 			patch.object(util.api, "getReviewPosition", side_effect=error),
@@ -24,7 +24,7 @@ class TestGetContextRect(unittest.TestCase):
 			util.getContextRect(Context.REVIEW)
 		self.assertIs(caught.exception, error)
 
-	def test_retrievalErrorsRaiseLocationUnavailable(self):
+	def test_retrievalErrorsRaiseLocationUnavailable(self) -> None:
 		"""#20860: Retrieval errors are raised as a single error type, keeping the original as the cause."""
 		for error in (
 			COMError(-2147467259, "Unspecified error", None),
@@ -40,7 +40,7 @@ class TestGetContextRect(unittest.TestCase):
 				util.getContextRect(Context.REVIEW)
 			self.assertIs(caught.exception.__cause__, error)
 
-	def test_browseModeCaretError(self):
+	def test_browseModeCaretError(self) -> None:
 		error = COMError(-2147467259, "Unspecified error", None)
 		with (
 			patch.object(util.api, "isCursorManager", return_value=True),
@@ -50,7 +50,7 @@ class TestGetContextRect(unittest.TestCase):
 			util.getContextRect(Context.BROWSEMODE, obj=Mock())
 		self.assertIs(caught.exception.__cause__, error)
 
-	def test_unexpectedErrorsPropagate(self):
+	def test_unexpectedErrorsPropagate(self) -> None:
 		for error in (AttributeError(), TypeError(), CallCancelled()):
 			with (
 				self.subTest(error=error),
