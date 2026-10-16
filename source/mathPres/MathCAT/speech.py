@@ -62,7 +62,8 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	synth: SynthDriver = getSynth()
 	# I tried the engines on a 180 word excerpt. The speeds do not change linearly and differ a it between engines
 	# At "50" espeak finished in 46 sec, sapi in 75 sec, and one core in 70; at '100' one core was much slower than the others
-	wpm: int = 2 * getSynth()._get_rate()
+	# The rate can be 0, so make sure we never divide by zero when scaling breaks.
+	wpm: int = max(2 * getSynth()._get_rate(), 2)
 	breakMulti: float = 180.0 / wpm
 	supportedCommands: set[type[SynthCommand]] = synth.supportedCommands
 	useBreak: bool = BreakCommand in supportedCommands
