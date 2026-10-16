@@ -1090,10 +1090,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		:raises ValueError: If the start index is greater than the end index.
 		"""
 		if not (start <= end):
-			raise ValueError(
-				f"start must be less than or equal to end. Got {start=}, {end=}.",
-				stack_info=True,
-			)
+			raise ValueError(f"start must be less than or equal to end. Got {start=}, {end=}.")
 		maxLength = self._getStoryLength()
 		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
 		if not (0 <= start < maxLength) and clamp:
@@ -1202,9 +1199,9 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		formatField = textInfos.FormatField()
 		curRun = None
 		if calculateOffsets:
-			curRun, startOffset, endOffset = self._getCurrentRun(self)
+			curRun, startOffset, endOffset = self._getCurrentRun(offset)
 		if not curRun:
-			curRun = self.obj.ppObject.textRange.characters(offset + 1)
+			curRun = self.obj.ppObject.textRange.characters(offset + 1, 1)
 			startOffset, endOffset = offset, self._endOffset
 		if (
 			self._startOffset == 0
@@ -1241,9 +1238,11 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getLinkDataAtCaretPosition(self) -> _LinkData | None:
 		offset = self._getCaretOffset()
 		curRun, _startOffset, _endOffset = self._getCurrentRun(offset)
+		if curRun is None:
+			return None
 		mouseClickSetting = curRun.actionSettings(ppMouseClick)
 		if mouseClickSetting.action == ppActionHyperlink:
-			return textInfos._LinkData(
+			return _LinkData(
 				displayText=mouseClickSetting.Hyperlink.TextToDisplay,
 				destination=mouseClickSetting.Hyperlink.Address,
 			)
