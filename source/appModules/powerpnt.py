@@ -3,7 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (  # noqa: I001
+from collections.abc import Iterator  # noqa: I001
+from typing import (
 	Any,
 )
 
@@ -269,6 +270,16 @@ def getBulletText(ppBulletFormat):
 		)  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
 		return chr(ppBulletFormat.character)
+
+
+def iterParagraphTexts(textRange: comtypes.client.lazybind.Dispatch) -> Iterator[str]:
+	"""Yields the text of each non-blank paragraph, preceded by its own bullet or number."""
+	for paragraph in textRange.paragraphs():
+		bulletText = getBulletText(paragraph.paragraphFormat.bullet)
+		text = paragraph.text.replace("\x0b", "\n").replace("\r", "\n").rstrip()
+		text = " ".join([t for t in (bulletText, text) if t])
+		if text and not text.isspace():
+			yield text
 
 
 def walkPpShapeRange(ppShapeRange):
@@ -972,9 +983,10 @@ class Shape(PpObject):
 		ppAutoShapeType = self.ppAutoShapeType
 		return msoAutoShapeTypes.msoAutoShapeTypeToRoleText.get(ppAutoShapeType)
 
-	def _get_value(self):
+	def _get_value(self) -> str | None:
 		if self.ppObject.hasTextFrame:
-			return self.ppObject.textFrame.textRange.text
+			return "\n".join(iterParagraphTexts(self.ppObject.textFrame.textRange))
+		return None
 
 	def _get_states(self):
 		states = super().states
@@ -1508,14 +1520,7 @@ class SlideShowWindow(PaneClassDC):
 
 	def _getShapeText(self, shape, cellShape=False):
 		if shape.hasTextFrame:
-			for p in shape.textFrame.textRange.paragraphs():
-				bulletText = getBulletText(p.paragraphFormat.bullet)
-				text = p.text.replace("\x0b", "\n")
-				text = text.replace("\r", "\n")
-				text = text.rstrip()
-				text = " ".join([t for t in (bulletText, text) if t])
-				if text and not text.isspace():
-					yield text
+			yield from iterParagraphTexts(shape.textFrame.textRange)
 			return
 		if cellShape:
 			return
