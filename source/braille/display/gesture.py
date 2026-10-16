@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau, Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau, Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt, Christos Bouronikos
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -117,7 +117,9 @@ class BrailleDisplayGesture(inputCore.InputGesture):
 			# Model based ids should take priority.
 			if self._cellIndexesStr:
 				ids.insert(0, f"br({self.source}.{self.model}):{self.id}{self._cellIndexesStr}")
-			ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
+				ids.insert(1, f"br({self.source}.{self.model}):{self.id}")
+			else:
+				ids.insert(0, f"br({self.source}.{self.model}):{self.id}")
 		from ..input.gesture import BrailleInputGesture
 
 		if isinstance(self, BrailleInputGesture):
