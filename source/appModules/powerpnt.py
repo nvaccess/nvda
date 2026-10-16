@@ -1653,7 +1653,18 @@ class AppModule(appModuleHandler.AppModule):
 
 	_ppApplicationFromROT = None
 
-	def _getPpObjectModelFromROT(self, useRPC=False):
+	def _getPpObjectModelFromROT(
+		self,
+		useRPC: bool = False,
+		*,
+		slideShow: bool = False,
+	) -> comtypes.client.lazybind.Dispatch | None:
+		"""Fetches the object model of the active slide show or, otherwise, of the first document window.
+		:param useRPC: Whether to get the application through the app module's RPC connection.
+		:param slideShow: Whether the caller is a slide show window.
+			Such a window may belong to a slide show which is not the active window,
+			for example in presenter view, so the slide show is used even when it is not active.
+		"""
 		if not self._ppApplicationFromROT:
 			try:
 				self._ppApplicationFromROT = comHelper.getActiveObject(
@@ -1680,7 +1691,7 @@ class AppModule(appModuleHandler.AppModule):
 				isActiveSlideShow = ppSlideShowWindow.active
 			except comtypes.COMError:
 				log.debugWarning("slideShowWindow.active", exc_info=True)
-		if isActiveSlideShow:
+		if ppSlideShowWindow and (isActiveSlideShow or slideShow):
 			return ppSlideShowWindow
 		try:
 			window = pres.windows.item(1)
@@ -1688,16 +1699,20 @@ class AppModule(appModuleHandler.AppModule):
 			window = None
 		return window
 
-	def _fetchPpObjectModelHelper(self, windowHandle=None):
+	def _fetchPpObjectModelHelper(
+		self,
+		windowHandle: int | None = None,
+	) -> comtypes.client.lazybind.Dispatch | None:
 		m = None
+		slideShow = bool(windowHandle and winUser.getClassName(windowHandle) == "screenClass")
 		# Its only safe to get the object model from PowerPoint 2003 to 2010 windows.
 		# In PowerPoint 2013 protected mode it causes security/stability issues
 		if windowHandle and winUser.getClassName(windowHandle) == "paneClassDC":
 			m = self._getPpObjectModelFromWindow(windowHandle)
 		if not m:
-			m = self._getPpObjectModelFromROT(useRPC=True)
+			m = self._getPpObjectModelFromROT(useRPC=True, slideShow=slideShow)
 		if not m:
-			m = self._getPpObjectModelFromROT()
+			m = self._getPpObjectModelFromROT(slideShow=slideShow)
 		return m
 
 	def fetchPpObjectModel(self, windowHandle=None):
