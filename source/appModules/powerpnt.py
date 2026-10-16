@@ -37,6 +37,7 @@ import braille
 from cursorManager import ReviewCursorManager
 import controlTypes
 from controlTypes import TextPosition
+from controlTypes.formatFields import TextAlign
 from logHandler import log
 import scriptHandler
 from locationHelper import RectLTRB, RectLTWH
@@ -101,6 +102,17 @@ class ppEApplicationSink(comtypes.COMObject):
 
 # Bullet types
 ppBulletNumbered = 2
+
+# PpParagraphAlignment, as exposed by ParagraphFormat.Alignment.
+ppParagraphAlignmentToTextAlign: dict[int, TextAlign] = {
+	1: TextAlign.LEFT,
+	2: TextAlign.CENTER,
+	3: TextAlign.RIGHT,
+	4: TextAlign.JUSTIFY,
+	5: TextAlign.DISTRIBUTE,
+	6: TextAlign.DISTRIBUTE,
+	7: TextAlign.JUSTIFY,
+}
 
 # media types
 ppVideo = 3
@@ -1203,15 +1215,24 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if not curRun:
 			curRun = self.obj.ppObject.textRange.characters(offset + 1, 1)
 			startOffset, endOffset = offset, self._endOffset
-		if (
-			self._startOffset == 0
-			or offset == self._startOffset
-			and self._getTextRange(offset - 1, offset).startswith("\n")
-		):
-			b = curRun.paragraphFormat.bullet
-			bulletText = getBulletText(b)
+		# A font run can span several paragraphs, each with its own bullet, number and alignment.
+		paragraphIndex, paragraphStart, paragraphEnd = self._getOffsets(
+			self.obj.ppObject.textRange.paragraphs(),
+			offset,
+		)
+		paragraphFormat = self.obj.ppObject.textRange.paragraphs(paragraphIndex + 1, 1).paragraphFormat
+		if calculateOffsets:
+			startOffset = max(startOffset, paragraphStart)
+			endOffset = min(endOffset, paragraphEnd)
+		if offset == paragraphStart:
+			bulletText = getBulletText(paragraphFormat.bullet)
 			if bulletText:
 				formatField["line-prefix"] = bulletText
+				formatField["line-prefix_speakAlways"] = True
+		if formatConfig["reportAlignment"]:
+			alignment = ppParagraphAlignmentToTextAlign.get(paragraphFormat.alignment)
+			if alignment is not None:
+				formatField["text-align"] = alignment
 		font = curRun.font
 		if formatConfig["reportFontName"]:
 			formatField["font-name"] = font.name
