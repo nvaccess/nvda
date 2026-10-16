@@ -1542,6 +1542,14 @@ class SlideShowWindow(PaneClassDC):
 				)
 			return
 		label = shape.alternativeText
+		if shapeType == msoMedia:
+			# A video or audio clip is announced as such, even when it has no alternative text.
+			mediaRole = {ppVideo: controlTypes.Role.VIDEO, ppAudio: controlTypes.Role.AUDIO}.get(
+				shape.mediaType
+			)
+			if mediaRole:
+				yield " ".join(part for part in (mediaRole.displayString, label) if part)
+				return
 		if not label:
 			try:
 				label = shape.title
