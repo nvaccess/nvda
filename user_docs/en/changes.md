@@ -21,6 +21,7 @@
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* NVDA no longer stops speaking and responding to the keyboard after a long freeze, such as when a Chromium-based browser is slow to respond on busy pages like WhatsApp Web. (#20846, @ChristosBouronikos)
 
 #### Performance
 
