@@ -43,6 +43,7 @@
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
   * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+* In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
 * In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
 
 #### Add-on Store
@@ -56,7 +57,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Updated components:
-  * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
+  * wxPython to 4.3.2, which is based on wxWidgets 3.3.4. (#20882, #20983, @LeonarddeR, @cary-rowen)
 * The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
 * Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
 A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
@@ -70,6 +71,7 @@ A read completing on the same handle no longer ends the wait while the write is 
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
+* `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
 * Added `exceptions.LocationUnavailableError`, a subclass of `LookupError`, raised when a cursor position or its screen location cannot currently be retrieved. (#20860)
 
 #### API Breaking Changes
@@ -83,6 +85,10 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 * The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
 * `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
 * `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
+* Some symbols in `comInterfaces.tom` have changed, as it is now generated from the type library in `msftedit.dll`: (#20987, @LeonarddeR)
+  * `ITextDocument2` is now the Text Object Model 2 interface.
+  The interface previously available under this name has been removed with no replacement.
+  * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
 * `api.getReviewPosition` and `vision.util.getContextRect` now raise `exceptions.LocationUnavailableError` when the position or location cannot be retrieved, instead of the underlying error, such as `COMError` or `RuntimeError`. (#20860)
 The underlying error is available as the cause.
 * `review.setCurrentMode` no longer fetches a review position when `updateReviewPosition` is `False`, so the mode is set without checking that a position is available. (#20860)
