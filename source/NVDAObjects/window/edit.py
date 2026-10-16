@@ -3,33 +3,34 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes  # noqa: I001
-from comtypes import BSTR, COMError
-import comtypes.client.dynamic
-import colors
-import eventHandler
-import comInterfaces.tom
-from logHandler import log
-import languageHandler
-import config
-import oleacc
-import winKernel
+import ctypes
+
 import api
-import winUser
-from winAPI.winUser.functions import GetSysColor
-from winAPI.winUser.constants import SysColorIndex
+import colors
+import comInterfaces.tom
+import comtypes.client.dynamic
+import config
+import controlTypes
+import eventHandler
+import languageHandler
+import locationHelper
+import NVDAHelper.localLib
+import oleacc
 import textInfos
 import textInfos.offsets
-import controlTypes
-from controlTypes import TextPosition, TextAlign
-from . import Window
-from ..behaviors import EditableTextWithAutoSelectDetection
-import watchdog
-import locationHelper
 import textUtils
+import watchdog
+import winKernel
+import winUser
+from comtypes import BSTR, COMError
+from controlTypes import TextAlign, TextPosition
+from logHandler import log
 from textUtils.segFlag import CharSegFlag, WordSegFlag
-import NVDAHelper.localLib
+from winAPI.winUser.constants import SysColorIndex
+from winAPI.winUser.functions import GetSysColor
 
+from ..behaviors import EditableTextWithAutoSelectDetection
+from . import Window
 
 selOffsetsAtLastCaretEvent = None
 
