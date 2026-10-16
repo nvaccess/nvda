@@ -47,6 +47,12 @@
 
 * The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
 
+#### Magnifier
+
+* Profiles do no longer interfer with Magnifier settings.
+Previously, saving magnifier settings could be uneffective while a profile was active.
+NVDA magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
