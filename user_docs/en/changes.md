@@ -42,6 +42,7 @@
   * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
 * In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
 * In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
+* In Microsoft PowerPoint slide shows, NVDA now reads the current slide, rather than the previous one, after returning from the slide chooser (`control+s`). Braille is also updated when the slide changes, even when automatic reading is disabled. (#17605, #11714, #13471, @ChristosBouronikos)
 
 #### Add-on Store
 

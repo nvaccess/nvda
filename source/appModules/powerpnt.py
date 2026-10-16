@@ -1424,10 +1424,14 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 
 	hadFocusOnce = False
 
-	def event_treeInterceptor_gainFocus(self):
-		braille.handler.handleGainFocus(self)
+	def event_treeInterceptor_gainFocus(self) -> None:
+		# The slide may have changed while another window, such as the slide chooser, had focus.
+		changed = self.rootNVDAObject.handleSlideChange(report=False)
 		self.rootNVDAObject.reportFocus()
-		self.reportNewSlide(self.hadFocusOnce)
+		self.reportNewSlide(
+			self.hadFocusOnce and not changed,
+			resetSelection=changed or not self.hadFocusOnce,
+		)
 		if not self.hadFocusOnce:
 			self.hadFocusOnce = True
 
@@ -1439,14 +1443,19 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	def makeTextInfo(self, position):
 		return self.TextInfo(self, position)
 
-	def reportNewSlide(self, suppressSayAll: bool = False):
+	def reportNewSlide(self, suppressSayAll: bool = False, *, resetSelection: bool = True) -> None:
 		"""Reports a new slide, activating say all when appropriate.
 		:param suppressSayAll: When say all should be suppressed always, e.g.
 			because tree interceptor gets focus multiple times.
+		:param resetSelection: Whether to move the caret to the start of the slide.
+			This is not wanted when the same slide is shown again.
 		"""
+		if resetSelection:
+			self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
+		# Braille is updated even when say all is disabled or suppressed.
+		braille.handler.handleGainFocus(self)
 		doSayAll = not suppressSayAll and config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]
 		if doSayAll:
-			self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
 			sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
 		else:
 			info = self.selection
@@ -1585,21 +1594,29 @@ class SlideShowWindow(PaneClassDC):
 				self.basicText = _("Empty slide")
 		return self.basicText or _("Empty slide")
 
-	def handleSlideChange(self):
+	def handleSlideChange(self, *, report: bool = True) -> bool:
+		"""Detects that the slide shown has changed, discarding the text of the previous slide.
+		:param report: Whether to report the new slide.
+		:returns: Whether the slide has changed.
+		"""
+		# The name of this window depends on the slide, so a cached name would be that of the previous slide.
+		self.invalidateCache()
 		try:
 			del self.__dict__["currentSlide"]
 		except KeyError:
 			pass
 		curSlideChangeID = self.name
 		if curSlideChangeID == self._lastSlideChangeID:
-			return
+			return False
 		self._lastSlideChangeID = curSlideChangeID
 		try:
 			del self.__dict__["basicText"]
 		except KeyError:
 			pass
-		self.reportFocus()
-		self.treeInterceptor.reportNewSlide()
+		if report:
+			self.reportFocus()
+			self.treeInterceptor.reportNewSlide()
+		return True
 
 
 class AppModule(appModuleHandler.AppModule):
