@@ -52,6 +52,11 @@ objectModelWindowClasses = set(["paneClassDC", "mdiClass", "screenClass"])  # no
 
 MATHTYPE_PROGID = "Equation.DSMT"
 
+# Fonts in which the characters are symbols, so that the character typed does not describe what is shown.
+symbolFontNames: frozenset[str] = frozenset(
+	{"Symbol", "Webdings", "Wingdings", "Wingdings 2", "Wingdings 3"},
+)
+
 
 # comtypes COM interface definition for Powerpoint application object's events
 class EApplication(IDispatch):
@@ -1508,6 +1513,12 @@ class SlideShowWindow(PaneClassDC):
 
 	def _getShapeText(self, shape, cellShape=False):
 		if shape.hasTextFrame:
+			# The text of a symbol, such as the letter "q" for a symbol in Webdings, is meaningless.
+			# Its alternative text, when it has one, describes it.
+			label = shape.alternativeText
+			if label and shape.textFrame.textRange.font.name in symbolFontNames:
+				yield label
+				return
 			for p in shape.textFrame.textRange.paragraphs():
 				bulletText = getBulletText(p.paragraphFormat.bullet)
 				text = p.text.replace("\x0b", "\n")
