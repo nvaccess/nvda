@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2026 NV Access Limited, Leonard de Ruijter, Christos Bouronikos
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from typing import (  # noqa: I001
 	Any,
@@ -325,7 +325,7 @@ class DocumentWindow(PaneClassDC):
 	def _isEqual(self, other):
 		return self.windowHandle == other.windowHandle and self.name == other.name
 
-	def _get_name(self):
+	def _get_name(self) -> str:
 		label = ppViewTypeLabels.get(self.ppActivePaneViewType)
 		if not label:
 			return super(PaneClassDC, self).name
@@ -333,7 +333,7 @@ class DocumentWindow(PaneClassDC):
 		if slide:
 			# The selected slide or title shape reports the title itself.
 			slideLabel = slide.slideNumberLabel if isinstance(slide, Slide) else slide.name
-			label = " - ".join([slideLabel, label])  # noqa: FLY002
+			label = f"{slideLabel} - {label}"
 		return label
 
 	def _get_currentSlide(self):
@@ -528,7 +528,7 @@ class PpObject(Window):
 	def _get_parent(self):
 		return self.documentWindow
 
-	def reportFocus(self):
+	def reportFocus(self) -> None:
 		# Announce the content section once when leaving the title or entering a new slide.
 		slide = self if isinstance(self, Slide) else self.documentWindow.currentSlide
 		shape = self.parent if isinstance(self, TextFrame) else self
@@ -580,13 +580,13 @@ class SlideBase(PpObject):
 class Slide(SlideBase):
 	"""Represents a single slide in Powerpoint."""
 
-	def _get_titleShape(self):
+	def _get_titleShape(self) -> comtypes.client.lazybind.Dispatch | None:
 		try:
 			return self.ppObject.shapes.title
 		except comtypes.COMError:
 			return None
 
-	def _get_titleText(self):
+	def _get_titleText(self) -> str:
 		shape = self.titleShape
 		if shape:
 			try:
@@ -595,7 +595,7 @@ class Slide(SlideBase):
 				pass
 		return ""
 
-	def _get_slideNumberLabel(self):
+	def _get_slideNumberLabel(self) -> str:
 		try:
 			number = self.ppObject.slideNumber
 		except comtypes.COMError:
@@ -603,12 +603,13 @@ class Slide(SlideBase):
 		# Translators: the label for a slide in Microsoft PowerPoint.
 		return _("Slide {slideNumber}").format(slideNumber=number)
 
-	def _get_name(self):
+	def _get_name(self) -> str:
 		name = self.slideNumberLabel
 		title = self.titleText
 		if title:
 			# Translators: The title text of a PowerPoint slide, preceded by its label.
-			name += " - " + _("Slide title: {title}").format(title=title)
+			titleLabel = _("Slide title: {title}").format(title=title)
+			name = f"{name} - {titleLabel}"
 		return name
 
 	def _get_positionInfo(self):
@@ -963,14 +964,14 @@ class Shape(PpObject):
 		self.ppMediaType = self.ppObject.mediaType
 		return self.ppMediaType
 
-	def _get_isSlideTitle(self):
+	def _get_isSlideTitle(self) -> bool:
 		slide = self.documentWindow.currentSlide
 		if not isinstance(slide, Slide) or self.documentWindow.ppActivePaneViewType == ppViewNotesPage:
 			return False
 		titleShape = slide.titleShape
 		return bool(titleShape and self.ppObject.ID == titleShape.ID)
 
-	def _get_name(self):
+	def _get_name(self) -> str | None:
 		"""The name is calculated firstly from the object's title, otherwize if its a generic shape, then  part of its programmatic name is used."""
 		# Powerpoint 2003 shape objects do not have a title property
 		try:
@@ -1539,7 +1540,7 @@ class SlideShowWindow(PaneClassDC):
 	treeInterceptorClass = ReviewableSlideshowTreeInterceptor
 	notesMode = False  #: If true then speaker notes will be exposed as this object's basicText, rather than the actual slide content.
 
-	def _get_name(self):
+	def _get_name(self) -> str:
 		if self.currentSlide:
 			if self.notesMode:
 				# Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
@@ -1601,7 +1602,7 @@ class SlideShowWindow(PaneClassDC):
 			else:
 				yield label
 
-	def _get_basicText(self):
+	def _get_basicText(self) -> str:
 		if not self.currentSlide:
 			return self.name
 		chunks = []
@@ -1650,7 +1651,7 @@ class SlideShowWindow(PaneClassDC):
 				self.basicText = _("Empty slide")
 		return self.basicText or _("Empty slide")
 
-	def handleSlideChange(self):
+	def handleSlideChange(self) -> None:
 		try:
 			del self.__dict__["currentSlide"]
 		except KeyError:
