@@ -6714,11 +6714,14 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
 		if (
 			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
-			or isinstance(self.currentCategory, GeneralSettingsPanel)
-			or isinstance(self.currentCategory, AddonStorePanel)
-			or isinstance(self.currentCategory, RemoteSettingsPanel)
-			or isinstance(self.currentCategory, MathSettingsPanel)
-			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
+			or isinstance(self.currentCategory, (
+				GeneralSettingsPanel,
+				MagnifierPanel,
+				AddonStorePanel,
+				RemoteSettingsPanel,
+				MathSettingsPanel,
+				PrivacyAndSecuritySettingsPanel,
+			))
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
