@@ -8,14 +8,14 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
-import sys  # noqa: I001
 import os
+import sys
+
 import globalVars
 import logHandler
 import monkeyPatches.comtypesMonkeyPatches
 import NVDAState
 import winBindings.kernel32
-
 
 # Ensure that slave uses generated comInterfaces by adding our comInterfaces to `comtypes.gen` search path.
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
@@ -35,7 +35,8 @@ globalVars.appPid = os.getpid()
 
 
 def getNvdaHelperRemote():
-	import ctypes  # noqa: I001
+	import ctypes
+
 	import winKernel
 
 	h = winBindings.kernel32.LoadLibraryEx(
@@ -71,7 +72,8 @@ def main():
 
 			COMRegistrationFixes.fixCOMRegistrations()
 		elif action == "launchNVDA":
-			import subprocess  # noqa: I001
+			import subprocess
+
 			import shellapi
 			import winUser
 

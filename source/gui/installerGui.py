@@ -3,16 +3,26 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import FormatError, GetLastError, byref  # noqa: I001
-from ctypes.wintypes import HANDLE
 import os
 import subprocess
 import sys
+from ctypes import FormatError, GetLastError, byref
+from ctypes.wintypes import HANDLE
 
+import config
+import core
+import globalVars
+import installer
+import systemUtils
+import ui
+import winUser
+import wx
+from installer import ComparisonState
+from logHandler import log
+from NVDAState import WritePaths
 from utils.security import isRunningElevated
-from winBindings.user32 import EWX, SHTDN_REASON, ExitWindowsEx
 from winAPI.constants import SystemErrorCodes
-from winBindings.kernel32 import GetCurrentProcess
+from winBindings import shell32
 from winBindings.advapi32 import (
 	SE_PRIVILEGE,
 	TOKEN_PRIVILEGES,
@@ -22,22 +32,14 @@ from winBindings.advapi32 import (
 	PrivilegeName,
 	TokenAccessRight,
 )
-import winUser
-import wx
-import config
-import core
-from winBindings import shell32
-import globalVars
-import installer
-from installer import ComparisonState
-from logHandler import log
+from winBindings.kernel32 import GetCurrentProcess
+from winBindings.user32 import EWX, SHTDN_REASON, ExitWindowsEx
+
 import gui
-from gui import guiHelper
 import gui.contextHelp
+from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import systemUtils
-import ui
-from NVDAState import WritePaths
+
 from .message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 
 
@@ -205,7 +207,7 @@ def _confirmTerminateRunningNVDA() -> bool:
 	message = _(
 		# Translators: a message dialog asking whether to end running copies of NVDA before installing
 		"Other copies of NVDA are running on this system. "
-		"This can be a copy on the sign-in screen or on another logged-on user account. "
+		"This can be a copy on the Windows sign-in screen or on another logged-on user account. "
 		"They must be ended to continue the installation. "
 		"They will not be restarted automatically. "
 		"Do you want to end them now?",
