@@ -3,44 +3,43 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (  # noqa: I001
+import ctypes
+from typing import (
 	Any,
 )
 
+import api
+import appModuleHandler
+import braille
+import colors
+import comHelper
 import comtypes
-from comtypes.automation import IDispatch
 import comtypes.client
-import ctypes
-
 import comtypes.client.lazybind
 import config
-import oleacc
-import comHelper
-import ui
-import colors
-import api
-import speech
-from speech import sayAll
-import winUser
+import controlTypes
+import eventHandler
 import msoAutoShapeTypes
-from treeInterceptorHandler import DocumentTreeInterceptor
-from NVDAObjects import NVDAObjectTextInfo
-from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
+import oleacc
+import scriptHandler
+import speech
 import textInfos
 import textInfos.offsets
-import eventHandler
-import appModuleHandler
+import ui
+import winUser
+from comtypes.automation import IDispatch
+from controlTypes import TextPosition
+from cursorManager import ReviewCursorManager
+from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
+from locationHelper import RectLTRB, RectLTWH
+from logHandler import log
+from NVDAObjects import NVDAObjectTextInfo
+from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
-from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, EditableText
-import braille
-from cursorManager import ReviewCursorManager
-import controlTypes
-from controlTypes import TextPosition
-from logHandler import log
-import scriptHandler
-from locationHelper import RectLTRB, RectLTWH
 from NVDAObjects.window._msOfficeChart import OfficeChart
+from speech import sayAll
+from treeInterceptorHandler import DocumentTreeInterceptor
 from utils.urlUtils import _LinkData
 
 # Translators: The name of a category of NVDA commands.
@@ -1685,8 +1684,8 @@ class AppModule(appModuleHandler.AppModule):
 		return super().isBadUIAWindow(hwnd)
 
 	def _registerCOMWithFocusJuggle(self):
-		import wx  # noqa: I001
 		import gui
+		import wx
 
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d = wx.Dialog(None, title=_("Waiting for Powerpoint..."))
