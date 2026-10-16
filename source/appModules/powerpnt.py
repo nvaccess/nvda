@@ -3,7 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (  # noqa: I001
+from collections.abc import Iterator  # noqa: I001
+from typing import (
 	Any,
 )
 
@@ -269,6 +270,14 @@ def getBulletText(ppBulletFormat):
 		)  # (ppBulletFormat.startValue+(ppBulletFormat.number-1))
 	elif t:
 		return chr(ppBulletFormat.character)
+
+
+def iterSmartArtNodeTexts(shape: comtypes.client.lazybind.Dispatch) -> Iterator[str]:
+	"""Yields the text of each node of a SmartArt graphic, in the order of the object model."""
+	for node in shape.smartArt.allNodes:
+		text = node.textFrame2.textRange.text.replace("\x0b", "\n").replace("\r", "\n").strip()
+		if text:
+			yield text
 
 
 def walkPpShapeRange(ppShapeRange):
@@ -972,9 +981,12 @@ class Shape(PpObject):
 		ppAutoShapeType = self.ppAutoShapeType
 		return msoAutoShapeTypes.msoAutoShapeTypeToRoleText.get(ppAutoShapeType)
 
-	def _get_value(self):
+	def _get_value(self) -> str | None:
 		if self.ppObject.hasTextFrame:
 			return self.ppObject.textFrame.textRange.text
+		if self.ppShapeType == msoSmartArt:
+			return "\n".join(iterSmartArtNodeTexts(self.ppObject))
+		return None
 
 	def _get_states(self):
 		states = super().states
@@ -1507,6 +1519,9 @@ class SlideShowWindow(PaneClassDC):
 	value = None
 
 	def _getShapeText(self, shape, cellShape=False):
+		if shape.type == msoSmartArt:
+			yield from iterSmartArtNodeTexts(shape)
+			return
 		if shape.hasTextFrame:
 			for p in shape.textFrame.textRange.paragraphs():
 				bulletText = getBulletText(p.paragraphFormat.bullet)
