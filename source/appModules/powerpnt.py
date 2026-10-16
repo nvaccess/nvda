@@ -1371,8 +1371,9 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 		raise LookupError
 
 	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
-		fields = self.obj.rootNVDAObject.basicTextFields
+		# The fields are created while the text is built, so the text has to be retrieved first.
 		text = self.obj.rootNVDAObject.basicText
+		fields = self.obj.rootNVDAObject.basicTextFields
 		out = []
 		textOffset = self._startOffset
 		for fieldOffset, field in fields:
@@ -1554,7 +1555,9 @@ class SlideShowWindow(PaneClassDC):
 			else:
 				yield label
 
-	def _get_basicText(self):
+	def _get_basicText(self) -> str:
+		# The fields belong to the text built here, including when there is no slide, such as after the show ends.
+		fields = self.basicTextFields = []
 		if not self.currentSlide:
 			return self.name
 		chunks = []
@@ -1563,7 +1566,6 @@ class SlideShowWindow(PaneClassDC):
 			ppObject = ppObject.notesPage
 		# Maintain a list of fields and the offsets at which they occur.
 		# For now, these are only control fields that consume a space.
-		fields = self.basicTextFields = []
 		# Incrementation of textLen must include line feed added by join.
 		textLen = 0
 		for shape in ppObject.shapes:

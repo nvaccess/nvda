@@ -42,6 +42,7 @@
   * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
 * In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
 * In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
+* In Microsoft PowerPoint, NVDA no longer produces an error when a slide show starts or moves to the next slide. (#17850, @ChristosBouronikos)
 
 #### Add-on Store
 
