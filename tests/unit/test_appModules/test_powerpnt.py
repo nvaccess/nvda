@@ -199,7 +199,9 @@ class TestSlideTitles(unittest.TestCase):
 		self.window._lastSlideChangeID = None
 		with (
 			patch.object(
-				powerpnt.SlideShowWindow, "treeInterceptor", new_callable=PropertyMock
+				powerpnt.SlideShowWindow,
+				"treeInterceptor",
+				new_callable=PropertyMock,
 			) as treeInterceptor,
 			patch.object(powerpnt.SlideShowWindow, "currentSlide", new_callable=PropertyMock) as currentSlide,
 			patch.object(powerpnt.SlideShowWindow, "reportFocus") as reportFocus,
