@@ -6712,16 +6712,16 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
-		if (
-			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
-			or isinstance(self.currentCategory, (
+		if not NvdaSettingsDialogActiveConfigProfile or isinstance(
+			self.currentCategory,
+			(
 				GeneralSettingsPanel,
 				MagnifierPanel,
 				AddonStorePanel,
 				RemoteSettingsPanel,
 				MathSettingsPanel,
 				PrivacyAndSecuritySettingsPanel,
-			))
+			),
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
