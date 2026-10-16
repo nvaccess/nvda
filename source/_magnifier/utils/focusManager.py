@@ -273,7 +273,7 @@ class FocusManager:
 						return textInfo._getPointFromOffset(prevOffset)
 			except (LookupError, AttributeError, COMError, OSError, RuntimeError) as fallbackError:
 				raise LocationUnavailableError(
-					"Unable to get the point at the start of the text"
+					"Unable to get the point at the start of the text",
 				) from fallbackError
 			raise LocationUnavailableError("Unable to get the point at the start of the text") from error
 
