@@ -1,29 +1,30 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary
+# Copyright (C) 2022-2026 NV Access Limited, Neil Soiffer, Ryan McCleary, Christos Bouronikos
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import re  # noqa: I001
+import re
+
+from speech import getCurrentLanguage
 from speech.commands import (
 	BaseProsodyCommand,
 	BeepCommand,
 	BreakCommand,
-	VolumeCommand,
-	RateCommand,
 	CharacterModeCommand,
 	LangChangeCommand,
 	PhonemeCommand,
 	PitchCommand,
+	RateCommand,
 	SpeechCommand,
 	SynthCommand,
+	VolumeCommand,
 )
-from synthDriverHandler import getSynth, SynthDriver
-from .localization import getLanguageToUse
-from speech import getCurrentLanguage
 from speechXml import toXmlLang
+from synthDriverHandler import SynthDriver, getSynth
 
+from .localization import getLanguageToUse
 
-PROSODY_COMMANDS: dict[str, BaseProsodyCommand] = {
+PROSODY_COMMANDS: dict[str, type[BaseProsodyCommand]] = {
 	"pitch": PitchCommand,
 	"volume": VolumeCommand,
 	"rate": RateCommand,
@@ -37,7 +38,8 @@ RE_MATHML_SPEECH: re.Pattern = re.compile(
 	# Specific pronunciation.
 	r"|<phoneme alphabet='ipa' ph='(?P<ipa>[^']+)'>(?P<phonemeText>[^ <]+)</phoneme> ?"
 	# Prosody.
-	r"|<prosody(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?(?: rate='(?P<rate>\d+)%')?> ?"
+	r"|(?P<prosody><prosody(?: pitch='(?P<pitch>\d+)%')?(?: volume='(?P<volume>\d+)%')?"
+	r"(?: rate='(?P<rate>\d+)%')?>) ?"
 	r"|(?P<prosodyReset></prosody>) ?"
 	r"|<audio src='(?P<beep>beep.mp4)'>.*?</audio> ?"  # hack for beeps
 	# Other tags, which we don't care about.
@@ -50,6 +52,7 @@ RE_MATHML_SPEECH: re.Pattern = re.compile(
 def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	"""
 	Change the SSML in the text into NVDA's command structure.
+	Nested prosody restores the enclosing settings when a tag closes.
 
 	:param text: The SSML text to convert.
 	:returns: A list of strings and SpeechCommand objects.
@@ -66,14 +69,14 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	breakMulti: float = 180.0 / wpm
 	supportedCommands: set[type[SynthCommand]] = synth.supportedCommands
 	useBreak: bool = BreakCommand in supportedCommands
-	usePitch: bool = PitchCommand in supportedCommands
 	usePhoneme: bool = PhonemeCommand in supportedCommands
 	useCharacter: bool = CharacterModeCommand in supportedCommands
 	out: list[str | SpeechCommand] = []
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(language))
 
-	resetProsody: list[type[BaseProsodyCommand]] = []
+	currentProsody: dict[type[BaseProsodyCommand], float] = {}
+	prosodyStack: list[dict[type[BaseProsodyCommand], float]] = []
 	for m in RE_MATHML_SPEECH.finditer(text):
 		if m.lastgroup == "break":
 			if useBreak:
@@ -86,20 +89,24 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 				out.extend((" ", "eigh" if ch == "a" and language.startswith("en") else ch, " "))
 		elif m.lastgroup == "beep":
 			out.append(BeepCommand(2000, 50))
-		elif m.lastgroup == "pitch":
-			if usePitch:
-				out.append(PitchCommand(multiplier=int(m.group(m.lastgroup))))
-				resetProsody.append(PitchCommand)
-		elif m.lastgroup in PROSODY_COMMANDS:
-			command: type[BaseProsodyCommand] = PROSODY_COMMANDS[m.lastgroup]
-			if command in supportedCommands:
-				out.append(command(multiplier=int(m.group(m.lastgroup)) / 100.0))
-				resetProsody.append(command)
+		elif m.lastgroup == "prosody":
+			previousProsody: dict[type[BaseProsodyCommand], float] = {}
+			for attribute, command in PROSODY_COMMANDS.items():
+				value: str | None = m.group(attribute)
+				if value is not None and command in supportedCommands:
+					previousProsody[command] = currentProsody.get(command, 1)
+					# Retain the existing MathCAT pitch conversion in this rate-restoration fix.
+					multiplier: float = int(value) if command is PitchCommand else int(value) / 100.0
+					out.append(command(multiplier=multiplier))
+					currentProsody[command] = multiplier
+			# Every tag needs a frame, even if its attributes are unsupported.
+			prosodyStack.append(previousProsody)
 		elif m.lastgroup == "prosodyReset":
-			while len(resetProsody) > 0:
-				# only supported commands were added, so no need to check
-				command: type[BaseProsodyCommand] = resetProsody.pop()
-				out.append(command(multiplier=1))
+			if prosodyStack:
+				# A capital's pitch reset must not reset the enclosing math rate.
+				for command, multiplier in reversed(prosodyStack.pop().items()):
+					out.append(command(multiplier=multiplier))
+					currentProsody[command] = multiplier
 		elif m.lastgroup == "phonemeText":
 			if usePhoneme:
 				out.append(PhonemeCommand(m.group("ipa"), text=m.group("phonemeText")))

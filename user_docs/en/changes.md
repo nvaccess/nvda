@@ -14,6 +14,7 @@
 
 ### Bug Fixes
 
+* Math speech now keeps the configured relative speech rate after capital variables, and restores enclosing pitch, volume and rate settings correctly. (#20119)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
