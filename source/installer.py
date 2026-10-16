@@ -33,7 +33,6 @@ from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkey
 from logHandler import log
 from NVDAState import WritePaths
 from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
-from utils.caseInsensitiveCollections import CaseInsensitiveSet
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 _wsh = None
@@ -857,15 +856,6 @@ _nvdaExes = {
 }
 
 
-_terminableNVDAExes = CaseInsensitiveSet(
-	{
-		"nvda.exe",
-		"nvda_noUIAccess.exe",
-	},
-)
-"""Executables in the install folders which are terminated when they hold back an installation."""
-
-
 def _getInstallDirs() -> list[str]:
 	"""Get the folders an installation replaces the NVDA executables in.
 
@@ -879,16 +869,8 @@ def _getInstallDirs() -> list[str]:
 	return dirs
 
 
-def _isTerminableNVDAImage(imagePath: str | None, installDirs: Sequence[str]) -> bool:
-	"""Whether a process image is one of the terminable NVDA executables inside one of the install folders."""
-	if imagePath is None or os.path.basename(imagePath) not in _terminableNVDAExes:
-		return False
-	imageDir = os.path.normcase(os.path.dirname(os.path.normpath(imagePath)))
-	return any(imageDir == os.path.normcase(os.path.normpath(d)) for d in installDirs)
-
-
 def _getRunningNVDAProcesses(installDirs: Sequence[str]) -> Iterator[psutil.Process]:
-	"""Find the processes running a terminable NVDA executable from the install folders.
+	"""Find the processes running one of the NVDA executables from the install folders.
 	Processes in every session and of every user are included, as is any other copy of NVDA.
 	The current process is never included.
 	This needs no elevation.
@@ -896,14 +878,19 @@ def _getRunningNVDAProcesses(installDirs: Sequence[str]) -> Iterator[psutil.Proc
 	:param installDirs: The folders to look in.
 	:return: An iterator over the processes found.
 	"""
+	exeNames = {os.path.normcase(exe) for exe in _nvdaExes}
+	exePaths = {
+		os.path.normcase(os.path.join(installDir, exe)) for installDir in installDirs for exe in _nvdaExes
+	}
 	for process in psutil.process_iter(["exe"]):
 		imagePath = process.info["exe"]
-		if process.pid == os.getpid() or os.path.basename(imagePath or "") not in _terminableNVDAExes:
+		if process.pid == os.getpid() or not imagePath:
 			continue
-		if _isTerminableNVDAImage(imagePath, installDirs):
+		normalizedPath = os.path.normcase(imagePath)
+		if normalizedPath in exePaths:
 			yield process
-		else:
-			log.debug(f"Ignoring process {process.pid}, its image {imagePath} is outside the install folders")
+		elif os.path.basename(normalizedPath) in exeNames:
+			log.debug(f"Ignoring {imagePath}, it is outside the install folders")
 
 
 def _terminateNVDAProcesses(installDirs: Sequence[str]) -> None:
@@ -919,12 +906,14 @@ def _terminateNVDAProcesses(installDirs: Sequence[str]) -> None:
 		try:
 			process.kill()
 		except psutil.Error:
-			log.warning(f"Failed to terminate process {process.pid}", exc_info=True)
+			log.warning(f"Failed to terminate process {process.pid} ({process.info['exe']})", exc_info=True)
 		else:
 			terminated.append(process)
 	_gone, alive = psutil.wait_procs(terminated, timeout=2)
 	for process in alive:
-		log.warning(f"Process {process.pid} did not exit within 2 seconds of being terminated")
+		log.warning(
+			f"Process {process.pid} ({process.info['exe']}) did not exit within 2 seconds of being terminated",
+		)
 
 
 def _revertGroupDelete(tempDir: str, installDir: str):

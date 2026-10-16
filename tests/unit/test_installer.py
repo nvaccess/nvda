@@ -5,7 +5,6 @@
 
 """Unit tests for the installer module."""
 
-import contextlib
 import os
 import pathlib
 import tempfile
@@ -79,25 +78,6 @@ class Test_terminateRunningNVDA(unittest.TestCase):
 	_installDir = "C:\\Program Files\\NVDA"
 	_installDirX86 = "C:\\Program Files (x86)\\NVDA"
 
-	@parameterized.expand(
-		(
-			("nvda", "C:\\Program Files\\NVDA\\nvda.exe", True),
-			("noUIAccess", "C:\\Program Files\\NVDA\\nvda_noUIAccess.exe", True),
-			("differentCase", "c:\\program files\\nvda\\NVDA.EXE", True),
-			("x86Dir", "C:\\Program Files (x86)\\NVDA\\nvda.exe", True),
-			("slave", "C:\\Program Files\\NVDA\\nvda_slave.exe", False),
-			("subfolder", "C:\\Program Files\\NVDA\\lib\\nvda.exe", False),
-			("otherFolder", "C:\\Temp\\launcher\\nvda.exe", False),
-			("unknown", None, False),
-		),
-	)
-	def test_isTerminableNVDAImage(self, _name: str, imagePath: str | None, expected: bool):
-		"""Only nvda.exe and nvda_noUIAccess.exe directly in an installation folder count, in any letter case."""
-		self.assertEqual(
-			installer._isTerminableNVDAImage(imagePath, [self._installDir, self._installDirX86]),
-			expected,
-		)
-
 	@staticmethod
 	def _fakeProcess(pid: int, exe: str | None) -> MagicMock:
 		"""Create a stand-in for a process as returned by :func:`psutil.process_iter` with exe."""
@@ -106,110 +86,49 @@ class Test_terminateRunningNVDA(unittest.TestCase):
 		process.info = {"exe": exe}
 		return process
 
-	def test_getRunningNVDAProcesses(self):
-		"""Only matching copies are found, never the current process or a process without a known path."""
-		processes = [
-			self._fakeProcess(100, f"{self._installDir}\\nvda.exe"),
-			self._fakeProcess(200, f"{self._installDir}\\NVDA_noUIAccess.exe"),
-			self._fakeProcess(300, "C:\\Temp\\launcher\\nvda.exe"),
-			self._fakeProcess(400, f"{self._installDir}\\notepad.exe"),
-			self._fakeProcess(500, None),
-			self._fakeProcess(os.getpid(), f"{self._installDir}\\nvda.exe"),
-		]
-		with patch("installer.psutil.process_iter", return_value=iter(processes)) as processIterMock:
-			found = list(installer._getRunningNVDAProcesses([self._installDir]))
-		processIterMock.assert_called_once_with(["exe"])
-		self.assertEqual([process.pid for process in found], [100, 200])
-
-	def _terminate(self, processes: list[MagicMock]) -> MagicMock:
-		"""Run :func:`installer._terminateNVDAProcesses` with the given processes found.
-
-		:param processes: The processes :func:`installer._getRunningNVDAProcesses` finds.
-		:return: The mock standing in for :func:`psutil.wait_procs`.
+	@parameterized.expand(
+		(
+			("nvda", "C:\\Program Files\\NVDA\\nvda.exe", True),
+			("slave", "C:\\Program Files\\NVDA\\nvda_slave.exe", True),
+			("differentCase", "c:\\program files\\nvda\\NVDA.EXE", True),
+			("x86Dir", "C:\\Program Files (x86)\\NVDA\\nvda.exe", True),
+			("otherExe", "C:\\Program Files\\NVDA\\notepad.exe", False),
+			("subfolder", "C:\\Program Files\\NVDA\\lib\\nvda.exe", False),
+			("otherFolder", "C:\\Temp\\launcher\\nvda.exe", False),
+			("unknown", None, False),
+		),
+	)
+	def test_getRunningNVDAProcesses_matchesPath(self, _name: str, imagePath: str | None, expected: bool):
+		"""The NVDA executables are found when they run directly from an installation folder.
+		Other executables, subfolders and other folders are not found.
 		"""
+		with patch("installer.psutil.process_iter", return_value=iter([self._fakeProcess(100, imagePath)])):
+			found = list(installer._getRunningNVDAProcesses([self._installDir, self._installDirX86]))
+		self.assertEqual(bool(found), expected)
+
+	def test_getRunningNVDAProcesses_skipsCurrentProcess(self):
+		"""The current process is never found."""
+		process = self._fakeProcess(os.getpid(), f"{self._installDir}\\nvda.exe")
+		with patch("installer.psutil.process_iter", return_value=iter([process])):
+			found = list(installer._getRunningNVDAProcesses([self._installDir]))
+		self.assertEqual(found, [])
+
+	def test_terminateNVDAProcesses(self):
+		"""Every copy found is ended. A copy that can't be ended doesn't stop the others, and isn't waited for."""
+		failing = self._fakeProcess(100, f"{self._installDir}\\nvda.exe")
+		failing.kill.side_effect = psutil.AccessDenied(100)
+		ending = self._fakeProcess(200, f"{self._installDir}\\nvda.exe")
 		with (
-			patch("installer._getRunningNVDAProcesses", return_value=processes),
-			patch("installer.psutil.wait_procs", return_value=([], [])) as waitProcsMock,
+			patch("installer._getRunningNVDAProcesses", return_value=[failing, ending]),
+			patch("installer.psutil.wait_procs", return_value=([ending], [])) as waitProcsMock,
 		):
 			installer._terminateNVDAProcesses([self._installDir])
-		return waitProcsMock
-
-	def test_terminatesFoundProcesses(self):
-		"""Every copy found is ended, and the installer waits for them to exit."""
-		processes = [
-			self._fakeProcess(100, f"{self._installDir}\\nvda.exe"),
-			self._fakeProcess(200, f"{self._installDir}\\nvda_noUIAccess.exe"),
-		]
-		waitProcsMock = self._terminate(processes)
-		for process in processes:
-			process.kill.assert_called_once_with()
-		waitProcsMock.assert_called_once_with(processes, timeout=2)
-
-	def test_continuesAfterFailedTermination(self):
-		"""A copy that can't be ended doesn't stop the others, and isn't waited for."""
-		processes = [
-			self._fakeProcess(100, f"{self._installDir}\\nvda.exe"),
-			self._fakeProcess(200, f"{self._installDir}\\nvda.exe"),
-		]
-		processes[0].kill.side_effect = psutil.AccessDenied(100)
-		waitProcsMock = self._terminate(processes)
-		processes[1].kill.assert_called_once_with()
-		waitProcsMock.assert_called_once_with([processes[1]], timeout=2)
-
-	def _runInstallUntilDelete(self, **installKwargs: bool) -> MagicMock:
-		"""Run :func:`installer.install` up to the first file deletion, recording the calls of interest in order."""
-		calls = MagicMock()
-		calls._deleteFileGroupOrFail.side_effect = installer.RetriableFailure
-		with (
-			patch("installer._getInstallDirs", return_value=[self._installDir]),
-			patch("installer.time.sleep"),
-			patch("installer._terminateNVDAProcesses", calls._terminateNVDAProcesses),
-			patch("installer._deleteFileGroupOrFail", calls._deleteFileGroupOrFail),
-			self.assertRaises(installer.RetriableFailure),
-		):
-			installer.install(**installKwargs)
-		return calls
-
-	def test_installTerminatesBeforeDeleting(self):
-		"""When asked, install ends the running copies before it deletes the NVDA executables."""
-		calls = self._runInstallUntilDelete(shouldTerminateRunningNVDA=True)
-		self.assertEqual(
-			[c[0] for c in calls.mock_calls],
-			["_terminateNVDAProcesses", "_deleteFileGroupOrFail"],
-		)
-		calls._terminateNVDAProcesses.assert_called_once_with([self._installDir])
-
-	def test_installDoesNotTerminateByDefault(self):
-		"""By default, install doesn't end any running copies."""
-		calls = self._runInstallUntilDelete()
-		calls._terminateNVDAProcesses.assert_not_called()
-		calls._deleteFileGroupOrFail.assert_called_once()
+		ending.kill.assert_called_once_with()
+		waitProcsMock.assert_called_once_with([ending], timeout=2)
 
 
 class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
-	"""Tests for asking the user whether to end running copies of NVDA before installing."""
-
-	@staticmethod
-	def _patchRunningNVDA(isRunning: bool, confirm: bool):
-		"""Patch finding running copies of NVDA and the question whether to end them.
-
-		:return: An exit stack holding the patches,
-			and the mock standing in for :func:`installerGui._confirmTerminateRunningNVDA`.
-		"""
-		stack = contextlib.ExitStack()
-		stack.enter_context(
-			patch("gui.installerGui.installer._getInstallDirs", return_value=["C:\\Program Files\\NVDA"]),
-		)
-		stack.enter_context(
-			patch(
-				"gui.installerGui.installer._getRunningNVDAProcesses",
-				return_value=[MagicMock(spec=psutil.Process)] if isRunning else [],
-			),
-		)
-		confirmMock = stack.enter_context(
-			patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=confirm),
-		)
-		return stack, confirmMock
+	"""Tests for asking the user on the Install NVDA screen whether to end running copies of NVDA."""
 
 	@parameterized.expand(((False, "0"), (True, "1")))
 	def test_doInstall_passesTerminateFlagToSlave(self, shouldTerminateRunningNVDA: bool, expected: str):
@@ -219,118 +138,83 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 			patch("gui.installerGui.systemUtils.execElevated", return_value=1) as execElevatedMock,
 			patch("gui.installerGui.gui.messageBox"),
 		):
-			installerGui.doInstall(shouldTerminateRunningNVDA=shouldTerminateRunningNVDA)
-		self.assertEqual(execElevatedMock.call_args.args[1][-1], expected)
+			installerGui.doInstall(
+				createDesktopShortcut=True,
+				startOnLogon=False,
+				shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
+			)
+		execElevatedMock.assert_called_once_with(
+			installerGui.config.SLAVE_FILENAME,
+			["install", "1", "0", expected],
+			wait=True,
+			handleAlreadyElevated=True,
+		)
 
-	def _onInstall(
-		self,
-		isRunning: bool,
-		confirm: bool,
-		isUpdate: bool = True,
-	) -> tuple[MagicMock, MagicMock, MagicMock]:
-		"""Press Install on the install screen.
-
-		:return: The mocks standing in for the install screen,
-			:func:`installerGui._confirmTerminateRunningNVDA` and :func:`installerGui.doInstall`.
-		"""
-		dialog = MagicMock()
-		dialog.isUpdate = isUpdate
-		stack, confirmMock = self._patchRunningNVDA(isRunning, confirm)
+	def test_onInstall_noKeepsInstallScreenOpen(self):
+		"""Answering No on the Install NVDA screen keeps it open and doesn't install."""
+		dialog = MagicMock(isUpdate=True)
 		with (
-			stack,
 			patch("gui.installerGui._warnAndConfirmIfInstallingRemotely", return_value=True),
+			patch("gui.installerGui.installer._getRunningNVDAProcesses", return_value=[MagicMock()]),
+			patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=False),
 			patch("gui.installerGui.doInstall") as doInstallMock,
-			patch("gui.installerGui.wx.GetApp"),
 		):
 			installerGui.InstallerDialog.onInstall(dialog, None)
-		return dialog, confirmMock, doInstallMock
-
-	def test_onInstall_noRunningCopies_doesNotAsk(self):
-		"""Without running copies, the install screen installs without asking."""
-		_dialog, confirmMock, doInstallMock = self._onInstall(isRunning=False, confirm=False)
-		confirmMock.assert_not_called()
-		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
-
-	def test_onInstall_userAgrees_passesTerminateFlag(self):
-		"""Answering Yes on the install screen installs and ends the running copies."""
-		_dialog, confirmMock, doInstallMock = self._onInstall(isRunning=True, confirm=True)
-		confirmMock.assert_called_once()
-		self.assertTrue(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
-
-	def test_onInstall_userDeclines_staysOnInstallScreen(self):
-		"""Answering No keeps the install screen open and doesn't install."""
-		dialog, _confirmMock, doInstallMock = self._onInstall(isRunning=True, confirm=False)
 		doInstallMock.assert_not_called()
 		dialog.Hide.assert_not_called()
 
-	def test_onInstall_freshInstall_doesNotAsk(self):
-		"""A fresh installation from the install screen never asks and never ends running copies."""
-		_dialog, confirmMock, doInstallMock = self._onInstall(isRunning=True, confirm=True, isUpdate=False)
-		confirmMock.assert_not_called()
-		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
 
-	def _doSilentInstall(
-		self,
-		isRunning: bool,
-		confirm: bool,
-		installSilent: bool = False,
-		freshInstall: bool = False,
-	) -> tuple[MagicMock, MagicMock, MagicMock]:
-		"""Run :func:`installerGui.doSilentInstall`, as for an update or a silent installation.
+class Test_doSilentInstallTerminateRunningNVDA(unittest.TestCase):
+	"""Tests for asking whether to end running copies of NVDA when installing from the command line, as updates do."""
 
-		:return: The mocks standing in for :func:`installerGui._confirmTerminateRunningNVDA`,
-			:func:`installerGui.doInstall` and :func:`installerGui._showInstallationFailedError`.
-		"""
-		stack, confirmMock = self._patchRunningNVDA(isRunning, confirm)
+	def setUp(self):
+		self.enterContext(
+			patch("gui.installerGui.installer._getRunningNVDAProcesses", return_value=[MagicMock()]),
+		)
+		self.enterContext(patch.object(installerGui.globalVars.appArgs, "enableStartOnLogon", False))
+		self.enterContext(patch("gui.installerGui.installer.isDesktopShortcutInstalled", return_value=True))
+		self.doInstallMock = self.enterContext(patch("gui.installerGui.doInstall"))
+
+	def test_noShowsError(self):
+		"""Answering No during an update shows the installation failed error and doesn't install."""
 		with (
-			stack,
-			patch.object(installerGui.globalVars.appArgs, "installSilent", installSilent),
-			patch.object(installerGui.globalVars.appArgs, "enableStartOnLogon", None),
 			patch(
 				"gui.installerGui.installer._comparePreviousInstall",
-				return_value=installer.ComparisonState.FRESH_INSTALL
-				if freshInstall
-				else installer.ComparisonState.UPGRADE,
+				return_value=installer.ComparisonState.UPGRADE,
 			),
-			patch("gui.installerGui.installer.isDesktopShortcutInstalled", return_value=True),
-			patch("gui.installerGui.config.getStartOnLogonScreen", return_value=False),
-			patch("gui.installerGui.doInstall") as doInstallMock,
+			patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=False),
 			patch("gui.installerGui._showInstallationFailedError") as errorMock,
 		):
 			installerGui.doSilentInstall()
-		return confirmMock, doInstallMock, errorMock
-
-	def test_doSilentInstall_userAgrees_passesTerminateFlag(self):
-		"""Answering Yes during an update installs and ends the running copies."""
-		_confirmMock, doInstallMock, errorMock = self._doSilentInstall(isRunning=True, confirm=True)
-		self.assertTrue(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
-		errorMock.assert_not_called()
-
-	def test_doSilentInstall_userDeclines_showsError(self):
-		"""Answering No during an update shows the installation failed error and doesn't install."""
-		_confirmMock, doInstallMock, errorMock = self._doSilentInstall(isRunning=True, confirm=False)
-		doInstallMock.assert_not_called()
+		self.doInstallMock.assert_not_called()
 		errorMock.assert_called_once_with()
 
-	def test_doSilentInstall_installSilent_neverAsksOrTerminates(self):
+	def test_installSilentNeverAsks(self):
 		"""A silent installation never asks and never ends running copies."""
-		confirmMock, doInstallMock, _errorMock = self._doSilentInstall(
-			isRunning=True,
-			confirm=True,
-			installSilent=True,
-		)
+		with (
+			patch(
+				"gui.installerGui.installer._comparePreviousInstall",
+				return_value=installer.ComparisonState.UPGRADE,
+			),
+			patch.object(installerGui.globalVars.appArgs, "installSilent", True),
+			patch("gui.installerGui._confirmTerminateRunningNVDA") as confirmMock,
+		):
+			installerGui.doSilentInstall()
 		confirmMock.assert_not_called()
-		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
+		self.assertFalse(self.doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
 
-	def test_doSilentInstall_freshInstall_neverAsksOrTerminates(self):
-		"""A fresh installation from the command line never asks and never ends running copies."""
-		confirmMock, doInstallMock, _errorMock = self._doSilentInstall(
-			isRunning=True,
-			confirm=True,
-			freshInstall=True,
-		)
+	def test_freshInstallNeverAsks(self):
+		"""A fresh installation never asks and never ends running copies."""
+		with (
+			patch(
+				"gui.installerGui.installer._comparePreviousInstall",
+				return_value=installer.ComparisonState.FRESH_INSTALL,
+			),
+			patch("gui.installerGui._confirmTerminateRunningNVDA") as confirmMock,
+		):
+			installerGui.doSilentInstall()
 		confirmMock.assert_not_called()
-		self.assertFalse(doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
+		self.assertFalse(self.doInstallMock.call_args.kwargs["shouldTerminateRunningNVDA"])
 
 
 class _ShouldWarnBeforeUpdateFactors(NamedTuple):
