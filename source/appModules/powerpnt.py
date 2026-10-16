@@ -1274,7 +1274,27 @@ class TableCell(PpObject):
 	"""Represents a table cell in Powerpoint. Accepts a table and a row and column number as this cannot be calculated directly."""
 
 	name = None
-	role = controlTypes.Role.TABLECELL
+
+	def _get_role(self) -> controlTypes.Role:
+		# The table style options "Header Row" and "First Column" define which cells are headers.
+		if self.rowNumber == 1 and self.table.ppTable.firstRow:
+			return controlTypes.Role.TABLECOLUMNHEADER
+		if self.columnNumber == 1 and self.table.ppTable.firstCol:
+			return controlTypes.Role.TABLEROWHEADER
+		return controlTypes.Role.TABLECELL
+
+	def _getCellText(self, rowNumber: int, columnNumber: int) -> str:
+		return self.table.ppTable.cell(rowNumber, columnNumber).shape.textFrame.textRange.text.strip()
+
+	def _get_rowHeaderText(self) -> str | None:
+		if self.columnNumber > 1 and self.table.ppTable.firstCol:
+			return self._getCellText(self.rowNumber, 1)
+		return None
+
+	def _get_columnHeaderText(self) -> str | None:
+		if self.rowNumber > 1 and self.table.ppTable.firstRow:
+			return self._getCellText(1, self.columnNumber)
+		return None
 
 	def _isEqual(self, other):
 		return self.table == other.table and (self.columnNumber, self.rowNumber) == (
