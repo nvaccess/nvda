@@ -11,14 +11,16 @@ These cover the mechanism that drops UIA events from a not-responding
 application so it cannot freeze NVDA or flood the log.
 """
 
-from unittest import TestCase  # noqa: I001
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest import TestCase
+from unittest.mock import MagicMock, patch
 
-from comtypes import COMError
-
+import exceptions
 import textInfos
-from UIAHandler import getUIAUnitFromNVDAUnit, NVDAUnitsToUIAUnits, utils
+import UIAHandler
 import winUser
+from comtypes import COMError
+from UIAHandler import NVDAUnitsToUIAUnits, getUIAUnitFromNVDAUnit, utils
 
 
 def _makeCOMError() -> COMError:
@@ -97,3 +99,45 @@ class Test_shouldSkipEventForHungWindow(TestCase):
 		with patch.object(winUser, "isHungAppWindow", side_effect=RuntimeError("boom")):
 			# A failure inside the guard itself must never escape into the COM handler.
 			self.assertFalse(utils._shouldSkipEventForHungWindow(_FakeElement(cachedHandle=1)))
+
+
+class Test_isUIAWindow(TestCase):
+	"""#20442: a hung application must not make NVDA stop treating its window as UIA."""
+
+	_HWND: int = 1
+
+	def setUp(self) -> None:
+		# Stand-in for the UIAHandler instance, so no UIA client is needed.
+		self._handler = SimpleNamespace(
+			UIAWindowHandleCache={},
+			_isUIAWindowHelper=MagicMock(return_value=True),
+		)
+
+	def _setExpiredCachedAnswer(self, isUIA: bool) -> None:
+		self._handler.UIAWindowHandleCache[self._HWND] = (isUIA, 0)
+
+	def _isUIAWindow(self) -> bool:
+		return UIAHandler.UIAHandler.isUIAWindow(self._handler, self._HWND)
+
+	def test_respondingWindowIsChecked(self) -> None:
+		self._setExpiredCachedAnswer(False)
+		with patch.object(winUser, "isHungAppWindow", return_value=False):
+			self.assertTrue(self._isUIAWindow())
+		self._handler._isUIAWindowHelper.assert_called_once()
+
+	def test_hungWindowKeepsLastKnownAnswer(self) -> None:
+		self._setExpiredCachedAnswer(True)
+		self._handler._isUIAWindowHelper.return_value = False
+		with patch.object(winUser, "isHungAppWindow", return_value=True):
+			self.assertTrue(self._isUIAWindow())
+		self._handler._isUIAWindowHelper.assert_not_called()
+
+	def test_cancelledCheckKeepsLastKnownAnswer(self) -> None:
+		self._setExpiredCachedAnswer(True)
+		self._handler._isUIAWindowHelper.side_effect = exceptions.CallCancelled
+		with patch.object(winUser, "isHungAppWindow", return_value=False):
+			self.assertTrue(self._isUIAWindow())
+
+	def test_cancelledCheckWithoutLastKnownAnswerIsNotUIA(self) -> None:
+		self._handler._isUIAWindowHelper.side_effect = exceptions.CallCancelled
+		self.assertFalse(self._isUIAWindow())

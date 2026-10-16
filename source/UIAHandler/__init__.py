@@ -1272,15 +1272,11 @@ class UIAHandler(COMObject):
 		# Run via the watchdog's cancellable thread: this is a blocking
 		# cross-process call that the watchdog cannot otherwise cancel, so a
 		# hung application could freeze the core here until it is killed.
-		try:
-			res = watchdog.cancellableExecute(
-				winBindings.uiAutomationCore.UiaHasServerSideProvider,
-				hwnd,
-			)
-		except exceptions.CallCancelled:
-			if isDebug:
-				log.debug("UiaHasServerSideProvider cancelled; treating window as non-UIA")
-			return False
+		# If the call is cancelled, exceptions.CallCancelled is raised and handled by isUIAWindow.
+		res = watchdog.cancellableExecute(
+			winBindings.uiAutomationCore.UiaHasServerSideProvider,
+			hwnd,
+		)
 		if res:
 			if isDebug:
 				log.debug("window has UIA server side provider")
@@ -1368,10 +1364,22 @@ class UIAHandler(COMObject):
 		now = time.time()
 		v = self.UIAWindowHandleCache.get(hwnd, None)
 		if not v or (now - v[1]) > 0.5:
-			v = (
-				self._isUIAWindowHelper(hwnd, isDebug=isDebug),
-				now,
-			)
+			# #20442: A not responding application cannot reliably say whether its window supports UIA.
+			# Treating the window as non-UIA would make NVDA switch to another API for it,
+			# e.g. MS Word documents would fall back to the much slower legacy object model.
+			# Therefore keep the last known answer until the application responds again.
+			if v and winUser.isHungAppWindow(hwnd):
+				if isDebug:
+					log.debug(f"Window is hung, keeping last known is UIA window {v[0]}")
+				isUIA: bool = v[0]
+			else:
+				try:
+					isUIA = self._isUIAWindowHelper(hwnd, isDebug=isDebug)
+				except exceptions.CallCancelled:
+					isUIA = v[0] if v else False
+					if isDebug:
+						log.debug(f"UiaHasServerSideProvider cancelled, keeping is UIA window {isUIA}")
+			v = (isUIA, now)
 			self.UIAWindowHandleCache[hwnd] = v
 		elif isDebug:
 			log.debug(f"Found cached is UIA window {v[0]} for hwnd {self.getWindowHandleDebugString(hwnd)}")
