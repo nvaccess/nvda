@@ -59,6 +59,7 @@ from typing import (
 )
 
 import wx
+from wx.siplib import wrappertype
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
 
@@ -479,7 +480,7 @@ class BoxSizerHelper:
 		return buttons
 
 
-class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
+class SIPABCMeta(wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 

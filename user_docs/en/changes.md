@@ -54,7 +54,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Updated components:
-  * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
+  * wxPython to 4.3.2, which is based on wxWidgets 3.3.4. (#20882, #20983, @LeonarddeR, @cary-rowen)
 * The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
 * Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
 A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
