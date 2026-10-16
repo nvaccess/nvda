@@ -48,6 +48,7 @@ constexpr int wdDISPID_FONT_HIDDEN = 132;
 constexpr int wdDISPID_FONT_ITALIC = 131;
 constexpr int wdDISPID_FONT_NAME = 142;
 constexpr int wdDISPID_FONT_SIZE = 141;
+constexpr int wdDISPID_FONT_SMALLCAPS = 133;
 constexpr int wdDISPID_FONT_STRIKETHROUGH = 135;
 constexpr int wdDISPID_FONT_SUBSCRIPT = 138;
 constexpr int wdDISPID_FONT_SUPERSCRIPT = 139;

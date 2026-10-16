@@ -2981,6 +2981,18 @@ def getFormatFieldSpeech(
 			)
 		):
 			textList.append(textPosition.displayString)
+	if formatConfig["reportSmallCaps"]:
+		smallCaps = attrs.get("smallCaps")
+		oldSmallCaps = attrsCache.get("smallCaps") if attrsCache is not None else None
+		if (smallCaps or oldSmallCaps is not None) and smallCaps != oldSmallCaps:
+			text = (
+				# Translators: Reported when text is formatted as small caps.
+				_("small caps")
+				if smallCaps
+				# Translators: Reported when text is no longer formatted as small caps.
+				else _("not small caps")
+			)
+			textList.append(text)
 	if formatConfig["reportAlignment"]:
 		textAlign = attrs.get("text-align")
 		oldTextAlign = attrsCache.get("text-align") if attrsCache is not None else None

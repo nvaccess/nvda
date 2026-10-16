@@ -9,6 +9,7 @@ import gettext  # noqa: I001
 import unittest
 
 import config
+import textInfos
 from speech import speech as speechModule
 from characterProcessing import processSpeechSymbol
 from speech import (
@@ -31,6 +32,28 @@ from speech.extensions import filter_speechSequence, pre_speech
 from speech.types import SpeechSequence
 
 from .extensionPointTestHelpers import actionTester
+
+
+class Test_getFormatFieldSpeech(unittest.TestCase):
+	def test_smallCaps(self):
+		formatConfig = dict.fromkeys(config.conf["documentFormatting"], False)
+		formatConfig["reportSmallCaps"] = True
+
+		self.assertEqual(
+			speechModule.getFormatFieldSpeech(
+				textInfos.FormatField({"smallCaps": True, "underline": False}),
+				formatConfig=formatConfig,
+			),
+			["small caps"],
+		)
+		self.assertEqual(
+			speechModule.getFormatFieldSpeech(
+				textInfos.FormatField({"smallCaps": False, "underline": True}),
+				attrsCache=textInfos.FormatField({"smallCaps": True}),
+				formatConfig=formatConfig,
+			),
+			["not small caps"],
+		)
 
 
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):

@@ -2648,6 +2648,7 @@ class BrowseModeDocumentTreeInterceptor(
 			"reportFontSize",
 			"fontAttributeReporting",
 			"reportSuperscriptsAndSubscripts",
+			"reportSmallCaps",
 			"reportHighlight",
 			"reportColor",
 			"reportStyle",
