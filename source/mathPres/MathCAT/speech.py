@@ -68,8 +68,7 @@ def convertSSMLTextForNVDA(text: str) -> list[str | SpeechCommand]:
 	useBreak: bool = BreakCommand in supportedCommands
 	usePitch: bool = PitchCommand in supportedCommands
 	usePhoneme: bool = PhonemeCommand in supportedCommands
-	# as of 7/23, oneCore voices do not implement the CharacterModeCommand despite it being in supported_commands
-	useCharacter: bool = CharacterModeCommand in supportedCommands and synth.name != "oneCore"
+	useCharacter: bool = CharacterModeCommand in supportedCommands
 	out: list[str | SpeechCommand] = []
 	if language != nvdaLanguage:
 		out.append(LangChangeCommand(language))

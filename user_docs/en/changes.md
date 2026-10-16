@@ -10,6 +10,7 @@
 ### Changes
 
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+* Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
 
 ### Bug Fixes
 
@@ -18,12 +19,15 @@
   * Saving other settings no longer unexpectedly disables automatic startup.
   * If saving fails, NVDA now reports the error and continues saving other settings.
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
+* When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
+* Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
 
 #### Performance
 
 #### Braille
 
 * The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
+* Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
 
 #### Web browsers
 
@@ -37,6 +41,7 @@
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
   * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
 * In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
+* In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
 
 #### Add-on Store
 
@@ -62,6 +67,7 @@ A read completing on the same handle no longer ends the wait while the write is 
   * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
+* `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 
 #### API Breaking Changes
 
@@ -94,7 +100,6 @@ Several performance improvements have been made to reduce lag and improve respon
 NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
 NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
 NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
-In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
 
 Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
 It is also now possible to change an existing gesture directly in the Input Gestures dialog.
@@ -223,6 +228,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 #### Add-on Store
 
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
 * NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * Updating an add-on no longer leaves modules of the old version loaded.
