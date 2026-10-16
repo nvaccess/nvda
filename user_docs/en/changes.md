@@ -21,6 +21,9 @@
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* Magnifier no longer flickers and stops when NVDA cannot get the review cursor position, such as when opening some browseable messages, closing a Firefox tab, or switching to Windows Terminal. (#20860, @ChristosBouronikos)
+* The review cursor now works in HTML messages containing characters such as 𝔓. (#20860, @ChristosBouronikos)
+* NVDA no longer sometimes fails to handle the focus when switching to Windows Terminal. (#20860, @ChristosBouronikos)
 
 #### Performance
 
@@ -69,6 +72,7 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
+* Added `exceptions.LocationUnavailableError`, a subclass of `LookupError`, raised when a cursor position or its screen location cannot currently be retrieved. (#20860)
 
 #### API Breaking Changes
 
@@ -85,6 +89,9 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `ITextDocument2` is now the Text Object Model 2 interface.
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
+* `api.getReviewPosition` and `vision.util.getContextRect` now raise `exceptions.LocationUnavailableError` when the position or location cannot be retrieved, instead of the underlying error, such as `COMError` or `RuntimeError`. (#20860)
+The underlying error is available as the cause.
+* `review.setCurrentMode` no longer fetches a review position when `updateReviewPosition` is `False`, so the mode is set without checking that a position is available. (#20860)
 
 #### Deprecations
 

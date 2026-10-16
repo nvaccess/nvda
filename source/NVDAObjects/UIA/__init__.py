@@ -495,7 +495,11 @@ class UIATextInfo(textInfos.TextInfo):
 			else:
 				raise NotImplementedError("UIAutomationTextRangeArray is empty")
 			if position == textInfos.POSITION_CARET:
-				self.collapse()
+				try:
+					self.collapse()
+				except COMError:
+					# #20860: Some providers, such as Windows Terminal, can fail to collapse the selection.
+					raise RuntimeError("Unable to collapse selection to caret")
 		elif isinstance(position, UIATextInfo):  # bookmark
 			self._rangeObj = position._rangeObj
 		elif position == textInfos.POSITION_FIRST:

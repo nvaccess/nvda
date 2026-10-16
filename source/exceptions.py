@@ -8,3 +8,9 @@
 
 class CallCancelled(Exception):
 	"""Raised when a call is cancelled."""
+
+
+class LocationUnavailableError(LookupError):
+	"""Raised when a cursor position or its screen location cannot currently be retrieved.
+	The underlying error, if any, is available as the cause.
+	"""

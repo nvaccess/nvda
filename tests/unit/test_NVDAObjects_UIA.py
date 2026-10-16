@@ -9,10 +9,13 @@ import unittest  # noqa: I001
 from unittest.mock import Mock, patch
 
 import api
+from comtypes import COMError
 import controlTypes
 import eventHandler
-from NVDAObjects.UIA import ListItem, MenuItem, UIA, _NetFrameworkWinFormsComboBox
+from NVDAObjects.UIA import ListItem, MenuItem, UIA, UIATextInfo, _NetFrameworkWinFormsComboBox
 import oleacc
+import review
+import textInfos
 import UIAHandler
 from winBindings import user32
 
@@ -202,3 +205,28 @@ class TestNetFrameworkWinFormsComboBox(unittest.TestCase):
 		):
 			listItem.event_UIA_elementSelected()
 		focus.event_valueChange.assert_not_called()
+
+
+class TestUIATextInfoCaret(unittest.TestCase):
+	def setUp(self) -> None:
+		self.obj = Mock()
+		self.obj.UIATextPattern.GetSelection.return_value.length = 1
+		# #20860: Windows Terminal can fail to collapse the selection to the caret.
+		patcher = patch.object(
+			UIATextInfo,
+			"collapse",
+			side_effect=COMError(-2147467259, "Unspecified error", None),
+		)
+		patcher.start()
+		self.addCleanup(patcher.stop)
+
+	def test_collapseFailureRaisesRuntimeError(self) -> None:
+		with self.assertRaises(RuntimeError):
+			UIATextInfo(self.obj, textInfos.POSITION_CARET)
+
+	def test_objectReviewFallsBackToFirstPosition(self) -> None:
+		first = Mock()
+		self.obj.makeTextInfo.side_effect = lambda position: (
+			first if position == textInfos.POSITION_FIRST else UIATextInfo(self.obj, position)
+		)
+		self.assertEqual(review.getObjectPosition(self.obj), (first, first.obj))

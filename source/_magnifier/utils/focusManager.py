@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot, Christos Bouronikos
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -9,6 +9,7 @@ Handles all focus tracking logic and coordinate calculations.
 """
 
 from comtypes import COMError  # noqa: I001
+from exceptions import LocationUnavailableError
 from logHandler import log
 import api
 import winUser
@@ -230,17 +231,17 @@ class FocusManager:
 
 		:return: The (x, y) coordinates of the review cursor, or ``None`` if not available.
 		"""
-		reviewPosition = api.getReviewPosition()
-		if reviewPosition:
-			try:
+		try:
+			reviewPosition = api.getReviewPosition()
+			if reviewPosition:
 				point = self._getPointAtStart(reviewPosition)
 				coords = Coordinates(point.x, point.y)
 				if coords != Coordinates(0, 0):
 					self._lastValidReviewPosition = coords
 				return coords
-			except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError):
-				# Review position may not support pointAtStart, or COM object may not be IAccessible
-				pass
+		except LocationUnavailableError:
+			if _isDebug():
+				log.debug("Failed to get review position", exc_info=True)
 		return None
 
 	def _getPointAtStart(self, textInfo: textInfos.TextInfo) -> locationHelper.Point:
@@ -250,30 +251,31 @@ class FocusManager:
 		When a collapsed TextInfo is positioned at an exclusive end offset, use the
 		right edge of the previous character if available. This keeps the workaround
 		local to the magnifier instead of changing TextInfo behavior globally.
+		@raises LocationUnavailableError: The range has no usable screen point.
 		"""
 		try:
 			return textInfo.pointAtStart
-		except (NotImplementedError, LookupError, AttributeError, COMError, RuntimeError) as e:
+		except (LookupError, AttributeError, COMError, OSError, RuntimeError) as error:
 			if _isDebug():
-				log.debug(f"pointAtStart failed for {textInfo!r}: {e}")
+				log.debug(f"pointAtStart failed for {textInfo!r}: {error}")
 			# Only apply the fallback for TextInfos exposing the offset-based internals we need.
-			# Otherwise, preserve the original failure.
-			if not (
-				isinstance(textInfo, OffsetsTextInfo) and textInfo.isCollapsed and textInfo._startOffset > 0
-			):
-				raise
-			prevOffset = textInfo._startOffset - 1
+			# Otherwise, report the original failure.
 			try:
-				return textInfo._getBoundingRectFromOffset(prevOffset).topRight
-			except (NotImplementedError, LookupError, AttributeError) as e:
-				if _isDebug():
-					log.debug(f"_getBoundingRectFromOffset failed: {e}")
-				try:
-					return textInfo._getPointFromOffset(prevOffset)
-				except (NotImplementedError, LookupError, AttributeError) as e:
-					if _isDebug():
-						log.debug(f"_getPointFromOffset failed: {e}", exc_info=True)
-			raise
+				if (
+					isinstance(textInfo, OffsetsTextInfo)
+					and textInfo.isCollapsed
+					and textInfo._startOffset > 0
+				):
+					prevOffset = textInfo._startOffset - 1
+					try:
+						return textInfo._getBoundingRectFromOffset(prevOffset).topRight
+					except (NotImplementedError, LookupError, AttributeError):
+						return textInfo._getPointFromOffset(prevOffset)
+			except (LookupError, AttributeError, COMError, OSError, RuntimeError) as fallbackError:
+				raise LocationUnavailableError(
+					"Unable to get the point at the start of the text",
+				) from fallbackError
+			raise LocationUnavailableError("Unable to get the point at the start of the text") from error
 
 	def _getNavigatorObjectLocation(self) -> Coordinates | None:
 		"""
@@ -281,16 +283,17 @@ class FocusManager:
 
 		:return: The (x, y) coordinates of the navigator object center, or None if not available
 		"""
-		navigatorObject = api.getNavigatorObject()
-		if navigatorObject:
-			try:
+		try:
+			navigatorObject = api.getNavigatorObject()
+			if navigatorObject:
 				left, top, width, _height = navigatorObject.location
 				x = left + width if _isWindowRTL(navigatorObject) else left
 				return Coordinates(x, top)
-			except Exception:
-				# Navigator object may not have a valid location
-				if _isDebug():
-					log.debug("Failed to get navigator object location", exc_info=True)
+		except Exception:
+			# The navigator object may not have a valid location,
+			# or fetching it from the review position may fail.
+			if _isDebug():
+				log.debug("Failed to get navigator object location", exc_info=True)
 		return None
 
 	def _getNavigatorObjectPosition(self) -> Coordinates:

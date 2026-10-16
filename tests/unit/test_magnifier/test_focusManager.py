@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot, Christos Bouronikos
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -9,6 +9,9 @@ from _magnifier.utils.types import Coordinates, MagnifierTrackingType
 import unittest
 from unittest.mock import MagicMock, Mock, patch
 import _ctypes
+from exceptions import CallCancelled, LocationUnavailableError
+from locationHelper import Point, RectLTRB
+from textInfos.offsets import OffsetsTextInfo
 
 
 def _makeFollowStateSideEffect(
@@ -128,6 +131,90 @@ class TestFocusManager(unittest.TestCase):
 		with patch("_magnifier.utils.focusManager.api.getReviewPosition", return_value=mockReviewPos):
 			result = self.focusManager._getReviewPosition()
 			self.assertIsNone(result)
+
+	def testGetReviewPositionSurvivesUnavailablePosition(self) -> None:
+		"""The API reports provider failures with a single documented error type."""
+		comError = _ctypes.COMError(-2147024809, "Paramètre incorrect.", None)
+		error = LocationUnavailableError("Review position unavailable")
+		error.__cause__ = comError
+		with patch("_magnifier.utils.focusManager.api.getReviewPosition", side_effect=error):
+			self.assertIsNone(self.focusManager._getReviewPosition())
+
+	def testGetCurrentFocusCoordinatesSurvivesReviewPositionError(self) -> None:
+		"""A failing review position must not break tracking; the last tracked coordinates are kept."""
+		error = LocationUnavailableError("Review position unavailable")
+		self.focusManager._lastReportedCoordinates = Coordinates(10, 20)
+		self.focusManager._getMousePosition = MagicMock(return_value=self.focusManager._lastMousePosition)
+		self.focusManager._getSystemFocusPosition = MagicMock(
+			return_value=self.focusManager._lastSystemFocusPosition,
+		)
+		self.focusManager._getNavigatorObjectPosition = MagicMock(
+			return_value=self.focusManager._lastNavigatorObjectPosition,
+		)
+		with (
+			patch("_magnifier.utils.focusManager.api.getReviewPosition", side_effect=error),
+			patch("_magnifier.utils.focusManager.getFollowState", side_effect=_makeFollowStateSideEffect()),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+		):
+			self.assertEqual(self.focusManager.getCurrentFocusCoordinates(), Coordinates(10, 20))
+
+	def testUnavailableReviewDoesNotPreventMouseTracking(self) -> None:
+		self.focusManager._getMousePosition = MagicMock(return_value=Coordinates(80, 90))
+		self.focusManager._getSystemFocusPosition = MagicMock(return_value=Coordinates(0, 0))
+		self.focusManager._getNavigatorObjectPosition = MagicMock(return_value=Coordinates(0, 0))
+		with (
+			patch(
+				"_magnifier.utils.focusManager.api.getReviewPosition",
+				side_effect=LocationUnavailableError(),
+			),
+			patch("_magnifier.utils.focusManager.getFollowState", side_effect=_makeFollowStateSideEffect()),
+			patch("_magnifier.utils.focusManager.winUser.getAsyncKeyState", return_value=0),
+		):
+			self.assertEqual(self.focusManager.getCurrentFocusCoordinates(), Coordinates(80, 90))
+
+	def testNavigatorRetrievalFailureCanRecover(self) -> None:
+		self.focusManager._lastValidNavigatorObjectPosition = Coordinates(10, 20)
+		obj = Mock(location=(100, 150, 200, 300))
+		with patch(
+			"_magnifier.utils.focusManager.api.getNavigatorObject",
+			side_effect=[_ctypes.COMError(-2147467259, "Unavailable", None), obj],
+		):
+			self.assertEqual(self.focusManager._getNavigatorObjectPosition(), Coordinates(10, 20))
+			self.assertEqual(self.focusManager._getNavigatorObjectPosition(), Coordinates(100, 150))
+
+	def testGetReviewPositionDoesNotSwallowCancellation(self) -> None:
+		"""Only an unavailable review position is handled; a cancelled call still propagates."""
+		with (
+			patch("_magnifier.utils.focusManager.api.getReviewPosition", side_effect=CallCancelled()),
+			self.assertRaises(CallCancelled),
+		):
+			self.focusManager._getReviewPosition()
+
+	def testGetPointAtStartFallsBackToPreviousCharacter(self) -> None:
+		"""At an exclusive end offset, the right edge of the previous character is used."""
+		pointError = LookupError("No point at the end of the text")
+		textInfo = Mock(spec=OffsetsTextInfo, isCollapsed=True, _startOffset=5)
+		type(textInfo).pointAtStart = property(Mock(side_effect=pointError))
+
+		textInfo._getBoundingRectFromOffset.return_value = RectLTRB(10, 20, 30, 40)
+		self.assertEqual(self.focusManager._getPointAtStart(textInfo), Point(30, 20))
+		textInfo._getBoundingRectFromOffset.assert_called_with(4)
+
+		textInfo._getBoundingRectFromOffset.side_effect = NotImplementedError
+		textInfo._getPointFromOffset.return_value = Point(50, 60)
+		self.assertEqual(self.focusManager._getPointAtStart(textInfo), Point(50, 60))
+		textInfo._getPointFromOffset.assert_called_with(4)
+
+		fallbackError = _ctypes.COMError(-2147467259, "Unspecified error", None)
+		textInfo._getPointFromOffset.side_effect = fallbackError
+		with self.assertRaises(LocationUnavailableError) as caught:
+			self.focusManager._getPointAtStart(textInfo)
+		self.assertIs(caught.exception.__cause__, fallbackError)
+
+		textInfo._startOffset = 0
+		with self.assertRaises(LocationUnavailableError) as caught:
+			self.focusManager._getPointAtStart(textInfo)
+		self.assertIs(caught.exception.__cause__, pointError)
 
 	def testGetSystemFocusPosition(self):
 		"""Getting system focus position with different API responses."""

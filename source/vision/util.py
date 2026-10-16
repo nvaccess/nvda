@@ -7,7 +7,9 @@
 """Utility functions for vision enhancement providers."""
 
 from .constants import Context  # noqa: I001
+from comtypes import COMError
 import api
+from exceptions import LocationUnavailableError
 import locationHelper
 from documentBase import TextContainerObject
 from NVDAObjects import NVDAObject
@@ -69,25 +71,32 @@ def getContextRect(
 	context: Context,
 	obj: TextContainerObject | None = None,
 ) -> locationHelper.RectLTRB | None:
-	"""Gets a rectangle for the specified context."""
-	if context == Context.FOCUS:
-		return getObjectRect(obj or api.getFocusObject())
-	elif context == Context.NAVIGATOR:
-		return getObjectRect(obj or api.getNavigatorObject())
-	elif context == Context.REVIEW:
-		return getReviewRect()
-	elif context == Context.BROWSEMODE:
-		caret = obj or api.getCaretObject()
-		if api.isCursorManager(caret):
-			return getCaretRect(obj=caret)
-		return None
-	elif context == Context.CARET:
-		caret = obj or api.getCaretObject()
-		if not api.isCursorManager(caret):
-			return getCaretRect(obj=caret)
-		return None
-	elif context == Context.MOUSE:
-		return getMouseRect()
+	"""Gets a rectangle for the specified context.
+	@raises LocationUnavailableError: If the location for the context cannot currently be retrieved.
+	"""
+	try:
+		if context == Context.FOCUS:
+			return getObjectRect(obj or api.getFocusObject())
+		elif context == Context.NAVIGATOR:
+			return getObjectRect(obj or api.getNavigatorObject())
+		elif context == Context.REVIEW:
+			return getReviewRect()
+		elif context == Context.BROWSEMODE:
+			caret = obj or api.getCaretObject()
+			if api.isCursorManager(caret):
+				return getCaretRect(obj=caret)
+			return None
+		elif context == Context.CARET:
+			caret = obj or api.getCaretObject()
+			if not api.isCursorManager(caret):
+				return getCaretRect(obj=caret)
+			return None
+		elif context == Context.MOUSE:
+			return getMouseRect()
+	except LocationUnavailableError:
+		raise
+	except (COMError, LookupError, OSError, RuntimeError) as e:
+		raise LocationUnavailableError(f"Unable to get the location for {context}") from e
 
 
 def getRectFromTextInfo(textInfo: textInfos.TextInfo) -> locationHelper.RectLTRB:

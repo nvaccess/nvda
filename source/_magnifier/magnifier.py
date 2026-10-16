@@ -10,6 +10,7 @@ Implements the magnifier global class and its basic functionalities.
 
 from collections.abc import Callable  # noqa: I001
 from comtypes import COMError
+from exceptions import LocationUnavailableError
 from logHandler import log
 from NVDAState import _TrackNVDAInitialization
 import wx
@@ -218,44 +219,56 @@ class Magnifier:
 		"""
 		Update the magnifier position and content.
 		This method is called repeatedly by the timer.
+		If the tracked location is unavailable, the current view is kept.
+		Only Magnification API errors count towards recovery:
 		On transient errors (below threshold): reschedules itself to keep running.
 		On repeated errors (at threshold): delegates rescheduling to _attemptRecovery.
 		"""
 		if not self._isActive:
 			return
+		recoveryScheduled = False
 		try:
-			self._managePanning()
-			if not self._isManualPanning:
-				self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
-			self._doUpdate()
-			self._consecutiveErrors = 0
-			self._recoveryAttempts = 0
-		except (OSError, COMError):
-			self._consecutiveErrors += 1
-			if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
-				log.error(  # noqa: G201
-					f"Error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS}), attempting recovery",
-					exc_info=True,
-				)
-				try:
-					self._attemptRecovery()
-				except Exception:
-					# Recovery itself failed: reset counter and restart timer directly
-					# to avoid a permanent freeze (recovery is responsible for rescheduling
-					# but may fail before reaching that point).
+			try:
+				self._managePanning()
+				if not self._isManualPanning:
+					self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+			except LocationUnavailableError:
+				# #20860: A tracking failure is not a magnification failure.
+				if _isDebug():
+					log.debug("Tracked location unavailable, keeping current magnifier view", exc_info=True)
+			try:
+				self._doUpdate()
+				self._consecutiveErrors = 0
+				self._recoveryAttempts = 0
+			except (OSError, COMError):
+				self._consecutiveErrors += 1
+				if self._consecutiveErrors >= self._MAX_CONSECUTIVE_ERRORS:
 					log.error(  # noqa: G201
-						"Recovery failed unexpectedly, restarting timer to prevent freeze",
+						f"Error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS}), attempting recovery",
 						exc_info=True,
 					)
-					self._consecutiveErrors = 0
-					self._startTimer(self._updateMagnifier)
-				return
-			log.warning(
-				f"Transient error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS})",
-				exc_info=True,
-			)
-		# Always reschedule the timer to keep the magnifier alive
-		self._startTimer(self._updateMagnifier)
+					try:
+						self._attemptRecovery()
+					except Exception:
+						# Recovery itself failed: reset counter and let the timer restart
+						# to avoid a permanent freeze (recovery is responsible for rescheduling
+						# but may fail before reaching that point).
+						log.error(  # noqa: G201
+							"Recovery failed unexpectedly, restarting timer to prevent freeze",
+							exc_info=True,
+						)
+						self._consecutiveErrors = 0
+					else:
+						recoveryScheduled = True
+					return
+				log.warning(
+					f"Transient error updating magnifier ({self._consecutiveErrors}/{self._MAX_CONSECUTIVE_ERRORS})",
+					exc_info=True,
+				)
+		finally:
+			# Always reschedule the timer to keep the magnifier alive, even after an unexpected error.
+			if self._isActive and not recoveryScheduled:
+				self._startTimer(self._updateMagnifier)
 
 	def _doUpdate(self) -> None:
 		"""
