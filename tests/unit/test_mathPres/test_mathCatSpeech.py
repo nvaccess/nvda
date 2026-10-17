@@ -13,9 +13,15 @@ from speech.commands import BreakCommand
 
 
 class TestConvertSSMLTextForNVDA(unittest.TestCase):
-	def _convert(self, rate: int) -> list:
+	def _convert(self, rate: int, rateBoost: bool = False, boostMultiplier: int | None = 3) -> list:
 		synth = MagicMock()
 		synth._get_rate.return_value = rate
+		synth.isSupported.return_value = True
+		synth.rateBoost = rateBoost
+		if boostMultiplier is None:
+			del synth.RATE_BOOST_MULTIPLIER
+		else:
+			synth.RATE_BOOST_MULTIPLIER = boostMultiplier
 		synth.supportedCommands = {BreakCommand}
 		with (
 			patch.object(speech, "getSynth", return_value=synth),
@@ -40,3 +46,15 @@ class TestConvertSSMLTextForNVDA(unittest.TestCase):
 
 	def test_rateZeroMatchesLowestNonZeroRate(self):
 		self.assertEqual(self._convert(0)[0].time, self._convert(1)[0].time)
+
+	def test_rateBoostShortensBreaks(self):
+		self.assertEqual(self._convert(50, rateBoost=True)[0].time, 180 * 180 // 300)
+
+	def test_rateBoostWithoutMultiplierDoesNotChangeBreaks(self):
+		self.assertEqual(
+			self._convert(50, rateBoost=True, boostMultiplier=None)[0].time,
+			self._convert(50)[0].time,
+		)
+
+	def test_rateZeroWithRateBoostDoesNotRaise(self):
+		self.assertIsInstance(self._convert(0, rateBoost=True)[0], BreakCommand)
