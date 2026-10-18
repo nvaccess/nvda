@@ -802,7 +802,29 @@ class UIATextInfo(textInfos.TextInfo):
 						parentRange,
 						UIAHandler.TextPatternRangeEndpoint_End,
 					)
-					clippedStart = startCmp > 0
+					if startCmp < 0:
+						if debug:
+							log.debug(
+								f"The start of the inner range is before the start of the outer range ({startCmp}). "
+								"This is likely a bug in the UIA implementation. "
+								"Comparing the endpoints of the range between both starts instead",
+							)
+						precedingRange = parentRange.clone()
+						precedingRange.MoveEndpointByRange(
+							UIAHandler.TextPatternRangeEndpoint_End,
+							textRange,
+							UIAHandler.TextPatternRangeEndpoint_Start,
+						)
+						clippedStart = (
+							precedingRange.CompareEndpoints(
+								UIAHandler.TextPatternRangeEndpoint_Start,
+								precedingRange,
+								UIAHandler.TextPatternRangeEndpoint_End,
+							)
+							< 0
+						)
+					else:
+						clippedStart = startCmp > 0
 					if endCmp == startCmp and endCmp > 0:
 						if debug:
 							log.debug(
