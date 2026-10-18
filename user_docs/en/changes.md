@@ -49,9 +49,9 @@
 
 #### Magnifier
 
-* Profiles do no longer interfer with Magnifier settings.
-Previously, saving magnifier settings could be uneffective while a profile was active.
-NVDA magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+* Profiles no longer interfere with Magnifier settings.
+Previously, saving magnifier settings could be ineffective while a profile was active.
+The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
 
 ### Changes for Developers
 
