@@ -170,8 +170,7 @@ def doStartupDialogs():
 				# This copy of NVDA uses factory defaults, but the configuration file on disk is not changed.
 				"Your configuration file could not be loaded, "
 				"possibly because it was saved by a newer version of NVDA. "
-				"This copy of NVDA is using factory defaults. "
-				"Your configuration file has not been changed.\n"
+				"This copy of NVDA is using factory defaults.\n"
 				"More details about the errors can be found in the log file.",
 			)
 		gui.messageBox(
