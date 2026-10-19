@@ -53,6 +53,23 @@ class TestMathSettingsAvailability(unittest.TestCase):
 
 			self.assertFalse(mathPres._mathCATAvailable)
 
+	def test_importKeyboardInterruptIsPropagated(self):
+		with (
+			mock.patch("builtins.__import__", side_effect=KeyboardInterrupt),
+			self.assertRaises(KeyboardInterrupt),
+		):
+			mathPres.initialize()
+
+	def test_initializationKeyboardInterruptIsPropagated(self):
+		with (
+			mock.patch.object(mathPres, "speechProvider", None),
+			mock.patch.object(mathPres, "brailleProvider", None),
+			mock.patch.object(mathPres, "interactionProvider", None),
+			mock.patch.object(mathCATModule, "MathCAT", side_effect=KeyboardInterrupt),
+			self.assertRaises(KeyboardInterrupt),
+		):
+			mathPres.initialize()
+
 	def test_mathCatInitializationFailureIsPropagated(self):
 		with (
 			mock.patch.object(mathCATModule.libmathcat, "GetVersion", return_value="test"),

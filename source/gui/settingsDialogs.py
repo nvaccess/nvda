@@ -4020,6 +4020,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
 		self.bindHelpEvent("RemoteEnable", self.enableRemote)
+		self._updateRemoteClientAvailability(sHelper)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
@@ -4138,6 +4139,23 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		if globalVars.appArgs.secure:
 			self._disableDescendants(sizer, enabledInSecureMode)
+
+	def _updateRemoteClientAvailability(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		import _remoteClient
+
+		if _remoteClient.remoteClientAvailable():
+			return
+		self.enableRemote.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				label=pgettext(
+					"remote",
+					# Translators: Explanation shown in Remote Access settings when the client cannot be loaded.
+					"Remote Access is unavailable because its required components could not be loaded.",
+				),
+			),
+		)
 
 	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
 		"""Disable all but the specified discendant windows of this sizer.
