@@ -22,6 +22,7 @@
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
 * MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
+* The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 
 #### Performance
 
