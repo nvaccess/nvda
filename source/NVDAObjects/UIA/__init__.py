@@ -2576,6 +2576,11 @@ class UIA(Window):
 					speechPriority = speech.priorities.Spri.NOW
 				else:
 					speech.cancelSpeech()
+			elif notificationProcessing in (
+				UIAHandler.NotificationProcessing_ImportantAll,
+				UIAHandler.NotificationProcessing_ImportantCurrentThenMostRecent,
+			):
+				speechPriority = speech.priorities.Spri.NEXT
 			ui.message(displayString, speechPriority=speechPriority)
 
 	def event_UIA_dragDropEffect(self):
