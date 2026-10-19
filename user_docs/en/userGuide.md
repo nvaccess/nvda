@@ -3295,7 +3295,7 @@ If this is unchecked, you need to double-tap on the key of the touch keyboard to
 ##### Enable edge gestures {#TouchEdgeGestures}
 
 This checkbox enables edge gesture support.
-When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
+When enabled, gestures that start from any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
 For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
 If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
 Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.
@@ -3545,12 +3545,11 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
-##### Native selection mode {#NativeSelectionModeSetting}
+##### Native selection mode on page load {#NativeSelectionModeSetting}
 
-Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
+Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it when loaded.
 This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.
 When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.
-Changing this option takes effect for newly loaded documents.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4582,7 +4581,8 @@ For example, you may wish to have reporting of indentation enabled while you are
 NVDA allows you to do this using configuration profiles.
 
 A configuration profile contains only those settings which are changed while the profile is being edited.
-Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings](#NVDASettings) dialog, which apply to the entirety of NVDA.
+Most settings can be changed in configuration profiles.
+Settings in the following categories of [NVDA Settings](#NVDASettings) dialog apply to the entirety of NVDA: General, Privacy and Security, Magnifier, Remote Access, Math, and Add-on Store.
 
 Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
@@ -6587,8 +6587,8 @@ Following are the command line options for NVDA:
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|
 |`-s` |`--secure` |Starts NVDA in [Secure Mode](#SecureMode)|
 |`-d` |`--disable-addons` |Add-ons will have no effect|
-|None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--loglevel`, `-l`) argument given, including no logging option.|
-|None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--loglevel`, `-l`) is specified from command line or if debug logging is turned on.|
+|None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--log-level`, `-l`) argument given, including no logging option.|
+|None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--log-level`, `-l`) is specified from command line or if debug logging is turned on.|
 |None |`--no-sr-flag` |Don't change the global system screen reader flag|
 |None |`--install` |Installs NVDA (starting the newly installed copy)|
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|

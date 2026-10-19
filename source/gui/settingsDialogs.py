@@ -2726,7 +2726,7 @@ class BrowseModePanel(SettingsPanel):
 		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is the label for a combo box in the browse mode settings panel.
-				"Nati&ve selection mode",
+				"Nati&ve selection mode on page load",
 			),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["virtualBuffers", "nativeSelectionMode"],
@@ -6712,13 +6712,16 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
-		if (
-			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
-			or isinstance(self.currentCategory, GeneralSettingsPanel)
-			or isinstance(self.currentCategory, AddonStorePanel)
-			or isinstance(self.currentCategory, RemoteSettingsPanel)
-			or isinstance(self.currentCategory, MathSettingsPanel)
-			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
+		if not NvdaSettingsDialogActiveConfigProfile or isinstance(
+			self.currentCategory,
+			(
+				GeneralSettingsPanel,
+				MagnifierPanel,
+				AddonStorePanel,
+				RemoteSettingsPanel,
+				MathSettingsPanel,
+				PrivacyAndSecuritySettingsPanel,
+			),
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
