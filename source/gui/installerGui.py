@@ -199,6 +199,15 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 			log.error(f"Unexpected return code from post-install dialog: {returnCode}")
 
 
+def _isOtherNVDARunning() -> bool:
+	"""Whether other copies of NVDA keep running from the install folders.
+	The wait for them to exit runs in a background thread.
+	"""
+	return bool(
+		systemUtils.ExecAndPump(installer._waitForRunningNVDAProcesses, installer._getInstallDirs()).funcRes,
+	)
+
+
 def _confirmTerminateRunningNVDA() -> bool:
 	"""Ask the user whether running copies of NVDA that block the installation may be ended.
 
@@ -356,9 +365,7 @@ def doSilentInstall(
 	"""
 	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
 	shouldTerminateRunningNVDA = (
-		not freshInstall
-		and not globalVars.appArgs.installSilent
-		and any(installer._getRunningNVDAProcesses(installer._getInstallDirs()))
+		not freshInstall and not globalVars.appArgs.installSilent and _isOtherNVDARunning()
 	)
 	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
 		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
@@ -507,9 +514,7 @@ class InstallerDialog(
 	def onInstall(self, evt):
 		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
-		shouldTerminateRunningNVDA = self.isUpdate and any(
-			installer._getRunningNVDAProcesses(installer._getInstallDirs()),
-		)
+		shouldTerminateRunningNVDA = self.isUpdate and _isOtherNVDARunning()
 		if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
 			return
 		self.Hide()

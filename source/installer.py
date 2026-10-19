@@ -893,15 +893,32 @@ def _getRunningNVDAProcesses(installDirs: Sequence[str]) -> Iterator[psutil.Proc
 			log.debug(f"Ignoring {imagePath}, it is outside the install folders")
 
 
-def _terminateNVDAProcesses(installDirs: Sequence[str]) -> None:
-	"""Forcefully end the processes found by :func:`_getRunningNVDAProcesses`.
+def _waitForRunningNVDAProcesses(installDirs: Sequence[str], timeout: float = 3) -> list[psutil.Process]:
+	"""Wait for the processes found by :func:`_getRunningNVDAProcesses` to exit.
+	It polls whether the processes still run and needs no access to them.
+
+	:param installDirs: The folders to look in.
+	:param timeout: The maximum number of seconds to wait.
+	:return: The processes that are still running after the wait.
+	"""
+	processes = list(_getRunningNVDAProcesses(installDirs))
+	deadline = time.monotonic() + timeout
+	while True:
+		processes = [process for process in processes if process.is_running()]
+		if not processes or time.monotonic() >= deadline:
+			return processes
+		time.sleep(0.1)
+
+
+def _terminateProcesses(processes: Iterable[psutil.Process]) -> None:
+	"""Forcefully end processes.
 	This needs elevation to end processes of other users.
 	Failures are logged and do not stop the remaining processes from being terminated.
 
-	:param installDirs: The folders to look in.
+	:param processes: The processes to end, as returned by :func:`psutil.process_iter` with the ``exe`` attribute.
 	"""
 	terminated: list[psutil.Process] = []
-	for process in _getRunningNVDAProcesses(installDirs):
+	for process in processes:
 		log.info(f"Terminating process {process.pid} ({process.info['exe']})")
 		try:
 			process.kill()
@@ -999,11 +1016,9 @@ def install(
 	shouldCleanX86 = len(installDirs) > 1
 	installDirX86 = installDirs[1] if shouldCleanX86 else None
 	startMenuFolder = WritePaths.defaultStartMenuFolder
-	# Give some time for the installed NVDA (which may have been running on a secure screen)
-	# to shut down before we start deleting files.
-	time.sleep(1)
+	runningProcesses = _waitForRunningNVDAProcesses(installDirs)
 	if shouldTerminateRunningNVDA:
-		_terminateNVDAProcesses(installDirs)
+		_terminateProcesses(runningProcesses)
 
 	# Remove all the main executables always.
 	# We do this for two reasons:
