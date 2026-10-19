@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
-###
-# This file is a part of the NVDA project.
-# URL: http://www.nvda-project.org/
-# Copyright 2013-2017 NV Access Limited.
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2.0, as published by
-# the Free Software Foundation.
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# This license can be found at:
-# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
-###
-from collections.abc import Callable  # noqa: I001
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
+import os
 import re
+from collections.abc import Callable
+
 from SCons.Node.FS import File
 
 Import(
@@ -140,7 +134,7 @@ COM_INTERFACES = {
 	"ISimpleDOM.py": "typelibs/ISimpleDOMNode.tlb",
 	"Scripting.py": ("{420B2830-E718-11CF-893D-00A0C9054228}", 1, 0),  # Used for browseable messages
 	"Accessibility.py": ("{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}", 1, 0),
-	"tom.py": ("{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}", 1, 0),
+	"tom.py": os.path.join(os.environ["SYSTEMROOT"], "System32", "msftedit.dll"),
 	"SpeechLib.py": ("{C866CA3A-32F7-11D2-9602-00C04F8EE628}", 5, 0),
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
 	# As long as GitHub Actions is on a Windows version that has an acceptable version of UIAutomationClient,
