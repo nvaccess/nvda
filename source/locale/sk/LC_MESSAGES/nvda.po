@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-05 04:24+0000\n"
-"PO-Revision-Date: 2026-10-12 00:27\n"
+"POT-Creation-Date: 2026-10-18 23:18+0000\n"
+"PO-Revision-Date: 2026-10-19 00:24\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -350,7 +350,7 @@ msgstr "Žiadny predchádzajúci prvok formulára"
 #. Translators: Label announced when cycling browse mode touch navigation element types in browse mode.
 #: browseMode.py:1001
 msgid "form fields"
-msgstr "formulárové prvky"
+msgstr "prvky formulára"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1007
@@ -1147,7 +1147,7 @@ msgstr "&Nadpisy"
 #. in the browse mode Elements List dialog.
 #: browseMode.py:1469 NVDAObjects\window\excel.py:768
 msgid "&Form fields"
-msgstr "&Formuláre"
+msgstr "Prvky &Formulára"
 
 #. Translators: The label of a radio button to select the type of element
 #. in the browse mode Elements List dialog.
@@ -1586,7 +1586,7 @@ msgstr[3] "Nebolo možné aktualizovať nasledujúce doplnky: {}."
 #: core.py:95
 msgid "The following add-on failed to uninstall: {}."
 msgid_plural "The following add-ons failed to uninstall: {}."
-msgstr[0] "Nebolo možné odinštalovať nasledujúce doplnky: {}."
+msgstr[0] "Nebolo možné odinštalovať nasledujúci doplnok: {}."
 msgstr[1] "Nebolo možné odinštalovať nasledujúce doplnky: {}."
 msgstr[2] "Nebolo možné odinštalovať nasledujúce doplnky: {}."
 msgstr[3] "Nebolo možné odinštalovať nasledujúce doplnky: {}."
@@ -1696,7 +1696,7 @@ msgstr "Spúšťanie programu NVDA, prosím čakajte..."
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
 #: core.py:970
 msgid "NVDA started with screen curtain enabled"
-msgstr "NVDA je spustené s tienením obrazovky"
+msgstr "NVDA je spustený so zapnutým tienením obrazovky"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 #: core.py:973
@@ -2475,7 +2475,7 @@ msgstr "Zapína alebo vypína ignorovanie prázdnych riadkov pre oznamovanie ods
 #. reporting document formatting setting.
 #: globalCommands.py:997
 msgid "Ignore blank lines for line indentation reporting off"
-msgstr "Neignorovať prázdne riadky pre oznamovanie odsadenia vypnuté"
+msgstr "Neignorovať prázdne riadky pre oznamovanie odsadenia"
 
 #. Translators: The message announced when toggling on the ignore blank lines for line indentation
 #. reporting document formatting setting.
@@ -2876,7 +2876,7 @@ msgstr "Jednoduchý režim objektovej navigácie zapnutý"
 #. Translators: Input help mode message for report current navigator object command.
 #: globalCommands.py:1499
 msgid "Reports the current navigator object. Pressing twice spells this information, and pressing three times Copies name and value of this object to the clipboard"
-msgstr "Oznamuje informácie o aktuálnom navigačnom objekte. Stlačené 2 krát rýchlo za sebou, vyhláskuje tieto informácie. Stlačené tri krát, okopíruje meno a hodnotu objektu do schránky"
+msgstr "Oznamuje informácie o aktuálnom navigačnom objekte. Stlačené dvakrát rýchlo za sebou, vyhláskuje tieto informácie. Stlačené trikrát, okopíruje meno a hodnotu objektu do schránky"
 
 #. Translators: Reported when the user tries to perform a command related to the navigator object
 #. but there is no current navigator object.
@@ -2888,7 +2888,7 @@ msgstr "Žiadny navigačný objekt"
 #. Translators: message when there is no location information
 #: globalCommands.py:1564
 msgid "No location information"
-msgstr "Žiadne informácie o formátovaní"
+msgstr "Žiadne informácie o umiestnení"
 
 #. Translators: Description for a keyboard command which reports location of the
 #. review cursor, falling back to the location of navigator object if needed.
@@ -3031,7 +3031,7 @@ msgstr "Vrch"
 #. Translators: Input help mode message for read current line under review cursor command.
 #: globalCommands.py:1959
 msgid "Reports the line of the current navigator object where the review cursor is situated. If this key is pressed twice, the current line will be spelled. Pressing three times will spell the line using character descriptions."
-msgstr "Prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Ak je tento príkaz stlačený 2 krát rýchlo za sebou, aktuálny riadok bude vyhláskovaný. Stlačené tri krát za sebou vyhláskuje aktuálny riadok foneticky."
+msgstr "Prečíta riadok aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Ak je tento príkaz stlačený dvakrát rýchlo za sebou, aktuálny riadok bude vyhláskovaný. Stlačené trikrát za sebou vyhláskuje aktuálny riadok foneticky."
 
 #. Translators: Input help mode message for move review cursor to next line command.
 #: globalCommands.py:1987
@@ -3091,7 +3091,7 @@ msgstr "Ľavý okraj"
 #. Translators: Input help mode message for report current character under review cursor command.
 #: globalCommands.py:2290
 msgid "Reports the character of the current navigator object where the review cursor is situated. Pressing twice reports a description or example of that character. Pressing three times reports the numeric value of the character in decimal and hexadecimal"
-msgstr "Prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Stlačené 2 krát rýchlo za sebou oznány popis alebo príklad použitia tohoto znaku. Stlačené 3 krát rýchlo za sebou oznámi ASCII a hexa hodnotu aktuálneho znaku."
+msgstr "Prečíta znak aktuálneho navigačného objektu, na ktorý ukazuje prezerací kurzor. Stlačené dvakrát rýchlo za sebou oznámi popis alebo príklad použitia tohoto znaku. Stlačené trikrát rýchlo za sebou oznámi Ascii a hexa hodnotu aktuálneho znaku"
 
 #. Translators: Input help mode message for move review cursor to next character command.
 #: globalCommands.py:2338
@@ -3165,7 +3165,7 @@ msgstr "Premiestni fokus za vnorený objekt späť do nadradeného dokumentu"
 #. in web browsing and other situations.
 #: globalCommands.py:2559 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Prepína medzi režimom fokusu a prehliadacím režimom. V režime fokusu sú stláčané klávesy prepustené aktívnej aplikácii, čo umožní priamu interakciu so zameraným prvkom. V prehliadacom režime je možné čítať dokument pomocou kurzorových klávesov, používať rýchlu navigáciu a podobne."
+msgstr "Prepína medzi režimom fokusu a režimom prehliadania. V režime fokusu sú stláčané klávesy prepustené aktívnej aplikácii, čo umožní priamu interakciu so zameraným prvkom. V režime prehliadania je možné čítať dokument pomocou kurzorových klávesov, používať rýchlu navigáciu a podobne."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:2609
@@ -3345,7 +3345,7 @@ msgstr "Text zameraný myšou %s"
 #. Translators: Input help mode message for report title bar command.
 #: globalCommands.py:3194
 msgid "Reports the title of the current application or foreground window. If pressed twice, spells the title. If pressed three times, copies the title to the clipboard"
-msgstr "Prečíta titulok aktuálneho aplikačného okna alebo okna v popredí. Stlačené rýchlo 2 krát za sebou vyhláskuje a 3 krát po sebe skopíruje titulok do schránky windows."
+msgstr "Prečíta titulok aktuálneho aplikačného okna alebo okna v popredí. Stlačené rýchlo dvakrát za sebou vyhláskuje a trikrát po sebe skopíruje titulok do schránky windows"
 
 #. Translators: Reported when there is no title text for current program or window.
 #: globalCommands.py:3215
@@ -3403,7 +3403,7 @@ msgstr "Záznam skopírovaný do schránky"
 #. or the clipboard content did not match what was just copied.
 #: globalCommands.py:3318 ui.py:227
 msgid "Unable to copy"
-msgstr "nemôžem skopírovať"
+msgstr "Nie je možné skopírovať"
 
 #. Translators: Input help mode message for Open user configuration directory command.
 #: globalCommands.py:3322
@@ -3677,7 +3677,7 @@ msgstr "Aktivuje Python konzolu NVDA, primárne použiteľnú pri vývoji."
 #. Translators: Input help mode message to activate Add-on Store command.
 #: globalCommands.py:3764
 msgid "Activates the Add-on Store to browse and manage add-on packages for NVDA"
-msgstr "Zobrazí obchod s doplnkami, v ktorom môžete spravovať doplnky"
+msgstr "Zobrazí katalóg s doplnkami, odkiaľ je možné inštalovať a spravovať doplnky pre NVDA"
 
 #. Translators: Input help mode message for toggle speech viewer command.
 #: globalCommands.py:3773
@@ -3737,7 +3737,7 @@ msgstr "Režim brailu {brailleMode}"
 #. braille move system caret when routing review cursor command.
 #: globalCommands.py:3869
 msgid "Cycle through the braille move system caret when routing review cursor states"
-msgstr "Prepína medzi režimami pre posúvanie prezeracieho a systémového kurzora pomocou smerových tlačidiel na brailovom riadku"
+msgstr "Prepína medzi režimami pre posúvanie prezeracieho a systémového kurzora pomocou privolávacích tlačidiel na brailovom riadku"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
 #: globalCommands.py:3879
@@ -3755,7 +3755,7 @@ msgstr "Systémový kurzor predvolene nasleduje prezerací kurzor po stlačení 
 #: globalCommands.py:3903
 #, python-format
 msgid "Braille move system caret when routing review cursor %s"
-msgstr "systémový kurzor nasleduje prezerací kurzor po stlačení smerových tlačidiel %s"
+msgstr "Systémový kurzor nasleduje prezerací kurzor po stlačení privolávacích tlačidiel %s"
 
 #. Translators: Input help mode message for toggle braille focus context presentation command.
 #: globalCommands.py:3911
@@ -3930,7 +3930,7 @@ msgstr "nie je označený začiatok"
 #. The select then copy command first selects the review cursor text, then copies it to the clipboard.
 #: globalCommands.py:4177
 msgid "If pressed once, the text from the previously set start marker up to and including the current position of the review cursor is selected. If pressed twice, the text is copied to the clipboard"
-msgstr "Označí text od značky po aktuálnu pozíciu prezeracieho kurzora. Stlačené dva krát rýchlo za sebou skopíruje text do schránky."
+msgstr "Označí text od značky po aktuálnu pozíciu prezeracieho kurzora. Stlačené dvakrát rýchlo za sebou skopíruje text do schránky"
 
 #. Translators: Presented when text has already been marked for selection, but not yet copied.
 #: globalCommands.py:4195
@@ -3945,7 +3945,7 @@ msgstr "Nie je vybraný žiadny text na skopírovanie"
 #. Translators: Presented when unable to select the marked text.
 #: globalCommands.py:4235
 msgid "Can't select text, press twice to copy"
-msgstr "nemôžem označiť text. Ak chcete text kopírovať, stlačte skratku dvakrát rýchlo za sebou."
+msgstr "Nie je možné označiť text. Ak chcete text kopírovať, stlačte skratku dvakrát rýchlo za sebou"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4251
@@ -4010,7 +4010,7 @@ msgstr "Odstráni posledný zadaný brailový znak"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4375
 msgid "Translates any braille input and presses the enter key"
-msgstr "Preloží zadaný text na braillovskom riadku a stlačí kláves Enter"
+msgstr "Preloží zadaný text na brailovom riadku a stlačí kláves Enter"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4384
@@ -4020,7 +4020,7 @@ msgstr "Preloží text zadaný cez brailový riadok"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4393
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
-msgstr "Odošle do systému cez brailový riadok kláves Shift"
+msgstr "Odošle cez brailový riadok do systému kláves Shift"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4402
@@ -4040,7 +4040,7 @@ msgstr "Odošle do systému cez brailový riadok kláves ľavý windows"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4431
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
-msgstr "Odošle do systému cez brailový riadok kláves NVDA"
+msgstr "Odošle cez brailový riadok do systému kláves NVDA"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4441
@@ -4090,7 +4090,7 @@ msgstr "Oznámi URL adresu cieľového odkazu, na ktorom je prezerací alebo sys
 #. Translators: Reported when using the command to report the destination of a link.
 #: globalCommands.py:4556
 msgid "Link has no apparent destination"
-msgstr "Odkaz nemá určený zdroj"
+msgstr "Odkaz nemá určený cieľ"
 
 #. Translators: Title of the browseable message when requesting the destination of a graphical link.
 #. Translators: A destination for braille output.
@@ -4198,7 +4198,7 @@ msgstr "Udalosti sú povolené"
 #. Translators: Describes a command.
 #: globalCommands.py:4814
 msgid "Begins interaction with math content"
-msgstr "prepúšťa príkazy do aplikácie MathPlayer"
+msgstr "Spúšťa navigáciu v matematickom obsahu"
 
 #. Translators: Reported when the user attempts math interaction
 #. with something that isn't math.
@@ -6917,7 +6917,7 @@ msgstr "Pripájanie"
 #. Translators: The progress message indicating that a download is in progress.
 #: updateCheck.py:902
 msgid "Downloading"
-msgstr "Prebieha sťahovanie"
+msgstr "Preberanie"
 
 #. Translators: A message indicating that an error occurred while downloading an update to NVDA.
 #: updateCheck.py:921
@@ -6933,7 +6933,7 @@ msgid "We need your help in order to continue to improve NVDA.\n"
 "Thank you for your support."
 msgstr "Na zaistenie nepretržitého vylepšovania programu NVDA potrebujeme aj Vašu pomoc.\n"
 "Tento projekt závisí primárne od obdržaných finančných príspevkov a grantov. Zaslaním príspevku pomôžete aj vy financovať nepretržitý vývoj programu NVDA.\n"
-"Ak by každé stiahnutie NVDA bolo odmenené príspevkom čo i len 10 euro, pomohlo by nám to pokryť predpokladané výdavky súvisiace s udržaním projektu.\n"
+"Ak by každé prevzatie programu NVDA bolo odmenené príspevkom čo i len 10 euro, pomohlo by nám to pokryť predpokladané výdavky súvisiace s udržaním projektu.\n"
 "Všetky príspevky sú zasielané spoločnosti NV Access, neziskovej organizácii, ktorá zastrešuje vývoj NVDA.\n"
 "Ďakujeme za podporu."
 
@@ -7096,14 +7096,14 @@ msgstr "Inštalácia doplnku z %s zlyhala"
 #: addonStore\network.py:330
 msgctxt "addonStore"
 msgid "Add-on download failure"
-msgstr "Nepodarilo sa stiahnuť doplnok"
+msgstr "Nepodarilo sa prevziať doplnok"
 
 #. Translators: A message to the user if an add-on download fails
 #: addonStore\network.py:352
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Unable to download add-on: {name}"
-msgstr "Nepodarilo sa stiahnuť doplnok: {name}"
+msgstr "Nepodarilo sa prevziať doplnok: {name}"
 
 #. Translators: A message to the user if an add-on download fails
 #: addonStore\network.py:362
@@ -7117,7 +7117,7 @@ msgstr "Nepodarilo sa uložiť súbor s doplnkom: {name}"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Add-on download not safe: checksum failed for {name}"
-msgstr "Stiahnutie doplnku nie je bezpečné: Zlyhalo overenie kontrolného súčtu pre {name}"
+msgstr "Prevzatie doplnku nie je bezpečné: Zlyhalo overenie kontrolného súčtu pre {name}"
 
 #. Translators: Label for add-on channel in the add-on sotre
 #. Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
@@ -7250,19 +7250,19 @@ msgstr "Nekompatibilný"
 #: addonStore\models\status.py:95
 msgctxt "addonStore"
 msgid "Downloading"
-msgstr "Prebieha sťahovanie"
+msgstr "Preberanie"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:97
 msgctxt "addonStore"
 msgid "Download failed"
-msgstr "Sťahovanie zlyhalo"
+msgstr "Preberanie zlyhalo"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:99
 msgctxt "addonStore"
 msgid "Downloaded, pending install"
-msgstr "Stiahnutý, bude povolený po reštarte"
+msgstr "Prevzatý, bude povolený po reštarte"
 
 #. Translators: Status for addons shown in the add-on store dialog
 #: addonStore\models\status.py:101
@@ -7816,7 +7816,7 @@ msgstr "komentár"
 #: appModules\poedit.py:180
 msgctxt "poedit"
 msgid "Reports the previous source text, if any. If pressed twice, presents the text in browse mode"
-msgstr "Oznámi predchádzajúci zdrojový text, ak je k dispozícii. Stlačené dva krát rýchlo za sebou, zobrazí predchádzajúci zdrojový text v režime prehliadania"
+msgstr "Oznámi predchádzajúci zdrojový text, ak je k dispozícii. Stlačené dvakrát rýchlo za sebou, zobrazí predchádzajúci zdrojový text v režime prehliadania"
 
 #. Translators: The description of the "previous source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -9043,7 +9043,7 @@ msgid "&HID keyboard input simulation"
 msgstr "Simulácia &HID klávesnice"
 
 #. Translators: Displayed when the source driver of a braille display gesture is unknown.
-#: braille\display\gesture.py:232
+#: braille\display\gesture.py:234
 msgid "Unknown braille display"
 msgstr "Neznámi brailový riadok"
 
@@ -9664,13 +9664,13 @@ msgstr "Anglický počítačový kód (Severná Amerika)"
 #. braille settings dialog.
 #: brailleTables\__tables.py:180
 msgid "English (New Zealand) grade 1"
-msgstr "Angličtina (Nový Zealand) plnopis"
+msgstr "Angličtina (Nový Zéland) plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables\__tables.py:183
 msgid "English (New Zealand) grade 2"
-msgstr "Angličtina (Nový Zealand) skratkopis"
+msgstr "Angličtina (Nový Zéland) skratkopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -16716,10 +16716,10 @@ msgstr[3] "Inštalujem {num} doplnkov, počkajte prosím."
 msgctxt "addonStore"
 msgid "Download of {num} add-on in progress, cancel downloading?"
 msgid_plural "Download of {num} add-ons in progress, cancel downloading?"
-msgstr[0] "Prebieha sťahovanie {num} doplnku, želáte si ho prerušiť?"
-msgstr[1] "Prebieha sťahovanie {num} doplnkov, želáte si ho prerušiť?"
-msgstr[2] "Prebieha sťahovanie {num} doplnkov, želáte si ho prerušiť?"
-msgstr[3] "Prebieha sťahovanie {num} doplnkov, želáte si ho prerušiť?"
+msgstr[0] "Prebieha preberanie {num} doplnku, želáte si ho prerušiť?"
+msgstr[1] "Prebieha Preberanie {num} doplnku, želáte si ho prerušiť?"
+msgstr[2] "Prebieha Preberanie {num} doplnkov, želáte si ho prerušiť?"
+msgstr[3] "Prebieha preberanie {num} doplnkov, želáte si ho prerušiť?"
 
 #. Translators: The label of the add-on list in the add-on store; {category} is replaced by the selected
 #. tab's name.
@@ -17642,7 +17642,7 @@ msgstr "V hlavičke pre riadky nie je možné nájsť riadok {rowNumber} stĺpec
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:346
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr "Oznámi text komentára na pozícii systémového kurzora. Stlačené dva krát rýchlo za sebou zobrazí informáciu v režime prehliadania."
+msgstr "Oznámi text komentára na pozícii systémového kurzora. Stlačené dvakrát rýchlo za sebou zobrazí informáciu v režime prehliadania."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:379 NVDAObjects\UIA\wordDocument.py:903
@@ -17916,7 +17916,7 @@ msgstr "Komentár: {comment} od {author} dňa {date}"
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:881
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr "Oznámi text komentára na pozícii systémového kurzora. Stlačené dva krát rýchlo za sebou zobrazí informáciu v režime prehliadania"
+msgstr "Oznámi text komentára na pozícii systémového kurzora. Stlačené dvakrát rýchlo za sebou zobrazí informáciu v režime prehliadania"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.

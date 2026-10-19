@@ -6534,7 +6534,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.</source>
-        <target>NVDA torna a rispondere più rapidamente quando un'applicazione si blocca e non si blocca più né riempie il registro di errori causati da applicazioni che non rispondono.</target>
+        <target>NVDA torna a rispondere più rapidamente quando un'applicazione si blocca e poi si sblocca, né riempie il registro di errori causati da applicazioni che non rispondono.</target>
       </segment>
     </unit>
     <unit id="9faf4a8e-2397-4974-b0fe-25a65d7ff3ae">
@@ -6634,7 +6634,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>New Features</source>
-        <target>Nuove funzionalità</target>
+        <target>Novità</target>
       </segment>
     </unit>
     <unit id="c744dc0e-04eb-4bbe-8ce7-52aeb7262e21">
@@ -6724,7 +6724,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>A new "Say all reads by" speech setting lets you choose whether say all reads by sentence, paragraph or line; say all now reads by sentence by default where supported. (#13420, #9179, #13971, @LeonarddeR)</source>
-        <target>La nuova impostazione vocale "Leggi tutto per" permette di scegliere se la lettura continua procede per frase, paragrafo o riga; dove supportato, ora procede per frase per impostazione predefinita. (#13420, #9179, #13971, @LeonarddeR)</target>
+        <target>La nuova impostazione vocale "Leggi tutto per" consente di scegliere se la lettura continua procede per frase, paragrafo o riga; dove supportato, ora procede per frase per impostazione predefinita. (#13420, #9179, #13971, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="6843a405-e8c1-4af6-9461-ca7057489f38">
@@ -6744,7 +6744,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The duration of indentation beeps can now be configured via a new "Indent tone duration (ms)" spin control in the Document Formatting settings panel. (#19353, @Mubashir78)</source>
-        <target>La durata dei segnali acustici di rientro può ora essere configurata tramite il nuovo controllo numerico "Durata del segnale acustico di rientro (ms)" nel pannello delle impostazioni Formattazione documento. (#19353, @Mubashir78)</target>
+        <target>La durata dei segnali acustici di rientro può ora essere configurata tramite il nuovo controllo numerico "Durata del tono rientro (ms)" nel pannello delle impostazioni Formattazione documento. (#19353, @Mubashir78)</target>
       </segment>
     </unit>
     <unit id="3970447c-f86e-474c-9e7b-e3138dcc65f2">
@@ -6824,7 +6824,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>The braille "word wrap" option has been replaced with a four-valued "Text wrap" option: Off, Show mark when words are cut, At word boundaries, and At word or syllable boundaries. (#17010, @LeonarddeR)</source>
-        <target>L'opzione braille "A capo automatico delle parole" è stata sostituita dall'opzione "A capo del testo", con quattro valori: Disattivato, Mostra un segno quando le parole vengono divise, Ai confini delle parole e Ai confini delle parole o delle sillabe. (#17010, @LeonarddeR)</target>
+        <target>L'opzione braille "A capo automatico delle parole" è stata sostituita dall'opzione "testo a capo", con quattro valori: Disattivato, Mostra un segno quando le parole vengono divise, Ai confini delle parole e Ai confini delle parole o delle sillabe. (#17010, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="7a5c5ef4-de27-4082-9279-c7c26c80f664">
@@ -6932,7 +6932,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browse mode</source>
-        <target>Modalità esplorazione</target>
+        <target>Modalità navigazione</target>
       </segment>
     </unit>
     <unit id="2d2a5c01-7e4b-4a08-a777-423999a5dfac">
@@ -7082,7 +7082,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Browseable message dialogs now better support resizing, maximizing and minimizing, with text wrapping to the dialog width. (#20429, @Cary-rowen)</source>
-        <target>Le finestre di dialogo dei messaggi esplorabili ora supportano meglio il ridimensionamento, l'ingrandimento e la riduzione a icona, adattando il testo alla larghezza della finestra. (#20429, @Cary-rowen)</target>
+        <target>Le finestre di dialogo dei messaggi navigabili ora supportano meglio il ridimensionamento, l'ingrandimento e la riduzione a icona, adattando il testo alla larghezza della finestra. (#20429, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="b3093759-dd3c-4d04-ad47-a64849aaff3b">
@@ -7132,7 +7132,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Bug Fixes</source>
-        <target>Correzione di bug</target>
+        <target>Bug corretti</target>
       </segment>
     </unit>
     <unit id="e58041c5-6933-4f18-8368-c1cec41b4cbf">
@@ -7331,7 +7331,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA no longer floods its log with errors while Windows is locked and a browse mode document keeps updating in the background, such as a playing video in Mozilla Firefox. (#18861, @bramd)</source>
-        <target>NVDA non riempie più il registro di errori quando Windows è bloccato e un documento in modalità esplorazione continua ad aggiornarsi in background, per esempio durante la riproduzione di un video in Mozilla Firefox. (#18861, @bramd)</target>
+        <target>NVDA non riempie più il registro di errori quando Windows è bloccato e un documento in modalità navigazione continua ad aggiornarsi in background, per esempio durante la riproduzione di un video in Mozilla Firefox. (#18861, @bramd)</target>
       </segment>
     </unit>
     <unit id="914281f2-8d2a-44c3-8732-103cb2ae19d3">
@@ -7380,7 +7380,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>Braille now follows the spoken text during say all in browse mode when braille is tethered to focus. (#3287, @LeonarddeR)</source>
-        <target>Durante la lettura continua in modalità esplorazione, il braille ora segue il testo pronunciato anche quando il display braille è vincolato al focus. (#3287, @LeonarddeR)</target>
+        <target>Durante la lettura continua in modalità navigazione, il braille ora segue il testo pronunciato anche quando il display braille è vincolato al focus. (#3287, @LeonarddeR)</target>
       </segment>
     </unit>
     <unit id="a7ef78f8-95ad-42ff-811b-6875252b8ace">
@@ -7460,7 +7460,7 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
       </notes>
       <segment state="final">
         <source>NVDA should no longer fail to navigate tables, read editable text fields or enable native app selection mode in Web browsers after a random period of time. (#16020)</source>
-        <target>NVDA non dovrebbe più smettere, dopo un periodo di tempo casuale, di navigare le tabelle, leggere i campi di testo modificabili o attivare la modalità selezione nativa nei browser web. (#16020)</target>
+        <target>NVDA non dovrebbe più avere problemi, dopo un periodo di tempo casuale, nella navigazione le tabelle, leggere i campi di testo modificabili o attivare la modalità selezione nativa nei browser web. (#16020)</target>
       </segment>
     </unit>
     <unit id="d90350d2-8661-4a70-95bd-4b23e43675c3">
@@ -7548,9 +7548,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 140</note>
         <note appliesTo="source">prefix: * </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)</source>
-        <target>The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)</target>
+        <target>L'Add-on Store non smette più di rispondere quando si cerca un add-on con una query di un solo carattere. (#20886, @Cary-rowen)</target>
       </segment>
     </unit>
     <unit id="c368e9ef-0ea5-40c1-9089-275e44525e5b">
@@ -7597,9 +7597,9 @@ $(ID:efa13148-65e5-4484-85b1-9e57c61df3e3)
         <note appliesTo="source">line: 146</note>
         <note appliesTo="source">prefix: ### </note>
       </notes>
-      <segment state="initial">
+      <segment state="final">
         <source>Changes for Developers</source>
-        <target>Changes for Developers</target>
+        <target>Note per sviluppatori, in inglese</target>
       </segment>
     </unit>
     <unit id="137357bb-a794-4ee1-ab1f-902645f52e8e">
