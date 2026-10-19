@@ -136,7 +136,7 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 		with (
 			patch("gui.installerGui.gui.IndeterminateProgressDialog"),
 			patch("gui.installerGui.systemUtils.execElevated", return_value=1) as execElevatedMock,
-			patch("gui.installerGui.gui.messageBox"),
+			patch("gui.installerGui._showInstallationFailedError"),
 		):
 			installerGui.doInstall(
 				createDesktopShortcut=True,

@@ -210,6 +210,7 @@ def _confirmTerminateRunningNVDA() -> bool:
 		"This can be a copy on the Windows sign-in screen or on another logged-on user account. "
 		"They must be ended to continue the installation. "
 		"They will not be restarted automatically. "
+		"Users of those copies will lose any NVDA settings they have not saved. "
 		"Do you want to end them now?",
 	)
 	# Translators: the title of a yes no dialog asking whether to end running copies of NVDA before installing
@@ -224,13 +225,14 @@ def _confirmTerminateRunningNVDA() -> bool:
 
 def _showInstallationFailedError() -> None:
 	"""Tell the user that the installation of NVDA failed."""
-	gui.messageBox(
+	MessageDialog(
+		gui.mainFrame,
 		# Translators: The message displayed when an error occurs during installation of NVDA.
 		_("The installation of NVDA failed. Please check the Log Viewer for more information."),
 		# Translators: The title of a dialog presented when an error occurs.
 		_("Error"),
-		wx.OK | wx.ICON_ERROR,
-	)
+		DialogType.ERROR,
+	).ShowModal()
 
 
 def doInstall(
@@ -344,8 +346,9 @@ def doSilentInstall(
 	"""Install NVDA without showing the Install NVDA screen.
 	``core.main`` calls this for both the ``--install`` and ``--install-silent`` command line parameters.
 	Updates use ``--install``.
-	Only ``--install-silent`` makes the installation really silent in principle.
-	Otherwise, the post-installation dialog is shown.
+	Only ``--install-silent`` makes the installation non-interactive.
+	It still shows error messages.
+	With ``--install``, the post-installation dialog is shown.
 	When an existing installation is replaced, the user is also asked whether to end other running copies of NVDA.
 
 	:param copyPortableConfig: Whether to copy the configuration of the running copy to the installed copy.
