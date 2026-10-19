@@ -21,13 +21,17 @@ import logging
 import os
 import sys
 import traceback
-from typing import Final
+from typing import TYPE_CHECKING, Final
 
+import rpyc
 from rpyc.core.stream import PipeStream, Stream
 from winBindings.kernel32 import CloseHandle
 
 from .. import _HOST_MARKER_ENV
 from .._winHandles import claimHandleFromDescriptor
+
+if TYPE_CHECKING:
+	from ..transport import Connection
 
 #: Name of the host's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART host control"
@@ -53,12 +57,27 @@ def run(stream: Stream) -> None:
 
 	service = HostRootService()
 	conn = Connection(stream, service, name=CONTROL_CONNECTION_NAME)
-	log.debug("ART host serving control connection")
 	try:
+		# There are no components to load yet, so launch always succeeds.
+		# Once there are, the outcome of loading them is what gets reported here.
+		_signalReadiness(conn)
+		log.debug("ART host serving control connection")
 		conn.eventLoop()
 	finally:
 		log.debug("ART host control connection closed")
 		conn.close()
+
+
+def _signalReadiness(conn: Connection, failure: str | None = None) -> None:
+	"""Tell core that launch has finished.
+
+	The signal is one-way: the host does not wait for core to acknowledge it.
+
+	:param conn: The host's end of the control connection.
+	:param failure: Why launch failed, or ``None`` if the host is ready to serve.
+		A failure tells core to abort the session.
+	"""
+	rpyc.async_(conn.remoteService.ready)(failure)
 
 
 def _redirectToDevNull(targetFd: int) -> None:
