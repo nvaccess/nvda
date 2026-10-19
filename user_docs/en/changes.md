@@ -11,6 +11,7 @@
 
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+* When installing NVDA from the Install NVDA screen fails, that screen now appears again after the error message instead of closing. (#XXXXX, @LeonarddeR)
 
 ### Bug Fixes
 

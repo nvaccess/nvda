@@ -1016,7 +1016,7 @@ def install(
 	shouldCleanX86 = len(installDirs) > 1
 	installDirX86 = installDirs[1] if shouldCleanX86 else None
 	startMenuFolder = WritePaths.defaultStartMenuFolder
-	runningProcesses = _waitForRunningNVDAProcesses(installDirs)
+	runningProcesses = _waitForRunningNVDAProcesses(installDirs, timeout=1)
 	if shouldTerminateRunningNVDA:
 		_terminateProcesses(runningProcesses)
 
