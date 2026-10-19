@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions, Bill Dengler, Joseph Lee, Takuya Nishimoto, Leonard de Ruijter
+# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions, Bill Dengler, Joseph Lee, Takuya Nishimoto, Leonard de Ruijter, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -562,6 +562,13 @@ class InstallingOverNewerVersionDialog(
 		"and completely uninstall NVDA before installing the earlier version.",
 	)
 
+	_CONFIG_RESET_WARNING: str | None = _(
+		# Translators: Added to the warning presented when the user attempts to install an earlier version of NVDA,
+		# when this version of NVDA could not load the configuration of the installed copy.
+		"This version of NVDA could not load your current configuration. "
+		"If you install it, your configuration will be reset to factory defaults.",
+	)
+
 	def __init__(self, installState: ComparisonState = ComparisonState.DOWNGRADE):
 		# Translators: The title of a warning dialog.
 		super().__init__(gui.mainFrame, title=_("Warning"))
@@ -601,15 +608,23 @@ class InstallingOverNewerVersionDialog(
 	def _warningText(self) -> str:
 		match self.installState:
 			case ComparisonState.DOWNGRADE:
-				return self._DOWNGRADE_WARNING
+				warning = self._DOWNGRADE_WARNING
 			case ComparisonState.UNKNOWN:
-				return self._UNKNOWN_WARNING
+				warning = self._UNKNOWN_WARNING
 			case _:
 				raise ValueError(f"Invalid install state for warning dialog {self.installState}")
+		# The launcher loads the installed copy's configuration,
+		# so if the launcher could not load it, the installed earlier version will not be able to either.
+		if self._CONFIG_RESET_WARNING and globalVars.appArgs.launcher and config.conf.baseConfigError:
+			warning = f"{warning}\n\n{self._CONFIG_RESET_WARNING}"
+		return warning
 
 
 class PortableCopyOverNewerVersionDialog(InstallingOverNewerVersionDialog):
 	helpId = "CreatingAPortableCopy"
+
+	# A portable copy has its own configuration, separate from the installed copy's.
+	_CONFIG_RESET_WARNING = None
 
 	_DOWNGRADE_WARNING = _(
 		# Translators: A warning presented when the user attempts to downgrade NVDA
