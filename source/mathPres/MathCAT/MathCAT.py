@@ -393,6 +393,7 @@ class MathCAT(mathPres.MathPresentationProvider):
 			log.exception()
 			# Translators: this message directs users to look in the log file
 			ui.message(pgettext("math", "Error navigating math"))
+			raise
 
 	def getSpeechForMathMl(
 		self,

@@ -2,12 +2,16 @@
 # Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+from typing import TYPE_CHECKING
+
 from logHandler import log
 
-from .client import RemoteClient
 from .configuration import getRemoteConfig
 
-_remoteClient: RemoteClient = None
+if TYPE_CHECKING:
+	from .client import RemoteClient
+
+_remoteClient: "RemoteClient | None" = None
 
 
 def initialize():
@@ -15,6 +19,11 @@ def initialize():
 	global _remoteClient
 	if not getRemoteConfig()["enabled"]:
 		log.debug("Remote Access disabled. Not initializing.")
+		return
+	try:
+		from .client import RemoteClient
+	except (AttributeError, ImportError, OSError):
+		log.warning("Remote Access unavailable.", exc_info=True)
 		return
 	import globalCommands
 

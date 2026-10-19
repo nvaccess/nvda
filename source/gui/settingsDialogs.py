@@ -3698,9 +3698,11 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
+		self._outputDeviceEnumerationAvailable = mmdevice.AudioUtilities is not None
 		self._deviceIds, deviceNames = zip(*mmdevice.getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
+		self._updateOutputDeviceEnumerationAvailability(sHelper)
 		selectedOutputDevice = config.conf["audio"]["outputDevice"]
 		if selectedOutputDevice == config.conf.getConfigValidation(("audio", "outputDevice")).default:
 			selection = 0
@@ -3756,6 +3758,7 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitComboBox.SetSelection(index)
 
 		self._appendSoundSplitModesList(sHelper)
+		self._updateSoundSplitAvailability(sHelper)
 
 		self._onSoundVolChange(None)
 
@@ -3790,7 +3793,41 @@ class AudioPanel(SettingsPanel):
 		]
 		self.soundSplitModesList.Select(0)
 
-	def onSave(self):
+	def _updateSoundSplitAvailability(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		if audio.SOUND_SPLIT_AVAILABLE:
+			return
+		self.soundSplitComboBox.Disable()
+		self.soundSplitModesList.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				label=_(
+					# Translators: Explanation shown when the Sound Split feature cannot be used.
+					"Sound Split is unavailable because required Windows audio components are missing.",
+				),
+			),
+		)
+
+	def _updateOutputDeviceEnumerationAvailability(
+		self,
+		settingsSizerHelper: guiHelper.BoxSizerHelper,
+	) -> None:
+		if self._outputDeviceEnumerationAvailable:
+			return
+		self.deviceList.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				label=_(
+					# Translators: Explanation shown when audio output device selection cannot be used.
+					"Audio output device selection is unavailable because required audio components are missing.",
+				),
+			),
+		)
+
+	def _saveOutputDevice(self) -> None:
+		if not self._outputDeviceEnumerationAvailable:
+			return
 		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
 		if config.conf["audio"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
@@ -3805,6 +3842,8 @@ class AudioPanel(SettingsPanel):
 			tones.terminate()
 			tones.initialize()
 
+	def onSave(self):
+		self._saveOutputDevice()
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 
@@ -3833,7 +3872,7 @@ class AudioPanel(SettingsPanel):
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
-		if len(enabledSoundSplitModes) < 1:
+		if audio.SOUND_SPLIT_AVAILABLE and len(enabledSoundSplitModes) < 1:
 			log.debugWarning("No sound split modes enabled.")
 			self._validationErrorMessageBox(
 				# Translators: Message shown when no sound split modes are enabled.
@@ -6703,6 +6742,20 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	# And finally the Advanced panel which should always be last.
 	if not globalVars.appArgs.secure:
 		categoryClasses.append(AdvancedPanel)
+
+	@classmethod
+	def _getCategoryClasses(cls) -> list[type[SettingsPanel]]:
+		import mathPres
+
+		return [
+			category
+			for category in cls.categoryClasses
+			if category is not MathSettingsPanel or mathPres._mathCATAvailable
+		]
+
+	def __init__(self, parent: wx.Window, initialCategory: type[SettingsPanel] | None = None):
+		self.categoryClasses = self._getCategoryClasses()
+		super().__init__(parent, initialCategory)
 
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
