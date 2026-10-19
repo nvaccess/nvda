@@ -7,6 +7,7 @@
 
 import contextlib
 import threading
+from collections.abc import Callable
 
 from _art.host import entrypoint
 from rpyc.core.stream import PipeStream, Stream
@@ -23,7 +24,13 @@ class ThreadHostController:
 	Tests that rely on such behaviour should use :class:`_art.session.hostController.SubprocessHostController` instead.
 	"""
 
-	def __init__(self) -> None:
+	def __init__(self, run: Callable[[Stream], None] = entrypoint.run) -> None:
+		"""Initializer.
+
+		:param run: The host half to run in the thread, given the host's end of the control connection.
+			Defaults to the real host entry point; tests replace it to simulate a misbehaving host.
+		"""
+		self._runHost = run
 		self._thread: threading.Thread | None = None
 		self._hostStream: Stream | None = None
 		self._exitStatus: int | None = None
@@ -47,7 +54,7 @@ class ThreadHostController:
 
 	def _run(self, hostStream: Stream) -> None:
 		try:
-			entrypoint.run(hostStream)
+			self._runHost(hostStream)
 		except Exception:  # noqa: BLE001
 			# A host failure ends the thread with a non-zero status rather than propagating a traceback.
 			self._exitStatus = 1
