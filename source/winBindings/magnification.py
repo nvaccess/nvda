@@ -3,14 +3,26 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Functions exported by magnification.dll, and supporting data structures and enumerations."""
+"""Functions exported by magnification.dll, and supporting data structures and enumerations.
+
+When the Magnification API is unavailable, function bindings raise :class:`OSError`.
+"""
 
 from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, c_int, windll  # noqa: I001
 from ctypes.wintypes import BOOL, LPRECT
 from _ctypes import CFuncPtr
 from typing import Any
 
-dll = windll.Magnification
+try:
+	dll = windll.Magnification
+except (AttributeError, OSError) as e:
+	dll = None
+	MAGNIFICATION_LOAD_ERROR: Exception | None = e
+else:
+	MAGNIFICATION_LOAD_ERROR = None
+
+MAGNIFICATION_AVAILABLE: bool = dll is not None
+"""True if the Windows Magnification API is available."""
 
 
 class MAGCOLOREFFECT(Structure):
@@ -33,8 +45,21 @@ def _errCheck[T: tuple[Any]](result: int, func: CFuncPtr, args: T) -> T:
 	return args
 
 
-MagSetFullscreenColorEffect = WINFUNCTYPE(BOOL, PMAGCOLOREFFECT)(
-	("MagSetFullscreenColorEffect", dll),
+def _unavailable(*args: Any, **kwargs: Any) -> None:
+	raise OSError("The Magnification API is not available")
+
+
+def _bind(name: str, prototype: Any, paramFlags: tuple[Any, ...] | None = None) -> Any:
+	if dll is None:
+		return _unavailable
+	function = prototype((name, dll), paramFlags) if paramFlags is not None else prototype((name, dll))
+	function.errcheck = _errCheck
+	return function
+
+
+MagSetFullscreenColorEffect = _bind(
+	"MagSetFullscreenColorEffect",
+	WINFUNCTYPE(BOOL, PMAGCOLOREFFECT),
 	((1, "pEffect"),),
 )
 """
@@ -43,10 +68,10 @@ Changes the color transformation matrix associated with the full-screen magnifie
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreencoloreffect
 """
-MagSetFullscreenColorEffect.errcheck = _errCheck
 
-MagGetFullscreenColorEffect = WINFUNCTYPE(BOOL, PMAGCOLOREFFECT)(
-	("MagGetFullscreenColorEffect", dll),
+MagGetFullscreenColorEffect = _bind(
+	"MagGetFullscreenColorEffect",
+	WINFUNCTYPE(BOOL, PMAGCOLOREFFECT),
 	((2, "effect"),),
 )
 """
@@ -55,10 +80,10 @@ Retrieves the color transformation matrix associated with the full-screen magnif
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maggetfullscreencoloreffect
 """
-MagGetFullscreenColorEffect.errcheck = _errCheck
 
-MagShowSystemCursor = WINFUNCTYPE(BOOL, BOOL)(
-	("MagShowSystemCursor", dll),
+MagShowSystemCursor = _bind(
+	"MagShowSystemCursor",
+	WINFUNCTYPE(BOOL, BOOL),
 	((1, "showCursor"),),
 )
 """
@@ -67,28 +92,26 @@ Shows or hides the system cursor.
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magshowsystemcursor
 """
-MagShowSystemCursor.errcheck = _errCheck
 
-MagInitialize = WINFUNCTYPE(BOOL)(("MagInitialize", dll))
+MagInitialize = _bind("MagInitialize", WINFUNCTYPE(BOOL))
 """
 Creates and initializes the magnifier run-time objects.
 
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maginitialize
 """
-MagInitialize.errcheck = _errCheck
 
-MagUninitialize = WINFUNCTYPE(BOOL)(("MagUninitialize", dll))
+MagUninitialize = _bind("MagUninitialize", WINFUNCTYPE(BOOL))
 """
 Destroys the magnifier run-time objects.
 
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-maguninitialize
 """
-MagUninitialize.errcheck = _errCheck
 
-MagSetFullscreenTransform = WINFUNCTYPE(BOOL, c_float, c_int, c_int)(
-	("MagSetFullscreenTransform", dll),
+MagSetFullscreenTransform = _bind(
+	"MagSetFullscreenTransform",
+	WINFUNCTYPE(BOOL, c_float, c_int, c_int),
 	((1, "magLevel"), (1, "xOffset"), (1, "yOffset")),
 )
 """
@@ -97,10 +120,10 @@ Sets the magnification settings for the full-screen magnifier.
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetfullscreentransform
 """
-MagSetFullscreenTransform.errcheck = _errCheck
 
-MagSetInputTransform = WINFUNCTYPE(BOOL, BOOL, LPRECT, LPRECT)(
-	("MagSetInputTransform", dll),
+MagSetInputTransform = _bind(
+	"MagSetInputTransform",
+	WINFUNCTYPE(BOOL, BOOL, LPRECT, LPRECT),
 	((1, "fEnabled"), (1, "pRectSource"), (1, "pRectDest")),
 )
 """
@@ -109,4 +132,3 @@ Sets the mapping between magnified coordinates and screen coordinates for pen an
 .. seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/magnification/nf-magnification-magsetinputtransform
 """
-MagSetInputTransform.errcheck = _errCheck

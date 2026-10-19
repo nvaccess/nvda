@@ -12,6 +12,10 @@
 
 ### Bug Fixes
 
+* NVDA can now start in Windows PE when optional Windows APIs are unavailable.
+  Depending on the image contents, affected features can include the Magnifier, Screen Curtain,
+  Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
+
 #### Braille
 
 #### Web browsers
@@ -25,6 +29,10 @@
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`,
+  and `WINUSB_AVAILABLE`.
+  Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
 
 #### Deprecations
 
