@@ -251,8 +251,13 @@ def doInstall(
 	copyPortableConfig: bool = False,
 	silent: bool = False,
 	startAfterInstall: bool = True,
-	shouldTerminateRunningNVDA: bool = False,
-):
+) -> bool:
+	"""Show a progress dialog and install NVDA.
+	For updates that are not silent, the user is asked whether to end other copies of NVDA that keep running.
+	The installation fails if the user chooses not to end them.
+
+	:return: Whether the installation succeeded.
+	"""
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
@@ -266,6 +271,12 @@ def doInstall(
 		# Translators: The message displayed while NVDA is being installed.
 		else _("Please wait while NVDA is being installed"),
 	)
+	shouldTerminateRunningNVDA = isUpdate and not silent and _isOtherNVDARunning()
+	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
+		progressDialog.done()
+		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
+		_showInstallationFailedError()
+		return False
 	try:
 		res = systemUtils.execElevated(
 			config.SLAVE_FILENAME,
@@ -307,17 +318,16 @@ def doInstall(
 				isUpdate=isUpdate,
 				silent=silent,
 				startAfterInstall=startAfterInstall,
-				shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 			)
 	if res != 0:
 		log.error("Installation failed: %s" % res)  # noqa: UP031
 		_showInstallationFailedError()
-		return
+		return False
 
 	startAfterInstall = startAfterInstall and not isRunningElevated()
 	if not silent:
 		_showPostInstallDialog(isUpdate=isUpdate, startAfterInstall=startAfterInstall)
-		return
+		return True
 
 	newNVDA = None
 	if startAfterInstall:
@@ -327,6 +337,7 @@ def doInstall(
 		)
 	if not core.triggerNVDAExit(newNVDA):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
+	return True
 
 
 def _generate_executionParameters() -> str:
@@ -364,19 +375,12 @@ def doSilentInstall(
 	:param startAfterInstall: Whether to start the installed copy after the installation.
 	"""
 	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
-	shouldTerminateRunningNVDA = (
-		not freshInstall and not globalVars.appArgs.installSilent and _isOtherNVDARunning()
-	)
-	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
-		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
-		_showInstallationFailedError()
-		return
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
 	# Currently, this function is only called by ``core.main`` when ``--install`` or ``--install-silent`` are provided at the command line.
-	# The only use of the ``silent`` parameter to ``doInstall`` is to surpress the post-installation restart dialog.
-	# Since that dialog should be shown unless this genuinely is a silent installation, use presence of ``--install-silent`` as the actual value of the ``silent`` argument.
+	# The ``silent`` parameter to ``doInstall`` suppresses the question about running copies of NVDA and the post-installation restart dialog.
+	# Since those should be shown unless this genuinely is a silent installation, use presence of ``--install-silent`` as the actual value of the ``silent`` argument.
 	doInstall(
 		createDesktopShortcut=installer.isDesktopShortcutInstalled() if not freshInstall else True,
 		startOnLogon=startOnLogon,
@@ -384,7 +388,6 @@ def doSilentInstall(
 		copyPortableConfig=copyPortableConfig,
 		silent=globalVars.appArgs.installSilent,
 		startAfterInstall=startAfterInstall,
-		shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 	)
 
 
@@ -514,17 +517,15 @@ class InstallerDialog(
 	def onInstall(self, evt):
 		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
-		shouldTerminateRunningNVDA = self.isUpdate and _isOtherNVDARunning()
-		if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
-			return
 		self.Hide()
-		doInstall(
+		if not doInstall(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
 			isUpdate=self.isUpdate,
-			shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
-		)
+		):
+			self.Show()
+			return
 		wx.GetApp().ScheduleForDestruction(self)
 
 	def onCancel(self, evt):
