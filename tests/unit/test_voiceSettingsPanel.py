@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2026 NV Access Limited, Andrew Johnson
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the voice settings panel when the synthesizer changes while it is open."""
 
@@ -101,7 +101,7 @@ class Test_VoiceSettingsPanel_synthChange(unittest.TestCase):
 
 	def test_layoutAfterSynthDies(self):
 		"""Controls after the synth settings must not be drawn on top of them after a config reload (#6469)."""
-		self.frame.Show()
+		self.frame.Layout()
 		synthDriverHandler._curSynth = _FakeSynthWithVariant()
 		# The old synth is now garbage, so the panel's weakref callback queues refreshGui.
 		self.app.ProcessPendingEvents()
