@@ -1,19 +1,28 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions,
-# Bill Dengler, Joseph Lee, Takuya Nishimoto
+# Copyright (C) 2011-2026 NV Access Limited, Babbage B.v., Cyrille Bougot, Julien Cochuyt, Accessolutions, Bill Dengler, Joseph Lee, Takuya Nishimoto, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import FormatError, GetLastError, byref  # noqa: I001
-from ctypes.wintypes import HANDLE
 import os
 import subprocess
 import sys
+from ctypes import FormatError, GetLastError, byref
+from ctypes.wintypes import HANDLE
 
+import config
+import core
+import globalVars
+import installer
+import systemUtils
+import ui
+import winUser
+import wx
+from installer import ComparisonState
+from logHandler import log
+from NVDAState import WritePaths
 from utils.security import isRunningElevated
-from winBindings.user32 import EWX, SHTDN_REASON, ExitWindowsEx
 from winAPI.constants import SystemErrorCodes
-from winBindings.kernel32 import GetCurrentProcess
+from winBindings import shell32
 from winBindings.advapi32 import (
 	SE_PRIVILEGE,
 	TOKEN_PRIVILEGES,
@@ -23,22 +32,14 @@ from winBindings.advapi32 import (
 	PrivilegeName,
 	TokenAccessRight,
 )
-import winUser
-import wx
-import config
-import core
-from winBindings import shell32
-import globalVars
-import installer
-from installer import ComparisonState
-from logHandler import log
+from winBindings.kernel32 import GetCurrentProcess
+from winBindings.user32 import EWX, SHTDN_REASON, ExitWindowsEx
+
 import gui
-from gui import guiHelper
 import gui.contextHelp
+from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import systemUtils
-import ui
-from NVDAState import WritePaths
+
 from .message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 
 
@@ -198,6 +199,42 @@ def _showPostInstallDialog(isUpdate: bool, startAfterInstall: bool) -> None:
 			log.error(f"Unexpected return code from post-install dialog: {returnCode}")
 
 
+def _confirmTerminateRunningNVDA() -> bool:
+	"""Ask the user whether running copies of NVDA that block the installation may be ended.
+
+	:return: ``True`` if the user agrees to end them.
+	"""
+	message = _(
+		# Translators: a message dialog asking whether to end running copies of NVDA before installing
+		"Other copies of NVDA are running on this system. "
+		"This can be a copy on the Windows sign-in screen or on another logged-on user account. "
+		"They must be ended to continue the installation. "
+		"They will not be restarted automatically. "
+		"Users of those copies will lose any NVDA settings they have not saved. "
+		"Do you want to end them now?",
+	)
+	# Translators: the title of a yes no dialog asking whether to end running copies of NVDA before installing
+	title = _("NVDA Still Running")
+	dialog = (
+		MessageDialog(gui.mainFrame, message, title, buttons=None)
+		.addNoButton(defaultFocus=True, fallbackAction=True)
+		.addYesButton()
+	)
+	return dialog.ShowModal() == ReturnCode.YES
+
+
+def _showInstallationFailedError() -> None:
+	"""Tell the user that the installation of NVDA failed."""
+	MessageDialog(
+		gui.mainFrame,
+		# Translators: The message displayed when an error occurs during installation of NVDA.
+		_("The installation of NVDA failed. Please check the Log Viewer for more information."),
+		# Translators: The title of a dialog presented when an error occurs.
+		_("Error"),
+		DialogType.ERROR,
+	).ShowModal()
+
+
 def doInstall(
 	createDesktopShortcut: bool = True,
 	startOnLogon: bool = False,
@@ -205,6 +242,7 @@ def doInstall(
 	copyPortableConfig: bool = False,
 	silent: bool = False,
 	startAfterInstall: bool = True,
+	shouldTerminateRunningNVDA: bool = False,
 ):
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
@@ -222,7 +260,12 @@ def doInstall(
 	try:
 		res = systemUtils.execElevated(
 			config.SLAVE_FILENAME,
-			["install", str(int(createDesktopShortcut)), str(int(startOnLogon))],
+			[
+				"install",
+				str(int(createDesktopShortcut)),
+				str(int(startOnLogon)),
+				str(int(shouldTerminateRunningNVDA)),
+			],
 			wait=True,
 			handleAlreadyElevated=True,
 		)
@@ -255,16 +298,11 @@ def doInstall(
 				isUpdate=isUpdate,
 				silent=silent,
 				startAfterInstall=startAfterInstall,
+				shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 			)
 	if res != 0:
 		log.error("Installation failed: %s" % res)  # noqa: UP031
-		gui.messageBox(
-			# Translators: The message displayed when an error occurs during installation of NVDA.
-			_("The installation of NVDA failed. Please check the Log Viewer for more information."),
-			# Translators: The title of a dialog presented when an error occurs.
-			_("Error"),
-			wx.OK | wx.ICON_ERROR,
-		)
+		_showInstallationFailedError()
 		return
 
 	startAfterInstall = startAfterInstall and not isRunningElevated()
@@ -302,10 +340,30 @@ def _generate_executionParameters() -> str:
 
 
 def doSilentInstall(
-	copyPortableConfig=False,
-	startAfterInstall=True,
-):
+	copyPortableConfig: bool = False,
+	startAfterInstall: bool = True,
+) -> None:
+	"""Install NVDA without showing the Install NVDA screen.
+	``core.main`` calls this for both the ``--install`` and ``--install-silent`` command line parameters.
+	Updates use ``--install``.
+	Only ``--install-silent`` makes the installation non-interactive.
+	It still shows error messages.
+	With ``--install``, the post-installation dialog is shown.
+	When an existing installation is replaced, the user is also asked whether to end other running copies of NVDA.
+
+	:param copyPortableConfig: Whether to copy the configuration of the running copy to the installed copy.
+	:param startAfterInstall: Whether to start the installed copy after the installation.
+	"""
 	freshInstall = installer._comparePreviousInstall() is ComparisonState.FRESH_INSTALL
+	shouldTerminateRunningNVDA = (
+		not freshInstall
+		and not globalVars.appArgs.installSilent
+		and any(installer._getRunningNVDAProcesses(installer._getInstallDirs()))
+	)
+	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
+		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
+		_showInstallationFailedError()
+		return
 	startOnLogon = globalVars.appArgs.enableStartOnLogon
 	if startOnLogon is None:
 		startOnLogon = config.getStartOnLogonScreen() if not freshInstall else False
@@ -319,6 +377,7 @@ def doSilentInstall(
 		copyPortableConfig=copyPortableConfig,
 		silent=globalVars.appArgs.installSilent,
 		startAfterInstall=startAfterInstall,
+		shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 	)
 
 
@@ -448,12 +507,18 @@ class InstallerDialog(
 	def onInstall(self, evt):
 		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
+		shouldTerminateRunningNVDA = self.isUpdate and any(
+			installer._getRunningNVDAProcesses(installer._getInstallDirs()),
+		)
+		if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
+			return
 		self.Hide()
 		doInstall(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
 			isUpdate=self.isUpdate,
+			shouldTerminateRunningNVDA=shouldTerminateRunningNVDA,
 		)
 		wx.GetApp().ScheduleForDestruction(self)
 

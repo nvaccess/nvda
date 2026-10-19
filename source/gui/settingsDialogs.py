@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Andrew Johnson.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -1619,20 +1619,21 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				pass
 
 	def onDiscard(self):
-		# unbind change events for string settings as wx closes combo boxes on cancel
-		settingsInst = self.getSettings()
-		for setting in settingsInst.supportedSettings:
-			if isinstance(setting, (NumericDriverSetting, BooleanDriverSetting)):
-				continue
-			getattr(self, f"{setting.id}List").Unbind(wx.EVT_CHOICE)
+		# unbind change events for string settings as wx closes combo boxes on cancel.
+		# Use the controls that were created, as the settings instance may have changed since (#6469).
+		for settingId in self.sizerDict:
+			if combo := getattr(self, f"{settingId}List", None):
+				combo.Unbind(wx.EVT_CHOICE)
 		# restore settings
-		settingsInst.loadSettings()
+		self.getSettings().loadSettings()
 
 	def onSave(self):
 		self.getSettings().saveSettings()
 
 	def refreshGui(self):
-		if not self._currentSettingsRef():
+		# The previous settings instance may outlive its replacement (e.g. a terminated synth awaiting
+		# garbage collection), so compare identity rather than waiting for the weakref to die (#6469).
+		if self._currentSettingsRef() is not self.getSettings():
 			if gui._isDebug():
 				log.debug("refreshing panel")
 			self.sizerDict.clear()
@@ -1642,6 +1643,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				lambda ref: wx.CallAfter(self.refreshGui),
 			)
 			self.makeSettings(self.settingsSizer)
+			self.settingsSizer.Layout()
 
 	def onPanelActivated(self):
 		"""Called after the panel has been activated
@@ -6712,13 +6714,16 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
-		if (
-			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
-			or isinstance(self.currentCategory, GeneralSettingsPanel)
-			or isinstance(self.currentCategory, AddonStorePanel)
-			or isinstance(self.currentCategory, RemoteSettingsPanel)
-			or isinstance(self.currentCategory, MathSettingsPanel)
-			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
+		if not NvdaSettingsDialogActiveConfigProfile or isinstance(
+			self.currentCategory,
+			(
+				GeneralSettingsPanel,
+				MagnifierPanel,
+				AddonStorePanel,
+				RemoteSettingsPanel,
+				MathSettingsPanel,
+				PrivacyAndSecuritySettingsPanel,
+			),
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
