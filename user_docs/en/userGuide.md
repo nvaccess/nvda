@@ -4581,7 +4581,8 @@ For example, you may wish to have reporting of indentation enabled while you are
 NVDA allows you to do this using configuration profiles.
 
 A configuration profile contains only those settings which are changed while the profile is being edited.
-Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings](#NVDASettings) dialog, which apply to the entirety of NVDA.
+Most settings can be changed in configuration profiles.
+Settings in the following categories of [NVDA Settings](#NVDASettings) dialog apply to the entirety of NVDA: General, Privacy and Security, Magnifier, Remote Access, Math, and Add-on Store.
 
 Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
