@@ -116,3 +116,37 @@ class TestUnavailableSoundSplitSettings(unittest.TestCase):
 			label="Audio output device selection is unavailable because required audio components are missing.",
 		)
 		settingsSizerHelper.addItem.assert_called_once_with(unavailableText)
+
+
+class TestUnavailableRemoteAccessSettings(unittest.TestCase):
+	def test_enableControlIsDisabledWithExplanation(self):
+		panel = mock.MagicMock()
+		settingsSizerHelper = mock.MagicMock()
+		unavailableText = mock.sentinel.unavailableText
+		with (
+			mock.patch("_remoteClient.remoteClientAvailable", return_value=False),
+			mock.patch.object(settingsDialogs.wx, "StaticText", return_value=unavailableText) as staticText,
+		):
+			settingsDialogs.RemoteSettingsPanel._updateRemoteClientAvailability(
+				panel,
+				settingsSizerHelper,
+			)
+
+		panel.enableRemote.Disable.assert_called_once_with()
+		staticText.assert_called_once_with(
+			panel,
+			label="Remote Access is unavailable because its required components could not be loaded.",
+		)
+		settingsSizerHelper.addItem.assert_called_once_with(unavailableText)
+
+	def test_availableClientLeavesEnableControlUsable(self):
+		panel = mock.MagicMock()
+		settingsSizerHelper = mock.MagicMock()
+		with mock.patch("_remoteClient.remoteClientAvailable", return_value=True):
+			settingsDialogs.RemoteSettingsPanel._updateRemoteClientAvailability(
+				panel,
+				settingsSizerHelper,
+			)
+
+		panel.enableRemote.Disable.assert_not_called()
+		settingsSizerHelper.addItem.assert_not_called()

@@ -14,6 +14,7 @@
 
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
+  The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
   Sound Split and audio device enumeration are unavailable without `pdh.dll`.
   Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
 

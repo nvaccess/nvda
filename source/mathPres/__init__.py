@@ -113,7 +113,7 @@ def initialize() -> None:
 	global _mathCATAvailable
 	try:
 		from .MathCAT import MathCAT
-	except:  # noqa: E722
+	except Exception:
 		_mathCATAvailable = False
 		log.warning("MathCAT not available.", exc_info=True)
 		return
@@ -122,7 +122,7 @@ def initialize() -> None:
 	if not speechProvider or not brailleProvider or not interactionProvider:
 		try:
 			provider = MathCAT.MathCAT()
-		except:  # noqa: E722
+		except Exception:
 			_mathCATAvailable = False
 			log.warning("MathCAT not available.", exc_info=True)
 		else:
