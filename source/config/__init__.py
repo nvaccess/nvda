@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot, Andrew Johnson
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Manages NVDA configuration.
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
@@ -544,6 +544,17 @@ class ConfigManager:
 				profile = self._loadConfig(fn)  # a blank config returned if fn does not exist
 				self.baseConfigError = False
 			except:  # noqa: E722
+				self.baseConfigError = True
+				if not NVDAState.shouldWriteToDisk():
+					# #18905: The launcher uses the installed copy's configuration,
+					# which may have been saved by a newer version of NVDA.
+					# Use factory defaults without changing the file the installed copy relies on.
+					log.error(  # noqa: G201
+						"Error loading base configuration; using factory defaults."
+						" The configuration file has not been changed.",
+						exc_info=True,
+					)
+					return self._initBaseConf(factoryDefaults=True)
 				backupFileName = fn + ".corrupted.bak"
 				log.error(  # noqa: G201
 					"Error loading base configuration; the base configuration file will be reinitialized."
@@ -559,7 +570,6 @@ class ConfigManager:
 						f"Unable to save a copy of the corrupted configuration to {backupFileName}",
 						exc_info=True,
 					)
-				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
 
 		for key in self.BASE_ONLY_SECTIONS:

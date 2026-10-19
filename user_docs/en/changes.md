@@ -26,6 +26,7 @@
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 * When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
 * Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
+* When an NVDA installer can't load your configuration, for example because it is older than the installed copy of NVDA, it now uses factory defaults without changing your configuration file. If you choose to install that earlier version, NVDA warns you that your configuration will be reset. (#18905, @akj)
 
 #### Performance
 
