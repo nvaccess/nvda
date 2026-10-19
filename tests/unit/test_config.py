@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter, Andrew Johnson
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Callable, Generator  # noqa: I001
 import enum
@@ -9,11 +9,15 @@ import typing
 import unittest
 from unittest.mock import MagicMock, mock_open, patch
 import io
+import os
+import tempfile
 import yaml
 
 import configobj
 import configobj.validate
 from pycaw.constants import DEVICE_STATE
+
+import globalVars
 
 from config import (
 	AggregatedSection,
@@ -1444,3 +1448,44 @@ class Config_loadCustomSections(unittest.TestCase):
 		self.assertFalse(_customSections["myNestedSection"]["isBaseOnly"])
 		self.assertIn("myNestedSection", confspec)
 		self.assertEqual(confspec["myNestedSection"], spec)
+
+
+class Config_initBaseConf_invalidConfig(unittest.TestCase):
+	"""Tests for loading a base configuration that fails validation,
+	such as one saved by a newer version of NVDA.
+	"""
+
+	_INVALID_CONFIG = "schemaVersion = 99\n[general]\nsaveConfigurationOnExit = notABoolean\n"
+
+	def setUp(self):
+		tempDir = tempfile.TemporaryDirectory()
+		self.addCleanup(tempDir.cleanup)
+		configPathPatch = patch.object(globalVars.appArgs, "configPath", tempDir.name)
+		configPathPatch.start()
+		self.addCleanup(configPathPatch.stop)
+		self._configFile = os.path.join(tempDir.name, "nvda.ini")
+		self._backupFile = self._configFile + ".corrupted.bak"
+		with open(self._configFile, "w", encoding="utf-8") as f:
+			f.write(self._INVALID_CONFIG)
+
+	def _readFile(self, path: str) -> str:
+		with open(path, encoding="utf-8") as f:
+			return f.read()
+
+	def test_launcher_leavesConfigFileUnchanged(self):
+		"""The launcher uses factory defaults without moving the installed copy's configuration aside."""
+		with patch.object(globalVars.appArgs, "launcher", True):
+			manager = ConfigManager()
+		self.assertTrue(manager.baseConfigError)
+		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
+		self.assertFalse(os.path.exists(self._backupFile))
+
+	def test_writableCopy_backsUpConfigFile(self):
+		"""A copy that may write to disk moves the invalid configuration aside and uses factory defaults."""
+		with patch.object(globalVars.appArgs, "launcher", False):
+			manager = ConfigManager()
+		self.assertTrue(manager.baseConfigError)
+		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertFalse(os.path.exists(self._configFile))
+		self.assertEqual(self._readFile(self._backupFile), self._INVALID_CONFIG)
