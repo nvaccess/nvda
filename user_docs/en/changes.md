@@ -22,6 +22,7 @@
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
 * MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
+* When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 
 #### Performance
