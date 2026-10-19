@@ -81,11 +81,6 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
-* `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
-  Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
-  which can be `None`.
-  `SoundSplitState` remains available from `audio` without Sound Split dependencies. (#19537)
-
 #### API Breaking Changes
 
 These are breaking API changes.
