@@ -162,8 +162,8 @@ repos:
   hooks:
     - id: checkPo
       name: Check po files
-      entry: cmd.exe /c runcheckpot.bat
-      language: system
+      entry: uv run source/l10nUtil.py checkPo
+      language: python
       types: [pofile]
     - id: scons-source
       name: build c/c++ files
