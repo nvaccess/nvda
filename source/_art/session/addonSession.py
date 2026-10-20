@@ -27,6 +27,8 @@ if TYPE_CHECKING:
 
 #: Name of core's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART core control"
+#: How long to give a host before killing it when the control connection is lost.
+_EXIT_CONFIRM_GRACE: Final[int] = 1.0
 
 
 class SessionState(enum.Enum):
@@ -38,6 +40,8 @@ class SessionState(enum.Enum):
 	"""The host has been started, but has not yet signalled readiness."""
 	READY = enum.auto()
 	"""The host signalled that it launched successfully."""
+	STOPPING = enum.auto()
+	"""Close has been called on the session, but it has not yet finished shutting down."""
 	STOPPED = enum.auto()
 	"""The session was closed. Final."""
 	FAILED = enum.auto()
@@ -62,9 +66,10 @@ class AddonSession:
 			Owned by the session from here on.
 		"""
 		self._controller = controller
-		self._stateLock = threading.Lock()
+		self._stateLock = threading.RLock()
 		self._state = SessionState.NEW
 		self._failureReason: str | None = None
+		self._exitStatus: int | None = None
 		self._conn: Connection[CoreRootService, HostRootService] | None = None
 		self._readinessReported = threading.Event()
 		self._readinessFailure: str | None = None
@@ -78,6 +83,11 @@ class AddonSession:
 	def failureReason(self) -> str | None:
 		"""Why the session failed, or ``None`` if it has not."""
 		return self._failureReason
+
+	@property
+	def exitStatus(self) -> int | None:
+		"""The host's exit status, or ``None`` if it has not yet exited."""
+		return self._exitStatus
 
 	@property
 	def hostRoot(self) -> HostRootService:
@@ -130,6 +140,39 @@ class AddonSession:
 		self._readinessFailure = failure
 		self._readinessReported.set()
 
+	def _serveControlConnection(self) -> None:
+		"""Serve the control connection in the calling thread."""
+		self._conn.eventLoop()
+		self._onControlConnectionLost()
+
+	def _onControlConnectionLost(self) -> None:
+		"""Respond to control connection exhaustion.
+
+		Ensures the host is dead, moves the session's state to ``STOPPED`` or ``FAILED`` as appropriate,
+		ensures ``start`` isn't blocked, and cleans up.
+
+		Must be called after the host has started.
+		"""
+		# Loss of the control connection most likely means the host has died, but we wish to ensure it really has.
+		exitStatus = self._controller.wait(_EXIT_CONFIRM_GRACE)
+		if exitStatus is None:
+			# The host is still alive, even after giving it extra time to finish.
+			# Forcefully terminate it.
+			self._controller.terminate()
+			exitStatus = self._controller.poll()
+		self._exitStatus = exitStatus
+		with self._stateLock:
+			if self._state == SessionState.STOPPING:
+				# Termination was expected.
+				self._state = SessionState.STOPPED
+			else:
+				# This is an unexpected termination.
+				self._fail(f"Host exited prematurely with status {exitStatus}")
+		# If the host exited prematurely while launching, start may still be waiting on the ready signal.
+		if not self._readinessReported.is_set():
+			self._readinessReported.set()
+		self._stopHost()
+
 	def close(self) -> None:
 		"""Close the session, stopping the host.
 
@@ -140,7 +183,7 @@ class AddonSession:
 			if self._state is SessionState.STOPPED:
 				return
 			if self._state is not SessionState.FAILED:
-				self._state = SessionState.STOPPED
+				self._state = SessionState.STOPPING
 		self._stopHost()
 
 	def _fail(self, reason: str) -> None:
