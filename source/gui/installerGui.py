@@ -251,12 +251,10 @@ def doInstall(
 	copyPortableConfig: bool = False,
 	silent: bool = False,
 	startAfterInstall: bool = True,
-) -> bool:
+):
 	"""Show a progress dialog and install NVDA.
 	For updates that are not silent, the user is asked whether to end other copies of NVDA that keep running.
 	The installation fails if the user chooses not to end them.
-
-	:return: Whether the installation succeeded.
 	"""
 	progressDialog = gui.IndeterminateProgressDialog(
 		gui.mainFrame,
@@ -276,7 +274,7 @@ def doInstall(
 		progressDialog.done()
 		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
 		_showInstallationFailedError()
-		return False
+		return
 	try:
 		res = systemUtils.execElevated(
 			config.SLAVE_FILENAME,
@@ -322,12 +320,12 @@ def doInstall(
 	if res != 0:
 		log.error("Installation failed: %s" % res)  # noqa: UP031
 		_showInstallationFailedError()
-		return False
+		return
 
 	startAfterInstall = startAfterInstall and not isRunningElevated()
 	if not silent:
 		_showPostInstallDialog(isUpdate=isUpdate, startAfterInstall=startAfterInstall)
-		return True
+		return
 
 	newNVDA = None
 	if startAfterInstall:
@@ -337,7 +335,6 @@ def doInstall(
 		)
 	if not core.triggerNVDAExit(newNVDA):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
-	return True
 
 
 def _generate_executionParameters() -> str:
@@ -518,14 +515,12 @@ class InstallerDialog(
 		if not _warnAndConfirmIfInstallingRemotely(self.isUpdate):
 			return
 		self.Hide()
-		if not doInstall(
+		doInstall(
 			createDesktopShortcut=self.createDesktopShortcutCheckbox.Value,
 			startOnLogon=self.startOnLogonCheckbox.Value,
 			copyPortableConfig=self.copyPortableConfigCheckbox.Value,
 			isUpdate=self.isUpdate,
-		):
-			self.Show()
-			return
+		)
 		wx.GetApp().ScheduleForDestruction(self)
 
 	def onCancel(self, evt):

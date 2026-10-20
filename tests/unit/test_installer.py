@@ -176,7 +176,7 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 	def test_noFailsInstallation(self):
 		"""Answering No closes the progress dialog, shows the installation failed error and doesn't install."""
 		with patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=False):
-			self.assertFalse(installerGui.doInstall(isUpdate=True))
+			installerGui.doInstall(isUpdate=True)
 		self.progressDialogMock.return_value.done.assert_called_once_with()
 		self.errorMock.assert_called_once_with()
 		self.execElevatedMock.assert_not_called()
@@ -188,16 +188,6 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 			installerGui.doInstall(isUpdate=isUpdate, silent=silent)
 		confirmMock.assert_not_called()
 		self.assertEqual(self.execElevatedMock.call_args.args[1][3], "0")
-
-	def test_onInstall_failureShowsInstallScreenAgain(self):
-		"""A failed installation shows the Install NVDA screen again."""
-		dialog = MagicMock(isUpdate=True)
-		with (
-			patch("gui.installerGui._warnAndConfirmIfInstallingRemotely", return_value=True),
-			patch("gui.installerGui.doInstall", return_value=False),
-		):
-			installerGui.InstallerDialog.onInstall(dialog, None)
-		dialog.Show.assert_called_once_with()
 
 
 class _ShouldWarnBeforeUpdateFactors(NamedTuple):
