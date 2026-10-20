@@ -2364,8 +2364,8 @@ Set this to 0 to turn counting off, so each symbol is spoken every time.
 
 |Option |Behaviour |
 |---|---|
-|0 |Counting is off. Each symbol is spoken every time. |
-|2 to 100 |Runs of the same symbol this long or longer are spoken as a count. |
+| 0 | Counting is off. Each symbol is spoken every time. |
+| 2 to 100 | Runs of the same symbol this long or longer are spoken as a count. |
 
 ##### Capital pitch change percentage {#SpeechSettingsCapPitchChange}
 
