@@ -1,11 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025-2026 NV Access Limited, Cary-rowen, Christopher Proß
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Functions exported by user32.dll, and supporting data structures and enumerations."""
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	Structure,
 	WINFUNCTYPE,
 	Union,
@@ -95,18 +95,18 @@ WNDPROC = WINFUNCTYPE(LRESULT, HWND, c_uint, WPARAM, LPARAM)
 
 class WNDCLASSEXW(Structure):
 	_fields_ = [
-		("cbSize", c_uint),  # noqa: F405
-		("style", c_uint),  # noqa: F405
+		("cbSize", c_uint),
+		("style", c_uint),
 		("lpfnWndProc", WNDPROC),
 		("cbClsExtra", c_int),
 		("cbWndExtra", c_int),
-		("hInstance", HINSTANCE),  # noqa: F405
-		("hIcon", HICON),  # noqa: F405
+		("hInstance", HINSTANCE),
+		("hIcon", HICON),
 		("HCURSOR", HCURSOR),
-		("hbrBackground", HBRUSH),  # noqa: F405
-		("lpszMenuName", LPWSTR),  # noqa: F405
-		("lpszClassName", LPWSTR),  # noqa: F405
-		("hIconSm", HICON),  # noqa: F405
+		("hbrBackground", HBRUSH),
+		("lpszMenuName", LPWSTR),
+		("lpszClassName", LPWSTR),
+		("hIconSm", HICON),
 	]
 
 
@@ -140,7 +140,7 @@ GetMessage.argtypes = (
 )
 GetMessage.restype = BOOL
 
-HOOKPROC = WINFUNCTYPE(LRESULT, c_int, WPARAM, LPARAM)  # noqa: F405
+HOOKPROC = WINFUNCTYPE(LRESULT, c_int, WPARAM, LPARAM)
 
 SetWindowsHookEx = WINFUNCTYPE(None)(("SetWindowsHookExW", dll))
 SetWindowsHookEx.argtypes = (
@@ -527,6 +527,21 @@ Determines whether the specified window handle identifies an existing window.
 """
 IsWindow.restype = BOOL
 IsWindow.argtypes = (
+	HWND,  # hWnd: A handle to the window to be tested
+)
+
+IsHungAppWindow = WINFUNCTYPE(None)(("IsHungAppWindow", dll))
+"""
+Determines whether the system considers that a specified application is not responding.
+An application is considered to be not responding if it is not waiting for input,
+is not in startup processing, and has not called PeekMessage within the internal
+timeout period (5 seconds).
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-ishungappwindow
+"""
+IsHungAppWindow.restype = BOOL
+IsHungAppWindow.argtypes = (
 	HWND,  # hWnd: A handle to the window to be tested
 )
 
@@ -988,6 +1003,42 @@ IsWindowEnabled.argtypes = (
 )
 
 
+class COMBOBOXINFO(Structure):
+	"""
+	Contains status information for a combo box.
+
+	.. seealso::
+		https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-comboboxinfo
+	"""
+
+	_fields_ = (
+		("cbSize", DWORD),
+		("rcItem", RECT),
+		("rcButton", RECT),
+		("stateButton", DWORD),
+		("hwndCombo", HWND),
+		("hwndItem", HWND),
+		("hwndList", HWND),
+	)
+
+
+PCOMBOBOXINFO = POINTER(COMBOBOXINFO)
+
+
+GetComboBoxInfo = WINFUNCTYPE(None)(("GetComboBoxInfo", dll))
+"""
+Retrieves information about the specified combo box.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getcomboboxinfo
+"""
+GetComboBoxInfo.restype = BOOL
+GetComboBoxInfo.argtypes = (
+	HWND,  # hwndCombo: Handle to the combo box.
+	PCOMBOBOXINFO,  # pcbi: Pointer to the structure that receives the combo box information.
+)
+
+
 class GUITHREADINFO(Structure):
 	"""
 	Contains information about a GUI thread.
@@ -1441,6 +1492,30 @@ SetProcessDpiAwarenessContext.argtypes = (
 	DPI_AWARENESS_CONTEXT,  # value: A DPI_AWARENESS_CONTEXT handle to set
 )
 
+SetThreadDpiAwarenessContext = WINFUNCTYPE(None)(("SetThreadDpiAwarenessContext", dll))
+"""
+Set the DPI awareness for the current thread to the provided value.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-setthreaddpiawarenesscontext
+"""
+SetThreadDpiAwarenessContext.restype = DPI_AWARENESS_CONTEXT
+SetThreadDpiAwarenessContext.argtypes = (
+	DPI_AWARENESS_CONTEXT,  # dpiContext: The new DPI_AWARENESS_CONTEXT for the current thread
+)
+
+GetWindowDpiAwarenessContext = WINFUNCTYPE(None)(("GetWindowDpiAwarenessContext", dll))
+"""
+Returns the DPI_AWARENESS_CONTEXT associated with a window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowdpiawarenesscontext
+"""
+GetWindowDpiAwarenessContext.restype = DPI_AWARENESS_CONTEXT
+GetWindowDpiAwarenessContext.argtypes = (
+	HWND,  # hwnd: The window to query
+)
+
 SetProcessDPIAware = WINFUNCTYPE(None)(("SetProcessDPIAware", dll))
 """
 Sets the process-default DPI awareness to system-DPI awareness.
@@ -1563,6 +1638,47 @@ GetWindowRect.argtypes = (
 	HWND,  # hWnd: Handle to the window
 	LPRECT,  # lpRect: RECT that receives the screen coordinates of the upper-left and lower-right corners of the window
 )
+
+
+GetMenu = WINFUNCTYPE(None)(("GetMenu", dll))
+"""
+Retrieves a handle to the menu assigned to the specified window.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenu
+"""
+GetMenu.restype = HMENU
+GetMenu.argtypes = (
+	HWND,  # hWnd: Handle to the window whose menu handle is to be retrieved
+)
+
+GetMenuItemCount = WINFUNCTYPE(None)(("GetMenuItemCount", dll))
+"""
+Determines the number of items in the specified menu.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenuitemcount
+"""
+GetMenuItemCount.restype = c_int
+GetMenuItemCount.argtypes = (
+	HMENU,  # hMenu: Handle to the menu to be examined
+)
+
+GetMenuItemRect = WINFUNCTYPE(None)(("GetMenuItemRect", dll))
+"""
+Retrieves the bounding rectangle of the specified menu item.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenuitemrect
+"""
+GetMenuItemRect.restype = BOOL
+GetMenuItemRect.argtypes = (
+	HWND,  # hWnd: Handle to the window containing the menu
+	HMENU,  # hMenu: Handle to the menu
+	UINT,  # uItem: Zero-based position of the menu item
+	LPRECT,  # lprcItem: RECT that receives the bounding rectangle in screen coordinates
+)
+
 IsWindowUnicode = WINFUNCTYPE(None)(("IsWindowUnicode", dll))
 """
 Determines whether the specified window is a native Unicode window.

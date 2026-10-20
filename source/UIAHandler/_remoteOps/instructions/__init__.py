@@ -14,7 +14,7 @@ which provides an implementation of the instruction that can be executed locally
 # Import all instructions so that they can be accessed as attributes of this module.
 # flake8: noqa: F401
 
-from ..builder import InstructionBase
+from ..builder import InstructionBase  # noqa: I001
 from .arithmetic import (
 	BinaryAdd,
 	BinarySubtract,
@@ -40,6 +40,13 @@ from .bool import (
 	BoolNot,
 	BoolAnd,
 	BoolOr,
+)
+from .cacheRequest import (
+	NewCacheRequest,
+	IsCacheRequest,
+	CacheRequestAddProperty,
+	CacheRequestAddPattern,
+	PopulateCache,
 )
 from .controlFlow import (
 	Halt,
@@ -67,6 +74,7 @@ from .float import (
 )
 from .general import (
 	Set,
+	IsNotSupported,
 	Compare,
 )
 from .guid import (

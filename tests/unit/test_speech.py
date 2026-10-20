@@ -5,8 +5,7 @@
 
 """Unit tests for the speech module."""
 
-import gettext
-import typing
+import gettext  # noqa: I001
 import unittest
 
 import config
@@ -113,7 +112,7 @@ class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 
 class Translation_Fake(gettext.NullTranslations):
 	originalTranslationFunction: gettext.NullTranslations
-	translationResults: typing.Dict[str, str]
+	translationResults: dict[str, str]
 
 	def __init__(self, originalTranslationFunction: gettext.NullTranslations):
 		self.originalTranslationFunction = originalTranslationFunction

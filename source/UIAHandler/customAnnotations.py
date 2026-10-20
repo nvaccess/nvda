@@ -19,10 +19,9 @@ This relies on both the UIA server application and the UIA client application sh
 GUID for the annotation type.
 """
 
-import dataclasses
+import dataclasses  # noqa: I001
 from typing import (
 	ClassVar,
-	Dict,
 )
 
 from comtypes import (
@@ -40,7 +39,7 @@ class CustomAnnotationTypeInfo:
 	"""
 
 	guid: GUID
-	_registeredAnnotations: ClassVar[Dict[GUID, int]] = dict()
+	_registeredAnnotations: ClassVar[dict[GUID, int]] = dict()  # noqa: C408
 
 	def _registerCustomAnnotation(self) -> int:
 		"""Registers the annotation with a given GUID.

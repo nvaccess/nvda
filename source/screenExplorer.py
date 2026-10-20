@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import api
+import api  # noqa: I001
 import controlTypes
 import textInfos
 import locationHelper
@@ -11,7 +11,7 @@ import speech
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 
-class ScreenExplorer(object):
+class ScreenExplorer:
 	updateReview = False
 
 	def __init__(self):
@@ -21,7 +21,7 @@ class ScreenExplorer(object):
 	# C901 'moveTo' is too complex
 	# Note: when working on moveTo, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def moveTo(  # noqa: C901
+	def moveTo(
 		self,
 		x: int,
 		y: int,
@@ -43,7 +43,7 @@ class ScreenExplorer(object):
 		if obj != self._obj:
 			self._obj = obj
 			hasNewObj = True
-			if self.updateReview:
+			if self.updateReview:  # noqa: SIM102
 				if not api.setNavigatorObject(obj):
 					return
 		else:

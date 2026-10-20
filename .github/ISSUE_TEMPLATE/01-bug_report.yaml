@@ -190,10 +190,10 @@ body:
       description: |
         Restarting your computer will help to ensure that software is in a fresh state.
       options: [
+        "I have not restarted my computer",
         "I have restarted my computer and the issue still occurs",
         "Restarting my computer fixes the issue temporarily, but it comes back later",
         "Restarting my computer fixed the issue",
-        "I have not restarted my computer",
       ]
 
   - type: dropdown
@@ -208,9 +208,9 @@ body:
         You can restart NVDA with add-ons disabled through the exit dialog.
         In case the issue is caused by an add-on, it is recommended to contact the author of the add-on first.
       options: [
+        "I have not restarted NVDA with add-ons disabled",
         "I have restarted NVDA with add-ons disabled and the issue still occurs",
         "I have restarted NVDA with add-ons disabled and the issue no longer occurs",
-        "I have not restarted NVDA with add-ons disabled",
         "I do not have any NVDA add-ons installed",
       ]
 
@@ -229,7 +229,7 @@ body:
         Note that when installing NVDA, this tool is run automatically.
         Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on websites or navigation problems in focus or browse mode on different interfaces are encountered.
       options: [
+        "I have not run the System Accessibility Repair Tool",
         "I have run the System Accessibility Repair Tool and the issue still occurs",
         "I have run the System Accessibility Repair Tool and the issue no longer occurs",
-        "I have not run the System Accessibility Repair Tool",
       ]

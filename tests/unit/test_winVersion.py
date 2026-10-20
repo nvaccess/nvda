@@ -5,7 +5,7 @@
 
 """Unit tests for the Windows version module."""
 
-import unittest
+import unittest  # noqa: I001
 import sys
 import os
 import winVersion
@@ -25,7 +25,7 @@ class TestWinVersion(unittest.TestCase):
 	def test_getWinVerFromNonExistentRelease(self):
 		# Test the fact that there is no Windows 10 2003 (2004 exists, however).
 		with self.assertRaises(AttributeError):
-			winVersion.WIN10_2003
+			winVersion.WIN10_2003  # noqa: B018
 
 	def test_moreRecentWinVer(self):
 		# Specifically to test operators.

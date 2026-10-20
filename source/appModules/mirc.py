@@ -6,7 +6,7 @@
 
 """App module for mIRC"""
 
-import controlTypes
+import controlTypes  # noqa: I001
 from NVDAObjects.window import Window, DisplayModelLiveText
 from NVDAObjects.IAccessible import StaticText
 import appModuleHandler
@@ -14,7 +14,7 @@ import appModuleHandler
 
 class Input(Window):
 	def event_gainFocus(self):
-		super(Input, self).event_gainFocus()
+		super().event_gainFocus()
 		try:
 			output = self.parent.parent.lastChild.firstChild
 		except AttributeError:

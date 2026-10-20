@@ -5,7 +5,7 @@
 
 """Unit tests for the nvwave module."""
 
-import unittest
+import unittest  # noqa: I001
 import nvwave
 from .extensionPointTestHelpers import deciderTester
 import os.path

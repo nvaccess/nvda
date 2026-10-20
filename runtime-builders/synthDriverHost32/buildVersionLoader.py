@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-import sys
+import sys  # noqa: I001
 
 
 # This file wraps buildVersion.py from NVDA's own source directory,
@@ -12,7 +12,7 @@ import sys
 
 sys.path.insert(0, "../../source")
 try:
-	from buildVersion import (
+	from buildVersion import (  # noqa: I001
 		version_detailed,
 		formatBuildVersionString,
 		name,
@@ -23,9 +23,9 @@ finally:
 	del sys.path[0]
 
 __all__ = [
-	"version_detailed",
 	"formatBuildVersionString",
 	"name",
 	"publisher",
 	"version",
+	"version_detailed",
 ]

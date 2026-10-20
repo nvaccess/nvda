@@ -5,7 +5,7 @@
 
 """Unit tests verifying loading and saving of addon state."""
 
-import json
+import json  # noqa: I001
 import os
 import tempfile
 from typing import Any
@@ -126,7 +126,7 @@ class TestSerialization(unittest.TestCase):
 		self.assertIsInstance(backCompatInfo, (list, tuple))
 		self.assertSequenceEqual(backCompatInfo, (2024, 1, 1))
 		# All keys in the state should be strings, all values should be lists.
-		for key in dataForJsonifying.keys():
+		for key in dataForJsonifying.keys():  # noqa: SIM118
 			# Compare by identity, to make sure keys are not enum members.
 			self.assertIs(key, addonStore.models.status.AddonStateCategory(key).value)
 
@@ -156,7 +156,7 @@ class TestSerialization(unittest.TestCase):
 	def test_saveRaisesWhenShouldNotWriteToDisk(self):
 		state = addonHandler.AddonsState()
 		state.fromDict({"disabledAddons": ["someAddon"]})
-		with patch("NVDAState.shouldWriteToDisk", return_value=False):
+		with patch("NVDAState.shouldWriteToDisk", return_value=False):  # noqa: SIM117
 			with self.assertRaises(RuntimeError):
 				state._save(self.statePath)
 

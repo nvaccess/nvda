@@ -10,7 +10,7 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
-from .base import (  # noqa: F401
+from .base import (  # noqa: F401, I001
 	IoBase,
 	Serial,
 	Bulk,
@@ -20,6 +20,7 @@ from .base import (  # noqa: F401
 )
 from .hid import Hid  # noqa: F401
 from .ioThread import IoThread
+from . import ble
 
 bgThread: IoThread
 
@@ -28,9 +29,11 @@ def initialize():
 	global bgThread
 	bgThread = IoThread()
 	bgThread.start()
+	ble.initialize()
 
 
 def terminate():
+	ble.terminate()
 	global bgThread
 	bgThread.stop()
 	bgThread = None

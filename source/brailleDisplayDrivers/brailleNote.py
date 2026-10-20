@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2011-2018 NV access Limited, Rui Batista, Joseph Lee
+# Copyright (C) 2011-2026 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Braille Display driver for the BrailleNote notetakers in terminal mode.
 USB, serial and bluetooth communications are supported.
@@ -9,12 +9,13 @@ QWERTY keyboard input using basic terminal mode (no PC keyboard emulation) and s
 See Brailliant B module for BrailleNote Touch support routines.
 """
 
-from typing import List, Optional
-
-import serial
+import serial  # noqa: I001
 import bdDetect
 import braille
-import brailleInput
+import braille.display
+import braille.display.driver
+import braille.display.gesture
+import braille.input.gesture
 import inputCore
 from logHandler import log
 import hwIo
@@ -84,8 +85,8 @@ _scrWheel = ("wCounterclockwise", "wClockwise", "wUp", "wDown", "wLeft", "wRight
 # Backspace is dot7 and enter dot8
 _dotNames = {}
 for i in range(1, 9):
-	key = globals()["DOT_%d" % i]
-	_dotNames[key] = "d%d" % i
+	key = globals()["DOT_%d" % i]  # noqa: UP031
+	_dotNames[key] = "d%d" % i  # noqa: UP031
 
 # QT keys
 _qtKeyNames = {
@@ -120,7 +121,7 @@ _qtKeys = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "brailleNote"
 	# Translators: Names of braille displays
 	description = _("HumanWare BrailleNote")
@@ -149,12 +150,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self._serial = None
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			log.debug("Checking port %s for a BrailleNote", port)
 			try:
 				self._serial = hwIo.Serial(
@@ -165,7 +166,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					parity=serial.PARITY_NONE,
 					onReceive=self._onReceive,
 				)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			# Check for cell information
@@ -175,11 +176,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			else:
 				self._serial.close()
 		else:
-			raise RuntimeError("Can't find a braillenote device (port = %s)" % port)
+			raise RuntimeError("Can't find a braillenote device (port = %s)" % port)  # noqa: UP031
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			self._serial.close()
 			self._serial = None
@@ -204,7 +205,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return
 		arg = self._serial.read(1)
 		if not arg:
-			log.debugWarning("Timeout reading argument for command 0x%X" % command)
+			log.debugWarning("Timeout reading argument for command 0x%X" % command)  # noqa: UP031
 			return
 		# #5993: Read the buffer once more if a BrailleNote QT says it's got characters in its pipeline.
 		if command == QT_MOD_TAG:
@@ -218,7 +219,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self,
 		command: int,
 		arg: int,
-		arg2: Optional[str] = None,
+		arg2: str | None = None,
 	):
 		space = False
 		if command == THUMB_KEYS_TAG:
@@ -246,7 +247,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# ESCAPE must be quoted because it is a control character
 		cellBytesList = [intToByte(cell).replace(ESCAPE, ESCAPE * 2) for cell in cells]
 		cellBytesList.insert(0, DISPLAY_TAG)
@@ -308,20 +309,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(
 		self,
-		keys: Optional[int] = None,
-		dots: Optional[int] = None,
+		keys: int | None = None,
+		dots: int | None = None,
 		space: bool = False,
-		routing: Optional[int] = None,
-		wheel: Optional[int] = None,
-		qtMod: Optional[int] = None,
-		qtData: Optional[str] = None,
+		routing: int | None = None,
+		wheel: int | None = None,
+		qtMod: int | None = None,
+		qtData: str | None = None,
 	):
-		super(braille.BrailleDisplayGesture, self).__init__()
+		super(braille.display.gesture.BrailleDisplayGesture, self).__init__()
 		# Denotes if we're dealing with a QT model.
 		self.qt = qtMod is not None
 		# Handle thumb-keys and scroll wheel (wheel is for Apex BT).
@@ -337,7 +338,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				names.add(_keyNames[0])
 			names.update(_dotNames[1 << i] for i in range(8) if (1 << i) & dots)
 		elif routing is not None:
-			self.routingIndex = routing
+			self.cellIndexes = [routing]
 			names.add("routing")
 		elif qtMod is not None:
 			names.update(_qtKeyNames[1 << i] for i in range(4) if (1 << i) & qtMod)

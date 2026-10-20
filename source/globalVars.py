@@ -25,22 +25,21 @@ import argparse
 import os
 from typing import (
 	TYPE_CHECKING,
-	List,
 	Literal,
 	Optional,
 )
 
 if TYPE_CHECKING:
-	import documentBase  # noqa: F401 used for type checking only
-	import NVDAObjects  # noqa: F401 used for type checking only
+	import documentBase
+	import NVDAObjects
 
 
 class DefaultAppArgs(argparse.Namespace):
 	quit: bool = False
 	check_running: bool = False
-	logFileName: Optional[os.PathLike] = ""
+	logFileName: os.PathLike | None = ""
 	logLevel: int = 0
-	configPath: Optional[os.PathLike] = None
+	configPath: os.PathLike | None = None
 	language: str | None = None
 	minimal: bool = False
 	secure: bool = False
@@ -65,9 +64,9 @@ class DefaultAppArgs(argparse.Namespace):
 	installSilent: bool = False
 	createPortable: bool = False
 	createPortableSilent: bool = False
-	portablePath: Optional[os.PathLike] = None
+	portablePath: os.PathLike | None = None
 	launcher: bool = False
-	enableStartOnLogon: Optional[bool] = None
+	enableStartOnLogon: bool | None = None
 	copyPortableConfig: bool = False
 	easeOfAccess: bool = False
 
@@ -83,10 +82,10 @@ foregroundObject: Optional["NVDAObjects.NVDAObject"] = None
 focusObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setFocusObject|getFocusObject` from `api` instead"""
 
-focusAncestors: List["NVDAObjects.NVDAObject"] = []
+focusAncestors: list["NVDAObjects.NVDAObject"] = []
 """Deprecated, use `getFocusAncestors` from `api` instead"""
 
-focusDifferenceLevel: Optional[int] = None
+focusDifferenceLevel: int | None = None
 """Deprecated, use `getFocusDifferenceLevel` from `api` instead"""
 
 mouseObject: Optional["NVDAObjects.NVDAObject"] = None
@@ -103,10 +102,10 @@ reviewPositionObj: Optional["NVDAObjects.NVDAObject"] = None
 
 
 # unused, should eventually get removed.
-mouseOldX: Literal[None] = None
+mouseOldX: Literal[None] = None  # noqa: PYI061
 """Deprecated, this is unused and not set by NVDA core"""
 
-mouseOldY: Literal[None] = None
+mouseOldY: Literal[None] = None  # noqa: PYI061
 """Deprecated, this is unused and not set by NVDA core"""
 
 lastProgressValue: Literal[0] = 0
@@ -119,7 +118,7 @@ startTime: float = 0.0
 
 appArgs = DefaultAppArgs()
 
-unknownAppArgs: List[str] = []
+unknownAppArgs: list[str] = []
 
 exitCode: int = 0
 """

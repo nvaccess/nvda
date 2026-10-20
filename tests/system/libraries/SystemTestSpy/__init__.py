@@ -11,7 +11,7 @@
 
 # Expose shared code. Lint error F401 imported but unused. Exposing like this makes importing easier, and
 # allows code to be re-organized without having to fix many import statements.
-from .blockUntilConditionMet import (  # noqa: F401
+from .blockUntilConditionMet import (  # noqa: F401, I001
 	_blockUntilConditionMet,
 	DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 )

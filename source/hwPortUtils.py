@@ -4,7 +4,7 @@
 
 """Utilities for working with hardware connection ports."""
 
-import ctypes
+import ctypes  # noqa: I001
 import itertools
 import math
 import typing
@@ -93,7 +93,7 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 				info["bluetoothAddress"] = addr
 				if addr:
 					info["bluetoothName"] = getBluetoothDeviceInfo(addr).szName
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning(
 					f"Couldn't get Microsoft bt name for hardware id {hwID!r}",
 					exc_info=True,
@@ -102,14 +102,13 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 			# This is a Toshiba bluetooth port.
 			try:
 				info["bluetoothAddress"], info["bluetoothName"] = getToshibaBluetoothPortInfo(port)
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning(f"Couldn't get Toshiba bt name for hardware id {hwID!r}", exc_info=True)
 		case r"{95C7A0A0-3094-11D7-A202-00508B9D7D5A}\BLUETOOTHPORT":
 			try:
 				info["bluetoothAddress"], info["bluetoothName"] = getWidcommBluetoothPortInfo(port)
-			except Exception:
+			except Exception:  # noqa: BLE001
 				log.debugWarning(f"Couldn't get Widcomm bt name for hardware id {hwID!r}", exc_info=True)
-				pass
 		case h if "USB" in h or "FTDIBUS" in h:
 			usbIDStart = h.find("VID_")
 			if usbIDStart != -1:
@@ -178,7 +177,7 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			entry["friendlyName"] = buf.value
 
 		if _isDebug():
-			log.debug("%r" % entry)
+			log.debug("%r" % entry)  # noqa: UP031
 		yield entry
 
 	if _isDebug():
@@ -275,7 +274,7 @@ def _listDevices(
 
 			dwNeeded = DWORD()
 			# get the size
-			if not _SetupDiGetDeviceInterfaceDetail(
+			if not _SetupDiGetDeviceInterfaceDetail(  # noqa: SIM102
 				g_hdi,
 				ctypes.byref(did),
 				None,

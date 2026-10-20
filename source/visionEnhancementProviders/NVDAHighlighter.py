@@ -228,20 +228,19 @@ class HighlightWindow(CustomWindow):
 		if not contextRects:
 			return
 
-		with winUser.paint(self.handle) as hdc:
-			with winGDI.GDIPlusGraphicsContext(hdc) as graphicsContext:
-				for context, rect in contextRects.items():
-					HighlightStyle = highlighter._ContextStyles[context]
-					rect = self._mapRectToClient(rect, HighlightStyle)
-					if not rect:
-						continue
+		with winUser.paint(self.handle) as hdc, winGDI.GDIPlusGraphicsContext(hdc) as graphicsContext:
+			for context, rect in contextRects.items():
+				HighlightStyle = highlighter._ContextStyles[context]
+				rect = self._mapRectToClient(rect, HighlightStyle)
+				if not rect:
+					continue
 
-					with winGDI.GDIPlusPen(
-						HighlightStyle.color.toGDIPlusARGB(),
-						HighlightStyle.width,
-						HighlightStyle.style,
-					) as pen:
-						winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
+				with winGDI.GDIPlusPen(
+					HighlightStyle.color.toGDIPlusARGB(),
+					HighlightStyle.width,
+					HighlightStyle.style,
+				) as pen:
+					winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
 
 	def _invalidateContextRect(self, rect: RectLTRB, style: HighlightStyle) -> None:
 		"""
@@ -477,7 +476,7 @@ class NVDAHighlighterGuiPanel(
 
 
 class NVDAHighlighter(providerBase.VisionEnhancementProvider):
-	_ContextStyles = {
+	_ContextStyles = {  # noqa: RUF012
 		Context.FOCUS: DASH_BLUE,
 		Context.NAVIGATOR: SOLID_PINK,
 		Context.FOCUS_NAVIGATOR: SOLID_BLUE,
@@ -513,6 +512,7 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
 		extensionPoints.post_browseModeMove.register(self.handleBrowseModeMove)
+		extensionPoints.post_mathNavigation.register(self.handleMathNavigation)
 
 	def __init__(self):
 		super().__init__()
@@ -598,6 +598,17 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 
 	def handleBrowseModeMove(self, obj: "CursorManager | None" = None) -> None:
 		self.updateContextRect(context=Context.BROWSEMODE)
+
+	def handleMathNavigation(self, rect: RectLTRB | None) -> None:
+		"""Update the browse mode highlight for math navigation.
+
+		:param rect: The current math navigation rectangle, or ``None`` if no rectangle is available.
+		"""
+		if rect is None:
+			self.contextToRectMap.pop(Context.BROWSEMODE, None)
+			self.updateContextRect(context=Context.BROWSEMODE)
+			return
+		self.updateContextRect(context=Context.BROWSEMODE, rect=rect)
 
 	def refresh(self) -> None:
 		"""Refreshes the screen positions of the enabled highlights."""

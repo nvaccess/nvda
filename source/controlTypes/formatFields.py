@@ -4,7 +4,6 @@
 # Copyright (C) 2021-2023 NV Access Limited, Cyrille Bougot
 
 import re
-from typing import Dict
 
 from logHandler import log
 from utils.displayString import DisplayStringStrEnum
@@ -27,7 +26,7 @@ class TextPosition(DisplayStringStrEnum):
 
 #: Text to use for 'text-position' format field values. These describe the vertical position of the
 #: formatted text with respect to the base line.
-_textPositionLabels: Dict[TextPosition, str] = {
+_textPositionLabels: dict[TextPosition, str] = {
 	TextPosition.UNDEFINED: "",  # There is nothing to report if no text position is defined.
 	# Translators: Reported for text which is at the baseline position;
 	# i.e. not superscript or subscript.
@@ -40,7 +39,7 @@ _textPositionLabels: Dict[TextPosition, str] = {
 
 
 class FontSize:
-	_unitToTranslatableString: Dict[str, str] = {
+	_unitToTranslatableString: dict[str, str] = {  # noqa: RUF012
 		# Translators: Abbreviation for pixels, a measurement of font size.
 		"px": pgettext("font size", "%s px"),
 		# Translators: A measurement unit of font size.
@@ -55,7 +54,7 @@ class FontSize:
 		"%": pgettext("font size", "%s%%"),
 	}
 
-	_keywordToTranslatableString: Dict[str, str] = {
+	_keywordToTranslatableString: dict[str, str] = {  # noqa: RUF012
 		# Translators: A measurement unit of font size.
 		"xx-small": pgettext("font size", "xx-small"),
 		# Translators: A measurement unit of font size.
@@ -124,7 +123,7 @@ class TextAlign(DisplayStringStrEnum):
 
 #: Text to use for 'text-align format field values. These describe the horizontal position of a paragraph
 #: or a cell's content.
-_textAlignLabels: Dict[TextAlign, str] = {
+_textAlignLabels: dict[TextAlign, str] = {
 	TextAlign.UNDEFINED: "",  # There is nothing to report if no alignment is defined.
 	# Translators: Reported when text is left-aligned.
 	TextAlign.LEFT: _("align left"),
@@ -168,7 +167,7 @@ class VerticalTextAlign(DisplayStringStrEnum):
 
 #: Text to use for 'vertical-align' format field values. These describe the vertical position
 #: of a cell's content.
-_verticalTextAlignLabels: Dict[VerticalTextAlign, str] = {
+_verticalTextAlignLabels: dict[VerticalTextAlign, str] = {
 	VerticalTextAlign.UNDEFINED: "",  # There is nothing to report if no vertical alignment is defined.
 	# Translators: Reported when text is vertically top-aligned.
 	VerticalTextAlign.TOP: _("vertical align top"),

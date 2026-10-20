@@ -14,7 +14,7 @@ Used to:
 - ensure object navigation cannot occur outside of the lockscreen
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import ctypes
 from contextlib import contextmanager
 from ctypes.wintypes import (
@@ -22,10 +22,7 @@ from ctypes.wintypes import (
 	LPWSTR,
 )
 import enum
-from typing import (
-	Generator,
-	Optional,
-)
+from collections.abc import Generator
 
 from baseObject import AutoPropertyObject
 from logHandler import log
@@ -65,7 +62,7 @@ https://docs.microsoft.com/en-us/windows/win32/sync/synchronization-object-secur
 Unused in NVDA core, duplicate of winKernel.SYNCHRONIZE.
 """
 
-_lockStateTracker: Optional["_WindowsLockedState"] = None
+_lockStateTracker: _WindowsLockedState | None = None
 """
 Caches the Windows lock state as an auto property object.
 """
@@ -189,7 +186,7 @@ _WTS_INFO_POINTER_T = ctypes.POINTER(WTSINFOEXW)
 
 
 @contextmanager
-def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T, None, None]:
+def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T]:
 	"""Context manager to get the WTSINFOEXW for the current server/session or raises a RuntimeError.
 	Handles freeing the memory when usage is complete.
 	@raises RuntimeError: On failure
@@ -205,7 +202,7 @@ def WTSCurrentSessionInfoEx() -> Generator[_WTS_INFO_POINTER_T, None, None]:
 		)
 
 
-def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
+def _getCurrentSessionInfoEx() -> _WTS_INFO_POINTER_T | None:
 	"""
 	Gets the WTSINFOEXW for the current server/session or raises a RuntimeError
 	on failure.

@@ -3,11 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
-	Dict,
-	OrderedDict,
-	Set,
-)
+from collections import OrderedDict
 
 import config
 from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
@@ -21,7 +17,7 @@ class Channel(DisplayStringStrEnum):
 	EXTERNAL = "external"  # for add-ons installed externally
 
 	@property
-	def _displayStringLabels(self) -> Dict["Channel", str]:
+	def _displayStringLabels(self) -> dict["Channel", str]:
 		return {
 			# Translators: Label for add-on channel in the add-on sotre
 			self.ALL: pgettext("addonStore", "All"),
@@ -36,7 +32,7 @@ class Channel(DisplayStringStrEnum):
 		}
 
 
-_channelFilters: OrderedDict[Channel, Set[Channel]] = OrderedDict(
+_channelFilters: OrderedDict[Channel, set[Channel]] = OrderedDict(
 	{
 		Channel.ALL: {
 			Channel.STABLE,

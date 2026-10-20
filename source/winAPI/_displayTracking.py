@@ -10,7 +10,7 @@ When the display resolution changes, the new height and width is sent to NVDA,
 and we notify the user of changes to the orientation.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 import enum
 
 import extensionPoints

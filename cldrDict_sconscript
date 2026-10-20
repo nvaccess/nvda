@@ -10,8 +10,8 @@ import typing
 if typing.TYPE_CHECKING:
 	import SCons
 	from SCons import (
-		Dir,
-		Import,
+		Dir,  # noqa: TC004
+		Import,  # noqa: TC004
 	)
 
 sourceDir: "SCons.Node.FS.Dir"

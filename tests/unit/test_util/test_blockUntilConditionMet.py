@@ -5,11 +5,10 @@
 
 """Unit tests for the blockUntilConditionMet submodule."""
 
-from typing import (
+from typing import (  # noqa: I001
 	Any,
-	Callable,
-	Type,
 )
+from collections.abc import Callable
 import unittest
 from unittest.mock import patch
 
@@ -92,7 +91,7 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 	Ensures that blockUntilConditionMet succeeds just before timeout, and fails just after timeout.
 	"""
 
-	_TimerClass: Type[_FakeTimer] = _FakeTimer
+	_TimerClass: type[_FakeTimer] = _FakeTimer
 	"""Test suites which inherit from Test_blockUntilConditionMet_Timer will override the TimerClass"""
 
 	def setUp(self) -> None:

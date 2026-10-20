@@ -5,7 +5,7 @@
 
 """Functions exported by gdi32.dll, and supporting data structures and enumerations."""
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	WINFUNCTYPE,
 	Structure,
 	c_ubyte,

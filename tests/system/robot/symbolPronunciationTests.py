@@ -29,8 +29,7 @@ By line symbol expectations:
 """
 
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
-import enum as _enum
-import typing as _typing
+import enum as _enum  # noqa: I001
 
 from SystemTestSpy import (
 	_getLib,
@@ -86,7 +85,7 @@ class ReportLineIndentation(_enum.Enum):
 	SPEECH = 1
 
 
-def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> _typing.List[str]:
+def _pressKeyAndCollectSpeech(key: str, numberOfTimes: int) -> list[str]:
 	actual = []
 	for _ in range(numberOfTimes):
 		spoken = _NvdaLib.getSpeechAfterKey(key)
@@ -378,42 +377,40 @@ def test_selByWord():
 		navKey=Move.SEL_CARET_WORD,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list(
-			(
-				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
-				for i in [
-					"Test: ",
-					"Say ",
-					"(quietly) ",
-					"Hello, ",
-					"Jim ",
-					". ",  # Expected: no symbols named
-					"don't ",  # Expected: mid-word symbol
-					"",
-					"t-shirt  ",  # todo: Expect right-pointing arrow
-					# end of first line
-					"",  # This is the newline todo: There should not be any "empty" words.
-					# todo: There should not be any "empty" words.
-					"1 ",
-					"",
-					"2 ",
-					"",
-					"3 ",
-					"",
-					"4",
-					# end of second line
-					"",  # newline and single space todo: There should not be any "empty" words.
-					"",  # newline and tab  todo: There should not be any "empty" words.
-					"",  # newline and 4 spaces todo: There should not be any "empty" words.
-					"",  # newline  todo: There should not be any "empty" words.
-					"right-pointing arrow",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t-shirt",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t-shirt",
-					# end of doc
-				]
-			)
+		expectedSpeech=list(  # noqa: C400
+			i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
+			for i in [
+				"Test: ",
+				"Say ",
+				"(quietly) ",
+				"Hello, ",
+				"Jim ",
+				". ",  # Expected: no symbols named
+				"don't ",  # Expected: mid-word symbol
+				"",
+				"t-shirt  ",  # todo: Expect right-pointing arrow
+				# end of first line
+				"",  # This is the newline todo: There should not be any "empty" words.
+				# todo: There should not be any "empty" words.
+				"1 ",
+				"",
+				"2 ",
+				"",
+				"3 ",
+				"",
+				"4",
+				# end of second line
+				"",  # newline and single space todo: There should not be any "empty" words.
+				"",  # newline and tab  todo: There should not be any "empty" words.
+				"",  # newline and 4 spaces todo: There should not be any "empty" words.
+				"",  # newline  todo: There should not be any "empty" words.
+				"right-pointing arrow",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t-shirt",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t-shirt",
+				# end of doc
+			]
 		),
 	)
 
@@ -423,42 +420,40 @@ def test_selByWord():
 		navKey=Move.SEL_CARET_WORD,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=list(
-			(
-				i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
-				for i in [
-					"Test colon: ",
-					"Say ",
-					"left paren(quietly right paren) ",  # Expect: parenthesis are named
-					"quote Hello comma, ",
-					"Jim ",
-					"quote  dot. ",  # Expect: quote, comma and dot are named
-					"don tick t ",  # Expect: mid-word symbol substituted
-					"right-pointing arrow  ",
-					"t-shirt  ",  # Expect dash symbol not to be replaced with word.
-					# end of first line
-					"",  # newline  todo: There should not be any "empty" words.
-					# Expect no empty words:
-					"1 ",
-					"bar  ",
-					"2 ",
-					"bar  bar  ",
-					"3 ",
-					"at  caret  star  line  ",
-					"4",
-					# end of second line
-					"",  # newline and single space
-					"tab ",  # newline and tab
-					"",  # newline and 4 spaces
-					"",  # newline
-					"right dash-pointing arrow",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t dash-shirt",
-					"",  # newline  todo: There should not be any "empty" words.
-					"t dash-shirt",
-					# end of doc
-				]
-			)
+		expectedSpeech=list(  # noqa: C400
+			i + (" " if i.endswith(" ") else "  " if i else "") + "selected"
+			for i in [
+				"Test colon: ",
+				"Say ",
+				"left paren(quietly right paren) ",  # Expect: parenthesis are named
+				"quote Hello comma, ",
+				"Jim ",
+				"quote  dot. ",  # Expect: quote, comma and dot are named
+				"don tick t ",  # Expect: mid-word symbol substituted
+				"right-pointing arrow  ",
+				"t-shirt  ",  # Expect dash symbol not to be replaced with word.
+				# end of first line
+				"",  # newline  todo: There should not be any "empty" words.
+				# Expect no empty words:
+				"1 ",
+				"bar  ",
+				"2 ",
+				"bar  bar  ",
+				"3 ",
+				"at  caret  star  line  ",
+				"4",
+				# end of second line
+				"",  # newline and single space
+				"tab ",  # newline and tab
+				"",  # newline and 4 spaces
+				"",  # newline
+				"right dash-pointing arrow",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t dash-shirt",
+				"",  # newline  todo: There should not be any "empty" words.
+				"t dash-shirt",
+				# end of doc
+			]
 		),
 	)
 
@@ -473,29 +468,27 @@ def test_selByLine():
 		navKey=Move.SEL_CARET_LINE,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list(
-			(
-				i + ("   " if i else "") + "selected"
-				for i in [
-					"Test:",
-					"Say",
-					"(quietly)",
-					"Hello,",
-					"Jim .",
-					"don't ",
-					"",  # todo: Expect 'right-pointing arrow'
-					"t-shirt ",
-					"",  # todo: Expect 'right-pointing arrow'
-					"t-shirt  ",
-					"t-shirt ",  # todo: Expect 'right-pointing arrow t-shirt'
-					# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
-					"1   2    3      4",
-					"",  # single space todo: There should not be any "empty" lines.
-					"",  # tab todo: There should not be any "empty" lines.
-					"",  # four spaces todo: There should not be any "empty" lines.
-					# end of doc
-				]
-			)
+		expectedSpeech=list(  # noqa: C400
+			i + ("   " if i else "") + "selected"
+			for i in [
+				"Test:",
+				"Say",
+				"(quietly)",
+				"Hello,",
+				"Jim .",
+				"don't ",
+				"",  # todo: Expect 'right-pointing arrow'
+				"t-shirt ",
+				"",  # todo: Expect 'right-pointing arrow'
+				"t-shirt  ",
+				"t-shirt ",  # todo: Expect 'right-pointing arrow t-shirt'
+				# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+				"1   2    3      4",
+				"",  # single space todo: There should not be any "empty" lines.
+				"",  # tab todo: There should not be any "empty" lines.
+				"",  # four spaces todo: There should not be any "empty" lines.
+				# end of doc
+			]
 		),
 	)
 
@@ -505,29 +498,27 @@ def test_selByLine():
 		navKey=Move.SEL_CARET_LINE,
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.NONE,
-		expectedSpeech=list(
-			(
-				i + (" " if i else "") + "selected"
-				for i in [
-					"Test colon:  ",
-					"Say  ",
-					"left paren(quietly right paren)  ",  # Expect: parenthesis are named
-					"quote Hello comma,  ",
-					"Jim quote  dot.  ",  # Expect: quote, comma and dot are named
-					"don tick t   ",  # Expect: mid-word symbol substituted
-					"right-pointing arrow   ",
-					"t-shirt   ",  # Expect dash
-					"right-pointing arrow    ",
-					"t-shirt    ",  # Expect dash
-					"right-pointing arrow  t-shirt   ",  # Expect dash
-					# Expect | symbol replaced with bar, and other symbols named
-					"1  bar  2  bar  bar  3  at  caret  star  line  4  ",
-					"",  # single space
-					"tab   ",  # single tab
-					"",  # 4 spaces
-					# end of doc
-				]
-			)
+		expectedSpeech=list(  # noqa: C400
+			i + (" " if i else "") + "selected"
+			for i in [
+				"Test colon:  ",
+				"Say  ",
+				"left paren(quietly right paren)  ",  # Expect: parenthesis are named
+				"quote Hello comma,  ",
+				"Jim quote  dot.  ",  # Expect: quote, comma and dot are named
+				"don tick t   ",  # Expect: mid-word symbol substituted
+				"right-pointing arrow   ",
+				"t-shirt   ",  # Expect dash
+				"right-pointing arrow    ",
+				"t-shirt    ",  # Expect dash
+				"right-pointing arrow  t-shirt   ",  # Expect dash
+				# Expect | symbol replaced with bar, and other symbols named
+				"1  bar  2  bar  bar  3  at  caret  star  line  4  ",
+				"",  # single space
+				"tab   ",  # single tab
+				"",  # 4 spaces
+				# end of doc
+			]
 		),
 	)
 
@@ -540,25 +531,23 @@ def test_selByChar():
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list(
-			(
-				i + ("  " if i else "") + "selected"
-				for i in [
-					"T",
-					"S",
-					"space",  # Expect whitespace named.
-					"left paren",
-					"right paren",  # Expect parens named
-					"quote",
-					"tick",  # Expect quote and apostrophe named
-					"e",
-					"comma",  # Expect comma named
-					"right-pointing arrow",
-					"t-shirt",
-					"tab",  # Expect tab named
-					"",  # Expect Windows/notepad newline is \r\n
-				]
-			)
+		expectedSpeech=list(  # noqa: C400
+			i + ("  " if i else "") + "selected"
+			for i in [
+				"T",
+				"S",
+				"space",  # Expect whitespace named.
+				"left paren",
+				"right paren",  # Expect parens named
+				"quote",
+				"tick",  # Expect quote and apostrophe named
+				"e",
+				"comma",  # Expect comma named
+				"right-pointing arrow",
+				"t-shirt",
+				"tab",  # Expect tab named
+				"",  # Expect Windows/notepad newline is \r\n
+			]
 		),
 	)
 
@@ -568,26 +557,24 @@ def test_selByChar():
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=list(
-			(
-				i + ("  " if i else "") + "selected"
-				for i in [
-					"T",
-					"S",
-					"space",  # Expect whitespace named.
-					"left paren",
-					"right paren",  # Expect parens named
-					"quote",
-					"tick",  # Expect quote and apostrophe named
-					"e",
-					"comma",  # Expect comma named
-					# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-					"right dash-pointing arrow",
-					"t dash-shirt",
-					"tab",  # Expect whitespace named.
-					"",  # on Windows/notepad newline is \r\n
-				]
-			)
+		expectedSpeech=list(  # noqa: C400
+			i + ("  " if i else "") + "selected"
+			for i in [
+				"T",
+				"S",
+				"space",  # Expect whitespace named.
+				"left paren",
+				"right paren",  # Expect parens named
+				"quote",
+				"tick",  # Expect quote and apostrophe named
+				"e",
+				"comma",  # Expect comma named
+				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
+				"right dash-pointing arrow",
+				"t dash-shirt",
+				"tab",  # Expect whitespace named.
+				"",  # on Windows/notepad newline is \r\n
+			]
 		),
 	)
 
@@ -610,7 +597,7 @@ def test_symbolInSpeechUI():
 		# This can be a major issue in languages other than English.
 		[
 			# todo: 'tick' is a bug
-			"shouldn tick t sub tick symbol"  # intentionally concatenate strings
+			"shouldn tick t sub tick symbol"  # intentionally concatenate strings  # noqa: ISC004
 			f"\n{character}",
 		],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
@@ -645,7 +632,7 @@ def _setConfig(
 
 def _doTest(
 	navKey: Move,
-	expectedSpeech: _typing.List[str],
+	expectedSpeech: list[str],
 	reportedAfterLast: EndSpeech,
 	symbolLevel: SymLevel = SymLevel.SOME,
 	reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
@@ -708,7 +695,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# into the table, describe first column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"table",  # enter table context
 				"with 2 rows and 3 columns",  # details of the table context
@@ -722,7 +709,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# describe second column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"column 2",  # enter column 2 context, still in row 1, still in table
 				"right-pointing arrow   t-shirt",  # the contents of the cell
@@ -733,7 +720,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"column 3",  # enter column 3 context, still in row 1, still in table
 				"Don tick t",  # the contents of the cell
@@ -745,7 +732,7 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		"  ".join(
+		"  ".join(  # noqa: FLY002
 			[
 				"row 2",  # enter row 2 context, still in table
 				"First dash-name",  # reminder of the column name
@@ -784,7 +771,7 @@ def test_tableHeaders():
 def test_ignoreBlankLinesForReportLineIndentation():
 	"""Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on"""
 	_notepad.prepareNotepad(
-		"\n".join(
+		"\n".join(  # noqa: FLY002
 			[
 				"",  # blank line
 				"def foo",
@@ -798,7 +785,7 @@ def test_ignoreBlankLinesForReportLineIndentation():
 		),
 	)
 
-	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
+	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: list[str]) -> None:
 		_doTest(
 			navKey=Move.REVIEW_LINE,
 			reportedAfterLast=EndSpeech.BOTTOM,

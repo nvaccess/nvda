@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 from dataclasses import dataclass
 from enum import Enum
 
@@ -30,6 +30,7 @@ from addonStore.models.addon import (
 )
 from addonStore.models.status import (
 	_installedAddonStatuses,
+	_updatableStatuses,
 	_StatusFilterKey,
 	AvailableAddonStatus,
 )
@@ -131,7 +132,7 @@ class AddonListField(_AddonListFieldData, Enum):
 _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
 
-class AddonListItemVM(Generic[_AddonModelT]):
+class AddonListItemVM(Generic[_AddonModelT]):  # noqa: UP046
 	def __init__(
 		self,
 		model: _AddonModelT,
@@ -185,7 +186,8 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
-			and self.status in _installedAddonStatuses
+			and self.status in _installedAddonStatuses.union(_updatableStatuses)
+			and self.status not in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
 			and self.status != AvailableAddonStatus.PENDING_REMOVE
 		)
 
@@ -220,7 +222,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		)
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def searchableText(self) -> str:
 		"""Extract searchable text from addon."""
 		model = self.model
@@ -244,13 +246,15 @@ class AddonListItemVM(Generic[_AddonModelT]):
 			return 1.0
 		if searchTerm in self.searchableText:
 			return 0.99
-		matches = find_near_matches(searchTerm, self.searchableText, max_l_dist=1)
+		# Exact matches were handled above, so a one-character fuzzy match has no
+		# matching character and its SequenceMatcher ratio is always zero.
+		if len(searchTerm) == 1:
+			return 0.0
 		bestRatio = 0.0
-		for match in matches:
+		for match in find_near_matches(searchTerm, self.searchableText, max_l_dist=1):
 			matchedText = self.searchableText[match.start : match.end]
 			ratio = SequenceMatcher(None, searchTerm, matchedText).ratio()
-			if ratio > bestRatio:
-				bestRatio = ratio
+			bestRatio = max(bestRatio, ratio)
 		# Cap at 0.99 to ensure exact matches of name are always ranked higher.
 		return min(bestRatio, 0.99)
 
@@ -428,9 +432,9 @@ class AddonListVM:
 		if sortField is not None:
 			assert sortField in AddonListField
 		if selectionIndex is not None:
-			assert 0 <= selectionIndex and selectionIndex < len(self._addonsFilteredOrdered)
+			assert 0 <= selectionIndex < len(self._addonsFilteredOrdered)
 		if selectionId is not None:
-			assert selectionId in self._addons.keys()
+			assert selectionId in self._addons.keys()  # noqa: SIM118
 
 	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
@@ -471,6 +475,13 @@ class AddonListVM:
 	MINIMUM_SEARCH_RANK_THRESHOLD = 0.7
 
 	def _getFilteredSortedIds(self) -> list[str]:
+		searchRankCache: dict[str, float] = {}
+
+		def _getSearchRank(listItemVM: AddonListItemVM[_AddonGUIModel]) -> float:
+			if listItemVM.Id not in searchRankCache:
+				searchRankCache[listItemVM.Id] = listItemVM.searchRank(self._filterString or "")
+			return searchRankCache[listItemVM.Id]
+
 		def _getSortFieldData(listItemVM: AddonListItemVM[_AddonGUIModel]) -> "_SupportsLessThan":
 			if self._sortByModelField == AddonListField.publicationDate:
 				if getattr(listItemVM.model, "submissionTime", None):
@@ -481,18 +492,17 @@ class AddonListVM:
 				if getattr(listItemVM.model, "installDate", None):
 					listItemVM = cast(AddonListItemVM[_AddonManifestModel], listItemVM)
 					return listItemVM.model.installDate
-				return datetime.max
+				return datetime.max  # noqa: DTZ901
 			if self._sortByModelField == AddonListField.searchRank:
-				return listItemVM.searchRank(self._filterString or "")
+				return _getSearchRank(listItemVM)
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		filtered = (
 			vm
 			for vm in self._addons.values()
-			if self._filterString is None
-			or vm.searchRank(self._filterString) >= self.MINIMUM_SEARCH_RANK_THRESHOLD
+			if self._filterString is None or _getSearchRank(vm) >= self.MINIMUM_SEARCH_RANK_THRESHOLD
 		)
-		filteredSorted = list(
+		filteredSorted = list(  # noqa: C411
 			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
 		)
 		return filteredSorted

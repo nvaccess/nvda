@@ -8,7 +8,7 @@ NVDA Magnifier module.
 Handles module initialization, configuration and settings interaction.
 """
 
-import config
+import config  # noqa: I001
 from dataclasses import dataclass, field
 from .utils.types import Filter, FullScreenMode, MagnifierTrackingType, MagnifiedView
 
@@ -91,7 +91,7 @@ def setZoomLevel(zoomLevel: int) -> None:
 	:param zoomLevel: The zoom level to set.
 	"""
 	if not isinstance(zoomLevel, int):
-		raise ValueError("Zoom level must be an integer percentage")
+		raise ValueError("Zoom level must be an integer percentage")  # noqa: TRY004
 	if not (ZoomLevel.MIN_ZOOM <= zoomLevel <= ZoomLevel.MAX_ZOOM):
 		raise ValueError(f"Zoom level must be between {ZoomLevel.MIN_ZOOM} and {ZoomLevel.MAX_ZOOM}")
 	if zoomLevel % ZoomLevel.STEP_FACTOR != 0:
@@ -128,7 +128,7 @@ def getFilter() -> Filter:
 
 def setFilter(filter: Filter) -> None:
 	"""
-	Set  filter from settings.
+	Set filter from settings.
 
 	:param filter: The filter to set.
 	"""

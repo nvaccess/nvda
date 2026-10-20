@@ -7,7 +7,7 @@
 Voice Access allows users to dictate text and perform voice commands, replacing Windows Speech Recognition.
 """
 
-from typing import Callable
+from collections.abc import Callable  # noqa: I001
 import appModuleHandler
 import ui
 import winUser
@@ -19,7 +19,7 @@ import UIAHandler
 class AppModule(appModuleHandler.AppModule):
 	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
 		# Allow proper mouse and touch interaction from main Voice access interface.
-		if winUser.getClassName(hwnd) == "Voice access":
+		if winUser.getClassName(hwnd) == "Voice access":  # noqa: SIM103
 			return True
 		return False
 

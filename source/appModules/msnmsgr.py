@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import config
+import config  # noqa: I001
 import winUser
 from NVDAObjects.IAccessible import IAccessible
 import controlTypes
@@ -60,10 +60,10 @@ class AppModule(appModuleHandler.AppModule):
 
 class OldMSNHistory(cursorManager.ReviewCursorManager, IAccessible):
 	def _get_basicText(self):
-		return "%s - %s\r%s" % (self.name, self.description, self.value)
+		return "%s - %s\r%s" % (self.name, self.description, self.value)  # noqa: UP031
 
 	def _get_value(self):
-		value = super(OldMSNHistory, self).value
+		value = super().value
 		if not isinstance(value, str):
 			value = ""
 		return value
@@ -80,7 +80,7 @@ class OldMSNHistory(cursorManager.ReviewCursorManager, IAccessible):
 				lastMSNHistoryValue = value
 
 	def event_gainFocus(self):
-		super(OldMSNHistory, self).event_gainFocus()
+		super().event_gainFocus()
 		self.selection = self.makeTextInfo(textInfos.POSITION_LAST)
 
 	def reportFocus(self):

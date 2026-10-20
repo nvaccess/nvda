@@ -164,7 +164,7 @@ def handleDeprecations(
 	deprecatedSymbols = {symbol.name: symbol for symbol in deprecated}
 
 	def module_getattr(attrName: str) -> Any:
-		if NVDAState._allowDeprecatedAPI():
+		if NVDAState._allowDeprecatedAPI():  # noqa: SIM102
 			if attrName in deprecatedSymbols:
 				# Import late to avoid circular import
 				from logHandler import log

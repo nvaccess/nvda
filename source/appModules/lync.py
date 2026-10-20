@@ -5,7 +5,7 @@
 
 """appModule for Microsoft Skype for business."""
 
-import ui
+import ui  # noqa: I001
 from NVDAObjects.UIA import UIA
 import appModuleHandler
 from logHandler import log

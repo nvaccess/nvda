@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import os
+import os  # noqa: I001
 from collections import OrderedDict
 
 from . import _espeak
@@ -41,7 +41,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.InflectionSetting(),
 		SynthDriver.VolumeSetting(),
 	)
-	supportedCommands = {
+	supportedCommands = {  # noqa: RUF012
 		IndexCommand,
 		CharacterModeCommand,
 		LangChangeCommand,
@@ -51,13 +51,13 @@ class SynthDriver(SynthDriver):
 		VolumeCommand,
 		PhonemeCommand,
 	}
-	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
 	# A mapping of commonly used language codes to eSpeak languages.
 	# Introduced due to eSpeak issue: https://github.com/espeak-ng/espeak-ng/issues/1200
 	# These are used when eSpeak doesn't support a given language code
 	# but a default alias is appropriate.
-	_defaultLangToLocale = {
+	_defaultLangToLocale = {  # noqa: RUF012
 		# Languages without locale that aren't supported in eSpeak 7e5457f91e10,
 		# with a language with locale that is supported.
 		# Found via:
@@ -68,138 +68,7 @@ class SynthDriver(SynthDriver):
 	}
 
 	availableLanguages: set[str | None]
-	"""
-	For eSpeak commit 7e5457f91e10, this is equivalent to:
-	{
-		'ia',
-		'ru',
-		'cy',
-		'ms',
-		'af',
-		'fi',
-		'fr-fr',
-		'nog',
-		'gu',
-		'hu',
-		'eu',
-		'om',
-		'en-029',
-		'de',
-		'es',
-		'kk',
-		'an',
-		'nci',
-		'uk',
-		'vi-vn-x-south',
-		'grc',
-		'it',
-		'vi-vn-x-central',
-		'bg',
-		'piqd',
-		'ug',
-		'ar',
-		'da',
-		'mi',
-		'mr',
-		'pt-br',
-		'fr-ch',
-		'py',
-		'uz',
-		'en-gb',
-		'sw',
-		'as',
-		'shn',
-		'vi',
-		'nl',
-		'bs',
-		'ga',
-		'pap',
-		'sv',
-		'kn',
-		'gn',
-		'th',
-		'tr',
-		'pa',
-		'mt',
-		'chr-US-Qaaa-x-west',
-		'eo',
-		'kok',
-		'ky',
-		'lfn',
-		'is',
-		'pt',
-		'en-gb-x-gbcwmd',
-		'en-gb-x-rp',
-		'ht',
-		'bpy',
-		'fr-be',
-		'nb',
-		'lt',
-		'ja',
-		'te',
-		'tn',
-		'es-419',
-		'gd',
-		'sjn',
-		'he',
-		'hyw',
-		'et',
-		'ro',
-		'ru-lv',
-		'sq',
-		'quc',
-		'am',
-		'hr',
-		'qya',
-		'ka',
-		'el',
-		'tt',
-		'or',
-		'pl',
-		'qu',
-		'ba',
-		'ta',
-		'cmn',
-		'io',
-		'en-us',
-		'ur',
-		'hi',
-		'en-gb-scotland',
-		'fa',
-		'kl',
-		'tk',
-		'ku',
-		'si',
-		'cv',
-		'ca',
-		'qdb',
-		'hak',
-		'fa-latn',
-		'lv',
-		'en-gb-x-gbclan',
-		'ltg',
-		'ne',
-		'sl',
-		'az',
-		'yue',
-		'sk',
-		'hy',
-		'my',
-		'ko',
-		'mk',
-		'smj',
-		'ml',
-		'cmn-latn-pinyin',
-		'id',
-		'la',
-		'sr',
-		'bn',
-		'sd',
-		'cs',
-		'jbo',
-		'haw'
-	}
-	"""
+	"""Set of available languages in eSpeak NG."""
 
 	@classmethod
 	def check(cls):
@@ -207,7 +76,7 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		_espeak.initialize(self._onIndexReached)
-		log.info("Using eSpeak NG version %s" % _espeak.info())
+		log.info("Using eSpeak NG version %s" % _espeak.info())  # noqa: UP031
 		lang = getLanguage()
 		_espeak.setVoiceByLanguage(lang)
 		self._language = lang
@@ -220,13 +89,13 @@ class SynthDriver(SynthDriver):
 	def _get_language(self):
 		return self._language
 
-	PROSODY_ATTRS = {
+	PROSODY_ATTRS = {  # noqa: RUF012
 		PitchCommand: "pitch",
 		VolumeCommand: "volume",
 		RateCommand: "rate",
 	}
 
-	IPA_TO_ESPEAK = {
+	IPA_TO_ESPEAK = {  # noqa: RUF012
 		"θ": "T",
 		"s": "s",
 		"ˈ": "'",
@@ -250,7 +119,7 @@ class SynthDriver(SynthDriver):
 		Otherwise, finds a language of a different dialect exists (e.g. ru-ru to ru).
 		Returns an eSpeak compatible LangChangeCommand.
 		"""
-		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)
+		lowerCaseAvailableLangs = set(lang.lower() for lang in self.availableLanguages)  # noqa: C401
 		# Use default language if no command.lang is supplied
 		langWithLocale = command.lang if command.lang else self._language
 		langWithLocale = toXmlLang(langWithLocale.lower())
@@ -314,7 +183,7 @@ class SynthDriver(SynthDriver):
 	# C901 'speak' is too complex
 	# Note: when working on speak, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def speak(self, speechSequence: SpeechSequence):  # noqa: C901
+	def speak(self, speechSequence: SpeechSequence):
 		textList: list[str] = []
 		langChanged = False
 		prosody: dict[str, int] = {}
@@ -325,7 +194,7 @@ class SynthDriver(SynthDriver):
 			if isinstance(item, str):
 				textList.append(self._processText(item))
 			elif isinstance(item, IndexCommand):
-				textList.append('<mark name="%d" />' % item.index)
+				textList.append('<mark name="%d" />' % item.index)  # noqa: UP031
 			elif isinstance(item, CharacterModeCommand):
 				textList.append('<say-as interpret-as="characters">' if item.state else "</say-as>")
 			elif isinstance(item, LangChangeCommand):
@@ -351,7 +220,7 @@ class SynthDriver(SynthDriver):
 					continue
 				textList.append("<prosody")
 				for attr, val in prosody.items():
-					textList.append(' %s="%d%%"' % (attr, val))
+					textList.append(' %s="%d%%"' % (attr, val))  # noqa: UP031
 				textList.append(">")
 			elif isinstance(item, PhonemeCommand):
 				# We can't use str.translate because we want to reject unknown characters.
@@ -359,13 +228,13 @@ class SynthDriver(SynthDriver):
 					phonemes = "".join([self.IPA_TO_ESPEAK[char] for char in item.ipa])
 					# There needs to be a space after the phoneme command.
 					# Otherwise, eSpeak will announce a subsequent SSML tag instead of processing it.
-					textList.append("[[%s]] " % phonemes)
+					textList.append("[[%s]] " % phonemes)  # noqa: UP031
 				except KeyError:
-					log.debugWarning("Unknown character in IPA string: %s" % item.ipa)
+					log.debugWarning("Unknown character in IPA string: %s" % item.ipa)  # noqa: UP031
 					if item.text:
 						textList.append(self._processText(item.text))
 			else:
-				log.error("Unknown speech: %s" % item)
+				log.error("Unknown speech: %s" % item)  # noqa: UP031
 		# Close any open tags.
 		if langChanged:
 			textList.append("</voice>")
@@ -437,7 +306,7 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices = OrderedDict()
 		for v in _espeak.getVoiceList():
-			l = _espeak.decodeEspeakString(v.languages[1:])  # noqa: E741
+			l = _espeak.decodeEspeakString(v.languages[1:])
 			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
 			name = _espeak.decodeEspeakString(v.name)
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
@@ -468,7 +337,7 @@ class SynthDriver(SynthDriver):
 		except:
 			self._voice = None
 			raise
-		self._language = super(SynthDriver, self).language
+		self._language = super().language
 
 	def _onIndexReached(self, index):
 		if index is not None:

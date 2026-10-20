@@ -8,7 +8,8 @@ Spotlight manager module for full-screen magnifier.
 Manages the spotlight effect, including zooming in on focus and zooming back.
 """
 
-from typing import TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING  # noqa: I001
+from collections.abc import Callable
 import ui
 from .types import Coordinates, ZoomHistory, FullScreenMode
 import wx
@@ -24,7 +25,7 @@ class SpotlightManager:
 		self,
 		fullscreenMagnifier: "FullScreenMagnifier",
 	):
-		self._fullscreenMagnifier: "FullScreenMagnifier" = fullscreenMagnifier
+		self._fullscreenMagnifier: FullScreenMagnifier = fullscreenMagnifier
 		self._spotlightIsActive: bool = False
 		self._lastMousePosition = Coordinates(0, 0)
 		self._timer: wx.CallLater | None = None
@@ -39,7 +40,7 @@ class SpotlightManager:
 		"""
 		Start the spotlight
 		"""
-		self._originalZoomLevel = self._fullscreenMagnifier.zoomLevel
+		self._originalZoomLevel = int(self._fullscreenMagnifier.zoomLevel)
 		self._currentZoomLevel = self._fullscreenMagnifier.zoomLevel
 
 		log.debug("start spotlight")
@@ -125,7 +126,7 @@ class SpotlightManager:
 				self._fullscreenMagnifier._setZoomRawValue(zoomLevel)
 				self._fullscreenMagnifier._fullscreenMagnifier(coords)
 			except Exception:
-				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)
+				log.error("Error during spotlight animation step, aborting spotlight", exc_info=True)  # noqa: G201
 				self._stopSpotlight()
 				return
 			self._currentZoomLevel = zoomLevel
@@ -170,7 +171,7 @@ class SpotlightManager:
 			savedZoom = self._fullscreenMagnifier.zoomLevel
 			self._fullscreenMagnifier.zoomLevel = self._originalZoomLevel
 			endCoordinates = self._fullscreenMagnifier._relativePos(focus)
-			self._fullscreenMagnifier.zoomLevel = savedZoom
+			self._fullscreenMagnifier.zoomLevel = int(savedZoom)
 		else:
 			endCoordinates = focus
 			self._fullscreenMagnifier._lastScreenPosition = endCoordinates

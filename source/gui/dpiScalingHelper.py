@@ -3,12 +3,13 @@
 # Copyright (C) 2018-2023 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional, Any, Callable, Tuple, Union
+from typing import Any, Union  # noqa: I001
+from collections.abc import Callable
 
 
-_FloatInt = Union[int, float]
-_Size = Union[Tuple[_FloatInt, _FloatInt], _FloatInt]
-_ScaledSize = Union[Tuple[int, int], int]
+_FloatInt = Union[int, float]  # noqa: UP007
+_Size = Union[tuple[_FloatInt, _FloatInt], _FloatInt]  # noqa: UP007
+_ScaledSize = Union[tuple[int, int], int]  # noqa: UP007
 
 
 def scaleSize(scaleFactor: float, size: _Size) -> _ScaledSize:
@@ -30,7 +31,7 @@ def getScaleFactor(windowHandle: int) -> int:
 	return windowUtils.getWindowScalingFactor(windowHandle)
 
 
-class DpiScalingHelperMixin(object):
+class DpiScalingHelperMixin:
 	"""mixin to provide size scaling intended to be used with wx.Window (usually wx.Dialog)
 	Sub-classes are responsible for calling wx.Window init
 	"""
@@ -49,7 +50,7 @@ class DpiScalingHelperMixinWithoutInit:
 	"""
 
 	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
-	_scaleFactor: Optional[int] = None
+	_scaleFactor: int | None = None
 
 	def scaleSize(self, size: _Size) -> _ScaledSize:
 		if self._scaleFactor is None:

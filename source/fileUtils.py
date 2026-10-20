@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import os
+import os  # noqa: I001
 import ctypes
 import array
 from contextlib import contextmanager
@@ -81,7 +81,7 @@ def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
 	:raises RuntimeError: If the file does not exist, has no version information, or has no codepage.
 	"""
 	if not os.path.exists(name):
-		raise RuntimeError("The file %s does not exist" % name)
+		raise RuntimeError("The file %s does not exist" % name)  # noqa: UP031
 	fileVersionInfo = {}
 	# Get size needed for buffer (0 if no info)
 	size = winBindings.version.GetFileVersionInfoSize(name, None)
@@ -92,7 +92,7 @@ def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
 	# Load file informations into buffer res
 	winBindings.version.GetFileVersionInfo(name, 0, size, res)
 	r = ctypes.c_void_p()
-	l = ctypes.c_uint()  # noqa: E741
+	l = ctypes.c_uint()
 	# Look for codepages
 	winBindings.version.VerQueryValue(
 		res,
@@ -104,15 +104,15 @@ def getFileVersionInfo(name: str, *attributes: str) -> dict[str, str | None]:
 		raise RuntimeError("No codepage")
 	# Take the first codepage (what else ?)
 	codepage = array.array("H", ctypes.string_at(r.value, 4))
-	codepage = "%04x%04x" % tuple(codepage)
+	codepage = "%04x%04x" % tuple(codepage)  # noqa: UP031
 	for attr in attributes:
 		if not winBindings.version.VerQueryValue(
 			res,
-			"\\StringFileInfo\\%s\\%s" % (codepage, attr),
+			"\\StringFileInfo\\%s\\%s" % (codepage, attr),  # noqa: UP031
 			ctypes.byref(r),
 			ctypes.byref(l),
 		):
-			log.warning("Invalid or unavailable version info attribute for %r: %s" % (name, attr))
+			log.warning("Invalid or unavailable version info attribute for %r: %s" % (name, attr))  # noqa: UP031
 			fileVersionInfo[attr] = None
 		else:
 			fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value - 1)

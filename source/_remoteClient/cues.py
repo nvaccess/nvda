@@ -58,7 +58,7 @@ def _playCue(cueName: str) -> None:
 		filePath = os.path.join(globalVars.appDir, "waves", wave + ".wav")
 		try:
 			nvwave.playWaveFile(filePath)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# We mustn't log at error level, as this may play a sound
 			# and playing a sound is what caused this exception.
 			log.debugWarning(f"Failed to play cue {filePath!r}.", exc_info=True)

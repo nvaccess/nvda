@@ -1,16 +1,17 @@
-# brailleDisplayDrivers/alva.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2009-2018 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
+# Copyright (C) 2009-2026 NV Access Limited, Davy Kager, Leonard de Ruijter, Optelec B.V.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import List, Union
 
-import bdDetect
+import bdDetect  # noqa: I001
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 import inputCore
-import brailleInput
+import braille.input.gesture
 import hwIo
 from hwIo import intToByte, boolToByte
 from globalCommands import SCRCAT_BRAILLE
@@ -145,15 +146,15 @@ ALVA_KEYS = {
 }
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
-	_dev: Union[hwIo.Serial, hwIo.Hid]
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver, ScriptableObject):
+	_dev: hwIo.Serial | hwIo.Hid
 	name = "alva"
 	# Translators: The name of a braille display.
 	description = _("Optelec ALVA 6 series/protocol converter")
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=False),)
+	supportedSettings = (braille.display.driver.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
@@ -170,7 +171,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def getManualPorts(cls):
-		return braille.getSerialPorts(
+		return braille.display.getSerialPorts(
 			filterFunc=lambda info: info.get("bluetoothName", "").startswith("ALVA "),
 		)
 
@@ -210,12 +211,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._ser6SendMessage(b"r", b"?")
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._rawKeyboardInput = False
 		self._deviceId = None
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
@@ -237,18 +238,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 							break
 					else:  # No response from display
 						continue
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			self._updateSettings()
 			if self.numCells:
 				# A display responded.
 				log.info(
-					"Found display with {cells} cells connected via {type} ({port})".format(
-						cells=self.numCells,
-						type=portType,
-						port=port,
-					),
+					f"Found display with {self.numCells} cells connected via {portType} ({port})",
 				)
 				break
 			self._dev.close()
@@ -261,7 +258,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
@@ -357,7 +354,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		)
 		self._ser6SendMessage(b"B", value)
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = bytes(cells)
 		if self.isHid:
@@ -374,7 +371,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debug("This ALVA display doesn't reveal clock information")
 			return
 		try:
-			displayDateTime = datetime.datetime(
+			displayDateTime = datetime.datetime(  # noqa: DTZ001
 				year=year,
 				month=time[2],
 				day=time[3],
@@ -383,18 +380,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				second=time[6],
 			)
 		except ValueError:
-			log.debugWarning("Invalid time/date of ALVA display: %r" % time)
+			log.debugWarning("Invalid time/date of ALVA display: %r" % time)  # noqa: UP031
 			return
-		localDateTime = datetime.datetime.today()
+		localDateTime = datetime.datetime.today()  # noqa: DTZ002
 		if abs((displayDateTime - localDateTime).total_seconds()) >= ALVA_RTC_MAX_DRIFT:
-			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())
+			log.debugWarning("Display time out of sync: %s" % displayDateTime.isoformat())  # noqa: UP031
 			self._syncTime(localDateTime)
 		else:
-			log.debug("Time not synchronized. Display time %s" % displayDateTime.isoformat())
+			log.debug("Time not synchronized. Display time %s" % displayDateTime.isoformat())  # noqa: UP031
 
 	def _syncTime(self, dt: datetime.datetime):
 		log.debug("Synchronizing braille display date and time...")
-		timeList: List[int] = [
+		timeList: list[int] = [
 			dt.year & 0xFF,
 			dt.year >> 8,
 			dt.month,
@@ -412,6 +409,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		return not self._rawKeyboardInput
 
 	def _set_hidKeyboardInput(self, state):
+		if state is self.hidKeyboardInput:
+			return
 		rawState = not state
 		if self.isHid:
 			# Make sure the device settings are up to date.
@@ -462,7 +461,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: Description of the script that toggles HID keyboard simulation.
 	script_toggleHidKeyboardInput.__doc__ = _("Toggles HID keyboard simulation")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"br(alva):t1+spEnter": "toggleHidKeyboardInput",
 	}
 
@@ -476,6 +475,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				"braille_scrollForward": ("br(alva):t5", "br(alva):etouch3"),
 				"braille_routeTo": ("br(alva):routing",),
 				"braille_reportFormatting": ("br(alva):secondRouting",),
+				"braille_selectRange": ("br(alva):multiRouting",),
 				"review_top": ("br(alva):t1+t2",),
 				"review_bottom": ("br(alva):t4+t5",),
 				"braille_toggleTether": ("br(alva):t1+t3",),
@@ -508,11 +508,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, brailleInput=False):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		isNoBC640 = model != ALVA_MODEL_IDS[ALVA_MODEL_BC640]
 		# Model identifiers should not contain spaces.
 		self.model = model.replace(" ", "")
@@ -522,22 +522,21 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		secondaryNames = []
 		dots = 0
 		space = False
+		cellIndexesByRange: dict[str, list[int]] = {}
 		for group, number in self.keyCodes:
 			if group == ALVA_CR_GROUP:
 				if number & ALVA_2ND_CR_MASK:
-					keyName = "secondRouting"
-					self.routingIndex = number & ~ALVA_2ND_CR_MASK
+					rangeName = "secondRouting"
+					cellIndex = number & ~ALVA_2ND_CR_MASK
 				else:
-					keyName = "routing"
-					self.routingIndex = number
-				names.append(keyName)
-				if isNoBC640:
-					secondaryNames.append(keyName)
+					rangeName = "routing"
+					cellIndex = number
+				cellIndexesByRange.setdefault(rangeName, []).append(cellIndex)
 			else:
 				try:
 					keyName = ALVA_KEYS[group][number]
 				except (KeyError, IndexError):
-					log.debugWarning("Unknown key with group %d and number %d" % (group, number))
+					log.debugWarning("Unknown key with group %d and number %d" % (group, number))  # noqa: UP031
 					return
 				names.append(keyName)
 				if isNoBC640:
@@ -557,6 +556,17 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				else:
 					brailleInput = False
 
+		if cellIndexesByRange:
+			allIndexes: list[int] = []
+			for rangeName, indexes in sorted(cellIndexesByRange.items()):
+				indexes.sort()
+				allIndexes.extend(indexes)
+				idName = self.idForCellCount(len(indexes), rangeName)
+				names.append(idName)
+				if isNoBC640:
+					secondaryNames.append(idName)
+			self.cellIndexes = allIndexes
+
 		self.id = "+".join(names)
 		self.secondaryId = "+".join(secondaryNames) if isNoBC640 else self.id
 		if brailleInput:
@@ -565,8 +575,8 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def _get_identifiers(self):
 		ids = [
-			"br({source}.{model}):{id}".format(source=self.source, model=self.model, id=self.secondaryId),
-			"br({source}):{id}".format(source=self.source, id=self.id),
+			f"br({self.source}.{self.model}):{self.secondaryId}",
+			f"br({self.source}):{self.id}",
 		]
-		ids.extend(brailleInput.BrailleInputGesture._get_identifiers(self))
+		ids.extend(braille.input.gesture.BrailleInputGesture._get_identifiers(self))
 		return ids

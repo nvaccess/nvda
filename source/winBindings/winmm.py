@@ -5,7 +5,7 @@
 
 """Functions exported by winmm.dll, and supporting data structures and enumerations."""
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	WINFUNCTYPE,
 	c_size_t,
 	windll,

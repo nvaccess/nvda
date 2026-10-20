@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2007-2021 NV Access Limited, Babbage B.V.
 
-from typing import Dict, List, Optional, Set
 
 import config
 
@@ -97,10 +96,10 @@ def _processPositiveStates(
 
 def _processNegativeStates(
 	role: Role,
-	states: Set[State],
+	states: set[State],
 	reason: OutputReason,
-	negativeStates: Optional[Set[State]] = None,
-) -> Set[State]:
+	negativeStates: set[State] | None = None,
+) -> set[State]:
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not
 	checked.
@@ -175,13 +174,13 @@ def _processNegativeStates(
 
 def processAndLabelStates(
 	role: Role,
-	states: Set[State],
+	states: set[State],
 	reason: OutputReason,
-	positiveStates: Optional[Set[State]] = None,
-	negativeStates: Optional[Set[State]] = None,
-	positiveStateLabelDict: Dict[State, str] = {},
-	negativeStateLabelDict: Dict[State, str] = {},
-) -> List[str]:
+	positiveStates: set[State] | None = None,
+	negativeStates: set[State] | None = None,
+	positiveStateLabelDict: dict[State, str] = {},  # noqa: B006
+	negativeStateLabelDict: dict[State, str] = {},  # noqa: B006
+) -> list[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and
 	negative states.
 	@param role: The role of the object to process states for (e.g. C{Role.CHECKBOX}).

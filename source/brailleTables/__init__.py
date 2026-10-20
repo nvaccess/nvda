@@ -5,7 +5,7 @@
 
 """Manages information about available braille translation tables."""
 
-import collections
+import collections  # noqa: I001
 from enum import Enum, StrEnum, auto
 import os
 from locale import strxfrm
@@ -80,10 +80,10 @@ The first map will be loaded when calling L{initialize} with the custom tables,
 and cleared when calling L{terminate}.
 """
 
-_inputTableForLangs: dict[str, str] = dict()
+_inputTableForLangs: dict[str, str] = dict()  # noqa: C408
 """Maps languages to input L{BrailleTable.fileName}."""
 
-_outputTableForLangs: dict[str, str] = dict()
+_outputTableForLangs: dict[str, str] = dict()  # noqa: C408
 """Maps languages to output L{BrailleTable.fileName}."""
 
 
@@ -205,7 +205,7 @@ RENAMED_TABLES = {
 
 # Add the builtin tables at import time.
 
-from . import __tables as __tables  # noqa: E402
+from . import __tables as __tables
 
 # Add new first maps for the custom tables - provided in the scratchpad directory
 # and/or by addons.

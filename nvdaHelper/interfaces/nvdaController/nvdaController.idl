@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2023 NV Access Limited, Leonard de Ruijter.
+Copyright 2006-2026 NV Access Limited, Leonard de Ruijter, Ethin Probst.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License version 2.1, as published by
     the Free Software Foundation.
@@ -145,4 +145,16 @@ interface NvdaController2 {
  * @param mark The name of the reached mark.
  */
 	[callback] error_status_t __stdcall onSsmlMarkReached([in, string] const wchar_t* mark);
+};
+
+[
+	uuid(019e4216-a9a1-7540-a217-e1a2d2793025),
+	version(1.0),
+]
+interface NvdaController3 {
+/**
+ * Retrieves whether NVDA is speaking or not
+ * @param speaking Out parameter that receives the speaking status.
+ */
+	error_status_t __stdcall isSpeaking([out] boolean* speaking);
 };

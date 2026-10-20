@@ -19,7 +19,7 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-import os
+import os  # noqa: I001
 import os.path
 import glob
 from fnmatch import fnmatch
@@ -34,12 +34,12 @@ def fetchDoxygenPath():
 			r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\doxygen_is1",
 			access=winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		) as doxygenKey:
-			doxygenPath = '"%s"' % os.path.join(
+			doxygenPath = '"%s"' % os.path.join(  # noqa: UP031
 				winreg.QueryValueEx(doxygenKey, "InstallLocation")[0],
 				"Bin",
 				"doxygen.exe",
 			)
-	except WindowsError:
+	except OSError:
 		return "doxygen"
 	return doxygenPath
 
@@ -82,9 +82,9 @@ def DoxyfileParse(file_contents):
 		else:
 			if token == "+=":
 				if key not in data:
-					data[key] = list()
+					data[key] = list()  # noqa: C408
 			elif token == "=":
-				data[key] = list()
+				data[key] = list()  # noqa: C408
 			else:
 				append_data(data, key, new_data, token)
 				new_data = True
@@ -162,7 +162,7 @@ def DoxySourceScan(node, env, path):
 	file_patterns = data.get("FILE_PATTERNS", default_file_patterns)
 	exclude_patterns = data.get("EXCLUDE_PATTERNS", default_exclude_patterns)
 
-	for node in data.get("INPUT", []):
+	for node in data.get("INPUT", []):  # noqa: PLR1704
 		if os.path.isfile(node):
 			sources.append(node)
 		elif os.path.isdir(node):
@@ -186,7 +186,7 @@ def DoxySourceScan(node, env, path):
 							sources.append(filename)
 			else:
 				for pattern in file_patterns:
-					sources.extend(glob.glob("/".join([node, pattern])))
+					sources.extend(glob.glob("/".join([node, pattern])))  # noqa: FLY002
 
 	sources = [env.File(path) for path in sources]
 	return sources

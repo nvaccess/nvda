@@ -3,19 +3,18 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import config
+import config  # noqa: I001
 import fast_diff_match_patch
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from difflib import ndiff
 from logHandler import log
 from textInfos import TextInfo, UNIT_LINE
-from typing import List
 
 
 class DiffAlgo(AutoPropertyObject):
 	@abstractmethod
-	def diff(self, newText: str, oldText: str) -> List[str]:
+	def diff(self, newText: str, oldText: str) -> list[str]:
 		raise NotImplementedError
 
 	@abstractmethod
@@ -34,9 +33,9 @@ class DiffMatchPatch(DiffAlgo):
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
 
-	def diff(self, newText: str, oldText: str) -> List[str]:
+	def diff(self, newText: str, oldText: str) -> list[str]:
 		try:
-			outLines: List[str] = []
+			outLines: list[str] = []
 			for op, text in fast_diff_match_patch.diff(oldText, newText, counts_only=False):
 				if op != "+":
 					continue
@@ -55,7 +54,7 @@ class DiffMatchPatch(DiffAlgo):
 class Difflib(DiffAlgo):
 	"A line-based diffing approach in pure Python, using the Python standard library."
 
-	def diff(self, newText: str, oldText: str) -> List[str]:
+	def diff(self, newText: str, oldText: str) -> list[str]:
 		newLines = newText.splitlines()
 		oldLines = oldText.splitlines()
 		outLines = []

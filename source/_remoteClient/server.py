@@ -24,13 +24,13 @@ When clients disconnect or lose connection, the server automatically removes the
 notifies other connected clients of the departure.
 """
 
-import os
+import os  # noqa: I001
 import shutil
 import socket
 import ssl
 import tempfile
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, UTC
 from pathlib import Path
 from select import select
 from itertools import count
@@ -103,7 +103,7 @@ class RemoteCertificateManager:
 			cert = x509.load_pem_x509_certificate(certData)
 
 		# Check validity period
-		now = datetime.now(timezone.utc)
+		now = datetime.now(UTC)
 		if not (cert.not_valid_before_utc < now <= cert.not_valid_after_utc):
 			raise ValueError("Certificate is not within its validity period")
 
@@ -150,7 +150,7 @@ class RemoteCertificateManager:
 			],
 		)
 
-		now = datetime.now(timezone.utc)
+		now = datetime.now(UTC)
 		cert = (
 			x509.CertificateBuilder()
 			.subject_name(
@@ -360,7 +360,7 @@ class LocalRelayServer:
 		self._running = True
 		self.lastPingTime = time.time()
 		while self._running:
-			read, write, error = select(
+			read, write, error = select(  # noqa: RUF059
 				self.clientSockets + [self.serverSocket, self.serverSocket6],
 				[],
 				self.clientSockets,
@@ -384,8 +384,8 @@ class LocalRelayServer:
 		try:
 			clientSock, addr = sock.accept()
 			log.info(f"New client connection from {addr}")
-		except (ssl.SSLError, socket.error, OSError):
-			log.error("Error accepting connection", exc_info=True)
+		except (ssl.SSLError, OSError):
+			log.error("Error accepting connection", exc_info=True)  # noqa: G201
 			return
 		# Disable Nagle's algorithm so that packets are always sent immediately.
 		clientSock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
@@ -460,7 +460,7 @@ class Client:
 		sockData = b""
 		try:
 			sockData = self.socket.recv(16384)
-		except Exception:
+		except Exception:  # noqa: BLE001
 			self.close()
 			return
 		if not sockData:  # Disconnect
@@ -472,11 +472,11 @@ class Client:
 			return
 		self.buffer = b""
 		while b"\n" in data:
-			line, sep, data = data.partition(b"\n")
+			line, sep, data = data.partition(b"\n")  # noqa: RUF059
 			try:
 				self.parse(line)
 			except ValueError:
-				log.error(f"Error parsing message from client {self.id}", exc_info=True)
+				log.error(f"Error parsing message from client {self.id}", exc_info=True)  # noqa: G201
 				self.close()
 				return
 		self.buffer += data
@@ -495,7 +495,7 @@ class Client:
 
 	def asDict(self) -> dict[str, Any]:
 		"""Get client information as a dictionary."""
-		return dict(id=self.id, connection_type=self.connectionType)
+		return dict(id=self.id, connection_type=self.connectionType)  # noqa: C408
 
 	def do_join(self, obj: dict[str, Any]) -> None:
 		"""Handle client join request and authentication."""
@@ -571,7 +571,7 @@ class Client:
 			data = self.serializer.serialize(type=type, **msg)
 			self.socket.sendall(data)
 		except Exception:
-			log.error(f"Error sending message to client {self.id}", exc_info=True)
+			log.error(f"Error sending message to client {self.id}", exc_info=True)  # noqa: G201
 			self.close()
 
 	def sendToOthers(self, origin: int | None = None, **payload: Any) -> None:

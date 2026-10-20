@@ -1,5 +1,4 @@
-from typing import Optional, List
-import heapq
+import heapq  # noqa: I001
 import itertools
 
 import winUser
@@ -18,7 +17,7 @@ MENU_EVENTIDS = (
 )
 
 
-class OrderedWinEventLimiter(object):
+class OrderedWinEventLimiter:
 	"""Collects and limits winEvents based on whether they are focus changes,
 	or just generic (all other ones).
 
@@ -82,7 +81,7 @@ class OrderedWinEventLimiter(object):
 
 	def flushEvents(
 		self,
-		alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,
+		alwaysAllowedObjects: list[IAccessibleObjectIdentifierType] | None = None,
 	) -> list[tuple[int, int, int, int]]:
 		"""Returns a list of winEvents that have been added.
 		Due to limiting, it will not necessarily be all the winEvents that were originally added.
@@ -101,7 +100,7 @@ class OrderedWinEventLimiter(object):
 			# Increase the event count for this thread by 1.
 			threadCount = threadCounters.get(k[-1], 0)
 			threadCounters[k[-1]] = threadCount + 1
-			if isMSAADebugLoggingEnabled():
+			if isMSAADebugLoggingEnabled():  # noqa: SIM102
 				if threadCount == MAX_WINEVENTS_PER_THREAD:
 					log.debug(f"winEvent limit for thread {k[-1]} hit for this core cycle")
 			# Find out if this event is for an object whos events are always allowed.

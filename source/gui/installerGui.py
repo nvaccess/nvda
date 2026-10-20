@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import FormatError, GetLastError, byref
+from ctypes import FormatError, GetLastError, byref  # noqa: I001
 from ctypes.wintypes import HANDLE
 import os
 import subprocess
@@ -64,7 +64,7 @@ def _canPortableConfigBeCopied() -> bool:
 		# so return True only if the configPath
 		# does not point to the config of the installed copy in appdata.
 		confPath = config.getInstalledUserConfigPath()
-		if confPath and confPath == WritePaths.configDir:
+		if confPath and confPath == WritePaths.configDir:  # noqa: SIM103
 			return False
 		return True
 
@@ -230,12 +230,12 @@ def doInstall(
 			raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath = config.getInstalledUserConfigPath()
-			if installedUserConfigPath:
+			if installedUserConfigPath:  # noqa: SIM102
 				if _canPortableConfigBeCopied():
 					systemUtils.ExecAndPump(installer.copyUserConfig, installedUserConfigPath)
 	except Exception as e:
 		res = e
-		log.error("Failed to execute installer", exc_info=True)
+		log.error("Failed to execute installer", exc_info=True)  # noqa: G201
 	progressDialog.done()
 	del progressDialog
 	if isinstance(res, installer.RetriableFailure):
@@ -257,7 +257,7 @@ def doInstall(
 				startAfterInstall=startAfterInstall,
 			)
 	if res != 0:
-		log.error("Installation failed: %s" % res)
+		log.error("Installation failed: %s" % res)  # noqa: UP031
 		gui.messageBox(
 			# Translators: The message displayed when an error occurs during installation of NVDA.
 			_("The installation of NVDA failed. Please check the Log Viewer for more information."),
@@ -831,7 +831,7 @@ def doCreatePortable(
 	try:
 		systemUtils.ExecAndPump(installer.createPortableCopy, portableDirectory, copyUserConfig)
 	except Exception as e:
-		log.error("Failed to create portable copy", exc_info=True)
+		log.error("Failed to create portable copy", exc_info=True)  # noqa: G201
 		d.done()
 		if isinstance(e, installer.RetriableFailure):
 			# Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails

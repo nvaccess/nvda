@@ -1,12 +1,13 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong,
+# Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """NVDA core"""
 
-from dataclasses import dataclass
+from dataclasses import dataclass  # noqa: I001
 from typing import (
 	TYPE_CHECKING,
 	Any,
@@ -46,7 +47,7 @@ def __getattr__(attrName: str) -> Any:
 			"use winAPI.messageWindow.pre_handleWindowMessage instead.",
 		)
 		return pre_handleWindowMessage
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 # Inform those who want to know that NVDA has finished starting up.
@@ -107,7 +108,7 @@ def _showAddonsErrors() -> None:
 		)
 
 	if addonFailureMessages:
-		import wx
+		import wx  # noqa: I001
 		import gui
 
 		gui.messageBox(
@@ -135,7 +136,7 @@ def doStartupDialogs():
 		return cliArgument in ("-r", "--replace")
 
 	addonHandler.isCLIParamKnown.register(handleReplaceCLIArg)
-	unknownCLIParams: list[str] = list()
+	unknownCLIParams: list[str] = list()  # noqa: C408
 	for param in globalVars.unknownAppArgs:
 		isParamKnown = addonHandler.isCLIParamKnown.decide(cliArgument=param)
 		if not isParamKnown:
@@ -192,7 +193,7 @@ def doStartupDialogs():
 		import updateCheck
 	except RuntimeError:
 		updateCheck = None
-	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:
+	if not globalVars.appArgs.secure and not config.isAppX and not globalVars.appArgs.launcher:  # noqa: SIM102
 		if updateCheck and not config.conf["update"]["askedAllowUsageStats"]:
 			# a callback to save config after the usage stats question dialog has been answered.
 			def onResult(ID):
@@ -201,7 +202,7 @@ def doStartupDialogs():
 				if ID in (wx.ID_YES, wx.ID_NO):
 					try:
 						config.conf.save()
-					except:  # noqa: E722
+					except:  # noqa: E722, S110
 						pass
 
 			# Ask the user if usage stats can be collected.
@@ -212,8 +213,8 @@ def doStartupDialogs():
 @dataclass
 class NewNVDAInstance:
 	filePath: str
-	parameters: Optional[str] = None
-	directory: Optional[str] = None
+	parameters: str | None = None
+	directory: str | None = None
 
 
 def computeRestartCLIArgs(removeArgsList: list[str] | None = None) -> list[str]:
@@ -230,7 +231,7 @@ def computeRestartCLIArgs(removeArgsList: list[str] | None = None) -> list[str]:
 			continue
 		if arg in removeArgsList:
 			continue
-		flag = [a.option_strings[0] for a in parser._actions if a.dest == arg][0]
+		flag = [a.option_strings[0] for a in parser._actions if a.dest == arg][0]  # noqa: RUF015
 		args.append(flag)
 		if isinstance(val, bool):
 			continue
@@ -310,9 +311,9 @@ def restart(disableAddons=False, debugLogging=False):
 
 def resetConfiguration(factoryDefaults=False):
 	"""Loads the configuration, installs the correct language support and initialises audio so that it will use the configured synth and speech settings."""
-	import config
+	import config  # noqa: I001
 	import braille
-	import brailleInput
+	import braille.input
 	import brailleTables
 	import speech
 	import characterProcessing
@@ -324,6 +325,7 @@ def resetConfiguration(factoryDefaults=False):
 	import audio
 	import screenCurtain
 	import mathPres
+	import textUtils._wordSeg
 	import _magnifier as magnifier
 
 	magnifier.terminate()
@@ -335,8 +337,8 @@ def resetConfiguration(factoryDefaults=False):
 	mathPres.terminate()
 	log.debug("Terminating braille")
 	braille.terminate()
-	log.debug("Terminating brailleInput")
-	brailleInput.terminate()
+	log.debug("Terminating braille input")
+	braille.input.terminate()
 	log.debug("Terminating brailleTables")
 	brailleTables.terminate()
 	log.debug("terminating speech")
@@ -366,7 +368,7 @@ def resetConfiguration(factoryDefaults=False):
 		lang = globalVars.appArgs.language
 	else:
 		lang = config.conf["general"]["language"]
-	log.debug("setting language to %s" % lang)
+	log.debug("setting language to %s" % lang)  # noqa: UP031
 	languageHandler.setLanguage(lang)
 	dataManager.initialize()
 	addonHandler.initialize()
@@ -389,10 +391,12 @@ def resetConfiguration(factoryDefaults=False):
 	# braille
 	log.debug("Initializing brailleTables")
 	brailleTables.initialize()
-	log.debug("Initializing brailleInput")
-	brailleInput.initialize()
+	log.debug("Initializing braille input")
+	braille.input.initialize()
 	log.debug("Initializing braille")
 	braille.initialize()
+	log.debug("Initializing word segmentation")
+	textUtils._wordSeg.initialize()
 	# Math
 	log.debug("Initializing math presentation")
 	mathPres.initialize()
@@ -414,7 +418,7 @@ def resetConfiguration(factoryDefaults=False):
 
 def _setInitialFocus():
 	"""Sets the initial focus if no focus event was received at startup."""
-	import eventHandler
+	import eventHandler  # noqa: I001
 	import api
 
 	if eventHandler.lastQueuedFocusObject:
@@ -444,7 +448,7 @@ def getWxLangOrNone() -> Optional["wx.LanguageInfo"]:
 	if wxLang and not wxLocaleObj.IsAvailable(wxLang.Language):
 		wxLang = None
 	if not wxLang:
-		log.debugWarning("wx does not support language %s" % lang)
+		log.debugWarning("wx does not support language %s" % lang)  # noqa: UP031
 	return wxLang
 
 
@@ -469,20 +473,20 @@ def _startNewInstance(newNVDA: NewNVDAInstance):
 	)
 
 
-def _doShutdown(newNVDA: Optional[NewNVDAInstance]):
+def _doShutdown(newNVDA: NewNVDAInstance | None):
 	_handleNVDAModuleCleanupBeforeGUIExit()
 	_closeAllWindows()
 	if newNVDA is not None:
 		_startNewInstance(newNVDA)
 
 
-def triggerNVDAExit(newNVDA: Optional[NewNVDAInstance] = None) -> bool:
+def triggerNVDAExit(newNVDA: NewNVDAInstance | None = None) -> bool:
 	"""
 	Used to safely exit NVDA. If a new instance is required to start after exit, queue one by specifying
 	instance information with `newNVDA`.
 	@return: True if this is the first call to trigger the exit, and the shutdown event was queued.
 	"""
-	from gui.message import isModalMessageBoxActive
+	from gui.message import isModalMessageBoxActive  # noqa: I001
 	import queueHandler
 
 	global _hasShutdownBeenTriggered
@@ -508,9 +512,8 @@ def _closeAllWindows():
 	Ensures the wx mainloop is exited by all the top windows being destroyed.
 	wx objects that don't inherit from wx.Window (eg sysTrayIcon, Menu) need to be manually destroyed.
 	"""
-	import gui
+	import gui  # noqa: I001
 	from gui.settingsDialogs import SettingsDialog
-	from typing import Dict
 	import wx
 
 	app = wx.GetApp()
@@ -518,7 +521,7 @@ def _closeAllWindows():
 	# prevent race condition with object deletion
 	# prevent deletion of the object while we work on it.
 	_SettingsDialog = SettingsDialog
-	nonWeak: Dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
+	nonWeak: dict[_SettingsDialog, _SettingsDialog] = dict(_SettingsDialog._instances)
 
 	for instance, state in nonWeak.items():
 		if state is _SettingsDialog.DialogState.DESTROYED:
@@ -527,7 +530,7 @@ def _closeAllWindows():
 				f": {instance.title} - {instance.__class__.__qualname__} - {instance}",
 			)
 		else:
-			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
+			log.debug(f"Exiting NVDA with an open settings dialog: {instance!r}")
 
 	# wx.Windows destroy child Windows automatically but wx.Menu and TaskBarIcon don't inherit from wx.Window.
 	# They must be manually destroyed when exiting the app.
@@ -560,7 +563,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	"""Terminates various modules that rely on the GUI. This should be used before closing all windows
 	and terminating the GUI.
 	"""
-	import brailleViewer
+	import brailleViewer  # noqa: I001
 	import globalPluginHandler
 	import watchdog
 	import _remoteClient
@@ -620,7 +623,7 @@ def _doLoseFocus():
 
 
 def _setUpWxApp() -> "wx.App":
-	import wx
+	import wx  # noqa: I001
 
 	import config
 	import nvwave
@@ -647,7 +650,6 @@ def _setUpWxApp() -> "wx.App":
 			and it is better to remove wx from the equation so this method is a No-op.
 			This code may need to be revisited when we update Python / wxPython.
 			"""
-			pass
 
 	app = App(redirect=False)
 
@@ -741,19 +743,19 @@ def main():
 	if not globalVars.appArgs.minimal and config.conf["general"]["playStartAndExitSounds"]:
 		try:
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "start.wav"))
-		except Exception:
+		except Exception:  # noqa: BLE001, S110
 			pass
 	logHandler.setLogLevelFromConfig()
 	log.info(f"Windows version: {winVersion.getWinVer()}")
-	log.info("Using Python version %s" % sys.version)
-	log.info("Using comtypes version %s" % comtypes.__version__)
+	log.info("Using Python version %s" % sys.version)  # noqa: UP031
+	log.info("Using comtypes version %s" % comtypes.__version__)  # noqa: UP031
 	from utils import schedule
 
 	schedule.initialize()
 	import configobj
 
 	log.info(
-		"Using configobj version %s with validate version %s"
+		"Using configobj version %s with validate version %s"  # noqa: UP031
 		% (configobj.__version__, configobj.validate.__version__),
 	)
 	# Set a reasonable timeout for any socket connections NVDA makes.
@@ -812,7 +814,7 @@ def main():
 	mathPres.initialize()
 	timeSinceStart = time.time() - NVDAState.getStartTime()
 	if not globalVars.appArgs.minimal and timeSinceStart > 5:
-		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)
+		log.debugWarning("Slow starting core (%.2f sec)" % timeSinceStart)  # noqa: UP031
 		# Translators: This is spoken when NVDA is starting.
 		speech.speakMessage(_("Loading NVDA. Please wait..."))
 
@@ -825,10 +827,9 @@ def main():
 
 	brailleTables.initialize()
 	log.debug("Initializing braille input")
-	import brailleInput
+	import braille.input
 
-	brailleInput.initialize()
-	import braille
+	braille.input.initialize()
 
 	log.debug("Initializing braille")
 	braille.initialize()
@@ -856,7 +857,7 @@ def main():
 		# the GUI mainloop must be running for this to work so delay it
 		wx.CallAfter(audioDucking.initialize)
 
-	from winAPI.messageWindow import _MessageWindow
+	from winAPI.messageWindow import _MessageWindow  # noqa: I001
 	import buildVersion
 
 	messageWindow = _MessageWindow(buildVersion.name)
@@ -870,7 +871,7 @@ def main():
 		try:
 			wxLocaleObj.Init(wxLang.Language)
 		except:  # noqa: E722
-			log.error("Failed to initialize wx locale", exc_info=True)
+			log.error("Failed to initialize wx locale", exc_info=True)  # noqa: G201
 		finally:
 			# Revert wx's changes to the python locale
 			languageHandler.setLocale(languageHandler.getLanguage())
@@ -889,7 +890,7 @@ def main():
 	except NotImplementedError:
 		log.warning("Java Access Bridge not available")
 	except:  # noqa: E722
-		log.error("Error initializing Java Access Bridge support", exc_info=True)
+		log.error("Error initializing Java Access Bridge support", exc_info=True)  # noqa: G201
 	import winConsoleHandler
 
 	log.debug("Initializing legacy winConsole support")
@@ -902,7 +903,7 @@ def main():
 	except RuntimeError:
 		log.warning("UIA disabled in configuration")
 	except:  # noqa: E722
-		log.error("Error initializing UIA support", exc_info=True)
+		log.error("Error initializing UIA support", exc_info=True)  # noqa: G201
 	import IAccessibleHandler
 
 	log.debug("Initializing IAccessible support")
@@ -935,6 +936,10 @@ def main():
 	import _remoteClient
 
 	_remoteClient.initialize()
+
+	import textUtils._wordSeg
+
+	textUtils._wordSeg.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
@@ -969,7 +974,7 @@ def main():
 		try:
 			braille.handler.message(initialMessage)
 		except:  # noqa: E722
-			log.error("", exc_info=True)
+			log.error("", exc_info=True)  # noqa: G201
 		if globalVars.appArgs.launcher:
 			from gui.startupDialogs import LauncherDialog
 
@@ -1105,7 +1110,7 @@ def main():
 
 	try:
 		speech.cancelSpeech()
-	except:  # noqa: E722
+	except:  # noqa: E722, S110
 		pass
 
 	import treeInterceptorHandler
@@ -1123,7 +1128,7 @@ def main():
 	_terminate(inputCore)
 	_terminate(screenCurtain)
 	_terminate(vision)
-	_terminate(brailleInput)
+	_terminate(braille.input)
 	_terminate(braille)
 	_terminate(brailleTables)
 	_terminate(speech)
@@ -1142,7 +1147,7 @@ def main():
 				os.path.join(globalVars.appDir, "waves", "exit.wav"),
 				asynchronous=False,
 			)
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 	# We cannot terminate nvwave until after we perform nvwave.playWaveFile
 	_terminate(nvwave)
@@ -1167,11 +1172,11 @@ def main():
 def _terminate(module, name=None):
 	if name is None:
 		name = module.__name__
-	log.debug("Terminating %s" % name)
+	log.debug("Terminating %s" % name)  # noqa: UP031
 	try:
 		module.terminate()
 	except:  # noqa: E722
-		log.exception("Error terminating %s" % name)
+		log.exception("Error terminating %s" % name)  # noqa: UP031
 
 
 def isMainThread() -> bool:

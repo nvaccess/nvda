@@ -9,7 +9,7 @@ Lo-level pythonic interface to FTDI chips.
 Based on work from http://fluidmotion.dyndns.org/zenphoto/index.php?p=news&title=Python-interface-to-FTDI-driver-chip.
 """
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	byref,
 	c_char_p,
 	cast,

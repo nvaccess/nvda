@@ -8,7 +8,7 @@ Required types and defines from Windows SDK's hidpi.h
 (Public Interface to the Windows HID parsing library).
 """
 
-import enum
+import enum  # noqa: I001
 from ctypes import Structure, Union, c_byte, c_long
 from ctypes.wintypes import USHORT, BOOLEAN, ULONG, LONG
 
@@ -65,7 +65,7 @@ class HIDP_REPORT_TYPE(enum.IntEnum):
 
 
 class _HIDP_DATA_U1(Union):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("RawValue", ULONG),
 		("On", BOOLEAN),
 	]
@@ -106,7 +106,7 @@ class _HIDP_VALUE_AND_BUTTON_CAPS_U1_NOT_RANGE(Structure):
 
 
 class _HIDP_VALUE_AND_BUTTON_CAPS_U1(Union):
-	_fields_ = [
+	_fields_ = [  # noqa: RUF012
 		("Range", _HIDP_VALUE_AND_BUTTON_CAPS_U1_RANGE),
 		("NotRange", _HIDP_VALUE_AND_BUTTON_CAPS_U1_NOT_RANGE),
 	]

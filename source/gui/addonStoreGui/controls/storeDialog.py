@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-import wx
+import wx  # noqa: I001
 from wx.adv import BannerWindow
 
 from addonStore.dataManager import addonDataManager
@@ -164,7 +164,7 @@ class AddonStoreDialog(SettingsDialog):
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Cha&nnel:"),
 			wxCtrlClass=wx.Choice,
-			choices=list(c.displayString for c in _channelFilters),
+			choices=list(c.displayString for c in _channelFilters),  # noqa: C400
 		)
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
@@ -186,7 +186,7 @@ class AddonStoreDialog(SettingsDialog):
 			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
 			labelText=pgettext("addonStore", "Ena&bled/disabled:"),
 			wxCtrlClass=wx.Choice,
-			choices=list(c.displayString for c in EnabledStatus),
+			choices=list(c.displayString for c in EnabledStatus),  # noqa: C400
 		)
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
@@ -279,7 +279,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _requiresRestart(self) -> bool:
-		from addonHandler import state, AddonStateCategory
+		from addonHandler import state, AddonStateCategory  # noqa: I001
 
 		if addonDataManager._downloadsPendingInstall or state[AddonStateCategory.PENDING_INSTALL]:
 			log.debug(

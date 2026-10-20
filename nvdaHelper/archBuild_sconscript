@@ -22,11 +22,14 @@ def clsidStringToCLSIDDefine(clsidString):
 	Into a c-style struct initializer for initializing a GUID (I.e. "{0xabcdef12,0xabcd,0xabcd,{0xab,0xcd,0xab,0xcd,0xef,0x12,0x34,0x56}}")
 	"""
 	d = clsidString[1:-1].replace("-", "")
-	return "{%s,%s,%s,%s}" % (
-		"0x" + d[0:8],
-		"0x" + d[8:12],
-		"0x" + d[12:16],
-		"{%s}" % (",".join("0x" + d[x : x + 2] for x in range(16, 32, 2))),
+	return (
+		"{%s,%s,%s,%s}"  # noqa: UP031
+		% (
+			"0x" + d[0:8],
+			"0x" + d[8:12],
+			"0x" + d[12:16],
+			"{%s}" % (",".join("0x" + d[x : x + 2] for x in range(16, 32, 2))),  # noqa: UP031
+		)
 	)
 
 
@@ -199,6 +202,7 @@ else:
 
 Export("thirdPartyEnv")
 Export("env")
+Export("isNVDACoreArch")
 
 acrobatAccessRPCStubs = env.SConscript("acrobatAccess_sconscript")
 Export("acrobatAccessRPCStubs")
@@ -225,6 +229,10 @@ Export("detoursLib")
 
 apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
 Export("apiHookObj")
+
+cppjiebaLib = env.SConscript("cppjieba/sconscript")
+Export("cppjiebaLib")
+env.Install(libInstallDir, cppjiebaLib)
 
 localLib = env.SConscript("local/sconscript")
 Export("localLib")

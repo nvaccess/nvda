@@ -4,19 +4,19 @@
 # See the file COPYING for more details.
 
 
-class HeaderCellInfo(object):
+class HeaderCellInfo:
 	__slots__ = [
-		"rowNumber",
-		"columnNumber",
-		"rowSpan",
 		"colSpan",
-		"minRowNumber",
+		"columnNumber",
+		"isColumnHeader",
+		"isRowHeader",
+		"maxColumnNumber",
 		"maxRowNumber",
 		"minColumnNumber",
-		"maxColumnNumber",
+		"minRowNumber",
 		"name",
-		"isRowHeader",
-		"isColumnHeader",
+		"rowNumber",
+		"rowSpan",
 	]
 
 	def __init__(self, **kwargs):
@@ -26,7 +26,7 @@ class HeaderCellInfo(object):
 			setattr(self, name, value)
 
 
-class HeaderCellTracker(object):
+class HeaderCellTracker:
 	def __init__(self):
 		self.infosDict = {}
 		self.listByRow = []

@@ -102,7 +102,7 @@ class ConnectionInfo:
 		try:
 			ConnectionMode(mode)
 		except ValueError:
-			raise URLParsingError("Invalid mode provided: %r" % mode)
+			raise URLParsingError("Invalid mode provided: %r" % mode)  # noqa: UP031
 		return cls(hostname=hostname, mode=mode, key=key, port=port, insecure=insecure)
 
 	def getAddress(self) -> str:

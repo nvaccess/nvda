@@ -5,7 +5,7 @@
 
 """Unit tests for the displayString submodule."""
 
-import unittest
+import unittest  # noqa: I001
 from utils.displayString import DisplayStringEnum
 
 
@@ -22,4 +22,4 @@ class TestDisplayStringEnum(unittest.TestCase):
 	def test_displayString(self):
 		self.assertEqual(ExampleEnum.foo.displayString, "this is foo from ExampleEnum")
 		with self.assertRaises(KeyError):
-			ExampleEnum.lorem.displayString
+			ExampleEnum.lorem.displayString  # noqa: B018

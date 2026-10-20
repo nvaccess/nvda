@@ -5,11 +5,11 @@
 
 """Unit tests for the synthDriverHandler"""
 
-import config
+import config  # noqa: I001
 import languageHandler
 import synthDriverHandler
 from synthDrivers.oneCore import SynthDriver as OneCoreSynthDriver
-from typing import Callable
+from collections.abc import Callable
 import unittest
 from .extensionPointTestHelpers import actionTester
 
@@ -120,7 +120,7 @@ class test_synthDriverHandler(unittest.TestCase):
 		self.assertEqual(synthDriverHandler.getSynth().name, "espeak")
 
 	def test_synthChangedExtensionPoint(self):
-		expectedKwargs = dict(
+		expectedKwargs = dict(  # noqa: C408
 			isFallback=False,
 			audioOutputDevice="default",
 		)

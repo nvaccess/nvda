@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import json
+import json  # noqa: I001
 import random
 import threading
 from typing import TypedDict
@@ -244,7 +244,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 	def doPortcheck(self, port: int) -> None:
 		tempServer = server.LocalRelayServer(port=port, password=None)
 		try:
-			req = request.urlopen("https://portcheck.nvdaremote.com/port/%s" % port)
+			req = request.urlopen("https://portcheck.nvdaremote.com/port/%s" % port)  # noqa: UP031
 			data = req.read()
 			result = json.loads(data)
 

@@ -9,7 +9,7 @@ Including to create new arrays, append, get, set, and remove elements from array
 and check if an object is an array.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import cast
 from dataclasses import dataclass
 from .. import lowLevel

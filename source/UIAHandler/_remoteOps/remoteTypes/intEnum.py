@@ -4,9 +4,8 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import (
-	Type,
 	Any,
 	Self,
 	Generic,
@@ -26,16 +25,16 @@ from . import (
 
 
 class c_long_enum(c_long):
-	_enumType: Type[enum.IntEnum]
+	_enumType: type[enum.IntEnum]
 
 	def __repr__(self):
-		return f"{c_long.__name__} enum {repr(self._enumType(self.value))}"
+		return f"{c_long.__name__} enum {self._enumType(self.value)!r}"
 
 
-_ctypeIntEnumCache: dict[Type[enum.IntEnum], Type[_SimpleCData]] = {}
+_ctypeIntEnumCache: dict[type[enum.IntEnum], type[_SimpleCData]] = {}
 
 
-def _makeCtypeIntEnum(enumType: Type[enum.IntEnum]) -> Type[_SimpleCData]:
+def _makeCtypeIntEnum(enumType: type[enum.IntEnum]) -> type[_SimpleCData]:
 	cachedCls = _ctypeIntEnumCache.get(enumType)
 	if cachedCls is not None:
 		return cachedCls
@@ -44,15 +43,15 @@ def _makeCtypeIntEnum(enumType: Type[enum.IntEnum]) -> Type[_SimpleCData]:
 		_enumType = enumType
 
 	cls.__name__ = f"{cls.__name__}_{enumType.__name__}"
-	cast(Type[_SimpleCData], cls)
+	cast(type[_SimpleCData], cls)
 	_ctypeIntEnumCache[enumType] = cls
 	return cls
 
 
-_RemoteEnumCache: dict[Type[enum.IntEnum], Type[RemoteInt]] = {}
+_RemoteEnumCache: dict[type[enum.IntEnum], type[RemoteInt]] = {}
 
 
-def _makeRemoteEnum(enumType: Type[enum.IntEnum]) -> Type[RemoteInt]:
+def _makeRemoteEnum(enumType: type[enum.IntEnum]) -> type[RemoteInt]:
 	cachedCls = _RemoteEnumCache.get(enumType)
 	if cachedCls is not None:
 		return cachedCls
@@ -62,7 +61,7 @@ def _makeRemoteEnum(enumType: Type[enum.IntEnum]) -> Type[RemoteInt]:
 		_ctype = _makeCtypeIntEnum(enumType)
 
 	cls.__name__ = f"RemoteEnum_{enumType.__name__}"
-	cast(Type[RemoteInt], cls)
+	cast(type[RemoteInt], cls)
 	_RemoteEnumCache[enumType] = cls
 	return cls
 
@@ -70,7 +69,7 @@ def _makeRemoteEnum(enumType: Type[enum.IntEnum]) -> Type[RemoteInt]:
 _RemoteIntEnum_LocalTypeVar = TypeVar("_RemoteIntEnum_LocalTypeVar", bound=enum.IntEnum)
 
 
-class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
+class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):  # noqa: UP046
 	localType = enum.IntEnum
 	_enumType: _RemoteIntEnum_LocalTypeVar
 

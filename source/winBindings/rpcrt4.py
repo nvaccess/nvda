@@ -5,7 +5,7 @@
 
 """Functions exported by rpcrt4.dll, and supporting data structures and enumerations."""
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	WINFUNCTYPE,
 	c_long,
 	c_ulong,

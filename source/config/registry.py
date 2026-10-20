@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import Enum, nonmember
+from enum import Enum, nonmember  # noqa: I001
 import winreg
 
 from winBindings.advapi32 import RegDeleteTree
@@ -72,4 +72,4 @@ def _deleteKeyAndSubkeys(key: int, subkey: str, access: int = 0) -> None:
 			subkey,
 		)
 	if result != 0:
-		raise WindowsError(result, f"RegDeleteTree failed for {subkey=}")
+		raise OSError(result, f"RegDeleteTree failed for {subkey=}")

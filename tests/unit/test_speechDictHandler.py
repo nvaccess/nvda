@@ -5,7 +5,7 @@
 
 """Unit tests for the speechDictHandler module."""
 
-import unittest
+import unittest  # noqa: I001
 
 import config
 

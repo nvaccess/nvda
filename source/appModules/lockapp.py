@@ -3,11 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
+from typing import (  # noqa: I001
 	Any,
-	Callable,
-	List,
 )
+from collections.abc import Callable
 
 import appModuleHandler
 import api
@@ -38,7 +37,7 @@ def __getattr__(attrName: str) -> Any:
 			"lockapp.LockAppObject is deprecated, use NVDAObjects.lockscreen.LockScreenObject instead.",
 		)
 		return LockScreenObject
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 # Windows 10 and 11 lock screen container
@@ -56,7 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(
 		self,
 		obj: NVDAObject,
-		clsList: List[NVDAObject],
+		clsList: list[NVDAObject],
 	) -> None:
 		if (
 			isinstance(obj, UIA)

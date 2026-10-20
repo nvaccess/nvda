@@ -11,7 +11,7 @@ When creating new parameter options, consider using F{FeatureFlag} which explici
 the default value.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING  # noqa: I001
 from enum import unique, verify, CONTINUOUS
 from logHandler import Logger
 from utils.displayString import (

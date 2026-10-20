@@ -17,6 +17,8 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <string>
 #include <locale>
 #include <vector>
+#include <map>
+#include <mutex>
 #define WIN32_LEAN_AND_MEAN
 #define CINTERFACE
 #include <windows.h>
@@ -30,30 +32,109 @@ using namespace std;
 
 typedef void(RPC_ENTRY *LPFNGETPROXYDLLINFO)(ProxyFileInfo***, CLSID**);
 
-// The CLSID representing the Windows COM standard marshaller
-// Many built-in COM interfaces  in Windows point to this class object to handle marshalling, however there does not seem to be a constant for it in the windows SDK.
-// Some non-Microsoft sources:
-// http://www.mazecomputer.com/sxs/help/proxy.htm
-// http://thrysoee.dk/InsideCOM+/ch12d.htm
-const wchar_t* StringCLSID_StandardMarshaler=L"{00020424-0000-0000-C000-000000000046}";
+typedef struct {
+	bool hadOriginalProxy;
+	CLSID originalProxyClsid;
+	std::wstring dllPath;
+	std::wstring interfaceName;
+	long threadId;
+	CLSID proxyClsidRegistered;
+} InterfaceProxyBackup_t;
+
+std::map<std::wstring, InterfaceProxyBackup_t> interfaceProxyBackups;
+std::map<std::wstring, CLSID> dllProxyClsidCache;
+std::mutex comProxyRegistrationMutex;
+
+std::wstring guidToString(const GUID& guid) {
+	OLECHAR* guidString = nullptr;
+	HRESULT res = StringFromCLSID(guid, &guidString);
+	if (FAILED(res) || !guidString) {
+		LOG_ERROR(L"StringFromCLSID failed, code "<<res);
+		return L"";
+	}
+	std::wstring result(guidString);
+	CoTaskMemFree(guidString);
+	return result;
+}
+
+GUID stringToGuid(const std::wstring& guidString) {
+	GUID guid = GUID_NULL;
+	HRESULT res = CLSIDFromString(guidString.c_str(), &guid);
+	if (FAILED(res)) {
+		LOG_ERROR(L"CLSIDFromString failed for '"<<guidString<<L"', code "<<res);
+		return GUID_NULL;
+	}
+	return guid;
+}
+
+bool generateOrFetchUniqueClsidForProxyDll(const std::wstring& dllPath, CLSID* outClsid) {
+	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
+	auto it = dllProxyClsidCache.find(dllPath);
+	if (it != dllProxyClsidCache.end()) {
+		*outClsid = it->second;
+		auto cachedClsidString = guidToString(it->second);
+		LOG_DEBUG(L"Reusing cached proxy CLSID "<<cachedClsidString <<L" for dll "<<dllPath);
+		return true;
+	}
+	// generate a new CLSID for this dll and cache it so that we can reuse the same CLSID for all interfaces in the same dll and also for later unregistration
+	HRESULT res = CoCreateGuid(outClsid);
+	if (res != S_OK) {
+		LOG_ERROR(L"Failed to generate CLSID for proxy dll "<<dllPath<<L", code "<<res);
+		return false;
+	}
+	dllProxyClsidCache[dllPath] = *outClsid;
+	return true;
+}
+
+bool registerInterfaceProxy(std::wstring interfaceName, std::wstring dllPath, IID iid, CLSID clsid) {
+	HRESULT res;
+	auto iidString = guidToString(iid);
+	auto clsidString = guidToString(clsid);
+	InterfaceProxyBackup_t backup = {0};
+	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
+	auto it = interfaceProxyBackups.find(iidString);
+	if (it != interfaceProxyBackups.end()) {
+		if (dllPath != it->second.dllPath) {
+			LOG_ERROR(L"Interface "<<interfaceName<<L" ("<<iidString<<L") already has a backup from a different dll ("<<it->second.dllPath<<L"), this may indicate a problem");
+			return false;
+		}
+		if (clsid != it->second.proxyClsidRegistered) {
+			LOG_ERROR(L"Interface "<<interfaceName<<L" ("<<iidString<<L") already has a backup with a different registered proxy CLSID ("<<guidToString(it->second.proxyClsidRegistered)<<L") than the one we are trying to register ("<<clsidString<<L"), this may indicate a problem");
+			return false;
+		}
+		LOG_DEBUG(L"Interface "<<iidString<<L" already  backed up by thread "<<it->second.threadId<<L" for dll "<<it->second.dllPath);
+		return true;
+	}
+	res = CoGetPSClsid(iid,&backup.originalProxyClsid);
+	if(res!=S_OK) {
+		LOG_DEBUG(L"Interface "<<iidString<<L" does not have an already registered proxy CLSID");
+		backup.hadOriginalProxy = false;
+	} else {
+		backup.hadOriginalProxy = true;
+	}
+	backup.interfaceName = interfaceName;
+	backup.dllPath = dllPath;
+	backup.proxyClsidRegistered = clsid;
+	backup.threadId = GetCurrentThreadId();
+	res = CoRegisterPSClsid(iid, clsid);
+	if(res!=S_OK) {
+		LOG_ERROR(L"Unable to register interface iid "<<iidString<<L" with proxy CLSID "<<clsidString<<L", code "<<res);
+		return false;
+	}
+	interfaceProxyBackups[iidString] = backup;
+	LOG_DEBUG(L"Registered proxy CLSID "<<clsidString<<L" for interface "<<interfaceName<<L" ("<<iidString<<L") for dll "<<dllPath);
+	return true;
+}
 
 COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 	LOG_DEBUG(L"Registering proxy "<<dllPath);
-	int res;
-	// Fetch the CLSID for the standard marshaler which will be used to unregister PS CLSIDs later
-	CLSID clsid_standardMarshaler;
-	res=IIDFromString(StringCLSID_StandardMarshaler,&clsid_standardMarshaler);
-	if(res!=S_OK) {
-		LOG_ERROR(L"Could not get clsid for standard marshaler");
+	CLSID proxyClsidForRegistration;
+	if (!generateOrFetchUniqueClsidForProxyDll(dllPath, &proxyClsidForRegistration)) {
+		LOG_ERROR(L"Failed to generate or fetch proxy CLSID for "<<dllPath);
 		return nullptr;
 	}
-	// Generate a new unique CLSID to use for class object registration
-	CLSID regClsid={0};
-	res=CoCreateGuid(&regClsid);
-	if(res!=S_OK) {
-		LOG_ERROR(L"Unable to generate registration CLSID");
-		return nullptr;
-	}
+	auto proxyClsidString = guidToString(proxyClsidForRegistration);
+	HRESULT res;
 	// load the proxy dll
 	wchar_t absDllPath[MAX_PATH]={0};
 	wsprintf(absDllPath,L"%s\\%s",dllDirectory,dllPath);
@@ -79,7 +160,8 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 		return nullptr;
 	}
 	// Create and activate an activation context using the manifest in the proxy dll
-	// to temporarily register the proxy dll's class object
+	// to temporarily register the proxy dll's class object.
+	// We do this instead of calling DllGetClassObject, so that Windows manages the loading and unloading of the proxy dll itself.
 	ACTCTX actCtx={0};
 	actCtx.cbSize=sizeof(actCtx);
 	actCtx.dwFlags=ACTCTX_FLAG_HMODULE_VALID|ACTCTX_FLAG_RESOURCE_NAME_VALID;
@@ -88,7 +170,7 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 	actCtx.lpResourceName=MAKEINTRESOURCE(2);
 	actCtx.hModule=dllHandle;
 	HANDLE hActCtx=CreateActCtx(&actCtx);
-	if(hActCtx==NULL) {
+	if (hActCtx == INVALID_HANDLE_VALUE) {
 		LOG_ERROR(L"Could not create activation context for "<<dllPath);
 		FreeLibrary(dllHandle);
 		return nullptr;
@@ -114,7 +196,13 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 	// Re-register the class object with COM now that the activation context is gone.
 	// Keeping the class object available to COM, with COM also handling the life time of the proxy dll now
 	DWORD dwCookie;
-	res=CoRegisterClassObject(regClsid,ClassObjPunk,CLSCTX_INPROC_SERVER,REGCLS_MULTIPLEUSE,&dwCookie);
+	res = CoRegisterClassObject(
+		proxyClsidForRegistration,
+		ClassObjPunk,
+		CLSCTX_INPROC_SERVER,
+		REGCLS_MULTIPLEUSE,
+		&dwCookie
+	);
 	ClassObjPunk->lpVtbl->Release(ClassObjPunk);
 	if(res!=S_OK) {
 		LOG_ERROR(L"Error registering class object for "<<dllPath<<L", code "<<res);
@@ -138,7 +226,7 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 		ProxyFileInfo& fileInfo=**tempInfoPtr;
 		for(unsigned short idx=0;idx<fileInfo.TableSize;++idx) {
 			IID iid=*(fileInfo.pStubVtblList[idx]->header.piid);
-			CLSID clsidBackup={0};
+			auto iidString = guidToString(iid);
 			const auto pName = fileInfo.pNamesArray[idx];
 			const int nameLength=MultiByteToWideChar(
 				CP_UTF8,  // Code Page for conversion
@@ -169,27 +257,17 @@ COMProxyRegistration_t* registerCOMProxy(const wchar_t* dllPath) {
 			if(wstring::npos != indexOfFirstNull) {
 				name.resize(indexOfFirstNull );
 			}
-			// Fetch the old CLSID for this interface if one is set, so we can replace it on deregistration.
-			// If not set, then we'll use the standard marshaler clsid on deregistration.
-			res=CoGetPSClsid(iid,&clsidBackup);
-			if(res!=S_OK) {
-				clsidBackup=clsid_standardMarshaler;
-			} else {
-				LOG_DEBUG(L"Backed up existing clsid for interface "<<name);
-			}
-			res=CoRegisterPSClsid(iid,regClsid);
-			if(res!=S_OK) {
-				LOG_ERROR(L"Unable to register interface "<<name<<L" with proxy stub "<<dllPath<<L", code "<<res);
+			if (!registerInterfaceProxy(name, dllPath, iid, proxyClsidForRegistration)) {
+				LOG_ERROR(L"Failed to register proxy for interface "<<name<<L" ("<<iidString<<L") with CLSID "<<proxyClsidString<<L" for dll "<<dllPath);
 				continue;
 			}
-		reg->psClsidBackups.push_back({name,iid,clsidBackup});
-		LOG_DEBUG(L"Registered interface "<<name);
+			reg->registeredInterfaces[name] = iid;
 		}
 		++tempInfoPtr;
 	}
+	LOG_DEBUG(L"Done registering proxy "<<dllPath);
 	// We can now safely free the proxy dll. COM will keep it loaded or re-load it if needed
 	FreeLibrary(dllHandle);
-	LOG_DEBUG(L"Done registering proxy "<<dllPath);
 	return reg;
 }
 
@@ -197,18 +275,65 @@ bool unregisterCOMProxy(COMProxyRegistration_t* reg) {
 	if(!reg) return false;
 	HRESULT res;
 	LOG_DEBUG(L"Unregistering proxy "<<(reg->dllPath));
-	for(auto& backup: reg->psClsidBackups) {
-		res=CoRegisterPSClsid(backup.iid,backup.clsid);
-		if(res!=S_OK) {
-			LOG_ERROR(L"Error registering backup PSClsid for interface "<<(backup.name)<<L" from "<<(reg->dllPath)<<L", code "<<res);
-		}
-		LOG_DEBUG(L"Unregistered interface "<<(backup.name));
-	}
 	res=CoRevokeClassObject((DWORD)(reg->classObjectRegistrationCookie));
 	if(res!=S_OK) {
 		LOG_ERROR(L"Error unregistering class object from "<<(reg->dllPath)<<L", code "<<res);
 	}
+	// For all interfaces the proxy dll supports, if we changed their proxy CLSID, restore the original one
+	for (const auto& entry: reg->registeredInterfaces) {
+		unregisterInterfaceProxy(entry.second);
+	}
+	auto it = dllProxyClsidCache.find(reg->dllPath);
+	if (it != dllProxyClsidCache.end()) {
+		LOG_DEBUG(L"Removing cached proxy CLSID "<<guidToString(it->second)<<L" for dll "<<reg->dllPath);
+		dllProxyClsidCache.erase(it);
+	}
 	LOG_DEBUG(L"Done unregistering proxy "<<(reg->dllPath));
 	delete reg;
 	return true;
+}
+
+bool unregisterInterfaceProxy(IID iid) {
+	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
+	auto iidString = guidToString(iid);
+	auto it = interfaceProxyBackups.find(iidString);
+	if (it == interfaceProxyBackups.end()) {
+		LOG_DEBUG(L"No backup found for interface "<<iidString<<L", nothing to restore");
+		return true;
+	}
+	if (!it->second.hadOriginalProxy) {
+		LOG_DEBUG(L"Interface " << iidString << L" had no original proxy CLSID; leaving current registration unchanged");
+		interfaceProxyBackups.erase(it);
+		return true;
+	}
+	HRESULT res = CoRegisterPSClsid(iid, it->second.originalProxyClsid);
+	if (res != S_OK) {
+		LOG_ERROR(L"Unable to restore proxy CLSID for interface " << iidString << L" to " << guidToString(it->second.originalProxyClsid) << L", code "<< res);
+		return false;
+	}
+	LOG_DEBUG(L"Restored proxy CLSID " << guidToString(it->second.originalProxyClsid) << L" for interface " << iidString);
+	interfaceProxyBackups.erase(it);
+	return true;
+}
+
+void clearCOMProxyRegistrationCache() {
+	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
+	if (!dllProxyClsidCache.empty()) {
+		LOG_ERROR(L"COM proxy registration cache is not empty at time of clearing. This may indicate a leak of COM proxy registrations. Cached entries: ");
+		for (const auto& entry: dllProxyClsidCache) {
+			LOG_ERROR(L"Cached CLSID "<<guidToString(entry.second)<<L" for dll "<<entry.first);
+		}
+	}
+	dllProxyClsidCache.clear();
+}
+
+void clearInterfaceProxyBackups() {
+	std::lock_guard<std::mutex> lock(comProxyRegistrationMutex);
+	if (!interfaceProxyBackups.empty()) {
+		LOG_ERROR(L"Interface proxy backup cache is not empty at time of clearing. This may indicate that some interface proxy registrations were not properly unregistered. Cached entries: ");
+		for (const auto& entry: interfaceProxyBackups) {
+			LOG_ERROR(L"Cached backup for interface "<<entry.first<<L", had original proxy: "<<entry.second.hadOriginalProxy<<L", original proxy CLSID: "<<guidToString(entry.second.originalProxyClsid));
+		}
+	}
+	interfaceProxyBackups.clear();
 }

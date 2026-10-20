@@ -9,7 +9,7 @@
 Consult the documentation of L{EventExtensionPoints} for more details.
 """
 
-from extensionPoints import Action
+from extensionPoints import Action  # noqa: I001
 from dataclasses import dataclass, field
 
 
@@ -73,6 +73,15 @@ class EventExtensionPoints:
 	#: @param obj: The cursor manager that changed it virtual caret position.
 	#: @type obj: L{cursorManager.CursorManager}
 	post_browseModeMove: Action = field(default_factory=Action, init=False)
+
+	post_mathNavigation: Action = field(default_factory=Action, init=False)
+	"""
+	Notifies a vision enhancement provider when the math navigation position has changed.
+	This allows a vision enhancement provider to track the current position while interacting with math.
+	Handlers are called with one argument.
+	:param rect: The screen rectangle of the current math navigation position, or ``None`` if no rectangle is available, including after math navigation exits.
+	"""
+
 	#: Notifies a vision enhancement provider when the position of the review cursor has changed.
 	#: This allows a vision enhancement provider to take an action
 	#: when the review position has changed.

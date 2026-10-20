@@ -6,7 +6,6 @@
 from enum import (
 	unique,
 )
-from typing import Dict, Set
 
 from utils.displayString import DisplayStringIntEnum
 
@@ -205,7 +204,7 @@ class Role(DisplayStringIntEnum):
 	SWITCH = 158
 
 
-_roleLabels: Dict[Role, str] = {
+_roleLabels: dict[Role, str] = {
 	# Translators: The word for an unknown control type.
 	Role.UNKNOWN: _("unknown"),
 	# Translators: The word for window of a program such as document window.
@@ -536,7 +535,7 @@ _roleLabels: Dict[Role, str] = {
 }
 
 
-silentRolesOnFocus: Set[Role] = {
+silentRolesOnFocus: set[Role] = {
 	Role.PANE,
 	Role.ROOTPANE,
 	Role.FRAME,
@@ -552,7 +551,7 @@ silentRolesOnFocus: Set[Role] = {
 }
 
 
-silentValuesForRoles: Set[Role] = {
+silentValuesForRoles: set[Role] = {
 	Role.CHECKBOX,
 	Role.RADIOBUTTON,
 	Role.LINK,
@@ -562,7 +561,7 @@ silentValuesForRoles: Set[Role] = {
 }
 
 
-clickableRoles: Set[Role] = {
+clickableRoles: set[Role] = {
 	Role.LINK,
 	Role.BUTTON,
 	Role.CHECKBOX,

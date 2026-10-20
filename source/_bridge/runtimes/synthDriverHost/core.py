@@ -4,10 +4,10 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-from typing import (
-	Callable,
+from typing import (  # noqa: I001
 	ParamSpec,
 )
+from collections.abc import Callable
 import threading
 import itertools
 import time
@@ -69,7 +69,7 @@ class Core:
 				try:
 					nextWorkItem.callable(*nextWorkItem.args, **nextWorkItem.kwargs)
 				except Exception:
-					log.error(f"Error running scheduled work item {nextWorkItem}", exc_info=True)
+					log.error(f"Error running scheduled work item {nextWorkItem}", exc_info=True)  # noqa: G201
 				continue
 			# No work item ready to run; wait until the next one is due or a new one is scheduled.
 			waitTime: float | None = None
@@ -88,7 +88,7 @@ _core: Core | None = None
 P = ParamSpec("P")
 
 
-def callLater(delay: int, callable: Callable[P, None], *args: P.args, **kwargs: P.kwargs) -> None:
+def callLater(delay: int, callable: Callable[P, None], *args: P.args, **kwargs: P.kwargs) -> None:  # noqa: UP047
 	if _core is None:
 		raise RuntimeError("Core not initialized")
 	log.debug(f"Scheduling callLater: {callable} to run in {delay} seconds")

@@ -5,7 +5,7 @@
 
 """Unit tests for the speech.shortcutKeys module."""
 
-import unittest
+import unittest  # noqa: I001
 from unittest.mock import patch
 
 from speech.shortcutKeys import (

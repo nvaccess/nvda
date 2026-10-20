@@ -8,7 +8,7 @@
 Performs miscellaneous tasks which need to be performed in a separate process.
 """
 
-import sys
+import sys  # noqa: I001
 import os
 import globalVars
 import logHandler
@@ -35,7 +35,7 @@ globalVars.appPid = os.getpid()
 
 
 def getNvdaHelperRemote():
-	import ctypes
+	import ctypes  # noqa: I001
 	import winKernel
 
 	h = winBindings.kernel32.LoadLibraryEx(
@@ -71,14 +71,14 @@ def main():
 
 			COMRegistrationFixes.fixCOMRegistrations()
 		elif action == "launchNVDA":
-			import subprocess
+			import subprocess  # noqa: I001
 			import shellapi
 			import winUser
 
 			shellapi.ShellExecute(
 				0,
 				None,
-				r"%s\nvda.exe" % sys.prefix,
+				r"%s\nvda.exe" % sys.prefix,  # noqa: UP031
 				subprocess.list2cmdline(args),
 				None,
 				winUser.SW_SHOWNORMAL,
@@ -125,13 +125,13 @@ def main():
 				if ret != 0:
 					raise RuntimeError(f"URL handling failed with code {ret}")
 			except Exception:
-				logHandler.log.error("Error handling remote URL", exc_info=True)
+				logHandler.log.error("Error handling remote URL", exc_info=True)  # noqa: G201
 				sys.exit(1)
 		elif action == "comGetActiveObject":
 			import comHelper
 
 			# py2exe scraps sys.stdout.
-			sys.__stdout__.write("%s\n" % comHelper._lresultFromGetActiveObject(args[0], bool(int(args[1]))))
+			sys.__stdout__.write("%s\n" % comHelper._lresultFromGetActiveObject(args[0], bool(int(args[1]))))  # noqa: UP031
 			sys.__stdout__.flush()
 			try:
 				input()
@@ -141,10 +141,10 @@ def main():
 			raise ValueError("No such action")
 
 	except installer.RetriableFailure:
-		logHandler.log.error("Task failed, try again", exc_info=True)
+		logHandler.log.error("Task failed, try again", exc_info=True)  # noqa: G201
 		sys.exit(2)
 	except Exception:
-		logHandler.log.error("slave error", exc_info=True)
+		logHandler.log.error("slave error", exc_info=True)  # noqa: G201
 		sys.exit(1)
 
 

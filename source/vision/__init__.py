@@ -11,12 +11,12 @@ Add-ons can provide their own provider
 using modules in the visionEnhancementProviders package containing a L{VisionEnhancementProvider} class.
 """
 
-from .visionHandler import VisionHandler
+from .visionHandler import VisionHandler  # noqa: I001
 import visionEnhancementProviders  # noqa: F401
 import config
-from typing import Optional
+from typing import Optional  # noqa: F401
 
-handler: Optional[VisionHandler] = None
+handler: VisionHandler | None = None
 
 
 def initialize() -> None:

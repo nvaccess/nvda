@@ -5,7 +5,7 @@
 
 """Unit tests for the installer module."""
 
-import pathlib
+import pathlib  # noqa: I001
 import tempfile
 from typing import NamedTuple
 import unittest
@@ -45,7 +45,7 @@ class Test_BatchDeletion(unittest.TestCase):
 			self.assertFalse(pathlib.Path(self._originalTempDir, file).exists())
 
 	def test_deleteFilesFailure(self):
-		with self.assertRaises(installer.RetriableFailure):
+		with self.assertRaises(installer.RetriableFailure):  # noqa: SIM117
 			with open(pathlib.Path(self._originalTempDir, self._sampleFiles[1]), "r"):
 				installer._deleteFileGroupOrFail(self._originalTempDir, self._sampleFiles)
 
@@ -131,16 +131,18 @@ class testFollowerWarning(unittest.TestCase):
 		isUserAnAdmin: bool,
 		expectedReturn: bool,
 	):
-		with patch("winBindings.shell32.IsUserAnAdmin", return_value=isUserAnAdmin):
-			with patch(
+		with (
+			patch("winBindings.shell32.IsUserAnAdmin", return_value=isUserAnAdmin),
+			patch(
 				"_remoteClient.client.RemoteClient",
 				isConnectedAsFollower=isConnectedAsFollower,
-			) as patchedRemoteClient:
-				with patch.dict(
-					"_remoteClient.__dict__",
-					_remoteClient=patchedRemoteClient if remoteEnabled else None,
-				):
-					self.assertEqual(installerGui._shouldWarnBeforeUpdate(), expectedReturn)
+			) as patchedRemoteClient,
+			patch.dict(
+				"_remoteClient.__dict__",
+				_remoteClient=patchedRemoteClient if remoteEnabled else None,
+			),
+		):
+			self.assertEqual(installerGui._shouldWarnBeforeUpdate(), expectedReturn)
 
 
 class Test_comparePreviousInstall(unittest.TestCase):

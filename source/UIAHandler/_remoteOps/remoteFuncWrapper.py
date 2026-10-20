@@ -4,12 +4,12 @@
 # Copyright (C) 2023-2025 NV Access Limited
 
 
-from collections.abc import Callable
-from typing import (
-	Generator,
+from collections.abc import Callable  # noqa: I001
+from typing import (  # noqa: UP035
 	ContextManager,
 	Concatenate,
 )
+from collections.abc import Generator
 import functools
 import contextlib
 from . import builder
@@ -20,8 +20,8 @@ _remoteFunc_self = builder._RemoteBase
 class _BaseRemoteFuncWrapper:
 	def generateArgsKwargsString(self, *args, **kwargs) -> str:
 		argsString = ", ".join(map(repr, args))
-		kwargsString = ", ".join(f"{key}={repr(val)}" for key, val in kwargs.items())
-		return f"({', '.join([argsString, kwargsString])})"
+		kwargsString = ", ".join(f"{key}={val!r}" for key, val in kwargs.items())
+		return f"({', '.join([argsString, kwargsString])})"  # noqa: FLY002
 
 	def _execRawFunc[**P, R](
 		self,
@@ -76,7 +76,7 @@ class RemoteContextManager(_BaseRemoteFuncWrapper):
 		self,
 		func: Callable[
 			Concatenate[_remoteFunc_self, P],
-			Generator[R, None, None],
+			Generator[R],
 		],
 	) -> Callable[Concatenate[_remoteFunc_self, P], ContextManager[R]]:
 		contextFunc = contextlib.contextmanager(func)
@@ -92,7 +92,7 @@ class RemoteContextManager(_BaseRemoteFuncWrapper):
 		funcSelf: _remoteFunc_self,
 		*args: P.args,
 		**kwargs: P.kwargs,
-	) -> Generator[R, None, None]:
+	) -> Generator[R]:
 		main = funcSelf.rob.getInstructionList("main")
 		main.addComment(
 			f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}",

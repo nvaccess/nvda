@@ -7,13 +7,9 @@ from . import (
 	Role,
 	State,
 )
-from typing import (
-	Tuple,
-	Set,
-)
 
 
-def transformRoleStates(role: Role, states: Set[State]) -> Tuple[Role, Set[State]]:
+def transformRoleStates(role: Role, states: set[State]) -> tuple[Role, set[State]]:
 	"""Map NVDA Role-State combinations to adjusted NVDA Role-State combinations.
 	Some combinations of roles and states may be better represented with some alternative combination.
 	As an example:

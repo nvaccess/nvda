@@ -1,10 +1,9 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	HRESULT,
 	POINTER,
 	WINFUNCTYPE,
@@ -20,10 +19,10 @@ from ctypes import (
 	sizeof,
 )
 from enum import IntEnum
-import locale
 from collections import OrderedDict, deque
 import threading
-from typing import TYPE_CHECKING, Any, NamedTuple, Generator
+from typing import TYPE_CHECKING, Any, NamedTuple
+from collections.abc import Generator
 import winBindings.ole32
 import audioDucking
 from ctypes.wintypes import _LARGE_INTEGER, _ULARGE_INTEGER
@@ -125,7 +124,7 @@ def __getattr__(attrName: str) -> Any:
 			stack_info=True,
 		)
 		return _deprecatedTypes[attrName]
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 class _SPEventLParamType(IntEnum):
@@ -213,7 +212,7 @@ class _SapiEvent(SPEVENT):
 		return hr == hresult.S_OK
 
 	@staticmethod
-	def enumerateFrom(eventSource: _Pointer[ISpEventSource]) -> Generator["_SapiEvent", None, None]:
+	def enumerateFrom(eventSource: _Pointer[ISpEventSource]) -> Generator["_SapiEvent"]:
 		"""Enumerate all events in the event source."""
 		while True:
 			event = _SapiEvent()
@@ -239,7 +238,7 @@ class SynthDriverAudioStream(COMObject):
 	and leave most functions unimplemented.
 	"""
 
-	_com_interfaces_ = [ISpAudio, ISpEventSource, ISpEventSink]
+	_com_interfaces_ = [ISpAudio, ISpEventSource, ISpEventSink]  # noqa: RUF012
 
 	def __init__(self, synthRef: weakref.ReferenceType["SynthDriver"]):
 		self.synthRef = synthRef
@@ -317,7 +316,6 @@ class SynthDriverAudioStream(COMObject):
 	def IStream_Commit(self, grfCommitFlags: int):
 		"""This is called when MSSP wants to flush the written data.
 		Does nothing."""
-		pass
 
 	def ISpStreamFormat_GetFormat(self, pguidFormatId: _Pointer[GUID]) -> _Pointer[WAVEFORMATEX]:
 		"""This is called when SAPI wants to get the current wave format.
@@ -338,7 +336,7 @@ class SynthDriverAudioStream(COMObject):
 
 	def ISpAudio_SetState(self, NewState: SPAUDIOSTATE, ullReserved: int) -> None:
 		"""This is called when the audio state changes, for example, when the audio stream is paused or closed."""
-		pass  # do nothing
+		# do nothing
 
 	def ISpAudio_SetFormat(self, rguidFmtId: _Pointer[GUID], pWaveFormatEx: _Pointer[WAVEFORMATEX]):
 		"""This is called when SAPI wants to tell us what wave format we should use.
@@ -355,8 +353,7 @@ class SynthDriverAudioStream(COMObject):
 		wfx = self.waveFormat
 		wfx.wFormatTag = nvwave.WAVE_FORMAT_PCM
 		wfx.cbSize = 0
-		if wfx.nChannels > 2:
-			wfx.nChannels = 2
+		wfx.nChannels = min(wfx.nChannels, 2)
 		wfx.wBitsPerSample = 16
 		wfx.nBlockAlign = wfx.nChannels * 2
 		wfx.nAvgBytesPerSec = wfx.nSamplesPerSec * wfx.nBlockAlign
@@ -401,7 +398,7 @@ class SynthDriverAudioStream(COMObject):
 		:param ullEventInterest: Types of events that should cause ISpNotifySink::Notify() to be called.
 		:param ullQueuedInterest: Types of events than should be stored in the event queue
 			and can be retrieved later with ISpEventSource::GetEvents()."""
-		pass  # do nothing
+		# do nothing
 
 	def ISpEventSource_GetEvents(
 		self,
@@ -450,7 +447,7 @@ class SapiSink(COMObject):
 	instead of being routed to the main thread.
 	"""
 
-	_com_interfaces_ = [ISpNotifySink]
+	_com_interfaces_ = [ISpNotifySink]  # noqa: RUF012
 
 	def __init__(self, synthRef: weakref.ReferenceType["SynthDriver"]):
 		self.synthRef = synthRef
@@ -538,7 +535,7 @@ class SynthDriver(SynthDriver):
 		SynthDriver.VolumeSetting(),
 		SynthDriver.UseWasapiSetting(),
 	)
-	supportedCommands = {
+	supportedCommands = {  # noqa: RUF012
 		IndexCommand,
 		CharacterModeCommand,
 		LangChangeCommand,
@@ -548,7 +545,7 @@ class SynthDriver(SynthDriver):
 		VolumeCommand,
 		PhonemeCommand,
 	}
-	supportedNotifications = {synthIndexReached, synthDoneSpeaking}
+	supportedNotifications = {synthIndexReached, synthDoneSpeaking}  # noqa: RUF012
 
 	COM_CLASS = "SAPI.SPVoice"
 	CUSTOMSTREAM_COM_CLASS = "SAPI.SpCustomStream"
@@ -626,10 +623,8 @@ class SynthDriver(SynthDriver):
 			try:
 				ID = v[i].Id
 				name = v[i].GetDescription()
-				try:
-					language = locale.windows_locale[int(v[i].getattribute("language").split(";")[0], 16)]
-				except KeyError:
-					language = None
+				lcid = int(v[i].getattribute("language").split(";")[0], 16)
+				language = languageHandler.windowsLCIDToLocaleName(lcid)
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
 			voices[ID] = VoiceInfo(ID, name, language)
@@ -786,7 +781,7 @@ class SynthDriver(SynthDriver):
 	def _percentToPitch(self, percent):
 		return percent // 2 - 25
 
-	IPA_TO_SAPI = {
+	IPA_TO_SAPI = {  # noqa: RUF012
 		"θ": "th",
 		"s": "s",
 	}
@@ -869,7 +864,7 @@ class SynthDriver(SynthDriver):
 						self._onEndStream()
 				except Exception:
 					self._bookmarkLists.pop()
-					log.error("Error speaking", exc_info=True)
+					log.error("Error speaking", exc_info=True)  # noqa: G201
 				request = None
 				if not self._requestsAvailable():
 					# No more requests, so call idle().
@@ -898,12 +893,12 @@ class SynthDriver(SynthDriver):
 			if not tagsChanged[0]:
 				return
 			for tag in reversed(openedTags):
-				textList.append("</%s>" % tag)
+				textList.append("</%s>" % tag)  # noqa: UP031
 			del openedTags[:]
 			for tag, attrs in tags.items():
-				textList.append("<%s" % tag)
+				textList.append("<%s" % tag)  # noqa: UP031
 				for attr, val in attrs.items():
-					textList.append(' %s="%s"' % (attr, val))
+					textList.append(' %s="%s"' % (attr, val))  # noqa: UP031
 				textList.append(">")
 				openedTags.append(tag)
 			tagsChanged[0] = False
@@ -919,7 +914,7 @@ class SynthDriver(SynthDriver):
 				outputTags()
 				textList.append(item.replace("<", "&lt;"))
 			elif isinstance(item, IndexCommand):
-				textList.append('<Bookmark Mark="%d" />' % item.index)
+				textList.append('<Bookmark Mark="%d" />' % item.index)  # noqa: UP031
 				bookmarks.append(item.index)
 			elif isinstance(item, CharacterModeCommand):
 				if item.state:
@@ -931,7 +926,7 @@ class SynthDriver(SynthDriver):
 						pass
 				tagsChanged[0] = True
 			elif isinstance(item, BreakCommand):
-				textList.append('<silence msec="%d" />' % item.time)
+				textList.append('<silence msec="%d" />' % item.time)  # noqa: UP031
 			elif isinstance(item, PitchCommand):
 				tags["pitch"] = {"absmiddle": self._percentToPitch(int(pitch * item.multiplier))}
 				tagsChanged[0] = True
@@ -956,10 +951,10 @@ class SynthDriver(SynthDriver):
 			elif isinstance(item, PhonemeCommand):
 				try:
 					textList.append(
-						'<pron sym="%s">%s</pron>' % (self._convertPhoneme(item.ipa), item.text or ""),
+						'<pron sym="%s">%s</pron>' % (self._convertPhoneme(item.ipa), item.text or ""),  # noqa: UP031
 					)
 				except LookupError:
-					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
+					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)  # noqa: UP031
 					if item.text:
 						textList.append(item.text)
 			elif isinstance(item, LangChangeCommand):
@@ -974,12 +969,12 @@ class SynthDriver(SynthDriver):
 					except KeyError:
 						pass
 				else:
-					tags["lang"] = {"langid": "%x" % lcid}
+					tags["lang"] = {"langid": "%x" % lcid}  # noqa: UP031
 				tagsChanged[0] = True
 			elif isinstance(item, SpeechCommand):
-				log.debugWarning("Unsupported speech command: %s" % item)
+				log.debugWarning("Unsupported speech command: %s" % item)  # noqa: UP031
 			else:
-				log.error("Unknown speech: %s" % item)
+				log.error("Unknown speech: %s" % item)  # noqa: UP031
 		# Close any tags that are still open.
 		tags.clear()
 		tagsChanged[0] = True

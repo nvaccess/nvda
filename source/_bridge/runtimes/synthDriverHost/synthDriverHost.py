@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import typing
 import sys
 import importlib
@@ -15,7 +15,7 @@ from _bridge.components.services.synthDriver import SynthDriverService
 
 if typing.TYPE_CHECKING:
 	from _bridge.clients.synthDriverHost32.launcher import NVDAService
-from _bridge.base import Connection
+from _bridge.base import Connection  # noqa: I001
 from logHandler import log
 from _bridge.base import Service
 
@@ -95,7 +95,7 @@ class HostService(Service):
 		languageHandler.setLanguage(lang)
 
 		log.debug("Initializing nvwave...")
-		from _bridge.components.proxies.nvwave import WavePlayerProxy
+		from _bridge.components.proxies.nvwave import WavePlayerProxy  # noqa: I001
 		import nvwave
 
 		nvwave.initialize()

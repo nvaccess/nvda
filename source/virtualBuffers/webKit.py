@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo  # noqa: I001
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
@@ -37,14 +37,14 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 		attrs["states"] = states
 		if level:
 			attrs["level"] = level
-		return super(WebKit_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 
 class WebKit(VirtualBuffer):
 	TextInfo = WebKit_TextInfo
 
 	def __init__(self, rootNVDAObject):
-		super(WebKit, self).__init__(rootNVDAObject, backendName="webKit")
+		super().__init__(rootNVDAObject, backendName="webKit")
 
 	def __contains__(self, obj):
 		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle):
@@ -65,7 +65,7 @@ class WebKit(VirtualBuffer):
 		root = self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:  # noqa: SIM103
 			return False
 		return True
 
@@ -92,7 +92,7 @@ class WebKit(VirtualBuffer):
 					oleacc.ROLE_SYSTEM_LIST,
 					oleacc.ROLE_SYSTEM_TEXT,
 				],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],  # noqa: UP031
 			}
 		elif nodeType == "list":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_LIST]}
@@ -103,7 +103,7 @@ class WebKit(VirtualBuffer):
 		elif nodeType == "edit":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],  # noqa: UP031
 			}
 		elif nodeType == "radioButton":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_RADIOBUTTON]}
@@ -114,7 +114,7 @@ class WebKit(VirtualBuffer):
 		elif nodeType == "graphic":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType == "focusable":
-			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}  # noqa: UP031
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
 			attrs = {"IAccessible::role": ["H" + nodeType[7:]]}
 		elif nodeType == "heading":
@@ -122,7 +122,7 @@ class WebKit(VirtualBuffer):
 		elif nodeType == "link":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
-				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],  # noqa: UP031
 			}
 		elif nodeType == "table":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_TABLE]}
@@ -134,11 +134,11 @@ class WebKit(VirtualBuffer):
 		try:
 			obj.doAction()
 			return
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l = obj.location  # noqa: E741
+		l = obj.location
 		if not l:
 			log.debugWarning("no location for field")
 			return
@@ -148,4 +148,4 @@ class WebKit(VirtualBuffer):
 		winUser.setCursorPos(oldX, oldY)
 
 	def _shouldSetFocusToObj(self, obj):
-		return obj.role != controlTypes.Role.GROUPING and super(WebKit, self)._shouldSetFocusToObj(obj)
+		return obj.role != controlTypes.Role.GROUPING and super()._shouldSetFocusToObj(obj)

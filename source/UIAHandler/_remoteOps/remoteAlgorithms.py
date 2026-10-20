@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2024 NV Access Limited
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from collections.abc import Generator
 from .remoteFuncWrapper import (
 	remoteContextManager,
@@ -24,7 +24,7 @@ def remote_forEachUnitInTextRange(
 	textRange: RemoteTextRange,
 	unit: RemoteIntEnum[TextUnit] | TextUnit,
 	reverse: bool = False,
-) -> Generator[RemoteTextRange, None, None]:
+) -> Generator[RemoteTextRange]:
 	logicalTextRange = textRange.getLogicalAdapter(reverse)
 	logicalTempRange = logicalTextRange.clone()
 	logicalTempRange.end = logicalTempRange.start

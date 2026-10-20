@@ -7,9 +7,9 @@
 Provides workarounds for controls such as identifying Start button, notification area and others.
 """
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import time
-from typing import Callable
+from collections.abc import Callable
 import appModuleHandler
 import controlTypes
 import winUser
@@ -17,6 +17,7 @@ import winVersion
 import api
 import speech
 import braille
+import braille.regions.properties
 import eventHandler
 import mouseHandler
 from NVDAObjects import NVDAObject
@@ -41,7 +42,7 @@ class MultitaskingViewFrameListItem(UIA):
 		if winUser.getAsyncKeyState(winUser.VK_MENU) & 32768:
 			return api.getDesktopObject()
 		else:
-			return super(MultitaskingViewFrameListItem, self).container
+			return super().container
 
 
 class SearchBoxClient(IAccessible):
@@ -62,7 +63,7 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 		if not res:
 			return False
 		focus = eventHandler.lastQueuedFocusObject
-		if type(focus) is not type(self) or (
+		if type(focus) is not type(self) or (  # noqa: SIM103
 			self.event_windowHandle,
 			self.event_objectID,
 			self.event_childID,
@@ -78,7 +79,7 @@ class NotificationArea(IAccessible):
 
 	def event_gainFocus(self):
 		NotificationArea.lastKnownLocation = self.location
-		if mouseHandler.lastMouseEventTime < time.time() - 0.2:
+		if mouseHandler.lastMouseEventTime < time.time() - 0.2:  # noqa: SIM102
 			# This focus change was not caused by a mouse event.
 			# If the mouse is on another systray control, the notification area toolbar will rudely
 			# bounce the focus back to the object under the mouse after a brief pause.
@@ -109,7 +110,7 @@ class NotificationArea(IAccessible):
 
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		super(NotificationArea, self).event_gainFocus()
+		super().event_gainFocus()
 
 
 class ExplorerToolTip(ToolTip):
@@ -143,7 +144,7 @@ class ExplorerToolTip(ToolTip):
 			return True
 
 		# Report is the next are different
-		if focus.name != self.name:
+		if focus.name != self.name:  # noqa: SIM103
 			return True
 
 		# Do not report otherwise
@@ -163,7 +164,7 @@ class StartButton(IAccessible):
 	def _get_states(self):
 		# #5178: Selection announcement should be suppressed.
 		# Borrowed from Mozilla objects in NVDAObjects/IAccessible/Mozilla.py.
-		states = super(StartButton, self).states
+		states = super().states
 		states.discard(controlTypes.State.SELECTED)
 		return states
 
@@ -178,7 +179,7 @@ class UIProperty(UIA):
 	"""
 
 	def _get_value(self):
-		value = super(UIProperty, self).value
+		value = super().value
 		if value is None:
 			return value
 		return value.replace(CHAR_LTR_MARK, "").replace(CHAR_RTL_MARK, "")
@@ -190,7 +191,7 @@ class ReadOnlyEditBox(Edit):
 	"""
 
 	def _get_windowText(self):
-		windowText = super(ReadOnlyEditBox, self).windowText
+		windowText = super().windowText
 		if windowText is not None:
 			return windowText.replace(CHAR_LTR_MARK, "").replace(CHAR_RTL_MARK, "")
 		return windowText
@@ -227,7 +228,7 @@ class AppModule(appModuleHandler.AppModule):
 	# C901 'chooseNVDAObjectOverlayClasses' is too complex
 	# Note: when working on chooseNVDAObjectOverlayClasses, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):  # NOQA: C901
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		role = obj.role
 
@@ -458,7 +459,7 @@ class AppModule(appModuleHandler.AppModule):
 		# letting NVDA announce shell elements when navigating with mouse and/or touch,
 		# notably when interacting with windows labeled "DesktopWindowXamlSource".
 		# WORKAROUND UNTIL A PERMANENT FIX IS FOUND ACROSS APPS
-		if (
+		if (  # noqa: SIM103
 			currentWinVer >= winVersion.WIN11
 			# Traverse parents until arriving at the top-level window with the below class names.
 			# This is more so for the shell root (first class name), and for others, class name check would work
@@ -506,7 +507,7 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.message(
-				braille.getPropertiesBraille(
+				braille.regions.properties.getPropertiesBraille(
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,

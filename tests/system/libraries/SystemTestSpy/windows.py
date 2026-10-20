@@ -5,7 +5,7 @@
 
 """This module provides functions to interact with the Windows system."""
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from ctypes.wintypes import LPARAM
 from ctypes import (
 	c_bool,

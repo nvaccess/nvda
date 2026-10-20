@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import re
+import re  # noqa: I001
 import ctypes
 import ctypes.wintypes
 from winBindings import user32
@@ -31,10 +31,18 @@ def isUsableWindow(windowHandle):
 		return False
 	if _GhostWindowFromHungWindow is not None and _GhostWindowFromHungWindow(windowHandle):
 		return False
+	# #7345-followup: A hung application is flagged by the system (IsHungAppWindow)
+	# slightly before its DWM ghost window is created. Treat it as unusable as soon
+	# as it is flagged so NVDA stops attempting blocking cross-process calls into it
+	# (which otherwise freeze the core until the watchdog cancels them ~6s later),
+	# and so child windows of the hung app (which have no ghost of their own) are
+	# also covered.
+	if winUser.isHungAppWindow(windowHandle):  # noqa: SIM103
+		return False
 	return True
 
 
-class WindowProcessHandleContainer(object):
+class WindowProcessHandleContainer:
 	"""
 	Manages a Windows process handle. On instanciation it retreaves an open process handle from the process of the provided window, and closes the handle on deletion.
 	@ivar windowHandle: the handle of the window the whos process handle was requested
@@ -81,6 +89,12 @@ class Window(NVDAObject):
 			return
 		# If this window has a ghost window its too dangerous to try any higher APIs
 		if _GhostWindowFromHungWindow is not None and _GhostWindowFromHungWindow(windowHandle):
+			return
+		# Likewise once the system flags the application as not responding: any higher
+		# API (UIA/MSAA/JAB) would make a synchronous cross-process call that blocks
+		# until the app recovers. Falling back to a plain Window object here keeps NVDA
+		# responsive instead of freezing the core until the watchdog intervenes.
+		if winUser.isHungAppWindow(windowHandle):
 			return
 		if windowClassName == "EXCEL7" and (relation == "focus" or isinstance(relation, tuple)):
 			from . import excel
@@ -143,7 +157,7 @@ class Window(NVDAObject):
 					clsList.append(DisplayModelEditableText)
 
 		clsList.append(Window)
-		super(Window, self).findOverlayClasses(clsList)
+		super().findOverlayClasses(clsList)
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None):
@@ -168,10 +182,10 @@ class Window(NVDAObject):
 		if not windowHandle:
 			raise ValueError("invalid or not specified window handle")
 		self.windowHandle = windowHandle
-		super(Window, self).__init__()
+		super().__init__()
 
 	def _isEqual(self, other):
-		return super(Window, self)._isEqual(other) and other.windowHandle == self.windowHandle
+		return super()._isEqual(other) and other.windowHandle == self.windowHandle
 
 	def _get_name(self):
 		return winUser.getWindowText(self.windowHandle)
@@ -274,7 +288,7 @@ class Window(NVDAObject):
 		parentHandle = winUser.getAncestor(self.windowHandle, winUser.GA_PARENT)
 		if parentHandle:
 			# Because we, we need to get the APIclass manually need to  set the relation as parent
-			kwargs = dict(windowHandle=parentHandle)
+			kwargs = dict(windowHandle=parentHandle)  # noqa: C408
 			APIClass = Window.findBestAPIClass(kwargs, relation="parent")
 			return APIClass(**kwargs) if APIClass else None
 
@@ -283,7 +297,7 @@ class Window(NVDAObject):
 		return self.windowHandle == fg or winUser.isDescendantWindow(fg, self.windowHandle)
 
 	def _get_states(self):
-		states = super(Window, self)._get_states()
+		states = super()._get_states()
 		style = self.windowStyle
 		if not style & winUser.WS_VISIBLE:
 			states.add(controlTypes.State.INVISIBLE)
@@ -308,7 +322,7 @@ class Window(NVDAObject):
 		newWindowHandle = obj.windowHandle
 		oldWindowHandle = self.windowHandle
 		if newWindowHandle and oldWindowHandle and newWindowHandle != oldWindowHandle:
-			kwargs = dict(windowHandle=newWindowHandle)
+			kwargs = dict(windowHandle=newWindowHandle)  # noqa: C408
 			newAPIClass = Window.findBestAPIClass(kwargs, relation=relation)
 			oldAPIClass = self.APIClass
 			if newAPIClass and newAPIClass != oldAPIClass:
@@ -347,48 +361,48 @@ class Window(NVDAObject):
 		cls.normalizedWindowClassNameCache[name] = newName
 		return newName
 
-	normalizedWindowClassNameCache = {}
+	normalizedWindowClassNameCache = {}  # noqa: RUF012
 
 	def _get_devInfo(self):
-		info = super(Window, self).devInfo
-		info.append("windowHandle: %r" % self.windowHandle)
+		info = super().devInfo
+		info.append("windowHandle: %r" % self.windowHandle)  # noqa: UP031
 		try:
 			ret = repr(self.windowClassName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowClassName: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowClassName: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.windowControlID)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowControlID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowControlID: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.windowStyle)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowStyle: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowStyle: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.extendedWindowStyle)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("extendedWindowStyle: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("extendedWindowStyle: %s" % ret)  # noqa: UP031
 		try:
 			ret = repr(self.windowThreadID)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowThreadID: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowThreadID: %s" % ret)  # noqa: UP031
 		formatLong = self._formatLongDevInfoString
 		try:
 			ret = formatLong(self.windowText)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("windowText: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("windowText: %s" % ret)  # noqa: UP031
 		try:
 			self.redraw()
 			ret = formatLong(self.displayText)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("displayText: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("displayText: %s" % ret)  # noqa: UP031
 		return info
 
 
@@ -415,10 +429,10 @@ class DisplayModelLiveText(LiveText, Window):
 		# Force the window to be redrawn, as our display model might be out of date.
 		self.redraw()
 		displayModel.requestTextChangeNotifications(self, True)
-		super(DisplayModelLiveText, self).startMonitoring()
+		super().startMonitoring()
 
 	def stopMonitoring(self):
-		super(DisplayModelLiveText, self).stopMonitoring()
+		super().stopMonitoring()
 		displayModel.requestTextChangeNotifications(self, False)
 
 	def _get_diffAlgo(self):

@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-from ctypes import (
+from ctypes import (  # noqa: I001
 	byref,
 	cast,
 	WinError,

@@ -8,7 +8,7 @@ This module contains the instructions that operate on null values.
 Including to create new null values, and check if an object is null.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from dataclasses import dataclass
 from .. import lowLevel
 from .. import builder

@@ -3,7 +3,7 @@
 # Copyright (C) 2017-2022 NV Access Limited, Thomas Stivers
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-import os
+import os  # noqa: I001
 import tempfile
 import typing
 
@@ -30,7 +30,7 @@ def showHelp(helpId: str):
 	recognized control.
 	"""
 
-	import ui
+	import ui  # noqa: I001
 	import queueHandler
 
 	if not helpId:
@@ -53,13 +53,13 @@ def showHelp(helpId: str):
 		# a redirect is necessary because not all browsers support opening a fragment URL from the command line.
 		writeRedirect(helpId, helpFile, contextHelpRedirect)
 	except Exception:
-		log.error("Unable to write context help redirect file.", exc_info=True)
+		log.error("Unable to write context help redirect file.", exc_info=True)  # noqa: G201
 		return
 
 	try:
 		os.startfile(f"file://{contextHelpRedirect}")
 	except Exception:
-		log.error("Unable to launch context help.", exc_info=True)
+		log.error("Unable to launch context help.", exc_info=True)  # noqa: G201
 
 
 def bindHelpEvent(helpId: str, window: wx.Window):

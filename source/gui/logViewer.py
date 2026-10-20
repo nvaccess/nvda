@@ -5,7 +5,7 @@
 
 """Provides functionality to view the NVDA log."""
 
-import wx
+import wx  # noqa: I001
 import globalVars
 import gui
 import gui.contextHelp
@@ -26,7 +26,7 @@ class LogViewer(
 
 	def __init__(self, parent):
 		# Translators: The title of the NVDA log viewer window.
-		super(LogViewer, self).__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
+		super().__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -73,13 +73,13 @@ class LogViewer(
 		pos = self.outputCtrl.GetInsertionPoint()
 		# Append new text to the output control which has been written to the log file since the last refresh.
 		try:
-			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")
+			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")  # noqa: SIM115
 			f.seek(self._lastFilePos)
 			self.outputCtrl.AppendText(f.read())
 			self._lastFilePos = f.tell()
 			self.outputCtrl.SetInsertionPoint(pos)
 			f.close()
-		except IOError:
+		except OSError:
 			pass
 
 	def onActivate(self, evt):
@@ -104,7 +104,7 @@ class LogViewer(
 			# #9038: work with UTF-8 from the start.
 			with open(filename, "w", encoding="UTF-8") as f:
 				f.write(self.outputCtrl.GetValue())
-		except (IOError, OSError) as e:
+		except OSError as e:
 			gui.messageBox(
 				# Translators: Dialog text presented when NVDA cannot save a log file.
 				_("Error saving log: %s") % e.strerror,

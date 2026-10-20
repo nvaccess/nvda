@@ -7,7 +7,7 @@
 Extension points for speech.
 """
 
-from extensionPoints import Action, Filter
+from extensionPoints import Action, Filter  # noqa: I001
 from speech.types import SpeechSequence
 
 speechCanceled = Action()

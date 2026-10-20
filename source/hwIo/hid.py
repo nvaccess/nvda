@@ -9,10 +9,10 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 from ctypes import byref
 from ctypes.wintypes import USHORT
-from typing import Tuple, Callable, Optional
+from collections.abc import Callable
 from .ioThread import IoThread
 
 from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
@@ -133,8 +133,8 @@ class Hid(IoBase):
 		path: str,
 		onReceive: Callable[[bytes], None],
 		exclusive: bool = True,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -148,7 +148,7 @@ class Hid(IoBase):
 			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		if _isDebug():
-			log.debug("Opening device %s" % path)
+			log.debug("Opening device %s" % path)  # noqa: UP031
 		handle = CreateFile(
 			path,
 			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
@@ -160,7 +160,7 @@ class Hid(IoBase):
 		)
 		if handle == INVALID_HANDLE_VALUE:
 			if _isDebug():
-				log.debug("Open failed: %s" % ctypes.WinError())
+				log.debug("Open failed: %s" % ctypes.WinError())  # noqa: UP031
 			raise ctypes.WinError()
 		pd = ctypes.c_void_p()
 		if not winBindings.hid.HidD_GetPreparsedData(handle, byref(pd)):
@@ -169,10 +169,10 @@ class Hid(IoBase):
 		caps = self.caps
 		self.usagePage = caps.UsagePage
 		if _isDebug():
-			log.debug("usage ID: 0X%X" % caps.Usage)
-			log.debug("usage page: 0X%X" % caps.UsagePage)
+			log.debug("usage ID: 0X%X" % caps.Usage)  # noqa: UP031
+			log.debug("usage page: 0X%X" % caps.UsagePage)  # noqa: UP031
 			log.debug(
-				"Report byte lengths: input %d, output %d, feature %d"
+				"Report byte lengths: input %d, output %d, feature %d"  # noqa: UP031
 				% (
 					caps.InputReportByteLength,
 					caps.OutputReportByteLength,
@@ -255,7 +255,7 @@ class Hid(IoBase):
 		self._outputValueCaps = valueCapsList
 		return self._outputValueCaps
 
-	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
+	def _prepareWriteBuffer(self, data: bytes) -> tuple[int, ctypes.c_char_p]:
 		"""For HID devices, the buffer to be written must match the
 		OutputReportByteLength fetched from HIDP_CAPS, to ensure this is the case
 		we create a buffer of that size. We also check that data is not bigger than
@@ -281,11 +281,11 @@ class Hid(IoBase):
 		if not winBindings.hid.HidD_GetFeature(self._file, buf, self._featureSize):
 			if _isDebug():
 				log.debug(
-					"Get feature %r failed: %s" % (reportId, ctypes.WinError()),
+					"Get feature %r failed: %s" % (reportId, ctypes.WinError()),  # noqa: UP031
 				)
 			raise ctypes.WinError()
 		if _isDebug():
-			log.debug("Get feature: %r" % buf.raw)
+			log.debug("Get feature: %r" % buf.raw)  # noqa: UP031
 		return buf.raw
 
 	def setFeature(self, report: bytes) -> None:
@@ -295,7 +295,7 @@ class Hid(IoBase):
 		buf = ctypes.create_string_buffer(report, size=len(report))
 		bufSize = ctypes.sizeof(buf)
 		if _isDebug():
-			log.debug("Set feature: %r" % report)
+			log.debug("Set feature: %r" % report)  # noqa: UP031
 		result = winBindings.hid.HidD_SetFeature(
 			self._file,
 			buf,
@@ -303,7 +303,7 @@ class Hid(IoBase):
 		)
 		if not result:
 			if _isDebug():
-				log.debug("Set feature failed: %s" % ctypes.WinError())
+				log.debug("Set feature failed: %s" % ctypes.WinError())  # noqa: UP031
 			raise ctypes.WinError()
 
 	def setOutputReport(self, report: bytes) -> None:
@@ -315,7 +315,7 @@ class Hid(IoBase):
 		buf = ctypes.create_string_buffer(report, size=len(report))
 		bufSize = ctypes.sizeof(buf)
 		if _isDebug():
-			log.debug("Set output report: %r" % report)
+			log.debug("Set output report: %r" % report)  # noqa: UP031
 		result = winBindings.hid.HidD_SetOutputReport(
 			self._writeFile,
 			buf,
@@ -323,14 +323,14 @@ class Hid(IoBase):
 		)
 		if not result:
 			if _isDebug():
-				log.debug("Set output report failed: %s" % ctypes.WinError())
+				log.debug("Set output report failed: %s" % ctypes.WinError())  # noqa: UP031
 			raise ctypes.WinError()
 
 	def close(self):
 		if self._isClosed:
 			log.debug("Attempted to close an already closed device.")
 			return
-		super(Hid, self).close()
+		super().close()
 		winKernel.closeHandle(self._file)
 		self._file = None
 		winBindings.hid.HidD_FreePreparsedData(self._pd)

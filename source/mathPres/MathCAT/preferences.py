@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from enum import Enum
+from enum import Enum  # noqa: I001
 import os
 
 import config
@@ -194,7 +194,7 @@ def getBrailleCodes() -> list[str]:
 	resultBrailleCodes = []
 	for brailleCode in os.listdir(brailleFolderPath):
 		pathToBrailleCode: str = os.path.join(brailleFolderPath, brailleCode)
-		if os.path.isdir(pathToBrailleCode):
+		if os.path.isdir(pathToBrailleCode):  # noqa: SIM102
 			if len(getRulesFiles(pathToBrailleCode, None)) > 0:
 				resultBrailleCodes.append(brailleCode)
 	return resultBrailleCodes
@@ -249,7 +249,7 @@ def setEffectiveBrailleCode() -> None:
 		brailleCodePref = config.conf["math"]["braille"]["brailleCode"]
 		effectiveCode = getAutoBrailleCode() if brailleCodePref == "Auto" else brailleCodePref
 		libmathcat.SetPreference("BrailleCode", effectiveCode)
-	except Exception as e:
+	except Exception as e:  # noqa: BLE001
 		log.debugWarning(
 			f"MathCAT: failed to set BrailleCode preference: {e}",
 			exc_info=True,
@@ -287,7 +287,7 @@ def applyUserPreferences(prefs: PreferencesDict | None = None) -> None:
 				libmathcat.SetPreference(k, yaml_val)
 			except Exception as e:
 				log.exception(
-					f"MathCAT: failed to set {k} preference: {e}",
+					f"MathCAT: failed to set {k} preference: {e}",  # noqa: TRY401
 				)
 	setEffectiveBrailleCode()
 
@@ -368,7 +368,7 @@ class MathCATUserPreferences:
 		convertedKey2 = toNVDAConfigKey(key2)
 		try:
 			return mathConf[convertedKey1][convertedKey2]
-		except Exception:
+		except Exception:  # noqa: BLE001
 			# This should never happen now that we are using the config validation system to ensure all keys exist and have defaults,
 			# but just in case, we catch any exceptions and log an error,
 			# then fall back to the MathCAT default for this preference key.

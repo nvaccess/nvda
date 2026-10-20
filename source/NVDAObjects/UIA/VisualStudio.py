@@ -7,9 +7,10 @@ Object overlay classes for Visual Studio components
 available in Visual Studio and SQL Server Management Studio.
 """
 
-from . import UIA, ToolTip
+from . import UIA, ToolTip  # noqa: I001
 import speech
 import braille
+import braille.regions.properties
 import api
 import time
 
@@ -28,7 +29,7 @@ class IntelliSenseItem(UIA):
 			self.reportFocus()
 			# Display results as flash messages.
 			braille.handler.message(
-				braille.getPropertiesBraille(
+				braille.regions.properties.getPropertiesBraille(
 					name=self.name,
 					role=self.role,
 					positionInfo=self.positionInfo,

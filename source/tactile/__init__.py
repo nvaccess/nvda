@@ -32,4 +32,3 @@ class TactileGraphicsBuffer(abc.ABC):
 		"""
 		Sets a dot at the given coordinates.
 		"""
-		pass

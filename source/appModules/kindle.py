@@ -2,12 +2,8 @@
 # Copyright (C) 2016-2021 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import (
-	Optional,
-	Dict,
-)
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 from comtypes.hresult import S_OK
 import appModuleHandler
 import speech
@@ -161,7 +157,7 @@ class BookPageViewTreeInterceptor(
 	script_showSelectionOptions.__doc__ = _("Shows options related to selected text or text at the cursor")
 	script_showSelectionOptions.category = SCRCAT_SYSTEMCARET
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:control+c": "showSelectionOptions",
 		"kb:applications": "showSelectionOptions",
 		"kb:shift+f10": "showSelectionOptions",
@@ -169,7 +165,7 @@ class BookPageViewTreeInterceptor(
 
 	def _iterEmbeddedObjs(self, hypertext, startIndex, direction):
 		"""Recursively iterate through all embedded objects in a given direction starting at a given hyperlink index."""
-		log.debug("Starting at hyperlink index %d" % startIndex)
+		log.debug("Starting at hyperlink index %d" % startIndex)  # noqa: UP031
 		for index in range(
 			startIndex,
 			hypertext.nHyperlinks if direction == "next" else -1,
@@ -177,22 +173,22 @@ class BookPageViewTreeInterceptor(
 		):
 			hl = hypertext.hyperlink(index)
 			obj = IAccessible(IAccessibleObject=hl.QueryInterface(IA2.IAccessible2), IAccessibleChildID=0)
-			log.debug("Yielding object at index %d" % index)
+			log.debug("Yielding object at index %d" % index)  # noqa: UP031
 			yield obj
 			try:
 				objHt = obj.iaHypertext
-			except:  # noqa: E722
+			except:  # noqa: E722, S112
 				# This is a graphic, etc. which doesn't support text.
 				continue
 			log.debug("Object has hypertext. Recursing")
-			for subObj in self._iterEmbeddedObjs(
+			for subObj in self._iterEmbeddedObjs(  # noqa: UP028
 				objHt,
 				0 if direction == "next" else objHt.nHyperlinks - 1,
 				direction,
 			):
 				yield subObj
 
-	NODE_TYPES_TO_ROLES = {
+	NODE_TYPES_TO_ROLES = {  # noqa: RUF012
 		"link": {controlTypes.Role.LINK, controlTypes.Role.FOOTNOTE},
 		"graphic": {controlTypes.Role.GRAPHIC},
 		"table": {controlTypes.Role.TABLE},
@@ -230,7 +226,7 @@ class BookPageViewTreeInterceptor(
 			else:
 				# We're at the start; we can't go back any further.
 				embed = -1
-		log.debug("%s embedded object from offset %d: %d" % (direction, offset, embed))
+		log.debug("%s embedded object from offset %d: %d" % (direction, offset, embed))  # noqa: UP031
 		hli = -1 if embed == -1 else obj.iaHypertext.hyperlinkIndex(embed)
 		while True:
 			if hli != -1:
@@ -286,10 +282,10 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			text += ", " + _("Page {pageNumber}").format(pageNumber=pageNumber)
 		return text
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
+	def getTextWithFields(self, formatConfig: dict | None = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
 			formatConfig = config.conf["documentFormatting"]
-		items = super(BookPageViewTextInfo, self).getTextWithFields(formatConfig=formatConfig)
+		items = super().getTextWithFields(formatConfig=formatConfig)
 		for item in items:
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
 				if formatConfig["reportPage"]:
@@ -306,10 +302,10 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 	def getFormatFieldSpeech(
 		self,
 		attrs: textInfos.Field,
-		attrsCache: Optional[textInfos.Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: textInfos.Field | None = None,
+		formatConfig: dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:
@@ -343,7 +339,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			)
 			out.append(translation)
 
-		superSpeech = super(BookPageViewTextInfo, self).getFormatFieldSpeech(
+		superSpeech = super().getFormatFieldSpeech(
 			attrs,
 			attrsCache=attrsCache,
 			formatConfig=formatConfig,
@@ -372,11 +368,11 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			end = self._getEmbedding(self._endObj)
 			assert end.obj == self.obj
 		sel.setEndPoint(end, "endToEnd")
-		log.debug("Setting selection to (%d, %d)" % (sel._startOffset, sel._endOffset))
+		log.debug("Setting selection to (%d, %d)" % (sel._startOffset, sel._endOffset))  # noqa: UP031
 		sel.updateSelection()
 
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
-		field = super(BookPageViewTextInfo, self)._getControlFieldForObject(
+		field = super()._getControlFieldForObject(
 			obj,
 			ignoreEditableText=ignoreEditableText,
 		)
@@ -411,7 +407,7 @@ class BookPageView(DocumentWithPageTurns, IAccessible):
 			except KeyError:
 				return None
 		if first != last:
-			return "%s to %s" % (first, last)
+			return "%s to %s" % (first, last)  # noqa: UP031
 		else:
 			return first
 
@@ -429,7 +425,7 @@ class PageTurnFocusIgnorer(IAccessible):
 		if isinstance(focus, BookPageView) and focus.hasFocus:
 			# The book area reports that it still has the focus, so this event is bogus.
 			return False
-		return super(PageTurnFocusIgnorer, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 
 class Math(IAccessible):

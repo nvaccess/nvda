@@ -5,7 +5,7 @@
 
 """Unit tests for the addonStore.network module."""
 
-from concurrent.futures import Future
+from concurrent.futures import Future  # noqa: I001
 from typing import Any
 import unittest
 from unittest.mock import patch, MagicMock

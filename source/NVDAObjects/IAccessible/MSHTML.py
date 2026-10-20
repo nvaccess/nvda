@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import comtypes.client
 import comtypes.automation
 from comtypes import IServiceProvider
@@ -28,7 +28,6 @@ from .. import InvalidNVDAObject
 from ..window import Window
 from NVDAObjects.UIA import UIA, UIATextInfo
 from locationHelper import RectLTRB
-from typing import Dict
 
 IID_IHTMLElement = comtypes.GUID("{3050F1FF-98B5-11CF-BB82-00AA00BDCE0B}")
 
@@ -40,7 +39,7 @@ class UIAMSHTMLTextInfo(UIATextInfo):
 	_atEndOfStory = False
 
 	def __init__(self, obj, position, _rangeObj=None):
-		super(UIAMSHTMLTextInfo, self).__init__(obj, position, _rangeObj)
+		super().__init__(obj, position, _rangeObj)
 		if position == textInfos.POSITION_CARET:
 			tempRange = self._rangeObj.clone()
 			tempRange.ExpandToEnclosingUnit(UIAHandler.TextUnit_Character)
@@ -55,7 +54,7 @@ class UIAMSHTMLTextInfo(UIATextInfo):
 				self._atEndOfStory = True
 
 	def copy(self):
-		info = super(UIAMSHTMLTextInfo, self).copy()
+		info = super().copy()
 		info._atEndOfStory = self._atEndOfStory
 		return info
 
@@ -63,7 +62,7 @@ class UIAMSHTMLTextInfo(UIATextInfo):
 		if unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_WORD) and self._atEndOfStory:
 			return
 		self._atEndOfStory = False
-		return super(UIAMSHTMLTextInfo, self).expand(unit)
+		return super().expand(unit)
 
 	def move(self, unit, direction, endPoint=None):
 		if direction == 0:
@@ -73,10 +72,10 @@ class UIAMSHTMLTextInfo(UIATextInfo):
 		self._atEndOfStory = False
 		if direction == 0:
 			return -1
-		return super(UIAMSHTMLTextInfo, self).move(unit, direction, endPoint=endPoint)
+		return super().move(unit, direction, endPoint=endPoint)
 
 
-class HTMLAttribCache(object):
+class HTMLAttribCache:
 	def __init__(self, HTMLNode):
 		self.HTMLNode = HTMLNode
 		self.cache = {}
@@ -109,7 +108,7 @@ class HTMLAttribCache(object):
 		return contains
 
 
-nodeNamesToNVDARoles: Dict[str, int] = {
+nodeNamesToNVDARoles: dict[str, int] = {
 	"FRAME": controlTypes.Role.FRAME,
 	"IFRAME": controlTypes.Role.INTERNALFRAME,
 	"FRAMESET": controlTypes.Role.DOCUMENT,
@@ -210,17 +209,17 @@ def locateHTMLElementByID(document, ID):
 			try:
 				element = document.getElementByID(ID)
 			except COMError as e:
-				log.debugWarning("document.getElementByID failed with COMError %s" % e)
+				log.debugWarning("document.getElementByID failed with COMError %s" % e)  # noqa: UP031
 				element = None
 	except COMError as e:
-		log.debugWarning("document.getElementsByName failed with COMError %s" % e)
+		log.debugWarning("document.getElementsByName failed with COMError %s" % e)  # noqa: UP031
 		element = None
 	if element:
 		return element
 	try:
 		nodeName = document.body.nodeName
 	except COMError as e:
-		log.debugWarning("document.body.nodeName failed with COMError %s" % e)
+		log.debugWarning("document.body.nodeName failed with COMError %s" % e)  # noqa: UP031
 		return None
 	if nodeName:
 		nodeName = nodeName.upper()
@@ -231,7 +230,7 @@ def locateHTMLElementByID(document, ID):
 	try:
 		frames = document.getElementsByTagName(tag)
 	except COMError as e:
-		log.debugWarning("document.getElementsByTagName failed with COMError %s" % e)
+		log.debugWarning("document.getElementsByTagName failed with COMError %s" % e)  # noqa: UP031
 		return None
 	if not frames:  # frames can be None in IE 10
 		return None
@@ -305,7 +304,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			oldSelRange.select()
 
 	def __init__(self, obj, position, _rangeObj=None):
-		super(MSHTMLTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		if _rangeObj:
 			self._rangeObj = _rangeObj.duplicate()
 			return
@@ -343,11 +342,11 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 				self._rangeObj.moveToBookmark(position.data)
 			else:
 				raise TypeError(
-					"Bookmark was for %s type, not for %s type"
+					"Bookmark was for %s type, not for %s type"  # noqa: UP031
 					% (position.infoClass.__name__, self.__class__.__name__),
 				)
 		else:
-			raise NotImplementedError("position: %s" % (position,))
+			raise NotImplementedError("position: %s" % (position,))  # noqa: UP031
 
 	def expand(self, unit):
 		if unit == textInfos.UNIT_PARAGRAPH:
@@ -373,10 +372,10 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 		elif unit == textInfos.UNIT_STORY:
 			self._rangeObj.expand("textedit")
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 
 	def _get_isCollapsed(self):
-		if self._rangeObj.compareEndPoints("startToEnd", self._rangeObj) == 0:
+		if self._rangeObj.compareEndPoints("startToEnd", self._rangeObj) == 0:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -452,10 +451,10 @@ class MSHTML(IAccessible):
 	def makeTextInfo(self, position):
 		if self._UIAControl:
 			return self._UIAControl.makeTextInfo(position)
-		return super(MSHTML, self).makeTextInfo(position)
+		return super().makeTextInfo(position)
 
-	HTMLNodeNameNavSkipList = ["#comment", "SCRIPT", "HEAD", "HTML", "PARAM", "STYLE"]
-	HTMLNodeNameEmbedList = ["OBJECT", "EMBED", "APPLET", "FRAME", "IFRAME"]
+	HTMLNodeNameNavSkipList = ["#comment", "SCRIPT", "HEAD", "HTML", "PARAM", "STYLE"]  # noqa: RUF012
+	HTMLNodeNameEmbedList = ["OBJECT", "EMBED", "APPLET", "FRAME", "IFRAME"]  # noqa: RUF012
 
 	_ignoreCaretEvents = (
 		False  #:Set to true when moving the caret to calculate lines, event_caret will be disabled.
@@ -483,7 +482,7 @@ class MSHTML(IAccessible):
 		if not newCaretBookmark or newCaretBookmark == getattr(self, "_oldCaretBookmark", None):
 			return
 		self._oldCaretBookmark = newCaretBookmark
-		return super(MSHTML, self).event_caret()
+		return super().event_caret()
 
 	@classmethod
 	def kwargsFromSuper(cls, kwargs, relation=None):
@@ -559,7 +558,7 @@ class MSHTML(IAccessible):
 		clsList.append(MSHTML)
 		if not self.HTMLNodeHasAncestorIAccessible:
 			# The IAccessibleObject is for this node (not an ancestor), so IAccessible overlay classes are relevant.
-			super(MSHTML, self).findOverlayClasses(clsList)
+			super().findOverlayClasses(clsList)
 			if self.IAccessibleRole == oleacc.ROLE_SYSTEM_DIALOG:
 				ariaRoles = (self.HTMLAttributes["role"] or "").split(" ")
 				if "dialog" in ariaRoles:
@@ -577,7 +576,7 @@ class MSHTML(IAccessible):
 			import virtualBuffers.MSHTML
 
 			return virtualBuffers.MSHTML.MSHTML
-		return super(MSHTML, self).treeInterceptorClass
+		return super().treeInterceptorClass
 
 	def _get_isCurrent(self) -> controlTypes.IsCurrent:
 		try:
@@ -627,7 +626,7 @@ class MSHTML(IAccessible):
 		if not IAccessibleObject:
 			raise InvalidNVDAObject("Couldn't get IAccessible, probably dead object")
 
-		super(MSHTML, self).__init__(
+		super().__init__(
 			IAccessibleObject=IAccessibleObject,
 			IAccessibleChildID=IAccessibleChildID,
 			**kwargs,
@@ -665,10 +664,10 @@ class MSHTML(IAccessible):
 				self._HTMLNodeSupportsTextRanges = False
 		if self._HTMLNodeSupportsTextRanges:
 			return MSHTMLTextInfo
-		return super(MSHTML, self).TextInfo
+		return super().TextInfo
 
 	def isDuplicateIAccessibleEvent(self, obj):
-		if not super(MSHTML, self).isDuplicateIAccessibleEvent(obj):
+		if not super().isDuplicateIAccessibleEvent(obj):
 			return False
 		# MSHTML winEvents can't be trusted for uniqueness, so just do normal object comparison.
 		return self == obj
@@ -682,10 +681,10 @@ class MSHTML(IAccessible):
 				)
 			except (COMError, NameError):
 				pass
-		return super(MSHTML, self)._isEqual(other)
+		return super()._isEqual(other)
 
 	def _get_presentationType(self):
-		presType = super(MSHTML, self).presentationType
+		presType = super().presentationType
 		if presType == self.presType_content and self.HTMLAttributes["role"] == "presentation":
 			presType = self.presType_layout
 		if presType == self.presType_content and self.role in (
@@ -706,7 +705,7 @@ class MSHTML(IAccessible):
 		ariaRole = self.HTMLAttributes["aria-role"]
 		if ariaRole == "gridcell":
 			return True
-		return super(MSHTML, self).shouldAllowIAccessibleFocusEvent
+		return super().shouldAllowIAccessibleFocusEvent
 
 	def _get_name(self):
 		ariaLabelledBy = self.HTMLAttributes["aria-labelledBy"]
@@ -752,7 +751,7 @@ class MSHTML(IAccessible):
 			if title and isinstance(title, str):
 				return title
 			return ""
-		return super(MSHTML, self).name
+		return super().name
 
 	def _get_landmark(self):
 		if self.HTMLNode:
@@ -781,7 +780,7 @@ class MSHTML(IAccessible):
 		):
 			return ""
 		else:
-			return super(MSHTML, self).value
+			return super().value
 
 	def _get_description(self):
 		ariaDescribedBy = self.HTMLAttributes["aria-describedBy"]
@@ -797,19 +796,19 @@ class MSHTML(IAccessible):
 					pass
 		if self.HTMLNodeHasAncestorIAccessible:
 			return ""
-		return super(MSHTML, self).description
+		return super().description
 
 	def _get_basicText(self):
-		if self.HTMLNode and not self.HTMLNodeName == "SELECT":
+		if self.HTMLNode and not self.HTMLNodeName == "SELECT":  # noqa: SIM201
 			try:
 				return self.HTMLNode.data or ""
 			except (COMError, AttributeError, NameError):
 				pass
 			try:
-				return self.HTMLNode.innerText or super(MSHTML, self).basicText
+				return self.HTMLNode.innerText or super().basicText
 			except (COMError, AttributeError, NameError):
 				pass
-		return super(MSHTML, self).basicText
+		return super().basicText
 
 	def _get_role(self):
 		if self.HTMLNode:
@@ -835,10 +834,10 @@ class MSHTML(IAccessible):
 				):
 					return nodeNamesToNVDARoles.get(nodeName, controlTypes.Role.SECTION)
 		if self.IAccessibleChildID > 0:
-			states = super(MSHTML, self).states
+			states = super().states
 			if controlTypes.State.LINKED in states:
 				return controlTypes.Role.LINK
-		role = super(MSHTML, self).role
+		role = super().role
 		# IE uses a MSAA role of ROLE_SYSTEM_TEXT with no readonly state for unsupported or future tags with an explicit ARIA role.
 		# If this is the case, force the role to staticText so this is not confused as a real edit field.
 		if role == controlTypes.Role.EDITABLETEXT and ariaRole and ariaRole != "textbox":
@@ -847,7 +846,7 @@ class MSHTML(IAccessible):
 
 	def _get_states(self):
 		if not self.HTMLNodeHasAncestorIAccessible:
-			states = super(MSHTML, self).states
+			states = super().states
 		else:
 			states = set()
 		ariaSort = self.HTMLAttributes["aria-sort"]
@@ -921,7 +920,7 @@ class MSHTML(IAccessible):
 				obj = MSHTML(HTMLNode=parentNode)
 				if obj and obj.HTMLNodeName not in self.HTMLNodeNameNavSkipList:
 					return obj
-		return super(MSHTML, self).parent
+		return super().parent
 
 	def _get_previous(self):
 		if self.HTMLNode:
@@ -935,7 +934,7 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				obj = obj.previous
 			return obj
-		return super(MSHTML, self).previous
+		return super().previous
 
 	def _get_next(self):
 		if self.HTMLNode:
@@ -949,12 +948,12 @@ class MSHTML(IAccessible):
 			if obj and obj.HTMLNodeName in self.HTMLNodeNameNavSkipList:
 				obj = obj.next
 			return obj
-		return super(MSHTML, self).next
+		return super().next
 
 	def _get_firstChild(self):
 		if self.HTMLNode:
 			if self.HTMLNodeName in ("FRAME", "IFRAME"):
-				return super(MSHTML, self).firstChild
+				return super().firstChild
 			try:
 				childNode = self.HTMLNode.firstChild
 			except COMError:
@@ -967,12 +966,12 @@ class MSHTML(IAccessible):
 			return obj
 		if self.HTMLNodeHasAncestorIAccessible:
 			return None
-		return super(MSHTML, self).firstChild
+		return super().firstChild
 
 	def _get_lastChild(self):
 		if self.HTMLNode:
 			if self.HTMLNodeName in ("FRAME", "IFRAME"):
-				return super(MSHTML, self).lastChild
+				return super().lastChild
 			try:
 				childNode = self.HTMLNode.lastChild
 			except COMError:
@@ -985,7 +984,7 @@ class MSHTML(IAccessible):
 			return obj
 		if self.HTMLNodeHasAncestorIAccessible:
 			return None
-		return super(MSHTML, self).lastChild
+		return super().lastChild
 
 	def _get_columnNumber(self):
 		if not self.role == controlTypes.Role.TABLECELL or not self.HTMLNode:
@@ -1002,7 +1001,7 @@ class MSHTML(IAccessible):
 		while HTMLNode:
 			try:
 				return HTMLNode.rowIndex + 1
-			except:  # noqa: E722
+			except:  # noqa: E722, S110
 				pass
 			HTMLNode = HTMLNode.parentNode
 		raise NotImplementedError
@@ -1032,7 +1031,7 @@ class MSHTML(IAccessible):
 				return
 			except NameError:
 				pass
-		super(MSHTML, self).doAction(index=index)
+		super().doAction(index=index)
 
 	def _get_isFocusable(self):
 		nodeName = self.HTMLNodeName
@@ -1059,7 +1058,7 @@ class MSHTML(IAccessible):
 			except (COMError, AttributeError, NameError):
 				pass
 			return
-		super(MSHTML, self).setFocus()
+		super().setFocus()
 
 	def _get_table(self):
 		if self.role not in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROW) or not self.HTMLNode:
@@ -1093,14 +1092,14 @@ class MSHTML(IAccessible):
 		return self._HTMLNodeName
 
 	def _get_devInfo(self):
-		info = super(MSHTML, self).devInfo
-		info.append("MSHTML node has ancestor IAccessible: %r" % self.HTMLNodeHasAncestorIAccessible)
+		info = super().devInfo
+		info.append("MSHTML node has ancestor IAccessible: %r" % self.HTMLNodeHasAncestorIAccessible)  # noqa: UP031
 		htmlNode = self.HTMLNode
 		try:
 			ret = repr(htmlNode.nodeName)
-		except Exception as e:
-			ret = "exception: %s" % e
-		info.append("MSHTML nodeName: %s" % ret)
+		except Exception as e:  # noqa: BLE001
+			ret = "exception: %s" % e  # noqa: UP031
+		info.append("MSHTML nodeName: %s" % ret)  # noqa: UP031
 		return info
 
 	def _get_language(self):
@@ -1119,8 +1118,8 @@ class MSHTML(IAccessible):
 		try:
 			return aria.AriaLivePoliteness(politeness.lower())
 		except ValueError:
-			log.error(f"Unknown live politeness of {politeness}", exc_info=True)
-			super().liveRegionPoliteness
+			log.error(f"Unknown live politeness of {politeness}", exc_info=True)  # noqa: G201
+			super().liveRegionPoliteness  # noqa: B018
 
 	def event_liveRegionChange(self):
 		# MSHTML live regions are currently handled with custom code in-process
@@ -1140,7 +1139,7 @@ class V6ComboBox(IAccessible):
 		focus = api.getFocusObject()
 		if controlTypes.State.FOCUSED not in self.states or focus.role != controlTypes.Role.COMBOBOX:
 			# This combo box is not focused.
-			return super(V6ComboBox, self).event_valueChange()
+			return super().event_valueChange()
 		# This combo box is focused. However, the value change is not fired on the real focus object.
 		# Therefore, redirect this event to the real focus object.
 		focus.event_valueChange()
@@ -1153,19 +1152,19 @@ class Fieldset(MSHTML):
 		except (COMError, NameError):
 			child = None
 		if not child:
-			return super(Fieldset, self).name
+			return super().name
 		try:
 			nodeName = child.nodeName
 		except (COMError, NameError):
-			return super(Fieldset, self).name
+			return super().name
 		if nodeName:
 			nodeName = nodeName.upper()
 		if nodeName != "LEGEND":
-			return super(Fieldset, self).name
+			return super().name
 		try:
 			text = child.innerText
 		except (COMError, NameError):
-			return super(Fieldset, self).name
+			return super().name
 		return text
 
 
@@ -1175,7 +1174,7 @@ class Body(MSHTML):
 		# This object isn't returned when requesting OBJID_CLIENT, nor is it returned as a child of its parent.
 		# Therefore, eliminate it from the ancestry completely.
 		# However it is possible that this body is a child document of a parent frame. In this case don't skip it.
-		parent = super(Body, self).parent
+		parent = super().parent
 		if parent and not isinstance(parent, MSHTML):
 			return parent.parent
 		else:
@@ -1186,7 +1185,7 @@ class Body(MSHTML):
 		# which might have the focused state.
 		if controlTypes.State.FOCUSED in self.states:
 			return True
-		parent = super(Body, self).parent
+		parent = super().parent
 		if not parent:
 			return False
 		return parent.shouldAllowIAccessibleFocusEvent
@@ -1203,7 +1202,7 @@ class Object(MSHTML):
 		except COMError:
 			window = None
 		if not window or window == self.windowHandle:
-			return super(Object, self).firstChild
+			return super().firstChild
 		return Window(windowHandle=window)
 
 

@@ -41,13 +41,8 @@ can be safely ignored.
 
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import (
-	Dict,
-	FrozenSet,
-	Tuple,
-)
 
-BAUD_RATE: Tuple[int] = (19200, 9600)
+BAUD_RATE: tuple[int] = (19200, 9600)
 """Possible baud rates.
 Because 19200 is the display default, it is tried at first.
 """
@@ -135,7 +130,7 @@ class Keys(IntEnum):
 MAX_COMBINATION_KEYS = 4
 """Maximum number of keys in key combination."""
 
-CONTROL_KEY_CODES: FrozenSet[Keys] = frozenset(
+CONTROL_KEY_CODES: frozenset[Keys] = frozenset(
 	{
 		Keys.attribute1,
 		Keys.attribute2,
@@ -161,7 +156,7 @@ CONTROL_KEY_CODES: FrozenSet[Keys] = frozenset(
 )
 """Ctrl keys which may start key combination."""
 
-LEFT_RIGHT_KEY_CODES: Dict[Keys, Keys] = {
+LEFT_RIGHT_KEY_CODES: dict[Keys, Keys] = {
 	Keys.attribute1: Keys.attribute3,
 	Keys.attribute2: Keys.attribute4,
 	Keys.f1: Keys.f9,
@@ -231,7 +226,7 @@ class RoutingKeyRange:
 	indexOffset: int
 
 
-ROUTING_KEY_RANGES: FrozenSet[RoutingKeyRange] = frozenset(
+ROUTING_KEY_RANGES: frozenset[RoutingKeyRange] = frozenset(
 	{
 		RoutingKeyRange("routing", 2, 41, indexOffset=2),
 		RoutingKeyRange("secondRouting", 43, 82, indexOffset=43),

@@ -5,7 +5,7 @@
 
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
-import unittest
+import unittest  # noqa: I001
 from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
 from scriptHandler import script
@@ -25,7 +25,7 @@ class NVDAObjectWithGesturesDictionary(PlaceholderNVDAObject):
 	def script_bravo(self, gesture):
 		return
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:b": "bravo",
 	}
 
@@ -42,7 +42,7 @@ class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
 	def script_delta(self, gesture):
 		return
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:d": "delta",
 	}
 
@@ -61,7 +61,7 @@ class SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary(
 	def script_foxtrot(self, gesture):
 		return
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:f": "foxtrot",
 	}
 
@@ -86,7 +86,7 @@ class DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAO
 	def script_hotel(self, gesture):
 		return
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:h": "hotel",
 	}
 
@@ -110,12 +110,12 @@ class TestScriptableObject(unittest.TestCase):
 	def test_decoratedScriptsAndGestureDictionariesIfSubclassed(self):
 		obj = SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary()
 		for key in ("a", "b", "c", "d", "e", "f"):
-			self.assertIn("kb:%s" % key, obj._gestureMap)
+			self.assertIn("kb:%s" % key, obj._gestureMap)  # noqa: UP031
 
 	def test_decoratedScriptsAndGestureDictionariesIfDynamic(self):
 		obj = DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary()
 		for key in ("a", "b", "c", "d", "g", "h"):
-			self.assertIn("kb:%s" % key, obj._gestureMap)
+			self.assertIn("kb:%s" % key, obj._gestureMap)  # noqa: UP031
 
 
 class AutoPropertyObjectWithAbstractProperty(AutoPropertyObject):

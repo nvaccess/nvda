@@ -10,22 +10,20 @@ Functions that wrap Windows API functions from kernel32.dll and advapi32.dll.
 When working on this file, consider moving to winAPI.
 """
 
-import contextlib
+import contextlib  # noqa: I001
 import ctypes
 import ctypes.wintypes
 from ctypes import byref, sizeof, Structure, WinError
 from ctypes.wintypes import BOOL, DWORD, HANDLE, LARGE_INTEGER, LCID, LPVOID
 from typing import (
 	TYPE_CHECKING,
-	Optional,
-	Union,
 )
 
 if TYPE_CHECKING:
 	from winAPI._powerTracking import SystemPowerStatus
 
 
-import winBindings.advapi32
+import winBindings.advapi32  # noqa: I001
 import winBindings.kernel32
 from winBindings.kernel32 import (
 	FILETIME as _FILETIME,
@@ -218,7 +216,7 @@ def setWaitableTimer(
 def openProcess(*args) -> int:
 	try:
 		return winBindings.kernel32.OpenProcess(*args) or 0
-	except Exception:
+	except Exception:  # noqa: BLE001
 		# Compatibility: error should just be a handle of 0.
 		return 0
 
@@ -261,7 +259,7 @@ def suspendWow64Redirection():
 	try:
 		yield
 	finally:
-		if redirectionDisabled:
+		if redirectionDisabled:  # noqa: SIM102
 			if winBindings.kernel32.Wow64RevertWow64FsRedirection(oldValue) == 0:
 				raise WinError()
 
@@ -284,7 +282,7 @@ def FileTimeToSystemTime(lpFileTime: _FILETIME, lpSystemTime: _SYSTEMTIME) -> No
 
 
 def SystemTimeToTzSpecificLocalTime(
-	timeZoneInformation: Union[_TIME_ZONE_INFORMATION, None],
+	timeZoneInformation: _TIME_ZONE_INFORMATION | None,
 	lpUniversalTime: _SYSTEMTIME,
 	lpLocalTime: _SYSTEMTIME,
 ) -> None:
@@ -411,7 +409,7 @@ class SECURITY_ATTRIBUTES(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)
+		super().__init__(nLength=sizeof(self), **kwargs)
 
 
 def CreatePipe(pipeAttributes, size):
@@ -520,7 +518,7 @@ class HGLOBAL(HANDLE):
 		@param autoFree: True by default, the handle will automatically be freed with GlobalFree
 		when this object goes out of scope.
 		"""
-		super(HGLOBAL, self).__init__(h)
+		super().__init__(h)
 		self._autoFree = autoFree
 
 	def __del__(self):
@@ -585,7 +583,7 @@ def SetThreadExecutionState(esFlags):
 	return res
 
 
-def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
+def LCIDToLocaleName(windowsLCID: LCID) -> str | None:
 	# NVDA cannot run with this imported at module level
 	from logHandler import log
 

@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import controlTypes
+import controlTypes  # noqa: I001
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
 from scriptHandler import isScriptWaiting
@@ -64,7 +64,7 @@ class Container(IAccessible):
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# QT doesn't fire focus on the active child as it should, so we will bounce the focus to it.
 		# However, as the container does not have the focused state in QT5, we must still ensure we can get the event if we are going to bounce it
-		res = super(Container, self).shouldAllowIAccessibleFocusEvent
+		res = super().shouldAllowIAccessibleFocusEvent
 		if not res:
 			res = bool(self.activeChild)
 		return res
@@ -98,7 +98,7 @@ class TableCell(IAccessible):
 			if previous and controlTypes.State.FOCUSED in previous.states:
 				eventHandler.executeEvent("gainFocus", previous)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": "nextColumn",
 		"kb:rightArrow": "nextColumn",
 		"kb:shift+tab": "previousColumn",
@@ -129,7 +129,7 @@ class Application(IAccessible):
 	description = None
 
 	def _get_states(self):
-		states = super(Application, self)._get_states()
+		states = super()._get_states()
 		# The application should not have the focused state.
 		# Otherwise, checks for the focused state will always hit the application and assume the focus is valid.
 		states.discard(controlTypes.State.FOCUSED)

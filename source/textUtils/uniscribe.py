@@ -6,10 +6,10 @@
 """Wrapper functions for NVDAHelper uniscribe functions."""
 
 import ctypes
-from typing import Generator
+from collections.abc import Generator
 
 
-def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
+def splitAtCharacterBoundaries(text: str) -> Generator[str]:
 	"""
 	Splits a given string into real visible characters (or glyphs), thereby respecting character boundaries.
 	Contrary to just iterating over a string, this respects surrogate pairs, decomposite characters, etc.

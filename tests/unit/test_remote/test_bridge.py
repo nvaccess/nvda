@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import unittest
+import unittest  # noqa: I001
 from _remoteClient.bridge import BridgeTransport
 from _remoteClient.transport import Transport, RemoteMessageType
 

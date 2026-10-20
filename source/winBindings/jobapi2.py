@@ -5,7 +5,7 @@
 
 """Types and constants from jobapi2.h."""
 
-import enum
+import enum  # noqa: I001
 from ctypes import (
 	Structure,
 	c_size_t,

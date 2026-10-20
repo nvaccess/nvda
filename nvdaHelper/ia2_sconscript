@@ -18,21 +18,20 @@ import re
 Import("env")
 
 # We want a single merged IDL, rather than the separate IDL files in the IA2 source.
-RE_IDL_IMPORT = re.compile(r'import "[A-Z].*$', re.M)
+RE_IDL_IMPORT = re.compile(r'import "[A-Z].*$', re.MULTILINE)
 
 
 def buildMergedIdl(target, source, env):
-	outFile = open(str(target[0]), "w")
+	outFile = open(str(target[0]), "w")  # noqa: SIM115
 	# The first source is a header and should be included unmodified.
-	inFile = open(str(source[0]), "r")
+	inFile = open(str(source[0]), "r")  # noqa: SIM115
 	outFile.write(inFile.read())
 	outFile.write("\n")
 	for idl in source[1:]:
 		# This source should be included with import statements removed.
-		inFile = open(str(idl), "r")
+		inFile = open(str(idl), "r")  # noqa: SIM115
 		outFile.write(RE_IDL_IMPORT.sub("", inFile.read()))
 		outFile.write("\n")
-	return None
 
 
 idlDir = env.Dir("#include/ia2/api")

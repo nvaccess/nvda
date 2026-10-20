@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import json
 import weakref
 import typing
@@ -31,9 +31,9 @@ from speech.commands import (
 )
 
 if typing.TYPE_CHECKING:
-	import extensionPoints
+	import extensionPoints  # noqa: I001
 	from ..services.synthDriver import SynthDriverService
-	from _bridge.base import Proxy
+	from _bridge.base import Proxy  # noqa: TC004
 
 
 class SynthDriverProxy(Proxy, SynthDriver):

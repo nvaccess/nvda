@@ -10,7 +10,7 @@ https://github.com/nvaccess/nvda/issues/9039
 https://github.com/nvaccess/nvda/issues/12560
 """
 
-import os
+import os  # noqa: I001
 import subprocess
 import winVersion
 import globalVars

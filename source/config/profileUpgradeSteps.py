@@ -30,6 +30,7 @@ from config.configFlags import (
 	TetherTo,
 	TypingEcho,
 )
+from config.featureFlagEnums import BrailleTextWrapFlag
 
 
 def upgradeConfigFrom_0_to_1(profile: ConfigObj) -> None:
@@ -463,7 +464,7 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 	:param friendlyName: Friendly name of the device to search for.
 	:return: Endpoint ID string of the best match device, or `None` if no device with a matching friendly name is available.
 	"""
-	from utils.mmdevice import getOutputDevices
+	from utils.mmdevice import getOutputDevices  # noqa: I001
 	from pycaw.constants import DEVICE_STATE
 
 	states = (DEVICE_STATE.ACTIVE, DEVICE_STATE.UNPLUGGED, DEVICE_STATE.DISABLED, DEVICE_STATE.NOTPRESENT)
@@ -517,7 +518,7 @@ def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 		log.debug(f"Loading remote config from {remoteIniPath}")
 		remoteConfig = ConfigObj(remoteIniPath, encoding="UTF-8")
 	except Exception:
-		log.error("Error loading remote.ini", exc_info=True)
+		log.error("Error loading remote.ini", exc_info=True)  # noqa: G201
 		return
 
 	# Create remote section if it doesn't exist
@@ -538,7 +539,7 @@ def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 		os.rename(remoteIniPath, backupPath)
 		log.debug(f"Backed up remote.ini to {backupPath}")
 	except Exception:
-		log.error("Error backing up remote.ini after migration", exc_info=True)
+		log.error("Error backing up remote.ini after migration", exc_info=True)  # noqa: G201
 
 
 def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
@@ -706,3 +707,28 @@ def upgradeConfigFrom_23_to_24(profile: ConfigObj):
 		log.debug("No isTrueCentered setting in profile. No action taken.")
 	if magnifierConf.get("fullscreenMode") == "border":
 		del magnifierConf["fullscreenMode"]
+
+
+def upgradeConfigFrom_24_to_25(profile: ConfigObj) -> None:
+	"""
+	If the wordWrap braille config flag is explicitly set in a profile,
+	set the new text wrap option to word boundaries,
+	rather than the new default of at word boundaries.
+	"""
+	section = "braille"
+	key = "wordWrap"
+	newKey = "textWrap"
+	try:
+		oldValue: bool = profile[section].as_bool(key)
+	except KeyError:
+		log.debug(f"'{key}' not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error(f"'{key}' is not a boolean, got {profile[section][key]!r}. No action taken.")
+		return
+
+	newValue = BrailleTextWrapFlag.AT_WORD_BOUNDARIES.name if oldValue else BrailleTextWrapFlag.NONE.name
+	profile[section][newKey] = newValue
+	log.debug(
+		f"Converted '{key}' with value {oldValue} to '{newKey}' with value {newValue}.",
+	)

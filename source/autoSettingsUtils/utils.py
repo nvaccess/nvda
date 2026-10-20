@@ -38,7 +38,7 @@ class UnsupportedConfigParameterError(NotImplementedError):
 	"""
 
 
-class StringParameterInfo(object):
+class StringParameterInfo:
 	"""
 	Used to represent a value of a DriverSetting instance.
 	"""

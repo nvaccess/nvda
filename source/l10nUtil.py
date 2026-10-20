@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import crowdin_api as crowdin
+import crowdin_api as crowdin  # noqa: I001
 import tempfile
 import lxml.etree
 import os
@@ -212,7 +212,7 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 				f"./xliff:file/xliff:unit[@id='{unitID}']/xliff:segment/xliff:target",
 				namespaces=namespace,
 			)
-			if oldTarget is not None and oldTarget.getparent().get("state") != "initial":
+			if oldTarget is not None and oldTarget.getparent().get("state") != "initial":  # noqa: SIM102
 				if oldTarget.text == targetText:
 					file.remove(unit)
 					existingTranslationCount += 1
@@ -271,7 +271,7 @@ def uploadTranslationFile(crowdinFilePath: str, localFilePath: str, language: st
 	fileId = crowdinFileIDs[crowdinFilePath]
 	print(f"Uploading {localFilePath} to Crowdin")
 	res = getCrowdinClient().storages.add_storage(
-		open(localFilePath, "rb"),
+		open(localFilePath, "rb"),  # noqa: SIM115
 	)
 	if res is None:
 		raise ValueError("Crowdin storage upload failed")
@@ -360,8 +360,7 @@ def exportTranslations(outputDir: str, language: str | None = None):
 	response.raise_for_status()
 
 	with open(zip_path, "wb") as f:
-		for chunk in response.iter_content(chunk_size=8192):
-			f.write(chunk)
+		f.writelines(response.iter_content(chunk_size=8192))
 
 	print(f"Archive saved to {zip_path}")
 	print("Extracting translations...")
@@ -479,7 +478,7 @@ class _PoChecker:
 		This will set the hasSyntaxError attribute to True if there is a syntax error.
 		"""
 
-		result = subprocess.run(
+		result = subprocess.run(  # noqa: PLW1510
 			(self.MSGFMT_PATH, "-o", "-", self._poPath),
 			stdout=subprocess.DEVNULL,
 			stderr=subprocess.PIPE,
@@ -568,7 +567,7 @@ class _PoChecker:
 		if self.alerts:
 			return False
 		self._checkMessages()
-		if self.alerts:
+		if self.alerts:  # noqa: SIM103
 			return False
 		return True
 
@@ -842,7 +841,7 @@ def main():
 			md2html.main(source=args.mdPath, dest=args.htmlPath, lang=args.lang, docType=args.docType)
 		case "xliff2html":
 			lang = args.lang or fetchLanguageFromXliff(args.xliffPath, source=args.untranslated)
-			temp_mdFile = tempfile.NamedTemporaryFile(suffix=".md", delete=False, mode="w", encoding="utf-8")
+			temp_mdFile = tempfile.NamedTemporaryFile(suffix=".md", delete=False, mode="w", encoding="utf-8")  # noqa: SIM115
 			temp_mdFile.close()
 			try:
 				markdownTranslate.generateMarkdown(
@@ -880,7 +879,7 @@ def main():
 			localFilePath = args.localFilePath or args.crowdinFilePath
 			needsDelete = False
 			if args.crowdinFilePath.endswith(".xliff"):
-				tmp = tempfile.NamedTemporaryFile(suffix=".xliff", delete=False, mode="w")
+				tmp = tempfile.NamedTemporaryFile(suffix=".xliff", delete=False, mode="w")  # noqa: SIM115
 				tmp.close()
 				shutil.copyfile(localFilePath, tmp.name)
 				stripXliff(tmp.name, tmp.name, args.old)

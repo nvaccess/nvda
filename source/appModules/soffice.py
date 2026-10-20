@@ -3,12 +3,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import (
-	Optional,
-	Union,
-)
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import comtypes.client
 import oleacc
 import time
@@ -60,7 +56,7 @@ class SymphonyTextInfo(IA2TextTextInfo, CompoundTextLeafTextInfo):
 	# Note: when working on _getFormatFieldFromLegacyAttributesString, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	# This is legacy code, kept for compatibility reasons.
-	def _getFormatFieldFromLegacyAttributesString(  # noqa: C901
+	def _getFormatFieldFromLegacyAttributesString(
 		self,
 		attribsString: str,
 		offset: int,
@@ -144,7 +140,7 @@ class SymphonyTextInfo(IA2TextTextInfo, CompoundTextLeafTextInfo):
 	def _getFormatFieldAndOffsetsFromAttributes(
 		self,
 		offset: int,
-		formatConfig: Optional[dict],
+		formatConfig: dict | None,
 		calculateOffsets: bool,
 	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		"""Get format field and offset information from either
@@ -190,7 +186,7 @@ class SymphonyTextInfo(IA2TextTextInfo, CompoundTextLeafTextInfo):
 	def _getFormatFieldAndOffsets(
 		self,
 		offset: int,
-		formatConfig: Optional[dict],
+		formatConfig: dict | None,
 		calculateOffsets: bool = True,
 	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		formatField, (startOffset, endOffset) = self._getFormatFieldAndOffsetsFromAttributes(
@@ -233,7 +229,7 @@ class SymphonyTextInfo(IA2TextTextInfo, CompoundTextLeafTextInfo):
 		return formatField, (startOffset, endOffset)
 
 	def _getLineOffsets(self, offset):
-		start, end = super(SymphonyTextInfo, self)._getLineOffsets(offset)
+		start, end = super()._getLineOffsets(offset)
 		if offset == 0 and start == 0 and end == 0:
 			# HACK: Symphony doesn't expose any characters at all on empty lines, but this means we don't ever fetch the list item prefix in this case.
 			# Fake a character so that the list item prefix will be spoken on empty lines.
@@ -243,7 +239,7 @@ class SymphonyTextInfo(IA2TextTextInfo, CompoundTextLeafTextInfo):
 
 	def _getStoryLength(self):
 		# HACK: Account for the character faked in _getLineOffsets() so that move() will work.
-		return max(super(SymphonyTextInfo, self)._getStoryLength(), 1)
+		return max(super()._getStoryLength(), 1)
 
 
 class SymphonyText(IAccessible, EditableText):
@@ -256,7 +252,7 @@ class SymphonyText(IAccessible, EditableText):
 		level = self.IA2Attributes.get("heading-level")
 		if level:
 			return {"level": int(level)}
-		return super(SymphonyText, self).positionInfo
+		return super().positionInfo
 
 	def event_valueChange(self) -> None:
 		# announce new value to indicate formatting change if registered gesture
@@ -276,7 +272,7 @@ class SymphonyTableCell(IAccessible):
 	TextInfo = SymphonyTextInfo
 
 	def _get_cellCoordsText(self):
-		return super(SymphonyTableCell, self).name
+		return super().name
 
 	name = None
 
@@ -284,7 +280,7 @@ class SymphonyTableCell(IAccessible):
 		return self.selectionContainer and 1 < self.selectionContainer.getSelectedItemsCount()
 
 	def _get_states(self):
-		states = super(SymphonyTableCell, self).states
+		states = super().states
 		states.discard(controlTypes.State.MULTILINE)
 		states.discard(controlTypes.State.EDITABLE)
 		if controlTypes.State.SELECTED not in states and controlTypes.State.FOCUSED in states:
@@ -334,11 +330,11 @@ class SymphonyIATableCell(SymphonyTableCell):
 			count = self.table.IAccessibleTable2Object.nSelectedCells
 			selection = self.table.IAccessibleObject.accSelection
 			enumObj = selection.QueryInterface(oleacc.IEnumVARIANT)
-			firstChild: Union[int, comtypes.client.dynamic._Dispatch]
+			firstChild: int | comtypes.client.dynamic._Dispatch
 			firstChild, _retrievedCount = enumObj.Next(1)
 			# skip over all except the last element
 			enumObj.Skip(count - 2)
-			lastChild: Union[int, comtypes.client.dynamic._Dispatch]
+			lastChild: int | comtypes.client.dynamic._Dispatch
 			lastChild, _retrieveCount = enumObj.Next(1)
 			# in LibreOffice 7.3.0, the IEnumVARIANT returns a child ID,
 			# in LibreOffice >= 7.4, it returns an IDispatch
@@ -449,7 +445,7 @@ class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
 				"cursor positioned {horizontalDistance} from left edge of page, {verticalDistance} from top edge of page",
 			).format(horizontalDistance=horizontalDistanceText, verticalDistance=verticalDistanceText)
 		except (AttributeError, KeyError):
-			return super(SymphonyDocumentTextInfo, self)._get_locationText()
+			return super()._get_locationText()
 
 
 class SymphonyDocument(CompoundDocument):
@@ -458,7 +454,7 @@ class SymphonyDocument(CompoundDocument):
 	# variables used for handling announcements resulting from gestures
 	GESTURE_ANNOUNCEMENT_TIMEOUT: float = 2.0  # Seconds
 	announceFormattingGestureChange: bool = False
-	formattingGestureObjectIds: list[str] = []
+	formattingGestureObjectIds: list[str] = []  # noqa: RUF012
 	lastFormattingGestureEventTime: float = 0
 
 	@staticmethod
@@ -480,7 +476,7 @@ class SymphonyDocument(CompoundDocument):
 		# object or its parent has an ID that matches.
 		# (For editable comboboxes, the value change event is triggered for the edit
 		# that's a child of the combobox which has the corresponding ID.)
-		if (
+		if (  # noqa: SIM103
 			SymphonyDocument.formattingGestureObjectIds
 			and (SymphonyUtils.get_id(obj) not in SymphonyDocument.formattingGestureObjectIds)
 			and (SymphonyUtils.get_id(obj.parent) not in SymphonyDocument.formattingGestureObjectIds)
@@ -622,7 +618,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.description = None
 			obj.treeInterceptorClass = SymphonyDocument
 
-	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> Optional[NVDAObject]:
+	def searchStatusBar(self, obj: NVDAObject, max_depth: int = 5) -> NVDAObject | None:
 		"""Searches for and returns the status bar object
 		if either the object itself or one of its recursive children
 		(up to the given depth) has the corresponding role."""
@@ -642,7 +638,7 @@ class AppModule(appModuleHandler.AppModule):
 				return status_bar
 		return None
 
-	def _get_statusBar(self) -> Optional[NVDAObject]:
+	def _get_statusBar(self) -> NVDAObject | None:
 		return self.searchStatusBar(api.getForegroundObject())
 
 	def getStatusBarText(self, obj: NVDAObject) -> str:

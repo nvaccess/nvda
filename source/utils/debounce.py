@@ -7,13 +7,18 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from functools import wraps
 from time import monotonic
-from typing import Any, ParamSpec
+from typing import Any, Final, ParamSpec
 from weakref import WeakKeyDictionary
 
 import wx
 
-
 P = ParamSpec("P")
+
+PREVENT_THREE_HZ_FLASH_MS: Final[int] = 200
+"""
+Ensure we don't apply visual changes more than 3 times per second to avoid triggering seizures.
+WCAG Three Flashes rule.
+"""
 
 
 @dataclass
@@ -42,6 +47,7 @@ def _executeDelayedCall(func: Callable[..., Any], state: _DebounceState) -> None
 	args = state.pendingArgs
 	kwargs = state.pendingKwargs
 	func(*args, **kwargs)
+	state.lastCallTimeMs = monotonic() * 1000
 	state.pendingArgs = ()
 	state.pendingKwargs = {}
 	state.pendingHandle = None

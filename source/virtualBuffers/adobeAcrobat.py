@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2009-2022 NV Access Limited, Aleksey Sadovoy
 
-from . import VirtualBuffer, VirtualBufferTextInfo
+from . import VirtualBuffer, VirtualBufferTextInfo  # noqa: I001
 import browseMode
 import controlTypes
 import NVDAObjects.IAccessible
@@ -17,7 +17,7 @@ import languageHandler
 
 class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 	def _getBoundingRectFromOffset(self, offset):
-		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
+		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)  # noqa: RUF059
 		# The format field starts at the first character.
 		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart + 1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
@@ -37,7 +37,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 				# Older versions of Adobe Reader have per word objects, but they don't expose a location
 				break
 			return obj.location
-		return super(AdobeAcrobat_TextInfo, self)._getBoundingRectFromOffset(offset)
+		return super()._getBoundingRectFromOffset(offset)
 
 	def _normalizeControlField(self, attrs):
 		stdName = attrs.get("acrobat::stdname", "")
@@ -66,7 +66,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 		attrs["states"] = states
 		if level:
 			attrs["level"] = level
-		return super(AdobeAcrobat_TextInfo, self)._normalizeControlField(attrs)
+		return super()._normalizeControlField(attrs)
 
 	def _normalizeFormatField(self, attrs):
 		try:
@@ -89,7 +89,7 @@ class AdobeAcrobat(VirtualBuffer):
 	programmaticScrollMayFireEvent = True
 
 	def __init__(self, rootNVDAObject):
-		super(AdobeAcrobat, self).__init__(rootNVDAObject, backendName="adobeAcrobat")
+		super().__init__(rootNVDAObject, backendName="adobeAcrobat")
 
 	def __contains__(self, obj):
 		return winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
@@ -100,7 +100,7 @@ class AdobeAcrobat(VirtualBuffer):
 		root = self.rootNVDAObject
 		if not root:
 			return False
-		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:
+		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:  # noqa: SIM103
 			return False
 		return True
 
@@ -109,7 +109,7 @@ class AdobeAcrobat(VirtualBuffer):
 
 	def getIdentifierFromNVDAObject(self, obj):
 		if not isinstance(obj, AcrobatNode):
-			raise LookupError
+			raise LookupError  # noqa: TRY004
 		return obj.windowHandle, obj.accID
 
 	def _searchableAttribsForNodeType(self, nodeType):
@@ -118,7 +118,7 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType == "table":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_TABLE]}
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs = {"acrobat::stdname": ["H%s" % nodeType[7:]]}
+			attrs = {"acrobat::stdname": ["H%s" % nodeType[7:]]}  # noqa: UP031
 		elif nodeType == "heading":
 			attrs = {"acrobat::stdname": ["H", "H1", "H2", "H3", "H4", "H5", "H6"]}
 		elif nodeType == "formField":
@@ -132,7 +132,7 @@ class AdobeAcrobat(VirtualBuffer):
 					oleacc.ROLE_SYSTEM_OUTLINE,
 					oleacc.ROLE_SYSTEM_TEXT,
 				],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None],  # noqa: UP031
 			}
 		elif nodeType == "list":
 			attrs = {"acrobat::stdname": ["L"]}
@@ -143,7 +143,7 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType == "edit":
 			attrs = {
 				"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
-				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None],  # noqa: UP031
 			}
 		elif nodeType == "radioButton":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_RADIOBUTTON]}
@@ -152,7 +152,7 @@ class AdobeAcrobat(VirtualBuffer):
 		elif nodeType == "blockQuote":
 			attrs = {"acrobat::stdname": ["BlockQuote"]}
 		elif nodeType == "focusable":
-			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}  # noqa: UP031
 		elif nodeType == "graphic":
 			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
 		elif nodeType == "comboBox":

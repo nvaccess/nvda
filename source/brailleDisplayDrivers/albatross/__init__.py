@@ -5,5 +5,5 @@
 
 """Braille display driver for Tivomatic Caiku albatross 46 and 80 displays."""
 
-# Imported here so that braille._getDisplayDriver can import
+# Imported here so that braille.display._getDisplayDriver can import
 from .driver import BrailleDisplayDriver  # noqa: F401

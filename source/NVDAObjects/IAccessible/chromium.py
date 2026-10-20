@@ -5,8 +5,7 @@
 
 """NVDAObjects for the Chromium browser project"""
 
-import typing
-from typing import Dict, Optional
+import typing  # noqa: I001
 from comtypes import COMError
 
 import config
@@ -19,9 +18,9 @@ from logHandler import log
 if typing.TYPE_CHECKING:
 	# F401 imported but unused, actually used as a string within type annotation (to avoid having to import
 	# at run time)
-	from treeInterceptorHandler import TreeInterceptor  # noqa: F401
+	from treeInterceptorHandler import TreeInterceptor
 
-supportedAriaDetailsRoles: Dict[str, Optional[controlTypes.Role]] = {
+supportedAriaDetailsRoles: dict[str, controlTypes.Role | None] = {
 	"unknown": None,  # no explicit role, should be reported as "details"
 	"comment": controlTypes.Role.COMMENT,
 	"doc-footnote": controlTypes.Role.FOOTNOTE,
@@ -97,7 +96,7 @@ class ChromeVBuf(GeckoVBuf):
 
 
 class Document(ia2Web.Document):
-	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
+	def _get_treeInterceptorClass(self) -> type["TreeInterceptor"]:
 		shouldLoadVBufOnBusyFeatureFlag = bool(
 			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"],
 		)

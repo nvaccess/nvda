@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from logHandler import log
+from logHandler import log  # noqa: I001
 from .configSpec import latestSchemaVersion, confspec
 from configobj import flatten_errors
 from copy import deepcopy
@@ -20,7 +20,7 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 	_ensureVersionProperty(profile)
 	startSchemaVersion = int(profile[SCHEMA_VERSION_KEY])
 	log.debug(
-		"Current config schema version: {0}, latest: {1}".format(startSchemaVersion, latestSchemaVersion),
+		f"Current config schema version: {startSchemaVersion}, latest: {latestSchemaVersion}",
 	)
 	for fromVersion in range(startSchemaVersion, latestSchemaVersion):
 		_doConfigUpgrade(profile, fromVersion)
@@ -36,9 +36,9 @@ def upgrade(profile, validator, writeProfileToFileFunc):
 
 def _doConfigUpgrade(profile, fromVersion):
 	toVersion = fromVersion + 1
-	upgradeStepName = "upgradeConfigFrom_{0}_to_{1}".format(fromVersion, toVersion)
+	upgradeStepName = f"upgradeConfigFrom_{fromVersion}_to_{toVersion}"
 	upgradeStepFunc = getattr(profileUpgradeSteps, upgradeStepName)
-	log.debug("Upgrading from schema version {0} to {1}".format(fromVersion, toVersion))
+	log.debug(f"Upgrading from schema version {fromVersion} to {toVersion}")
 	upgradeStepFunc(profile)
 	profile[SCHEMA_VERSION_KEY] = toVersion
 
@@ -65,7 +65,7 @@ def _doValidation(profile, validator):
 				+ "Full result: (value of false means the key was not present)\n"
 				+ "{2}"
 			).format(key, value, flatResult)
-			raise ValueError(errorString)
+			raise ValueError(errorString)  # noqa: TRY004
 
 
 def _ensureVersionProperty(profile):

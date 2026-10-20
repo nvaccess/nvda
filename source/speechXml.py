@@ -51,7 +51,7 @@ def _buildInvalidXmlRegexp():
 		(0xFDD0, 0xFDDF),
 		(0xFFFE, 0xFFFF),
 	)
-	rangeExprs = ["%s-%s" % (chr(start), chr(end)) for start, end in ranges]
+	rangeExprs = ["%s-%s" % (chr(start), chr(end)) for start, end in ranges]  # noqa: UP031
 	leadingSurrogate = "[\ud800-\udbff]"
 	trailingSurrogate = "[\udc00-\udfff]"
 	return re.compile(
@@ -144,9 +144,9 @@ class XmlBalancer:
 			self._closeTag(tag)
 
 	def _openTag(self, tag, attrs, empty=False):
-		self._out.append("<%s" % tag)
+		self._out.append("<%s" % tag)  # noqa: UP031
 		for attr, val in attrs.items():
-			self._out.append(' %s="' % attr)
+			self._out.append(' %s="' % attr)  # noqa: UP031
 			# Attribute values could be ints, floats etc, not just strings.
 			# Therefore coerce the value to a string, as well as escaping xml characters.
 			self._out.append(_escapeXml(str(val)))
@@ -154,7 +154,7 @@ class XmlBalancer:
 		self._out.append("/>" if empty else ">")
 
 	def _closeTag(self, tag):
-		self._out.append("</%s>" % tag)
+		self._out.append("</%s>" % tag)  # noqa: UP031
 
 	def _setAttr(self, tag, attr, val):
 		attrs = self._tags.get(tag)
@@ -248,15 +248,15 @@ class SpeechXmlConverter:
 			elif isinstance(item, SpeechCommand):
 				name = type(item).__name__
 				# For example: self.convertIndexCommand
-				func = getattr(self, "convert%s" % name, None)
+				func = getattr(self, "convert%s" % name, None)  # noqa: UP031
 				if not func:
-					log.debugWarning("Unsupported command: %s" % item)
+					log.debugWarning("Unsupported command: %s" % item)  # noqa: UP031
 					return
 				command = func(item)
 				if command is not None:
 					yield command
 			else:
-				log.error("Unknown speech: %r" % item)
+				log.error("Unknown speech: %r" % item)  # noqa: UP031
 
 	def convertToXml(self, speechSequence):
 		"""Convenience method to convert a speech sequence to XML using L{XmlBalancer}."""
@@ -280,7 +280,7 @@ class SsmlConverter(SpeechXmlConverter):
 			),
 		)
 		yield EncloseAllCommand("speak", attrs)
-		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
+		for command in super().generateBalancerCommands(speechSequence):  # noqa: UP028
 			yield command
 
 	def convertIndexCommand(self, command):
@@ -298,7 +298,7 @@ class SsmlConverter(SpeechXmlConverter):
 		return SetAttrCommand("voice", "xml:lang", lang)
 
 	def convertBreakCommand(self, command):
-		return StandAloneTagCommand("break", {"time": "%dms" % command.time}, None)
+		return StandAloneTagCommand("break", {"time": "%dms" % command.time}, None)  # noqa: UP031
 
 	def _convertProsody(self, command, attr):
 		if command.multiplier == 1:
@@ -308,7 +308,7 @@ class SsmlConverter(SpeechXmlConverter):
 			return SetAttrCommand(
 				"prosody",
 				attr,
-				"%d%%" % int(command.multiplier * 100),
+				"%d%%" % int(command.multiplier * 100),  # noqa: UP031
 			)
 
 	def convertPitchCommand(self, command):
@@ -369,7 +369,7 @@ class SpeechXmlParser:
 		return self._speechSequence
 
 
-ParseGeneratorT = Generator[SpeechCommand, None, None]
+ParseGeneratorT = Generator[SpeechCommand]
 ParseFuncT = Callable[[dict[str, str] | None], ParseGeneratorT]
 MarkCallbackT = Callable[[str], None]
 

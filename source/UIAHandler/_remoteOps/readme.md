@@ -288,6 +288,43 @@ element.set(parent)
 
 This is useful when walking the element tree in a loop.
 
+### UIA cache requests
+
+#### Declaring a cache request
+
+To create a new remote cache request, call `ra.newCacheRequest`:
+
+```py
+cacheRequest = ra.newCacheRequest()
+```
+
+#### Adding properties and patterns
+
+To choose what the cache request will cache, use `addProperty` and `addPattern`:
+
+```py
+cacheRequest.addProperty(UIA_NamePropertyId)
+cacheRequest.addProperty(UIA_ControlTypePropertyId)
+cacheRequest.addPattern(UIA_TextPatternId)
+```
+
+#### Populating the cache of an element
+
+To populate the cache of a remote element from the cache request, call the element's `populateCache` method:
+
+```py
+element.populateCache(cacheRequest)
+```
+
+When such an element is later returned or yielded from the operation, the received `IUIAutomationElement` carries the populated cache.
+Its cached property and pattern getters, such as `getCachedPropertyValue`, can then be used without further cross-process calls.
+
+Note that a cache populated this way stores default values for properties the element does not support.
+The reserved "not supported" value that a locally built cache returns for such properties is not preserved:
+reads through `getCachedPropertyValueEx` behave as if `ignoreDefault` was not set.
+To determine whether an element supports a pattern, cache the corresponding `IsXPatternAvailable` property instead.
+Alternatively, fetch the property explicitly with `getPropertyValue` and `ignoreDefault` set, and test the result inside the operation with `isNotSupported` on the returned variant.
+
 ### UI Automation text ranges
 
 #### Declaring a text range

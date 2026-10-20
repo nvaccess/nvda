@@ -4,10 +4,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2014-2015 ONCE-CIDAT <cidat.id@once.es>
-from typing import List
 
-import inputCore
+import inputCore  # noqa: I001
 import braille
+import braille.display.driver
+import braille.display.gesture
 import hwPortUtils
 from collections import OrderedDict
 from logHandler import log
@@ -77,7 +78,7 @@ def eco_in_init(dev: serial.Serial) -> int:
 	# 0x10 0x02 TT AA BB CC DD 0x10 0x03
 	# where TT can be 0xF1 (identification message) or 0x88 (command pressed in the line)
 	# If TT = 0xF1, then the next byte (AA) give us the type of EcoBraille line (ECO 80, 40 or 20)
-	if (msg[0] == 0x10) and (msg[1] == 0x02) and (msg[7] == 0x10) and (msg[8] == 0x03):
+	if (msg[0] == 0x10) and (msg[1] == 0x02) and (msg[7] == 0x10) and (msg[8] == 0x03):  # noqa: SIM102
 		if msg[2] == 0xF1:  # Initial message
 			if msg[3] == 0x80:
 				return ecoTypes.TECO_80
@@ -109,7 +110,7 @@ def eco_in(dev: serial.Serial) -> int:
 	return 0
 
 
-output_dots_map: List[int] = [
+output_dots_map: list[int] = [
 	0x00,
 	0x10,
 	0x20,
@@ -369,7 +370,7 @@ output_dots_map: List[int] = [
 ]
 
 
-def eco_out(cells: List[int]) -> bytes:
+def eco_out(cells: list[int]) -> bytes:
 	# Messages sends to EcoBraille display are something like that:
 	# 0x10 0x02 0xBC message 0x10 0x03
 	ret = bytearray(b"\x10\x02\xbc")
@@ -380,7 +381,7 @@ def eco_out(cells: List[int]) -> bytes:
 	return bytes(ret)
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	"""EcoBraille display driver."""
 
 	name = "ecoBraille"
@@ -400,7 +401,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		return ports
 
 	def __init__(self, port):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self._port = port
 		# Try to open port
 		self._dev = serial.Serial(
@@ -423,7 +424,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._readTimer.Start(READ_INTERVAL)
 
 	def terminate(self):
-		super(BrailleDisplayDriver, self).terminate()
+		super().terminate()
 		try:
 			self._dev.write(b"\x61\x10\x02\xf1\x57\x57\x57\x10\x03")
 			self._readTimer.Stop()
@@ -435,7 +436,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _get_numCells(self):
 		return self._ecoType
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		try:
 			self._dev.write(eco_out(cells))
 		except:  # noqa: E722
@@ -462,7 +463,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				)
 			except:  # noqa: E722
 				log.debug(
-					"EcoBraille: No function associated with this routing key {key}".format(key=command),
+					f"EcoBraille: No function associated with this routing key {command}",
 				)
 		elif command > 0:
 			# Button
@@ -470,7 +471,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				inputCore.manager.executeGesture(InputGestureKeys(command))
 			except inputCore.NoInputGestureAction:
 				log.debug(
-					"EcoBraille: No function associated with this Braille key {key}".format(key=command),
+					f"EcoBraille: No function associated with this Braille key {command}",
 				)
 		return 0
 
@@ -499,18 +500,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGestureKeys(braille.BrailleDisplayGesture):
+class InputGestureKeys(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
-		super(InputGestureKeys, self).__init__()
+		super().__init__()
 		self.id = keyNames[keys]
 
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
+class InputGestureRouting(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):
-		super(InputGestureRouting, self).__init__()
+		super().__init__()
 		self.id = "routing"
-		self.routingIndex = index - 1
+		self.cellIndexes = [index - 1]

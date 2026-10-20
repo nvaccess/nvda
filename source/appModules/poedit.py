@@ -5,7 +5,7 @@
 
 """App module for Poedit 3.4+."""
 
-from enum import IntEnum
+from enum import IntEnum  # noqa: I001
 
 import api
 import appModuleHandler
@@ -243,7 +243,7 @@ class PoeditRichEdit(NVDAObject):
 		# These rich edit controls are incorrectly labeled.
 		# Oleacc doesn't return any name, and UIA defaults to RichEdit Control.
 		# The label object is positioned just above the field on the screen.
-		l, t, w, h = self.location  # noqa: E741
+		l, t, w, h = self.location  # noqa: RUF059
 		try:
 			self.name = NVDAObjects.NVDAObject.objectFromPoint(l + 10, t - 10).name
 		except AttributeError:

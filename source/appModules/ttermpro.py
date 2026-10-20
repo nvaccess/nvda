@@ -6,7 +6,7 @@
 
 """App module for Tera Term"""
 
-import oleacc
+import oleacc  # noqa: I001
 from NVDAObjects.behaviors import Terminal
 from NVDAObjects.window import DisplayModelEditableText, DisplayModelLiveText
 import appModuleHandler

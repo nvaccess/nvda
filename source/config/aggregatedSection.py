@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 from typing import (
-	Dict,
 	Protocol,
 	Union,
 )
@@ -21,4 +20,4 @@ class _SupportsStrT(Protocol):
 
 _cacheKeyT = str
 _cacheValueT = Union["_cacheT", _SupportsStrT, KeyError]
-_cacheT = Dict[str, _cacheValueT]
+_cacheT = dict[str, _cacheValueT]

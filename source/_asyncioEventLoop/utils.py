@@ -39,6 +39,6 @@ def runCoroutineSync(coro: Coroutine, timeout: float | None = None):
 	future = runCoroutine(coro)
 	try:
 		return future.result(timeout)
-	except asyncio.TimeoutError as e:
+	except TimeoutError as e:
 		future.cancel()
 		raise TimeoutError(f"Coroutine execution timed out after {timeout} seconds") from e

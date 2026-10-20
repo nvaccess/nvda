@@ -3,12 +3,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from typing import (
-	Optional,
-	Union,
-)
 
-import api
+import api  # noqa: I001
 from baseObject import ScriptableObject
 import winUser
 from logHandler import log
@@ -36,7 +32,7 @@ def getObjectPosition(obj):
 			pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		except (NotImplementedError, RuntimeError):
 			log.debugWarning(
-				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,
+				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,  # noqa: UP031
 			)
 			# First position not supported either, return first position from a generic NVDAObjectTextInfo
 			return NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST), obj
@@ -96,7 +92,7 @@ modes = [
 _currentMode = 0
 
 
-def getPositionForCurrentMode(obj: NVDAObject) -> Union[textInfos.TextInfo, ScriptableObject]:
+def getPositionForCurrentMode(obj: NVDAObject) -> textInfos.TextInfo | ScriptableObject:
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode.
 	@param obj: the NVDAObject to review
@@ -116,9 +112,9 @@ def getCurrentMode():
 
 
 def setCurrentMode(
-	mode: Union[int, str],
+	mode: int | str,
 	updateReviewPosition: bool = True,
-) -> Optional[str]:
+) -> str | None:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
@@ -133,7 +129,7 @@ def setCurrentMode(
 				mode = index
 				break
 		else:
-			raise LookupError("mode %s not found" % mode)
+			raise LookupError("mode %s not found" % mode)  # noqa: UP031
 	obj = api.getNavigatorObject()
 	pos = func(obj)
 	if pos:
@@ -176,7 +172,7 @@ def handleCaretMove(pos):
 		obj = pos
 	mode = getCurrentMode()
 	if isinstance(obj, NVDAObject):
-		if not mode == "object" or obj != api.getNavigatorObject():
+		if not mode == "object" or obj != api.getNavigatorObject():  # noqa: SIM201
 			return
 	elif isinstance(obj, DocumentTreeInterceptor):
 		if mode not in ("object", "document"):

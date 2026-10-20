@@ -13,9 +13,7 @@ https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Annotations
 from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
-	List,
 	Optional,
-	Tuple,
 )
 
 if TYPE_CHECKING:
@@ -23,14 +21,14 @@ if TYPE_CHECKING:
 	from NVDAObjects import NVDAObject
 
 __all__ = [
-	"AnnotationTarget",
 	"AnnotationOrigin",
+	"AnnotationTarget",
 	"_AnnotationNavigation",
 	"_AnnotationNavigationNode",
 	"_AnnotationRolesT",
 ]
 
-_AnnotationRolesT = Tuple[Optional["controlTypes.Role"]]
+_AnnotationRolesT = tuple[Optional["controlTypes.Role"]]
 
 
 class AnnotationTarget:
@@ -62,14 +60,14 @@ class AnnotationOrigin:
 	"""
 
 	def __init__(self, originObj: "NVDAObject"):
-		self._originObj: "NVDAObject" = originObj
+		self._originObj: NVDAObject = originObj
 
 	def __bool__(self):
 		"""Performant implementation required to test for annotations"""
 		raise NotImplementedError
 
 	@property
-	def targets(self) -> Tuple[AnnotationTarget]:
+	def targets(self) -> tuple[AnnotationTarget]:
 		raise NotImplementedError
 
 	@property
@@ -83,7 +81,7 @@ class _AnnotationNavigationNode:
 
 	_TargetIndex = int  # Type for target index
 	origin: "NVDAObject"  # this is the last known location
-	indexOfLastReportedSummary: Optional[_TargetIndex] = None  # this would be the next destination
+	indexOfLastReportedSummary: _TargetIndex | None = None  # this would be the next destination
 
 
 class _AnnotationNavigation:
@@ -92,5 +90,5 @@ class _AnnotationNavigation:
 	For example, reporting a summary of each comment for an object with multiple comment annotation targets.
 	"""
 
-	lastReported: Optional[_AnnotationNavigationNode] = None
-	priorOrigins: List["NVDAObject"] = []
+	lastReported: _AnnotationNavigationNode | None = None
+	priorOrigins: list["NVDAObject"] = []  # noqa: RUF012

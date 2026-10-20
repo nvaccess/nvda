@@ -5,7 +5,7 @@
 
 """Unit tests for the addonVersionCheck module."""
 
-import unittest
+import unittest  # noqa: I001
 
 import addonAPIVersion
 from addonHandler.addonVersionCheck import (
@@ -34,7 +34,7 @@ class mockAddon(AddonBase):
 		name="mockAddon",
 		version="1.0",
 	):
-		super(mockAddon, self).__init__()
+		super().__init__()
 		self._name = name
 		self._version = version
 		self._minAPIVersion = minAPIVersion

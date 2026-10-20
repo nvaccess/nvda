@@ -1,3 +1,10 @@
+/*
+A part of NonVisual Desktop Access (NVDA)
+Copyright (C) 2023-2026 NV Access Limited, Leonard de Ruijter
+This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+*/
+
 #include <uiAutomationClient.h>
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.foundation.collections.h>
@@ -139,6 +146,22 @@ HRESULT IInspectableToVariant(winrt::Windows::Foundation::IInspectable result, V
 			case PropertyType::Int32:
 				arg_pVariant->vt = VT_I4;
 				arg_pVariant->lVal = propVal.GetInt32();
+				break;
+			case PropertyType::UInt32:
+				arg_pVariant->vt = VT_UI4;
+				arg_pVariant->ulVal = propVal.GetUInt32();
+				break;
+			case PropertyType::Int64:
+				arg_pVariant->vt = VT_I8;
+				arg_pVariant->llVal = propVal.GetInt64();
+				break;
+			case PropertyType::Single:
+				arg_pVariant->vt = VT_R4;
+				arg_pVariant->fltVal = propVal.GetSingle();
+				break;
+			case PropertyType::Double:
+				arg_pVariant->vt = VT_R8;
+				arg_pVariant->dblVal = propVal.GetDouble();
 				break;
 			case PropertyType::String:
 				arg_pVariant->vt = VT_BSTR;

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from NVDAObjects.window import edit
+from NVDAObjects.window import edit  # noqa: I001
 import ui
 import appModuleHandler
 import controlTypes
@@ -20,7 +20,7 @@ SCRCAT_VIPMUD = _("VipMud")
 
 class AppModule(appModuleHandler.AppModule):
 	lastLength = 0
-	msgs = []
+	msgs = []  # noqa: RUF012
 	historyLength = 9
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):

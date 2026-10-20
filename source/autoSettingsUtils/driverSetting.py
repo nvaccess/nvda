@@ -9,7 +9,6 @@
 Naming of these classes is historical, kept for backwards compatibility purposes.
 """
 
-from typing import Optional
 from baseObject import AutoPropertyObject
 
 
@@ -36,7 +35,7 @@ class DriverSetting(AutoPropertyObject):
 		"""Returns the configuration specification of this particular setting for config file validator.
 		@rtype: str
 		"""
-		return "string(default={defaultVal})".format(defaultVal=self.defaultVal)
+		return f"string(default={self.defaultVal})"
 
 	def __init__(
 		self,
@@ -44,7 +43,7 @@ class DriverSetting(AutoPropertyObject):
 		displayNameWithAccelerator: str,
 		availableInSettingsRing: bool = False,
 		defaultVal: object = None,
-		displayName: Optional[str] = None,
+		displayName: str | None = None,
 		useConfig: bool = True,
 	):
 		"""
@@ -77,11 +76,7 @@ class NumericDriverSetting(DriverSetting):
 	defaultVal: int
 
 	def _get_configSpec(self):
-		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
-			defaultVal=self.defaultVal,
-			minVal=self.minVal,
-			maxVal=self.maxVal,
-		)
+		return f"integer(default={self.defaultVal},min={self.minVal},max={self.maxVal})"
 
 	def __init__(
 		self,
@@ -94,7 +89,7 @@ class NumericDriverSetting(DriverSetting):
 		minStep: int = 1,
 		normalStep: int = 5,
 		largeStep: int = 10,
-		displayName: Optional[str] = None,
+		displayName: str | None = None,
 		useConfig: bool = True,
 	):
 		"""
@@ -109,7 +104,7 @@ class NumericDriverSetting(DriverSetting):
 			This is used for pageUp/pageDown on sliders in the Voice Settings dialog.
 		@note: If necessary, the step values will be normalised so that L{minStep} <= L{normalStep} <= L{largeStep}.
 		"""
-		super(NumericDriverSetting, self).__init__(
+		super().__init__(
 			id,
 			displayNameWithAccelerator,
 			availableInSettingsRing=availableInSettingsRing,
@@ -136,14 +131,14 @@ class BooleanDriverSetting(DriverSetting):
 		id: str,
 		displayNameWithAccelerator: str,
 		availableInSettingsRing: bool = False,
-		displayName: Optional[str] = None,
+		displayName: str | None = None,
 		defaultVal: bool = False,
 		useConfig: bool = True,
 	):
 		"""
 		@param defaultVal: Specifies the default value for a boolean driver setting.
 		"""
-		super(BooleanDriverSetting, self).__init__(
+		super().__init__(
 			id,
 			displayNameWithAccelerator,
 			availableInSettingsRing=availableInSettingsRing,
@@ -154,4 +149,4 @@ class BooleanDriverSetting(DriverSetting):
 
 	def _get_configSpec(self):
 		defaultVal = repr(self.defaultVal) if self.defaultVal is not None else self.defaultVal
-		return "boolean(default={defaultVal})".format(defaultVal=defaultVal)
+		return f"boolean(default={defaultVal})"

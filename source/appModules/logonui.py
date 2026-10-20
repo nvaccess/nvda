@@ -4,9 +4,10 @@
 # See the file COPYING for more details.
 # Copyright (C) 2009-2016 NV Access Limited, Joseph Lee
 
-import speech
+import speech  # noqa: I001
 import api
 import braille
+import braille.regions.focus
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import Dialog
@@ -36,7 +37,7 @@ class LogonDialog(Dialog):
 			eventHandler.queueEvent("gainFocus", child)
 			return
 
-		return super(LogonDialog, self).event_gainFocus()
+		return super().event_gainFocus()
 
 
 class Win8PasswordField(UIA):
@@ -62,7 +63,7 @@ class XPPasswordField(IAccessible):
 			self.parent.invalidateCache()
 			return self.parent.name
 		except:  # noqa: E722
-			return super(XPPasswordField, self).name
+			return super().name
 
 	def script_changeUser(self, gesture):
 		# The up and down arrow keys change the selected user, but there's no reliable NVDA event for detecting this.
@@ -84,7 +85,7 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 
-		if UIAHandler.handler:
+		if UIAHandler.handler:  # noqa: SIM102
 			if (
 				isinstance(obj, UIA)
 				and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox")
@@ -124,5 +125,5 @@ class AppModule(appModuleHandler.AppModule):
 					role=True,
 					description=True,
 				)
-				braille.invalidateCachedFocusAncestors(1)
+				braille.regions.focus.invalidateCachedFocusAncestors(1)
 		nextHandler()

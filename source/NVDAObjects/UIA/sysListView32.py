@@ -6,8 +6,7 @@
 
 """Module for native UIA implementations of SysListView32, e.g. in Windows Forms."""
 
-from typing import Dict, List, Optional, Type
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 import config
 from logHandler import log
 from config.configFlags import ReportTableHeaders
@@ -17,7 +16,7 @@ from ..behaviors import RowWithFakeNavigation
 from . import ListItem, UIA
 
 
-def findExtraOverlayClasses(obj: NVDAObject, clsList: List[Type[NVDAObject]]) -> None:
+def findExtraOverlayClasses(obj: NVDAObject, clsList: list[type[NVDAObject]]) -> None:
 	UIAControlType = obj.UIAElement.cachedControlType
 	if UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
 		clsList.insert(0, SysListViewList)
@@ -83,7 +82,7 @@ class SysListViewItem(ListItem):
 			textList.append(text)
 		return "; ".join(textList)
 
-	def _get_indexInParent(self) -> Optional[int]:
+	def _get_indexInParent(self) -> int | None:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount == 0:
 			return super().indexInParent
@@ -101,7 +100,7 @@ class SysListViewItem(ListItem):
 			return super().indexInParent
 		return val
 
-	def _get_positionInfo(self) -> Dict[str, int]:
+	def _get_positionInfo(self) -> dict[str, int]:
 		info = super().positionInfo or {}
 		itemIndex = 0
 		try:

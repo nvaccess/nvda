@@ -5,7 +5,7 @@
 
 """An appModule for the Windows Mail app, for Windows 10 and 11."""
 
-import controlTypes
+import controlTypes  # noqa: I001
 import appModuleHandler
 from comtypes import COMError
 import UIAHandler
@@ -14,10 +14,7 @@ from NVDAObjects.UIA.wordDocument import WordDocument
 
 class MailWordDocumentTreeInterceptor(WordDocument.treeInterceptorClass):
 	def _get_isAlive(self):
-		return (
-			super(MailWordDocumentTreeInterceptor, self).isAlive
-			and self.rootNVDAObject.shouldCreateTreeInterceptor
-		)
+		return super().isAlive and self.rootNVDAObject.shouldCreateTreeInterceptor
 
 
 class MailWordDocument(WordDocument):

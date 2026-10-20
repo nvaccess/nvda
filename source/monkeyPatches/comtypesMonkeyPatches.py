@@ -6,7 +6,7 @@
 # Warning: no comtypes modules can be imported at the module level
 # since we need to replace ctypes.WINFUNCTYPE with our custom version.
 
-import ctypes
+import ctypes  # noqa: I001
 import _ctypes
 from ctypes import cast, c_void_p
 from _ctypes import _Pointer
@@ -133,7 +133,7 @@ def newCpbDel(self):
 		if not isFinalizing:
 			from logHandler import log
 
-			log.debugWarning("COM pointer %r already deleted" % self)
+			log.debugWarning("COM pointer %r already deleted" % self)  # noqa: UP031
 		return
 	if not isFinalizing:
 		import garbageHandler
@@ -144,7 +144,7 @@ def newCpbDel(self):
 	except Exception:
 		from logHandler import log
 
-		log.error(f"Exception when deleting COM pointer {self!r}:", exc_info=True)
+		log.error(f"Exception when deleting COM pointer {self!r}:", exc_info=True)  # noqa: G201
 	self._deleted = True
 
 
@@ -220,7 +220,7 @@ def vt_R8_to_c_double() -> None:
 	# Overriding the first mapping, thus it never appears in the _vartype_to_ctype DICTIONARY.
 	# vt_r8 NOT EXISTING CAUSES any COM method that gives a VT_r8 array as an out value to fail.
 	# For example, the cellSize UIA custom property in Excel.
-	from comtypes.automation import _vartype_to_ctype, VT_R8
+	from comtypes.automation import _vartype_to_ctype, VT_R8  # noqa: I001
 
 	_vartype_to_ctype[VT_R8] = ctypes.c_double
 
@@ -228,7 +228,7 @@ def vt_R8_to_c_double() -> None:
 def appendComInterfacesToGenSearchPath() -> None:
 	# Initialise comtypes.client.gen_dir and the comtypes.gen search path
 	# and append our comInterfaces directory to the comtypes.gen search path.
-	import comtypes.client
+	import comtypes.client  # noqa: I001
 	import comtypes.gen
 	import comInterfaces
 

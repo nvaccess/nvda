@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 from NVDAObjects import NVDAObject
 from NVDAObjects.UIA import UIA
 from NVDAObjects.window import Window
@@ -38,7 +38,7 @@ class AppModule(appModuleHandler.AppModule):
 	def isBadUIAWindow(self, hwnd: int):
 		windowClassName = winUser.getClassName(hwnd)
 		normalizedClassName = Window.normalizeWindowClassName(windowClassName)
-		if normalizedClassName in (
+		if normalizedClassName in (  # noqa: SIM103
 			# #15503: SysListView32 controls in task manager are known to have an incomplete UIA implementation.
 			# Revert back to the MSAA implementation instead.
 			"SysListView32",

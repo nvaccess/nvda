@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue
+# Copyright (C) 2025-2026 NV Access Limited, Antoine Haffreingue, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -11,29 +11,34 @@ from ctypes import byref
 from ctypes.wintypes import RECT
 from typing import override
 
-from logHandler import log
-import ui
 import systemUtils
+import ui
+from logHandler import log
+from utils.debounce import PREVENT_THREE_HZ_FLASH_MS, debounceLimiter
 from winBindings import magnification
+
+from .config import _isDebug, getFullscreenMode, isTrueCentered
 from .magnifier import Magnifier
+from .utils.errorHandling import MagnifierStartError, trackNativeMagnifierErrors
 from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
 from .utils.types import (
-	Filter,
-	MagnifiedView,
-	FullScreenMode,
-	Size,
-	MagnifierParameters,
 	Coordinates,
+	Filter,
+	FullScreenMode,
+	MagnifiedView,
+	MagnifierParameters,
+	Size,
 )
-from .config import getFullscreenMode, isTrueCentered, _isDebug
-from .utils.errorHandling import trackNativeMagnifierErrors, MagnifierStartError
 
 
 class FullScreenMagnifier(Magnifier):
 	"""Magnifier that uses the Windows Magnification API to magnify the entire screen."""
 
-	_MAX_RECOVERY_ATTEMPTS: int = 3
+	_MAX_RECOVERY_ATTEMPTS: int = 1
+	"""
+	Limited to 1 as current implementation of recovery causes flashing of the screen. (#20897)
+	"""
 	_MAGNIFIED_VIEW = MagnifiedView.FULLSCREEN
 
 	def __init__(self):
@@ -219,7 +224,7 @@ class FullScreenMagnifier(Magnifier):
 			self._initializeNativeMagnification()
 			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 		except OSError:
-			log.error("Recovery failed", exc_info=True)
+			log.error("Recovery failed", exc_info=True)  # noqa: G201
 			self._conductRecoveryFailure()
 			return
 
@@ -251,6 +256,10 @@ class FullScreenMagnifier(Magnifier):
 			case Filter.INVERTED:
 				return FilterMatrix.INVERTED
 
+	@debounceLimiter(
+		cooldownTimeMs=PREVENT_THREE_HZ_FLASH_MS,
+		delayTimeMs=PREVENT_THREE_HZ_FLASH_MS,
+	)
 	@trackNativeMagnifierErrors
 	def _applyFilter(self) -> None:
 		"""
@@ -311,6 +320,19 @@ class FullScreenMagnifier(Magnifier):
 				return self._relativePos(coordinates)
 			case FullScreenMode.CENTER:
 				return coordinates
+
+	def _computeMagnifiedViewCenter(self) -> Coordinates:
+		"""
+		Compute the coordinates of the center of the currently magnified view.
+
+		:return: The (x, y) coordinates of the center of the magnified view
+		"""
+
+		coordinates = self._getCoordinatesForMode(self.currentCoordinates)
+		params = self._getMagnifierParameters(coordinates)
+		centerX = params.coordinates.x + params.magnifierSize.width // 2
+		centerY = params.coordinates.y + params.magnifierSize.height // 2
+		return Coordinates(centerX, centerY)
 
 	def _relativePos(
 		self,

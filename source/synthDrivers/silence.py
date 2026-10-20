@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections import OrderedDict
+from collections import OrderedDict  # noqa: I001
 import synthDriverHandler
 from speech.commands import IndexCommand
 
@@ -20,7 +20,7 @@ class SynthDriver(synthDriverHandler.SynthDriver):
 		return True
 
 	supportedSettings = frozenset()
-	_availableVoices = OrderedDict({name: synthDriverHandler.VoiceInfo(name, description)})
+	_availableVoices = OrderedDict({name: synthDriverHandler.VoiceInfo(name, description)})  # noqa: RUF012
 
 	def speak(self, speechSequence):
 		self.lastIndex = None

@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from . import edit
+from . import edit  # noqa: I001
 import winUser
 import winKernel
 import ctypes
@@ -107,7 +107,7 @@ class AkelEditTextInfo(edit.EditTextInfo):
 		return end + 1
 
 	def _getLineOffsets(self, offset):
-		(start, end) = super(AkelEditTextInfo, self)._getLineOffsets(offset)
+		(start, end) = super()._getLineOffsets(offset)
 		if end == self._getStoryLength():
 			return (start, end)
 		ciChar = AECHARINDEX()

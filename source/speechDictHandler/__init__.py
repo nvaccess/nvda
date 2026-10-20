@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import globalVars
+import globalVars  # noqa: I001
 from .types import DictionaryType
 from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
 
@@ -51,9 +51,9 @@ def terminate() -> None:
 
 
 __all__ = [
-	"processText",
 	"initialize",
-	"terminate",
-	"loadVoiceDict",
 	"listAvailableSpeechDictDefinitions",
+	"loadVoiceDict",
+	"processText",
+	"terminate",
 ]

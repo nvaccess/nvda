@@ -6,7 +6,7 @@
 
 """Utilities and classes to manage logging in NVDA"""
 
-import os
+import os  # noqa: I001
 import ctypes
 import sys
 import threading
@@ -71,7 +71,7 @@ def getFormattedStacksForAllThreads() -> str:
 
 def isPathExternalToNVDA(path: str) -> bool:
 	"""Checks if the given path is external to NVDA (I.e. not pointing to built-in code)."""
-	if (
+	if (  # noqa: SIM103
 		path[0] != "<"
 		and os.path.isabs(path)
 		and not os.path.normpath(path).startswith(_NVDA_CODE_PATH + "\\")
@@ -221,7 +221,7 @@ _excInfo_t = tuple[type[BaseException] | None, BaseException | None, TracebackTy
 
 class Logger(logging.Logger):
 	# Import standard levels for convenience.
-	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL
+	from logging import DEBUG, INFO, WARNING, WARN, ERROR, CRITICAL  # noqa: I001
 
 	# Our custom levels.
 	DEBUG_UNREDACTED = 5
@@ -297,7 +297,7 @@ class Logger(logging.Logger):
 
 			try:
 				formattedMsg = msg % args if args else msg
-			except Exception:
+			except Exception:  # noqa: BLE001
 				formattedMsg = msg
 				self.exception(
 					"Failed to format log message for secret redaction, logging unredacted exception.",
@@ -442,7 +442,7 @@ class RemoteHandler(logging.Handler):
 		msg = self.format(record)
 		try:
 			self._remoteLib.nvdaControllerInternal_logMessage(record.levelno, globalVars.appPid, msg)
-		except WindowsError:
+		except OSError:
 			pass
 
 
@@ -460,7 +460,7 @@ class Formatter(logging.Formatter):
 	default_msec_format = "%s.%03d"
 
 	def formatException(self, ex):
-		return stripBasePathFromTracebackText(super(Formatter, self).formatException(ex))
+		return stripBasePathFromTracebackText(super().formatException(ex))
 
 	def format(self, record: logging.LogRecord) -> str:
 		# NVDA's log calls provide / generate a special 'codepath' record attribute.
@@ -487,7 +487,7 @@ class Formatter(logging.Formatter):
 		return self.default_msec_format % (res, record.msecs)
 
 
-class StreamRedirector(object):
+class StreamRedirector:
 	"""Redirects an output stream to a logger."""
 
 	def __init__(self, name, logger, level):
@@ -597,7 +597,7 @@ def _shouldDisableLogging() -> bool:
 	* `--debug-logging` or `--log-level=X` overrides the user config log level setting.
 	* `--debug-logging` and `--log-level=X` override `--no-logging`.
 	"""
-	logLevelOverridden = globalVars.appArgs.debugLogging or not globalVars.appArgs.logLevel == 0
+	logLevelOverridden = globalVars.appArgs.debugLogging or not globalVars.appArgs.logLevel == 0  # noqa: SIM201
 	noLoggingRequested = globalVars.appArgs.noLogging and not logLevelOverridden
 	return globalVars.appArgs.secure or noLoggingRequested
 
@@ -619,7 +619,7 @@ def initialize(shouldDoRemoteLogging=False):
 	@var shouldDoRemoteLogging: True if all logging should go to the real NVDA via rpc (for slave)
 	@type shouldDoRemoteLogging: bool
 	"""
-	global log, logHandler
+	global log, logHandler  # noqa: PLW0602
 	logging.addLevelName(Logger.DEBUG_UNREDACTED, "DEBUG_UNREDACTED")
 	logging.addLevelName(Logger.DEBUGWARNING, "DEBUGWARNING")
 	logging.addLevelName(Logger.IO, "IO")
@@ -646,11 +646,11 @@ def initialize(shouldDoRemoteLogging=False):
 				if os.path.exists(oldLogFileName):
 					os.unlink(oldLogFileName)
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
-			except (IOError, WindowsError):
+			except OSError:
 				pass  # Probably log does not exist, don't care.
 			try:
 				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
-			except IOError:
+			except OSError:
 				# if log cannot be opened, we use NullHandler to avoid logging preserving logger behaviour
 				# and set log filename to None to inform logViewer about it
 				globalVars.appArgs.logFileName = None
@@ -707,7 +707,7 @@ def setLogLevelFromConfig():
 		log.INFO,
 		log.OFF,
 	):
-		log.warning("invalid setting for logging level: %s" % levelName)
+		log.warning("invalid setting for logging level: %s" % levelName)  # noqa: UP031
 		level = log.INFO
 		config.conf["general"]["loggingLevel"] = logging.getLevelName(log.INFO)
 	log.root.setLevel(level)

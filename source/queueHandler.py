@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import types
+import types  # noqa: I001
 from queue import SimpleQueue
 from logHandler import log
 import watchdog
@@ -22,18 +22,18 @@ lastGeneratorObjID = 0
 
 
 def registerGeneratorObject(generatorObj):
-	global generators, lastGeneratorObjID
+	global generators, lastGeneratorObjID  # noqa: PLW0602
 	if not isinstance(generatorObj, types.GeneratorType):
-		raise TypeError("Arg 2 must be a generator object, not %s" % type(generatorObj))
+		raise TypeError("Arg 2 must be a generator object, not %s" % type(generatorObj))  # noqa: UP031
 	lastGeneratorObjID += 1
-	log.debug("Adding generator %d" % lastGeneratorObjID)
+	log.debug("Adding generator %d" % lastGeneratorObjID)  # noqa: UP031
 	generators[lastGeneratorObjID] = generatorObj
 	core.requestPump()
 	return lastGeneratorObjID
 
 
 def cancelGeneratorObject(generatorObjID):
-	global generators
+	global generators  # noqa: PLW0602
 	try:
 		del generators[generatorObjID]
 	except KeyError:
@@ -55,7 +55,7 @@ def queueFunction(queue, func, *args, _immediate: bool = False, **kwargs):
 
 def isRunningGenerators():
 	res = len(generators) > 0
-	log.debug("generators running: %s" % res)
+	log.debug("generators running: %s" % res)  # noqa: UP031
 
 
 def flushQueue(queue):
@@ -90,10 +90,10 @@ def pumpAll():
 		try:
 			next(gen)
 		except StopIteration:
-			log.debug("generator %s finished" % ID)
+			log.debug("generator %s finished" % ID)  # noqa: UP031
 			del generators[ID]
 		except:  # noqa: E722
-			log.exception("error in generator %d" % ID)
+			log.exception("error in generator %d" % ID)  # noqa: UP031
 			del generators[ID]
 		# Lose our reference so Python can destroy the generator if appropriate.
 		del gen

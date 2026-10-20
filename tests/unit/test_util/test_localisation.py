@@ -5,7 +5,7 @@
 
 """Unit tests for the localisation submodule."""
 
-from datetime import timedelta
+from datetime import timedelta  # noqa: I001
 import unittest
 
 from utils.localisation import (

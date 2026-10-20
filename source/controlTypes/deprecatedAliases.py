@@ -11,8 +11,7 @@ continuing to rely on the aliases (I.E. 'ROLE_*' and 'STATE_*' symbols) this mod
 Using controlTypes.Role and controlTypes.State will make your add-on code consistent with NVDA core.
 """
 
-import typing
-from .role import (
+from .role import (  # noqa: I001
 	Role,
 	_roleLabels,
 )
@@ -237,7 +236,7 @@ STATE_UNLOCKED = State.UNLOCKED
 # Do not extend
 
 
-def getDeprecatedLabellingAliasNames() -> typing.List[str]:
+def getDeprecatedLabellingAliasNames() -> list[str]:
 	return [
 		"roleLabels",
 		"stateLabels",
@@ -247,17 +246,17 @@ def getDeprecatedLabellingAliasNames() -> typing.List[str]:
 	]  # do not extend
 
 
-def getDeprecatedRoleAliasNames() -> typing.List[str]:
+def getDeprecatedRoleAliasNames() -> list[str]:
 	return [symbol for symbol, thing in globals().items() if symbol.startswith("ROLE_")]
 
 
-def getDeprecatedStateAliasNames() -> typing.List[str]:
+def getDeprecatedStateAliasNames() -> list[str]:
 	return [symbol for symbol, thing in globals().items() if symbol.startswith("STATE_")]
 
 
 # Ensure only the aliases are exposed when deprecations are imported.
 # Everything else must be explicitly referenced
-__all__ = [
+__all__ = [  # noqa: PLE0604
 	*getDeprecatedStateAliasNames(),
 	*getDeprecatedRoleAliasNames(),
 	*getDeprecatedLabellingAliasNames(),

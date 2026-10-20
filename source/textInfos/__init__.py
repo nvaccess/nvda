@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot,
+# Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -9,23 +10,24 @@ In order to access text content for a widget, a L{TextInfo} implementation is re
 A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable text review of information about a widget which does not have or support text content.
 """
 
-from abc import abstractmethod
+from abc import abstractmethod  # noqa: I001
 from enum import Enum
 import weakref
 import re
 import typing
-from typing import (
+from typing import (  # noqa: UP035
 	Any,
 	Union,
-	List,
-	Optional,
-	Dict,
-	Tuple,
+	List,  # noqa: F401
+	Optional,  # noqa: F401
+	Dict,  # noqa: F401
+	Tuple,  # noqa: F401
 	Self,
 )
 
 import baseObject
 import config
+import config.featureFlagEnums
 import controlTypes
 from controlTypes import OutputReason
 import locationHelper
@@ -33,11 +35,11 @@ from logHandler import log
 from utils.urlUtils import _LinkData
 
 if typing.TYPE_CHECKING:
-	import documentBase  # noqa: F401 used for type checking only
+	import documentBase
 	import NVDAObjects
 
 
-SpeechSequence = List[Union[Any, str]]
+SpeechSequence = list[Any | str]
 
 
 class Field(dict):
@@ -240,13 +242,13 @@ class ControlField(Field):
 		return self.PRESCAT_LAYOUT
 
 
-class FieldCommand(object):
+class FieldCommand:
 	"""A command indicating a L{Field} in a sequence of text and fields.
 	When retrieving text with its associated fields, a L{TextInfo} provides a sequence of text strings and L{FieldCommand}s.
 	A command indicates the start or end of a control or that the formatting of the text has changed.
 	"""
 
-	def __init__(self, command: str, field: Optional[Union[ControlField, FormatField]]):
+	def __init__(self, command: str, field: ControlField | FormatField | None):
 		"""Constructor.
 		@param command: The command; one of:
 			"controlStart", indicating the start of a L{ControlField};
@@ -255,16 +257,16 @@ class FieldCommand(object):
 		@param field: The field associated with this command; may be C{None} for controlEnd.
 		"""
 		if command not in ("controlStart", "controlEnd", "formatChange"):
-			raise ValueError("Unknown command: %s" % command)
+			raise ValueError("Unknown command: %s" % command)  # noqa: UP031
 		elif command == "controlStart" and not isinstance(field, ControlField):
-			raise ValueError("command: %s needs a controlField" % command)
+			raise ValueError("command: %s needs a controlField" % command)  # noqa: UP031
 		elif command == "formatChange" and not isinstance(field, FormatField):
-			raise ValueError("command: %s needs a formatField" % command)
+			raise ValueError("command: %s needs a formatField" % command)  # noqa: UP031
 		self.command = command
 		self.field = field
 
 	def __repr__(self):
-		return "FieldCommand %s with %s" % (self.command, self.field)
+		return "FieldCommand %s with %s" % (self.command, self.field)  # noqa: UP031
 
 
 # Position constants
@@ -362,14 +364,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def __init__(
 		self,
 		obj: "documentBase.TextContainerObject",
-		position: Union[int, Tuple, str],
+		position: int | tuple | str,
 	):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
 		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
 		@param obj: The object containing the range of text being represented.
 		"""
-		super(TextInfo, self).__init__()
+		super().__init__()
 		self._obj = weakref.ref(obj) if type(obj) is not weakref.ProxyType else obj
 		#: The position with which this instance was constructed.
 		self.basePosition = position
@@ -402,6 +404,32 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_unit_readingChunk
+	unit_readingChunk: str
+	_cache_unit_readingChunk = True
+
+	def _get_unit_readingChunk(self) -> str:
+		"""The concrete unit that :data:`UNIT_READINGCHUNK` resolves to,
+		as configured via the ``sayAllReadingUnit`` feature flag.
+
+		:raises ValueError: If the configured flag value is not recognised.
+		"""
+		match config.conf["speech"]["sayAllReadingUnit"].calculated():
+			case config.featureFlagEnums.SayAllReadingUnitFlag.SENTENCE:
+				return UNIT_SENTENCE
+			case config.featureFlagEnums.SayAllReadingUnitFlag.PARAGRAPH:
+				return UNIT_PARAGRAPH
+			case config.featureFlagEnums.SayAllReadingUnitFlag.LINE:
+				return UNIT_LINE
+			case flag:
+				raise ValueError(f"Unknown sayAllReadingUnit flag, {flag!r}")
+
+	def _resolveReadingChunkUnit(self, unit: str) -> str:
+		"""Resolve :data:`UNIT_READINGCHUNK` to the concrete configured unit,
+		returning any other unit unchanged.
+		"""
+		return self.unit_readingChunk if unit == UNIT_READINGCHUNK else unit
+
 	#: Typing information for auto-property: _get_text
 	text: str
 
@@ -415,10 +443,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	TextOrFieldsT = Union[str, FieldCommand]
-	TextWithFieldsT = List[TextOrFieldsT]
+	TextOrFieldsT = Union[str, FieldCommand]  # noqa: UP007
+	TextWithFieldsT = list[TextOrFieldsT]
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
+	def getTextWithFields(self, formatConfig: dict | None = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
@@ -622,10 +650,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 		while unitInfo.start < self.end:
 			unitInfo.expand(unit)
 			chunkInfo = unitInfo.copy()
-			if chunkInfo.start < self.start:
-				chunkInfo.start = self.start
-			if chunkInfo.end > self.end:
-				chunkInfo.end = self.end
+			chunkInfo.start = max(chunkInfo.start, self.start)
+			chunkInfo.end = min(chunkInfo.end, self.end)
 			yield chunkInfo.text
 			unitInfo.collapse(end=True)
 			if unitInfo.start < chunkInfo.end:
@@ -635,11 +661,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def getControlFieldSpeech(
 		self,
 		attrs: ControlField,
-		ancestorAttrs: List[Field],
+		ancestorAttrs: list[Field],
 		fieldType: str,
-		formatConfig: Optional[Dict[str, bool]] = None,
+		formatConfig: dict[str, bool] | None = None,
 		extraDetail: bool = False,
-		reason: Optional[OutputReason] = None,
+		reason: OutputReason | None = None,
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
@@ -657,17 +683,23 @@ class TextInfo(baseObject.AutoPropertyObject):
 
 	def getControlFieldBraille(self, field, ancestors, reportStart, formatConfig):
 		# Import late to avoid circular import.
-		import braille
+		import braille.regions.properties
 
-		return braille.getControlFieldBraille(self, field, ancestors, reportStart, formatConfig)
+		return braille.regions.properties.getControlFieldBraille(
+			self,
+			field,
+			ancestors,
+			reportStart,
+			formatConfig,
+		)
 
 	def getFormatFieldSpeech(
 		self,
 		attrs: Field,
-		attrsCache: Optional[Field] = None,
-		formatConfig: Optional[Dict[str, bool]] = None,
-		reason: Optional[OutputReason] = None,
-		unit: Optional[str] = None,
+		attrsCache: Field | None = None,
+		formatConfig: dict[str, bool] | None = None,
+		reason: OutputReason | None = None,
+		unit: str | None = None,
 		extraDetail: bool = False,
 		initialFormat: bool = False,
 	) -> SpeechSequence:
@@ -990,7 +1022,7 @@ class TextInfoEndpoint:
 	< <= == != >= >
 	"""
 
-	_whichMap: Dict[Tuple[bool, bool], str] = {
+	_whichMap: dict[tuple[bool, bool], str] = {  # noqa: RUF012
 		(True, True): "startToStart",
 		(True, False): "startToEnd",
 		(False, True): "endToStart",
@@ -1003,7 +1035,7 @@ class TextInfoEndpoint:
 		-1 for less than, 0 for equal and 1 for greater than.
 		"""
 		if not isinstance(other, TextInfoEndpoint) or not isinstance(other.textInfo, type(self.textInfo)):
-			raise ValueError(f"Cannot compare endpoint with different type: {other}")
+			raise ValueError(f"Cannot compare endpoint with different type: {other}")  # noqa: TRY004
 		return self.textInfo.compareEndPoints(other.textInfo, self._whichMap[self.isStart, other.isStart])
 
 	def __init__(
@@ -1041,7 +1073,7 @@ class TextInfoEndpoint:
 		Moves the end of the TextInfo this endpoint represents to the position of the given endpoint.
 		"""
 		if not isinstance(other, TextInfoEndpoint) or not isinstance(other.textInfo, type(self.textInfo)):
-			raise ValueError(f"Cannot move endpoint to different type: {other}")
+			raise ValueError(f"Cannot move endpoint to different type: {other}")  # noqa: TRY004
 		self.textInfo.setEndPoint(other.textInfo, self._whichMap[(self.isStart, other.isStart)])
 
 	def __repr__(self):

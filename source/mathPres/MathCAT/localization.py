@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from dataclasses import dataclass
 import glob
 import os
@@ -125,7 +125,7 @@ def getLanguages() -> list[LanguageInfo]:
 	languageDir: str = pathToLanguagesFolder()
 	for language in os.listdir(languageDir):
 		pathToLanguageDir: str = os.path.join(pathToLanguagesFolder(), language)
-		if os.path.isdir(pathToLanguageDir):
+		if os.path.isdir(pathToLanguageDir):  # noqa: SIM102
 			# only add this language if there is a xxx_Rules.yaml file
 			if len(rulesUtils.getRulesFiles(pathToLanguageDir, addRegionalLanguages)) > 0:
 				# add to the listbox the text for this language
@@ -187,7 +187,7 @@ def getSpeechStyleFromDirectory(dir: str, lang: str) -> list[str]:
 				allStyleFiles = [
 					name.split("/")[-1] for name in zipFile.namelist() if name.endswith("_Rules.yaml")
 				]
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			log.debugWarning(f"MathCAT: didn't find zip file {zipFilePath}. Error: {e}")
 	allStyleFiles.sort()
 	return allStyleFiles
@@ -220,5 +220,5 @@ def getSpeechStyles(languageCode: str) -> list[str]:
 	# Translators: at the moment, do NOT translate this string as some code specifically looks for this name.
 	allStyleFiles.append("LiteralSpeak")
 	for name in allStyleFiles:
-		resultSpeechStyles.append((name))
+		resultSpeechStyles.append(name)  # noqa: PERF402
 	return resultSpeechStyles

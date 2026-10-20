@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 from typing import (
-	List,
 	Protocol,
 )
 
@@ -31,7 +30,7 @@ class _IUIAutomationTextRangeT(Protocol):
 
 	def findText(self) -> "IUIAutomationTextRangeT": ...
 
-	def GetBoundingRectangles(self) -> List: ...
+	def GetBoundingRectangles(self) -> list: ...
 
 	def getText(self, index: int) -> str: ...
 

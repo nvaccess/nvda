@@ -5,7 +5,7 @@
 
 """Functions exported by magnification.dll, and supporting data structures and enumerations."""
 
-from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, c_int, windll
+from ctypes import POINTER, WINFUNCTYPE, Structure, WinError, c_float, c_int, windll  # noqa: I001
 from ctypes.wintypes import BOOL, LPRECT
 from _ctypes import CFuncPtr
 from typing import Any

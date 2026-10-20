@@ -8,7 +8,7 @@ This app module also serves as the basis for Start menu in Windows 10 Version 20
 as well as Windows 11, represented by alias app modules.
 """
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 import winVersion
 import winUser
@@ -53,7 +53,7 @@ class StartChromiumObj(IAccessible):
 
 class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
-		if isinstance(obj, UIA):
+		if isinstance(obj, UIA):  # noqa: SIM102
 			# #10341: Build 18363 introduces modern search experience in File Explorer.
 			# As part of this, suggestion count is part of a live region.
 			# Although it is geared for Narrator, it is applicable to other screen readers as well.

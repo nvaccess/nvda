@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2012-2026 NV Access Limited, Rui Batista, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
 # Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations  # Avoids quoting of forward references
+from __future__ import annotations  # Avoids quoting of forward references  # noqa: I001
 
 from abc import abstractmethod, ABC
 from collections.abc import Callable, Mapping
@@ -55,7 +55,7 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from addonStore.models.addon import (  # noqa: F401
+	from addonStore.models.addon import (  # noqa: I001
 		AddonManifestModel,
 		AddonHandlerModelGeneratorT,
 		InstalledAddonStoreModel,
@@ -156,7 +156,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 					*(int(num) for num in stateDict["backCompatToAPIVersion"]),
 				)
 			except Exception:
-				log.error("Unable to deserialise backward compatibility version.", exc_info=True)
+				log.error("Unable to deserialise backward compatibility version.", exc_info=True)  # noqa: G201
 		for category in AddonStateCategory:
 			# Make the list of strings unique and case insensitive.
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(stateDict.get(category, []))
@@ -172,7 +172,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def toDict(self) -> dict[str, list[str] | addonAPIVersion.AddonApiVersionT]:
 		"""Convert state to a dict that can be dumped to JSON."""
-		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()
+		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()  # noqa: C408
 		for category, addonIds in self.data.items():
 			serializeableState[category.value] = list(addonIds)
 		serializeableState["backCompatToAPIVersion"] = tuple(self.manualOverridesAPIVersion)
@@ -215,9 +215,9 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		except FileNotFoundError:
 			pass  # Clean config - no point logging in this case
 		except OSError:
-			log.error("Error when reading state file", exc_info=True)
+			log.error("Error when reading state file", exc_info=True)  # noqa: G201
 		except json.JSONDecodeError:
-			log.error("Failed to deserialize add-ons state", exc_info=True)
+			log.error("Failed to deserialize add-ons state", exc_info=True)  # noqa: G201
 		except Exception:
 			log.exception()
 		else:
@@ -240,7 +240,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				try:
 					self.fromDict(_getAddonsStateDictFromPickle(WritePaths._oldAddonStateFile))
 				except Exception:
-					log.error("Failed to load pickled add-ons state.", exc_info=True)
+					log.error("Failed to load pickled add-ons state.", exc_info=True)  # noqa: G201
 				else:
 					if NVDAState.shouldWriteToDisk():
 						self.save()
@@ -261,7 +261,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		except FileNotFoundError:
 			pass  # Probably clean config - no point in logging in this case.
 		except OSError:
-			log.error(f"Failed to remove state file {self.statePath}", exc_info=True)
+			log.error(f"Failed to remove state file {self.statePath}", exc_info=True)  # noqa: G201
 
 	def save(self) -> None:
 		"""Saves content of the state to a file unless state is empty in which case this would be pointless."""
@@ -292,7 +292,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			try:
 				with open(statePath, "wt", encoding="utf-8") as file:
 					json.dump(self.toDict(), file)
-			except (IOError, TypeError):
+			except (OSError, TypeError):
 				log.debugWarning("Error saving state", exc_info=True)
 			return True
 		return False
@@ -335,7 +335,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 state = AddonsState()
 
 
-def getRunningAddons() -> "AddonHandlerModelGeneratorT":
+def getRunningAddons() -> AddonHandlerModelGeneratorT:
 	"""Returns currently loaded add-ons."""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
 
@@ -343,7 +343,7 @@ def getRunningAddons() -> "AddonHandlerModelGeneratorT":
 def getIncompatibleAddons(
 	currentAPIVersion=addonAPIVersion.CURRENT,
 	backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO,
-) -> "AddonHandlerModelGeneratorT":
+) -> AddonHandlerModelGeneratorT:
 	"""Returns a generator of the add-ons that are not compatible."""
 	return getAvailableAddons(
 		filterFunc=lambda addon: (
@@ -368,7 +368,7 @@ def removeFailedDeletion(path: os.PathLike):
 	if os.path.exists(path):
 		try:
 			os.remove(path)
-		except Exception:
+		except Exception:  # noqa: BLE001, S110
 			pass
 	if os.path.exists(path):
 		log.error(f"Failed to delete path {path}, try removing manually")
@@ -421,7 +421,6 @@ def initialize():
 
 def terminate():
 	"""Terminates the add-ons subsystem."""
-	pass
 
 
 def _getDefaultAddonPaths() -> list[str]:
@@ -437,7 +436,7 @@ def _getDefaultAddonPaths() -> list[str]:
 def _getAvailableAddonsFromPath(
 	path: str,
 	isFirstLoad: bool = False,
-) -> "AddonHandlerModelGeneratorT":
+) -> AddonHandlerModelGeneratorT:
 	"""Gets available add-ons from path.
 	An addon is only considered available if the manifest file is loaded with no errors.
 	@param path: path from where to find addon directories.
@@ -490,12 +489,9 @@ def _getAvailableAddonsFromPath(
 						state[AddonStateCategory.OVERRIDE_COMPATIBILITY].add(name)
 						state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].remove(name)
 					log.debug(
-						"Found add-on {name} - {a.version}."
-						" Requires API: {a.minimumNVDAVersion}."
-						" Last-tested API: {a.lastTestedNVDAVersion}".format(
-							name=name,
-							a=a,
-						),
+						f"Found add-on {name} - {a.version}."
+						f" Requires API: {a.minimumNVDAVersion}."
+						f" Last-tested API: {a.lastTestedNVDAVersion}",
 					)
 					if a.isDisabled:
 						log.debug("Disabling add-on %s", name)
@@ -504,7 +500,7 @@ def _getAvailableAddonsFromPath(
 						state[AddonStateCategory.BLOCKED].add(a.name)
 					yield a
 				except:  # noqa: E722
-					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
+					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)  # noqa: G201
 
 
 _availableAddons = collections.OrderedDict()
@@ -512,9 +508,9 @@ _availableAddons = collections.OrderedDict()
 
 def getAvailableAddons(
 	refresh: bool = False,
-	filterFunc: Callable[["Addon"], bool] | None = None,
+	filterFunc: Callable[[Addon], bool] | None = None,
 	isFirstLoad: bool = False,
-) -> "AddonHandlerModelGeneratorT":
+) -> AddonHandlerModelGeneratorT:
 	"""Gets all available addons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
 	@param filterFunc: A function that allows filtering of add-ons.
@@ -553,7 +549,7 @@ def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 		addon = Addon(bundle.pendingInstallPath)
 	except Exception as extractException:
 		bundle._installExceptions.append(extractException)
-		log.error(f"Error extracting add-on bundle {bundle}", exc_info=True)
+		log.error(f"Error extracting add-on bundle {bundle}", exc_info=True)  # noqa: G201
 		return None
 
 	# #2715: The add-on must be added to _availableAddons here so that
@@ -564,12 +560,12 @@ def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 	except Exception as onInstallException:
 		bundle._installExceptions.append(onInstallException)
 		# Broad except used, since we can not know what exceptions might be thrown by the install tasks.
-		log.error(f"task 'onInstall' on addon '{addon.name}' failed", exc_info=True)
+		log.error(f"task 'onInstall' on addon '{addon.name}' failed", exc_info=True)  # noqa: G201
 		del _availableAddons[addon.path]
 		try:
 			addon.completeRemove(runUninstallTask=False)
 		except Exception as removeException:
-			log.error(f"Failed to remove add-on {addon.name}", exc_info=True)
+			log.error(f"Failed to remove add-on {addon.name}", exc_info=True)  # noqa: G201
 			bundle._installExceptions.append(removeException)
 	else:
 		state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest["name"])
@@ -606,17 +602,17 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 
 	@property
 	@abstractmethod
-	def manifest(self) -> "AddonManifest": ...
+	def manifest(self) -> AddonManifest: ...
 
 	@property
-	def _addonStoreData(self) -> "InstalledAddonStoreModel" | None:
+	def _addonStoreData(self) -> InstalledAddonStoreModel | None:
 		from addonStore.dataManager import addonDataManager
 
 		assert addonDataManager
 		return addonDataManager._getCachedInstalledAddonData(self.name)
 
 	@property
-	def _addonGuiModel(self) -> "AddonManifestModel":
+	def _addonGuiModel(self) -> AddonManifestModel:
 		from addonStore.models.addon import _createGUIModelFromManifest
 
 		return _createGUIModelFromManifest(self)
@@ -626,7 +622,7 @@ class Addon(AddonBase):
 	"""Represents an Add-on available on the file system."""
 
 	@property
-	def manifest(self) -> "AddonManifest":
+	def manifest(self) -> AddonManifest:
 		return self._manifest
 
 	def __init__(self, path: str):
@@ -644,7 +640,7 @@ class Addon(AddonBase):
 				p = os.path.join(self.path, translatedPath)
 				if os.path.exists(p):
 					log.debug("Using manifest translation from %s", p)
-					translatedInput = open(p, "rb")
+					translatedInput = open(p, "rb")  # noqa: SIM115
 					break
 			self._manifest = AddonManifest(f, translatedInput)
 			if self.manifest.errors is not None:
@@ -661,7 +657,7 @@ class Addon(AddonBase):
 			state[AddonStateCategory.PENDING_INSTALL].discard(self.name)
 			return self.installPath
 		except OSError:
-			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)
+			log.error(f"Failed to complete addon installation for {self.name}", exc_info=True)  # noqa: G201
 			return None
 
 	def requestRemove(self):
@@ -691,7 +687,7 @@ class Addon(AddonBase):
 				_availableAddons[self.path] = self
 				self.runInstallTask("onUninstall")
 			except:  # noqa: E722
-				log.error("task 'onUninstall' on addon '%s' failed" % self.name, exc_info=True)
+				log.error("task 'onUninstall' on addon '%s' failed" % self.name, exc_info=True)  # noqa: G201, UP031
 			finally:
 				del _availableAddons[self.path]
 				self._cleanupAddonImports()
@@ -701,11 +697,11 @@ class Addon(AddonBase):
 		)
 		try:
 			os.replace(self.path, tempPath)
-		except (WindowsError, IOError):
+		except OSError:
 			raise RuntimeError("Cannot rename add-on path for deletion")
 		shutil.rmtree(tempPath, ignore_errors=True)
 		if os.path.exists(tempPath):
-			log.error("Error removing addon directory %s, deferring until next NVDA restart" % self.path)
+			log.error("Error removing addon directory %s, deferring until next NVDA restart" % self.path)  # noqa: UP031
 		# clean up the addons state. If an addon with the same name is installed, it should not be automatically
 		# disabled / blocked.
 		log.debug(f"removing addon {self.name} from the list of disabled / blocked add-ons")
@@ -888,9 +884,11 @@ class Addon(AddonBase):
 			log.debug(f"removing imported add-on module {modName}")
 			del sys.modules[modName]
 		self._importedAddonModules.clear()
+		addonPathPrefix = os.path.join(os.path.normcase(self.path), "")
 		for modName in set(sys.modules.keys()) - self._modulesBeforeInstall:
 			module = sys.modules[modName]
-			if module.__name__ and module.__name__.startswith(self.path):
+			moduleFile = getattr(module, "__file__", None)
+			if moduleFile and os.path.normcase(moduleFile).startswith(addonPathPrefix):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
@@ -1057,12 +1055,12 @@ class AddonBundle(AddonBase):
 				z.extract(info, addonPath)
 
 	@property
-	def manifest(self) -> "AddonManifest":
+	def manifest(self) -> AddonManifest:
 		"""Gets the manifest for the represented Addon."""
 		return self._manifest
 
 	def __repr__(self):
-		return "<AddonBundle at %s>" % self._path
+		return "<AddonBundle at %s>" % self._path  # noqa: UP031
 
 
 def createAddonBundleFromPath(path, destDir=None):
@@ -1075,7 +1073,7 @@ def createAddonBundleFromPath(path, destDir=None):
 		destDir = os.path.dirname(basedir)
 	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
 	if not os.path.isfile(manifest_path):
-		raise AddonError("Can't find %s manifest file." % manifest_path)
+		raise AddonError("Can't find %s manifest file." % manifest_path)  # noqa: UP031
 	with open(manifest_path, "rb") as f:
 		manifest = AddonManifest(f)
 	if manifest.errors is not None:
@@ -1184,9 +1182,9 @@ docFileName = string(default=None)
 		self._errors = None
 		val = Validator({"apiVersion": validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
-		if result != True:  # noqa: E712
+		if result != True:
 			self._errors = result
-		elif True != self._validateApiVersionRange():  # noqa: E712
+		elif True != self._validateApiVersionRange():
 			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
 				self.get("minimumNVDAVersion"),
 				self.get("lastTestedNVDAVersion"),
@@ -1234,4 +1232,4 @@ def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 	try:
 		return addonAPIVersion.getAPIVersionTupleFromString(value)
 	except ValueError as e:
-		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))
+		raise ValidateError(f'"{value}" is not a valid API Version string: {e}')

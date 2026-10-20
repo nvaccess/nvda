@@ -3,14 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
-	Callable,
-	Generator,
-	Iterator,
-	List,
-	Optional,
-	Tuple,
-)
+from collections.abc import Callable, Generator, Iterator  # noqa: I001
 import time
 import weakref
 import types
@@ -30,11 +23,11 @@ import baseObject
 _ScriptFunctionT = Callable[["inputCore.InputGesture"], None]
 _ScriptFilterT = Callable[
 	[
-		Optional[_ScriptFunctionT],
+		_ScriptFunctionT | None,
 		"NVDAObjects.NVDAObject",
 		"inputCore.InputGesture",
 	],
-	Optional[_ScriptFunctionT],
+	_ScriptFunctionT | None,
 ]
 
 _numScriptsQueued = 0  # Number of scripts that are queued to be executed
@@ -51,8 +44,8 @@ def _makeKbEmulateScript(scriptName):
 
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
-	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)  # noqa: E731
-	func.__name__ = "script_%s" % scriptName
+	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
+	func.__name__ = "script_%s" % scriptName  # noqa: UP031
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
 
@@ -60,8 +53,8 @@ def _makeKbEmulateScript(scriptName):
 def _getObjScript(
 	obj: "NVDAObjects.NVDAObject",
 	gesture: "inputCore.InputGesture",
-	globalMapScripts: List["inputCore.InputGestureScriptT"],
-) -> Optional[_ScriptFunctionT]:
+	globalMapScripts: list["inputCore.InputGestureScriptT"],
+) -> _ScriptFunctionT | None:
 	"""
 	@param globalMapScripts: An ordered list of scripts.
 	The list is ordered by resolution priority,
@@ -77,7 +70,7 @@ def _getObjScript(
 				# Emulate a key press.
 				return _makeKbEmulateScript(scriptName)
 			try:
-				return getattr(obj, "script_%s" % scriptName)
+				return getattr(obj, "script_%s" % scriptName)  # noqa: UP031
 			except AttributeError:
 				pass
 
@@ -88,13 +81,13 @@ def _getObjScript(
 		log.exception()
 
 
-def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.InputGestureScriptT"]:
+def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> list["inputCore.InputGestureScriptT"]:
 	"""
 	@returns: An ordered list of scripts.
 	The list is ordered by resolution priority,
 	the first map in the list should be used to resolve scripts first.
 	"""
-	globalMapScripts: List["inputCore.InputGestureScriptT"] = []
+	globalMapScripts: list[inputCore.InputGestureScriptT] = []
 	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
@@ -105,7 +98,7 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.In
 	return globalMapScripts
 
 
-def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
+def findScript(gesture: "inputCore.InputGesture") -> _ScriptFunctionT | None:
 	from utils.security import getSafeScripts
 	from winAPI.sessionTracking import isLockScreenModeActive
 
@@ -115,7 +108,7 @@ def findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
 	return foundScript
 
 
-def _findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]:
+def _findScript(gesture: "inputCore.InputGesture") -> _ScriptFunctionT | None:
 	focus = api.getFocusObject()
 	if not focus:
 		return None
@@ -134,10 +127,10 @@ def _findScript(gesture: "inputCore.InputGesture") -> Optional[_ScriptFunctionT]
 
 
 def _getTreeModeInterceptorScript(
-	func: Optional[_ScriptFunctionT],
+	func: _ScriptFunctionT | None,
 	obj: "NVDAObjects.NVDAObject",
 	gesture: "inputCore.InputGesture",
-) -> Optional[_ScriptFunctionT]:
+) -> _ScriptFunctionT | None:
 	"""
 	A filtering function used with _yieldObjectsForFindScript, to ensure a tree interceptor
 	should propagate scripts and therefore handle the input gesture.
@@ -152,10 +145,10 @@ def _getTreeModeInterceptorScript(
 
 
 def _getFocusAncestorScript(
-	func: Optional[_ScriptFunctionT],
+	func: _ScriptFunctionT | None,
 	obj: "NVDAObjects.NVDAObject",
 	gesture: "inputCore.InputGesture",
-) -> Optional[_ScriptFunctionT]:
+) -> _ScriptFunctionT | None:
 	"""
 	A filtering function used with _yieldObjectsForFindScript, to ensure a focus ancestor
 	should propagate scripts and therefore handle the input gesture.
@@ -167,7 +160,7 @@ def _getFocusAncestorScript(
 
 def _yieldObjectsForFindScript(
 	gesture: "inputCore.InputGesture",
-) -> Generator[Tuple["NVDAObjects.NVDAObject", Optional[_ScriptFilterT]], None, None]:
+) -> Generator[tuple["NVDAObjects.NVDAObject", _ScriptFilterT | None]]:
 	"""
 	This generator is used to determine which NVDAObject to perform an input gesture on,
 	in order of priority.
@@ -231,7 +224,7 @@ def getScriptLocation(script):
 	name = script.__name__
 	for cls in instance.__class__.__mro__:
 		if name in cls.__dict__:
-			return "%s.%s" % (cls.__module__, cls.__name__)
+			return "%s.%s" % (cls.__module__, cls.__name__)  # noqa: UP031
 
 
 def _isInterceptedCommandScript(script):
@@ -299,7 +292,7 @@ def executeScript(script, gesture):
 		_lastScriptTime = scriptTime
 		script(gesture)
 	except:  # noqa: E722
-		log.exception("error executing script: %s with gesture %r" % (script, gesture.displayName))
+		log.exception("error executing script: %s with gesture %r" % (script, gesture.displayName))  # noqa: UP031
 	finally:
 		_isScriptRunning = False
 		if resumeSayAllMode is not None:
@@ -330,7 +323,7 @@ def clearLastScript():
 	_lastScriptCount = 0
 
 
-def getCurrentScript() -> Optional[_ScriptFunctionT]:
+def getCurrentScript() -> _ScriptFunctionT | None:
 	if not _isScriptRunning:
 		return None
 	lastScriptRef = _lastScriptRef() if _lastScriptRef else None
@@ -343,13 +336,13 @@ def isScriptWaiting():
 
 def script(
 	description: str = "",
-	category: Optional[str] = None,
-	gesture: Optional[str] = None,
-	gestures: Optional[Iterator[str]] = None,
+	category: str | None = None,
+	gesture: str | None = None,
+	gestures: Iterator[str] | None = None,
 	canPropagate: bool = False,
 	bypassInputHelp: bool = False,
 	allowInSleepMode: bool = False,
-	resumeSayAllMode: Optional[int] = None,
+	resumeSayAllMode: int | None = None,
 	speakOnDemand: bool = False,
 ):
 	"""Define metadata for a script.
@@ -367,24 +360,24 @@ def script(
 	:param speakOnDemand: Whether this script should speak when NVDA speech mode is "on-demand"
 	"""
 	if gestures is None:
-		gestures: List[str] = []
+		gestures: list[str] = []
 	else:
 		# A tuple may have been used, however, the collection of gestures may need to be
 		# extended (via append) with the value of the 'gesture' string (in-case both are provided in the
 		# decorator).
-		gestures: List[str] = list(gestures)
+		gestures: list[str] = list(gestures)
 
 	def script_decorator(decoratedScript):
 		# Decoratable scripts are functions, not bound instance methods.
 		if not isinstance(decoratedScript, types.FunctionType):
 			log.warning(
-				"Using the script decorator is unsupported for %r" % decoratedScript,
+				"Using the script decorator is unsupported for %r" % decoratedScript,  # noqa: UP031
 				stack_info=True,
 			)
 			return decoratedScript
 		if not decoratedScript.__name__.startswith("script_"):
 			log.warning(
-				"Can't apply  script decorator to %r which name does not start with 'script_'"
+				"Can't apply  script decorator to %r which name does not start with 'script_'"  # noqa: UP031
 				% decoratedScript.__name__,
 				stack_info=True,
 			)

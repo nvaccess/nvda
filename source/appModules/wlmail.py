@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 import api
 import winUser

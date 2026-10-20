@@ -1,17 +1,92 @@
-# -*- coding: UTF-8 -*-
-# tests/unit/test_textInfos.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the textInfos module, its submodules and classes."""
 
-import unittest
-from .textProvider import BasicTextProvider, MockBlackBoxTextInfo
+import unittest  # noqa: I001
+from unittest.mock import patch
+
+import config
+from .textProvider import BasicTextInfo, BasicTextProvider, MockBlackBoxTextInfo
 import textInfos
 from textInfos.offsets import Offsets
 import textUtils
+from textUtils.segFlag import WordSegFlag
+
+
+# Distinguishable offsets returned by the fake TextInfos below.
+_LINE_OFFSETS = (5, 10)
+_SENTENCE_OFFSETS = (15, 20)
+_PARAGRAPH_OFFSETS = (25, 30)
+
+
+class _LineOnlyTextInfo(BasicTextInfo):
+	"""A fake offsets TextInfo whose sentence and paragraph support is not implemented."""
+
+	def _getLineOffsets(self, offset):
+		return _LINE_OFFSETS
+
+	def _getParagraphOffsets(self, offset):
+		# Override OffsetsTextInfo._getParagraphOffsets, which delegates to _getLineOffsets.
+		raise NotImplementedError
+
+
+class _MultiUnitTextInfo(_LineOnlyTextInfo):
+	"""A fake offsets TextInfo which supports line, sentence and paragraph units."""
+
+	def _getSentenceOffsets(self, offset):
+		return _SENTENCE_OFFSETS
+
+	def _getParagraphOffsets(self, offset):
+		return _PARAGRAPH_OFFSETS
+
+
+class _MultiUnitProvider(BasicTextProvider):
+	TextInfo = _MultiUnitTextInfo
+
+
+class _LineOnlyProvider(BasicTextProvider):
+	TextInfo = _LineOnlyTextInfo
+
+
+class TestReadingChunkOffsets(unittest.TestCase):
+	"""Tests for OffsetsTextInfo._getReadingChunkOffsets honouring the
+	`sayAllReadingUnit` feature flag, falling back to line where the
+	configured unit is unsupported."""
+
+	def setUp(self):
+		self._origValue = config.conf["speech"]["sayAllReadingUnit"]
+
+	def tearDown(self):
+		config.conf["speech"]["sayAllReadingUnit"] = self._origValue
+
+	def _getReadingChunkOffsets(self, provider):
+		obj = provider(text="a" * 30)
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.expand(textInfos.UNIT_READINGCHUNK)
+		return ti.offsets
+
+	def test_sentenceFlag_sentenceSupported_returnsSentenceOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "sentence"
+		self.assertEqual(self._getReadingChunkOffsets(_MultiUnitProvider), _SENTENCE_OFFSETS)
+
+	def test_paragraphFlag_paragraphSupported_returnsParagraphOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "paragraph"
+		self.assertEqual(self._getReadingChunkOffsets(_MultiUnitProvider), _PARAGRAPH_OFFSETS)
+
+	def test_lineFlag_returnsLineOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "line"
+		self.assertEqual(self._getReadingChunkOffsets(_MultiUnitProvider), _LINE_OFFSETS)
+
+	def test_sentenceFlag_sentenceUnsupported_fallsBackToLineOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "sentence"
+		self.assertEqual(self._getReadingChunkOffsets(_LineOnlyProvider), _LINE_OFFSETS)
+
+	def test_paragraphFlag_paragraphUnsupported_fallsBackToLineOffsets(self):
+		config.conf["speech"]["sayAllReadingUnit"] = "paragraph"
+		self.assertEqual(self._getReadingChunkOffsets(_LineOnlyProvider), _LINE_OFFSETS)
 
 
 class TestCharacterOffsets(unittest.TestCase):
@@ -176,6 +251,102 @@ class TestEndpoints(unittest.TestCase):
 		self.assertEqual((ti1._startOffset, ti1._endOffset), (5, 5))
 
 
+class TestWordExpansion(unittest.TestCase):
+	def test_expandWordDoesNotRequireFlowsToBeforeEndOfStory(self) -> None:
+		obj = BasicTextProvider(text="one two")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.expand(textInfos.UNIT_WORD)
+		self.assertEqual(ti.text, "one ")
+
+	def test_expandWordAtEndOfStoryWithoutFlowsToDoesNothing(self) -> None:
+		obj = BasicTextProvider(text="one two")
+		ti = obj.makeTextInfo(textInfos.POSITION_ALL)
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_WORD)
+		self.assertEqual(ti.text, "")
+		self.assertEqual(ti.offsets, (7, 7))
+
+
+class _UnknownWordSegConf:
+	def calculated(self) -> str:
+		return "unexpected"
+
+
+class TestWordSegFlag(unittest.TestCase):
+	def test_unknownWordSegConfigReturnsNoneAfterLogging(self) -> None:
+		obj = BasicTextProvider(text="abc")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.wordSegConf = _UnknownWordSegConf()
+
+		with patch("textInfos.offsets.log.error") as mockLogError:
+			self.assertIsNone(ti.wordSegFlag)
+
+		mockLogError.assert_called_once_with("Unknown word segmentation standard, 'unexpected'")
+
+
+class _LegacyNoUniscribeTextInfo(BasicTextProvider.TextInfo):
+	useUniscribe = False
+
+
+class _LegacyNoUniscribeProvider(BasicTextProvider):
+	TextInfo = _LegacyNoUniscribeTextInfo
+
+
+class _RuntimeLegacyNoUniscribeTextInfo(BasicTextProvider.TextInfo):
+	pass
+
+
+class _RuntimeLegacyNoUniscribeProvider(BasicTextProvider):
+	TextInfo = _RuntimeLegacyNoUniscribeTextInfo
+
+
+class TestUseUniscribeCompatibility(unittest.TestCase):
+	def test_instanceOverrideFalseDisablesWordSegmenter(self) -> None:
+		obj = BasicTextProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.useUniscribe = False
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_not_called()
+		self.assertEqual(ti.text, "abc ")
+
+	def test_classOverrideFalseDisablesWordSegmenter(self) -> None:
+		obj = _LegacyNoUniscribeProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_not_called()
+		self.assertEqual(ti.text, "abc ")
+
+	def test_classAssignmentFalseDisablesWordSegmenter(self) -> None:
+		_RuntimeLegacyNoUniscribeTextInfo.useUniscribe = False
+		self.addCleanup(type.__delattr__, _RuntimeLegacyNoUniscribeTextInfo, "_useUniscribeOverride")
+		obj = _RuntimeLegacyNoUniscribeProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_not_called()
+		self.assertEqual(ti.text, "abc ")
+
+	def test_instanceOverrideTrueForcesUniscribeWordSegmentation(self) -> None:
+		obj = BasicTextProvider(text="abc def")
+		ti = obj.makeTextInfo(Offsets(0, 0))
+		ti.useUniscribe = True
+
+		with patch("textInfos.offsets.WordSegmenter") as wordSegmenter:
+			wordSegmenter.return_value.getSegmentForOffset.return_value = (0, 3)
+			ti.expand(textInfos.UNIT_WORD)
+
+		wordSegmenter.assert_called_once_with("abc def", textUtils.WCHAR_ENCODING, WordSegFlag.UNISCRIBE)
+		self.assertEqual(ti.text, "abc")
+
+
 class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 	THREE_CHARS = "012"
 	TEN_CHARS = "0123456789"
@@ -224,13 +395,13 @@ class TestMoveToCodepointOffsetInBlackBoxTextInfo(unittest.TestCase):
 
 
 class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
-	encodings = [
+	encodings = [  # noqa: RUF012
 		textUtils.UTF8_ENCODING,
 		textUtils.WCHAR_ENCODING,
 		"utf_32_le",
 	]
 
-	prefixes = [
+	prefixes = [  # noqa: RUF012
 		"",
 		"a\n",
 		"0123456789",

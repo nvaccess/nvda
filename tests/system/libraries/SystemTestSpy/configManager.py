@@ -8,10 +8,9 @@ This module is designed to construct and install the speechSpyGlobalPlugin, spee
 NVDA config before NVDA is started by the system tests.
 """
 
-from os.path import join as _pJoin
+from os.path import join as _pJoin  # noqa: I001
 from .getLib import _getLib
 import sys
-from typing import Optional
 
 # Imported for type information
 from robot.libraries.BuiltIn import BuiltIn
@@ -32,7 +31,7 @@ def _findDepPath(depFileName, searchPaths):
 			return filePath
 		elif os.path.isfile(_pJoin(path, depFileName, "__init__.py")):
 			return _pJoin(path, depFileName)
-	raise AssertionError("Unable to find required system test spy dependency: {}".format(depFileName))
+	raise AssertionError(f"Unable to find required system test spy dependency: {depFileName}")
 
 
 def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
@@ -97,7 +96,7 @@ def setupProfile(
 	repoRoot: str,
 	settingsFileName: str,
 	stagingDir: str,
-	gesturesFileName: Optional[str] = None,
+	gesturesFileName: str | None = None,
 ):
 	builtIn.log("Copying files into NVDA profile", level="DEBUG")
 	opSys.copy_file(

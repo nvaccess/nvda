@@ -8,7 +8,7 @@
 This module provides functions for drawing Braille cells on a TactileGraphicsBuffer.
 """
 
-from . import TactileGraphicsBuffer
+from . import TactileGraphicsBuffer  # noqa: I001
 
 
 CELL_WIDTH = 2
@@ -44,7 +44,7 @@ def drawBrailleCells(tgBuf: TactileGraphicsBuffer, x: int, y: int, cells: list[i
 	:param hCellPadding: The horizontal padding between cells.
 	"""
 	for cell in cells:
-		for dot in range(0, 8):
+		for dot in range(8):
 			if 1 << dot & cell:
 				dotX, dotY = _brailleDotCoords[dot]
 				# Check if the coordinates are within bounds

@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2015-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
-from typing import Optional
+from typing import Optional  # noqa: I001
 from ctypes import byref
 from comtypes import COMError
 from comtypes.automation import VARIANT, VT_EMPTY
@@ -73,9 +73,9 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 			UIATextRange = UIAElementOrRange
 			self._UIAElement = None
 		else:
-			raise ValueError("Invalid UIAElementOrRange")
+			raise ValueError("Invalid UIAElementOrRange")  # noqa: TRY004
 		textInfo = document.TextInfo(document, None, _rangeObj=UIATextRange)
-		super(UIATextRangeQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 
 	@property
 	def obj(self):
@@ -91,16 +91,16 @@ class UIATextRangeQuickNavItem(browseMode.TextInfoQuickNavItem):
 
 class TextAttribUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 	attribID = None  #: a UIA text attribute to search for
-	wantedAttribValues = set()  #: A set of attribute values acceptable to match the search.
+	wantedAttribValues = set()  #: A set of attribute values acceptable to match the search.  # noqa: RUF012
 
 	def __init__(self, attribValues, itemType, document, textInfo):
 		self.attribValues = attribValues
-		super(TextAttribUIATextInfoQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 
 
 class ErrorUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {UIAHandler.AnnotationType_SpellingError, UIAHandler.AnnotationType_GrammarError}
+	wantedAttribValues = {UIAHandler.AnnotationType_SpellingError, UIAHandler.AnnotationType_GrammarError}  # noqa: RUF012
 
 	@property
 	def label(self):
@@ -160,7 +160,7 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 		label: str | None = None,
 		level: int = 0,
 	):
-		super(HeadingUIATextInfoQuickNavItem, self).__init__(itemType, document, position)
+		super().__init__(itemType, document, position)
 		self.level = level
 		self._label = label
 
@@ -692,6 +692,19 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation, browseMode.BrowseMod
 				UIAHandler.UIA_SliderControlTypeId,
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
+		elif nodeType == "clickable":
+			# Match the generic control types which UIAWeb exposes with State.CLICKABLE.
+			condition = createUIAMultiPropertyCondition(
+				{
+					UIAHandler.UIA_ControlTypePropertyId: [
+						UIAHandler.UIA_TextControlTypeId,
+						UIAHandler.UIA_GroupControlTypeId,
+						UIAHandler.UIA_ImageControlTypeId,
+					],
+					UIAHandler.UIA_IsInvokePatternAvailablePropertyId: True,
+				},
+			)
+			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "nonTextContainer":
 			condition = createUIAMultiPropertyCondition(
 				{
@@ -715,7 +728,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation, browseMode.BrowseMod
 		if not winUser.isWindow(self.rootNVDAObject.windowHandle):
 			return False
 		try:
-			self.rootNVDAObject.UIAElement.currentProviderDescription
+			self.rootNVDAObject.UIAElement.currentProviderDescription  # noqa: B018
 		except COMError:
 			return False
 		return True

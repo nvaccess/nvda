@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import json
+import json  # noqa: I001
 import unittest
 from enum import Enum
 from _remoteClient.serializer import JSONSerializer, SpeechCommandJSONEncoder, asSequence

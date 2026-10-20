@@ -5,7 +5,7 @@
 
 """GUI functionality for managing NVDA configuration, including factory reset with undo support."""
 
-import core
+import core  # noqa: I001
 import queueHandler
 import ui
 import wx

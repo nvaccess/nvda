@@ -168,7 +168,7 @@ class ScreenCurtain:
 			try:
 				self.enable()
 			except RuntimeError:
-				log.error("Failed to enable Screen Curtain", exc_info=True)
+				log.error("Failed to enable Screen Curtain", exc_info=True)  # noqa: G201
 				if _TrackNVDAInitialization.isInitializationComplete():
 					self._postInitialisationActivationFailureMessage()
 				else:
@@ -217,7 +217,7 @@ class ScreenCurtain:
 				if not isScreenFullyBlack():
 					raise RuntimeError("Screen is not black.")
 				break
-			except Exception as e:
+			except Exception as e:  # noqa: BLE001
 				# We must call MagUninitialize at least as many times as we call MagInitialize,
 				# as if we don't, we are liable to get permission errors
 				# when attempting to use the magnification API

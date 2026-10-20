@@ -5,7 +5,7 @@
 
 """Unit tests for the scriptHandler module."""
 
-import unittest
+import unittest  # noqa: I001
 from scriptHandler import script
 from inputCore import SCRCAT_MISC
 from speech.sayAll import CURSOR

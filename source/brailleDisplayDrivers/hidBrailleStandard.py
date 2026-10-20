@@ -1,16 +1,17 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited
+# Copyright (C) 2021-2026 NV Access Limited, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass  # noqa: I001
 import enum
 import itertools
 import braille
+import braille.display.driver
+import braille.display.gesture
 import inputCore
 from logHandler import log
-import brailleInput
+import braille.input.gesture
 import bdDetect
 import hidpi
 import hwIo.hid
@@ -76,7 +77,7 @@ class ButtonCapsInfo:
 	relativeIndexInCollection: int = 0
 
 
-class HidBrailleDriver(braille.BrailleDisplayDriver):
+class HidBrailleDriver(braille.display.driver.BrailleDisplayDriver):
 	_dev: hwIo.hid.Hid
 	_numberOfCellsValueCaps: hidpi.HIDP_VALUE_CAPS | None = None
 	name = "hidBrailleStandard"
@@ -95,13 +96,13 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		self.numRows = 1
 		self.numCols = 0
 
-		for portType, portId, port, portInfo in self._getTryPorts(port):
+		for portType, portId, port, portInfo in self._getTryPorts(port):  # noqa: B020, PLR1704
 			if portType != bdDetect.ProtocolType.HID:
 				continue
 			# Try talking to the display.
 			try:
 				self._dev = hwIo.hid.Hid(port, onReceive=self._hidOnReceive)
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue  # Couldn't connect.
 			if self._dev.usagePage != HID_USAGE_PAGE_BRAILLE:
@@ -124,12 +125,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 					log.warning("Reserved braille cells are not supported on multi-line displays")
 				# A display responded.
 				log.info(
-					"Found display with {rows} rows, {cols} cols connected via {type} ({port})".format(
-						rows=self.numRows,
-						cols=self.numCols,
-						type=portType,
-						port=port,
-					),
+					f"Found display with {self.numRows} rows, {self.numCols} cols connected via {portType} ({port})",
 				)
 				break
 			# This device can't be initialized. Move on to the next (if any).
@@ -238,7 +234,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		# so they should be ignored.
 		self._ignoreKeyReleases = True
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		padded_cells = cells + [0] * (self._maxNumberOfCells - len(cells))
 		cellBytes = b"".join(intToByte(cell) for cell in padded_cells)
@@ -271,6 +267,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 					"br(hidBrailleStandard):rockerDown",
 				),
 				"braille_routeTo": ("br(hidBrailleStandard):routerSet1_routerKey",),
+				"braille_selectRange": ("br(hidBrailleStandard):routerSet1_multiRouterKey",),
 				"braille_toggleTether": ("br(hidBrailleStandard):up+down",),
 				"kb:upArrow": (
 					"br(hidBrailleStandard):joystickUp",
@@ -310,7 +307,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture, braille.input.gesture.BrailleInputGesture):
 	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):
@@ -318,8 +315,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		self.keyCodes = set(dataIndices)
 
 		self.keyNames = names = []
-		namePrefix = None
 		isBrailleInput = True
+		routingIndexes: list[int] = []
+		routingNamePrefix: str | None = None
 		for index in dataIndices:
 			buttonCapsInfo = driver._inputButtonCapsByDataIndex.get(index)
 			buttonCaps = buttonCapsInfo.buttonCaps
@@ -354,14 +352,21 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				# We must assume that any input in the router set is a routing key,
 				# Because some devices expose the routing keys as 1-bit values
 				# which Windows then combines into a usage range.
-				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
+				routingIndexes.append(buttonCapsInfo.relativeIndexInCollection)
 				usageID = BraillePageUsageID.ROUTER_KEY
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
-				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
+				routingNamePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
+				continue
 			name = self._usageIDToGestureName(usagePage, usageID)
-			if namePrefix:
-				name = "_".join([namePrefix, name])
 			names.append(name)
+		if routingIndexes:
+			routingIndexes.sort()
+			self.cellIndexes = routingIndexes
+			routingIdName = self._usageIDToGestureName(HID_USAGE_PAGE_BRAILLE, BraillePageUsageID.ROUTER_KEY)
+			routingIdName = self.idForCellCount(len(routingIndexes), routingIdName)
+			if routingNamePrefix:
+				routingIdName = f"{routingNamePrefix}_{routingIdName}"
+			names.append(routingIdName)
 		self.id = "+".join(names)
 
 	def _usageIDToGestureName(self, usagePage: int, usageID: int):

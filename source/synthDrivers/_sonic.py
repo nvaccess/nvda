@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2025 NV Access Limited, gexgd0419
 
-from ctypes import CDLL, POINTER, Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll
+from ctypes import CDLL, POINTER, Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll  # noqa: I001
 import os
 from typing import TYPE_CHECKING
 import globalVars

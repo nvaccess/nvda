@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2022-2026 NV Access Limited, Bill Dengler, Rob Meredith, Leonard de Ruijter, Wang Chong
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """
 Feature flag value enumerations.
@@ -33,8 +33,6 @@ class FeatureFlagEnumProtocol(Protocol):
 
 class FlagValueEnum(enum.EnumMeta, _DisplayStringEnumMixin, FeatureFlagEnumProtocol):
 	"""Provided only for type annotations."""
-
-	pass
 
 
 class BoolFlag(DisplayStringEnum):
@@ -139,7 +137,80 @@ class FontFormattingBrailleModeFlag(DisplayStringEnum):
 		}
 
 
-def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
+class WordNavigationUnitFlag(DisplayStringEnum):
+	"""Enumeration for word navigation."""
+
+	DEFAULT = enum.auto()
+	AUTO = enum.auto()
+	CHINESE = enum.auto()
+	ICU = enum.auto()
+	UNISCRIBE = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["WordNavigationUnitFlag", str]:
+		return {
+			# Translators: Label for a method of word segmentation.
+			self.AUTO: _("Automatic"),
+			# Translators: Label for a method of word segmentation.
+			self.CHINESE: _("Chinese"),
+			# Translators: Label for a method of word segmentation.
+			self.ICU: _("Unicode (ICU)"),
+			# Translators: Label for a method of word segmentation.
+			self.UNISCRIBE: _("Legacy (Uniscribe)"),
+		}
+
+
+class BrailleTextWrapFlag(DisplayStringEnum):
+	"""Enumeration containing the possible ways to wrap text in braille when a row would exceed the display.
+
+	The continuation mark (dots 7-8) is shown on rows where a word was cut,
+	regardless of mode (except for NONE, which never shows the mark).
+	"""
+
+	DEFAULT = enum.auto()
+	NONE = enum.auto()
+	MARK_WORD_CUTS = enum.auto()
+	AT_WORD_BOUNDARIES = enum.auto()
+	AT_WORD_OR_SYLLABLE_BOUNDARIES = enum.auto()
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.NONE: pgettext("braille text wrap", "Off"),
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.MARK_WORD_CUTS: pgettext("braille text wrap", "Show mark when words are cut"),
+			# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+			self.AT_WORD_BOUNDARIES: pgettext("braille text wrap", "At word boundaries"),
+			self.AT_WORD_OR_SYLLABLE_BOUNDARIES: pgettext(
+				"braille text wrap",
+				# Translators: A choice in a combo box in the braille settings panel to configure text wrapping.
+				"At word or syllable boundaries",
+			),
+		}
+
+
+class SayAllReadingUnitFlag(DisplayStringEnum):
+	"""Feature flag for the text unit say all advances by (the reading chunk)."""
+
+	DEFAULT = enum.auto()
+	SENTENCE = enum.auto()
+	PARAGRAPH = enum.auto()
+	LINE = enum.auto()
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for an option in the Speech settings (say all reading unit).
+			self.SENTENCE: pgettext("sayAll", "Sentence where possible"),
+			# Translators: Label for an option in the Speech settings (say all reading unit).
+			self.PARAGRAPH: pgettext("sayAll", "Paragraph"),
+			# Translators: Label for an option in the Speech settings (say all reading unit).
+			self.LINE: pgettext("sayAll", "Line"),
+		}
+
+
+def getAvailableEnums() -> typing.Generator[tuple[str, FlagValueEnum]]:
 	for name, value in globals().items():
 		if (
 			isinstance(value, type)  # is a class

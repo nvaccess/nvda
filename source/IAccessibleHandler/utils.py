@@ -8,7 +8,7 @@
 Kept here so they can be re-used without having to worry about circular imports.
 """
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 from comInterfaces import IAccessible2Lib as IA2
 import config
 import winUser

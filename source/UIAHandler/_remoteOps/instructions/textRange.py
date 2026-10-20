@@ -7,7 +7,7 @@
 This module contains the instructions that operate on UI Automation text ranges.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from typing import cast
 from dataclasses import dataclass
 from UIAHandler import UIA

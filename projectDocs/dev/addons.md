@@ -17,6 +17,8 @@
 * [NVDA Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html)
 * [Technical design overview](../design/technicalDesignOverview.md)
 * [NVDA Add-on Development Community Guide](https://github.com/nvdaaddons/DevGuide/wiki/NVDA-Add-on-Development-Guide)
+* [Addon localization guide for add-on authors](https://github.com/nvaccess/AddonTemplate/blob/master/docs/l10n/addonAuthors.md)
+* [Addon localization guide for translators](https://github.com/nvaccess/AddonTemplate/blob/master/docs/l10n/addonTranslators.md)
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](../../extras/controllerClient)
 
 ## Communication channels

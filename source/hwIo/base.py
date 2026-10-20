@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2015-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2015-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Selvas Healthcare
 
 
 """Raw input/output for braille displays via serial and HID.
@@ -11,12 +11,15 @@ See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
 # "annotations" Needed to provide the inner type for weakref.ReferenceType.
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
+import functools
 import sys
 import ctypes
+import threading
 from ctypes import byref
 from ctypes.wintypes import DWORD
-from typing import Optional, Any, Union, Tuple, Callable
+from typing import Any
+from collections.abc import Callable
 import weakref
 import serial
 from serial.win32 import (
@@ -47,14 +50,32 @@ def __getattr__(attrName: str) -> Any:
 		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
 
 		return LPOVERLAPPED_COMPLETION_ROUTINE
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 def _isDebug():
 	return config.conf["debugLog"]["hwIo"]
 
 
-class IoBase(object):
+def requiresBackgroundThread(func: Callable) -> Callable:
+	"""Decorator that raises RuntimeError if the decorated function is called on the main thread.
+
+	Use this on any hwIo function that blocks (e.g. sleeps or polls) and must not be called
+	from NVDA's main thread, where it would freeze the UI.
+	"""
+
+	@functools.wraps(func)
+	def wrapper(*args, **kwargs):
+		if threading.main_thread() is threading.current_thread():
+			raise RuntimeError(
+				f"{func.__qualname__} must not be called on the main thread",
+			)
+		return func(*args, **kwargs)
+
+	return wrapper
+
+
+class IoBase:
 	"""Base class for raw I/O.
 	This watches for data of a specified size and calls a callback when it is received.
 	"""
@@ -63,12 +84,12 @@ class IoBase(object):
 
 	def __init__(
 		self,
-		fileHandle: Union[ctypes.wintypes.HANDLE],
+		fileHandle: ctypes.wintypes.HANDLE,
 		onReceive: Callable[[bytes], None],
-		writeFileHandle: Optional[ctypes.wintypes.HANDLE] = None,
+		writeFileHandle: ctypes.wintypes.HANDLE | None = None,
 		onReceiveSize: int = 1,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param fileHandle: A handle to an open I/O device opened for overlapped I/O.
@@ -107,7 +128,7 @@ class IoBase(object):
 			raise RuntimeError("I/O thread is no longer available")
 		ioThread.queueAsApc(self._asyncRead)
 
-	def waitForRead(self, timeout: Union[int, float]) -> bool:
+	def waitForRead(self, timeout: float) -> bool:
 		"""Wait for a chunk of data to be received and processed.
 		This will return after L{onReceive} has been called or when the timeout elapses.
 		@param timeout: The maximum time to wait in seconds.
@@ -129,7 +150,7 @@ class IoBase(object):
 					log.debug("Waiting interrupted by completed i/o")
 				timeout -= int((time.time() - curTime) * 1000)
 
-	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
+	def _prepareWriteBuffer(self, data: bytes) -> tuple[int, ctypes.c_char_p]:
 		"""Private helper method to allow derived classes to prepare buffers in different ways"""
 		size = len(data)
 		return (
@@ -141,13 +162,13 @@ class IoBase(object):
 		if not isinstance(data, bytes):
 			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
-			log.debug("Write: %r" % data)
+			log.debug("Write: %r" % data)  # noqa: UP031
 
 		size, data = self._prepareWriteBuffer(data)
 		if not winBindings.kernel32.WriteFile(self._writeFile, data, size, None, byref(self._writeOl)):
 			if ctypes.GetLastError() != ERROR_IO_PENDING:
 				if _isDebug():
-					log.debug("Write failed: %s" % ctypes.WinError())
+					log.debug("Write failed: %s" % ctypes.WinError())  # noqa: UP031
 				raise ctypes.WinError()
 			byteData = DWORD()
 			winBindings.kernel32.GetOverlappedResult(
@@ -175,7 +196,7 @@ class IoBase(object):
 			if _isDebug():
 				log.debugWarning("Couldn't delete object gracefully", exc_info=True)
 
-	def _asyncRead(self, param: Optional[int] = None):
+	def _asyncRead(self, param: int | None = None):
 		ioThread = self._ioThreadRef()
 		if not ioThread:
 			raise RuntimeError("I/O thread is no longer available")
@@ -214,11 +235,11 @@ class IoBase(object):
 		if not isinstance(data, bytes):
 			raise TypeError("Expected argument 'data' to be of type 'bytes'")
 		if _isDebug():
-			log.debug("Read: %r" % data)
+			log.debug("Read: %r" % data)  # noqa: UP031
 		try:
 			self._onReceive(data)
 		except:  # noqa: E722
-			log.error("", exc_info=True)
+			log.error("", exc_info=True)  # noqa: G201
 
 
 class Serial(IoBase):
@@ -230,8 +251,8 @@ class Serial(IoBase):
 		self,
 		*args,
 		onReceive: Callable[[bytes], None],
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 		**kwargs,
 	):
 		"""Constructor.
@@ -249,12 +270,12 @@ class Serial(IoBase):
 		self._ser = None
 		self.port = args[0] if len(args) >= 1 else kwargs["port"]
 		if _isDebug():
-			log.debug("Opening port %s" % self.port)
+			log.debug("Opening port %s" % self.port)  # noqa: UP031
 		try:
 			self._ser = serial.Serial(*args, **kwargs)
 		except Exception as e:
 			if _isDebug():
-				log.debug("Open failed: %s" % e)
+				log.debug("Open failed: %s" % e)  # noqa: UP031
 			raise
 		self._origTimeout = self._ser.timeout
 		# We don't want a timeout while we're waiting for data.
@@ -269,27 +290,27 @@ class Serial(IoBase):
 	def read(self, size=1) -> bytes:
 		data = self._ser.read(size)
 		if _isDebug():
-			log.debug("Read: %r" % data)
+			log.debug("Read: %r" % data)  # noqa: UP031
 		return data
 
 	def write(self, data: bytes):
 		if _isDebug():
-			log.debug("Write: %r" % data)
+			log.debug("Write: %r" % data)  # noqa: UP031
 		self._ser.write(data)
 
 	def close(self):
 		if not self._ser:
 			return
-		super(Serial, self).close()
+		super().close()
 		self._ser.close()
 
 	def _notifyReceive(self, data: bytes):
 		# Set the timeout for onReceive in case it does a sync read.
 		self._setTimeout(self._origTimeout)
-		super(Serial, self)._notifyReceive(data)
+		super()._notifyReceive(data)
 		self._setTimeout(None)
 
-	def _setTimeout(self, timeout: Optional[int]):
+	def _setTimeout(self, timeout: int | None):
 		# #6035: pyserial reconfigures all settings of the port when setting a timeout.
 		# This can cause error 'Cannot configure port, some setting was wrong.'
 		# Therefore, manually set the timeouts using the Win32 API.
@@ -322,8 +343,8 @@ class Bulk(IoBase):
 		epOut: int,
 		onReceive: Callable[[bytes], None],
 		onReceiveSize: int = 1,
-		onReadError: Optional[Callable[[int], bool]] = None,
-		ioThread: Optional[IoThread] = None,
+		onReadError: Callable[[int], bool] | None = None,
+		ioThread: IoThread | None = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -337,9 +358,9 @@ class Bulk(IoBase):
 			if C{None}, defaults to L{hwIo.bgThread}
 		"""
 		if _isDebug():
-			log.debug("Opening device %s" % path)
-		readPath = "{path}\\{endpoint}".format(path=path, endpoint=epIn)
-		writePath = "{path}\\{endpoint}".format(path=path, endpoint=epOut)
+			log.debug("Opening device %s" % path)  # noqa: UP031
+		readPath = f"{path}\\{epIn}"
+		writePath = f"{path}\\{epOut}"
 		readHandle = CreateFile(
 			readPath,
 			winKernel.GENERIC_READ,
@@ -351,7 +372,7 @@ class Bulk(IoBase):
 		)
 		if readHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
-				log.debug("Open read handle failed: %s" % ctypes.WinError())
+				log.debug("Open read handle failed: %s" % ctypes.WinError())  # noqa: UP031
 			raise ctypes.WinError()
 		writeHandle = CreateFile(
 			writePath,
@@ -364,8 +385,14 @@ class Bulk(IoBase):
 		)
 		if writeHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
-				log.debug("Open write handle failed: %s" % ctypes.WinError())
-			raise ctypes.WinError()
+				log.debug("Open write handle failed: %s" % ctypes.WinError())  # noqa: UP031
+			err = ctypes.WinError()
+			# readHandle already succeeded above; close it before raising so it isn't
+			# leaked. At this point super().__init__() hasn't run yet, so readHandle
+			# isn't stored anywhere (e.g. as self._file) and would otherwise never be
+			# closed, leaving the device open for the lifetime of the process.
+			winKernel.closeHandle(readHandle)
+			raise err
 		super().__init__(
 			readHandle,
 			onReceive,
@@ -376,7 +403,7 @@ class Bulk(IoBase):
 		)
 
 	def close(self):
-		super(Bulk, self).close()
+		super().close()
 		if hasattr(self, "_file") and self._file is not INVALID_HANDLE_VALUE:
 			winKernel.closeHandle(self._file)
 		if hasattr(self, "_writeFile") and self._writeFile is not INVALID_HANDLE_VALUE:

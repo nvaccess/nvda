@@ -3,22 +3,23 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2008-2017 NV Access Limited, Gianluca Casalino, Alberto Benassati, Babbage B.V.
-from typing import Optional, List
 
-import os
+import os  # noqa: I001
 import globalVars
 from logHandler import log
 from ctypes import windll
 import inputCore
 import wx
 import braille
+import braille.display.driver
+import braille.display.gesture
 
 try:
 	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
 except:  # noqa: E722
 	lilliDll = None
 
-lilliCellsMap: List[int] = []
+lilliCellsMap: list[int] = []
 KEY_CHECK_INTERVAL = 50
 
 LILLI_KEYS = [
@@ -106,7 +107,7 @@ def convertLilliCells(cell: int) -> int:
 	return newCell
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "lilli"
 	# Translators: Name of a braille display.
 	description = _("MDV Lilli")
@@ -117,7 +118,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def __init__(self):
 		global lilliCellsMap
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		lilliCellsMap = [convertLilliCells(x) for x in range(256)]
 		if lilliDll.Init408USB():
 			self._keyCheckTimer = wx.PyTimer(self._handleKeyPresses)
@@ -126,11 +127,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise RuntimeError("No display found")
 
 	def terminate(self):
-		super(BrailleDisplayDriver, self).terminate()
+		super().terminate()
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		lilliDll.Close408USB()
 
@@ -139,7 +140,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleKeyPresses(self):
 		while True:
-			key: Optional[int] = None
+			key: int | None = None
 			try:
 				# Python 3: review required
 				# The code seems to assume this returns an int.
@@ -147,7 +148,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				key = lilliDll.ReadBuf()
 			except:  # noqa: E722
 				log.debug("", exc_info=True)
-				pass
 			if not key:
 				break
 			if (key <= 0x40) or (0x101 <= key <= 0x128):
@@ -162,7 +162,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		lilliDll.WriteBuf(bytes(lilliCellsMap[x] for x in cells))
 
 	gestureMap = inputCore.GlobalGestureMap(
@@ -182,11 +182,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class InputGesture(braille.BrailleDisplayGesture):
+class InputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, command: str, argument: int):
-		super(InputGesture, self).__init__()
+		super().__init__()
 		self.id = command
 		if command == ROUTE_COMMAND:
-			self.routingIndex = argument
+			self.cellIndexes = [argument]

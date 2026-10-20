@@ -5,7 +5,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
-import typing
+import typing  # noqa: I001
 
 import appModuleHandler
 import api
@@ -31,7 +31,7 @@ class NvdaDialog(IAccessible):
 	"""Fix to ensure NVDA message dialogs get reported when they pop up."""
 
 	def _get_presentationType(self):
-		presType = super(NvdaDialog, self).presentationType
+		presType = super().presentationType
 		# Sometimes, NVDA message dialogs briefly report the invisible state
 		# after they're focused.
 		# This causes them to be treated as unavailable and they are thus not reported.
@@ -146,7 +146,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 				speech.speakMessage(_("Bottom"))
 				return
 		else:
-			raise ValueError("Unexpected direction: {!r}".format(direction))
+			raise ValueError(f"Unexpected direction: {direction!r}")
 		if select:
 			consoleUI.outputCtrl.Freeze()
 			anchorPos = startPos if self.isTextSelectionAnchoredAtStart else endPos
@@ -226,7 +226,7 @@ class AppModule(appModuleHandler.AppModule):
 		windowHandle = obj.windowHandle
 		from gui.settingsDialogs import NvdaSettingsDialogWindowHandle
 
-		if windowHandle == NvdaSettingsDialogWindowHandle:
+		if windowHandle == NvdaSettingsDialogWindowHandle:  # noqa: SIM103
 			return True
 		return False
 

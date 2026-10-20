@@ -8,7 +8,7 @@ NVDA Magnifier module.
 Handles module initialization, configuration and settings interaction.
 """
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING  # noqa: I001
 
 from logHandler import log
 
@@ -138,7 +138,7 @@ def isActive() -> bool:
 
 	:return: True if magnifier is active, False otherwise
 	"""
-	global _magnifier
+	global _magnifier  # noqa: PLW0602
 	return _magnifier is not None and _magnifier._isActive
 
 
@@ -150,7 +150,7 @@ def changeMagnifiedView(magnifiedView: MagnifiedView) -> None:
 	:param magnifiedView: The new magnifier view to use
 	:raises RuntimeError: If no magnifier is currently active
 	"""
-	global _magnifier
+	global _magnifier  # noqa: PLW0602
 	if not _magnifier or not _magnifier._isActive:
 		raise RuntimeError("Cannot change magnifier view: magnifier is not active")
 
@@ -164,5 +164,5 @@ def getMagnifier() -> "Magnifier | None":
 
 	:return: The current magnifier instance, or None if not initialized
 	"""
-	global _magnifier
+	global _magnifier  # noqa: PLW0602
 	return _magnifier

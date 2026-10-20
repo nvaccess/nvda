@@ -5,18 +5,17 @@
 
 """Unit tests for the blockUntilConditionMet submodule."""
 
-from dataclasses import dataclass
-from typing import (
-	List,
-	Optional,
-	Type,
-)
+from dataclasses import dataclass  # noqa: I001
 import unittest
 from unittest.mock import patch
+
+from ..objectProvider import PlaceholderNVDAObject
+import treeInterceptorHandler
 
 from utils.security import (
 	_UnexpectedWindowCountError,
 	_isWindowBelowWindowMatchesCond,
+	objectBelowLockScreenAndWindowsIsLocked,
 )
 import winUser
 
@@ -29,6 +28,48 @@ class _MoveWindow:
 	insertBelowHWND: winUser.HWNDVal  # is moved to below this window
 	triggerHWND: winUser.HWNDVal  # when this window is reached
 	triggered = False  # If the move has been triggered
+
+
+class Test_objectBelowLockScreenAndWindowsIsLocked(unittest.TestCase):
+	"""
+	Tests for objects which are not NVDAObjects being passed to
+	objectBelowLockScreenAndWindowsIsLocked.
+
+	Several callers, e.g. braille.handler.handleUpdate and braille.handler.handleCaretMove,
+	are called with a TreeInterceptor (such as a virtual buffer) rather than an NVDAObject.
+	TreeInterceptors do not implement isBelowLockScreen (#18861).
+	"""
+
+	def setUp(self) -> None:
+		# isLockScreenModeActive is imported into both modules by name.
+		self._patches = [
+			patch("utils.security.isLockScreenModeActive", lambda: True),
+			patch("NVDAObjects.isLockScreenModeActive", lambda: True),
+			# Avoid depending on the z-order of real windows.
+			patch("NVDAObjects._isObjectBelowLockScreen", lambda obj: True),
+		]
+		for p in self._patches:
+			p.start()
+		self._rootObj = PlaceholderNVDAObject()
+		return super().setUp()
+
+	def tearDown(self) -> None:
+		for p in self._patches:
+			p.stop()
+		return super().tearDown()
+
+	def test_NVDAObject(self):
+		"""An NVDAObject below the lock screen is detected as such."""
+		self.assertTrue(objectBelowLockScreenAndWindowsIsLocked(self._rootObj))
+
+	def test_treeInterceptor(self):
+		"""A TreeInterceptor is checked via its root NVDAObject."""
+		treeInterceptor = treeInterceptorHandler.TreeInterceptor(self._rootObj)
+		self.assertTrue(objectBelowLockScreenAndWindowsIsLocked(treeInterceptor))
+
+	def test_unhandledObject(self):
+		"""An object which is neither an NVDAObject nor has a root NVDAObject is treated as safe."""
+		self.assertFalse(objectBelowLockScreenAndWindowsIsLocked(object()))
 
 
 class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
@@ -82,7 +123,7 @@ class _Test_isWindowAboveWindowMatchesCond(unittest.TestCase):
 		List of fake HWNDs, given an ordered index to make testing easier.
 		Must be 1 indexed as a HWND of 0 is treated an error.
 		"""
-		self._windows: List[winUser.HWNDVal] = list(range(1, 11))
+		self._windows: list[winUser.HWNDVal] = list(range(1, 11))
 
 	def tearDown(self) -> None:
 		self._getWindowPatch.stop()
@@ -123,7 +164,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 	windows will change.
 	"""
 
-	_queuedMove: Optional[_MoveWindow] = None
+	_queuedMove: _MoveWindow | None = None
 
 	def _getWindow_patched(self, hwnd: winUser.HWNDVal, relation: int) -> int:
 		self._triggerQueuedMove(hwnd)
@@ -149,8 +190,8 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 		move: _MoveWindow,
 		aboveWindow: winUser.HWNDVal,
 		belowWindow: winUser.HWNDVal,
-		aboveRaises: Optional[Type[Exception]] = None,
-		belowRaises: Optional[Type[Exception]] = None,
+		aboveRaises: type[Exception] | None = None,
+		belowRaises: type[Exception] | None = None,
 		aboveExpectFailure: bool = False,
 		belowExpectFailure: bool = False,
 	):

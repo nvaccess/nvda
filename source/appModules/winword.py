@@ -8,7 +8,7 @@ Word and Outlook share a lot of code and components. This app module gathers the
 Microsoft Word only.
 """
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import config
 from scriptHandler import script
 import ui
@@ -162,7 +162,7 @@ class WinwordWordDocument(WordDocument):
 			msg = _("Expanded")
 		ui.message(msg)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:control+shift+b": "toggleBold",
 		"kb:control+shift+w": "toggleUnderline",
 		"kb:control+shift+a": "toggleCaps",

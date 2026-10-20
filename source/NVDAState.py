@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from functools import lru_cache
+from functools import lru_cache  # noqa: I001
 import os
 import platform
 import sys
@@ -72,6 +72,10 @@ class _WritePaths:
 		return os.path.join(self.configDir, "nvda.ini")
 
 	@property
+	def nvdaCustomSectionsFile(self) -> str:
+		return os.path.join(self.configDir, "customSections.yaml")
+
+	@property
 	def addonStateFile(self) -> str:
 		from addonHandler import STATE_FILENAME
 
@@ -109,7 +113,7 @@ class _WritePaths:
 		return buildVersion.name
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def startMenuFolder(self) -> str | None:
 		"""Name of a specific folder in the start menu, not a full path"""
 		from config.registry import RegistryKey
@@ -117,11 +121,11 @@ class _WritePaths:
 		try:
 			with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def _startMenuFolderX86(self) -> str | None:
 		"""Name of a specific folder in the start menu, not a full path"""
 		from config.registry import RegistryKey
@@ -133,11 +137,11 @@ class _WritePaths:
 				access=winreg.KEY_WOW64_32KEY,
 			) as k:
 				return winreg.QueryValueEx(k, "Start Menu Folder")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def defaultInstallDir(self) -> str:
 		from config.registry import RegistryKey
 
@@ -146,7 +150,7 @@ class _WritePaths:
 		return os.path.join(programFilesPath, buildVersion.name)
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def _defaultInstallDirX86(self) -> str:
 		from config.registry import RegistryKey, _RegistryKeyX86
 
@@ -166,7 +170,7 @@ class _WritePaths:
 		return os.path.join(programFilesPath, buildVersion.name)
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def installDir(self) -> str | None:
 		from config.registry import RegistryKey
 
@@ -176,11 +180,11 @@ class _WritePaths:
 				RegistryKey.INSTALLED_COPY.value,
 			) as k:
 				return winreg.QueryValueEx(k, "UninstallDirectory")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	@property
-	@lru_cache(maxsize=1)
+	@lru_cache(maxsize=1)  # noqa: B019
 	def _installDirX86(self) -> str | None:
 		from config.registry import RegistryKey
 
@@ -191,7 +195,7 @@ class _WritePaths:
 				access=winreg.KEY_WOW64_32KEY,
 			) as k:
 				return winreg.QueryValueEx(k, "UninstallDirectory")[0]
-		except WindowsError:
+		except OSError:
 			return None
 
 	def getSymbolsConfigFile(self, locale: str) -> str:
@@ -254,6 +258,14 @@ class _ReadPaths:
 	@property
 	def nvdaHelperLocalWin10Dll(self) -> str:
 		return os.path.join(self.coreArchLibPath, "nvdaHelperLocalWin10.dll")
+
+	@property
+	def cppjiebaDll(self) -> str:
+		return os.path.join(self.coreArchLibPath, "cppjieba.dll")
+
+	@property
+	def cppjiebaDictsDir(self) -> str:
+		return os.path.join(globalVars.appDir, "cppjieba", "dicts")
 
 	@property
 	def mathCATDir(self) -> str:
@@ -362,7 +374,7 @@ def _forceSecureModeEnabled() -> bool:
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 			return bool(winreg.QueryValueEx(k, RegistryKey.FORCE_SECURE_MODE_SUBKEY.value)[0])
-	except WindowsError:
+	except OSError:
 		# Expected state by default, forceSecureMode parameter not set
 		return False
 
@@ -374,7 +386,7 @@ def _serviceDebugEnabled() -> bool:
 	try:
 		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value) as k:
 			return bool(winreg.QueryValueEx(k, RegistryKey.SERVICE_DEBUG_SUBKEY.value)[0])
-	except WindowsError:
+	except OSError:
 		# Expected state by default, serviceDebug parameter not set
 		return False
 
@@ -390,6 +402,6 @@ def _configInLocalAppDataEnabled() -> bool:
 	except FileNotFoundError:
 		log.debug("Installed user config is not in local app data")
 		return False
-	except WindowsError:
+	except OSError:
 		# Expected state by default, configInLocalAppData parameter not set
 		return False

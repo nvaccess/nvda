@@ -7,7 +7,7 @@
 High-level UIA remote ops Unit tests for error handling including try, except, and uncaught errors.
 """
 
-from unittest import TestCase
+from unittest import TestCase  # noqa: I001
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
 

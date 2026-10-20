@@ -1,20 +1,56 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2010-2023 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
-# Bram Duvigneau
+# Copyright (C) 2010-2026 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter, Bram Duvigneau, Selvas Healthcare
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from typing import List, Iterator
+from collections.abc import Callable  # noqa: I001
+from collections.abc import Iterator
 
+import ctypes
+from ctypes import byref
+from ctypes.wintypes import DWORD, ULONG
+import threading
 import serial
+from serial.win32 import CreateFile, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE
+from comtypes import GUID
 from io import BytesIO
 import hwIo
 from hwIo import intToByte
+from hwIo.base import _isDebug as _isHwIoDebug
+import winKernel
+from winAPI.constants import SystemErrorCodes
+from winBindings.setupapi import (
+	DIGCF,
+	SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W,
+	SP_DEVICE_INTERFACE_DATA,
+	SP_DEVINFO_DATA,
+	SetupDiDestroyDeviceInfoList,
+	SetupDiEnumDeviceInterfaces,
+	SetupDiGetClassDevs,
+	SetupDiGetDeviceInterfaceDetail,
+	_Dummy as _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING,
+)
+from winBindings.winusb import (
+	USB_INTERFACE_DESCRIPTOR,
+	USBD_PIPE_TYPE,
+	WINUSB_PIPE_POLICY,
+	WINUSB_PIPE_INFORMATION,
+	WinUsb_Free,
+	WinUsb_Initialize,
+	WinUsb_QueryInterfaceSettings,
+	WinUsb_QueryPipe,
+	WinUsb_ReadPipe,
+	WinUsb_SetPipePolicy,
+	WinUsb_WritePipe,
+)
 import braille
+import braille.display
+import braille.display.driver
+import braille.display.gesture
 from logHandler import log
 from collections import OrderedDict
 import inputCore
-import brailleInput
+import braille.input.gesture
 from baseObject import AutoPropertyObject
 import time
 import bdDetect
@@ -25,6 +61,260 @@ PARITY = serial.PARITY_NONE
 
 # HID
 HR_CAPS = b"\x01"
+
+# WinUSB (winusb.sys) fallback for the CUSTOM/bulk protocol.
+#
+# hwIo.Bulk talks to the device via the legacy himsusb.sys kernel driver (a custom,
+# non-WHCP-signed driver). Windows 11 blocks installation of such drivers, so on affected
+# systems hwIo.Bulk() raises and the CUSTOM match is skipped entirely -- for the plain
+# Braille Sense/EDGE (930A/930B) devices there is no HID/serial fallback, so the display
+# would not be found via USB at all.
+# This fallback talks to the same device through winusb.sys (an inbox driver) instead,
+# provided the vendor's WinUSB INF (hims_winusb.inf) is installed for it.
+
+# DeviceInterfaceGUID defined in the WinUSB INF (hims_winusb.inf).
+GUID_DEVINTERFACE_HIMS_WINUSB = GUID("{78A1C341-4539-11d3-B88D-00C04FAD5171}")
+
+
+def _findWinUsbDevicePath(deviceInterfaceGuid: GUID) -> str | None:
+	"""Find the device path for the first present device exposing the given device
+	interface GUID, using the same SetupDi* enumeration pattern as ``hwPortUtils._listDevices``.
+
+	:param deviceInterfaceGuid: The device interface GUID to search for.
+	:return: The device path, or ``None`` if no matching device is present.
+	"""
+	try:
+		hDevInfo = SetupDiGetClassDevs(
+			byref(deviceInterfaceGuid),
+			None,
+			None,
+			DIGCF.PRESENT | DIGCF.DEVICEINTERFACE,
+		)
+	except OSError as e:
+		log.debug(f"_findWinUsbDevicePath: SetupDiGetClassDevs failed: {e}")
+		return None
+	try:
+		did = SP_DEVICE_INTERFACE_DATA()
+		did.cbSize = ctypes.sizeof(did)
+		if not SetupDiEnumDeviceInterfaces(hDevInfo, None, byref(deviceInterfaceGuid), 0, byref(did)):
+			log.debug(
+				f"_findWinUsbDevicePath: SetupDiEnumDeviceInterfaces found no device for GUID {deviceInterfaceGuid} "
+				f"(GetLastError={ctypes.GetLastError()}) -- WinUSB INF (hims_winusb.inf) may not be "
+				"installed/bound for this device",
+			)
+			return None
+
+		dwNeeded = DWORD()
+		SetupDiGetDeviceInterfaceDetail(hDevInfo, byref(did), None, 0, byref(dwNeeded), None)
+
+		class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
+			_fields_ = (
+				("cbSize", DWORD),
+				(
+					"DevicePath",
+					# Round up to the next WCHAR count to ensure proper memory alignment.
+					ctypes.c_wchar
+					* math.ceil((dwNeeded.value - ctypes.sizeof(DWORD)) / ctypes.sizeof(ctypes.c_wchar)),
+				),
+			)
+			_pack_ = _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING._pack_
+
+		idd = SP_DEVICE_INTERFACE_DETAIL_DATA_W()
+		idd.cbSize = SIZEOF_SP_DEVICE_INTERFACE_DETAIL_DATA_W
+		devinfo = SP_DEVINFO_DATA()
+		devinfo.cbSize = ctypes.sizeof(devinfo)
+		if not SetupDiGetDeviceInterfaceDetail(
+			hDevInfo,
+			byref(did),
+			byref(idd),
+			dwNeeded,
+			None,
+			byref(devinfo),
+		):
+			log.debug(
+				f"_findWinUsbDevicePath: SetupDiGetDeviceInterfaceDetail failed, GetLastError={ctypes.GetLastError()}",
+			)
+			return None
+		log.debug(f"_findWinUsbDevicePath: found DevicePath={idd.DevicePath}")
+		return idd.DevicePath
+	finally:
+		SetupDiDestroyDeviceInfoList(hDevInfo)
+
+
+class _WinUsbBulk:
+	"""Raw I/O for HIMS bulk USB devices via WinUSB.
+
+	Used as a fallback for `hwIo.Bulk` when the legacy himsusb.sys kernel driver is
+	not available. Unlike `hwIo.Bulk`, this does not integrate with `hwIo.bgThread`;
+	reads happen on a dedicated background thread using blocking, timed ``WinUsb_ReadPipe`` calls.
+	"""
+
+	def __init__(self, path: str, onReceive: Callable[[bytes], None], onReceiveSize: int = 64) -> None:
+		"""Constructor.
+
+		:param path: The WinUSB device path, as returned by `_findWinUsbDevicePath`.
+		:param onReceive: A callable taking the received data as its only argument.
+		:param onReceiveSize: The size (in bytes) of the buffer used for each read.
+		:raises OSError: If the device could not be opened, or if the bulk IN/OUT pipes
+			could not be determined.
+		"""
+		log.debug(f"_WinUsbBulk: 1 opening device {path}")
+		self._onReceive = onReceive
+		self._readSize = onReceiveSize
+		self._closed = False
+		self._recvEvt = threading.Event()
+
+		self._handle = CreateFile(
+			path,
+			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+			winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None,
+		)
+		if self._handle == INVALID_HANDLE_VALUE:
+			err = ctypes.WinError()
+			log.debug(f"_WinUsbBulk: FAILED at step 1, CreateFile: {err}")
+			raise err
+
+		# WinUsb_Initialize requires a handle opened with FILE_FLAG_OVERLAPPED
+		# (WinUsb_ReadPipe/WritePipe still behave synchronously when passed no OVERLAPPED).
+		log.debug("_WinUsbBulk: 2 WinUsb_Initialize")
+		self._winUsbHandle = ctypes.c_void_p()
+		if not WinUsb_Initialize(self._handle, byref(self._winUsbHandle)):
+			err = ctypes.WinError()
+			log.debug(f"_WinUsbBulk: FAILED at step 2, WinUsb_Initialize: {err}")
+			winKernel.closeHandle(self._handle)
+			raise err
+
+		log.debug("_WinUsbBulk: 3 querying pipes")
+		try:
+			self._pipeIn, self._pipeOut = self._queryPipes()
+		except Exception as e:
+			log.debug(f"_WinUsbBulk: FAILED at step 3, querying pipes: {e}")
+			WinUsb_Free(self._winUsbHandle)
+			winKernel.closeHandle(self._handle)
+			raise
+
+		# Set a read timeout so the background read thread can notice `close()`
+		# instead of blocking forever if the device never responds.
+		timeoutMs = DWORD(3000)
+		if not WinUsb_SetPipePolicy(
+			self._winUsbHandle,
+			self._pipeIn,
+			WINUSB_PIPE_POLICY.PIPE_TRANSFER_TIMEOUT,
+			ctypes.sizeof(timeoutMs),
+			byref(timeoutMs),
+		):
+			log.debugWarning(f"WinUsb_SetPipePolicy(PIPE_TRANSFER_TIMEOUT) failed: {ctypes.WinError()}")
+
+		log.debug(
+			f"_WinUsbBulk: 4 SUCCESS (pipeIn=0x{self._pipeIn:02X} pipeOut=0x{self._pipeOut:02X})",
+		)
+		self._readThread = threading.Thread(target=self._readLoop, daemon=True)
+		self._readThread.start()
+
+	def _queryPipes(self) -> tuple[int, int]:
+		"""Query the device's bulk IN and OUT pipe IDs.
+
+		:return: A tuple of ``(pipeIn, pipeOut)`` pipe IDs.
+		:raises OSError: If the interface settings could not be queried, or if both a bulk
+			IN and OUT pipe could not be found.
+		"""
+		ifaceDesc = USB_INTERFACE_DESCRIPTOR()
+		if not WinUsb_QueryInterfaceSettings(self._winUsbHandle, 0, byref(ifaceDesc)):
+			raise ctypes.WinError()
+		log.debug(
+			f"_WinUsbBulk._queryPipes: bNumEndpoints={ifaceDesc.bNumEndpoints} "
+			f"bInterfaceClass={ifaceDesc.bInterfaceClass}",
+		)
+		pipeIn = pipeOut = None
+		for i in range(ifaceDesc.bNumEndpoints):
+			pipe = WINUSB_PIPE_INFORMATION()
+			if not WinUsb_QueryPipe(self._winUsbHandle, 0, i, byref(pipe)):
+				log.debug(f"_WinUsbBulk._queryPipes: WinUsb_QueryPipe({i}) failed: {ctypes.WinError()}")
+				continue
+			log.debug(
+				f"_WinUsbBulk._queryPipes: pipe[{i}] id=0x{pipe.pipeId:02X} type={pipe.pipeType} "
+				f"maxPacketSize={pipe.maximumPacketSize}",
+			)
+			if pipe.pipeType == USBD_PIPE_TYPE.BULK:
+				if pipe.pipeId & 0x80:
+					pipeIn = pipe.pipeId
+				else:
+					pipeOut = pipe.pipeId
+		if pipeIn is None or pipeOut is None:
+			# Raised as OSError (not RuntimeError) so callers that catch EnvironmentError/OSError
+			# to fall back to another connection method (e.g. hims.py's CUSTOM protocol handling)
+			# handle this the same way as a WinUsb_* API failure.
+			raise OSError(
+				f"Could not find both bulk IN and OUT pipes on WinUSB device (pipeIn={pipeIn!r}, pipeOut={pipeOut!r})",
+			)
+		return pipeIn, pipeOut
+
+	def _readLoop(self) -> None:
+		"""Blocking read loop run on a dedicated background thread until `close()` is called."""
+		buf = ctypes.create_string_buffer(self._readSize)
+		bytesRead = ULONG()
+		while not self._closed:
+			ok = WinUsb_ReadPipe(
+				self._winUsbHandle,
+				self._pipeIn,
+				buf,
+				self._readSize,
+				byref(bytesRead),
+				None,
+			)
+			if not ok:
+				err = ctypes.GetLastError()
+				if err == SystemErrorCodes.SEM_TIMEOUT:
+					# No data within PIPE_TRANSFER_TIMEOUT; keep waiting.
+					continue
+				if not self._closed:
+					log.debugWarning(f"WinUsb_ReadPipe failed: {ctypes.WinError(err)}")
+				break
+			data = buf.raw[: bytesRead.value]
+			if data and self._onReceive:
+				try:
+					self._onReceive(data)
+				except Exception:
+					log.error("", exc_info=True)  # noqa: G201
+			self._recvEvt.set()
+
+	def waitForRead(self, timeout: float) -> bool:
+		"""Wait for a chunk of data to be received and processed.
+
+		:param timeout: The maximum time to wait in seconds.
+		:return: ``True`` if received data was processed before the timeout, ``False`` if not.
+		"""
+		self._recvEvt.clear()
+		return self._recvEvt.wait(timeout)
+
+	def write(self, data: bytes) -> None:
+		"""Write data to the device's bulk OUT pipe.
+
+		:param data: The data to write.
+		:raises OSError: If the write failed.
+		"""
+		if _isHwIoDebug():
+			log.debug(f"Write: {data!r}")
+		buf = ctypes.create_string_buffer(data, len(data))
+		written = ULONG()
+		if not WinUsb_WritePipe(self._winUsbHandle, self._pipeOut, buf, len(data), byref(written), None):
+			raise ctypes.WinError()
+
+	def close(self) -> None:
+		"""Stop the background read thread and release the WinUSB and file handles."""
+		if self._closed:
+			return
+		self._closed = True
+		if self._winUsbHandle:
+			WinUsb_Free(self._winUsbHandle)
+			self._winUsbHandle = None
+		if self._handle and self._handle != INVALID_HANDLE_VALUE:
+			winKernel.closeHandle(self._handle)
+			self._handle = None
 
 
 class Model(AutoPropertyObject):
@@ -88,7 +378,7 @@ class BrailleSense(Model):
 	numCells = 0  # Either 18 or 32
 
 	def _get_keys(self):
-		keys = super(BrailleSense, self)._get_keys()
+		keys = super()._get_keys()
 		keys.update(
 			{
 				0x01 << 16: "leftSideScrollUp",
@@ -108,7 +398,7 @@ class BrailleEdge(Model):
 	numCells = 40
 
 	def _get_keys(self):
-		keys = super(BrailleEdge, self)._get_keys()
+		keys = super()._get_keys()
 		keys.update(
 			{
 				0x01 << 16: "leftSideScrollUp",
@@ -270,7 +560,7 @@ modelMap = [
 ]
 
 
-class BrailleDisplayDriver(braille.BrailleDisplayDriver):
+class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 	name = "hims"
 	# Translators: The name of a series of braille displays.
 	description = _("HIMS Braille Sense/Braille EDGE/Smart Beetle/Sync Braille series")
@@ -319,16 +609,16 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
-		return braille.getSerialPorts()
+		return braille.display.getSerialPorts()
 
 	def __init__(self, port="auto"):
-		super(BrailleDisplayDriver, self).__init__()
+		super().__init__()
 		self.numCells = 0
 		self._model = None
 		self._serialData = b""
 
 		for match in self._getTryPorts(port):
-			portType, portId, port, portInfo = match
+			portType, portId, port, portInfo = match  # noqa: RUF059
 			self.isBulk = portType == bdDetect.ProtocolType.CUSTOM
 			self.isHID = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
@@ -338,7 +628,28 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 					case bdDetect.ProtocolType.CUSTOM:
 						# onReceiveSize based on max packet size according to USB endpoint information.
-						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+						try:
+							self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
+						except OSError as bulkError:
+							# himsusb.sys (the legacy kernel driver hwIo.Bulk expects) may not be
+							# available -- e.g. Windows 11 blocks installation of unsigned/non-WHCP
+							# kernel drivers. Fall back to WinUSB (winusb.sys, an inbox driver) if
+							# the vendor's WinUSB INF (hims_winusb.inf) is installed for this device.
+							log.debug(
+								f"hwIo.Bulk(port={port!r}) failed ({bulkError}); trying WinUSB fallback",
+							)
+							winUsbPath = _findWinUsbDevicePath(GUID_DEVINTERFACE_HIMS_WINUSB)
+							if not winUsbPath:
+								log.debug(
+									"WinUSB fallback: no device found for GUID_DEVINTERFACE_HIMS_WINUSB; "
+									"giving up on this port",
+								)
+								raise
+							try:
+								self._dev = _WinUsbBulk(winUsbPath, self._onReceive, onReceiveSize=64)
+							except OSError as winUsbError:
+								log.debug(f"WinUSB fallback failed: {winUsbError}")
+								raise
 					case bdDetect.ProtocolType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
@@ -350,7 +661,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						)
 					case _:
 						log.error(f"No matching case for portType found: {portType}")
-			except EnvironmentError:
+			except OSError:
 				log.debugWarning("", exc_info=True)
 				continue
 			for i in range(3):
@@ -374,11 +685,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self._model:
 				# A display responded.
 				log.info(
-					"Found {device} connected via {type} ({port})".format(
-						device=self._model.name,
-						type=portType,
-						port=port,
-					),
+					f"Found {self._model.name} connected via {portType} ({port})",
 				)
 				break
 
@@ -386,7 +693,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			raise RuntimeError("No Hims display found")
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		cellBytes = bytes(cells)
 		if self.isHID:
@@ -406,7 +713,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				data: bytes = self._dev.getFeature(HR_CAPS)
 				self.numCells = data[9]
-			except WindowsError:
+			except OSError:
 				log.exception("Failed to fetch number of cells")
 				return
 		else:
@@ -414,7 +721,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._sendPacket(b"\xfb", b"\x01", bytes(32))  # send 32 null bytes
 
 	def _sendIdentificationRequests(self, match: bdDetect.DeviceMatch):
-		log.debug("Considering sending identification requests for device %s" % str(match))
+		log.debug("Considering sending identification requests for device %s" % str(match))  # noqa: UP031
 		if "bluetoothName" in match.deviceInfo:  # Bluetooth
 			matchedModelsMap = [
 				modelTuple
@@ -436,14 +743,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# There is only one model matching the criteria, and we have the proper number of cells.
 				# There's no point in sending an identification request at all, just use this model
 				log.debug(
-					"Use %s as model without sending an additional identification request" % modelCls.name,
+					"Use %s as model without sending an additional identification request" % modelCls.name,  # noqa: UP031
 				)
 				self._model = modelCls()
 				self.numCells = numCells
 				return
 		self._model = None
 		for modelId, cls in matchedModelsMap:
-			log.debug("Sending request for id %r" % modelId)
+			log.debug("Sending request for id %r" % modelId)  # noqa: UP031
 
 			self._dev.write(
 				b"".join(
@@ -456,30 +763,30 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			)
 			self._dev.waitForRead(self.timeout)
 			if self._model:
-				log.debug("%s model has been set" % self._model.name)
+				log.debug("%s model has been set" % self._model.name)  # noqa: UP031
 				break
 
 	def _handleIdentification(self, recvId: bytes):
 		modelCls = None
 		models = [modelCls for modelId, modelCls in modelMap if (modelId == recvId)]
-		log.debug("Identification received, id %s" % recvId)
+		log.debug("Identification received, id %s" % recvId)  # noqa: UP031
 		if not models:
 			raise ValueError("Device identification ID unknown in model map")
 		if len(models) == 1:
 			modelCls = models[0]
 			self.numCells = self.numCells or modelCls.numCells
-			log.debug("There is an exact match, %s found with %d cells" % (modelCls.name, self.numCells))
+			log.debug("There is an exact match, %s found with %d cells" % (modelCls.name, self.numCells))  # noqa: UP031
 		elif len(models) > 1:
-			log.debug("Multiple models match: %s" % ", ".join(modelCls.name for modelCls in models))
+			log.debug("Multiple models match: %s" % ", ".join(modelCls.name for modelCls in models))  # noqa: UP031
 			try:
 				modelCls = next(cls for cls in models if cls.numCells == self.numCells)
 				log.debug(
-					"There is an exact match out of multiple models, %s found with %d cells"
+					"There is an exact match out of multiple models, %s found with %d cells"  # noqa: UP031
 					% (modelCls.name, self.numCells),
 				)
 			except StopIteration:
 				log.debugWarning(
-					"No exact model match found for the reported %d cells display" % self.numCells,
+					"No exact model match found for the reported %d cells display" % self.numCells,  # noqa: UP031
 				)
 				try:
 					modelCls = next(cls for cls in models if not cls.numCells)
@@ -509,7 +816,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)  # noqa: UP031
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys))
@@ -525,7 +832,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		routingKey = int.from_bytes(data[2:7], "little", signed=False)
 		if routingKey != 0:  # Routing key
 			try:
-				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))
+				inputCore.manager.executeGesture(RoutingInputGesture(int(math.log(routingKey, 2))))  # noqa: FURB163
 			except inputCore.NoInputGestureAction:
 				pass
 		else:  # Other key
@@ -541,7 +848,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					if _keys == 0:
 						break
 			if _keys:
-				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)
+				log.error("Unknown key(s) 0x%x received from Hims display" % _keys)  # noqa: UP031
 				return
 			try:
 				inputCore.manager.executeGesture(KeyInputGesture(self._model, keys, True))
@@ -587,7 +894,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				# Command packets are ten bytes long
 				packet = firstByte + stream.read(9)
-			except IOError:
+			except OSError:
 				# remaining data will be received next onReceive
 				self._serialData = firstByte
 				return
@@ -613,7 +920,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		d1Len = len(data1)
 		d2Len = len(data2)
 		# Construct the packet
-		packet: List[bytes] = [
+		packet: list[bytes] = [
 			# Packet start
 			packetType * 2,
 			# Mode
@@ -663,7 +970,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# We must sleep before closing the port as not doing this can leave the display in a bad state where it can not be re-initialized.
 			time.sleep(self.timeout)
@@ -795,11 +1102,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	)
 
 
-class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
+class KeyInputGesture(
+	braille.display.gesture.BrailleDisplayGesture,
+	braille.input.gesture.BrailleInputGesture,
+):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keys, isHid: bool = False):
-		super(KeyInputGesture, self).__init__()
+		super().__init__()
 		# Model identifiers should not contain spaces.
 		self.model = model.name.replace(" ", "")
 		self.keys = keys
@@ -808,7 +1118,7 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 		for key in keys:
 			if isBrailleInput:
 				if isHid:
-					if 8 <= int(math.log(key, 2)) <= 15:
+					if 8 <= int(math.log(key, 2)) <= 15:  # noqa: FURB163
 						self.dots |= key >> 8
 					elif model.keys.get(key) == "space":
 						self.space = True
@@ -832,10 +1142,10 @@ class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGe
 		self.id = "+".join(names)
 
 
-class RoutingInputGesture(braille.BrailleDisplayGesture):
+class RoutingInputGesture(braille.display.gesture.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, routingINdex):
-		super(RoutingInputGesture, self).__init__()
-		self.routingIndex = routingINdex
+	def __init__(self, routingIndex: int):
+		super().__init__()
+		self.cellIndexes = [routingIndex]
 		self.id = "routing"

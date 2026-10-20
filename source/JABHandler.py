@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections.abc import Callable
+from collections.abc import Callable  # noqa: I001
 from enum import IntEnum, IntFlag
 import os
 import queue
@@ -57,7 +57,7 @@ A11Y_PROPS_CONTENT = (
 
 def _errcheck(res, func, args):
 	if not res:
-		raise RuntimeError("Result %s" % res)
+		raise RuntimeError("Result %s" % res)  # noqa: UP031
 	return res
 
 
@@ -65,7 +65,7 @@ def _fixBridgeFunc(restype, name, *argtypes, **kwargs):
 	try:
 		func = getattr(bridgeDll, name)
 	except AttributeError:
-		log.warning("%s not found in Java Access Bridge dll" % name)
+		log.warning("%s not found in Java Access Bridge dll" % name)  # noqa: UP031
 		return
 	func.restype = restype
 	func.argtypes = argtypes
@@ -612,7 +612,7 @@ def getWindowHandleFromAccContext(vmID, accContext):
 		return vmIDsToWindowHandles.get(vmID)
 
 
-class JABContext(object):
+class JABContext:
 	def __init__(self, hwnd=None, vmID=None, accContext=None):
 		if hwnd and not vmID:
 			vmID = c_long()
@@ -635,7 +635,7 @@ class JABContext(object):
 				log.debugWarning("Error releasing java object", exc_info=True)
 
 	def __eq__(self, jabContext):
-		if self.vmID == jabContext.vmID and bridgeDll.isSameObject(
+		if self.vmID == jabContext.vmID and bridgeDll.isSameObject(  # noqa: SIM103
 			self.vmID,
 			self.accContext,
 			jabContext.accContext,
@@ -650,7 +650,7 @@ class JABContext(object):
 		return super().__hash__()
 
 	def __ne__(self, jabContext):
-		if self.vmID != jabContext.vmID or not bridgeDll.isSameObject(
+		if self.vmID != jabContext.vmID or not bridgeDll.isSameObject(  # noqa: SIM103
 			self.vmID,
 			self.accContext,
 			jabContext.accContext,
@@ -730,7 +730,7 @@ class JABContext(object):
 
 	def getAccessibleTextLineBounds(self, index):
 		index = max(index, 0)
-		log.debug("lineBounds: index %s" % index)
+		log.debug("lineBounds: index %s" % index)  # noqa: UP031
 		# Java returns end as the last character, not end as past the last character
 		startIndex = c_int()
 		endIndex = c_int()
@@ -743,7 +743,7 @@ class JABContext(object):
 		)
 		start = startIndex.value
 		end = endIndex.value
-		log.debug("line bounds: start %s, end %s" % (start, end))
+		log.debug("line bounds: start %s, end %s" % (start, end))  # noqa: UP031
 		if end < start or start < 0:
 			# Invalid or empty line.
 			return (0, -1)
@@ -760,7 +760,7 @@ class JABContext(object):
 			)
 			tempStart = max(startIndex.value, 0)
 			tempEnd = max(endIndex.value, 0)
-			log.debug("line bounds: tempStart %s, tempEnd %s" % (tempStart, tempEnd))
+			log.debug("line bounds: tempStart %s, tempEnd %s" % (tempStart, tempEnd))  # noqa: UP031
 			if tempStart > (index + 1):
 				# This line starts after the requested index, so set end to point at the line before.
 				end = tempStart - 1
@@ -778,13 +778,13 @@ class JABContext(object):
 			)
 			tempStart = max(startIndex.value, 0)
 			tempEnd = max(endIndex.value, 0)
-			log.debug("line bounds: tempStart %s, tempEnd %s" % (tempStart, tempEnd))
+			log.debug("line bounds: tempStart %s, tempEnd %s" % (tempStart, tempEnd))  # noqa: UP031
 			if tempEnd < (index - 1):
 				# This line ends before the requested index, so set start to point at the line after.
 				start = tempEnd + 1
 			else:
 				ok = True
-		log.debug("line bounds: returning %s, %s" % (start, end))
+		log.debug("line bounds: returning %s, %s" % (start, end))  # noqa: UP031
 		return (start, end)
 
 	def getAccessibleParentFromContext(self):
@@ -1016,7 +1016,7 @@ def internal_hasFocus(sourceContext):
 	if isinstance(focus, NVDAObjects.JAB.JAB) and focus.jabContext == sourceContext:
 		return True
 	ancestors = reversed(api.getFocusAncestors())
-	return any((isinstance(x, NVDAObjects.JAB.JAB) and x.jabContext == sourceContext for x in ancestors))
+	return any(isinstance(x, NVDAObjects.JAB.JAB) and x.jabContext == sourceContext for x in ancestors)
 
 
 @AccessBridge_PropertyNameChangeFP
@@ -1170,7 +1170,7 @@ def enterJavaWindow_helper(hwnd):
 	while time.time() < timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
 			bridgeDll.getAccessibleContextWithFocus(hwnd, byref(vmID), byref(accContext))
-		except:  # noqa: E722
+		except:  # noqa: E722, S110
 			pass
 		if vmID and accContext:
 			break
@@ -1196,7 +1196,7 @@ def isJavaWindow(hwnd):
 
 def isBridgeEnabled():
 	try:
-		data = open(A11Y_PROPS_PATH, "rt").read()
+		data = open(A11Y_PROPS_PATH, "rt").read()  # noqa: SIM115
 	except OSError:
 		return False
 	return data == A11Y_PROPS_CONTENT
@@ -1204,7 +1204,7 @@ def isBridgeEnabled():
 
 def enableBridge():
 	try:
-		props = open(A11Y_PROPS_PATH, "wt")
+		props = open(A11Y_PROPS_PATH, "wt")  # noqa: SIM115
 		props.write(A11Y_PROPS_CONTENT)
 		log.info("Enabled Java Access Bridge for user")
 	except OSError:
@@ -1215,7 +1215,7 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(NVDAState.ReadPaths.javaAccessBridgeDLL)
-	except WindowsError:
+	except OSError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
 	if (
@@ -1298,7 +1298,7 @@ JABKeyModifiersToLabels = {
 def _getKeyLabels(modifiers, character):
 	keys = [v for m, v in JABKeyModifiersToLabels.items() if modifiers & m]
 	if modifiers & AccessibleKeystroke.FKEY:
-		keys.append("F{}".format(ord(character)))
+		keys.append(f"F{ord(character)}")
 	elif modifiers & AccessibleKeystroke.CONTROLCODE:
 		keys.append(JABKeyControlCodesToLabels.get(ord(character), character))
 	else:

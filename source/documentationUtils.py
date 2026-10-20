@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from functools import lru_cache
+from functools import lru_cache  # noqa: I001
 import os
 
 import markdown
@@ -36,7 +36,7 @@ def getDocFilePath(fileName: str, localized: bool = True) -> str | None:
 		# If all else fails, use English.
 		tryLangs.append("en")
 
-		fileName, fileExt = os.path.splitext(fileName)
+		fileName, fileExt = os.path.splitext(fileName)  # noqa: RUF059
 		for tryLang in tryLangs:
 			tryDir = os.path.join(getDocFilePath.rootPath, tryLang)
 			if not os.path.isdir(tryDir):

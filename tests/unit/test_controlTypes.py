@@ -5,7 +5,7 @@
 
 """Unit tests for the controlTypes module."""
 
-import enum
+import enum  # noqa: I001
 import logging
 import unittest
 
@@ -17,14 +17,14 @@ import logHandler
 
 
 class TestLabels(unittest.TestCase):
-	_noDisplayStringRoles = {}
-	_noDisplayStringStates = {
+	_noDisplayStringRoles = {}  # noqa: RUF012
+	_noDisplayStringStates = {  # noqa: RUF012
 		# HAS_ARIA_DETAILS is not used internally to NVDA, only exists for backwards
 		# compatibility of the add-on API
 		controlTypes.State.HAS_ARIA_DETAILS,
 		controlTypes.State.INDETERMINATE,
 	}
-	_noNegDisplayStringStates = {
+	_noNegDisplayStringStates = {  # noqa: RUF012
 		# HAS_ARIA_DETAILS is not used internally to NVDA, only exists for backwards
 		# compatibility of the add-on API
 		controlTypes.State.HAS_ARIA_DETAILS,
@@ -42,7 +42,7 @@ class TestLabels(unittest.TestCase):
 
 		for role in self._noDisplayStringRoles:
 			with self.assertRaises(KeyError):
-				role.displayString
+				role.displayString  # noqa: B018
 
 	def test_state_displayString(self):
 		"""Test to check whether every state has its own display string
@@ -55,7 +55,7 @@ class TestLabels(unittest.TestCase):
 
 		for state in self._noDisplayStringStates:
 			with self.assertRaises(KeyError):
-				state.displayString
+				state.displayString  # noqa: B018
 
 	def test_state_negativeDisplayString(self):
 		"""Test to check whether every state has its own negative display string
@@ -68,7 +68,7 @@ class TestLabels(unittest.TestCase):
 
 		for state in self._noNegDisplayStringStates:
 			with self.assertRaises(KeyError):
-				state.negativeDisplayString
+				state.negativeDisplayString  # noqa: B018
 
 
 class TestProcessStates(unittest.TestCase):
@@ -149,7 +149,7 @@ class TestStateOrder(unittest.TestCase):
 
 
 class TestBackCompat(unittest.TestCase):
-	MISSING_ROLE_VALUES = {68, 81, 114}
+	MISSING_ROLE_VALUES = {68, 81, 114}  # noqa: RUF012
 
 	def test_statesValues(self):
 		class oldStates(enum.IntEnum):

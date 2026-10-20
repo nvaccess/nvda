@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import argparse
+import argparse  # noqa: I001
 from copy import deepcopy
 import io
 import re
@@ -46,7 +46,7 @@ def __getattr__(attrName: str) -> Any:
 		)
 		# Return a frozenset to match the API of the deprecated DEFAULT_EXTENSIONS symbol.
 		return frozenset(_DEFAULT_EXTENSIONS_ORDERED)
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+	raise AttributeError(f"module {__name__!r} has no attribute {attrName!r}")
 
 
 EXTENSIONS_CONFIG = {
@@ -85,7 +85,7 @@ def _getTitle(mdBuffer: io.StringIO, isKeyCommands: bool = False) -> str:
 		TITLE_RE = re.compile(r"^<!-- KC:title: (.*) -->$")
 		# Make next read at start of buffer
 		mdBuffer.seek(0)
-		for line in mdBuffer.readlines():
+		for line in mdBuffer:
 			match = TITLE_RE.match(line.strip())
 			if match:
 				return match.group(1)

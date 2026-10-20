@@ -5,20 +5,20 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 
-import ctypes
+import ctypes  # noqa: I001
 import time
 from typing import (
-	Optional,
-	Dict,
-	Generator,
 	Self,
 	TYPE_CHECKING,
 )
+from collections.abc import Generator
 from comtypes import COMError, GUID, BSTR
 import comtypes.client
 import comtypes.automation
 import colorsys
 import eventHandler
+import exceptions
+import watchdog
 import braille
 import scriptHandler
 from scriptHandler import script
@@ -396,7 +396,7 @@ class WinWordColor(IntEnum):
 
 
 # map (highlighting) color index to color decimal value
-_colorIndexToColor: Dict[WinWordColorIndex, WinWordColor] = {
+_colorIndexToColor: dict[WinWordColorIndex, WinWordColor] = {
 	colorIndex.value: WinWordColor[colorIndex.name].value for colorIndex in WinWordColorIndex
 }
 
@@ -484,7 +484,6 @@ NVDAUnitsToWordUnits = {
 	textInfos.UNIT_ROW: wdRow,
 	textInfos.UNIT_COLUMN: wdColumn,
 	textInfos.UNIT_STORY: wdStory,
-	textInfos.UNIT_READINGCHUNK: wdSentence,
 }
 
 formatConfigFlagsMap = {
@@ -531,7 +530,7 @@ mapPUAToUnicode = {
 class WordDocumentHeadingQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def __init__(self, nodeType, document, textInfo, level):
 		self.level = level
-		super(WordDocumentHeadingQuickNavItem, self).__init__(nodeType, document, textInfo)
+		super().__init__(nodeType, document, textInfo)
 
 	def isChild(self, parent):
 		if not isinstance(parent, WordDocumentHeadingQuickNavItem):
@@ -559,7 +558,7 @@ class WordDocumentCollectionQuickNavItem(browseMode.TextInfoQuickNavItem):
 		self.collectionItem = collectionItem
 		self.rangeObj = self.rangeFromCollectionItem(collectionItem)
 		textInfo = BrowseModeWordDocumentTextInfo(document, None, _rangeObj=self.rangeObj)
-		super(WordDocumentCollectionQuickNavItem, self).__init__(itemType, document, textInfo)
+		super().__init__(itemType, document, textInfo)
 
 
 class WordDocumentCommentQuickNavItem(WordDocumentCollectionQuickNavItem):
@@ -610,7 +609,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 			text = self.collectionItem.Chart.ChartTitle.Text
 		else:
 			text = self.collectionItem.Chart.Name
-		return "{text}".format(text=text)
+		return f"{text}"
 
 	def moveTo(self):
 		chartNVDAObj = _msOfficeChart.OfficeChart(
@@ -664,7 +663,7 @@ class WordDocumentEndnoteQuickNavItem(WordDocumentReferenceQuickNavItem):
 		return _("endnote reference {number}: {text}").format(number=number, text=text)
 
 
-class WinWordCollectionQuicknavIterator(object):
+class WinWordCollectionQuicknavIterator:
 	"""
 	Allows iterating over an MS Word collection (e.g. HyperLinks) emitting L{QuickNavItem} objects.
 	"""
@@ -724,9 +723,9 @@ class WinWordCollectionQuicknavIterator(object):
 			except COMError:
 				message = (
 					"Error iterating over item with "
-					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+					f"type: {self.itemType}, iteration direction: {self.direction}, total item count: {itemCount}, item at index: {index}"
 					"\nThis could be caused by an issue with some element within or a corruption of the word document."
-				).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				)
 				log.debugWarning(message, exc_info=True)
 				continue
 			itemRange = item.rangeObj
@@ -854,7 +853,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	# force mouse reading chunk to sentense to make it what it used to be in 2014.4.
 	# We need to however fix line so it does not accidentially scroll.
 	def _get_unit_mouseChunk(self):
-		unit = super(WordDocumentTextInfo, self).unit_mouseChunk
+		unit = super().unit_mouseChunk
 		if unit == textInfos.UNIT_LINE:
 			unit = textInfos.UNIT_SENTENCE
 		return unit
@@ -867,7 +866,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if s.isEqual(r):
 			r = s
 		else:
-			return super(WordDocumentTextInfo, self).locationText
+			return super().locationText
 		offset = r.information(wdHorizontalPositionRelativeToPage)
 		distance = self.obj.getLocalizedMeasurementTextForPointSize(offset)
 		# Translators: a distance from the left edge of the page in Microsoft Word
@@ -903,7 +902,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return mathPres.interactWithMathMl(mathMl)
 		newRng = self._rangeObj.Duplicate
 		newRng.End = newRng.End + 1
-		if newRng.InlineShapes.Count >= 1:
+		if newRng.InlineShapes.Count >= 1:  # noqa: SIM102
 			if newRng.InlineShapes[1].Type == wdInlineShapeChart:
 				return eventHandler.queueEvent(
 					"gainFocus",
@@ -943,7 +942,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			fieldText = field.code.text.strip().split(" ")
 			# the \\h field indicates that the field is a link
 			if not any(fieldText[i] == "\\h" for i in range(2, len(fieldText))):
-				log.debugWarning("no \\h for field xref: %s" % field.code.text)
+				log.debugWarning("no \\h for field xref: %s" % field.code.text)  # noqa: UP031
 				continue
 			bookmarkKey = fieldText[1]  # we want the _Ref12345 part
 			# get book mark start, we need to look at the whole document to find the bookmark.
@@ -1010,7 +1009,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		self._rangeObj.setRange(lineStart.value, lineEnd.value)
 
 	def __init__(self, obj, position, _rangeObj=None):
-		super(WordDocumentTextInfo, self).__init__(obj, position)
+		super().__init__(obj, position)
 		if _rangeObj:
 			self._rangeObj = _rangeObj.Duplicate
 			return
@@ -1044,14 +1043,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# copying from one textInfo to another
 			self._rangeObj = position._rangeObj.duplicate
 		else:
-			raise NotImplementedError("position: %s" % position)
+			raise NotImplementedError("position: %s" % position)  # noqa: UP031
 
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def getTextWithFields(  # noqa: C901
+	def getTextWithFields(
 		self,
-		formatConfig: Optional[Dict] = None,
+		formatConfig: dict | None = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed:
 			return []
@@ -1072,16 +1071,27 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			formatConfigFlags &= ~formatConfigFlagsMap["reportRevisions"]
 		if self.obj.ignorePageNumbers:
 			formatConfigFlags &= ~formatConfigFlagsMap["reportPage"]
-		res = NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange(
-			self.obj.appModule.helperLocalBindingHandle,
-			self.obj.documentWindowHandle,
-			startOffset,
-			endOffset,
-			formatConfigFlags,
-			ctypes.byref(text),
-		)
+		# This call reaches into Word's process and blocks the core if Word is
+		# unresponsive (e.g. a huge document operation). Run it via the watchdog's
+		# cancellable thread so the watchdog can cancel it.
+		try:
+			res = watchdog.cancellableExecute(
+				NVDAHelper.localLib.nvdaInProcUtils_winword_getTextInRange,
+				self.obj.appModule.helperLocalBindingHandle,
+				self.obj.documentWindowHandle,
+				startOffset,
+				endOffset,
+				formatConfigFlags,
+				ctypes.byref(text),
+			)
+		except exceptions.CallCancelled:
+			# Don't fall back to self.text here: that reads self._rangeObj.text, which
+			# is another COM call into the same (still hung) Word and would re-block
+			# the core, defeating the cancellation.
+			log.debug("winword_getTextInRange cancelled; Word is not responding")
+			return [""]
 		if res or not text:
-			log.debugWarning("winword_getTextInRange failed with %d" % res)
+			log.debugWarning("winword_getTextInRange failed with %d" % res)  # noqa: UP031
 			return [self.text]
 		commandList = XMLFormatting.XMLTextParser().parse(text.value)
 		for index, item in enumerate(commandList):
@@ -1142,7 +1152,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			if fieldType != -1:
 				role = wdFieldTypesToNVDARoles.get(fieldType, controlTypes.Role.UNKNOWN)
 				if fieldType == wdFieldFormCheckBox and int(field.get("wdFieldResult", "0")) > 0:
-					field["states"] = set([controlTypes.State.CHECKED])
+					field["states"] = set([controlTypes.State.CHECKED])  # noqa: C405
 				elif fieldType == wdFieldFormDropDown:
 					field["value"] = field.get("wdFieldResult", None)
 			fieldStatusText = field.pop("wdFieldStatusText", None)
@@ -1156,7 +1166,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 					if role == controlTypes.Role.CHECKBOX:
 						fieldChecked = bool(int(field.get("wdContentControlChecked", "0")))
 						if fieldChecked:
-							field["states"] = set([controlTypes.State.CHECKED])
+							field["states"] = set([controlTypes.State.CHECKED])  # noqa: C405
 					fieldTitle = field.get("wdContentControlTitle", None)
 					if fieldTitle:
 						field["name"] = fieldTitle
@@ -1164,7 +1174,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if role is not None:
 			field["role"] = role
 		if role == controlTypes.Role.TABLE and field.get("longdescription"):
-			field["states"] = set([controlTypes.State.HASLONGDESC])
+			field["states"] = set([controlTypes.State.HASLONGDESC])  # noqa: C405
 		storyType = int(field.pop("wdStoryType", 0))
 		if storyType:
 			name = storyTypeLocalizedLabels.get(storyType, None)
@@ -1243,7 +1253,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				hlColor = self.obj.winwordColorToNVDAColor(val)
 			except (KeyError, ValueError):
 				log.debugWarning("highlight color error", exc_info=True)
-				pass
 			if hlColor is not None:
 				field["highlight-color"] = hlColor
 		try:
@@ -1252,7 +1261,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field["language"] = languageHandler.windowsLCIDToLocaleName(languageId)
 		except:  # noqa: E722
 			log.debugWarning("language error", exc_info=True)
-			pass
 		for x in ("first-line-indent", "left-indent", "right-indent", "hanging-indent"):
 			v = field.get(x)
 			if not v:
@@ -1276,6 +1284,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return field
 
 	def expand(self, unit):
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit == textInfos.UNIT_LINE:
 			try:
 				if self._rangeObj.tables.count > 0 and self._rangeObj.cells.count == 0:
@@ -1289,7 +1298,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif unit in NVDAUnitsToWordUnits:
 			self._rangeObj.Expand(NVDAUnitsToWordUnits[unit])
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 
 	def compareEndPoints(self, other, which):
 		if which == "startToStart":
@@ -1301,7 +1310,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif which == "endToEnd":
 			diff = self._rangeObj.End - other._rangeObj.End
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 		if diff < 0:
 			diff = -1
 		elif diff > 0:
@@ -1318,10 +1327,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		elif which == "endToEnd":
 			self._rangeObj.End = other._rangeObj.End
 		else:
-			raise ValueError("bad argument - which: %s" % which)
+			raise ValueError("bad argument - which: %s" % which)  # noqa: UP031
 
 	def _get_isCollapsed(self):
-		if self._rangeObj.Start == self._rangeObj.End:
+		if self._rangeObj.Start == self._rangeObj.End:  # noqa: SIM103
 			return True
 		else:
 			return False
@@ -1350,10 +1359,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	def _move(self, unit, direction, endPoint=None, _rangeObj=None):
 		if not _rangeObj:
 			_rangeObj = self._rangeObj
+		unit = self._resolveReadingChunkUnit(unit)
 		if unit in NVDAUnitsToWordUnits:
 			unit = NVDAUnitsToWordUnits[unit]
 		else:
-			raise NotImplementedError("unit: %s" % unit)
+			raise NotImplementedError("unit: %s" % unit)  # noqa: UP031
 		if endPoint == "start":
 			moveFunc = _rangeObj.MoveStart
 		elif endPoint == "end":
@@ -1470,7 +1480,7 @@ class BrowseModeWordDocumentTextInfo(
 	def __init__(self, obj, position, _rangeObj=None):
 		if isinstance(position, WordDocument):
 			position = textInfos.POSITION_CARET
-		super(BrowseModeWordDocumentTextInfo, self).__init__(obj, position, _rangeObj=_rangeObj)
+		super().__init__(obj, position, _rangeObj=_rangeObj)
 
 	def _get_focusableNVDAObjectAtStart(self):
 		return self.obj.rootNVDAObject
@@ -1528,7 +1538,7 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			rangeObj = pos.innerTextInfo._rangeObj
 		else:
 			rangeObj = self.rootNVDAObject.WinwordDocumentObject.range(0, 0)
-		includeCurrent = False if pos else True
+		includeCurrent = False if pos else True  # noqa: SIM211
 		if nodeType == "link":
 			return LinkWinWordCollectionQuicknavIterator(
 				nodeType,
@@ -1632,12 +1642,12 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		kind: str,
 		direction: documentBase._Movement = documentBase._Movement.NEXT,
 		pos: textInfos.TextInfo | None = None,
-	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
+	) -> Generator[browseMode.TextInfoQuickNavItem]:
 		raise NotImplementedError(
 			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": "trapNonCommandGesture",
 		"kb:shift+tab": "trapNonCommandGesture",
 		"kb:control+alt+upArrow": "previousRow",
@@ -1682,7 +1692,7 @@ class WordDocument(Window, EditableTextBase):
 			return name
 		else:
 			raise ValueError(
-				"Unknown color format %x %x %x %x"
+				"Unknown color format %x %x %x %x"  # noqa: UP031
 				% ((val >> 24) & 0xFF, (val >> 16) & 0xFF, (val >> 8) & 0xFF, val & 0xFF),
 			)
 
@@ -1702,9 +1712,9 @@ class WordDocument(Window, EditableTextBase):
 					winUser.OBJID_NATIVEOM,
 					interface=comtypes.automation.IDispatch,
 				)
-			except (COMError, WindowsError):
+			except (OSError, COMError):
 				log.debugWarning(
-					"Could not get MS Word object model from window %s with class %s"
+					"Could not get MS Word object model from window %s with class %s"  # noqa: UP031
 					% (self.documentWindowHandle, winUser.getClassName(self.documentWindowHandle)),
 					exc_info=True,
 				)
@@ -2180,7 +2190,7 @@ class WordDocument(Window, EditableTextBase):
 			self.bindGesture("kb:f8", "caret_changeSelection")
 			self.bindGesture("kb:shift+f8", "caret_changeSelection")
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
@@ -2191,11 +2201,11 @@ class WordDocument_WwN(WordDocument):
 		w = NVDAHelper.localLib.findWindowWithClassInThread(self.windowThreadID, "_WwG", True)
 		if not w:
 			log.debugWarning("Could not find window for class _WwG in thread.")
-			w = super(WordDocument_WwN, self).documentWindowHandle
+			w = super().documentWindowHandle
 		return w
 
 	def _get_WinwordWindowObject(self):
-		window = super(WordDocument_WwN, self).WinwordWindowObject
+		window = super().WinwordWindowObject
 		if not window:
 			return None
 		try:
@@ -2204,7 +2214,7 @@ class WordDocument_WwN(WordDocument):
 			log.debugWarning("Unable to get activePane")
 			return window.application.windows[1].activePane
 
-	__gestures = {
+	__gestures = {  # noqa: RUF012
 		"kb:tab": None,
 		"kb:shift+tab": None,
 	}

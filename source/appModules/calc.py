@@ -27,7 +27,7 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 	_nextNameIsCalculationResult: bool = False
 	"""Set to `True` by the gestures which cause the calculator expression to be calculated."""
 
-	calcCommandChars = ["!", "=", "@", "#"]
+	calcCommandChars = ["!", "=", "@", "#"]  # noqa: RUF012
 
 	calcCommandGestures = (
 		"kb:backspace",
@@ -52,7 +52,7 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 	)
 
 	def _get_name(self):
-		name = super(Display, self).name
+		name = super().name
 		if not name:
 			name = _("Display")
 		return name

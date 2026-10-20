@@ -6,12 +6,11 @@
 
 """Utility functions for vision enhancement providers."""
 
-from .constants import Context
+from .constants import Context  # noqa: I001
 import api
 import locationHelper
 from documentBase import TextContainerObject
 from NVDAObjects import NVDAObject
-from typing import Optional
 import textInfos
 import mouseHandler
 
@@ -20,7 +19,7 @@ def getReviewRect() -> locationHelper.RectLTRB:
 	return getRectFromTextInfo(api.getReviewPosition())
 
 
-def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.RectLTRB:
+def getCaretRect(obj: TextContainerObject | None = None) -> locationHelper.RectLTRB:
 	if obj is None:
 		obj = api.getCaretObject()
 	if api.isObjectInActiveTreeInterceptor(obj):
@@ -59,7 +58,7 @@ def getMouseRect() -> locationHelper.RectLTRB:
 
 def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 	if not api.isNVDAObject(obj):
-		raise TypeError("obj must be of type NVDAObject, %s not supported" % type(obj).__name__)
+		raise TypeError("obj must be of type NVDAObject, %s not supported" % type(obj).__name__)  # noqa: UP031
 	location = obj.location
 	if not location:
 		raise LookupError
@@ -68,8 +67,8 @@ def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 
 def getContextRect(
 	context: Context,
-	obj: Optional[TextContainerObject] = None,
-) -> Optional[locationHelper.RectLTRB]:
+	obj: TextContainerObject | None = None,
+) -> locationHelper.RectLTRB | None:
 	"""Gets a rectangle for the specified context."""
 	if context == Context.FOCUS:
 		return getObjectRect(obj or api.getFocusObject())

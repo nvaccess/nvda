@@ -9,7 +9,7 @@ Read-Only edit boxes in it can contain dates that include unwanted left-to-right
 This simply imports a proper class from the explorer app module, and maps it to a edit control.
 """
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import controlTypes
 from NVDAObjects.window.edit import Edit
 from .explorer import ReadOnlyEditBox

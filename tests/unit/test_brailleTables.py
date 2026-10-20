@@ -1,16 +1,16 @@
-# tests/unit/test_brailleTables.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the brailleTables module."""
 
-import unittest
+import unittest  # noqa: I001
 import brailleTables
-import louis
 import louisHelper
 import os.path
+
+from braille.input.constants import UNICODE_BRAILLE_START
 
 
 class TestBrailleTables(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestBrailleTables(unittest.TestCase):
 			with self.subTest(table=table.fileName):
 				self.assertTrue(
 					os.path.isfile(os.path.join(brailleTables.TABLES_DIR, table.fileName)),
-					msg="{table} table not found".format(table=table.displayName),
+					msg=f"{table.displayName} table not found",
 				)
 
 	def test_renamedTableExistence(self):
@@ -46,17 +46,18 @@ class TestTranslate(unittest.TestCase):
 			with self.subTest(table=table.fileName):
 				try:
 					louisHelper.translate([table.fileName, "braille-patterns.cti"], "test")
-				except Exception as e:
+				except Exception as e:  # noqa: BLE001
 					self.fail(f"Translation failed for {table.displayName}: {e}")
 
 	def test_backtranslate(self):
 		"""Tests whether all tables can be used for back-translation."""
+		cells = [ord(cell) - UNICODE_BRAILLE_START for cell in "⠞⠑⠎⠞"]
 		tables = brailleTables.listTables()
 		for table in tables:
 			if not table.input:
 				continue
 			with self.subTest(table=table.fileName):
 				try:
-					louis.backTranslate([table.fileName, "braille-patterns.cti"], "⠞⠑⠎⠞")
-				except Exception as e:
+					louisHelper.backTranslate([table.fileName, "braille-patterns.cti"], cells)
+				except Exception as e:  # noqa: BLE001
 					self.fail(f"Back-translation failed for {table.displayName}: {e}")

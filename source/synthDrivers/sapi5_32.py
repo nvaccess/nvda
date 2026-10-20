@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import os
+import os  # noqa: I001
 import winreg
 from _bridge.clients.synthDriverHost32.synthDriver import SynthDriverProxy32
 import globalVars
@@ -28,5 +28,5 @@ class SynthDriver(SynthDriverProxy32):
 				winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
 			).Close()
 			return True
-		except WindowsError:
+		except OSError:
 			return False

@@ -46,9 +46,17 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 		if (RPC_S_OK != status) {
 			return FALSE;
 		}
+		status = RpcBindingFromStringBinding(rpcWstr, &nvdaController3BindingHandle);
+		if (RPC_S_OK != status) {
+			return FALSE;
+		}
 	} else if(reason==DLL_PROCESS_DETACH) {
-		RpcBindingFree(&nvdaController2BindingHandle);
-		RpcBindingFree(&nvdaControllerBindingHandle);
+		if (nvdaController3BindingHandle)
+			RpcBindingFree(&nvdaController3BindingHandle);
+		if (nvdaController2BindingHandle)
+			RpcBindingFree(&nvdaController2BindingHandle);
+		if (nvdaControllerBindingHandle)
+			RpcBindingFree(&nvdaControllerBindingHandle);
 	}
 	return TRUE;
 }

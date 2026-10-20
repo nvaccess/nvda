@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 from NVDAObjects.IAccessible import IAccessible
 import oleacc
 from NVDAObjects.IAccessible.sysListView32 import ListItem
@@ -22,7 +22,7 @@ class loudTalksContactListItem(ListItem):
 	shouldAllowIAccessibleFocusEvent = True
 
 	def _get_keyboardShortcut(self):
-		keyboardShortcut = super(loudTalksContactListItem, self).keyboardShortcut
+		keyboardShortcut = super().keyboardShortcut
 		if keyboardShortcut == "None":
 			return None
 		return keyboardShortcut

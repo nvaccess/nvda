@@ -9,7 +9,7 @@ In Windows 10, progressive web apps (PWA) and friends are hosted inside this pro
 App modules wishing to support apps hosted inside this process must subclass the AppModule class.
 """
 
-import ctypes
+import ctypes  # noqa: I001
 import appModuleHandler
 import winBindings.kernel32
 import winKernel

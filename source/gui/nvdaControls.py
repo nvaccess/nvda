@@ -3,15 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import collections
+import collections  # noqa: I001
 from ctypes import addressof
 import enum
 import typing
-from typing import (
-	List,
-	OrderedDict,
-	Type,
-)
+from collections import OrderedDict
 import warnings
 
 import wx
@@ -37,16 +33,16 @@ from collections.abc import Callable
 
 
 __all__ = [
-	"AutoWidthColumnListCtrl",
-	"SelectOnFocusSpinCtrl",
-	"ListCtrlAccessible",
-	"CustomCheckListBox",
 	"AutoWidthColumnCheckListCtrl",
+	"AutoWidthColumnListCtrl",
+	"CustomCheckListBox",
 	"DPIScaledDialog",
-	"MessageDialog",
-	"_ContinueCancelDialog",
 	"EnhancedInputSlider",
 	"FeatureFlagCombo",
+	"ListCtrlAccessible",
+	"MessageDialog",
+	"SelectOnFocusSpinCtrl",
+	"_ContinueCancelDialog",
 ]
 
 
@@ -92,7 +88,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		self._itemTextCallable = None
 
 	def _super_itemTextCallable(self, item, column):
-		return super(AutoWidthColumnListCtrl, self).OnGetItemText(item, column)
+		return super().OnGetItemText(item, column)
 
 	def OnGetItemText(self, item, column):
 		return self._itemTextCallable(item, column)
@@ -161,7 +157,7 @@ class CustomCheckListBox(wx.CheckListBox):
 	"""Custom checkable list to fix a11y bugs in the standard wx checkable list box."""
 
 	def __init__(self, *args, **kwargs):
-		super(CustomCheckListBox, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		# Register a custom wx.Accessible implementation to fix accessibility incompleties
 		self.SetAccessible(ListCtrlAccessible(self))
 		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
@@ -224,7 +220,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 
 	def SetCheckedItems(self, indexes):
 		for i in indexes:
-			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i
+			assert 0 <= i < self.ItemCount, "Index (%s) out of range" % i  # noqa: UP031
 		for i in range(self.ItemCount):
 			self.CheckItem(i, i in indexes)
 
@@ -398,11 +394,11 @@ class _ContinueCancelDialog(MessageDialog):
 
 class EnhancedInputSlider(wx.Slider):
 	def __init__(self, *args, **kwargs):
-		super(EnhancedInputSlider, self).__init__(*args, **kwargs)
+		super().__init__(*args, **kwargs)
 		self.Bind(wx.EVT_CHAR, self.onSliderChar)
 
 	def SetValue(self, i):
-		super(EnhancedInputSlider, self).SetValue(i)
+		super().SetValue(i)
 		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED, self.GetId())
 		evt.SetInt(i)
 		self.ProcessEvent(evt)
@@ -442,7 +438,7 @@ class FeatureFlagCombo(wx.Choice):
 	def __init__(
 		self,
 		parent: wx.Window,
-		keyPath: List[str],
+		keyPath: list[str],
 		conf: config.ConfigManager,
 		pos=wx.DefaultPosition,
 		size=wx.DefaultSize,
@@ -465,7 +461,7 @@ class FeatureFlagCombo(wx.Choice):
 		self._confPath = keyPath
 		self._conf = conf
 		configValue = self._getConfigValue()
-		self._optionsEnumClass: Type[FeatureFlagEnumT] = configValue.enumClassType
+		self._optionsEnumClass: type[FeatureFlagEnumT] = configValue.enumClassType
 		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict(
 			{
 				value: value.displayString
@@ -507,7 +503,7 @@ class FeatureFlagCombo(wx.Choice):
 	def _getConfSpecDefaultValue(self) -> FeatureFlagEnumT:
 		defaultValueFromSpec = self._conf.getConfigValidation(self._confPath).default
 		if not isinstance(defaultValueFromSpec, FeatureFlag):
-			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")
+			raise ValueError(f"Default spec value is not a FeatureFlag, but {type(defaultValueFromSpec)}")  # noqa: TRY004
 		return defaultValueFromSpec.value
 
 	def _getConfigValue(self) -> FeatureFlag:
@@ -520,7 +516,7 @@ class FeatureFlagCombo(wx.Choice):
 			conf = conf[nextKey]
 
 		if not isinstance(conf, FeatureFlag):
-			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")
+			raise ValueError(f"Config value is not a FeatureFlag, but a {type(conf)}")  # noqa: TRY004
 		return conf
 
 	def isValueConfigSpecDefault(self) -> bool:

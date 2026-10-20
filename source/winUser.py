@@ -9,7 +9,7 @@ Functions that wrap Windows API functions from user32.dll.
 When working on this file, consider moving to winAPI.
 """
 
-import contextlib
+import contextlib  # noqa: I001
 import ctypes
 from ctypes import (
 	byref,
@@ -539,8 +539,19 @@ def isWindow(hwnd):
 	return _user32.IsWindow(hwnd)
 
 
+def isHungAppWindow(hwnd: HWNDVal) -> bool:
+	"""Whether the system considers the given window's application to be not responding.
+
+	See `winBindings.user32.IsHungAppWindow`. This is a read-only query against the
+	window manager's input-processing state; it does not pump messages or enter the
+	target process, so it is safe to call from any thread (including the UIA event
+	delivery thread).
+	"""
+	return bool(_user32.IsHungAppWindow(hwnd))
+
+
 def isDescendantWindow(parentHwnd, childHwnd):
-	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):
+	if (parentHwnd == childHwnd) or _user32.IsChild(parentHwnd, childHwnd):  # noqa: SIM103
 		return True
 	else:
 		return False
@@ -682,7 +693,7 @@ def SetLayeredWindowAttributes(hwnd, key, alpha, flags):
 def getPreviousWindow(hwnd: HWNDVal) -> HWNDVal:
 	try:
 		hwnd = _user32.GetWindow(hwnd, GW_HWNDPREV)
-	except WindowsError:
+	except OSError:
 		return 0
 	return hwnd or 0
 
@@ -758,7 +769,7 @@ class STICKYKEYS(Structure):
 	)
 
 	def __init__(self, **kwargs):
-		super(STICKYKEYS, self).__init__(cbSize=sizeof(self), **kwargs)
+		super().__init__(cbSize=sizeof(self), **kwargs)
 
 
 SKF_STICKYKEYSON = 0x00000001
@@ -799,7 +810,7 @@ def paint(hwnd: int, paintStruct: _PAINTSTRUCT | None = None):
 		winBindings.user32.EndPaint(hwnd, byref(paintStruct))
 
 
-class WinTimer(object):
+class WinTimer:
 	"""Object that wraps the SetTimer function in user32.
 	The timer is automatically destroyed using KillTimer when the object is terminated using L{terminate}.
 	"""

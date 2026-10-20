@@ -8,8 +8,8 @@
 from ._screenCurtain import ScreenCurtain
 
 __all__ = (
-	"screenCurtain",
 	"initialize",
+	"screenCurtain",
 	"terminate",
 )
 

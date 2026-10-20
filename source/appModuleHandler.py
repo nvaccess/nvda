@@ -8,19 +8,13 @@
 @var runningTable: a dictionary of the currently running appModules, using their application's main window handle as a key.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import itertools
 import ctypes
 import ctypes.wintypes
 import os
 import sys
 from types import ModuleType
-from typing import (
-	Dict,
-	List,
-	Optional,
-	Tuple,
-)
 
 import winBindings.kernel32
 import winVersion
@@ -70,7 +64,7 @@ __getattr__ = _deprecate.handleDeprecations(
 
 
 # Dictionary of processID:appModule pairs used to hold the currently running modules
-runningTable: Dict[int, AppModule] = {}
+runningTable: dict[int, AppModule] = {}
 _getAppModuleLock = threading.RLock()
 #: Notifies when another application is taking foreground.
 #: This allows components to react upon application switches.
@@ -79,7 +73,7 @@ _getAppModuleLock = threading.RLock()
 post_appSwitch = extensionPoints.Action()
 
 
-_executableNamesToAppModsAddons: Dict[str, str] = dict()
+_executableNamesToAppModsAddons: dict[str, str] = dict()  # noqa: C408
 """AppModules registered with a given binary by add-ons are placed here.
 We cannot use l{appModules.EXECUTABLE_NAMES_TO_APP_MODS} for modules included in add-ons,
 since appModules in add-ons should take precedence over the one bundled in NVDA.
@@ -99,7 +93,7 @@ def unregisterExecutable(executableName: str) -> None:
 		log.error(f"Executable {executableName} was not previously registered.")
 
 
-def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, ...]:
+def _getPossibleAppModuleNamesForExecutable(executableName: str) -> tuple[str, ...]:
 	"""Returns list of the appModule names for a given executable.
 	The names in the tuple are placed in order in which import of these aliases should be attempted that is:
 	- The alias registered by add-ons if any add-on registered an appModule for the executable
@@ -128,12 +122,12 @@ def doesAppModuleExist(name: str) -> bool:
 		modSpec = importlib.util.find_spec(f"appModules.{name}", package=appModules)
 	except ImportError:
 		modSpec = None
-	if modSpec is None:
+	if modSpec is None:  # noqa: SIM103
 		return False
 	return True
 
 
-def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
+def _importAppModuleForExecutable(executableName: str) -> ModuleType | None:
 	"""Import and return appModule for a given executable or `None` if there is no module."""
 	for possibleModName in _getPossibleAppModuleNamesForExecutable(executableName):
 		# First, check whether the module exists.
@@ -161,7 +155,7 @@ def getAppNameFromProcessID(processID: int, includeExt: bool = False) -> str:
 	FProcessEntry32 = winBindings.kernel32.PROCESSENTRY32W()
 	FProcessEntry32.dwSize = ctypes.sizeof(FProcessEntry32)
 	ContinueLoop = winBindings.kernel32.Process32First(FSnapshotHandle, ctypes.byref(FProcessEntry32))
-	appName = str()
+	appName = ""
 	while ContinueLoop:
 		if FProcessEntry32.th32ProcessID == processID:
 			appName = FProcessEntry32.szExeFile
@@ -205,7 +199,7 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 			)
 		):
 			raise ctypes.WinError()
-	except WindowsError:
+	except OSError:
 		log.debugWarning(f"Unable to open process for processId {processId}", exc_info=True)
 	else:
 		return processHandle
@@ -220,7 +214,7 @@ def getProcessHandleFromProcessId(processId: int, fallBackToTopLevelWindowEnumer
 				raise RuntimeError(f"No window handle found for process {processId} to create process handle")
 			if not (processHandle := _getProcessHandleFromHwnd(foundWindowHandle)):
 				raise ctypes.WinError()
-		except (WindowsError, RuntimeError):
+		except (OSError, RuntimeError):
 			log.debugWarning(
 				f"Unable to get process handle for process {processId} using window enumeration "
 				"and subsequently getting process handle from that window",
@@ -278,9 +272,9 @@ def update(processID, helperLocalBindingHandle=None, inprocRegistrationHandle=No
 def cleanup():
 	"""Removes any appModules from the cache whose process has died."""
 	for deadMod in [mod for mod in runningTable.values() if not mod.isAlive]:
-		log.debug("application %s closed" % deadMod.appName)
+		log.debug("application %s closed" % deadMod.appName)  # noqa: UP031
 		del runningTable[deadMod.processID]
-		if deadMod in set(
+		if deadMod in set(  # noqa: C401, SIM102
 			o.appModule for o in api.getFocusAncestors() + [api.getFocusObject()] if o and o.appModule
 		):
 			if hasattr(deadMod, "event_appLoseFocus"):
@@ -291,7 +285,7 @@ def cleanup():
 		try:
 			deadMod.terminate()
 		except:  # noqa: E722
-			log.exception("Error terminating app module %r" % deadMod)
+			log.exception("Error terminating app module %r" % deadMod)  # noqa: UP031
 
 
 def fetchAppModule(processID: int, appName: str) -> AppModule:
@@ -310,7 +304,7 @@ def fetchAppModule(processID: int, appName: str) -> AppModule:
 		# what exceptions may be thrown during import / construction of the App Module.
 	except Exception:
 		log.exception(f"error in appModule {modName!r}")
-		import ui
+		import ui  # noqa: I001
 		import speech.priorities
 
 		ui.message(
@@ -374,7 +368,7 @@ def reloadAppModules():
 		except AttributeError:
 			continue
 		# Fetch and cache right away; the process could die any time.
-		obj.appModule
+		obj.appModule  # noqa: B018
 
 
 def initialize():
@@ -387,11 +381,11 @@ initialize._alreadyInitialized = False
 
 
 def terminate():
-	for processID, app in runningTable.items():
+	for processID, app in runningTable.items():  # noqa: PERF102
 		try:
 			app.terminate()
 		except:  # noqa: E722
-			log.exception("Error terminating app module %r" % app)
+			log.exception("Error terminating app module %r" % app)  # noqa: UP031
 	runningTable.clear()
 
 
@@ -506,13 +500,13 @@ class AppModule(baseObject.ScriptableObject):
 	"""The application name"""
 
 	def __init__(self, processID, appName=None):
-		super(AppModule, self).__init__()
+		super().__init__()
 		self.processID = processID
 		if appName is None:
 			appName = getAppNameFromProcessID(processID)
 		self.appName = appName
 		self.processHandle = getProcessHandleFromProcessId(processID)
-		self.helperLocalBindingHandle: Optional[ctypes.c_long] = None
+		self.helperLocalBindingHandle: ctypes.c_long | None = None
 		"""RPC binding handle pointing to the RPC server for this process"""
 
 		self._inprocRegistrationHandle = None
@@ -734,8 +728,8 @@ class AppModule(baseObject.ScriptableObject):
 			self.isRunningUnderDifferentLogonSession = (
 				getCurrentProcessLogonSessionId() != getProcessLogonSessionId(self.processHandle)
 			)
-		except WindowsError:
-			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)
+		except OSError:
+			log.error(f"Couldn't compare logon session ID for {self}", exc_info=True)  # noqa: G201
 			self.isRunningUnderDifferentLogonSession = False
 		return self.isRunningUnderDifferentLogonSession
 
@@ -856,13 +850,13 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		path = os.path.join(
 			tempfile.gettempdir(),
-			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID),
+			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID),  # noqa: UP031
 		)
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
 			self.helperLocalBindingHandle,
 			path,
 		)
-		print("Dump path: %s" % path)
+		print("Dump path: %s" % path)  # noqa: UP031
 
 	def _get_statusBar(self):
 		"""Retrieve the status bar object of the application.
@@ -892,10 +886,10 @@ class AppModule(baseObject.ScriptableObject):
 		"""
 		raise NotImplementedError()
 
-	devInfo: List[str]
+	devInfo: list[str]
 	"""Information about this appModule useful to developers."""
 
-	def _get_devInfo(self) -> List[str]:
+	def _get_devInfo(self) -> list[str]:
 		"""Information about this appModule useful to developers.
 		For an NVDAObject, its appModule devInfo is appended to NVDAObject.devInfo.
 		Subclasses may extend this, calling the superclass property first.
@@ -904,27 +898,27 @@ class AppModule(baseObject.ScriptableObject):
 		info = []
 		try:
 			ret = repr(self)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule: {ret}")
 		try:
 			ret = repr(self.productName)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.productName: {ret}")
 		try:
 			ret = repr(self.productVersion)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.productVersion: {ret}")
 		try:
 			ret = repr(self.helperLocalBindingHandle)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.helperLocalBindingHandle: {ret}")
 		try:
 			ret = repr(self.appArchitecture)
-		except Exception as e:
+		except Exception as e:  # noqa: BLE001
 			ret = f"exception: {e}"
 		info.append(f"appModule.appArchitecture: {ret}")
 		return info
@@ -934,7 +928,7 @@ class AppProfileTrigger(config.ProfileTrigger):
 	"""A configuration profile trigger for when a particular application has focus."""
 
 	def __init__(self, appName):
-		self.spec = "app:%s" % appName
+		self.spec = "app:%s" % appName  # noqa: UP031
 
 
 def getWmiProcessInfo(processId):
@@ -949,7 +943,7 @@ def getWmiProcessInfo(processId):
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
 		results = wmi.ExecQuery(
-			"select * from Win32_Process where ProcessId = %d" % processId,
+			"select * from Win32_Process where ProcessId = %d" % processId,  # noqa: UP031
 		)
 		for result in results:
 			return result

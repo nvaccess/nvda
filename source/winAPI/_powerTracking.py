@@ -11,7 +11,7 @@ we notify the user of the power status.
 The power status can also be reported using script_say_battery_status.
 """
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 import ctypes
 from enum import (
 	Enum,
@@ -19,10 +19,6 @@ from enum import (
 	IntFlag,
 	auto,
 	unique,
-)
-from typing import (
-	List,
-	Optional,
 )
 
 from logHandler import log
@@ -154,7 +150,7 @@ def _reportPowerStatus(context: _ReportContext) -> None:
 		_powerState = systemPowerStatus.ACLineStatus
 
 
-def _getPowerStatus() -> Optional[SystemPowerStatus]:
+def _getPowerStatus() -> SystemPowerStatus | None:
 	sps = SystemPowerStatus()
 	systemPowerStatusUpdateResult = winKernel.GetSystemPowerStatus(sps)
 	if not systemPowerStatusUpdateResult:
@@ -164,10 +160,10 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 
 def _getSpeechForBatteryStatus(
-	systemPowerStatus: Optional[SystemPowerStatus],
+	systemPowerStatus: SystemPowerStatus | None,
 	context: _ReportContext,
 	oldPowerState: PowerState,
-) -> List[str]:
+) -> list[str]:
 	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
 		# Translators: This is presented when there is an error retrieving the battery status.
 		return [_("Unknown power status")]
@@ -182,7 +178,7 @@ def _getSpeechForBatteryStatus(
 		# The power change event also fires when the battery level decreases by 3%.
 		return []
 
-	text: List[str] = []
+	text: list[str] = []
 
 	if context == _ReportContext.AC_STATUS_CHANGE:
 		# When the AC status changes, users want to be alerted to the new AC status first.
@@ -210,8 +206,8 @@ def _getACStatusText(systemPowerStatus: SystemPowerStatus) -> str:
 		return _("Unplugged")
 
 
-def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
-	text: List[str] = []
+def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> list[str]:
+	text: list[str] = []
 	# Translators: This is presented to inform the user of the current battery percentage.
 	text.append(
 		ngettext("%d percent", "%d percent", systemPowerStatus.BatteryLifePercent)

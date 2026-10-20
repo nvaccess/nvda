@@ -3,13 +3,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import operator
+import operator  # noqa: I001
 from comtypes import COMError
 import config
 from config.featureFlagEnums import WindowsTerminalStrategyFlag
 import ctypes
 import UIAHandler
 import weakref
+import winUser
 import winVersion
 from functools import lru_cache
 from logHandler import log
@@ -95,8 +96,6 @@ def getDeepestLastChildUIAElementInWalker(element, walker):
 class UIAMixedAttributeError(ValueError):
 	"""Raised when a function would return a UIAutomation text attribute value that is mixed."""
 
-	pass
-
 
 def getUIATextAttributeValueFromRange(rangeObj, attrib, ignoreMixedValues=False):
 	"""
@@ -106,7 +105,7 @@ def getUIATextAttributeValueFromRange(rangeObj, attrib, ignoreMixedValues=False)
 		val = rangeObj.GetAttributeValue(attrib)
 	except COMError:
 		return UIAHandler.handler.reservedNotSupportedValue
-	if val == UIAHandler.handler.ReservedMixedAttributeValue:
+	if val == UIAHandler.handler.ReservedMixedAttributeValue:  # noqa: SIM102
 		if not ignoreMixedValues:
 			raise UIAMixedAttributeError
 	return val
@@ -175,7 +174,7 @@ def iterUIARangeByUnit(rangeObj, unit, reverse=False):
 def getEnclosingElementWithCacheFromUIATextRange(textRange, cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getEnclosingElementBuildCache if it exists, otherwise IUIAutomationTextRange::getEnclosingElement and then IUIAutomationElement::buildUpdatedCache."""
 	if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-		raise ValueError("%s is not a text range" % textRange)
+		raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 	try:
 		textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 	except (COMError, AttributeError):
@@ -186,7 +185,7 @@ def getEnclosingElementWithCacheFromUIATextRange(textRange, cacheRequest):
 	return textRange.getEnclosingElementBuildCache(cacheRequest)
 
 
-class CacheableUIAElementArray(object):
+class CacheableUIAElementArray:
 	def __init__(self, elementArray, cacheRequest=None):
 		self._elementArray = elementArray
 		self._cacheRequest = cacheRequest
@@ -205,7 +204,7 @@ class CacheableUIAElementArray(object):
 def getChildrenWithCacheFromUIATextRange(textRange, cacheRequest):
 	"""A thin wrapper around IUIAutomationTextRange3::getChildrenBuildCache if it exists, otherwise IUIAutomationTextRange::getChildren but wraps the result in an object that automatically calls IUIAutomationElement::buildUpdateCache on any element retreaved."""
 	if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-		raise ValueError("%s is not a text range" % textRange)
+		raise ValueError("%s is not a text range" % textRange)  # noqa: TRY004, UP031
 	try:
 		textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
 	except (COMError, AttributeError):
@@ -242,7 +241,7 @@ def isTextRangeOffscreen(textRange, visiRanges):
 		raise RuntimeError("Visible textRanges array is empty or invalid.")
 
 
-class UIATextRangeAttributeValueFetcher(object):
+class UIATextRangeAttributeValueFetcher:
 	def __init__(self, textRange):
 		self.textRange = textRange
 
@@ -261,7 +260,7 @@ class BulkUIATextRangeAttributeValueFetcher(UIATextRangeAttributeValueFetcher):
 	def __init__(self, textRange, IDs):
 		IDs = list(IDs)
 		self.IDsToValues = {}
-		super(BulkUIATextRangeAttributeValueFetcher, self).__init__(textRange)
+		super().__init__(textRange)
 		IDsArray = (ctypes.c_long * len(IDs))(*IDs)
 		values = textRange.GetAttributeValues(IDsArray, len(IDsArray))
 		self.IDsToValues = {IDs[x]: values[x] for x in range(len(IDs))}
@@ -296,7 +295,7 @@ class FakeEventHandlerGroup:
 
 	def AddNotificationEventHandler(self, scope, cacheRequest, handler):
 		if not isinstance(self.clientObject, UIAHandler.UIA.IUIAutomation5):
-			raise RuntimeError
+			raise RuntimeError  # noqa: TRY004
 		self._notificationEventHandlers[(scope, cacheRequest)] = handler
 
 	def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
@@ -323,7 +322,7 @@ class FakeEventHandlerGroup:
 				self.unregisterFromClientObject(element)
 			except COMError:
 				pass
-			raise e
+			raise e  # noqa: TRY201
 
 	def unregisterFromClientObject(self, element):
 		for (eventId, scope, cacheRequest), handler in self._automationEventHandlers.items():
@@ -411,6 +410,53 @@ def _shouldSelectivelyRegister() -> bool:
 def _shouldUseWindowsTerminalNotifications() -> bool:
 	"Determines whether to use notifications for new text reporting in Windows Terminal."
 	return config.conf["terminals"]["wtStrategy"] == WindowsTerminalStrategyFlag.NOTIFICATIONS
+
+
+def _getCachedWindowHandleFromEvent(sender: "UIAHandler.UIA.IUIAutomationElement") -> int | None:
+	"""Get the native window handle for a UIA event's sender element.
+
+	This only ever reads the I{cached} native window handle. NVDA registers all event
+	handler groups with a cache request that includes
+	C{UIA_NativeWindowHandlePropertyId}, so the sender arrives pre-cached and this read
+	is local: it must never trigger a cross-process call, which is what makes it safe to
+	use as a hung-window guard (a live read would itself hang on an unresponsive app).
+
+	:return: The window handle, or C{None} if it could not be obtained.
+	"""
+	try:
+		return sender.cachedNativeWindowHandle or None
+	except COMError:
+		log.debug(
+			"Failed to read cachedNativeWindowHandle from UIA event sender",
+			exc_info=True,
+		)
+		# The element has no cached window handle, or the cache request did not apply.
+		# Deliberately do not fall back to the live (current) property: that could hang.
+		return None
+
+
+def _shouldSkipEventForHungWindow(sender: "UIAHandler.UIA.IUIAutomationElement") -> bool:
+	"""Whether a UIA event should be dropped because its window's app is not responding.
+
+	When an application stops responding, any live cross-process COM call against its
+	elements blocks until the app is killed, raising a flood of COMErrors out of the
+	UIA event handlers and leaving NVDA partially dead. Detecting the hung window up
+	front (cheaply, from the cached handle) lets us drop the event before touching any
+	live property. This mirrors the existing, unconditional ghost-window handling:
+	there is no legitimate reason to keep polling a not-responding window.
+	"""
+	try:
+		window = _getCachedWindowHandleFromEvent(sender)
+		if not window:
+			return False
+		return winUser.isHungAppWindow(window)
+	except Exception:
+		log.debug(
+			"Exception in _shouldSkipEventForHungWindow; treating as not hung",
+			exc_info=True,
+		)
+		# Never let the guard itself raise into the COM event handler.
+		return False
 
 
 def _isFrameworkIdWinForm(hwnd: int) -> bool:

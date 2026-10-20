@@ -4,10 +4,9 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from datetime import datetime
+from datetime import datetime  # noqa: I001
 import re
 from typing import (
-	Dict,
 	NamedTuple,
 	Optional,
 	TYPE_CHECKING,
@@ -22,11 +21,11 @@ from utils.localisation import TimeOutputFormat
 from scriptHandler import script
 
 if TYPE_CHECKING:
-	from inputCore import InputGesture  # noqa: F401
-	from NVDAObjects import NVDAObject  # noqa: F401
+	from inputCore import InputGesture
+	from NVDAObjects import NVDAObject
 
 
-_timeOutputToParsingFormats: Dict[TimeOutputFormat, str] = {
+_timeOutputToParsingFormats: dict[TimeOutputFormat, str] = {
 	TimeOutputFormat.SECONDS: r"%S",
 	TimeOutputFormat.MINUTES: r"%M:%S",
 	TimeOutputFormat.HOURS: r"%H:%M:%S",
@@ -36,7 +35,7 @@ _timeOutputToParsingFormats: Dict[TimeOutputFormat, str] = {
 }
 
 
-def _getTimeOutputFormat(timeStr: str) -> Optional[TimeOutputFormat]:
+def _getTimeOutputFormat(timeStr: str) -> TimeOutputFormat | None:
 	"""
 	Attempts to find a suitable output format for a
 	D HH:MM:SS, HH:MM:SS, MM:SS or SS -style interval.
@@ -69,7 +68,7 @@ def _getTimeOutputFormat(timeStr: str) -> Optional[TimeOutputFormat]:
 		return None
 
 
-def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
+def _parseTimeStrToTimeDelta(timeStr: str) -> timedelta | None:
 	"""
 	Attempts to convert a time string to a timedelta for a
 	D HH:MM:SS, HH:MM:SS, MM:SS or SS -style interval.
@@ -81,7 +80,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
 	if outputFormat is None:
 		return None
 	try:
-		parsedTime = datetime.strptime(
+		parsedTime = datetime.strptime(  # noqa: DTZ007
 			timeStr,
 			_timeOutputToParsingFormats[outputFormat],
 		)
@@ -101,7 +100,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
 	)
 
 
-def _parseTimeStrToOutputFormatted(timeStr: str) -> Optional[str]:
+def _parseTimeStrToOutputFormatted(timeStr: str) -> str | None:
 	td = _parseTimeStrToTimeDelta(timeStr)
 	if td is None:
 		return td
@@ -113,8 +112,8 @@ class _StatusBarTimes(NamedTuple):
 	A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
 	"""
 
-	elapsed: Optional[str]
-	total: Optional[str]
+	elapsed: str | None
+	total: str | None
 
 
 class AppModule(appModuleHandler.AppModule):

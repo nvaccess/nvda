@@ -5,7 +5,7 @@
 
 """Unit tests for the hwIo module."""
 
-import unittest
+import unittest  # noqa: I001
 import hwIo
 import threading
 

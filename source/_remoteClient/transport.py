@@ -24,7 +24,7 @@ All network operations run in background threads, while message handlers
 are called on the main wxPython thread for thread-safety.
 """
 
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod  # noqa: I001
 import hashlib
 import select
 import socket
@@ -63,7 +63,7 @@ class RemoteExtensionPoint:
 	messageType: RemoteMessageType
 	"""The remote message type to send"""
 
-	filter: Optional[Callable[..., dict[str, Any]]] = None
+	filter: Callable[..., dict[str, Any]] | None = None
 	"""Optional function to transform arguments before sending"""
 
 	transport: Optional["Transport"] = None
@@ -214,7 +214,7 @@ class Transport(ABC):
 		self,
 		extensionPoint: HandlerRegistrar,
 		messageType: RemoteMessageType,
-		filter: Optional[Callable[..., dict[str, Any]]] = None,
+		filter: Callable[..., dict[str, Any]] | None = None,
 	) -> None:
 		"""Register an extension point to a message type.
 
@@ -339,7 +339,7 @@ class TCPTransport(Transport):
 			fingerprint = None
 			try:
 				fingerprint = self.getHostFingerprint()
-			except Exception:
+			except Exception:  # noqa: BLE001, S110
 				pass
 			if self.isFingerprintTrusted(fingerprint):
 				self._trustedFingerprint = fingerprint
@@ -410,12 +410,12 @@ class TCPTransport(Transport):
 		"""Main loop for reading data from the server socket."""
 		while self.serverSock is not None:
 			try:
-				readers, writers, error = select.select(
+				readers, writers, error = select.select(  # noqa: RUF059
 					[self.serverSock],
 					[],
 					[self.serverSock],
 				)
-			except socket.error:
+			except OSError:
 				self.buffer = b""
 				break
 			if self.serverSock in error:
@@ -424,7 +424,7 @@ class TCPTransport(Transport):
 			if self.serverSock in readers:
 				try:
 					self.processIncomingSocketData()
-				except socket.error:
+				except OSError:
 					self.buffer = b""
 					break
 
@@ -459,7 +459,7 @@ class TCPTransport(Transport):
 		ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 		if insecure:
 			ctx.verify_mode = ssl.CERT_NONE
-			log.warn(f"Skipping certificate verification for {host}:{port}")
+			log.warning(f"Skipping certificate verification for {host}:{port}")
 		ctx.check_hostname = not insecure
 		ctx.load_default_certs()
 
@@ -520,7 +520,7 @@ class TCPTransport(Transport):
 			self.buffer += data
 			return
 		while b"\n" in data:
-			line, sep, data = data.partition(b"\n")
+			line, sep, data = data.partition(b"\n")  # noqa: RUF059
 			self.parse(line)
 		self.buffer += data
 
@@ -538,12 +538,12 @@ class TCPTransport(Transport):
 		if configuration._isDebugForRemoteClient():
 			log.debug(f"Received message: {obj!r}")
 		if "type" not in obj:
-			log.warn(f"Received message without type: {obj!r}")
+			log.warning(f"Received message without type: {obj!r}")
 			return
 		try:
 			messageType = RemoteMessageType(obj["type"])
 		except ValueError:
-			log.warn(f"Received message with invalid type: {obj!r}")
+			log.warning(f"Received message with invalid type: {obj!r}")
 			return
 		if messageType is RemoteMessageType.PING:
 			# No handling is required
@@ -551,7 +551,7 @@ class TCPTransport(Transport):
 		del obj["type"]
 		extensionPoint = self.inboundHandlers.get(messageType)
 		if not extensionPoint:
-			log.warn(f"Received message with unhandled type: {messageType} {obj!r}")
+			log.warning(f"Received message with unhandled type: {messageType} {obj!r}")
 			return
 		wx.CallAfter(extensionPoint.notify, **obj)
 
@@ -571,7 +571,7 @@ class TCPTransport(Transport):
 			try:
 				with self.serverSockLock:
 					self.serverSock.sendall(item)
-			except socket.error:
+			except OSError:
 				return
 
 	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
@@ -734,7 +734,7 @@ class ConnectorThread(threading.Thread):
 		while self.running:
 			try:
 				self.connector.run()
-			except socket.error:
+			except OSError:
 				time.sleep(self.reconnectDelay)
 				continue
 			else:
@@ -755,5 +755,5 @@ def clearQueue(queue: Queue[bytes | None]) -> None:
 	try:
 		while True:
 			queue.get_nowait()
-	except Exception:
+	except Exception:  # noqa: BLE001, S110
 		pass

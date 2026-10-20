@@ -18,18 +18,18 @@ _appDir = os.path.abspath(os.path.join("..", "..", "..", "source"))
 # used for developer documentation build, "ImportError: Typelib different than module" is raised
 # by comTypes.
 # This patch causes the error to be ignored, which matches the behavior at runtime.
-import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
+import monkeyPatches.comtypesMonkeyPatches
 
 monkeyPatches.comtypesMonkeyPatches.replace_check_version()
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 
 # Initialize languageHandler so that sphinx is able to deal with translatable strings.
-import languageHandler  # noqa: E402
+import languageHandler
 
 languageHandler.setLanguage("en")
 
 # Initialize globalVars.appArgs to something sensible.
-import globalVars  # noqa: E402
+import globalVars  # noqa: I001
 
 
 # Set an empty config path
@@ -44,8 +44,8 @@ globalVars.appDir = _appDir
 
 
 # Import NVDA's versionInfo module.
-import buildVersion  # noqa: E402
-import versionInfo  # noqa: E402
+import buildVersion
+import versionInfo
 
 # Set a suitable updateVersionType for the updateCheck module to be imported
 buildVersion.updateVersionType = "stable"
@@ -107,9 +107,9 @@ autodoc_mock_imports = [
 
 # Perform some manual mocking of specific objects.
 # autodoc can only mock modules, not objects.
-from sphinx.ext.autodoc.mock import _make_subclass  # noqa: E402
+from sphinx.ext.autodoc._dynamic._mock import _make_subclass  # noqa: I001
 
-import config  # noqa: E402
+import config
 
 # Mock an instance of the configuration manager.
 config.conf = _make_subclass("conf", "config")()

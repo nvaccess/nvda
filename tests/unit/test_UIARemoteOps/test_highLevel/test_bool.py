@@ -7,7 +7,7 @@
 High-level UIA remote ops unit tests for setting and comparing booleans.
 """
 
-from unittest import TestCase
+from unittest import TestCase  # noqa: I001
 from UIAHandler._remoteOps import operation
 from UIAHandler._remoteOps import remoteAPI
 

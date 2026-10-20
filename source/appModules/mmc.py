@@ -3,7 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import api
+import api  # noqa: I001
 import appModuleHandler
 import controlTypes
 import eventHandler
@@ -36,7 +36,7 @@ class MMCTableCell(IAccessible):
 		"""When 'Guess object position info when unavailable' is enabled
 		these controls report very strange information such as 65537 of 12, especially in braille.
 		Disable reporting of position info all together."""
-		return None
+		return
 
 
 class toolTipWithEmptyName(ToolTip):
@@ -71,7 +71,7 @@ class AppModule(appModuleHandler.AppModule):
 	def isBadUIAWindow(self, hwnd):
 		windowClassName = winUser.getClassName(hwnd)
 		normalizedClassName = NVDAObjects.window.Window.normalizeWindowClassName(windowClassName)
-		if normalizedClassName in (
+		if normalizedClassName in (  # noqa: SIM103
 			# #15333: SysListView32 controls in mmc are known to have an incomplete UIA implementation.
 			# Revert back to the MSAA implementation instead.
 			"SysListView32"

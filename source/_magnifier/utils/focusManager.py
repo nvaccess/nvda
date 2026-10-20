@@ -8,7 +8,7 @@ Focus Manager for the magnifier module.
 Handles all focus tracking logic and coordinate calculations.
 """
 
-from comtypes import COMError
+from comtypes import COMError  # noqa: I001
 from logHandler import log
 import api
 import winUser

@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Iterable
+from collections.abc import Iterable  # noqa: I001
 import json
 import comtypes.client
 import ctypes
@@ -190,7 +190,7 @@ def getDocFilePath(fileName: str, installDir: str):
 		tryLangs.append(lang.split("_")[0])
 	# If all else fails, use English.
 	tryLangs.append("en")
-	fileName, fileExt = os.path.splitext(fileName)
+	fileName, fileExt = os.path.splitext(fileName)  # noqa: RUF059
 	for tryLang in tryLangs:
 		tryDir = os.path.join(rootPath, tryLang)
 		if not os.path.isdir(tryDir):
@@ -246,28 +246,28 @@ def removeOldLibFiles(destPath: str, rebootOK: bool = False):
 				[os.path.abspath(parent), os.path.abspath(currentLibPath)],
 			) == os.path.abspath(currentLibPath):
 				# We are in the lib dir for current installation. Don't touch this!
-				log.debug("Skipping current install lib path: %r" % parent)
+				log.debug("Skipping current install lib path: %r" % parent)  # noqa: UP031
 				continue
 			for d in subdirs:
 				path = os.path.join(parent, d)
 				if path != currentLibPath:
-					log.debug(f"Removing old lib directory: {repr(path)}")
+					log.debug(f"Removing old lib directory: {path!r}")
 					try:
 						os.rmdir(path)
 					except OSError:
 						log.warning(
 							"Failed to remove a directory no longer needed. "
 							"This can be manually removed after a reboot or the  installer will try"
-							f" removing it again next time. Directory: {repr(path)}",
+							f" removing it again next time. Directory: {path!r}",
 						)
 			for f in files:
 				path = os.path.join(parent, f)
-				log.debug("Removing old lib file: %r" % path)
+				log.debug("Removing old lib file: %r" % path)  # noqa: UP031
 				try:
 					tryRemoveFile(path, numRetries=2, rebootOK=rebootOK)
 				except RetriableFailure:
 					log.warning(
-						"A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"
+						"A file no longer needed could not be removed. This can be manually removed after a reboot, or  the installer will try again next time. File: %r"  # noqa: UP031
 						% path,
 					)
 
@@ -327,7 +327,7 @@ def getUninstallerRegInfo(installDir: str) -> dict[str, str | int]:
 	Constructs a dictionary that is written to the registry for NVDA to show up
 	in the Windows "Apps and Features" overview.
 	"""
-	return dict(
+	return dict(  # noqa: C408
 		DisplayName=f"{buildVersion.name} {buildVersion.version}",
 		DisplayVersion=buildVersion.version_detailed,
 		DisplayIcon=os.path.join(installDir, "images", "nvda.ico"),
@@ -420,7 +420,7 @@ def registerInstallation(
 	try:
 		_updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe, startMenuFolder)
 	except Exception:
-		log.error("Error while creating shortcuts", exc_info=True)
+		log.error("Error while creating shortcuts", exc_info=True)  # noqa: G201
 	registerAddonFileAssociation(slaveExe)
 
 
@@ -449,7 +449,7 @@ def _createShortcutWithFallback(
 			hotkey,
 			prependSpecialFolder,
 		)
-	except Exception:
+	except Exception:  # noqa: BLE001
 		if hotkey is not None and fallbackHotkey is not None:
 			log.error(
 				f"Error creating {path}. With hotkey ({hotkey}). Trying fallback hotkey: {fallbackHotkey}",
@@ -594,11 +594,11 @@ def _unregisterEaseOfAccessApp():
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Ease of Access app key not found. Nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
-	except WindowsError:
+	except OSError:
 		log.debug("Could not disable auto start on logon screen.")
 
 
@@ -608,7 +608,7 @@ def _unregisterDesktopShortcut(keepDesktopShortcut: bool):
 	if not keepDesktopShortcut and os.path.isfile(desktopPath):
 		try:
 			os.remove(desktopPath)
-		except WindowsError:
+		except OSError:
 			pass
 
 
@@ -640,7 +640,7 @@ def _unregisterFromUninstallRegistry() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Uninstall registry key not found for 64-bit, nothing to unregister.")
 	try:
 		winreg.DeleteKeyEx(
@@ -648,7 +648,7 @@ def _unregisterFromUninstallRegistry() -> None:
 			RegistryKey.INSTALLED_COPY.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Uninstall registry key not found for 32-bit, nothing to unregister.")
 
 
@@ -660,7 +660,7 @@ def _unregisterFromAppPathRegistry() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("App path registry key not found for 64-bit, nothing to unregister.")
 	try:
 		winreg.DeleteKeyEx(
@@ -668,7 +668,7 @@ def _unregisterFromAppPathRegistry() -> None:
 			RegistryKey.APP_PATH.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("App path registry key not found for 32-bit, nothing to unregister.")
 
 
@@ -680,7 +680,7 @@ def _unregisterFromSoftwareRegistry() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("NVDA registry key not found for 64-bit, nothing to unregister.")
 	try:
 		winreg.DeleteKeyEx(
@@ -688,7 +688,7 @@ def _unregisterFromSoftwareRegistry() -> None:
 			RegistryKey.NVDA.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("NVDA registry key not found for 32-bit, nothing to unregister.")
 
 
@@ -714,7 +714,7 @@ def registerAddonFileAssociation(slaveExe: str):
 			# Translators: A file extension label for NVDA add-on package.
 			winreg.SetValueEx(k, None, 0, winreg.REG_SZ, _("NVDA add-on package"))
 			with winreg.CreateKeyEx(k, "DefaultIcon", 0, winreg.KEY_WRITE) as k2:
-				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, "@{slaveExe},1".format(slaveExe=slaveExe))
+				winreg.SetValueEx(k2, None, 0, winreg.REG_SZ, f"@{slaveExe},1")
 			# Point the open verb to nvda_slave addons_installAddonPackage action
 			with winreg.CreateKeyEx(k, "shell\\open\\command", 0, winreg.KEY_WRITE) as k2:
 				winreg.SetValueEx(
@@ -743,8 +743,8 @@ def registerAddonFileAssociation(slaveExe: str):
 			winreg.CloseKey(k2)
 		# Notify the shell that a file association has changed:
 		shellapi.SHChangeNotify(shellapi.SHCNE_ASSOCCHANGED, shellapi.SHCNF_IDLIST, None, None)
-	except WindowsError:
-		log.error("Can not create addon file association.", exc_info=True)
+	except OSError:
+		log.error("Can not create addon file association.", exc_info=True)  # noqa: G201
 
 
 def unregisterAddonFileAssociation() -> None:
@@ -757,7 +757,7 @@ def unregisterAddonFileAssociation() -> None:
 			# TODO: remove when NVDA is 64-bit only.
 			access=winreg.KEY_WOW64_64KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Addon prog ID registry key not found for 64-bit, nothing to unregister.")
 	else:
 		shouldNotifyShell = True
@@ -767,7 +767,7 @@ def unregisterAddonFileAssociation() -> None:
 			RegistryKey.ADDON_PROG.value,
 			access=winreg.KEY_WOW64_32KEY,
 		)
-	except WindowsError:
+	except OSError:
 		log.debug("Addon prog ID registry key not found for 32-bit, nothing to unregister.")
 	else:
 		shouldNotifyShell = True
@@ -790,8 +790,8 @@ def tryRemoveFile(
 	tempPath = _createEmptyTempFileForDeletingFile(dir=dirPath)
 	try:
 		os.replace(path, tempPath)
-	except (WindowsError, IOError):
-		raise RetriableFailure("Failed to rename file %s before  remove" % path)
+	except OSError:
+		raise RetriableFailure("Failed to rename file %s before  remove" % path)  # noqa: UP031
 	for count in range(numRetries):
 		try:
 			if os.path.isdir(tempPath):
@@ -803,14 +803,14 @@ def tryRemoveFile(
 			log.debugWarning(f"Failed to delete file {tempPath}, attempt {count}/{numRetries}", exc_info=True)
 		time.sleep(retryInterval)
 	if rebootOK:
-		log.debugWarning("Failed to delete file %s, marking for delete on reboot" % tempPath)
+		log.debugWarning("Failed to delete file %s, marking for delete on reboot" % tempPath)  # noqa: UP031
 		try:
 			# Use escapes in a unicode string instead of raw.
 			# In a raw string the trailing slash escapes the closing quote leading to a python syntax error.
 			pathQualifier = "\\\\?\\"
 			# #9847: Move file to None to delete it.
 			winKernel.moveFileEx(pathQualifier + tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		except WindowsError:
+		except OSError:
 			log.debugWarning(f"Failed to mark file {tempPath} for delete on reboot", exc_info=True)
 		else:
 			return
@@ -818,7 +818,7 @@ def tryRemoveFile(
 		os.replace(tempPath, path)
 	except Exception:
 		log.exception(f"Unable to rename back to {path} before retriable failure")
-	raise RetriableFailure("File %s could not be removed" % path)
+	raise RetriableFailure("File %s could not be removed" % path)  # noqa: UP031
 
 
 def tryCopyFile(sourceFilePath: str, destFilePath: str):
@@ -828,20 +828,20 @@ def tryCopyFile(sourceFilePath: str, destFilePath: str):
 		destFilePath = "\\\\?\\" + destFilePath
 	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 		errorCode = ctypes.GetLastError()
-		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))
+		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))  # noqa: UP031
 		if not os.path.exists(destFilePath):
-			raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))
+			raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))  # noqa: UP031
 		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
 		try:
 			os.replace(destFilePath, tempPath)
-		except (WindowsError, OSError):
-			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)
-			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)
+		except OSError:
+			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)  # noqa: G201, UP031
+			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)  # noqa: UP031
 		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 			errorCode = ctypes.GetLastError()
 			raise OSError(
-				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),
+				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),  # noqa: UP031
 			)
 
 
@@ -1013,25 +1013,25 @@ def _migratePickledAddonsStateToJson(configPath: str) -> None:
 
 		jsonState = _getAddonsStateDictFromPickle(pickledPath)
 	except Exception:
-		log.error("Failed to load pickled add-ons state.", exc_info=True)
+		log.error("Failed to load pickled add-ons state.", exc_info=True)  # noqa: G201
 	else:
 		jsonPath = os.path.join(configPath, addonHandler.STATE_FILENAME)
 		try:
 			if os.path.exists(jsonPath):
 				tryRemoveFile(jsonPath)
 		except Exception:
-			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)
+			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)  # noqa: G201
 		else:
 			try:
 				with open(jsonPath, "wt", encoding="utf-8") as file:
 					json.dump(jsonState, file)
 			except Exception:
-				log.error("Failed to dump JSON add-ons state.", exc_info=True)
+				log.error("Failed to dump JSON add-ons state.", exc_info=True)  # noqa: G201
 	finally:
 		try:
 			os.replace(pickledPath, pickledPath + ".bak")
 		except Exception:
-			log.error("Failed to back up pickled add-ons state.", exc_info=True)
+			log.error("Failed to back up pickled add-ons state.", exc_info=True)  # noqa: G201
 
 
 def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):

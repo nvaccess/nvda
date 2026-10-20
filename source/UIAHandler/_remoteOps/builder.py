@@ -4,14 +4,14 @@
 # Copyright (C) 2023-2024 NV Access Limited
 
 
-from __future__ import annotations
+from __future__ import annotations  # noqa: I001
 from abc import ABCMeta, abstractproperty
 from typing import (
 	Self,
 	ClassVar,
 	Any,
-	Iterable,
 )
+from collections.abc import Iterable
 import ctypes
 from ctypes import (
 	_SimpleCData,
@@ -62,7 +62,7 @@ class _RemoteBase:
 		otherBuilder = other._robRef() if other._robRef is not None else None
 		if rob != otherBuilder:
 			return False
-		if self._mutable != other._mutable:
+		if self._mutable != other._mutable:  # noqa: SIM103
 			return False
 		return True
 
@@ -91,7 +91,7 @@ class Operand(_RemoteBase):
 			return False
 		if type(other) is not Operand:
 			return False
-		if self._operandId != other._operandId:
+		if self._operandId != other._operandId:  # noqa: SIM103
 			return False
 		return True
 
@@ -133,9 +133,9 @@ class InstructionBase(metaclass=ABCMeta):
 		for paramName, param in self.params.items():
 			paramOutput = f"{paramName}="
 			if isinstance(param, ctypes.Array) and param._type_ == c_wchar:
-				paramOutput += f"c_wchar_array({repr(param.value)})"
+				paramOutput += f"c_wchar_array({param.value!r})"
 			else:
-				paramOutput += f"{repr(param)}"
+				paramOutput += f"{param!r}"
 			paramOutputList.append(paramOutput)
 		output += "(" + ", ".join(paramOutputList) + ")"
 		return output
@@ -234,7 +234,7 @@ class InstructionList:
 
 class RemoteOperationBuilder:
 	_versionBytes: bytes = struct.pack("l", 0)
-	_sectionNames = ["static", "const", "main"]
+	_sectionNames = ["static", "const", "main"]  # noqa: RUF012
 	_lastOperandIdRequested = OperandId(1)
 	_defaultSection: str = "main"
 

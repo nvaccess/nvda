@@ -25,3 +25,11 @@ if "%1" NEQ "" (
     call uv run --group lint --directory "%here%" pyright
 )
 if ERRORLEVEL 1 exit /b %ERRORLEVEL%
+
+rem Run ty for type checking
+if "%1" NEQ "" (
+    call uv run --group lint --directory "%here%" ty check > %1/ty-output.txt
+) else (
+    call uv run --group lint --directory "%here%" ty check
+)
+if ERRORLEVEL 1 exit /b %ERRORLEVEL%

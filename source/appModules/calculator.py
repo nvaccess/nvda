@@ -6,7 +6,7 @@
 """App module for Windows 10 Calculator.
 This is also the base app module for Windows 11 Calculator."""
 
-import appModuleHandler
+import appModuleHandler  # noqa: I001
 import api
 import config
 from NVDAObjects.UIA import UIA
@@ -19,7 +19,7 @@ import braille
 import speech
 import UIAHandler
 from comtypes import COMError
-from typing import Callable
+from collections.abc import Callable
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [

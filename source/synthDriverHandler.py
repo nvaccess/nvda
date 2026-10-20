@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections import OrderedDict
+from collections import OrderedDict  # noqa: I001
 import pkgutil
 import importlib
 from typing import (
@@ -36,7 +36,7 @@ class LanguageInfo(StringParameterInfo):
 	def __init__(self, id):
 		"""Given a language ID (locale name) the description is automatically calculated."""
 		displayName = languageHandler.getLanguageDescription(id)
-		super(LanguageInfo, self).__init__(id, displayName)
+		super().__init__(id, displayName)
 
 
 class VoiceInfo(StringParameterInfo):
@@ -48,7 +48,7 @@ class VoiceInfo(StringParameterInfo):
 			C{None} if not known or the synth implements language separate from voices.
 		"""
 		self.language = language
-		super(VoiceInfo, self).__init__(id, displayName)
+		super().__init__(id, displayName)
 
 
 class SynthDriver(driverHandler.Driver):
@@ -335,7 +335,6 @@ class SynthDriver(driverHandler.Driver):
 		@param switch: C{True} to pause, C{False} to resume (unpause).
 		@type switch: bool
 		"""
-		pass
 
 	def languageIsSupported(self, lang: str | None) -> bool:
 		"""Determines if the specified language is supported.
@@ -358,7 +357,7 @@ class SynthDriver(driverHandler.Driver):
 			normalizedAvailableLangs.add(normalizedAvailableLang)
 		if normalizedLang in normalizedAvailableLangs:
 			return True
-		if any(rootLang == availableLang.split("_")[0] for availableLang in normalizedAvailableLangs):
+		if any(rootLang == availableLang.split("_")[0] for availableLang in normalizedAvailableLangs):  # noqa: SIM103
 			return True
 		return False
 
@@ -393,7 +392,7 @@ class SynthDriver(driverHandler.Driver):
 				try:
 					changeVoice(self, voice)
 				except:  # noqa: E722
-					log.warning("Invalid voice: %s" % voice)
+					log.warning("Invalid voice: %s" % voice)  # noqa: UP031
 					# Update the configuration with the correct voice.
 					c["voice"] = self.voice
 					# We need to call changeVoice here so that required initialisation can be performed.
@@ -451,7 +450,7 @@ def changeVoice(synth, voice):
 
 
 def _getSynthDriver(name: str) -> type[SynthDriver]:
-	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver
+	return importlib.import_module("synthDrivers.%s" % name, package="synthDrivers").SynthDriver  # noqa: UP031
 
 
 def getSynthList() -> list[tuple[str, str]]:
@@ -466,7 +465,7 @@ def getSynthList() -> list[tuple[str, str]]:
 		try:
 			synth = _getSynthDriver(name)
 		except:  # noqa: E722 # Legacy bare except
-			log.error("Error while importing SynthDriver %s" % name, exc_info=True)
+			log.error("Error while importing SynthDriver %s" % name, exc_info=True)  # noqa: G201, UP031
 			continue
 		try:
 			if synth.check():
@@ -475,9 +474,9 @@ def getSynthList() -> list[tuple[str, str]]:
 				else:
 					synthList.append((synth.name, synth.description))
 			else:
-				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)
+				log.debugWarning("Synthesizer '%s' doesn't pass the check, excluding from list" % name)  # noqa: UP031
 		except:  # noqa: E722 # Legacy bare except
-			log.error("", exc_info=True)
+			log.error("", exc_info=True)  # noqa: G201
 	synthList.sort(key=lambda s: strxfrm(s[1]))
 	if lastSynth:
 		synthList.append(lastSynth)
@@ -537,7 +536,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 	try:
 		_curSynth = getSynthInstance(name, asDefault)
 	except:  # noqa: E722 # Legacy bare except
-		log.error(f"setSynth failed for {name}", exc_info=True)
+		log.error(f"setSynth failed for {name}", exc_info=True)  # noqa: G201
 
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["audio"]["outputDevice"]
@@ -547,7 +546,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
-	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:
+	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:  # noqa: SIM201
 		# Don't fall back to silence if speech is expected
 		log.info(f"Falling back to previous synthDriver {prevSynthName}")
 		# There was a previous synthesizer, so switch back to that one.
