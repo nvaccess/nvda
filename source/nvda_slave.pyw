@@ -62,7 +62,12 @@ def main():
 
 	try:
 		if action == "install":
-			installer.install(bool(int(args[0])), bool(int(args[1])), bool(int(args[2])))
+			installer.install(
+				bool(int(args[0])),
+				bool(int(args[1])),
+				bool(int(args[2])),
+				progressCallback=getNvdaHelperRemote().nvdaControllerInternal_progressNotify,
+			)
 		elif action == "unregisterInstall":
 			import installer
 
