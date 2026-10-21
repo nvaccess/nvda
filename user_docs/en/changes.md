@@ -39,6 +39,8 @@
 
 #### Applications
 
+* In Microsoft PowerPoint, NVDA no longer reads the slide title twice. (#9379, @ChristosBouronikos)
+  * The slide title is now announced with a "Slide title" label, and the rest of the slide is introduced with "Slide contents".
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
