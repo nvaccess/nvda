@@ -893,7 +893,7 @@ def _getRunningNVDAProcesses(installDirs: Sequence[str]) -> Iterator[psutil.Proc
 			log.debug(f"Ignoring {imagePath}, it is outside the install folders")
 
 
-def _waitForRunningNVDAProcesses(installDirs: Sequence[str], timeout: float = 3) -> list[psutil.Process]:
+def _waitForRunningNVDAProcesses(installDirs: Sequence[str], timeout: float = 3.0) -> list[psutil.Process]:
 	"""Wait for the processes found by :func:`_getRunningNVDAProcesses` to exit.
 	It polls whether the processes still run and needs no access to them.
 
