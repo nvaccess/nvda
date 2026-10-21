@@ -79,6 +79,8 @@ Existing handlers which only accept `speechSequence` remain compatible. (#20766,
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
 
+* Used [nvdaL10n](https://github.com/nvaccess/nvdaL10n) for translations management. (#20777, @nvdaes)
+
 #### API Breaking Changes
 
 These are breaking API changes.
