@@ -10,7 +10,7 @@ import pathlib
 import tempfile
 import unittest
 from typing import NamedTuple
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, PropertyMock, call, patch
 
 import installer
 import psutil
@@ -151,9 +151,12 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 	"""Tests for asking whether to end running copies of NVDA before installing."""
 
 	def setUp(self):
-		self.progressDialogMock = self.enterContext(patch("gui.installerGui.gui.IndeterminateProgressDialog"))
+		self.progressDialogMock = self.enterContext(patch("gui.installerGui.gui._DeterminateProgressDialog"))
 		self.errorMock = self.enterContext(patch("gui.installerGui._showInstallationFailedError"))
 		self.enterContext(patch("gui.installerGui._isOtherNVDARunning", return_value=True))
+		self.isUserAnAdminMock = self.enterContext(
+			patch("gui.installerGui.shell32.IsUserAnAdmin", return_value=False),
+		)
 		self.execElevatedMock = self.enterContext(
 			patch("gui.installerGui.systemUtils.execElevated", return_value=1),
 		)
@@ -187,7 +190,26 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 		with patch("gui.installerGui._confirmTerminateRunningNVDA") as confirmMock:
 			installerGui.doInstall(isUpdate=isUpdate, silent=silent)
 		confirmMock.assert_not_called()
+		self.progressDialogMock.return_value.setStep.assert_called_once_with(installer._InstallStep.ELEVATE)
 		self.assertEqual(self.execElevatedMock.call_args.args[1][3], "0")
+
+	def test_reportsWaitAndElevateSteps(self):
+		"""The progress dialog reports the wait step while looking for running copies, then the elevate step."""
+		with patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=True):
+			installerGui.doInstall(isUpdate=True)
+		self.assertEqual(
+			self.progressDialogMock.return_value.setStep.call_args_list,
+			[call(installer._InstallStep.WAIT_FOR_RUNNING_COPIES), call(installer._InstallStep.ELEVATE)],
+		)
+
+	def test_alreadyElevated_skipsElevateStep(self):
+		"""When NVDA already runs as administrator, the progress dialog doesn't report the elevate step."""
+		self.isUserAnAdminMock.return_value = True
+		with patch("gui.installerGui._confirmTerminateRunningNVDA", return_value=True):
+			installerGui.doInstall(isUpdate=True)
+		self.progressDialogMock.return_value.setStep.assert_called_once_with(
+			installer._InstallStep.WAIT_FOR_RUNNING_COPIES,
+		)
 
 
 class _ShouldWarnBeforeUpdateFactors(NamedTuple):
@@ -601,3 +623,34 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_walkProgramFiles(unittest.TestCase):
+	def setUp(self) -> None:
+		self._tempDir = tempfile.TemporaryDirectory()
+		for relPath in (
+			"nvda.exe",
+			"nvda_slave.exe",
+			"userConfig/nvda.ini",
+			"systemConfig/nvda.ini",
+			"lib/nvda.exe",
+			"lib/userConfig/file.txt",
+		):
+			path = pathlib.Path(self._tempDir.name, relPath)
+			path.parent.mkdir(parents=True, exist_ok=True)
+			path.touch()
+		pathlib.Path(self._tempDir.name, "emptyDir").mkdir()
+
+	def tearDown(self) -> None:
+		self._tempDir.cleanup()
+
+	def test_skipsConfigDirectoriesAndNvdaExeOnlyAtTopLevel(self):
+		self.assertEqual(
+			{relDir: set(fileNames) for relDir, fileNames in installer._walkProgramFiles(self._tempDir.name)},
+			{
+				".": {"nvda_slave.exe"},
+				"lib": {"nvda.exe"},
+				os.path.join("lib", "userConfig"): {"file.txt"},
+				"emptyDir": set(),
+			},
+		)
