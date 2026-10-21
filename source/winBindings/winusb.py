@@ -3,7 +3,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Functions exported by winusb.dll, and supporting data structures and enumerations."""
+"""Functions exported by winusb.dll, and supporting data structures and enumerations.
+
+When WinUSB is unavailable, function bindings raise :class:`OSError`.
+"""
 
 from ctypes import (  # noqa: I001
 	WINFUNCTYPE,
@@ -17,8 +20,18 @@ from ctypes import (  # noqa: I001
 from ctypes.wintypes import BOOL, HANDLE, PULONG, ULONG, USHORT
 from enum import IntEnum
 from serial.win32 import LPOVERLAPPED
+from typing import Any
 
-dll = windll.winusb
+try:
+	dll = windll.winusb
+except (AttributeError, OSError) as e:
+	dll = None
+	WINUSB_LOAD_ERROR: Exception | None = e
+else:
+	WINUSB_LOAD_ERROR = None
+
+WINUSB_AVAILABLE: bool = dll is not None
+"""True if WinUSB is available."""
 
 WINUSB_INTERFACE_HANDLE = c_void_p
 PWINUSB_INTERFACE_HANDLE = POINTER(c_void_p)
@@ -83,106 +96,133 @@ class WINUSB_PIPE_INFORMATION(Structure):
 	)
 
 
-WinUsb_Initialize = WINFUNCTYPE(None)(("WinUsb_Initialize", dll))
+def _unavailable(*args: Any, **kwargs: Any) -> None:
+	raise OSError("WinUSB is not available")
+
+
+def _bind(name: str, argtypes: tuple[Any, ...], restype: Any) -> Any:
+	if dll is None:
+		return _unavailable
+	function = WINFUNCTYPE(None)((name, dll))
+	function.argtypes = argtypes
+	function.restype = restype
+	return function
+
+
+WinUsb_Initialize = _bind(
+	"WinUsb_Initialize",
+	(
+		HANDLE,  # DeviceHandle
+		PWINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+	),
+	BOOL,
+)
 """
 Creates a WinUSB handle for the device specified by a file handle.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_initialize
 """
-WinUsb_Initialize.argtypes = (
-	HANDLE,  # DeviceHandle
-	PWINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-)
-WinUsb_Initialize.restype = BOOL
 
-WinUsb_Free = WINFUNCTYPE(None)(("WinUsb_Free", dll))
+WinUsb_Free = _bind(
+	"WinUsb_Free",
+	(
+		WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+	),
+	BOOL,
+)
 """
 Frees the resources allocated by ``WinUsb_Initialize``.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_free
 """
-WinUsb_Free.argtypes = (
-	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-)
-WinUsb_Free.restype = BOOL
 
-WinUsb_QueryInterfaceSettings = WINFUNCTYPE(None)(("WinUsb_QueryInterfaceSettings", dll))
+WinUsb_QueryInterfaceSettings = _bind(
+	"WinUsb_QueryInterfaceSettings",
+	(
+		WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+		c_ubyte,  # AlternateInterfaceNumber
+		POINTER(USB_INTERFACE_DESCRIPTOR),  # UsbAltInterfaceDescriptor
+	),
+	BOOL,
+)
 """
 Retrieves the interface descriptor for the specified alternate interface settings for a particular interface handle.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_queryinterfacesettings
 """
-WinUsb_QueryInterfaceSettings.argtypes = (
-	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-	c_ubyte,  # AlternateInterfaceNumber
-	POINTER(USB_INTERFACE_DESCRIPTOR),  # UsbAltInterfaceDescriptor
-)
-WinUsb_QueryInterfaceSettings.restype = BOOL
 
-WinUsb_QueryPipe = WINFUNCTYPE(None)(("WinUsb_QueryPipe", dll))
+WinUsb_QueryPipe = _bind(
+	"WinUsb_QueryPipe",
+	(
+		WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+		c_ubyte,  # AlternateInterfaceNumber
+		c_ubyte,  # PipeIndex
+		POINTER(WINUSB_PIPE_INFORMATION),  # PipeInformation
+	),
+	BOOL,
+)
 """
 Retrieves information about a pipe that is associated with an interface.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_querypipe
 """
-WinUsb_QueryPipe.argtypes = (
-	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-	c_ubyte,  # AlternateInterfaceNumber
-	c_ubyte,  # PipeIndex
-	POINTER(WINUSB_PIPE_INFORMATION),  # PipeInformation
-)
-WinUsb_QueryPipe.restype = BOOL
 
-WinUsb_ReadPipe = WINFUNCTYPE(None)(("WinUsb_ReadPipe", dll))
+WinUsb_ReadPipe = _bind(
+	"WinUsb_ReadPipe",
+	(
+		WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+		c_ubyte,  # PipeID
+		c_void_p,  # Buffer
+		ULONG,  # BufferLength
+		PULONG,  # LengthTransferred
+		LPOVERLAPPED,  # Overlapped
+	),
+	BOOL,
+)
 """
 Reads data from the specified pipe.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_readpipe
 """
-WinUsb_ReadPipe.argtypes = (
-	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-	c_ubyte,  # PipeID
-	c_void_p,  # Buffer
-	ULONG,  # BufferLength
-	PULONG,  # LengthTransferred
-	LPOVERLAPPED,  # Overlapped
-)
-WinUsb_ReadPipe.restype = BOOL
 
-WinUsb_WritePipe = WINFUNCTYPE(None)(("WinUsb_WritePipe", dll))
+WinUsb_WritePipe = _bind(
+	"WinUsb_WritePipe",
+	(
+		WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+		c_ubyte,  # PipeID
+		c_void_p,  # Buffer
+		ULONG,  # BufferLength
+		PULONG,  # LengthTransferred
+		LPOVERLAPPED,  # Overlapped
+	),
+	BOOL,
+)
 """
 Writes data to a pipe.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_writepipe
 """
-WinUsb_WritePipe.argtypes = (
-	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-	c_ubyte,  # PipeID
-	c_void_p,  # Buffer
-	ULONG,  # BufferLength
-	PULONG,  # LengthTransferred
-	LPOVERLAPPED,  # Overlapped
-)
-WinUsb_WritePipe.restype = BOOL
 
-WinUsb_SetPipePolicy = WINFUNCTYPE(None)(("WinUsb_SetPipePolicy", dll))
+WinUsb_SetPipePolicy = _bind(
+	"WinUsb_SetPipePolicy",
+	(
+		WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
+		c_ubyte,  # PipeID
+		ULONG,  # PolicyType
+		ULONG,  # ValueLength
+		c_void_p,  # Value
+	),
+	BOOL,
+)
 """
 Sets the policy for a specific pipe associated with an endpoint on the device.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/winusb/nf-winusb-winusb_setpipepolicy
 """
-WinUsb_SetPipePolicy.argtypes = (
-	WINUSB_INTERFACE_HANDLE,  # InterfaceHandle
-	c_ubyte,  # PipeID
-	ULONG,  # PolicyType
-	ULONG,  # ValueLength
-	c_void_p,  # Value
-)
-WinUsb_SetPipePolicy.restype = BOOL

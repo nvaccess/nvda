@@ -3,7 +3,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Functions exported by bthprops.cpl, and supporting data structures and enumerations."""
+"""Functions exported by bthprops.cpl, and supporting data structures and enumerations.
+
+When Bluetooth support is unavailable, function bindings raise :class:`OSError`.
+"""
 
 from ctypes import (
 	POINTER,
@@ -13,10 +16,20 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, HANDLE, ULONG, WCHAR
+from typing import Any
 
 from winBindings.kernel32 import SYSTEMTIME
 
-cpl = windll["bthprops.cpl"]
+try:
+	cpl = windll["bthprops.cpl"]
+except (AttributeError, OSError) as e:
+	cpl = None
+	BLUETOOTH_LOAD_ERROR: Exception | None = e
+else:
+	BLUETOOTH_LOAD_ERROR = None
+
+BLUETOOTH_AVAILABLE: bool = cpl is not None
+"""True if the Windows Bluetooth API is available."""
 
 BLUETOOTH_ADDRESS = c_ulonglong
 BLUETOOTH_MAX_NAME_SIZE = 248
@@ -49,15 +62,20 @@ class BLUETOOTH_DEVICE_INFO(Structure):
 BLUETOOTH_DEVICE_INFO_P = POINTER(BLUETOOTH_DEVICE_INFO)
 
 
-BluetoothGetDeviceInfo = cpl.BluetoothGetDeviceInfo
+def _unavailableBluetoothGetDeviceInfo(*args: Any, **kwargs: Any) -> None:
+	raise OSError("The Bluetooth API is not available")
+
+
+BluetoothGetDeviceInfo = cpl.BluetoothGetDeviceInfo if cpl is not None else _unavailableBluetoothGetDeviceInfo
 """
 Retrieves information about a remote Bluetooth device which has been identified through a successful device inquiry function call.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/bluetoothapis/nf-bluetoothapis-bluetoothgetdeviceinfo
 """
-BluetoothGetDeviceInfo.argtypes = (
-	HANDLE,  # hRadio
-	BLUETOOTH_DEVICE_INFO_P,  # pbtdi
-)
-BluetoothGetDeviceInfo.restype = DWORD
+if cpl is not None:
+	BluetoothGetDeviceInfo.argtypes = (
+		HANDLE,  # hRadio
+		BLUETOOTH_DEVICE_INFO_P,  # pbtdi
+	)
+	BluetoothGetDeviceInfo.restype = DWORD
