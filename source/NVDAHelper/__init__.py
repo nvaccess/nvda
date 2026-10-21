@@ -742,6 +742,20 @@ def nvdaControllerInternal_handleRemoteURL(url):
 		return -1
 
 
+@WINFUNCTYPE(c_long, c_long, c_long)
+def nvdaControllerInternal_progressNotify(step: int, percentage: int) -> int:
+	"""Handles progress reported by an operation that NVDA started in another process.
+
+	:param step: The step the operation is in.
+	:param percentage: The overall progress of the operation, from 0 to 100.
+	:return: :attr:`SystemErrorCodes.SUCCESS`
+	"""
+	import gui
+
+	gui._DeterminateProgressDialog._handleRemoteProgress(step, percentage)
+	return SystemErrorCodes.SUCCESS
+
+
 class _RemoteLoader:
 	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
@@ -838,6 +852,7 @@ def initialize() -> None:
 		("nvdaControllerInternal_drawFocusRectNotify", nvdaControllerInternal_drawFocusRectNotify),
 		("nvdaControllerInternal_openConfigDirectory", nvdaControllerInternal_openConfigDirectory),
 		("nvdaControllerInternal_handleRemoteURL", nvdaControllerInternal_handleRemoteURL),
+		("nvdaControllerInternal_progressNotify", nvdaControllerInternal_progressNotify),
 	]:
 		try:
 			_setDllFuncPointer(localLib.dll, f"_{name}", func)

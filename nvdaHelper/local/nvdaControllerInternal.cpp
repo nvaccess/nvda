@@ -1,15 +1,8 @@
 /*
-This file is a part of the NVDA project.
-URL: http://www.nvda-project.org/
-Copyright 2006-2025 NV Access Limited, rui Batista, Google LLC, Christopher Toth.
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2.0, as published by
-    the Free Software Foundation.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-This license can be found at:
-http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+A part of NonVisual Desktop Access (NVDA)
+Copyright (C) 2006-2026 NV Access Limited, rui Batista, Google LLC, Christopher Toth, Leonard de Ruijter
+This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 */
 
 #include <local/nvdaControllerInternal.h>
@@ -88,4 +81,9 @@ error_status_t __stdcall nvdaControllerInternal_reportLiveRegion(const wchar_t* 
 error_status_t(__stdcall *_nvdaControllerInternal_openConfigDirectory)();
 error_status_t __stdcall nvdaControllerInternal_openConfigDirectory() {
 	return _nvdaControllerInternal_openConfigDirectory();
+}
+
+error_status_t(__stdcall *_nvdaControllerInternal_progressNotify)(const long, const long);
+error_status_t __stdcall nvdaControllerInternal_progressNotify(const long step, const long percentage) {
+	return _nvdaControllerInternal_progressNotify(step, percentage);
 }
