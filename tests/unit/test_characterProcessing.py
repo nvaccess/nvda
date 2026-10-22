@@ -5,13 +5,12 @@
 
 """Unit tests for the characterProcessing module."""
 
-import unittest  # noqa: I001
 import re
-from characterProcessing import SpeechSymbolProcessor
-from characterProcessing import SymbolLevel
-from characterProcessing import processSpeechSymbols as process
-from characterProcessing import processSpeechSymbol
+import unittest
+
 import config
+from characterProcessing import SpeechSymbolProcessor, SymbolLevel, processSpeechSymbol
+from characterProcessing import processSpeechSymbols as process
 
 
 class TestComplex(unittest.TestCase):
