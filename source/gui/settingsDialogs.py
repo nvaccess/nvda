@@ -1957,7 +1957,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			max=int(validation.kwargs["max"]),
 			initial=config.conf["speech"]["symbolRepeatAnnounceThreshold"],
 		)
-		self.bindHelpEvent("SpeechSettingsRepeatedSymbols", self.repeatedSymbolsThresholdEdit)
+		self.bindHelpEvent("RepeatedSymbolCount", self.repeatedSymbolsThresholdEdit)
 
 	def onAutoLanguageSwitchingChange(self, evt: wx.CommandEvent):
 		"""Take action when the autoLanguageSwitching checkbox is pressed."""
@@ -2043,7 +2043,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			bool(self.unicodeNormalizationCombo._getControlCurrentFlag()),
 		)
 
-		def isValid(self) -> bool:
+	def isValid(self) -> bool:
 			if self.repeatedSymbolsThresholdEdit.Value == 1:
 				self._validationErrorMessageBox(
 					# Translators: Message shown when the repeated symbols count is set to 1.
