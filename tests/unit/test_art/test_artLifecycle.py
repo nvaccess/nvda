@@ -79,26 +79,26 @@ class TestReadinessSignalReceipt(unittest.TestCase):
 
 	def test_successIsDelivered(self):
 		"""A host reporting no failure is reported as ready."""
-		self.service.ready()
+		self.service._ready()
 		self.onReady.assert_called_once_with(None)
 
 	def test_failureIsDelivered(self):
 		"""A host reporting a failure has its reason passed on."""
-		self.service.ready("component failed to load")
+		self.service._ready("component failed to load")
 		self.onReady.assert_called_once_with("component failed to load")
 
 	def test_onlyTheFirstSignalCounts(self):
 		"""The add-on shares the host's process, so a later signal must not change the outcome."""
-		self.service.ready()
-		self.service.ready("late failure")
+		self.service._ready()
+		self.service._ready("late failure")
 		self.onReady.assert_called_once_with(None)
 
 	def test_malformedSignalIsRejectedAndDoesNotCount(self):
 		"""A failure that is not a string is refused, and leaves the real signal to come."""
 		with self.assertRaises(TypeError):
-			self.service.ready(42)
+			self.service._ready(42)
 		self.onReady.assert_not_called()
-		self.service.ready()
+		self.service._ready()
 		self.onReady.assert_called_once_with(None)
 
 	def test_strSubclassIsRejected(self):
@@ -108,7 +108,7 @@ class TestReadinessSignalReceipt(unittest.TestCase):
 			pass
 
 		with self.assertRaises(TypeError):
-			self.service.ready(NotQuiteStr("failure"))
+			self.service._ready(NotQuiteStr("failure"))
 		self.onReady.assert_not_called()
 
 
@@ -160,7 +160,7 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		def body(conn: Connection) -> None:
 			entrypoint._signalReadiness(conn)
 			# Synchronous, so that core has handled it before the test looks.
-			conn.remoteService.ready("late failure")
+			conn.remoteService._ready("late failure")
 			lateSignalSent.set()
 
 		session = self.makeSession(ThreadHostController(run=makeHostRun(body)))
