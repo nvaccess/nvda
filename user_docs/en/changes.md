@@ -24,6 +24,11 @@
 * MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
 * When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
+* NVDA can now start in Windows PE when optional components are unavailable.
+  Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
+  The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
+  Sound Split and audio device enumeration are unavailable without `pdh.dll`.
+  Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
 
 #### Performance
 
@@ -78,6 +83,10 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
+* `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
+  Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
+  which can be `None`.
+  `SoundSplitState` remains available from `audio` without Sound Split dependencies. (#19537)
 
 #### API Breaking Changes
 
@@ -97,6 +106,9 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 
 #### Deprecations
 
+* `audio.soundSplit.SoundSplitState` and `audio.soundSplit.VolumeTupleT` are deprecated.
+  Use `audio.SoundSplitState` and `audio.soundSplitState.VolumeTupleT` instead.
+  The old imports will be removed in 2028.1. (#21035, @akash07k)
 * The following symbols from `winKernel` are deprecated: (#20784, #20836)
   * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
   * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
