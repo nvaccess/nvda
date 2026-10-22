@@ -3291,6 +3291,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		smallCapsText = _("Small Caps (Microsoft Word with UIA)")
+		self.smallCapsCheckBox = fontGroup.addItem(
+			wx.CheckBox(fontGroupBox, label=smallCapsText),
+		)
+		self.smallCapsCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportSmallCaps"],
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		emphasisText = _("E&mphasis")
 		self.emphasisCheckBox = fontGroup.addItem(wx.CheckBox(fontGroupBox, label=emphasisText))
 		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
@@ -3595,6 +3605,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
 			self.superscriptsAndSubscriptsCheckBox.IsChecked()
 		)
+		config.conf["documentFormatting"]["reportSmallCaps"] = self.smallCapsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"] = self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"] = self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBookmarks"] = self.bookmarksCheckBox.IsChecked()
