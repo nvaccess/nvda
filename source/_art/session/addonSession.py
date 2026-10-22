@@ -30,7 +30,13 @@ CONTROL_CONNECTION_NAME: Final[str] = "ART core control"
 
 
 class SessionState(enum.Enum):
-	"""Where an add-on session is in its lifecycle."""
+	"""Where an add-on session is in its lifecycle.
+
+	A healthy session moves through ``NEW``, ``LAUNCHING``, ``READY``, ``STOPPING`` and ``STOPPED`` in order.
+	In case of an issue with the host, it may move from any state other than ``STOPPED`` straight to ``FAILED``.
+
+	``STOPPED`` and ``FAILED`` are final.
+	"""
 
 	NEW = enum.auto()
 	"""Constructed, but not yet started."""
@@ -38,6 +44,8 @@ class SessionState(enum.Enum):
 	"""The host has been started, but has not yet signalled readiness."""
 	READY = enum.auto()
 	"""The host signalled that it launched successfully."""
+	STOPPING = enum.auto()
+	"""Close has been called on the session, but it has not yet finished shutting down."""
 	STOPPED = enum.auto()
 	"""The session was closed. Final."""
 	FAILED = enum.auto()
@@ -137,11 +145,15 @@ class AddonSession:
 		A failed session stays ``FAILED``; any other session becomes ``STOPPED``.
 		"""
 		with self._stateLock:
-			if self._state is SessionState.STOPPED:
+			if self._state in (SessionState.STOPPING, SessionState.STOPPED):
 				return
-			if self._state is not SessionState.FAILED:
-				self._state = SessionState.STOPPED
+			stopping = self._state is not SessionState.FAILED
+			if stopping:
+				self._state = SessionState.STOPPING
 		self._stopHost()
+		if stopping:
+			with self._stateLock:
+				self._state = SessionState.STOPPED
 
 	def _fail(self, reason: str) -> None:
 		"""Mark the session as failed, and stop the host.

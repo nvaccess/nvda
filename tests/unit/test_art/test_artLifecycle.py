@@ -198,6 +198,28 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		with self.assertRaises(RuntimeError):
 			_ = session.hostRoot
 
+	def test_closePassesThroughStopping(self):
+		"""The host is stopped while the session is ``STOPPING``, so its exit is expected rather than a failure."""
+		statesWhenTerminated: list[SessionState] = []
+		controller = ThreadHostController()
+		realTerminate = controller.terminate
+
+		def terminate() -> None:
+			# In the case of a healthy session, the session must move its state to ``STOPPING`` before terminating the host,
+			# so this test is a valid check of the state we're interested in.
+			statesWhenTerminated.append(session.state)
+			realTerminate()
+
+		controller.terminate = terminate
+		session = self.makeSession(controller)
+		startWithin(self, session)
+		session.close()
+		# It is safe to call ``terminate`` on a terminated host,
+		# but the terminating call must occur when the session is ``STOPPING``.
+		# Thus, we only care about the session's state at the time of the first ``terminate``.
+		self.assertEqual(statesWhenTerminated[0], SessionState.STOPPING)
+		self.assertIs(session.state, SessionState.STOPPED)
+
 	def test_closeIsIdempotent(self):
 		"""Closing twice, or closing a session that was never started, is not an error."""
 		session = self.makeSession()
