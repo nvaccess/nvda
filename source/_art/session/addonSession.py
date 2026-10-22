@@ -70,7 +70,7 @@ class AddonSession:
 			Owned by the session from here on.
 		"""
 		self._controller = controller
-		self._stateLock = threading.Lock()
+		self._stateChanged = threading.Condition()
 		self._state = SessionState.NEW
 		self._failureReason: str | None = None
 		self._conn: Connection[CoreRootService, HostRootService] | None = None
@@ -97,6 +97,15 @@ class AddonSession:
 			raise RuntimeError(f"Add-on session is not ready (state: {self._state.name})")
 		return self._conn.remoteService
 
+	def _setState(self, state: SessionState) -> None:
+		"""Move the session to ``state``, and wake everything waiting on a state change.
+
+		Every state transition goes through here.
+		Must be called with :attr:`_stateChanged` held.
+		"""
+		self._state = state
+		self._stateChanged.notify_all()
+
 	def start(self) -> None:
 		"""Launch the host and wait for it to signal readiness.
 
@@ -106,10 +115,10 @@ class AddonSession:
 		:raises HostLaunchError: If the host could not be started, or reported a failed launch.
 			The session is ``FAILED``, and the host has been stopped.
 		"""
-		with self._stateLock:
+		with self._stateChanged:
 			if self._state is not SessionState.NEW:
 				raise RuntimeError(f"Add-on session has already been started (state: {self._state.name})")
-			self._state = SessionState.LAUNCHING
+			self._setState(SessionState.LAUNCHING)
 		try:
 			stream = self._controller.start()
 		except Exception as e:
@@ -122,13 +131,18 @@ class AddonSession:
 		)
 		self._conn.bgEventLoop(daemon=True)
 		self._readinessReported.wait()
-		if (failure := self._readinessFailure) is not None:
-			self._fail(f"Host reported a failed launch: {failure}")
-			raise HostLaunchError(f"Host reported a failed launch: {failure}")
-		with self._stateLock:
-			if self._state is SessionState.LAUNCHING:
-				self._state = SessionState.READY
-		log.debug("ART add-on session is ready")
+		with self._stateChanged:
+			state = self._state
+			if (failure := self._readinessFailure) is not None:
+				self._fail(f"Host reported a failed launch: {failure}")
+				raise HostLaunchError(f"Host reported a failed launch: {failure}")
+			if state is SessionState.LAUNCHING:
+				self._setState(SessionState.READY)
+				log.debug("ART add-on session is ready")
+			elif state is SessionState.FAILED:
+				raise HostLaunchError(f"Host did not launch: {self._failureReason}")
+			else:
+				raise HostLaunchError("Add-on session was closed during launch")
 
 	def _onReady(self, failure: str | None) -> None:
 		"""Receive the outcome of the host's readiness signal.
@@ -144,16 +158,16 @@ class AddonSession:
 		Safe to call more than once, and on a session that failed or was never started.
 		A failed session stays ``FAILED``; any other session becomes ``STOPPED``.
 		"""
-		with self._stateLock:
+		with self._stateChanged:
 			if self._state in (SessionState.STOPPING, SessionState.STOPPED):
 				return
 			stopping = self._state is not SessionState.FAILED
 			if stopping:
-				self._state = SessionState.STOPPING
+				self._setState(SessionState.STOPPING)
 		self._stopHost()
 		if stopping:
-			with self._stateLock:
-				self._state = SessionState.STOPPED
+			with self._stateChanged:
+				self._setState(SessionState.STOPPED)
 
 	def _fail(self, reason: str) -> None:
 		"""Mark the session as failed, and stop the host.
@@ -162,11 +176,11 @@ class AddonSession:
 
 		:param reason: Why the session failed.
 		"""
-		with self._stateLock:
+		with self._stateChanged:
 			if self._state in (SessionState.FAILED, SessionState.STOPPED):
 				return
-			self._state = SessionState.FAILED
 			self._failureReason = reason
+			self._setState(SessionState.FAILED)
 		log.warning(f"ART add-on session failed: {reason}")
 		self._stopHost()
 
