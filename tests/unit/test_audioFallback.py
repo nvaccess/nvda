@@ -48,6 +48,39 @@ class TestUnavailableSoundSplit(unittest.TestCase):
 			message.assert_called_once_with("Sound Split is unavailable.")
 
 
+@unittest.skipUnless(audio.SOUND_SPLIT_AVAILABLE, "Sound Split dependencies are unavailable")
+class TestDeprecatedSoundSplitSymbols(unittest.TestCase):
+	def test_oldImportsWarnAndResolveToNewSymbols(self):
+		newSoundSplitState = audio.SoundSplitState
+		newVolumeTupleT = importlib.import_module("audio.soundSplitState").VolumeTupleT
+
+		with (
+			mock.patch("NVDAState._allowDeprecatedAPI", return_value=True),
+			mock.patch("logHandler.log.warning") as warning,
+		):
+			from audio.soundSplit import SoundSplitState as deprecatedSoundSplitState
+			from audio.soundSplit import VolumeTupleT as deprecatedVolumeTupleT
+
+		self.assertIs(deprecatedSoundSplitState, newSoundSplitState)
+		self.assertIs(deprecatedVolumeTupleT, newVolumeTupleT)
+		self.assertEqual(
+			[
+				("audio.soundSplit.SoundSplitState is deprecated. Use audio.SoundSplitState instead."),
+				(
+					"audio.soundSplit.VolumeTupleT is deprecated. "
+					"Use audio.soundSplitState.VolumeTupleT instead."
+				),
+			],
+			[call.args[0] for call in warning.call_args_list],
+		)
+
+	def test_oldImportsAreUnavailableWhenDeprecatedApiIsDisabled(self):
+		with mock.patch("NVDAState._allowDeprecatedAPI", return_value=False):
+			for name in ("SoundSplitState", "VolumeTupleT"):
+				with self.subTest(name=name), self.assertRaises(AttributeError):
+					getattr(audio.soundSplit, name)
+
+
 class TestUnavailableAudioDeviceEnumeration(unittest.TestCase):
 	def test_importHandlesUnavailablePycaw(self):
 		self.addCleanup(importlib.reload, mmdevice)

@@ -16,7 +16,10 @@ from comtypes import COMError
 from threading import Lock
 import core
 
-from .soundSplitState import SoundSplitState, VolumeTupleT  # noqa: F401
+from addonAPIVersion import BACK_COMPAT_TO
+from utils._deprecate import MovedSymbol, handleDeprecations
+
+from .soundSplitState import SoundSplitState as _SoundSplitState
 
 
 _audioSessionManager: IAudioSessionManager2 | None = None
@@ -30,15 +33,15 @@ def initialize() -> None:
 	except COMError:
 		log.exception("Could not initialize audio session manager")
 		return
-	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	state = _SoundSplitState(config.conf["audio"]["soundSplitState"])
 	_setSoundSplitState(state, initial=True)
 
 
 @atexit.register
 def terminate():
-	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-	if state != SoundSplitState.OFF:
-		_setSoundSplitState(SoundSplitState.OFF)
+	state = _SoundSplitState(config.conf["audio"]["soundSplitState"])
+	if state != _SoundSplitState.OFF:
+		_setSoundSplitState(_SoundSplitState.OFF)
 	_unregisterCallback()
 
 
@@ -113,15 +116,15 @@ class _VolumeSetter(AudioSessionNotification):
 			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
 
-def _setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
+def _setSoundSplitState(state: _SoundSplitState, initial: bool = False) -> dict:
 	applyToFuture = True
-	if state == SoundSplitState.OFF:
+	if state == _SoundSplitState.OFF:
 		if initial:
 			return {}
 		else:
 			# Disabling sound split via command or via settings
 			# We need to restore volume of all applications, but then don't set up callback for future audio sessions
-			state = SoundSplitState.NVDA_BOTH_APPS_BOTH
+			state = _SoundSplitState.NVDA_BOTH_APPS_BOTH
 			applyToFuture = False
 	leftVolume, rightVolume = state.getAppVolume()
 	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
@@ -133,7 +136,7 @@ def _setSoundSplitState(state: SoundSplitState, initial: bool = False) -> dict:
 
 
 def _toggleSoundSplitState() -> None:
-	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	state = _SoundSplitState(config.conf["audio"]["soundSplitState"])
 	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
 	try:
 		i = allowedStates.index(state)
@@ -141,7 +144,7 @@ def _toggleSoundSplitState() -> None:
 		# State not found, resetting to default (OFF)
 		i = -1
 	i = (i + 1) % len(allowedStates)
-	newState = SoundSplitState(allowedStates[i])
+	newState = _SoundSplitState(allowedStates[i])
 	result = _setSoundSplitState(newState)
 	config.conf["audio"]["soundSplitState"] = newState.value
 	ui.message(newState.displayString)
@@ -195,3 +198,10 @@ class _VolumeRestorer(AudioSessionEvents):
 
 _applicationExitCallbacksLock = Lock()
 _applicationExitCallbacks: dict[int, _VolumeRestorer] = {}
+
+# Deprecated in 2027.1; remove in 2028.1.
+if BACK_COMPAT_TO < (2028, 1, 0):
+	__getattr__ = handleDeprecations(
+		MovedSymbol("SoundSplitState", "audio", "SoundSplitState"),
+		MovedSymbol("VolumeTupleT", "audio.soundSplitState"),
+	)
