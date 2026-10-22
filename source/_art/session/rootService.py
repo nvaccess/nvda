@@ -47,8 +47,11 @@ class CoreRootService(Service):
 		return "pong"
 
 	@Service.exposed
-	def ready(self, failure: str | None = None) -> None:
+	def _ready(self, failure: str | None = None) -> None:
 		"""Receive the host's readiness signal, which ends launch.
+
+		Exposed under a sunder name to mark it as ART's own launch plumbing,
+		rather than part of the API that add-ons build on.
 
 		Only the first signal counts.
 		The add-on shares the host's process, so it can send this too;

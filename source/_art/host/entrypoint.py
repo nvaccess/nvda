@@ -77,7 +77,7 @@ def _signalReadiness(conn: Connection, failure: str | None = None) -> None:
 	:param failure: Why launch failed, or ``None`` if the host is ready to serve.
 		A failure tells core to abort the session.
 	"""
-	rpyc.async_(conn.remoteService.ready)(failure)
+	rpyc.async_(conn.remoteService._ready)(failure)
 
 
 def _redirectToDevNull(targetFd: int) -> None:
