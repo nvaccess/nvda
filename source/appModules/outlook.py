@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
+# Copyright (C) 2006-2026 NV Access Limited, Yogesh Kumar, Manish Agrawal, Joseph Lee, Davy Kager,
 # Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -43,7 +43,8 @@ from NVDAObjects.UIA import UIA
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 from NVDAObjects import NVDAObject
 import languageHandler
-from collections.abc import Generator
+from collections.abc import Callable, Generator
+from keyboardHandler import KeyboardInputGesture
 import documentBase
 import browseMode
 import vision
@@ -122,11 +123,136 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		return False
 
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
+	def __init__(self, processID: int, appName: str | None = None) -> None:
+		"""Register Outlook-specific events and initialize recipient announcement state."""
+		super().__init__(processID, appName)
+		self._lastAutoCompleteAnnouncement: tuple[int, int, str] | None = None
 		# Explicitly allow gainFocus events for the window class that hosts the active Outlook DatePicker cell
 		# This object gets focus but its window does not conform to our GUI thread info window checks
 		eventHandler.requestEvents("gainFocus", processId=self.processID, windowClassName="rctrl_renwnd32")
+
+		# The popup has no focus, so its hide event normally would not reach NVDA.
+		eventHandler.requestEvents("hide", processId=self.processID, windowClassName="Net UI Tool Window")
+
+	def _resetAutoCompleteAnnouncement(self, recipientWindow: int | None = None) -> None:
+		"""Forget a dismissed popup, without clearing another recipient field's state."""
+		if recipientWindow is None or (
+			self._lastAutoCompleteAnnouncement is not None
+			and self._lastAutoCompleteAnnouncement[1] == recipientWindow
+		):
+			self._lastAutoCompleteAnnouncement = None
+
+	def event_hide(self, obj: NVDAObject, nextHandler: Callable[[], None]) -> None:
+		"""Only the tracked popup's closure resets announcement suppression."""
+		if (
+			self._lastAutoCompleteAnnouncement is not None
+			and obj.windowHandle == self._lastAutoCompleteAnnouncement[0]
+			and obj.windowClassName == "Net UI Tool Window"
+		):
+			self._resetAutoCompleteAnnouncement()
+		nextHandler()
+
+	def event_appModule_loseFocus(self) -> None:
+		"""Discard suggestions when switching away from Outlook."""
+		self._resetAutoCompleteAnnouncement()
+
+	def _announceAutoCompleteSelection(self, obj: UIA) -> bool:
+		"""Handle a recipient list or item event using the current selected descendant.
+
+		Outlook can expose the initial selection through a layout event without firing
+		a selection event. Both paths use this query and share suppression state.
+		Return whether the event belongs to the UIA recipient popup.
+		"""
+		if not UIAHandler.handler:
+			return False
+		try:
+			cache: UIAHandler.IUIAutomationCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+			propertyIds: set[int] = {
+				UIAHandler.UIA_IsOffscreenPropertyId,
+				UIAHandler.UIA_IsEnabledPropertyId,
+				UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
+			}
+			propertyId: int
+			for propertyId in propertyIds:
+				cache.addProperty(propertyId)
+			listCondition: UIAHandler.IUIAutomationCondition = (
+				UIAHandler.handler.clientObject.createPropertyCondition(
+					UIAHandler.UIA_AutomationIdPropertyId, "idAutoCompleteList"
+				)
+			)
+			walker: UIAHandler.IUIAutomationTreeWalker = UIAHandler.handler.clientObject.createTreeWalker(
+				listCondition
+			)
+			popup: UIAHandler.IUIAutomationElement = walker.normalizeElementBuildCache(obj.UIAElement, cache)
+			if not popup:
+				return False
+			focus: NVDAObject | None = api.getFocusObject()
+			if not isinstance(focus, ContactEditField) or focus.appModule is not self or not focus.value:
+				return True
+			popupWindow: int = winUser.getAncestor(obj.windowHandle, winUser.GA_ROOT)
+			ownerWindow: int = winUser.getWindow(popupWindow, winUser.GW_OWNER)
+			recipientRoot: int = winUser.getAncestor(focus.windowHandle, winUser.GA_ROOT)
+			if (
+				winUser.getAncestor(ownerWindow, winUser.GA_ROOT) != recipientRoot
+				or winUser.getForegroundWindow() != recipientRoot
+				or not winUser.isWindowVisible(popupWindow)
+				or not winUser.isWindowEnabled(popupWindow)
+				or popup.cachedIsOffscreen
+				or not popup.cachedIsEnabled
+			):
+				return True
+			# A deselected item must not clear suppression or reannounce another item.
+			if obj.role == controlTypes.Role.LISTITEM:
+				item: UIAHandler.IUIAutomationElement = obj.UIAElement.buildUpdatedCache(cache)
+				if (
+					item.cachedIsOffscreen
+					or not item.cachedIsEnabled
+					or not item.getCachedPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId)
+				):
+					return True
+			selectedCondition: UIAHandler.IUIAutomationCondition = (
+				UIAHandler.handler.clientObject.createPropertyCondition(
+					UIAHandler.UIA_SelectionItemIsSelectedPropertyId, True
+				)
+			)
+			selected: UIAHandler.IUIAutomationElement = popup.findFirstBuildCache(
+				UIAHandler.TreeScope_Descendants, selectedCondition, cache
+			)
+			if (
+				not selected
+				or selected.cachedIsOffscreen
+				or not selected.cachedIsEnabled
+				or not selected.getCachedPropertyValue(UIAHandler.UIA_SelectionItemIsSelectedPropertyId)
+			):
+				return True
+			text: str = selected.cachedName
+			if not text:
+				parent: UIAHandler.IUIAutomationElement = (
+					UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(selected, cache)
+				)
+				text = parent.cachedName if parent else ""
+			if not text:
+				return True
+			announcement: tuple[int, int, str] = (popupWindow, focus.windowHandle, text)
+			if announcement == self._lastAutoCompleteAnnouncement:
+				return True
+			recipient: UIA | None = UIA(
+				windowHandle=obj.windowHandle,
+				UIAElement=selected,
+				initialUIACachedPropertyIDs=UIAHandler.baseCachePropertyIDs | propertyIds,
+			)
+			if recipient is None:
+				return True
+		except COMError:
+			# Outlook can close the popup before an already queued event is handled.
+			return True
+		self._lastAutoCompleteAnnouncement = announcement
+		speech.cancelSpeech()
+		ui.message(text)
+		if vision.handler:
+			vision.handler.handleGainFocus(recipient)
+		api.setNavigatorObject(recipient)
+		return True
 
 	_hasTriedoutlookAppSwitch = False
 
@@ -170,13 +296,18 @@ class AppModule(appModuleHandler.AppModule):
 			outlookVersion = 0
 		return outlookVersion
 
-	def isBadUIAWindow(self, hwnd):
-		windowClass = winUser.getClassName(hwnd)
+	def isBadUIAWindow(self, hwnd: int) -> bool:
+		"""Keep MSAA events for popup hosts and older Outlook controls."""
+		windowClass: str = winUser.getClassName(hwnd)
+		# The nonfocused popup host needs MSAA hide events for lifecycle tracking.
+		# Its NetUIHWND children still use UIA for the recipient list and items.
+		if windowClass == "Net UI Tool Window":
+			return True
 		# #2816: Outlook versions before 2016 auto complete does not fire enough UIA events, IAccessible is better.
 		if windowClass == "NetUIHWND":
-			parentHwnd = winUser.getAncestor(hwnd, winUser.GA_ROOT)
+			parentHwnd: int = winUser.getAncestor(hwnd, winUser.GA_ROOT)
 			if winUser.getClassName(parentHwnd) == "Net UI Tool Window":
-				versionMajor = int(self.productVersion.split(".")[0])
+				versionMajor: int = int(self.productVersion.split(".")[0])
 				if versionMajor < 16:
 					return True
 		if windowClass in ("WeekViewWnd", "DayViewWnd"):  # noqa: SIM103
@@ -213,7 +344,8 @@ class AppModule(appModuleHandler.AppModule):
 		) and role == controlTypes.Role.UNKNOWN:
 			obj.role = controlTypes.Role.LISTITEM
 
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+	def chooseNVDAObjectOverlayClasses(self, obj: NVDAObject, clsList: list[type[NVDAObject]]) -> None:
+		"""Apply Outlook overlays, including its UIA recipient suggestion list."""
 		if UIAWordDocument in clsList:
 			# Overlay class for Outlook message viewer when UI Automation for MS Word is enabled.
 			clsList.insert(0, OutlookUIAWordDocument)
@@ -223,8 +355,14 @@ class AppModule(appModuleHandler.AppModule):
 			"ThreadHeader",
 		):
 			clsList.insert(0, UIAGridRow)
-		role = obj.role
-		windowClassName = obj.windowClassName
+		role: controlTypes.Role = obj.role
+		windowClassName: str = obj.windowClassName
+		if (
+			isinstance(obj, UIA)
+			and role == controlTypes.Role.LIST
+			and obj.UIAElement.cachedAutomationId == "idAutoCompleteList"
+		):
+			clsList.insert(0, AutoCompleteList)
 		# AutoComplete listItems.
 		# This class is abstract enough to  support both UIA and MSAA
 		if role == controlTypes.Role.LISTITEM and (
@@ -240,12 +378,12 @@ class AppModule(appModuleHandler.AppModule):
 		# Outlook uses dialogs for many forms such as appointment / meeting creation. In these cases, there is no sane dialog caption that can be calculated as the dialog inly contains controls.
 		# Therefore remove the Dialog behavior for these imbedded dialog forms so as to not announce junk as the caption
 		if Dialog in clsList:
-			parentWindow = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
+			parentWindow: int = winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
 			if parentWindow and winUser.getClassName(parentWindow) == "AfxWndW":
 				clsList.remove(Dialog)
 		if WordDocument in clsList:
 			clsList.insert(0, OutlookWordDocument)
-		controlID = obj.windowControlID
+		controlID: int = obj.windowControlID
 		# Support the date picker in Outlook Meeting / Appointment creation forms
 		if controlID == 4352 and role == controlTypes.Role.BUTTON:
 			clsList.insert(0, DatePickerButton)
@@ -259,7 +397,7 @@ class AppModule(appModuleHandler.AppModule):
 		if (windowClassName == "SUPERGRID" and controlID == 4704) or (
 			windowClassName == "rctrl_renwnd32" and controlID == 109
 		):
-			outlookVersion = self.outlookVersion
+			outlookVersion: int = self.outlookVersion
 			if (
 				outlookVersion
 				and outlookVersion > 9
@@ -330,26 +468,66 @@ class AddressBookEntry(IAccessible):
 
 
 class ContactEditField(NVDAObject):
+	"""Restore recipient-field feedback and reset dismissed UIA suggestions."""
+
 	@script(gestures=["kb:escape"])
-	def script_hide(self, gesture):
+	def script_hide(self, gesture: KeyboardInputGesture) -> None:
 		"""The auto-complete list is getting closed, set focus back to the edit field."""
 		if vision.handler:
 			vision.handler.handleGainFocus(self)
 			api.setNavigatorObject(self)
+		if isinstance(self.appModule, AppModule):
+			self.appModule._resetAutoCompleteAnnouncement(self.windowHandle)
 		gesture.send()
 
-	def event_valueChange(self):
+	def event_valueChange(self) -> None:
 		"""Set focus back to the edit field when an auto-complete list item is confirmed."""
 		if vision.handler:
 			vision.handler.handleGainFocus(self)
 			api.setNavigatorObject(self, isFocus=True)
+		if not self.value and isinstance(self.appModule, AppModule):
+			self.appModule._resetAutoCompleteAnnouncement(self.windowHandle)
 		super().event_valueChange()
+
+	def event_loseFocus(self) -> None:
+		"""A new recipient field or application starts a new suggestion session."""
+		if isinstance(self.appModule, AppModule):
+			self.appModule._resetAutoCompleteAnnouncement(self.windowHandle)
+		super().event_loseFocus()
+
+
+class AutoCompleteList(UIA):
+	"""Announce the initial recipient even when Outlook omits its selection event."""
+
+	def event_UIA_layoutInvalidated(self) -> None:
+		"""Read the available selection immediately, without polling the popup."""
+		if isinstance(self.appModule, AppModule):
+			self.appModule._announceAutoCompleteSelection(self)
 
 
 class AutoCompleteListItem(Window):
-	def event_stateChange(self):
-		states = self.states
-		focus = api.getFocusObject()
+	"""Share UIA recipient announcements while retaining older MSAA behaviour."""
+
+	def event_selection(self) -> None:
+		"""Avoid generic controller-for feedback duplicating UIA recipient speech."""
+		if (
+			isinstance(self, UIA)
+			and isinstance(self.appModule, AppModule)
+			and self.appModule._announceAutoCompleteSelection(self)
+		):
+			return
+		super().event_selection()
+
+	def event_stateChange(self) -> None:
+		"""Announce usable recipients, retaining the original MSAA fallback."""
+		if (
+			isinstance(self, UIA)
+			and isinstance(self.appModule, AppModule)
+			and self.appModule._announceAutoCompleteSelection(self)
+		):
+			return
+		states: set[controlTypes.State] = self.states
+		focus: NVDAObject = api.getFocusObject()
 		if (
 			(focus.role == controlTypes.Role.EDITABLETEXT or focus.role == controlTypes.Role.BUTTON)
 			and controlTypes.State.SELECTED in states
@@ -358,7 +536,7 @@ class AutoCompleteListItem(Window):
 			and controlTypes.State.OFFSCREEN not in states
 		):
 			speech.cancelSpeech()
-			text = self.name
+			text: str | None = self.name
 			# Some newer versions of Outlook don't put the contact as the name of the listItem, rather it is on the parent
 			if not text:
 				text = self.parent.name
