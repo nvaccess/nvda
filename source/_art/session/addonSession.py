@@ -32,9 +32,9 @@ CONTROL_CONNECTION_NAME: Final[str] = "ART core control"
 class SessionState(enum.Enum):
 	"""Where an add-on session is in its lifecycle.
 
-	A healthy session moves through ``NEW``, ``LAUNCHING``, ``READY``, ``STOPPING`` and ``STOPPED`` in order.
-	A session closed during launch moves straight from ``LAUNCHING`` to ``STOPPING``, and is never ``READY``.
-	A session closed before it was started moves straight from ``NEW`` to ``STOPPED``.
+	A healthy session moves through ``NEW``, ``STARTING``, ``READY``, ``STOPPING`` and ``STOPPED`` in order.
+	A session stopped while starting moves straight from ``STARTING`` to ``STOPPING``, and is never ``READY``.
+	A session stopped before it was started moves straight from ``NEW`` to ``STOPPED``.
 	In case of an issue with the host, a started session may move from any state other than ``STOPPED`` straight to ``FAILED``.
 
 	``STOPPED`` and ``FAILED`` are final.
@@ -42,14 +42,14 @@ class SessionState(enum.Enum):
 
 	NEW = enum.auto()
 	"""Constructed, but not yet started."""
-	LAUNCHING = enum.auto()
+	STARTING = enum.auto()
 	"""``start`` has been called, but the host has not yet signalled readiness."""
 	READY = enum.auto()
 	"""The host signalled that it launched successfully."""
 	STOPPING = enum.auto()
-	"""Close has been called on the session, but it has not yet finished shutting down."""
+	"""Stop has been called on the session, but it has not yet finished shutting down."""
 	STOPPED = enum.auto()
-	"""The session was closed. Final."""
+	"""The session was stopped. Final."""
 	FAILED = enum.auto()
 	"""The session failed, and the host has been stopped. Final."""
 
@@ -118,8 +118,8 @@ class AddonSession:
 			case (_, SessionState.FAILED):
 				return old is not SessionState.NEW and old is not SessionState.STOPPED
 			case (
-				(SessionState.NEW, SessionState.LAUNCHING | SessionState.STOPPED)
-				| (SessionState.LAUNCHING, SessionState.READY | SessionState.STOPPING)
+				(SessionState.NEW, SessionState.STARTING | SessionState.STOPPED)
+				| (SessionState.STARTING, SessionState.READY | SessionState.STOPPING)
 				| (SessionState.READY, SessionState.STOPPING)
 				| (SessionState.STOPPING, SessionState.STOPPED)
 			):
@@ -145,17 +145,17 @@ class AddonSession:
 		"""Launch the host and wait for it to signal readiness.
 
 		Blocks until the host's readiness signal arrives, or the session fails.
-		If the session is closed in the meantime, the host is  allowed to finish launching and then stopped.
+		If the session is stopped in the meantime, the host is allowed to finish launching and then stopped.
 
 		:raises RuntimeError: If the session has already been started.
 		:raises HostLaunchError: If the host could not be started, reported a failed launch,
-			did not expose its root service, or the session was closed during launch.
+			did not expose its root service, or the session was stopped while starting.
 			The session is ``FAILED`` or ``STOPPED`` respectively, and the host has been stopped.
 		"""
 		with self._stateChanged:
 			if self._state is not SessionState.NEW:
 				raise RuntimeError(f"Add-on session has already been started (state: {self._state.name})")
-			self._setState(SessionState.LAUNCHING)
+			self._setState(SessionState.STARTING)
 		try:
 			stream = self._controller.start()
 			# Published straight away, so that a failure from here on closes it.
@@ -170,13 +170,13 @@ class AddonSession:
 			self._fail(f"Host could not be started: {e}")
 			raise HostLaunchError("Host could not be started") from e
 		with self._stateChanged:
-			# Not woken by a close: the host must be left to finish launching before it is stopped.
+			# Not woken by a stop: the host must be left to finish launching before it is stopped.
 			self._stateChanged.wait_for(
 				lambda: self._readinessReported or self._state is SessionState.FAILED,
 			)
 			state = self._state
 			failure = self._readinessFailure
-		if state is SessionState.LAUNCHING and failure is None:
+		if state is SessionState.STARTING and failure is None:
 			# A host that cannot expose its root service has failed to launch,
 			# and fetching it here means ``hostRoot`` never makes a round trip to the host.
 			# It is a round trip, so happens without ``_stateChanged`` held.
@@ -186,8 +186,8 @@ class AddonSession:
 				self._fail(f"Could not fetch the host's root service: {e}")
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
 			with self._stateChanged:
-				# The session may have been closed, or failed, during the round trip.
-				if (state := self._state) is SessionState.LAUNCHING:
+				# The session may have been stopped, or failed, during the round trip.
+				if (state := self._state) is SessionState.STARTING:
 					self._hostRoot = hostRoot
 					self._setState(SessionState.READY)
 					log.debug("ART add-on session is ready")
@@ -195,15 +195,15 @@ class AddonSession:
 		# Stopping the host blocks this thread,
 		# but we are interested in state changes in the meantime,
 		# such as if a failure is detected during shutdown.
-		# Thus, we act on a request to stop without ``_StateChanged`` held.
+		# Thus, we act on a request to stop without ``_stateChanged`` held.
 		if state is SessionState.FAILED:
 			raise HostLaunchError(f"Host did not launch: {self._failureReason}")
 		if failure is not None:
 			self._fail(f"Host reported a failed launch: {failure}")
 			raise HostLaunchError(f"Host reported a failed launch: {failure}")
-		# The session was closed during launch, and its closer is waiting for this thread to stop the host.
-		self._finishClose()
-		raise HostLaunchError("Add-on session was closed during launch")
+		# The session was stopped while starting, and ``stop`` is waiting for this thread to stop the host.
+		self._finishStopping()
+		raise HostLaunchError("Add-on session was stopped while starting")
 
 	def _onReady(self, failure: str | None) -> None:
 		"""Receive the outcome of the host's readiness signal.
@@ -215,11 +215,11 @@ class AddonSession:
 			self._readinessReported = True
 			self._stateChanged.notify_all()
 
-	def close(self) -> None:
-		"""Close the session, stopping the host.
+	def stop(self) -> None:
+		"""Stop the session and its host.
 
 		Blocks until the session is ``STOPPED`` or ``FAILED``.
-		A session that is still launching is left to finish launching before its host is stopped,
+		A session that is still starting has its host left to finish launching before it is stopped,
 		so this must not be called on the control connection's serving thread.
 
 		Safe to call more than once, and on a session that failed or was never started.
@@ -233,16 +233,16 @@ class AddonSession:
 					return
 				case SessionState.STOPPED | SessionState.FAILED:
 					return
-				case SessionState.LAUNCHING | SessionState.STOPPING:
+				case SessionState.STARTING | SessionState.STOPPING:
 					# ``start`` stops the host if ``state`` is ``STOPPING`` when launch has finished.
 					self._setState(SessionState.STOPPING)
 					self._stateChanged.wait_for(lambda: self._state.isFinal)
 					return
 				case SessionState.READY:
 					self._setState(SessionState.STOPPING)
-		self._finishClose()
+		self._finishStopping()
 
-	def _finishClose(self) -> None:
+	def _finishStopping(self) -> None:
 		"""Stop the host of a ``STOPPING`` session, and mark the session ``STOPPED``.
 
 		Must be called by exactly one thread per session, without :attr:`_stateChanged` held.
