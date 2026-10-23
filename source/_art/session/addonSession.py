@@ -177,7 +177,10 @@ class AddonSession:
 				self._setState(SessionState.READY)
 				log.debug("ART add-on session is ready")
 				return
-		# Stopping the host blocks, so happens with the lock released.
+		# Stopping the host blocks this thread,
+		# but we are interested in state changes in the meantime,
+		# such as if a failure is detected during shutdown.
+		# Thus, we act on a request to stop without ``_StateChanged`` held.
 		if state is SessionState.FAILED:
 			raise HostLaunchError(f"Host did not launch: {self._failureReason}")
 		if failure is not None:
