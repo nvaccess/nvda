@@ -28,29 +28,61 @@ from .threadHostController import ThreadHostController
 _TIMEOUT: float = 30.0
 
 
+class BackgroundCall:
+	"""Runs a call on a daemon thread, so a test can bound how long it waits for it."""
+
+	def __init__(self, func: Callable[[], None], name: str) -> None:
+		# Used for mutability; should only ever have 0 or 1 elements.
+		self._outcome: list[BaseException | None] = []
+		self._name = name
+		self._thread = threading.Thread(target=self._run, args=(func,), name=name, daemon=True)
+		self._thread.start()
+
+	def _run(self, func: Callable[[], None]) -> None:
+		try:
+			func()
+		except BaseException as e:  # noqa: BLE001
+			self._outcome.append(e)
+		else:
+			self._outcome.append(None)
+
+	def result(self, testCase: unittest.TestCase, timeout: float = _TIMEOUT) -> None:
+		"""Wait for the call, failing the test rather than hanging if it does not return.
+
+		Re-raises whatever the call raised.
+		"""
+		self._thread.join(timeout)
+		if not self._outcome:
+			testCase.fail(f"{self._name} did not return within {timeout}s")
+		if (exc := self._outcome[0]) is not None:
+			raise exc
+
+
 def startWithin(testCase: unittest.TestCase, session: AddonSession, timeout: float = _TIMEOUT) -> None:
 	"""Start ``session``, failing the test rather than hanging if ``start`` does not return.
 
 	Re-raises whatever ``start`` raised.
 	"""
-	# Used for mutability; should only ever have 0 or 1 elements.
-	outcome: list[BaseException | None] = []
+	BackgroundCall(session.start, "AddonSession.start").result(testCase, timeout)
 
-	def target():
-		try:
-			session.start()
-		except BaseException as e:  # noqa: BLE001
-			outcome.append(e)
-		else:
-			outcome.append(None)
 
-	thread = threading.Thread(target=target, name="test session start", daemon=True)
-	thread.start()
-	thread.join(timeout)
-	if not outcome:
-		testCase.fail(f"AddonSession.start did not return within {timeout}s")
-	if (exc := outcome[0]) is not None:
-		raise exc
+def waitForState(session: AddonSession, state: SessionState, timeout: float = _TIMEOUT) -> bool:
+	"""Wait for ``session`` to reach ``state``, returning whether it did within ``timeout``."""
+	with session._stateChanged:
+		return session._stateChanged.wait_for(lambda: session.state is state, timeout)
+
+
+def recordStates(session: AddonSession) -> list[SessionState]:
+	"""Record every state ``session`` moves to from here on."""
+	states: list[SessionState] = []
+	realSetState = session._setState
+
+	def setState(state: SessionState) -> None:
+		states.append(state)
+		realSetState(state)
+
+	session._setState = setState
+	return states
 
 
 def makeHostRun(body: Callable[[Connection], None]) -> Callable[[Stream], None]:
@@ -219,6 +251,57 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		# Thus, we only care about the session's state at the time of the first ``terminate``.
 		self.assertEqual(statesWhenTerminated[0], SessionState.STOPPING)
 		self.assertIs(session.state, SessionState.STOPPED)
+
+	def makeHeldLaunchSession(self, failure: str | None = None) -> tuple[AddonSession, threading.Event]:
+		"""Make a session whose host holds off signalling readiness until released.
+
+		:param failure: The failure the host reports once released, or ``None`` for a successful launch.
+		:returns: The session, and the event that releases the host.
+		"""
+		release = threading.Event()
+
+		def body(conn: Connection) -> None:
+			release.wait(_TIMEOUT)
+			entrypoint._signalReadiness(conn, failure)
+
+		return self.makeSession(ThreadHostController(run=makeHostRun(body))), release
+
+	def test_closeDuringLaunchWaitsForReadiness(self):
+		"""A session closed during launch lets the host finish launching, then stops it without ever being ready."""
+		session, release = self.makeHeldLaunchSession()
+		states = recordStates(session)
+		start = BackgroundCall(session.start, "AddonSession.start")
+		self.assertTrue(waitForState(session, SessionState.LAUNCHING))
+		close = BackgroundCall(session.close, "AddonSession.close")
+		self.assertTrue(waitForState(session, SessionState.STOPPING))
+		# The host has not yet signalled readiness, so the session must hold off on terminating it.
+		self.assertIsNone(self.controller.poll())
+		release.set()
+		close.result(self)
+		with self.assertRaises(HostLaunchError):
+			start.result(self)
+		self.assertEqual(
+			states,
+			[SessionState.LAUNCHING, SessionState.STOPPING, SessionState.STOPPED],
+		)
+		self.assertIsNone(session.failureReason)
+		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
+
+	def test_closeDuringFailedLaunchLeavesSessionFailed(self):
+		"""A host that reports a failed launch after the session was closed still fails the session."""
+		FAILURE_REASON = "component failed to load"
+		session, release = self.makeHeldLaunchSession(FAILURE_REASON)
+		start = BackgroundCall(session.start, "AddonSession.start")
+		self.assertTrue(waitForState(session, SessionState.LAUNCHING))
+		close = BackgroundCall(session.close, "AddonSession.close")
+		self.assertTrue(waitForState(session, SessionState.STOPPING))
+		release.set()
+		close.result(self)
+		with self.assertRaises(HostLaunchError):
+			start.result(self)
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertIn(FAILURE_REASON, session.failureReason)
+		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 
 	def test_closeIsIdempotent(self):
 		"""Closing twice, or closing a session that was never started, is not an error."""
