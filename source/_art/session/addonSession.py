@@ -81,6 +81,7 @@ class AddonSession:
 		self._state = SessionState.NEW
 		self._failureReason: str | None = None
 		self._conn: Connection[CoreRootService, HostRootService] | None = None
+		self._hostRoot: HostRootService | None = None
 		# Guarded by ``_stateChanged``, so that ``start`` can wait for readiness and failure together.
 		self._readinessReported = False
 		self._readinessFailure: str | None = None
@@ -101,9 +102,11 @@ class AddonSession:
 
 		:raises RuntimeError: If the session is not ready.
 		"""
-		if (state := self._state) is not SessionState.READY or (conn := self._conn) is None:
+		# ``_hostRoot`` is set before the session is ``READY``, and only cleared after it leaves ``READY``,
+		# so reading the state first makes this snapshot consistent without holding ``_stateChanged``.
+		if (state := self._state) is not SessionState.READY or (hostRoot := self._hostRoot) is None:
 			raise RuntimeError(f"Add-on session is not ready (state: {state.name})")
-		return conn.remoteService
+		return hostRoot
 
 	@staticmethod
 	def _isTransitionValid(old: SessionState, new: SessionState) -> bool:
@@ -146,7 +149,7 @@ class AddonSession:
 
 		:raises RuntimeError: If the session has already been started.
 		:raises HostLaunchError: If the host could not be started, reported a failed launch,
-			or the session was closed during launch.
+			did not expose its root service, or the session was closed during launch.
 			The session is ``FAILED`` or ``STOPPED`` respectively, and the host has been stopped.
 		"""
 		with self._stateChanged:
@@ -173,10 +176,22 @@ class AddonSession:
 			)
 			state = self._state
 			failure = self._readinessFailure
-			if state is SessionState.LAUNCHING and failure is None:
-				self._setState(SessionState.READY)
-				log.debug("ART add-on session is ready")
-				return
+		if state is SessionState.LAUNCHING and failure is None:
+			# A host that cannot expose its root service has failed to launch,
+			# and fetching it here means ``hostRoot`` never makes a round trip to the host.
+			# It is a round trip, so happens without ``_stateChanged`` held.
+			try:
+				hostRoot = self._conn.remoteService
+			except Exception as e:
+				self._fail(f"Could not fetch the host's root service: {e}")
+				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
+			with self._stateChanged:
+				# The session may have been closed, or failed, during the round trip.
+				if (state := self._state) is SessionState.LAUNCHING:
+					self._hostRoot = hostRoot
+					self._setState(SessionState.READY)
+					log.debug("ART add-on session is ready")
+					return
 		# Stopping the host blocks this thread,
 		# but we are interested in state changes in the meantime,
 		# such as if a failure is detected during shutdown.
@@ -258,6 +273,7 @@ class AddonSession:
 
 		Closing the connection first lets a healthy host see end-of-file and exit by itself.
 		"""
+		self._hostRoot = None
 		conn = self._conn
 		self._conn = None
 		if conn is not None:

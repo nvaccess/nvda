@@ -185,6 +185,22 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		with self.assertRaises(RuntimeError):
 			_ = session.hostRoot
 
+	def test_unreachableRootServiceAbortsLaunch(self):
+		"""A host that signals readiness but does not expose its root service fails the session."""
+
+		def body(conn: Connection) -> None:
+			entrypoint._signalReadiness(conn)
+			# Never serves, so core's request for the root service is not answered before the connection closes.
+			conn.close()
+
+		session = self.makeSession(ThreadHostController(run=makeHostRun(body)))
+		with self.assertRaises(HostLaunchError):
+			startWithin(self, session)
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertIn("root service", session.failureReason)
+		with self.assertRaises(RuntimeError):
+			_ = session.hostRoot
+
 	def test_laterSignalDoesNotChangeTheOutcome(self):
 		"""A failure reported after a successful launch is ignored."""
 		lateSignalSent = threading.Event()
