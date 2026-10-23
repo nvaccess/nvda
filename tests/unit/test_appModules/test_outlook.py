@@ -45,7 +45,10 @@ class TestAutoComplete(unittest.TestCase):
 			self.popup
 		)
 		self.list: Mock = Mock(
-			spec=outlook.AutoCompleteList, appModule=self.app, windowHandle=10, UIAElement=Mock()
+			spec=outlook.AutoCompleteList,
+			appModule=self.app,
+			windowHandle=10,
+			UIAElement=Mock(),
 		)
 		self.list.role = controlTypes.Role.LIST
 		self.item: Mock = Mock(spec=_RecipientUIA, appModule=self.app, windowHandle=10)
@@ -53,7 +56,7 @@ class TestAutoComplete(unittest.TestCase):
 		self.item.UIAElement = Mock()
 		self.item.UIAElement.buildUpdatedCache.return_value = self.selected
 		self.item.event_selection = Mock(
-			side_effect=lambda: outlook.AutoCompleteListItem.event_selection(self.item)
+			side_effect=lambda: outlook.AutoCompleteListItem.event_selection(self.item),
 		)
 		self.message: Mock = self.enterContext(patch.object(outlook.ui, "message"))
 		self.navigator: Mock = self.enterContext(patch.object(outlook.api, "setNavigatorObject"))
@@ -64,14 +67,14 @@ class TestAutoComplete(unittest.TestCase):
 		self.enterContext(patch.object(outlook, "UIA", _RecipientUIA))
 		self.enterContext(patch.object(outlook.winUser, "getAncestor", side_effect=self._getRoot))
 		self.foreground: Mock = self.enterContext(
-			patch.object(outlook.winUser, "getForegroundWindow", return_value=200)
+			patch.object(outlook.winUser, "getForegroundWindow", return_value=200),
 		)
 		self.owner: Mock = self.enterContext(patch.object(outlook.winUser, "getWindow", return_value=200))
 		self.visible: Mock = self.enterContext(
-			patch.object(outlook.winUser, "isWindowVisible", return_value=True)
+			patch.object(outlook.winUser, "isWindowVisible", return_value=True),
 		)
 		self.enabled: Mock = self.enterContext(
-			patch.object(outlook.winUser, "isWindowEnabled", return_value=True)
+			patch.object(outlook.winUser, "isWindowEnabled", return_value=True),
 		)
 
 	@staticmethod
@@ -81,7 +84,7 @@ class TestAutoComplete(unittest.TestCase):
 	def _layout(self) -> None:
 		self.list.treeInterceptor = None
 		self.list.event_UIA_layoutInvalidated = Mock(
-			side_effect=lambda: outlook.AutoCompleteList.event_UIA_layoutInvalidated(self.list)
+			side_effect=lambda: outlook.AutoCompleteList.event_UIA_layoutInvalidated(self.list),
 		)
 		with patch.object(outlook.eventHandler.globalPluginHandler, "runningPlugins", []):
 			outlook.eventHandler._EventExecuter("UIA_layoutInvalidated", self.list, {})
@@ -112,7 +115,10 @@ class TestAutoComplete(unittest.TestCase):
 	def test_recreatedObjectAndInputRefinement(self) -> None:
 		self._layout()
 		self.list = Mock(
-			spec=outlook.AutoCompleteList, appModule=self.app, windowHandle=10, UIAElement=Mock()
+			spec=outlook.AutoCompleteList,
+			appModule=self.app,
+			windowHandle=10,
+			UIAElement=Mock(),
 		)
 		self.list.role = controlTypes.Role.LIST
 		self.selected = Mock(cachedName="Recipient A", cachedIsOffscreen=False, cachedIsEnabled=True)
@@ -128,7 +134,8 @@ class TestAutoComplete(unittest.TestCase):
 			self.selected.cachedName = name
 			self._layout()
 		self.assertEqual(
-			[call("Recipient A"), call("Recipient B"), call("Recipient A")], self.message.call_args_list
+			[call("Recipient A"), call("Recipient B"), call("Recipient A")],
+			self.message.call_args_list,
 		)
 
 	def test_emptyAndUnusableSelection(self) -> None:
@@ -149,7 +156,7 @@ class TestAutoComplete(unittest.TestCase):
 	def test_parentNameFallbackAndMissingName(self) -> None:
 		self.selected.cachedName = ""
 		self.handler.baseTreeWalker.getParentElementBuildCache.return_value = Mock(
-			cachedName="Parent recipient"
+			cachedName="Parent recipient",
 		)
 		self._layout()
 		self.message.assert_called_once_with("Parent recipient")
@@ -203,7 +210,9 @@ class TestAutoComplete(unittest.TestCase):
 		self._layout()
 		self.message.assert_called_once()
 		outlook.AppModule.event_hide(
-			self.app, Mock(windowHandle=100, windowClassName="Net UI Tool Window"), nextHandler
+			self.app,
+			Mock(windowHandle=100, windowClassName="Net UI Tool Window"),
+			nextHandler,
 		)
 		self._layout()
 		self.assertEqual(2, self.message.call_count)

@@ -177,11 +177,12 @@ class AppModule(appModuleHandler.AppModule):
 				cache.addProperty(propertyId)
 			listCondition: UIAHandler.IUIAutomationCondition = (
 				UIAHandler.handler.clientObject.createPropertyCondition(
-					UIAHandler.UIA_AutomationIdPropertyId, "idAutoCompleteList"
+					UIAHandler.UIA_AutomationIdPropertyId,
+					"idAutoCompleteList",
 				)
 			)
 			walker: UIAHandler.IUIAutomationTreeWalker = UIAHandler.handler.clientObject.createTreeWalker(
-				listCondition
+				listCondition,
 			)
 			popup: UIAHandler.IUIAutomationElement = walker.normalizeElementBuildCache(obj.UIAElement, cache)
 			if not popup:
@@ -212,11 +213,14 @@ class AppModule(appModuleHandler.AppModule):
 					return True
 			selectedCondition: UIAHandler.IUIAutomationCondition = (
 				UIAHandler.handler.clientObject.createPropertyCondition(
-					UIAHandler.UIA_SelectionItemIsSelectedPropertyId, True
+					UIAHandler.UIA_SelectionItemIsSelectedPropertyId,
+					True,
 				)
 			)
 			selected: UIAHandler.IUIAutomationElement = popup.findFirstBuildCache(
-				UIAHandler.TreeScope_Descendants, selectedCondition, cache
+				UIAHandler.TreeScope_Descendants,
+				selectedCondition,
+				cache,
 			)
 			if (
 				not selected
