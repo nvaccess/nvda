@@ -144,13 +144,13 @@ class TestReadinessSignalReceipt(unittest.TestCase):
 		self.onReady.assert_not_called()
 
 
-class TestAddonSessionLaunch(unittest.TestCase):
-	"""Launching a session and waiting for readiness, over the thread-backed controller."""
+class TestAddonSessionLifecycle(unittest.TestCase):
+	"""Starting and stopping a session, over the thread-backed controller."""
 
 	def makeSession(self, controller: ThreadHostController | None = None) -> AddonSession:
 		self.controller = controller if controller is not None else ThreadHostController()
 		session = AddonSession(self.controller)
-		self.addCleanup(session.close)
+		self.addCleanup(session.stop)
 		return session
 
 	def test_newSessionIsNotReady(self):
@@ -236,17 +236,17 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		with self.assertRaises(RuntimeError):
 			session.start()
 
-	def test_closeStopsTheHost(self):
-		"""Closing a ready session stops its host."""
+	def test_stopStopsTheHost(self):
+		"""Stopping a ready session stops its host."""
 		session = self.makeSession()
 		startWithin(self, session)
-		session.close()
+		session.stop()
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 		with self.assertRaises(RuntimeError):
 			_ = session.hostRoot
 
-	def test_closePassesThroughStopping(self):
+	def test_stopPassesThroughStopping(self):
 		"""The host is stopped while the session is ``STOPPING``, so its exit is expected rather than a failure."""
 		statesWhenTerminated: list[SessionState] = []
 		controller = ThreadHostController()
@@ -261,80 +261,90 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		controller.terminate = terminate
 		session = self.makeSession(controller)
 		startWithin(self, session)
-		session.close()
+		session.stop()
 		# It is safe to call ``terminate`` on a terminated host,
 		# but the terminating call must occur when the session is ``STOPPING``.
 		# Thus, we only care about the session's state at the time of the first ``terminate``.
 		self.assertEqual(statesWhenTerminated[0], SessionState.STOPPING)
 		self.assertIs(session.state, SessionState.STOPPED)
 
-	def makeHeldLaunchSession(self, failure: str | None = None) -> tuple[AddonSession, threading.Event]:
+	def makeHeldLaunchSession(
+		self,
+		failure: str | None = None,
+	) -> tuple[AddonSession, threading.Event, threading.Event]:
 		"""Make a session whose host holds off signalling readiness until released.
 
 		:param failure: The failure the host reports once released, or ``None`` for a successful launch.
-		:returns: The session, and the event that releases the host.
+		:returns: The session, an event set once the host is running, and the event that releases the host.
 		"""
+		hostRunning = threading.Event()
 		release = threading.Event()
 
 		def body(conn: Connection) -> None:
+			hostRunning.set()
 			release.wait(_TIMEOUT)
 			entrypoint._signalReadiness(conn, failure)
 
-		return self.makeSession(ThreadHostController(run=makeHostRun(body))), release
+		session = self.makeSession(ThreadHostController(run=makeHostRun(body)))
+		# Cleanups run last-in first-out, so a failed test releases the host before stopping the session,
+		# rather than waiting out the host's timeout.
+		self.addCleanup(release.set)
+		return session, hostRunning, release
 
-	def test_closeDuringLaunchWaitsForReadiness(self):
-		"""A session closed during launch lets the host finish launching, then stops it without ever being ready."""
-		session, release = self.makeHeldLaunchSession()
+	def test_stopWhileStartingWaitsForReadiness(self):
+		"""A session stopped while starting lets the host finish launching, then stops it without ever being ready."""
+		session, hostRunning, release = self.makeHeldLaunchSession()
 		states = recordStates(session)
 		start = BackgroundCall(session.start, "AddonSession.start")
-		self.assertTrue(waitForState(session, SessionState.LAUNCHING))
-		close = BackgroundCall(session.close, "AddonSession.close")
+		# The session is ``STARTING`` before the host is, so wait for the host itself.
+		self.assertTrue(hostRunning.wait(_TIMEOUT))
+		stop = BackgroundCall(session.stop, "AddonSession.stop")
 		self.assertTrue(waitForState(session, SessionState.STOPPING))
 		# The host has not yet signalled readiness, so the session must hold off on terminating it.
 		self.assertIsNone(self.controller.poll())
 		release.set()
-		close.result(self)
+		stop.result(self)
 		with self.assertRaises(HostLaunchError):
 			start.result(self)
 		self.assertEqual(
 			states,
-			[SessionState.LAUNCHING, SessionState.STOPPING, SessionState.STOPPED],
+			[SessionState.STARTING, SessionState.STOPPING, SessionState.STOPPED],
 		)
 		self.assertIsNone(session.failureReason)
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 
-	def test_closeDuringFailedLaunchLeavesSessionFailed(self):
-		"""A host that reports a failed launch after the session was closed still fails the session."""
+	def test_stopDuringFailedLaunchLeavesSessionFailed(self):
+		"""A host that reports a failed launch after the session was stopped still fails the session."""
 		FAILURE_REASON = "component failed to load"
-		session, release = self.makeHeldLaunchSession(FAILURE_REASON)
+		session, hostRunning, release = self.makeHeldLaunchSession(FAILURE_REASON)
 		start = BackgroundCall(session.start, "AddonSession.start")
-		self.assertTrue(waitForState(session, SessionState.LAUNCHING))
-		close = BackgroundCall(session.close, "AddonSession.close")
+		self.assertTrue(hostRunning.wait(_TIMEOUT))
+		stop = BackgroundCall(session.stop, "AddonSession.stop")
 		self.assertTrue(waitForState(session, SessionState.STOPPING))
 		release.set()
-		close.result(self)
+		stop.result(self)
 		with self.assertRaises(HostLaunchError):
 			start.result(self)
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertIn(FAILURE_REASON, session.failureReason)
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 
-	def test_closeIsIdempotent(self):
-		"""Closing twice, or closing a session that was never started, is not an error."""
+	def test_stopIsIdempotent(self):
+		"""Stopping twice, or stopping a session that was never started, is not an error."""
 		session = self.makeSession()
-		session.close()
-		session.close()
+		session.stop()
+		session.stop()
 		self.assertIs(session.state, SessionState.STOPPED)
 
-	def test_closeKeepsAFailedSessionFailed(self):
-		"""Closing after a failure does not hide the failure."""
+	def test_stopKeepsAFailedSessionFailed(self):
+		"""Stopping after a failure does not hide the failure."""
 		session = self.makeSession(
 			ThreadHostController(run=makeHostRun(lambda conn: entrypoint._signalReadiness(conn, "boom"))),
 		)
 		with self.assertRaises(HostLaunchError):
 			startWithin(self, session)
 		self.assertIs(session.state, SessionState.FAILED)
-		session.close()
+		session.stop()
 		self.assertIs(session.state, SessionState.FAILED)
 
 
@@ -342,12 +352,12 @@ class TestLifecycleProcessConformance(unittest.TestCase):
 	"""Lifecycle facts checked against a real host process."""
 
 	def test_realHostBecomesReady(self):
-		"""A freshly booted host process signals readiness, and is stopped by closing the session."""
+		"""A freshly booted host process signals readiness, and is stopped by stopping the session."""
 		controller = SubprocessHostController()
 		session = AddonSession(controller)
-		self.addCleanup(session.close)
+		self.addCleanup(session.stop)
 		startWithin(self, session)
 		self.assertIs(session.state, SessionState.READY)
 		self.assertEqual(session.hostRoot.ping(), "pong")
-		session.close()
+		session.stop()
 		self.assertIsNotNone(controller.wait(_TIMEOUT))
