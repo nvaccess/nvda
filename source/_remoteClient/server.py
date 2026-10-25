@@ -49,6 +49,13 @@ from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
 
 
+# Authentication messages are small, so use a lower limit before authentication
+# to minimize the memory an unauthenticated client can retain.
+MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES: Final[int] = 64 * 1024
+# Authenticated messages can include larger payloads such as clipboard text.
+MAX_MESSAGE_SIZE_BYTES: Final[int] = 10 * 1024 * 1024
+
+
 class RemoteCertificateManager:
 	"""Manages SSL certificates for the NVDA Remote relay server.
 
@@ -467,19 +474,35 @@ class Client:
 			self.close()
 			return
 		data = self.buffer + sockData
-		if b"\n" not in data:
-			self.buffer = data
-			return
 		self.buffer = b""
 		while b"\n" in data:
 			line, sep, data = data.partition(b"\n")  # noqa: RUF059
+			if not self._isMessageWithinSizeLimit(line):
+				return
 			try:
 				self.parse(line)
 			except ValueError:
 				log.error(f"Error parsing message from client {self.id}", exc_info=True)  # noqa: G201
 				self.close()
 				return
-		self.buffer += data
+		if not self._isMessageWithinSizeLimit(data):
+			return
+		self.buffer = data
+
+	def _isMessageWithinSizeLimit(self, data: bytes) -> bool:
+		"""Return whether a complete or partial message is within the size limit."""
+		messageSizeLimit = (
+			MAX_MESSAGE_SIZE_BYTES if self.authenticated else MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES
+		)
+		if len(data) <= messageSizeLimit:
+			return True
+		log.warning(
+			"Client %s exceeded the maximum message size of %s bytes",
+			self.id,
+			messageSizeLimit,
+		)
+		self.close()
+		return False
 
 	def parse(self, line: bytes) -> None:
 		"""Parse and handle an incoming message line."""
