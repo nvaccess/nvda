@@ -3,8 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import unittest  # noqa: I001
-from unittest.mock import MagicMock, patch
+import sys  # noqa: I001
+import unittest
+from unittest.mock import ANY, MagicMock, patch
+import _remoteClient
 import _remoteClient.client as rcClient
 from _remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
 from _remoteClient.protocol import RemoteMessageType
@@ -355,6 +357,42 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.followerTransport = fakeTransport
 		onConnectAsFollowerFailed(self.client)
 		self.uiDelayedMessage.assert_called_once()
+
+
+class TestRemoteInitialization(unittest.TestCase):
+	def test_importError_marksRemoteAccessUnavailable(self):
+		with (
+			patch.dict(sys.modules, {"_remoteClient.client": None}),
+			patch.object(_remoteClient, "_remoteClient", None),
+			patch.object(_remoteClient, "_hasLoggedRemoteClientLoadError", False),
+			patch.object(_remoteClient, "getRemoteConfig", return_value={"enabled": True}),
+			patch.object(_remoteClient.log, "warning") as logWarning,
+		):
+			self.assertFalse(_remoteClient.remoteClientAvailable())
+			_remoteClient.initialize()
+
+			logWarning.assert_called_once_with(
+				"Remote Access unavailable.",
+				exc_info=ANY,
+			)
+			self.assertIsInstance(logWarning.call_args.kwargs["exc_info"], ImportError)
+			self.assertIsNone(_remoteClient._remoteClient)
+
+	def test_importErrorIsLoggedWhenCheckingAvailabilityWhileDisabled(self):
+		with (
+			patch.dict(sys.modules, {"_remoteClient.client": None}),
+			patch.object(_remoteClient, "_hasLoggedRemoteClientLoadError", False),
+			patch.object(_remoteClient, "getRemoteConfig", return_value={"enabled": False}),
+			patch.object(_remoteClient.log, "warning") as logWarning,
+		):
+			_remoteClient.initialize()
+			self.assertFalse(_remoteClient.remoteClientAvailable())
+
+			logWarning.assert_called_once_with(
+				"Remote Access unavailable.",
+				exc_info=ANY,
+			)
+			self.assertIsInstance(logWarning.call_args.kwargs["exc_info"], ImportError)
 
 
 if __name__ == "__main__":

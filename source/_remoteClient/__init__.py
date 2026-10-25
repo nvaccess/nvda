@@ -2,12 +2,41 @@
 # Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+from typing import TYPE_CHECKING
+
 from logHandler import log
 
-from .client import RemoteClient
 from .configuration import getRemoteConfig
 
-_remoteClient: RemoteClient = None
+if TYPE_CHECKING:
+	from .client import RemoteClient
+
+_remoteClient: "RemoteClient | None" = None
+_hasLoggedRemoteClientLoadError: bool = False
+
+
+def _getRemoteClientClass() -> "tuple[type[RemoteClient] | None, Exception | None]":
+	try:
+		from .client import RemoteClient
+	except (AttributeError, ImportError, OSError) as e:
+		return None, e
+	return RemoteClient, None
+
+
+def _logRemoteClientLoadError(loadError: Exception) -> None:
+	global _hasLoggedRemoteClientLoadError
+	if _hasLoggedRemoteClientLoadError:
+		return
+	log.warning("Remote Access unavailable.", exc_info=loadError)
+	_hasLoggedRemoteClientLoadError = True
+
+
+def remoteClientAvailable() -> bool:
+	"""Whether the Remote Access client can be imported."""
+	remoteClientClass, loadError = _getRemoteClientClass()
+	if remoteClientClass is None and loadError is not None:
+		_logRemoteClientLoadError(loadError)
+	return remoteClientClass is not None
 
 
 def initialize():
@@ -16,10 +45,15 @@ def initialize():
 	if not getRemoteConfig()["enabled"]:
 		log.debug("Remote Access disabled. Not initializing.")
 		return
+	remoteClientClass, loadError = _getRemoteClientClass()
+	if remoteClientClass is None:
+		if loadError is not None:
+			_logRemoteClientLoadError(loadError)
+		return
 	import globalCommands
 
 	log.debug("Initializing Remote Access")
-	_remoteClient = RemoteClient()
+	_remoteClient = remoteClientClass()
 	_remoteClient.registerLocalScript(globalCommands.commands.script_sendKeys)
 	_remoteClient.registerLocalScript(globalCommands.commands.script_sendSAS)
 
