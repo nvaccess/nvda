@@ -545,7 +545,7 @@ class ConfigManager:
 				self.baseConfigError = False
 			except:  # noqa: E722
 				self.baseConfigError = True
-				if not NVDAState.shouldWriteToDisk():
+				if globalVars.appArgs.launcher:
 					# #18905: The launcher uses the installed copy's configuration,
 					# which may have been saved by a newer version of NVDA.
 					# Use factory defaults without changing the file the installed copy relies on.

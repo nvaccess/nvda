@@ -156,7 +156,7 @@ def doStartupDialogs():
 	if config.conf.baseConfigError:
 		import wx
 
-		if NVDAState.shouldWriteToDisk():
+		if not globalVars.appArgs.launcher:
 			message = _(
 				# Translators: A message informing the user that there are errors in the configuration file.
 				"Your configuration file contains errors. "
