@@ -615,10 +615,11 @@ class Test_InstallingOverNewerVersionDialog_warningText(unittest.TestCase):
 		*,
 		isLauncher: bool,
 		baseConfigError: bool,
+		installState: installer.ComparisonState = installer.ComparisonState.DOWNGRADE,
 	) -> str:
 		# Construct the Python object only; the warning text does not depend on the native dialog.
 		dialog = dialogClass.__new__(dialogClass)
-		dialog.installState = installer.ComparisonState.DOWNGRADE
+		dialog.installState = installState
 		with (
 			patch.object(installerGui.globalVars.appArgs, "launcher", isLauncher),
 			patch.object(installerGui.config.conf, "baseConfigError", baseConfigError),
@@ -646,6 +647,16 @@ class Test_InstallingOverNewerVersionDialog_warningText(unittest.TestCase):
 		)
 		self.assertTrue(text.startswith(self._DOWNGRADE_START))
 		self.assertEqual(self._CONFIG_RESET in text, shouldWarn)
+
+	def test_installer_unknownVersion_configResetWarning(self):
+		text = self._getWarningText(
+			installerGui.InstallingOverNewerVersionDialog,
+			isLauncher=True,
+			baseConfigError=True,
+			installState=installer.ComparisonState.UNKNOWN,
+		)
+		self.assertTrue(text.startswith("An existing NVDA installation has been detected"))
+		self.assertIn(self._CONFIG_RESET, text)
 
 	def test_portableCopy_neverWarnsAboutConfigReset(self):
 		text = self._getWarningText(
