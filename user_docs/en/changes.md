@@ -31,6 +31,7 @@
 
 * The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
 * Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+* The Braille Viewer now draws braille patterns ⣌ (dots 3-4-7-8) and ⡳ (dots 1-2-5-6-7) correctly. (#21022, #17781, @unvisible789)
 
 #### Web browsers
 
