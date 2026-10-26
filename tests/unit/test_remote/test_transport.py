@@ -356,6 +356,20 @@ class TestRelayTransportOnConnected(unittest.TestCase):
 		rt.send.assert_any_call(RemoteMessageType.PROTOCOL_VERSION, version=PROTOCOL_VERSION)
 		rt.send.assert_any_call(RemoteMessageType.GENERATE_KEY)
 
+	def test_channelNotLogged(self):
+		# The channel is the secret Remote Access key, so it must not be logged.
+		with mock.patch("_remoteClient.transport.log") as mockLog:
+			RelayTransport(
+				serializer=self.serializer,
+				address=("localhost", 8090),
+				channel="secretkey",
+				connectionType="relayMode",
+				protocolVersion=PROTOCOL_VERSION,
+				insecure=False,
+			)
+		for call in mockLog.mock_calls:
+			self.assertNotIn("secretkey", repr(call))
+
 
 # ---------------------------------------------------------------------------
 # Tests for ConnectorThread

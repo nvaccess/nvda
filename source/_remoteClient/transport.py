@@ -654,7 +654,8 @@ class RelayTransport(TCPTransport):
 			insecure=insecure,
 			trustedFingerprint=trustedFingerprint,
 		)
-		log.info(f"Connecting to {address} channel {channel}")
+		# Don't log the channel, as it is the secret key used to join the session.
+		log.info(f"Connecting to {address}")
 		self.channel: str | None = channel
 		"""Relay channel name"""
 
