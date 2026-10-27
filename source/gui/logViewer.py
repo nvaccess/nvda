@@ -89,7 +89,8 @@ class LogViewer(
 		# index 0 is always "All add-ons" (no filter), represented by None.
 		self._filterAddons: list[addonHandler.Addon | None] = [None]
 		availableAddons = sorted(
-			addonHandler.getAvailableAddons(), key=lambda addon: addon.manifest["summary"]
+			addonHandler.getAvailableAddons(),
+			key=lambda addon: addon.manifest["summary"],
 		)
 		# Translators: An item in the add-on filter list in the NVDA log viewer meaning no filter is applied.
 		choices = [_("All add-ons")]
