@@ -120,10 +120,12 @@ class LogViewer(
 			text = self._rawText
 		else:
 			prefixes = filterAddon.getLogModulePrefixes()
+			addonPath = filterAddon.path
 			text = "".join(
 				entryText
 				for codepath, entryText in self._iterLogEntries(self._rawText)
 				if self._codepathMatchesPrefixes(codepath, prefixes)
+				or self._entryMentionsAddonPath(entryText, addonPath)
 			)
 		self.outputCtrl.ChangeValue(text)
 		self.outputCtrl.SetInsertionPoint(pos)
@@ -146,6 +148,15 @@ class LogViewer(
 	def _codepathMatchesPrefixes(codepath: str, prefixes: set[str]) -> bool:
 		codepath = codepath.removeprefix("external:")
 		return any(codepath == prefix or codepath.startswith(f"{prefix}.") for prefix in prefixes)
+
+	@staticmethod
+	def _entryMentionsAddonPath(entryText: str, addonPath: str) -> bool:
+		"""Whether the add-on's own install directory appears anywhere in the entry's text.
+		This catches entries logged by NVDA's own code on the add-on's behalf, such as a traceback
+		logged by the plugin loader when an add-on fails to import, where the codepath points at the
+		loader rather than at the add-on.
+		"""
+		return addonPath.lower() in entryText.lower()
 
 	def refresh(self, evt=None):
 		# Ignore if log is not initialized
