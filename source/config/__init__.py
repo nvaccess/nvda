@@ -549,12 +549,15 @@ class ConfigManager:
 					# #18905: The launcher uses the installed copy's configuration,
 					# which may have been saved by a newer version of NVDA.
 					# Use factory defaults without changing the file the installed copy relies on.
+					# Load them before logging, as handling a logged error reads the configuration,
+					# which is empty while it is being reset.
+					self._initBaseConf(factoryDefaults=True)
 					log.error(  # noqa: G201
 						"Error loading base configuration; using factory defaults."
 						" The configuration file has not been changed.",
 						exc_info=True,
 					)
-					return self._initBaseConf(factoryDefaults=True)
+					return
 				backupFileName = fn + ".corrupted.bak"
 				log.error(  # noqa: G201
 					"Error loading base configuration; the base configuration file will be reinitialized."
