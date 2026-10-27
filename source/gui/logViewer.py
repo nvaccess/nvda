@@ -5,7 +5,9 @@
 
 """Provides functionality to view the NVDA log."""
 
-import wx  # noqa: I001
+import re  # noqa: I001
+import wx
+import addonHandler
 import globalVars
 import gui
 import gui.contextHelp
@@ -14,6 +16,11 @@ from gui import blockAction
 
 #: The singleton instance of the log viewer UI.
 logViewer = None
+
+#: Matches the header line of a log entry, e.g.
+#: "IO - inputCore.InputManager.executeGesture (09:17:40.724) - Thread-5 (13576):"
+#: Capturing the codepath (e.g. "external:globalPlugins.foo.MyClass.myFunc") in group 1.
+_LOG_ENTRY_HEADER_REGEX = re.compile(r"^[A-Z_]+ - (\S+) \(.*?\) - .*:$", re.MULTILINE)
 
 
 class LogViewer(
@@ -30,6 +37,17 @@ class LogViewer(
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+
+		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: The label for a control in the NVDA log viewer to filter log messages by add-on.
+		filterLabel = wx.StaticText(self, label=_("&Filter by add-on:"))
+		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTRE_VERTICAL)
+		self._addonFilterChoice = wx.Choice(self)
+		filterSizer.Add(self._addonFilterChoice)
+		mainSizer.Add(filterSizer, flag=wx.EXPAND)
+		self._populateAddonFilterChoice()
+		self._addonFilterChoice.Bind(wx.EVT_CHOICE, self.onFilterChanged)
+
 		self.outputCtrl = wx.TextCtrl(
 			self,
 			wx.ID_ANY,
@@ -62,25 +80,87 @@ class LogViewer(
 		self.SetMenuBar(menuBar)
 
 		self._lastFilePos = 0
+		self._rawText = ""
 
 		self.refresh()
 		self.outputCtrl.SetFocus()
+
+	def _populateAddonFilterChoice(self):
+		# index 0 is always "All add-ons" (no filter), represented by None.
+		self._filterAddons: list[addonHandler.Addon | None] = [None]
+		availableAddons = sorted(
+			addonHandler.getAvailableAddons(), key=lambda addon: addon.manifest["summary"]
+		)
+		# Translators: An item in the add-on filter list in the NVDA log viewer meaning no filter is applied.
+		choices = [_("All add-ons")]
+		for addon in availableAddons:
+			self._filterAddons.append(addon)
+			choices.append(addon.manifest["summary"])
+		self._addonFilterChoice.SetItems(choices)
+		self._addonFilterChoice.SetSelection(0)
+
+	def setAddonFilter(self, addon: addonHandler.Addon):
+		"""Selects the given add-on in the filter list and re-renders the log to match.
+		@param addon: The add-on to filter log entries by.
+		"""
+		for index, filterAddon in enumerate(self._filterAddons):
+			if filterAddon is not None and filterAddon.name == addon.name:
+				self._addonFilterChoice.SetSelection(index)
+				break
+		self._render()
+
+	def onFilterChanged(self, evt):
+		self._render()
+
+	def _render(self):
+		"""Updates the output control to show the raw log text, filtered to the selected add-on if any."""
+		pos = self.outputCtrl.GetInsertionPoint()
+		filterAddon = self._filterAddons[self._addonFilterChoice.GetSelection()]
+		if filterAddon is None:
+			text = self._rawText
+		else:
+			prefixes = filterAddon.getLogModulePrefixes()
+			text = "".join(
+				entryText
+				for codepath, entryText in self._iterLogEntries(self._rawText)
+				if self._codepathMatchesPrefixes(codepath, prefixes)
+			)
+		self.outputCtrl.ChangeValue(text)
+		self.outputCtrl.SetInsertionPoint(pos)
+
+	@staticmethod
+	def _iterLogEntries(text: str):
+		"""Splits raw log text into (codepath, entryText) pairs, one per log entry.
+		Any text before the first recognised log entry header is discarded.
+		@param text: The raw log text to split.
+		@return: An iterator of tuples, each containing the entry's codepath and its full text,
+			header line included.
+		"""
+		headerMatches = list(_LOG_ENTRY_HEADER_REGEX.finditer(text))
+		for index, headerMatch in enumerate(headerMatches):
+			start = headerMatch.start()
+			end = headerMatches[index + 1].start() if index + 1 < len(headerMatches) else len(text)
+			yield headerMatch.group(1), text[start:end]
+
+	@staticmethod
+	def _codepathMatchesPrefixes(codepath: str, prefixes: set[str]) -> bool:
+		codepath = codepath.removeprefix("external:")
+		return any(codepath == prefix or codepath.startswith(f"{prefix}.") for prefix in prefixes)
 
 	def refresh(self, evt=None):
 		# Ignore if log is not initialized
 		if globalVars.appArgs.logFileName is None:
 			return
-		pos = self.outputCtrl.GetInsertionPoint()
-		# Append new text to the output control which has been written to the log file since the last refresh.
+		# Read new text which has been written to the log file since the last refresh.
 		try:
 			f = open(globalVars.appArgs.logFileName, "r", encoding="UTF-8")  # noqa: SIM115
 			f.seek(self._lastFilePos)
-			self.outputCtrl.AppendText(f.read())
+			self._rawText += f.read()
 			self._lastFilePos = f.tell()
-			self.outputCtrl.SetInsertionPoint(pos)
 			f.close()
 		except OSError:
-			pass
+			return
+		self._render()
 
 	def onActivate(self, evt):
 		if evt.GetActive():
@@ -125,10 +205,11 @@ class LogViewer(
 
 # The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
 @blockAction.when(blockAction.Context.SECURE_MODE)
-def activate():
+def activate(addonFilter: addonHandler.Addon | None = None):
 	"""Activate the log viewer.
 	If the log viewer has not already been created and opened, this will create and open it.
 	Otherwise, it will be brought to the foreground if possible.
+	@param addonFilter: If given, the log viewer's add-on filter is set to this add-on.
 	"""
 	global logViewer
 	if not logViewer:
@@ -144,6 +225,8 @@ def activate():
 			wx.OK | wx.ICON_ERROR,
 		)
 		return
+	if addonFilter is not None:
+		logViewer.setAddonFilter(addonFilter)
 	logViewer.Raise()
 	# There is a MAXIMIZE style which can be used on the frame at construction, but it doesn't seem to work the first time it is shown,
 	# probably because it was in the background.

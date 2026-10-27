@@ -97,6 +97,15 @@ _MAX_STATE_FILESIZE_BYTES = 1024 * 1024  # 1MiB
 BUNDLE_MIMETYPE: Final[str] = "application/x-nvda-addon"
 ADDON_PENDINGINSTALL_SUFFIX: Final[str] = ".pendingInstall"
 DELETEDIR_SUFFIX: Final[str] = ".delete"
+#: The package names add-ons can contribute modules to.
+#: See L{addonHandler.packaging.initializeModulePackagePaths}.
+_LOG_FILTERABLE_PACKAGE_NAMES: Final[tuple[str, ...]] = (
+	"appModules",
+	"brailleDisplayDrivers",
+	"globalPlugins",
+	"synthDrivers",
+	"visionEnhancementProviders",
+)
 
 
 # Allows add-ons to process additional command line arguments when NVDA starts.
@@ -731,6 +740,31 @@ class Addon(AddonBase):
 		package.__path__.insert(0, converted_path)
 		self._extendedPackages.add(package)
 		log.debug("Addon %s added to %s package path", self.manifest["name"], package.__name__)
+
+	def getLogModulePrefixes(self) -> set[str]:
+		"""Returns the dotted module name prefixes that code belonging to this add-on is logged under.
+		These are the same prefixes that appear in the C{codepath} of a log entry (see L{logHandler.getCodePath}),
+		and can be used to attribute a log entry to this add-on.
+		@return: A set of dotted module name prefixes, e.g. C{{"globalPlugins.foo", "addons.myAddon"}}.
+		"""
+		prefixes: set[str] = set()
+		for packageName in _LOG_FILTERABLE_PACKAGE_NAMES:
+			packageDir = os.path.join(self.path, packageName)
+			if not os.path.isdir(packageDir):
+				continue
+			for entry in os.listdir(packageDir):
+				entryPath = os.path.join(packageDir, entry)
+				if entry.endswith(".py") and entry != "__init__.py":
+					moduleName = entry[: -len(".py")]
+				elif os.path.isdir(entryPath) and os.path.isfile(os.path.join(entryPath, "__init__.py")):
+					moduleName = entry
+				else:
+					continue
+				if isModuleName(moduleName):
+					prefixes.add(f"{packageName}.{moduleName}")
+		# Submodules loaded via L{loadModule} (e.g. installTasks, addonVersionCheck) use this synthetic prefix.
+		prefixes.add(f"addons.{os.path.split(self.path)[-1].replace('.', '_')}")
+		return prefixes
 
 	@property
 	def _canBeEnabled(self) -> bool:

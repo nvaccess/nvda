@@ -39,6 +39,7 @@ from addonStore.models.status import (
 from addonStore.network import AddonFileDownloader
 import core
 import extensionPoints
+from gui import logViewer
 from gui.message import DisplayableError
 from logHandler import log
 
@@ -240,6 +241,13 @@ class AddonStoreVM:
 					and aVM.model._addonHandlerModel is not None
 					and aVM.model._addonHandlerModel.getDocFilePath() is not None
 				),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that opens the log viewer filtered to the selected addon
+				displayName=pgettext("addonStore", "View &log entries"),
+				actionHandler=lambda aVM: logViewer.activate(addonFilter=aVM.model._addonHandlerModel),
+				validCheck=lambda aVM: aVM.model.isInstalled and aVM.model._addonHandlerModel is not None,
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
