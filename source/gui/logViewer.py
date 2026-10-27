@@ -36,20 +36,29 @@ class LogViewer(
 		super().__init__(parent, wx.ID_ANY, _("NVDA Log Viewer"))
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
+
+		# wx.Frame does not provide correct tab ordering between child controls on its own;
+		# a wx.Panel is needed to get that behaviour (see speechViewer.SpeechViewerFrame).
+		frameSizer = wx.BoxSizer(wx.VERTICAL)
+		self.SetSizer(frameSizer)
+		panel = wx.Panel(self)
+		frameSizer.Add(panel, proportion=1, flag=wx.EXPAND)
+
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		panel.SetSizer(mainSizer)
 
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: The label for a control in the NVDA log viewer to filter log messages by add-on.
-		filterLabel = wx.StaticText(self, label=_("&Filter by add-on:"))
+		filterLabel = wx.StaticText(panel, label=_("&Filter by add-on:"))
 		filterSizer.Add(filterLabel, flag=wx.ALIGN_CENTRE_VERTICAL)
-		self._addonFilterChoice = wx.Choice(self)
+		self._addonFilterChoice = wx.Choice(panel)
 		filterSizer.Add(self._addonFilterChoice)
 		mainSizer.Add(filterSizer, flag=wx.EXPAND)
 		self._populateAddonFilterChoice()
 		self._addonFilterChoice.Bind(wx.EVT_CHOICE, self.onFilterChanged)
 
 		self.outputCtrl = wx.TextCtrl(
-			self,
+			panel,
 			wx.ID_ANY,
 			size=(500, 500),
 			style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH,
@@ -60,8 +69,7 @@ class LogViewer(
 		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
-		self.SetSizer(mainSizer)
-		mainSizer.Fit(self)
+		frameSizer.Fit(self)
 
 		menuBar = wx.MenuBar()
 		menu = wx.Menu()
