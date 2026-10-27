@@ -25,7 +25,8 @@
 * When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 * Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
-* When an NVDA installer can't load your configuration, for example because it is older than the installed copy of NVDA, it now uses factory defaults without changing your configuration file. If you choose to install that earlier version, NVDA warns you that your configuration will be reset. (#18905, @akj)
+* When running NVDA from the launcher, a configuration that can't be loaded, such as one saved by a newer version of NVDA, is no longer reset.
+NVDA uses factory defaults instead, and warns that installing that version will reset the configuration. (#18905, @akj)
 
 #### Performance
 
