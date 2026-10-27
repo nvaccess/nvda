@@ -132,9 +132,13 @@ class _WinrtProjectionTransformer(NodeTransformer):
 
 	def visit_Assign(self, node: Assign) -> Assign:
 		if len(node.targets) == 1 and getattr(node.targets[0], "id", None) == "table":
-			node.value = parse(
-				"os.path.join(os.path.dirname(sys.executable), *spec.name.split('.'), TABLE_NAME)",
-			).body[0].value
+			node.value = (
+				parse(
+					"os.path.join(os.path.dirname(sys.executable), *spec.name.split('.'), TABLE_NAME)",
+				)
+				.body[0]
+				.value
+			)
 			self.rewritten = True
 		return node
 
