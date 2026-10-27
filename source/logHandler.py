@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2007-2026 NV Access Limited, Rui Batista, Joseph Lee, Leonard de Ruijter, Babbage B.V.,
-# Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka
+# Accessolutions, Julien Cochuyt, Cyrille Bougot, Łukasz Golonka, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -189,7 +189,8 @@ def shouldPlayErrorSound() -> bool:
 
 	playErrorSound = (
 		PlayErrorSound(config.conf["featureFlag"]["playErrorSound"])
-		if config.conf
+		# The configuration can't be read before it is created, or while it is being reset.
+		if config.conf and config.conf.rootSection is not None
 		else PlayErrorSound.ONLY_IN_TEST_VERSIONS
 	)
 
