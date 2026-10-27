@@ -2405,7 +2405,7 @@ If the selection has this many characters or more, NVDA reports the number of se
 
 Pressing the read selection command twice or three times spells the selection only if it has fewer characters than this value.
 
-Speaking very long selections can be slow or even lead to crashes under certain speech synthasizers, so take care when setting a high value.
+Speaking very long selections can be slow or even lead to crashes with some speech synthesizers, so take care when setting a high value.
 
 ##### Modes available in the Cycle speech mode command {#SpeechModesDisabling}
 
