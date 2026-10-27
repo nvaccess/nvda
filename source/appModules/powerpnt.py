@@ -1,45 +1,46 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2026 NV Access Limited, Leonard de Ruijter, Christos Bouronikos
-# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
-# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+# Copyright (C) 2012-2025 NV Access Limited, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
-import ctypes
-from typing import (
+from typing import (  # noqa: I001
 	Any,
 )
 
-import api
-import appModuleHandler
-import braille
-import colors
-import comHelper
 import comtypes
+from comtypes.automation import IDispatch
 import comtypes.client
+import ctypes
+
 import comtypes.client.lazybind
 import config
-import controlTypes
-import eventHandler
-import msoAutoShapeTypes
 import oleacc
-import scriptHandler
+import comHelper
+import ui
+import colors
+import api
 import speech
+from speech import sayAll
+import winUser
+import msoAutoShapeTypes
+from treeInterceptorHandler import DocumentTreeInterceptor
+from NVDAObjects import NVDAObjectTextInfo
+from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos
 import textInfos.offsets
-import ui
-import winUser
-from comtypes.automation import IDispatch
-from controlTypes import TextPosition
-from cursorManager import ReviewCursorManager
-from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
-from locationHelper import RectLTRB, RectLTWH
-from logHandler import log
-from NVDAObjects import NVDAObjectTextInfo
-from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection
+import eventHandler
+import appModuleHandler
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
+from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, EditableText
+import braille
+from cursorManager import ReviewCursorManager
+import controlTypes
+from controlTypes import TextPosition
+from logHandler import log
+import scriptHandler
+from locationHelper import RectLTRB, RectLTWH
 from NVDAObjects.window._msOfficeChart import OfficeChart
-from speech import sayAll
-from treeInterceptorHandler import DocumentTreeInterceptor
 from utils.urlUtils import _LinkData
 
 # Translators: The name of a category of NVDA commands.
@@ -324,15 +325,13 @@ class DocumentWindow(PaneClassDC):
 	def _isEqual(self, other):
 		return self.windowHandle == other.windowHandle and self.name == other.name
 
-	def _get_name(self) -> str:
+	def _get_name(self):
 		label = ppViewTypeLabels.get(self.ppActivePaneViewType)
 		if not label:
 			return super(PaneClassDC, self).name
 		slide = self.currentSlide
 		if slide:
-			# The selected slide or title shape reports the title itself.
-			slideLabel = slide.slideNumberLabel if isinstance(slide, Slide) else slide.name
-			label = f"{slideLabel} - {label}"
+			label = " - ".join([slide.name, label])  # noqa: FLY002
 		return label
 
 	def _get_currentSlide(self):
@@ -527,25 +526,6 @@ class PpObject(Window):
 	def _get_parent(self):
 		return self.documentWindow
 
-	def reportFocus(self) -> None:
-		# Announce the content section once when leaving the title or entering a new slide.
-		slide = self if isinstance(self, Slide) else self.documentWindow.currentSlide
-		shape = self.parent if isinstance(self, TextFrame) else self
-		while isinstance(shape, PpObject) and not isinstance(shape, (Slide, Shape)):
-			shape = shape.parent
-		if (
-			isinstance(slide, Slide)
-			and isinstance(shape, (Slide, Shape))
-			and self.documentWindow.ppActivePaneViewType != ppViewNotesPage
-		):
-			isTitle = isinstance(shape, Slide) or shape.isSlideTitle
-			section = (slide.ppObject.slideID, isTitle)
-			if not isTitle and section != getattr(self.documentWindow, "_lastReportedSlideSection", None):
-				# Translators: Announced before reading the non-title content of a PowerPoint slide.
-				speech.speakMessage(_("Slide contents"))
-			self.documentWindow._lastReportedSlideSection = section
-		super().reportFocus()
-
 	def script_selectionChange(self, gesture):
 		return self.documentWindow.script_selectionChange(gesture)
 
@@ -579,36 +559,19 @@ class SlideBase(PpObject):
 class Slide(SlideBase):
 	"""Represents a single slide in Powerpoint."""
 
-	def _get_titleShape(self) -> comtypes.client.lazybind.Dispatch | None:
+	def _get_name(self):
 		try:
-			return self.ppObject.shapes.title
+			title = self.ppObject.shapes.title.textFrame.textRange.text
 		except comtypes.COMError:
-			return None
-
-	def _get_titleText(self) -> str:
-		shape = self.titleShape
-		if shape:
-			try:
-				return shape.textFrame.textRange.text.replace("\x0b", "\n").replace("\r", "\n").strip()
-			except comtypes.COMError:
-				pass
-		return ""
-
-	def _get_slideNumberLabel(self) -> str:
+			title = None
 		try:
 			number = self.ppObject.slideNumber
 		except comtypes.COMError:
 			number = ""
 		# Translators: the label for a slide in Microsoft PowerPoint.
-		return _("Slide {slideNumber}").format(slideNumber=number)
-
-	def _get_name(self) -> str:
-		name = self.slideNumberLabel
-		title = self.titleText
+		name = _("Slide {slideNumber}").format(slideNumber=number)
 		if title:
-			# Translators: The title text of a PowerPoint slide, preceded by its label.
-			titleLabel = _("Slide title: {title}").format(title=title)
-			name = f"{name} - {titleLabel}"
+			name += " (%s)" % title  # noqa: UP031
 		return name
 
 	def _get_positionInfo(self):
@@ -963,14 +926,7 @@ class Shape(PpObject):
 		self.ppMediaType = self.ppObject.mediaType
 		return self.ppMediaType
 
-	def _get_isSlideTitle(self) -> bool:
-		slide = self.documentWindow.currentSlide
-		if not isinstance(slide, Slide) or self.documentWindow.ppActivePaneViewType == ppViewNotesPage:
-			return False
-		titleShape = slide.titleShape
-		return bool(titleShape and self.ppObject.ID == titleShape.ID)
-
-	def _get_name(self) -> str | None:
+	def _get_name(self):
 		"""The name is calculated firstly from the object's title, otherwize if its a generic shape, then  part of its programmatic name is used."""
 		# Powerpoint 2003 shape objects do not have a title property
 		try:
@@ -979,9 +935,6 @@ class Shape(PpObject):
 			title = None
 		if title:
 			return title
-		if self.isSlideTitle:
-			# Translators: The label for the title text box of a PowerPoint slide while editing.
-			return _("Slide title")
 		# Provide a meaningful label for placeholders from slide templates
 		if self.ppShapeType == msoPlaceholder:
 			label = ppPlaceholderLabels.get(self.ppPlaceholderType)
@@ -1539,14 +1492,14 @@ class SlideShowWindow(PaneClassDC):
 	treeInterceptorClass = ReviewableSlideshowTreeInterceptor
 	notesMode = False  #: If true then speaker notes will be exposed as this object's basicText, rather than the actual slide content.
 
-	def _get_name(self) -> str:
+	def _get_name(self):
 		if self.currentSlide:
 			if self.notesMode:
 				# Translators: The title of the current slide (with notes) in a running Slide Show in Microsoft PowerPoint.
 				return _("Slide show notes - {slideName}").format(slideName=self.currentSlide.name)
 			else:
 				# Translators: The title of the current slide in a running Slide Show in Microsoft PowerPoint.
-				return _("Slide show - {slideName}").format(slideName=self.currentSlide.slideNumberLabel)
+				return _("Slide show - {slideName}").format(slideName=self.currentSlide.name)
 		else:
 			# Translators: The title for a Slide show in Microsoft PowerPoint that has completed.
 			return _("Slide Show - complete")
@@ -1601,38 +1554,20 @@ class SlideShowWindow(PaneClassDC):
 			else:
 				yield label
 
-	def _get_basicText(self) -> str:
+	def _get_basicText(self):
 		if not self.currentSlide:
 			return self.name
 		chunks = []
 		ppObject = self.currentSlide.ppObject
-		titleShape = None
-		title = ""
 		if self.notesMode:
 			ppObject = ppObject.notesPage
-		else:
-			titleShape = self.currentSlide.titleShape
-			title = self.currentSlide.titleText
-			if title:
-				# Translators: The title text of a PowerPoint slide, preceded by its label.
-				chunks.append(_("Slide title: {title}").format(title=title))
 		# Maintain a list of fields and the offsets at which they occur.
 		# For now, these are only control fields that consume a space.
 		fields = self.basicTextFields = []
 		# Incrementation of textLen must include line feed added by join.
-		textLen = sum(len(chunk) + 1 for chunk in chunks)
-		hasContents = False
+		textLen = 0
 		for shape in ppObject.shapes:
-			# Only skip the designated title shape; identical text in other shapes is still content.
-			if title and titleShape and shape.ID == titleShape.ID:
-				continue
 			for chunk in self._getShapeText(shape):
-				if not self.notesMode and not hasContents:
-					# Translators: Announced before reading the non-title content of a PowerPoint slide.
-					contentLabel = _("Slide contents")
-					chunks.append(contentLabel)
-					textLen += len(contentLabel) + 1
-					hasContents = True
 				if isinstance(chunk, textInfos.ControlField):
 					fields.append((textLen, chunk))
 					chunks.append(" ")
@@ -1650,13 +1585,12 @@ class SlideShowWindow(PaneClassDC):
 				self.basicText = _("Empty slide")
 		return self.basicText or _("Empty slide")
 
-	def handleSlideChange(self) -> None:
+	def handleSlideChange(self):
 		try:
 			del self.__dict__["currentSlide"]
 		except KeyError:
 			pass
-		# The window name no longer includes the title, but title changes must still be detected.
-		curSlideChangeID = (self.name, self.currentSlide.name if self.currentSlide else None)
+		curSlideChangeID = self.name
 		if curSlideChangeID == self._lastSlideChangeID:
 			return
 		self._lastSlideChangeID = curSlideChangeID
@@ -1684,8 +1618,8 @@ class AppModule(appModuleHandler.AppModule):
 		return super().isBadUIAWindow(hwnd)
 
 	def _registerCOMWithFocusJuggle(self):
+		import wx  # noqa: I001
 		import gui
-		import wx
 
 		# Translators: A title for a dialog shown while Microsoft PowerPoint initializes
 		d = wx.Dialog(None, title=_("Waiting for Powerpoint..."))
