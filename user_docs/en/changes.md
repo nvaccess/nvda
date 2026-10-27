@@ -1,5 +1,18 @@
 # What's New in NVDA
 
+## 2026.3.1
+
+This is a patch release to fix security issues.
+A bug fix is also included for an issue introduced in 2026.3 with the task switcher in Windows 10.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+### Bug Fixes
+
+* Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
+
 ## 2026.3
 
 This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
