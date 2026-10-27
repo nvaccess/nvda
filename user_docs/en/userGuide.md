@@ -5012,6 +5012,9 @@ The log viewer, found under Tools in the NVDA menu, allows you to view the loggi
 Apart from reading the content, you can also Save a copy of the log file, or refresh the viewer so that it loads new log output generated after the Log viewer was opened.
 These actions are available under the Log menu in the log viewer.
 
+The "Filter by add-on" control at the top of the log viewer lets you show only the log entries produced by a single installed add-on, which is useful when troubleshooting a specific add-on.
+Select "All add-ons" to remove the filter and show the full log again.
+
 The file which is displayed when you open the log viewer is saved on your computer at the file location `%temp%\nvda.log`.
 A new log file is created each time NVDA is started.
 When this happens, the previous NVDA session's log file is moved to `%temp%\nvda-old.log`.
