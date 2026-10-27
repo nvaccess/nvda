@@ -9,6 +9,7 @@ import typing
 import unittest
 from unittest.mock import MagicMock, mock_open, patch
 import io
+import logging
 import os
 import tempfile
 import yaml
@@ -17,7 +18,9 @@ import configobj
 import configobj.validate
 from pycaw.constants import DEVICE_STATE
 
+import config
 import globalVars
+import logHandler
 
 from config import (
 	AggregatedSection,
@@ -1476,6 +1479,27 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		"""The launcher uses factory defaults without moving the installed copy's configuration aside."""
 		with patch.object(globalVars.appArgs, "launcher", True):
 			manager = ConfigManager()
+		self.assertTrue(manager.baseConfigError)
+		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
+		self.assertFalse(os.path.exists(self._backupFile))
+
+	def test_launcher_revertLeavesConfigFileUnchanged(self):
+		"""Reverting to the saved configuration in the launcher fails to load the file again,
+		and falls back to factory defaults while the error is logged.
+		"""
+		logFile = os.path.join(os.path.dirname(self._configFile), "nvda.log")
+		fileHandler = logHandler.FileHandler(logFile, mode="w", encoding="utf-8")
+		self.addCleanup(fileHandler.close)
+		logHandler.log.addHandler(fileHandler)
+		self.addCleanup(logHandler.log.removeHandler, fileHandler)
+		# Unit tests disable logging, but the error is logged while the configuration is being reset.
+		self.addCleanup(logHandler.log.setLevel, logHandler.log.level)
+		logHandler.log.setLevel(logging.ERROR)
+		with patch.object(globalVars.appArgs, "launcher", True):
+			manager = ConfigManager()
+			with patch.object(config, "conf", manager):
+				manager.reset()
 		self.assertTrue(manager.baseConfigError)
 		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
 		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
