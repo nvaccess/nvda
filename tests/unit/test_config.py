@@ -18,7 +18,6 @@ import configobj
 import configobj.validate
 from pycaw.constants import DEVICE_STATE
 
-import config
 import globalVars
 import logHandler
 
@@ -1471,6 +1470,26 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		with open(self._configFile, "w", encoding="utf-8") as f:
 			f.write(self._INVALID_CONFIG)
 
+	def _readConfigOnLoggedErrors(self, manager: ConfigManager) -> list[int]:
+		"""Read the configuration whenever an error is logged, as NVDA's error sound handling does.
+		:return: The error sound setting read for each logged error.
+		"""
+		values: list[int] = []
+
+		class ConfigReadingHandler(logging.Handler):
+			def handle(self, record: logging.LogRecord) -> bool:
+				# Errors raised here propagate to the code that logged, as they do from NVDA's file handler.
+				values.append(manager["featureFlag"]["playErrorSound"])
+				return True
+
+		handler = ConfigReadingHandler(logging.ERROR)
+		logHandler.log.addHandler(handler)
+		self.addCleanup(logHandler.log.removeHandler, handler)
+		# Unit tests disable logging.
+		self.addCleanup(logHandler.log.setLevel, logHandler.log.level)
+		logHandler.log.setLevel(logging.ERROR)
+		return values
+
 	def _readFile(self, path: str) -> str:
 		with open(path, encoding="utf-8") as f:
 			return f.read()
@@ -1488,18 +1507,11 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		"""Reverting to the saved configuration in the launcher fails to load the file again,
 		and falls back to factory defaults while the error is logged.
 		"""
-		logFile = os.path.join(os.path.dirname(self._configFile), "nvda.log")
-		fileHandler = logHandler.FileHandler(logFile, mode="w", encoding="utf-8")
-		self.addCleanup(fileHandler.close)
-		logHandler.log.addHandler(fileHandler)
-		self.addCleanup(logHandler.log.removeHandler, fileHandler)
-		# Unit tests disable logging, but the error is logged while the configuration is being reset.
-		self.addCleanup(logHandler.log.setLevel, logHandler.log.level)
-		logHandler.log.setLevel(logging.ERROR)
 		with patch.object(globalVars.appArgs, "launcher", True):
 			manager = ConfigManager()
-			with patch.object(config, "conf", manager):
-				manager.reset()
+			errorSoundSettings = self._readConfigOnLoggedErrors(manager)
+			manager.reset()
+		self.assertEqual(errorSoundSettings, [0])
 		self.assertTrue(manager.baseConfigError)
 		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
 		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
