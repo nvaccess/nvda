@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Andrew Johnson.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Andrew Johnson, Abdullah Mansour.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -6483,13 +6483,9 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			),
 		)
 		self._screenCurtainCheckboxChanged: bool = False
+		self._changingScreenCurtain = False
 		isScreenCurtainAvailable = screenCurtain.screenCurtain is not None
-		if isScreenCurtainAvailable:
-			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
-			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
-		else:
-			self._cachedScreenCurtainConfigEnabled = self._screenCurtainConfig["enabled"]
-			self._cachedScreenCurtainEnabled = False
+		self._updateScreenCurtainBaseline()
 		self._screenCurtainEnabledCheckbox.SetValue(self._cachedScreenCurtainEnabled)
 		self._screenCurtainEnabledCheckbox.Bind(wx.EVT_CHECKBOX, self._ensureScreenCurtainEnableState)
 		self._screenCurtainEnabledCheckbox.Enable(isScreenCurtainAvailable)
@@ -6554,15 +6550,53 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			self._allowUsageStatsCheckBox.Value = False
 			self._allowUsageStatsCheckBox.Disable()
 
+		screenCurtain._screenCurtain._postScreenCurtainStateChange.register(self._onScreenCurtainStateChange)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
+
+	def _updateScreenCurtainBaseline(self) -> None:
+		curtain = screenCurtain.screenCurtain
+		self._cachedScreenCurtainConfigEnabled = (
+			curtain.settings["enabled"] if curtain is not None else self._screenCurtainConfig["enabled"]
+		)
+		self._cachedScreenCurtainEnabled = curtain is not None and curtain.enabled
+		self._screenCurtainCheckboxChanged = False
+
+	def _onScreenCurtainStateChange(self) -> None:
+		if self._changingScreenCurtain:
+			return
+		# A command supersedes earlier checkbox previews and becomes the new cancellation baseline.
+		self._updateScreenCurtainBaseline()
+		self._screenCurtainEnabledCheckbox.SetValue(self._cachedScreenCurtainEnabled)
+
+	def _setScreenCurtainEnabled(self, enabled: bool, *, persist: bool) -> None:
+		curtain = screenCurtain.screenCurtain
+		if curtain is None:
+			raise RuntimeError("Screen Curtain is not available")
+		self._changingScreenCurtain = True
+		try:
+			if enabled:
+				curtain.enable(persist=persist)
+			else:
+				curtain.disable(persist=persist)
+		finally:
+			self._changingScreenCurtain = False
+
+	def _onWindowDestroy(self, evt: wx.WindowDestroyEvent) -> None:
+		if evt.GetEventObject() is self:
+			screenCurtain._screenCurtain._postScreenCurtainStateChange.unregister(
+				self._onScreenCurtainStateChange
+			)
+		evt.Skip()
+
 	def onDiscard(self):
 		# Restore screen curtain state and setting to the most recently saved baseline,
 		# in case the user enabled or disabled it without saving.
 		if screenCurtain.screenCurtain is not None:
 			if screenCurtain.screenCurtain.enabled != self._cachedScreenCurtainEnabled:
 				if self._cachedScreenCurtainEnabled:
-					screenCurtain.screenCurtain.enable(persist=self._cachedScreenCurtainConfigEnabled)
+					self._setScreenCurtainEnabled(True, persist=self._cachedScreenCurtainConfigEnabled)
 				else:
-					screenCurtain.screenCurtain.disable(persist=not self._cachedScreenCurtainConfigEnabled)
+					self._setScreenCurtainEnabled(False, persist=not self._cachedScreenCurtainConfigEnabled)
 			if screenCurtain.screenCurtain.settings["enabled"] != self._cachedScreenCurtainConfigEnabled:
 				screenCurtain.screenCurtain.settings["enabled"] = self._cachedScreenCurtainConfigEnabled
 		super().onDiscard()
@@ -6592,9 +6626,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 			config.conf["update"]["allowUsageStats"] = self._allowUsageStatsCheckBox.IsChecked()
 			# updateCheck queries this value whenever checking for updates, so there's no need to restart it
 
-		if screenCurtain.screenCurtain is not None:
-			self._cachedScreenCurtainConfigEnabled = screenCurtain.screenCurtain.settings["enabled"]
-			self._cachedScreenCurtainEnabled = screenCurtain.screenCurtain.enabled
+		self._updateScreenCurtainBaseline()
 
 	def _contentRecognitionActive(self) -> bool:
 		"""
@@ -6627,7 +6659,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 				self._screenCurtainEnabledCheckbox.SetValue(False)
 			else:
 				try:
-					screenCurtain.screenCurtain.enable(persist=False)
+					self._setScreenCurtainEnabled(True, persist=False)
 					self._screenCurtainCheckboxChanged = True
 				except Exception:
 					log.error("Error enabling Screen Curtain.", exc_info=True)  # noqa: G201
@@ -6637,7 +6669,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 					)
 					self._screenCurtainEnabledCheckbox.SetValue(False)
 		elif not shouldBeEnabled and currentlyEnabled:
-			screenCurtain.screenCurtain.disable(persist=False)
+			self._setScreenCurtainEnabled(False, persist=False)
 			self._screenCurtainCheckboxChanged = True
 
 	def _confirmEnableScreenCurtainWithUser(self) -> bool:
