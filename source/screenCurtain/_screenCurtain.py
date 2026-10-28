@@ -50,7 +50,7 @@ ERROR_ENABLING_AT_STARTUP_MESSAGE = pgettext(
 
 
 _postScreenCurtainStateChange = extensionPoints.Action()
-"""Notify internal consumers when Screen Curtain's actual state or persistence changes."""
+"""Notify internal consumers when Screen Curtain's actual state, persistence, or controller changes."""
 
 
 class ScreenCurtainSettings(TypedDict):

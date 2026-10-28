@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Abdullah Mansour
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Screen curtain implementation based on the windows magnification API."""
 
+from . import _screenCurtain
 from ._screenCurtain import ScreenCurtain
 
 __all__ = (
@@ -23,6 +24,9 @@ def initialize():
 	global screenCurtain
 	if screenCurtain is None:
 		screenCurtain = ScreenCurtain()
+		# Construction can activate the curtain before the singleton is assigned.
+		# Reconcile consumers after installing the replacement, including disabled replacements.
+		_screenCurtain._postScreenCurtainStateChange.notify()
 
 
 def terminate():

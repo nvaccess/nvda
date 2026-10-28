@@ -7,6 +7,7 @@
 
 from unittest.mock import patch
 
+import config
 import screenCurtain
 import wx
 from gui.settingsDialogs import PrivacyAndSecuritySettingsPanel
@@ -198,3 +199,40 @@ class TestPrivacyAndSecurityScreenCurtain(_ScreenCurtainTestCase):
 			self.assertFalse(self.panel._screenCurtainEnabledCheckbox.IsChecked())
 			self.panel.onSave()
 			self.panel.onDiscard()
+
+	def test_reinitializedCurtainUpdatesCheckbox(self):
+		self.curtain.enable(persist=True)
+		self.createPanel()
+		screenCurtain.terminate()
+		screenCurtain.initialize()
+		replacement = screenCurtain.screenCurtain
+		assert replacement is not None
+		self.addCleanup(replacement.disable, persist=False)
+		self.assertTrue(replacement.enabled)
+		self.assertTrue(self.panel._screenCurtainEnabledCheckbox.IsChecked())
+
+	def test_cancelPreservesReinitializedCurtain(self):
+		self.curtain.enable(persist=True)
+		self.createPanel()
+		screenCurtain.terminate()
+		screenCurtain.initialize()
+		replacement = screenCurtain.screenCurtain
+		assert replacement is not None
+		self.addCleanup(replacement.disable, persist=False)
+		self.panel.onDiscard()
+		self.assertTrue(replacement.enabled)
+		self.assertTrue(replacement.settings["enabled"])
+
+	def test_saveUsesReinitializedConfiguration(self):
+		self.createPanel()
+		settings = config.conf["screenCurtain"].dict()
+		screenCurtain.terminate()
+		config.conf["screenCurtain"] = settings
+		screenCurtain.initialize()
+		replacement = screenCurtain.screenCurtain
+		assert replacement is not None
+		self.addCleanup(replacement.disable, persist=False)
+		self.changeCheckbox(True)
+		self.panel.onSave()
+		self.assertTrue(replacement.enabled)
+		self.assertTrue(replacement.settings["enabled"])

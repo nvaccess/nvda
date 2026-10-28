@@ -6554,6 +6554,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
 	def _updateScreenCurtainBaseline(self) -> None:
+		self._screenCurtainConfig = config.conf["screenCurtain"]
 		curtain = screenCurtain.screenCurtain
 		self._cachedScreenCurtainConfigEnabled = (
 			curtain.settings["enabled"] if curtain is not None else self._screenCurtainConfig["enabled"]
@@ -6604,6 +6605,7 @@ class PrivacyAndSecuritySettingsPanel(SettingsPanel):
 	def onSave(self):
 		# We only save whether the screen curtain is enabled here if the user has toggled the checkbox,
 		# so we don't unintentionally persist a temporary screen curtain to config.
+		self._screenCurtainConfig = config.conf["screenCurtain"]
 		if self._screenCurtainCheckboxChanged:
 			# We don't need to change the state of the screen curtain, as that is done when the checkbox is checked/unchecked.
 			self._screenCurtainConfig["enabled"] = self._screenCurtainEnabledCheckbox.IsChecked()
