@@ -58,6 +58,7 @@
 * Profiles no longer interfere with Magnifier settings.
 Previously, saving magnifier settings could be ineffective while a profile was active.
 The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+* Magnifier no longer stops when a secure screen such as UAC or logon screen pops up in the current session. (#20636, @CyrilleB79)
 
 ### Changes for Developers
 
