@@ -15,7 +15,7 @@
 ### Bug Fixes
 
 * Screen Curtain settings now stay synchronized with the toggle command and configuration reloads.
-  Cancelling the settings dialog preserves those changes, and saving no longer overwrites them with an earlier checkbox change.
+  Cancelling the settings dialog preserves those changes, and saving no longer overwrites them with an earlier checkbox change. (#21079)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
