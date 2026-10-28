@@ -9,6 +9,8 @@ A bug fix is also included for an issue introduced in 2026.3 with the task switc
 
 Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
 
+* Fixed NVDA leaking the Remote Access key. (#21037)
+
 ### Bug Fixes
 
 * Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
