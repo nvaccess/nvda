@@ -85,7 +85,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 #### Run time dependencies
 
-* [eSpeak NG](https://github.com/nvaccess/espeak-ng), commit `3fa99a2dae33a7c61265d411c11eaf109ae69676`
+* [eSpeak NG](https://github.com/nvaccess/espeak-ng), commit `b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc`
   * We currently maintain a fork of eSpeak to remove commits which introduce regressions, in an effort to make a stable release quality version of eSpeak.
   We can switch back if [espeak-ng/espeak-ng#2531](https://github.com/espeak-ng/espeak-ng/issues/2531) is resolved.
 * [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
