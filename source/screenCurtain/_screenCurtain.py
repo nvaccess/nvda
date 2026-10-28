@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Leonard de Ruijter, Abdullah Mansour
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -7,6 +7,7 @@ import os
 from typing import Final, TypedDict, cast
 
 import config
+import extensionPoints
 import globalVars
 import nvwave
 import wx
@@ -46,6 +47,10 @@ ERROR_ENABLING_AT_STARTUP_MESSAGE = pgettext(
 	"The contents of your screen are still visible. "
 	"You may attempt to enable Screen Curtain manually.",
 )
+
+
+_postScreenCurtainStateChange = extensionPoints.Action()
+"""Notify internal consumers when Screen Curtain's actual state or persistence changes."""
 
 
 class ScreenCurtainSettings(TypedDict):
@@ -198,6 +203,9 @@ class ScreenCurtain:
 		"""
 		if self._enabled:
 			log.debug("ScreenCurtain is already enabled.")
+			if persist and not self.settings["enabled"]:
+				self.settings["enabled"] = True
+				_postScreenCurtainStateChange.notify()
 			return
 
 		# Notify magnifier that screen curtain is being enabled
@@ -236,6 +244,7 @@ class ScreenCurtain:
 				nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "screenCurtainOn.wav"))
 			except Exception:
 				log.exception()
+		_postScreenCurtainStateChange.notify()
 
 	def disable(self, *, persist: bool = True) -> None:
 		"""Disables the Screen Curtain.
@@ -265,6 +274,7 @@ class ScreenCurtain:
 		magnifierInstance = _magnifier.getMagnifier()
 		if magnifierInstance:
 			magnifierInstance.onScreenCurtainDisabled()
+		_postScreenCurtainStateChange.notify()
 
 	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""

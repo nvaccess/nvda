@@ -5058,10 +5058,7 @@ class GlobalCommands(ScriptableObject):
 					enableMessage = _("Temporary Screen curtain, enabled until next restart")
 
 				try:
-					if alreadyRunning:
-						screenCurtain.screenCurtain.settings["enabled"] = True
-					else:
-						screenCurtain.screenCurtain.enable(persist=not tempEnable)
+					screenCurtain.screenCurtain.enable(persist=not tempEnable)
 				except Exception:
 					log.error("Screen curtain initialization error", exc_info=True)  # noqa: G201
 					enableMessage = screenCurtain._screenCurtain.ERROR_ENABLING_MESSAGE
