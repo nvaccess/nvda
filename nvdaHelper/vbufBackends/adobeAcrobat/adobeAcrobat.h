@@ -32,8 +32,10 @@ typedef struct TableInfo_t {
 	long tableID{ 0 };
 	int curRowNumber{ 0 };
 	int curColumnNumber{ 0 };
-	// Maps column numbers to remaining row spans.
-	std::map<int, int> columnRowSpans;
+	// The highest column number used by any cell in the table so far.
+	int maxColumnNumber{ 0 };
+	// Maps column numbers to the last row number covered by a cell spanning rows from a previous row.
+	std::map<int, int> columnLastSpannedRow;
 	// Maps column numbers to table-columnheadercells attribute values.
 	std::map<int, std::wstring> columnHeaders;
 	// Maps row numbers to table-rowheadercells attribute values.
