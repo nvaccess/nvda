@@ -601,6 +601,7 @@ class InputGesturesDialog(SettingsDialog):
 	# Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 	title = _("Input Gestures")
 	helpId = "InputGestures"
+	lastCaptureFunc = None
 
 	def __init__(self, parent: "InputGesturesDialog"):
 		#: The index in the _GesturesTree of the prompt for entering a new gesture
@@ -706,6 +707,11 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.SetFocus()
 
 	def _onWindowDestroy(self, evt):
+		"""Remove any references to capture functions - these can stop dialog from being restarted"""
+		if inputCore.manager._captureFunc == self.lastCaptureFunc:
+			self._setCaptureFunc(None)
+		self.lastCaptureFunc = None
+
 		super()._onWindowDestroy(evt)
 
 	def onFilterChange(self, evt):
@@ -757,13 +763,13 @@ class InputGesturesDialog(SettingsDialog):
 			pending = catVM.createPendingEmuGesture()
 			self.tree.doRefresh(focus=(catVM, pending, None))
 			self._refreshButtonState()
-			inputCore.manager._captureFunc = lambda g: self._addKbEmuGestureCaptor(g, catVM)
+			self._setCaptureFunc(lambda g: self._addKbEmuGestureCaptor(g, catVM))
 		elif gestureVM is None and isinstance(scriptVM, _ScriptVM):
 			self.gesturesVM.isExpectingNewGesture = scriptVM
 			pendingGesture = scriptVM.createPendingGesture()
 			self.tree.doRefresh(focus=(catVM, scriptVM, pendingGesture))
 			self._refreshButtonState()
-			inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
+			self._setCaptureFunc(lambda g: self._addGestureCaptor(g, catVM, scriptVM))
 		else:
 			log.error("unable to do 'add' action for selected item")
 
@@ -783,23 +789,27 @@ class InputGesturesDialog(SettingsDialog):
 			pending = catVM.createPendingEmuGesture()
 			self.tree.doRefresh(focus=(catVM, pending, None))
 			self._refreshButtonState()
-			inputCore.manager._captureFunc = lambda g: self._addKbEmuGestureCaptor(g, catVM)
+			self._setCaptureFunc(lambda g: self._addKbEmuGestureCaptor(g, catVM))
 		elif gestureVM is not None and isinstance(scriptVM, _ScriptVM):
 			scriptVM.removeGesture(gestureVM)
 			self.gesturesVM.isExpectingNewGesture = scriptVM
 			pendingGesture = scriptVM.createPendingGesture()
 			self.tree.doRefresh(focus=(catVM, scriptVM, pendingGesture))
 			self._refreshButtonState()
-			inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
+			self._setCaptureFunc(lambda g: self._addGestureCaptor(g, catVM, scriptVM))
 		else:
 			log.error(f"unable to do 'change' action for selected item: {catVM}, {scriptVM}, {gestureVM}")
 
 	def _addKbEmuGestureCaptor(self, gesture: inputCore.InputGesture, catVM: _EmuCategoryVM) -> bool:
 		if not isinstance(gesture, keyboardHandler.KeyboardInputGesture) or gesture.isModifier:
 			return False
-		inputCore.manager._captureFunc = None
+		self._setCaptureFunc(None)
 		wx.CallAfter(self._addCapturedKbEmu, gesture, catVM)
 		return False
+
+	def _setCaptureFunc(self, captureFunc):
+		"""Update the global captureFunc and stash the value locally"""
+		self.lastCaptureFunc = inputCore.manager._captureFunc = captureFunc
 
 	def _addGestureCaptor(
 		self,
@@ -813,7 +823,7 @@ class InputGesturesDialog(SettingsDialog):
 			gesName = keyLabels.getKeyCombinationLabel(gesture.normalizedIdentifiers[-1][3:])
 			if gesName == scriptVM.scriptInfo.displayName:
 				return False
-		inputCore.manager._captureFunc = None
+		self._setCaptureFunc(None)
 		wx.CallAfter(self._addCaptured, catVM, scriptVM, gesture)
 		return False
 
@@ -869,7 +879,7 @@ class InputGesturesDialog(SettingsDialog):
 		pending = getattr(scriptVM, "pending", None)
 		assert pending is not None
 		self.gesturesVM.isExpectingNewGesture = scriptVM
-		inputCore.manager._captureFunc = lambda g: self._addGestureCaptor(g, catVM, scriptVM)
+		self._setCaptureFunc(lambda g: self._addGestureCaptor(g, catVM, scriptVM))
 		self.tree.doRefresh(focus=(catVM, scriptVM, pending))
 		self._refreshButtonState()
 

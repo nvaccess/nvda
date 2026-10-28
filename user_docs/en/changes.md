@@ -25,6 +25,7 @@
 * When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 * When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
+* Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
 
 #### Performance
 
@@ -40,6 +41,8 @@
 
 #### Applications
 
+* In Microsoft PowerPoint, NVDA no longer reads the slide title twice. (#9379, @ChristosBouronikos)
+  * The slide title is now announced with a "Slide title" label, and the rest of the slide is introduced with "Slide contents".
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
