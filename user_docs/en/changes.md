@@ -14,6 +14,8 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 ### Bug Fixes
 
 * Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
+* Updated eSpeak NG to [commit `b97de3cf2`](https://github.com/nvaccess/espeak-ng/commit/b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc).
+This changes Brazilian Portuguese back to how it worked in 2026.1. (#21059)
 
 ## 2026.3
 
