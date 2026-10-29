@@ -5204,6 +5204,13 @@ The following displays support this automatic detection functionality.
 * NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
 
+### Key assignments
+
+For each display, a table lists its key assignments.
+In these tables:
+* `routing` means pressing any routing key.
+* `multiRouting` means pressing two distinct routing key simultaneously.
+
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
 
 All Focus and PAC Mate displays from [Freedom Scientific](https://www.freedomscientific.com/) are supported when connected via USB or bluetooth.
@@ -5234,7 +5241,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move back using right wiz wheel action |rightWizWheelUp|
 |Move forward using right wiz wheel action |rightWizWheelDown|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |brailleSpaceBar+dot1+dot2|
 |tab key |brailleSpaceBar+dot4+dot5|
 |upArrow key |brailleSpaceBar+dot1|
@@ -5311,7 +5318,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to next line |t4|
 |Scroll braille display forward |t5, etouch3|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |Report text formatting under braille cell |secondary routing|
 |Toggle HID keyboard simulation |t1+spEnter|
 |Move to top line in review |t1+t2|
@@ -5364,7 +5371,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |b4|
 |Move braille display to next line |b5|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+tab key |esc, left triple action key up+down|
 |alt key |b2+b4+b5|
 |escape key |b4+b6|
@@ -5435,7 +5442,7 @@ Please see your display's documentation for descriptions of where these keys can
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
-| Select range from first up to last braille cell | two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |`shift+tab` key |`space+dot1+dot3`|
 |`tab` key |`space+dot4+dot6`|
 |`alt` key |`space+dot1+dot3+dot4` (`space+m`)|
@@ -5531,7 +5538,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |up|
 |Move braille display to next line |down|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |Toggle braille tethered to |up+down|
 |upArrow key |space+dot1|
 |downArrow key |space+dot4|
@@ -5718,7 +5725,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |leftArrow key |RJ left|
 |rightArrow key |RJ right|
 |Route to braille cell |routing|
-| Select range from first up to last braille cell | two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |shift+upArrow key |Space+RJ up, Backspace+RJ up|
 |shift+downArrow key |Space+RJ down, Backspace+RJ down|
 |shift+leftArrow key |Space+RJ left, Backspace+RJ left|
@@ -6089,6 +6096,7 @@ The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are support
 These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+In addition, in the key assignment tables of the models below, `doubleRouting` gesture corresponds to pressing a routing key twice quickly.
 
 These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
@@ -6196,7 +6204,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |Scroll braille display back |`leftKeypadLeft`|
 |Scroll braille display forward |`leftKeypadRight`|
 |Route to braille cell |`routing`|
-| Report text formatting under braille cell | double press on `routing` |
+|Report text formatting under braille cell |`doubleRouting`|
 |Move to next line in review |`leftKeypadDown`|
 |Switch to previous review mode |`leftKeypadLeft+leftKeypadUp`|
 |Switch to next review mode |`leftKeypadRight+leftKeypadDown`|
@@ -6219,7 +6227,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |Scroll braille display forward |`switch1Right`|
 |Move to current focus |`switch1Center`|
 |Route to braille cell |`routing`|
-| Report text formatting under braille cell | double press on `routing` |
+|Report text formatting under braille cell |`doubleRouting`|
 |Move to previous line in review |`joystick1Up`|
 |Move to next line in review |`joystick1Down`|
 |Move to previous character in review |`joystick1Left`|
@@ -6242,7 +6250,7 @@ The braille keyboard functions described directly below is when "HID Keyboard si
 |Scroll braille display forward |`l8`|
 |Move to current focus |`l1+l8`|
 |Route to braille cell |`routing`|
-| Report text formatting under braille cell | double press on `routing` |
+|Report text formatting under braille cell |`doubleRouting`|
 |Move to previous line in review |`joystick1Up`|
 |Move to next line in review |`joystick1Down`|
 |Move to previous character in review |`joystick1Left`|
@@ -6346,7 +6354,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Scroll braille display back |`left`, `lWheelLeft`, `rWheelLeft`|
 |Scroll braille display forward |`right`, `lWheelRight`, `rWheelRight`|
 |Route to braille cell |`routing`|
-| Select range from first up to last braille cell | `home1` or `home2` and two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `home1+multiRouting`, `home2+multiRouting` |
 |Report text formatting under braille cell |`secondary routing`|
 |Toggle the way context information is presented in braille |`attribute1+attribute3`|
 |Cycles between speech modes |`attribute2+attribute4`|
@@ -6404,7 +6412,7 @@ Please see the display's documentation for descriptions of where these keys can 
 |Move braille display to previous line |`d1`|
 |Move braille display to next line |`d3`|
 |Route to braille cell |`routing`|
-| Select range from first up to last braille cell | and two `routing` keys simultaneously |
+| Select range from first up to last braille cell | `multiRouting` |
 |Up arrow key |`up`|
 |Down arrow key |`down`|
 |Left arrow key |`left`|
