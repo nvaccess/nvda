@@ -537,8 +537,9 @@ class SpeechSymbolProcessor:
 		characters = "[%s]" % re.escape("".join(characters))  # noqa: UP031
 		# The simple symbols must be ordered longest first so that the longer symbols will match.
 		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
-
-		# Build the regexp.
+		# Number of times a symbol must repeat in a row before it is announced as a repeat.
+		threshold: int = speechConf["symbolRepeatAnnounceThreshold"] 
+		# Buildthe regexp.
 		patterns: list[str] = []
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
@@ -548,7 +549,7 @@ class SpeechSymbolProcessor:
 				# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 				r"(?P<rstripSpace>  +$)",
 				# Whether characters are counted is decided by the symbolRepeatAnnouceThreshold setting.
-				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp)+)" % characters,  # noqa: UP031
+				rf"(?P<repeated>(?P<repTmp>{characters})(?P=repTmp){{{threshold - 1},}})",
 			],
 		)
 		# Simple symbols.
