@@ -4308,16 +4308,20 @@ class GlobalCommands(ScriptableObject):
 		endPos = max(gesture.cellIndexes)
 		startInfo = braille.handler.getTextInfoForWindowPos(startPos)
 		endInfo = braille.handler.getTextInfoForWindowPos(endPos)
-		if startInfo is None or endInfo is None:
+		if startInfo is None or endInfo is None or startInfo.obj != endInfo.obj:
 			# Translators: Reported when selection via multiple routing keys is not possible.
 			ui.message(_("Cannot select from braille routing keys"))
 			return
 		startInfo.setEndPoint(endInfo, "endToEnd")
 		try:
+			oldInfo = startInfo.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			startInfo.updateSelection()
 		except NotImplementedError:
 			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 			ui.message(_("Selection not supported here"))
+			return
+		if hasattr(startInfo.obj, "reportSelectionChange"):
+			startInfo.obj.reportSelectionChange(oldInfo)
 
 	@script(
 		# Translators: Input help mode message for a braille command.
