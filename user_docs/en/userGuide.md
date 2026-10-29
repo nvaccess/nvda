@@ -5208,6 +5208,7 @@ The following displays support this automatic detection functionality.
 
 For each display, a table lists its key assignments.
 In these tables:
+
 * `routing` means pressing any routing key.
 * `multiRouting` means pressing two distinct routing key simultaneously.
 
