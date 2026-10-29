@@ -1945,7 +1945,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			max=int(validation.kwargs["max"]),
 			initial=config.conf["speech"]["maxSelectionReportingLength"],
 		)
-		self.bindHelpEvent("SpeechSettingsMaxSelectionReportingLength", self.maxSelectionReportingLengthEdit)
+		self.bindHelpEvent("MaxSelectionReportingLength", self.maxSelectionReportingLengthEdit)
 
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		# Translators: This is the label for a checkbox in the voice settings panel.
