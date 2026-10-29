@@ -16,9 +16,9 @@ import re
 from typing import (
 	Generic,
 	TypeVar,
+	cast,
 )
 from collections.abc import Callable
-
 import NVDAState
 from logHandler import log
 import globalVars
@@ -537,8 +537,9 @@ class SpeechSymbolProcessor:
 		characters = "[%s]" % re.escape("".join(characters))  # noqa: UP031
 		# The simple symbols must be ordered longest first so that the longer symbols will match.
 		multiChars.sort(key=lambda identifier: len(identifier), reverse=True)
-
-		# Build the regexp.
+		# Number of times a symbol must repeat in a row before it is announced as a repeat.
+		threshold: int = speechConf["symbolRepeatAnnounceThreshold"] 
+		# Buildthe regexp.
 		patterns: list[str] = []
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
@@ -547,8 +548,8 @@ class SpeechSymbolProcessor:
 			[
 				# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 				r"(?P<rstripSpace>  +$)",
-				# Repeated characters: more than 3 repeats.
-				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters,  # noqa: UP031
+				# Whether characters are counted is decided by the symbolRepeatAnnouceThreshold setting.
+				rf"(?P<repeated>(?P<repTmp>{characters})(?P=repTmp){{{threshold - 1},}})",
 			],
 		)
 		# Simple symbols.
@@ -606,6 +607,9 @@ class SpeechSymbolProcessor:
 			# Repeated character.
 			text = m.group()
 			symbol = self.computedSymbols[text[0]]
+			threshold = cast(int, config.conf["speech"]["symbolRepeatAnnounceThreshold"])
+			if threshold == 0 or len(text) < threshold:
+				return "".join(self._regexp.sub(self._regexpRepl, char) for char in text)
 			if self._level >= symbol.level:
 				return f"  {len(text)} {symbol.replacement} "
 			elif symbol.preserve in [SYMPRES_ALWAYS, SYMPRES_NOREP]:
