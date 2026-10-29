@@ -2392,7 +2392,7 @@ This can be useful if it is hard to distinguish between pronunciation of symbols
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the `control` key.
 
-##### Speak selected text if it has fewer characters than {#SpeechSettingsMaxSelectionReportingLength}
+##### Speak selected text if it has fewer characters than {#MaxSelectionReportingLength}
 
 | . {.hideHeaderRow} |.|
 |---|---|
