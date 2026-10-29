@@ -16,7 +16,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 * Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
 
-## Changes for developers
+### Changes for Developers
 
 * Updated Python to 3.13.17. (#21067)
 * Updated pip dependencies (#21067):
