@@ -14,6 +14,9 @@
 
 ### Bug Fixes
 
+* NVDA can now start in Windows PE when optional Windows APIs are unavailable.
+  Depending on the image contents, affected features can include the Magnifier, Screen Curtain,
+  Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
@@ -80,6 +83,9 @@ A read completing on the same handle no longer ends the wait while the write is 
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
+* Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`,
+  and `WINUSB_AVAILABLE`.
+  Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
 
 #### API Breaking Changes
