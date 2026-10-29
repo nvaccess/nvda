@@ -10,7 +10,7 @@ A bug fix is also included for an issue introduced in 2026.3 with the task switc
 Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
 
 * Fixed NVDA leaking the Remote Access key. (#21037)
-* Updated certifi to 2026.10.23. (GHSA-3j65-46c5-4grp)
+* Updated certifi to 2026.10.23. ([GHSA-3j65-46c5-4grp](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp))
 
 ### Bug Fixes
 
