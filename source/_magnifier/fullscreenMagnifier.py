@@ -48,13 +48,18 @@ class FullScreenMagnifier(Magnifier):
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
-		self._isSecureDesktopActive = False
 
 	def _onSecureDesktopChange(self, isSecureDesktop: bool) -> None:
 		"""Internal callback for secure desktop state changes.
 		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
 		"""
-		self._isSecureDesktopActive = isSecureDesktop
+		if isSecureDesktop:
+			# While secure desktop is active, the secure desktop masks the user's one, so updating magnification on
+			# the user's desktop is useless. But overall, calling magnification.MagSetInputTransform is not allowed
+			# and causes an error. Thus we disable magnifier update while secure desktop is active.
+			self._stopTimer()
+		else:
+			self._startTimer(self._updateMagnifier)
 
 	@staticmethod
 	def _isAccessDeniedError(error: OSError) -> bool:
@@ -297,7 +302,7 @@ class FullScreenMagnifier(Magnifier):
 			params.coordinates.x,
 			params.coordinates.y,
 		)
-		if self._inputTransformSupported and not self._isSecureDesktopActive:
+		if self._inputTransformSupported:
 			sourceRect = RECT(
 				params.coordinates.x,
 				params.coordinates.y,
