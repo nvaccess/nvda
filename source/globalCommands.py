@@ -4313,14 +4313,16 @@ class GlobalCommands(ScriptableObject):
 			ui.message(_("Cannot select from braille routing keys"))
 			return
 		startInfo.setEndPoint(endInfo, "endToEnd")
+		oldInfo = None
 		try:
-			oldInfo = startInfo.obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			if hasattr(startInfo.obj, "reportSelectionChange"):
+				oldInfo = startInfo.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			startInfo.updateSelection()
 		except NotImplementedError:
 			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
 			ui.message(_("Selection not supported here"))
 			return
-		if hasattr(startInfo.obj, "reportSelectionChange"):
+		if oldInfo is not None:
 			startInfo.obj.reportSelectionChange(oldInfo)
 
 	@script(
