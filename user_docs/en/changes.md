@@ -41,8 +41,6 @@
 
 #### Applications
 
-* In Microsoft PowerPoint, NVDA no longer reads the slide title twice. (#9379, @ChristosBouronikos)
-  * The slide title is now announced with a "Slide title" label, and the rest of the slide is introduced with "Slide contents".
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
@@ -109,6 +107,41 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
+
+## 2026.3.1
+
+This is a patch release to fix security issues.
+A bug fix is also included for an issue introduced in 2026.3 with the task switcher in Windows 10.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed NVDA leaking the Remote Access key. (#21037)
+* Updated certifi to 2026.10.23. ([GHSA-3j65-46c5-4grp](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp))
+
+### Bug Fixes
+
+* Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
+* Updated eSpeak NG to [commit `b97de3cf2`](https://github.com/nvaccess/espeak-ng/commit/b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc).
+This changes Brazilian Portuguese back to how it worked in 2026.1. (#21059)
+
+### Changes for Developers
+
+* Updated Python to 3.13.17. (#21067)
+* Updated pip dependencies (#21067):
+  * cryptography to 50.0.2.
+  * url-normalize to 3.0.1.
+  * pycaw to 20260927.
+  * nh3 to 0.3.7.
+  * crowdin-api-client to 1.30.0.
+  * markdown to 3.11.2.
+  * lxml to 6.1.3.
+  * regex to 2026.9.29.
+  * scons to 4.11.1.
+  * uv to 0.13.5.
+  * sphinx to 9.2.0.
+  * robotframework to 7.5.
 
 ## 2026.3
 

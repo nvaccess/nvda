@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2021-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2021-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter, Carter Temm
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the speech module."""
 
@@ -634,6 +634,36 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			reportNormalizedForCharacterNavigation=True,
 		)
 		self.assertEqual(repr(list(output)), expected)
+
+
+class Test_getSelectionMessageSpeech(unittest.TestCase):
+	_LIMIT = 10
+
+	def setUp(self):
+		config.conf["speech"]["maxSelectionReportingLength"] = self._LIMIT
+
+	def tearDown(self):
+		config.conf["speech"]["maxSelectionReportingLength"] = config.conf.getConfigValidation(
+			["speech", "maxSelectionReportingLength"],
+		).default
+
+	def _getMessage(self, text: str) -> str:
+		return "".join(
+			item
+			for item in speechModule._getSelectionMessageSpeech("%s selected", text)
+			if isinstance(item, str)
+		)
+
+	def test_textUnderLimitIsSpoken(self):
+		text = "a" * (self._LIMIT - 1)
+		self.assertEqual(self._getMessage(text), f"{text} selected")
+
+	def test_textAtLimitReportsCount(self):
+		text = "a" * self._LIMIT
+		self.assertEqual(self._getMessage(text), f"{self._LIMIT} characters selected")
+
+	def test_deprecatedConstantReturnsSetting(self):
+		self.assertEqual(speechModule.MAX_LENGTH_FOR_SELECTION_REPORTING, self._LIMIT)
 
 
 class SpeechExtensionPoints(unittest.TestCase):
