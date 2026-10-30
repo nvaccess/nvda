@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Andrew Johnson.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -868,6 +868,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		# start NVDA by pressing the shortcut key (CTRL+Alt+N by default).
 		self.startAfterLogonCheckBox = wx.CheckBox(self, label=_("St&art NVDA after I sign in"))
 		self.startAfterLogonCheckBox.SetValue(config.getStartAfterLogon())
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartAfterLogonChanged: bool = False
+		self.startAfterLogonCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartAfterLogonChanged)
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startAfterLogonCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startAfterLogonCheckBox)
@@ -882,6 +885,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("GeneralSettingsStartOnLogOnScreen", self.startOnLogonScreenCheckBox)
 		self.startOnLogonScreenCheckBox.SetValue(config.getStartOnLogonScreen())
+		# A failed read appears unchecked; only an explicit user action should request a change.
+		self._hasStartOnLogonScreenChanged: bool = False
+		self.startOnLogonScreenCheckBox.Bind(wx.EVT_CHECKBOX, self._onStartOnLogonScreenChanged)
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.startOnLogonScreenCheckBox.Disable()
 		settingsSizerHelper.addItem(self.startOnLogonScreenCheckBox)
@@ -1049,7 +1055,15 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
-	def onSave(self):
+	def _onStartAfterLogonChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartAfterLogonChanged = True
+		evt.Skip()
+
+	def _onStartOnLogonScreenChanged(self, evt: wx.CommandEvent) -> None:
+		self._hasStartOnLogonScreenChanged = True
+		evt.Skip()
+
+	def onSave(self) -> None:
 		if (
 			not languageHandler.isLanguageForced()
 			or self.languageList.GetSelection() != len(self.languageNames) - 1
@@ -1059,18 +1073,42 @@ class GeneralSettingsPanel(SettingsPanel):
 		config.conf["general"]["saveConfigurationOnExit"] = self.saveOnExitCheckBox.IsChecked()
 		config.conf["general"]["askToExit"] = self.askToExitCheckBox.IsChecked()
 		config.conf["general"]["playStartAndExitSounds"] = self.playStartAndExitSoundsCheckBox.IsChecked()
-		if self.startAfterLogonCheckBox.IsEnabled():
-			config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
-		if self.startOnLogonScreenCheckBox.IsEnabled():
+		if self.startAfterLogonCheckBox.IsEnabled() and self._hasStartAfterLogonChanged:
+			try:
+				config.setStartAfterLogon(self.startAfterLogonCheckBox.GetValue())
+			except (OSError, TypeError):
+				log.exception("Unable to set start after sign-in")
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically after signing in.
+							"Unable to change the setting to start NVDA after you sign in.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
+			else:
+				self._hasStartAfterLogonChanged = False
+		if self.startOnLogonScreenCheckBox.IsEnabled() and self._hasStartOnLogonScreenChanged:
 			try:
 				config.setStartOnLogonScreen(self.startOnLogonScreenCheckBox.GetValue())
-			except (OSError, RuntimeError):
-				gui.messageBox(
-					_("This change requires administrator privileges."),
-					_("Insufficient Privileges"),
-					style=wx.OK | wx.ICON_ERROR,
-					parent=self,
-				)
+			except (OSError, RuntimeError, TypeError):
+				log.exception("Unable to set start during sign-in")
+				if not core._hasShutdownBeenTriggered:
+					gui.message.MessageDialog(
+						parent=self,
+						message=_(
+							# Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
+							"Unable to change the setting to use NVDA during sign-in.",
+						),
+						# Translators: The title of an error message dialog.
+						title=_("Error"),
+						dialogType=gui.message.DialogType.ERROR,
+					).ShowModal()
+			else:
+				self._hasStartOnLogonScreenChanged = False
 		if updateCheck:
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
@@ -1581,20 +1619,21 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				pass
 
 	def onDiscard(self):
-		# unbind change events for string settings as wx closes combo boxes on cancel
-		settingsInst = self.getSettings()
-		for setting in settingsInst.supportedSettings:
-			if isinstance(setting, (NumericDriverSetting, BooleanDriverSetting)):
-				continue
-			getattr(self, f"{setting.id}List").Unbind(wx.EVT_CHOICE)
+		# unbind change events for string settings as wx closes combo boxes on cancel.
+		# Use the controls that were created, as the settings instance may have changed since (#6469).
+		for settingId in self.sizerDict:
+			if combo := getattr(self, f"{settingId}List", None):
+				combo.Unbind(wx.EVT_CHOICE)
 		# restore settings
-		settingsInst.loadSettings()
+		self.getSettings().loadSettings()
 
 	def onSave(self):
 		self.getSettings().saveSettings()
 
 	def refreshGui(self):
-		if not self._currentSettingsRef():
+		# The previous settings instance may outlive its replacement (e.g. a terminated synth awaiting
+		# garbage collection), so compare identity rather than waiting for the weakref to die (#6469).
+		if self._currentSettingsRef() is not self.getSettings():
 			if gui._isDebug():
 				log.debug("refreshing panel")
 			self.sizerDict.clear()
@@ -1604,6 +1643,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				lambda ref: wx.CallAfter(self.refreshGui),
 			)
 			self.makeSettings(self.settingsSizer)
+			self.settingsSizer.Layout()
 
 	def onPanelActivated(self):
 		"""Called after the panel has been activated
@@ -2688,7 +2728,7 @@ class BrowseModePanel(SettingsPanel):
 		self.nativeSelectionModeCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is the label for a combo box in the browse mode settings panel.
-				"Nati&ve selection mode",
+				"Nati&ve selection mode on page load",
 			),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["virtualBuffers", "nativeSelectionMode"],
@@ -4314,8 +4354,6 @@ class AdvancedPanelControls(
 			wx.EVT_CHECKBOX,
 			lambda evt: self.openScratchpadButton.Enable(evt.IsChecked()),
 		)
-		if config.isAppX:
-			self.scratchpadCheckBox.Disable()
 
 		# Translators: the label for a button in the Advanced settings category
 		label = _("Open developer scratchpad directory")
@@ -4323,8 +4361,6 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("AdvancedSettingsOpenScratchpadDir", self.openScratchpadButton)
 		self.openScratchpadButton.Enable(config.conf["development"]["enableScratchpadDir"])
 		self.openScratchpadButton.Bind(wx.EVT_BUTTON, self.onOpenScratchpadDir)
-		if config.isAppX:
-			self.openScratchpadButton.Disable()
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -6678,13 +6714,16 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
-		if (
-			not NvdaSettingsDialogActiveConfigProfile  # noqa: SIM101
-			or isinstance(self.currentCategory, GeneralSettingsPanel)
-			or isinstance(self.currentCategory, AddonStorePanel)
-			or isinstance(self.currentCategory, RemoteSettingsPanel)
-			or isinstance(self.currentCategory, MathSettingsPanel)
-			or isinstance(self.currentCategory, PrivacyAndSecuritySettingsPanel)
+		if not NvdaSettingsDialogActiveConfigProfile or isinstance(
+			self.currentCategory,
+			(
+				GeneralSettingsPanel,
+				MagnifierPanel,
+				AddonStorePanel,
+				RemoteSettingsPanel,
+				MathSettingsPanel,
+				PrivacyAndSecuritySettingsPanel,
+			),
 		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")

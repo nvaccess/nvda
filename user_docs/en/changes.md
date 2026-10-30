@@ -1,5 +1,112 @@
 # What's New in NVDA
 
+## 2027.1
+
+### Important notes
+
+### New Features
+<!-- Note we are in a feature freeze, only features related to API breaking changes should be listed here -->
+
+### Changes
+
+* The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+* Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+
+### Bug Fixes
+
+* The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
+  * Fixed an issue that could prevent automatic startup from being enabled on some systems.
+  * Saving other settings no longer unexpectedly disables automatic startup.
+  * If saving fails, NVDA now reports the error and continues saving other settings.
+* Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
+* When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
+* Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
+* When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
+* The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
+* Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
+
+#### Performance
+
+#### Braille
+
+* The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
+* Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+
+#### Web browsers
+
+* In browse mode in Mozilla Firefox, NVDA no longer fails to read content containing markup with invalid XML attribute names. (#7173, @akj)
+* In web browsers, NVDA now announces the labels of enclosing regions and groupings when tabbing to an element with the application role. (#20753)
+
+#### Applications
+
+* Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+* In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
+  * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
+  * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+* In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
+* In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
+
+#### Add-on Store
+
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
+
+#### Magnifier
+
+* Profiles no longer interfere with Magnifier settings.
+Previously, saving magnifier settings could be ineffective while a profile was active.
+The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+* Updated components:
+  * wxPython to 4.3.2, which is based on wxWidgets 3.3.4. (#20882, #20983, @LeonarddeR, @cary-rowen)
+* The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
+* Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
+A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
+  * `IoBase.write` now raises `OSError` when a write fails, instead of returning silently.
+  * Closing a device now cancels a pending write, and repeated `close()` calls are safe.
+  * A failure to start a background read is now reported through the driver's read error callback, instead of silently ending the read loop.
+* `keyboardHandler.KeyboardInputGesture.fromName` now treats the non modifier key as the main key, regardless of its position in the name. (#8201, @LeonarddeR)
+  * For example, `alt+b+control` now creates the same gesture as `alt+control+b`.
+  * When the name contains only modifiers, the last key remains the main key.
+  * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
+* The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
+Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
+* `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
+* `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+* APIs that wxWidgets deprecated in version 3.0 are no longer available.
+Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPython-4.3.1/CHANGES.rst) for details. (#20700, @LeonarddeR)
+* `gui.nvdaControls.CustomCheckListBox.notifyIAccessible` has been removed with no public replacement. (#20700, @LeonarddeR)
+* The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
+* `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
+* `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
+* Some symbols in `comInterfaces.tom` have changed, as it is now generated from the type library in `msftedit.dll`: (#20987, @LeonarddeR)
+  * `ITextDocument2` is now the Text Object Model 2 interface.
+  The interface previously available under this name has been removed with no replacement.
+  * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
+
+#### Deprecations
+
+* The following symbols from `winKernel` are deprecated: (#20784, #20836)
+  * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
+  * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
+  * `PROCESS_QUERY_INFORMATION` and `PROCESS_TERMINATE`: use `winBindings.kernel32.PROCESS.QUERY_INFORMATION` and `winBindings.kernel32.PROCESS.TERMINATE` instead.
+* `getCommentInfoFromPosition` and `getPresentableCommentInfoFromPosition` in `NVDAObjects.UIA.wordDocument` are deprecated with no public replacement. (#14985, @LeonarddeR)
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2026.3.1
 
 This is a patch release to fix security issues.

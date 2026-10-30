@@ -27,7 +27,6 @@ from typing import (
 import zipfile
 from configobj import ConfigObj
 from configobj.validate import Validator
-import config
 from config.registry import ADDON_BUNDLE_EXTENSION
 import languageHandler
 from logHandler import log
@@ -391,9 +390,6 @@ def disableAddonsIfAny():
 
 def initialize():
 	"""Initializes the add-ons subsystem."""
-	if config.isAppX:
-		log.info("Add-ons not supported when running as a Windows Store application")
-		return
 	state.load()
 	# #3090: Are there add-ons that are supposed to not run for this session?
 	disableAddonsIfAny()

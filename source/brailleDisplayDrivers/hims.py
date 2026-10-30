@@ -43,6 +43,7 @@ from winBindings.winusb import (
 	WinUsb_SetPipePolicy,
 	WinUsb_WritePipe,
 )
+from winBindings import kernel32
 import braille
 import braille.display
 import braille.display.driver
@@ -166,7 +167,7 @@ class _WinUsbBulk:
 
 		self._handle = CreateFile(
 			path,
-			winKernel.GENERIC_READ | winKernel.GENERIC_WRITE,
+			kernel32.GENERIC.READ | kernel32.GENERIC.WRITE,
 			winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
 			None,
 			winKernel.OPEN_EXISTING,

@@ -29,6 +29,7 @@ import inputCore
 import keyboardHandler
 import louisHelper
 import queueHandler
+import systemUtils
 import winBindings.kernel32
 import winKernel
 import wx
@@ -424,6 +425,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		"""When a decider handler decides to disable the braille handler, ensure braille doesn't continue.
 		This should be called from the main thread to avoid wx assertions.
 		"""
+		self.autoScroll(enable=False)
 		if self._cursorBlinkTimer:
 			# A blinking cursor should be stopped
 			self._cursorBlinkTimer.Stop()
@@ -749,13 +751,15 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		:param enable: ``True`` if automatic scroll should be enabled, ``False`` otherwise.
 		"""
 
-		if not self.enabled:
-			return
-		if enable and self._autoScrollCallLater is None:
+		if enable:
+			if not self.enabled or self._autoScrollCallLater is not None:
+				return
 			self._autoScrollCallLater = wx.CallLater(self._calculateAutoScrollTimeout(), self.scrollForward)
-		elif not enable and self._autoScrollCallLater is not None:
+			systemUtils.preventSystemIdle(persistent=True)
+		elif self._autoScrollCallLater is not None:
 			self._autoScrollCallLater.Stop()
 			self._autoScrollCallLater = None
+			systemUtils.resetThreadExecutionState()
 
 	def _calculateAutoScrollTimeout(self) -> int:
 		"""

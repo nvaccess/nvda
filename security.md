@@ -2,7 +2,6 @@
 
 Please do not report security vulnerabilities through public GitHub issues.
 You can report security issues directly through [a GitHub Security Advisory](https://github.com/nvaccess/nvda/security/advisories/new).
-Please use [our advisory template](./projectDocs/issues/securityAdvisoryTemplate.md).
 Alternatively, please report security issues via an email to [info@nvaccess.org](mailto:info@nvaccess.org).
 
 You should receive an acknowledgement in the advisory or via email response within 3 business days.
@@ -22,6 +21,10 @@ This information will help us triage your report more quickly.
 * If there is a known solution or approach to fixing this issue
 
 Examples of handled security issues in NVDA can be found in the [NVDA GitHub Security Advisories page](https://github.com/nvaccess/nvda/security/advisories).
+
+Note for security researchers:
+We are a small, not-for-profit organisation, dedicated to creating and freely providing the NVDA screen reader, which enables blind people around the world to access the PC, for free.
+As such, we do not have a bug bounty program, however we will gratefully receive any reports of genuine issues.
 
 ## Security Advisory Group
 

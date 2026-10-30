@@ -253,6 +253,9 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 			log.debugWarning("task had errors", exc_info=True)
 
 
+_persistentSystemIdlePreventionRequests = 0
+
+
 def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: bool = False) -> None:
 	"""
 	Prevent the system from locking the screen or going to sleep.
@@ -265,6 +268,9 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 		import config
 
 		preventDisplayTurningOff = config.conf["general"]["preventDisplayTurningOff"]
+	global _persistentSystemIdlePreventionRequests
+	if persistent:
+		_persistentSystemIdlePreventionRequests += 1
 	winBindings.kernel32.SetThreadExecutionState(
 		winKernel.ES_SYSTEM_REQUIRED
 		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurningOff else 0)
@@ -273,8 +279,12 @@ def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: 
 
 
 def resetThreadExecutionState() -> None:
-	"""Reset the thread execution state to the default."""
-	winBindings.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)
+	"""Release a persistent system idle prevention request."""
+	global _persistentSystemIdlePreventionRequests
+	if _persistentSystemIdlePreventionRequests:
+		_persistentSystemIdlePreventionRequests -= 1
+	if not _persistentSystemIdlePreventionRequests:
+		winBindings.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)
 
 
 @contextmanager

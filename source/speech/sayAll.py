@@ -104,7 +104,7 @@ class _SayAllHandler:
 			self.startedFromScript = startedFromScript
 		reader = _ObjectsReader(self, obj)
 		self._getActiveSayAll = weakref.ref(reader)
-		reader.next()
+		reader.start()
 
 	def readText(
 		self,
@@ -138,7 +138,7 @@ class _SayAllHandler:
 			log.debugWarning("Unable to make reader", exc_info=True)
 			return
 		self._getActiveSayAll = weakref.ref(reader)
-		reader.next()
+		reader.start()
 
 
 class _Reader(garbageHandler.TrackedObject, metaclass=ABCMeta):
@@ -146,7 +146,12 @@ class _Reader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 	def __init__(self, handler: _SayAllHandler):
 		self.handler = handler
+		self._systemIdlePreventionActive = False
+
+	def start(self):
 		systemUtils.preventSystemIdle(persistent=True)
+		self._systemIdlePreventionActive = True
+		self.next()
 
 	@abstractmethod
 	def next(self): ...
@@ -154,6 +159,9 @@ class _Reader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	@abstractmethod
 	def stop(self):
 		"""Stops the reader."""
+		if not self._systemIdlePreventionActive:
+			return
+		self._systemIdlePreventionActive = False
 		systemUtils.resetThreadExecutionState()
 
 	def __del__(self):
