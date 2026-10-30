@@ -10,12 +10,121 @@ import pathlib
 import tempfile
 import unittest
 from typing import NamedTuple
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, PropertyMock, call, patch
 
 import installer
 import psutil
 from gui import installerGui
 from parameterized import parameterized
+
+
+class Test_tryCopyFile(unittest.TestCase):
+	_sourcePath = r"C:\source.txt"
+	_destPath = r"C:\destination.txt"
+	_qualifiedSourcePath = rf"\\?\{_sourcePath}"
+	_qualifiedDestPath = rf"\\?\{_destPath}"
+
+	@patch("installer.time.sleep")
+	@patch("installer.winBindings.kernel32.CopyFile", return_value=1)
+	def test_successDoesNotRetry(self, copyFileMock: MagicMock, sleepMock: MagicMock):
+		installer.tryCopyFile(self._sourcePath, self._destPath)
+
+		copyFileMock.assert_called_once_with(
+			self._qualifiedSourcePath,
+			self._qualifiedDestPath,
+			False,
+		)
+		sleepMock.assert_not_called()
+
+	def test_temporaryFailuresAreRetried(self):
+		with (
+			patch(
+				"installer.winBindings.kernel32.CopyFile",
+				side_effect=(0, 0, 1),
+			) as copyFileMock,
+			patch("installer.ctypes.GetLastError", return_value=33),
+			patch("installer.os.path.exists", return_value=False),
+			patch("installer.time.sleep") as sleepMock,
+		):
+			installer.tryCopyFile(
+				self._sourcePath,
+				self._destPath,
+				numRetries=3,
+				retryInterval=0.25,
+			)
+
+		self.assertEqual(copyFileMock.call_count, 3)
+		self.assertEqual(
+			sleepMock.call_args_list,
+			[call(0.25), call(0.25)],
+		)
+
+	def test_exhaustedRetriesRaiseOriginalError(self):
+		with (
+			patch(
+				"installer.winBindings.kernel32.CopyFile",
+				return_value=0,
+			) as copyFileMock,
+			patch("installer.ctypes.GetLastError", return_value=33),
+			patch("installer.os.path.exists", return_value=False),
+			patch("installer.time.sleep") as sleepMock,
+			self.assertRaisesRegex(OSError, r"error 33 copying"),
+		):
+			installer.tryCopyFile(
+				self._sourcePath,
+				self._destPath,
+				numRetries=3,
+				retryInterval=0.25,
+			)
+
+		self.assertEqual(copyFileMock.call_count, 3)
+		self.assertEqual(
+			sleepMock.call_args_list,
+			[call(0.25), call(0.25), call(0.25)],
+		)
+
+	def test_existingDestinationUsesOverwriteFallbackWithoutRetry(self):
+		tempPath = r"C:\temporary.txt"
+		with (
+			patch(
+				"installer.winBindings.kernel32.CopyFile",
+				side_effect=(0, 1),
+			) as copyFileMock,
+			patch("installer.ctypes.GetLastError", return_value=5),
+			patch("installer.os.path.exists", return_value=True),
+			patch(
+				"installer._createEmptyTempFileForDeletingFile",
+				return_value=tempPath,
+			) as createTempFileMock,
+			patch("installer.os.replace") as replaceMock,
+			patch("installer.winKernel.moveFileEx") as moveFileMock,
+			patch("installer.time.sleep") as sleepMock,
+		):
+			installer.tryCopyFile(self._sourcePath, self._destPath)
+
+		self.assertEqual(
+			copyFileMock.call_args_list,
+			[
+				call(
+					self._qualifiedSourcePath,
+					self._qualifiedDestPath,
+					False,
+				),
+				call(
+					self._qualifiedSourcePath,
+					self._qualifiedDestPath,
+					False,
+				),
+			],
+		)
+		createTempFileMock.assert_called_once()
+		replaceMock.assert_called_once_with(self._qualifiedDestPath, tempPath)
+		moveFileMock.assert_called_once_with(
+			tempPath,
+			None,
+			installer.winKernel.MOVEFILE_DELAY_UNTIL_REBOOT,
+		)
+		sleepMock.assert_not_called()
 
 
 class Test_BatchDeletion(unittest.TestCase):

@@ -14,6 +14,7 @@
 
 ### Bug Fixes
 
+* NVDA now retries copying user settings for use during sign-in and on secure screens when a configuration file is temporarily locked. (#20118, @b-tanyileke)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
