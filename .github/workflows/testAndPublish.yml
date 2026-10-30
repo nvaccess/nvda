@@ -366,13 +366,11 @@ jobs:
           with:
             name: makePot results
             path: output
-    - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
     - name: Upload translations to Crowdin
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-      run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
+      run: miscDeps/tools/l10nUtil.exe uploadSourceFile output\nvda.pot 2>&1
 
   createLauncher:
     name: Create launcher
