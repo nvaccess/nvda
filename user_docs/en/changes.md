@@ -1,5 +1,40 @@
 # What's New in NVDA
 
+## 2026.3.1
+
+This is a patch release to fix security issues.
+A bug fix is also included for an issue introduced in 2026.3 with the task switcher in Windows 10.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed NVDA leaking the Remote Access key. (#21037)
+* Updated certifi to 2026.10.23. ([GHSA-3j65-46c5-4grp](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp))
+
+### Bug Fixes
+
+* Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
+* Updated eSpeak NG to [commit `b97de3cf2`](https://github.com/nvaccess/espeak-ng/commit/b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc).
+This changes Brazilian Portuguese back to how it worked in 2026.1. (#21059)
+
+### Changes for Developers
+
+* Updated Python to 3.13.17. (#21067)
+* Updated pip dependencies (#21067):
+  * cryptography to 50.0.2.
+  * url-normalize to 3.0.1.
+  * pycaw to 20260927.
+  * nh3 to 0.3.7.
+  * crowdin-api-client to 1.30.0.
+  * markdown to 3.11.2.
+  * lxml to 6.1.3.
+  * regex to 2026.9.29.
+  * scons to 4.11.1.
+  * uv to 0.13.5.
+  * sphinx to 9.2.0.
+  * robotframework to 7.5.
+
 ## 2026.3
 
 This release includes significant performance improvements, improvements to NVDA's dialogs, and expanded touch screen input.
