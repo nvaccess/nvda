@@ -32,6 +32,7 @@
 
 * The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
 * Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+* When selecting text in browse mode with multiple routing keys, the selection is now announced and shown on the braille display. (#21086, @LeonarddeR)
 
 #### Web browsers
 
