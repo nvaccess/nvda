@@ -1,6 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen,
+# Carter Temm
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -76,6 +77,7 @@ from dataclasses import dataclass
 from copy import copy
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 from utils.displayString import DisplayStringIntEnum
+from utils._deprecate import RemovedSymbol, handleDeprecations
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -1300,7 +1302,21 @@ def speakSelectionMessage(
 		speak(seq, symbolLevel=None, priority=priority)
 
 
-MAX_LENGTH_FOR_SELECTION_REPORTING = 512
+# Remove MAX_LENGTH_FOR_SELECTION_REPORTING in 2028.1.
+# Add-ons should read config.conf["speech"]["maxSelectionReportingLength"] instead.
+__getattr__ = handleDeprecations(
+	RemovedSymbol(
+		"MAX_LENGTH_FOR_SELECTION_REPORTING",
+		lambda: config.conf["speech"]["maxSelectionReportingLength"],
+		callValue=True,
+		message='Use config.conf["speech"]["maxSelectionReportingLength"] instead.',
+	),
+)
+"""Module level `__getattr__` used to preserve backward compatibility."""
+
+
+def _isSelectionShortEnoughToSpeak(text: str) -> bool:
+	return len(text) < config.conf["speech"]["maxSelectionReportingLength"]
 
 
 def _getSelectionMessageSpeech(
@@ -1325,7 +1341,7 @@ def _getSelectionMessageSpeech(
 			seq.append(suffix)
 		return seq
 
-	if len(text) < MAX_LENGTH_FOR_SELECTION_REPORTING:
+	if _isSelectionShortEnoughToSpeak(text):
 		return _getSpeakMessageSpeech(message % text)
 	textLength = len(text)
 	# Translators: This is spoken when the user has selected a large portion of text.
