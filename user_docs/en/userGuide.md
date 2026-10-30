@@ -2392,6 +2392,21 @@ This can be useful if it is hard to distinguish between pronunciation of symbols
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the `control` key.
 
+##### Speak selected text if it has fewer characters than {#MaxSelectionReportingLength}
+
+This setting controls how much selected text NVDA speaks.
+When you select text, or use the read selection command (`NVDA+shift+upArrow`), NVDA speaks the selected text if it has fewer characters than this value.
+If the selection has this many characters or more, NVDA reports the number of selected characters instead.
+
+Pressing the read selection command twice or three times spells the selection only if it has fewer characters than this value.
+
+Speaking very long selections can be slow or even lead to crashes with some speech synthesizers, so take care when setting a high value.
+
+| . {.hideHeaderRow} |.|
+| --- | --- |
+| Options | 1 to 10000 |
+| Default | 512 |
+
 ##### Modes available in the Cycle speech mode command {#SpeechModesDisabling}
 
 This checkable list allows selecting which [speech modes](#SpeechModes) are included when cycling between them using `NVDA+s`.
