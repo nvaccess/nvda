@@ -2,7 +2,7 @@
 # Copyright (C) 2006-2026 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen,
-# Wang Chong, Kefas Lungu
+# Wang Chong, Kefas Lungu, Carter Temm
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -47,6 +47,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportLanguage = boolean(default=false)
 	reportNotSupportedLanguage = option("speech", "beep", "off", default="speech")
 	delayedCharacterDescriptions = boolean(default=false)
+	maxSelectionReportingLength = integer(min=1, max=10000, default=512)
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
 	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
