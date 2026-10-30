@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -601,3 +601,68 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_InstallingOverNewerVersionDialog_warningText(unittest.TestCase):
+	"""Tests for the warning shown when installing over a newer or unknown version of NVDA."""
+
+	_DOWNGRADE_START = "You are attempting to install an earlier version of NVDA"
+	_CONFIG_RESET = "your configuration will be reset to factory defaults"
+
+	def _getWarningText(
+		self,
+		dialogClass: type[installerGui.InstallingOverNewerVersionDialog],
+		*,
+		isLauncher: bool,
+		baseConfigError: bool,
+		installState: installer.ComparisonState = installer.ComparisonState.DOWNGRADE,
+	) -> str:
+		# Construct the Python object only; the warning text does not depend on the native dialog.
+		dialog = dialogClass.__new__(dialogClass)
+		dialog.installState = installState
+		with (
+			patch.object(installerGui.globalVars.appArgs, "launcher", isLauncher),
+			patch.object(installerGui.config.conf, "baseConfigError", baseConfigError),
+		):
+			return dialog._warningText
+
+	@parameterized.expand(
+		[
+			("launcherWithConfigError", True, True, True),
+			("launcherWithValidConfig", True, False, False),
+			("runningCopyWithConfigError", False, True, False),
+		],
+	)
+	def test_installer_configResetWarning(
+		self,
+		_name: str,
+		isLauncher: bool,
+		baseConfigError: bool,
+		shouldWarn: bool,
+	):
+		text = self._getWarningText(
+			installerGui.InstallingOverNewerVersionDialog,
+			isLauncher=isLauncher,
+			baseConfigError=baseConfigError,
+		)
+		self.assertTrue(text.startswith(self._DOWNGRADE_START))
+		self.assertEqual(self._CONFIG_RESET in text, shouldWarn)
+
+	def test_installer_unknownVersion_configResetWarning(self):
+		text = self._getWarningText(
+			installerGui.InstallingOverNewerVersionDialog,
+			isLauncher=True,
+			baseConfigError=True,
+			installState=installer.ComparisonState.UNKNOWN,
+		)
+		self.assertTrue(text.startswith("An existing NVDA installation has been detected"))
+		self.assertIn(self._CONFIG_RESET, text)
+
+	def test_portableCopy_neverWarnsAboutConfigReset(self):
+		text = self._getWarningText(
+			installerGui.PortableCopyOverNewerVersionDialog,
+			isLauncher=True,
+			baseConfigError=True,
+		)
+		self.assertTrue(text.startswith("You are attempting to replace an existing portable copy"))
+		self.assertNotIn(self._CONFIG_RESET, text)
