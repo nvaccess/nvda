@@ -10,6 +10,7 @@ from ast import NodeTransformer, fix_missing_locations, parse
 import os
 import sys
 import gettext
+from pathlib import Path
 from typing import TYPE_CHECKING, Final
 from buildVersion import (
 	formatBuildVersionString,
@@ -35,7 +36,8 @@ import wx
 import importlib.machinery
 
 if TYPE_CHECKING:
-	from ast import AnnAssign  # noqa: I001
+	from ast import AnnAssign, Assign
+
 	from py2exe.dllfinder import Scanner
 	from py2exe.mf310 import Module
 
@@ -119,6 +121,54 @@ def _hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
 # py2exe discovers hooks by name:
 # ``hook_<dotted_module_name_with_underscores>`` on the ``py2exe.hooks`` module.
 py2exe.hooks.hook_latex2mathml_symbols_parser = _hook_latex2mathml_symbols_parser
+
+
+class _WinrtProjectionTransformer(NodeTransformer):
+	"""Resolve projection tables outside library.zip in frozen builds."""
+
+	def __init__(self) -> None:
+		super().__init__()
+		self.rewritten: bool = False
+
+	def visit_Assign(self, node: Assign) -> Assign:
+		if len(node.targets) == 1 and getattr(node.targets[0], "id", None) == "table":
+			node.value = (
+				parse(
+					"os.path.join(os.path.dirname(sys.executable), *spec.name.split('.'), TABLE_NAME)",
+				)
+				.body[0]
+				.value
+			)
+			self.rewritten = True
+		return node
+
+
+def _hook_winrt_runtime_internals(finder: Scanner, module: Module) -> None:
+	"""Bundle WinRT 4 projection tables on disk and redirect the frozen loader.
+
+	The native runtime memory-maps these tables, so they cannot be read from
+	inside library.zip. Include every installed projection namespace as well,
+	since the runtime imports dependencies that modulefinder cannot see.
+	"""
+	import winrt
+
+	tree = parse(module.__source__)
+	transformer = _WinrtProjectionTransformer()
+	newTree = fix_missing_locations(transformer.visit(tree))
+	if not transformer.rewritten:
+		raise RuntimeError(
+			"py2exe hook failed to rewrite the WinRT projection table path. "
+			"The upstream loader may have changed.",
+		)
+	module.__code_object__ = compile(newTree, module.__file__, "exec", optimize=module.__optimize__)
+	for packagePath in winrt.__path__:
+		for tablePath in Path(packagePath).rglob("_table.pywinrt"):
+			relativePath = Path("winrt") / tablePath.relative_to(packagePath)
+			finder.add_datafile(str(relativePath), str(tablePath))
+			finder.import_hook(".".join(relativePath.parent.parts))
+
+
+py2exe.hooks.hook_winrt_runtime__internals = _hook_winrt_runtime_internals
 
 
 def _parsePartialArguments() -> argparse.Namespace:
