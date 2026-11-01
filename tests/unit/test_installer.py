@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter, Shimmy0530
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -15,6 +15,7 @@ from unittest.mock import MagicMock, PropertyMock, patch
 import installer
 import psutil
 from gui import installerGui
+from gui.message import DisplayableError
 from parameterized import parameterized
 
 
@@ -601,3 +602,56 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_validatePortableDirectory(unittest.TestCase):
+	"""Tests for the destination directory check in the Create Portable NVDA dialog (#20159)."""
+
+	def test_emptyDirectory_raises(self):
+		with self.assertRaises(DisplayableError) as cm:
+			installerGui._validatePortableDirectory("")
+		self.assertIn("Please specify a directory", cm.exception.displayMessage)
+
+	@parameterized.expand(
+		[
+			("bareDrive", "D:", "D:"),
+			("lowercaseBareDrive", "c:", "c:"),
+			("driveRelativeFolder", "D:folder", "D:"),
+		],
+	)
+	def test_driveWithoutBackslash_raisesDriveMessage(self, _name: str, path: str, drive: str):
+		with self.assertRaises(DisplayableError) as cm:
+			installerGui._validatePortableDirectory(path)
+		message = cm.exception.displayMessage
+		self.assertIn(f"use {drive}\\ for the root of the drive", message)
+		self.assertIn(f"Current path: {path}.", message)
+
+	@parameterized.expand(
+		[
+			("relativeFolder", "folder"),
+			("rootedWithoutDrive", "\\folder"),
+		],
+	)
+	def test_pathWithoutDrive_raisesGeneralMessage(self, _name: str, path: str):
+		with self.assertRaises(DisplayableError) as cm:
+			installerGui._validatePortableDirectory(path)
+		message = cm.exception.displayMessage
+		self.assertIn("(e.g. C:\\)", message)
+		self.assertNotIn("The drive letter must be followed by a backslash", message)
+
+	@parameterized.expand(
+		[
+			("driveRoot", "D:\\", "D:\\"),
+			("driveFolder", "D:\\portable\\NVDA", "D:\\portable\\NVDA"),
+			("uncShare", "\\\\server\\share\\NVDA", "\\\\server\\share\\NVDA"),
+		],
+	)
+	def test_absolutePath_returnsPath(self, _name: str, path: str, expected: str):
+		self.assertEqual(installerGui._validatePortableDirectory(path), expected)
+
+	def test_systemVariable_isExpanded(self):
+		with patch.dict(os.environ, {"NVDA_TEST_PORTABLE_DIR": "D:\\portable"}):
+			self.assertEqual(
+				installerGui._validatePortableDirectory("%NVDA_TEST_PORTABLE_DIR%\\NVDA"),
+				"D:\\portable\\NVDA",
+			)
