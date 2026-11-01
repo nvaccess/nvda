@@ -2340,7 +2340,7 @@ Note that this setting is only available when "[Unicode normalization](#SpeechUn
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
-These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data Repository](http://cldr.unicode.org/).
+These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data and Rules](http://cldr.unicode.org/).
 If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this option.
 However, if you are using a speech synthesizer that supports speaking emoji descriptions natively, you may wish to turn this off.
 
