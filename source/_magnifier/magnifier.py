@@ -210,7 +210,18 @@ class Magnifier:
 		if self._isBlockedByScreenCurtain():
 			return
 		self._isActive = True
-		self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		try:
+			self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
+		except (COMError, LookupError, OSError, RuntimeError):
+			# Tracking reads UIA and COM; its failure must not prevent the magnifier from starting.
+			log.warning(
+				"Magnifier could not determine what to track; starting at the screen centre",
+				exc_info=True,
+			)
+			self.currentCoordinates = Coordinates(
+				self._displayOrientation.width // 2,
+				self._displayOrientation.height // 2,
+			)
 		self._mouseHook = MagnifierMouseHook(self._onMouseMove)
 		self._mouseHook.start()
 
