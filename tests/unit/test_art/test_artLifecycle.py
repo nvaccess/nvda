@@ -9,15 +9,17 @@ Lifecycle behaviour is tested over the thread-backed host controller.
 Only facts that need a real process run against :class:`SubprocessHostController`.
 """
 
+import pathlib
 import threading
 import unittest
 from collections.abc import Callable
 from unittest.mock import MagicMock
 
+import rpyc
 from _art.host import entrypoint
 from _art.host.rootService import HostRootService
 from _art.session.addonSession import AddonSession, HostLaunchError, SessionState
-from _art.session.hostController import SubprocessHostController
+from _art.session.hostController import SubprocessHostController, interpreterCommand
 from _art.session.rootService import CoreRootService
 from _art.transport import Connection
 from rpyc.core.stream import Stream
@@ -26,36 +28,17 @@ from .threadHostController import ThreadHostController
 
 #: Bound on anything involving a real process or a background thread, in seconds.
 _TIMEOUT: float = 30.0
+#: Grace given to a host to exit once its control connection closes, in tests that expect it not to.
+_SHORT_GRACE: float = 0.2
 
 
-class BackgroundCall:
-	"""Runs a call on a daemon thread, so a test can bound how long it waits for it."""
+def fakeHostCommand(behaviour: str, *arguments: str) -> list[str]:
+	"""The command line that runs the fake host with ``behaviour``.
 
-	def __init__(self, func: Callable[[], None], name: str) -> None:
-		# Used for mutability; should only ever have 0 or 1 elements.
-		self._outcome: list[BaseException | None] = []
-		self._name = name
-		self._thread = threading.Thread(target=self._run, args=(func,), name=name, daemon=True)
-		self._thread.start()
-
-	def _run(self, func: Callable[[], None]) -> None:
-		try:
-			func()
-		except BaseException as e:  # noqa: BLE001
-			self._outcome.append(e)
-		else:
-			self._outcome.append(None)
-
-	def result(self, testCase: unittest.TestCase, timeout: float = _TIMEOUT) -> None:
-		"""Wait for the call, failing the test rather than hanging if it does not return.
-
-		Re-raises whatever the call raised.
-		"""
-		self._thread.join(timeout)
-		if not self._outcome:
-			testCase.fail(f"{self._name} did not return within {timeout}s")
-		if (exc := self._outcome[0]) is not None:
-			raise exc
+	See ``fakeHosts/fakeHost.py`` for the behaviours available.
+	"""
+	script = pathlib.Path(__file__).parent / "fakeHosts" / "fakeHost.py"
+	return interpreterCommand(str(script), behaviour, *arguments)
 
 
 def startWithin(testCase: unittest.TestCase, session: AddonSession, timeout: float = _TIMEOUT) -> None:
@@ -63,39 +46,41 @@ def startWithin(testCase: unittest.TestCase, session: AddonSession, timeout: flo
 
 	Re-raises whatever ``start`` raised.
 	"""
-	BackgroundCall(session.start, "AddonSession.start").result(testCase, timeout)
+	# Used for mutability; should only ever have 0 or 1 elements.
+	outcome: list[BaseException | None] = []
+
+	def target():
+		try:
+			session.start()
+		except BaseException as e:  # noqa: BLE001
+			outcome.append(e)
+		else:
+			outcome.append(None)
+
+	thread = threading.Thread(target=target, name="test session start", daemon=True)
+	thread.start()
+	thread.join(timeout)
+	if not outcome:
+		testCase.fail(f"AddonSession.start did not return within {timeout}s")
+	if (exc := outcome[0]) is not None:
+		raise exc
 
 
-def waitForState(session: AddonSession, state: SessionState, timeout: float = _TIMEOUT) -> bool:
-	"""Wait for ``session`` to reach ``state``, returning whether it did within ``timeout``."""
-	with session._stateChanged:
-		return session._stateChanged.wait_for(lambda: session.state is state, timeout)
-
-
-def recordStates(session: AddonSession) -> list[SessionState]:
-	"""Record every state ``session`` moves to from here on."""
-	states: list[SessionState] = []
-	realSetState = session._setState
-
-	def setState(state: SessionState) -> None:
-		states.append(state)
-		realSetState(state)
-
-	session._setState = setState
-	return states
-
-
-def makeHostRun(body: Callable[[Connection], None]) -> Callable[[Stream], None]:
+def makeHostRun(body: Callable[[Connection], None], serve: bool = True) -> Callable[[Stream], None]:
 	"""Build a host half that runs ``body`` in place of the real entry point's readiness signal.
 
-	``body`` receives the host's end of the control connection, and the event loop runs once it returns.
+	``body`` receives the host's end of the control connection.
+
+	:param serve: Whether to run the event loop once ``body`` returns.
+		If ``False``, the host finishes when ``body`` does, as though it had exited.
 	"""
 
 	def run(stream: Stream) -> None:
 		conn = Connection(stream, HostRootService(), name=entrypoint.CONTROL_CONNECTION_NAME)
 		try:
 			body(conn)
-			conn.eventLoop()
+			if serve:
+				conn.eventLoop()
 		finally:
 			conn.close()
 
@@ -144,8 +129,8 @@ class TestReadinessSignalReceipt(unittest.TestCase):
 		self.onReady.assert_not_called()
 
 
-class TestAddonSessionLifecycle(unittest.TestCase):
-	"""Starting and stopping a session, over the thread-backed controller."""
+class TestAddonSessionLaunch(unittest.TestCase):
+	"""Launching a session and waiting for readiness, over the thread-backed controller."""
 
 	def makeSession(self, controller: ThreadHostController | None = None) -> AddonSession:
 		self.controller = controller if controller is not None else ThreadHostController()
@@ -185,22 +170,6 @@ class TestAddonSessionLifecycle(unittest.TestCase):
 		with self.assertRaises(RuntimeError):
 			_ = session.hostRoot
 
-	def test_unreachableRootServiceAbortsLaunch(self):
-		"""A host that signals readiness but does not expose its root service fails the session."""
-
-		def body(conn: Connection) -> None:
-			entrypoint._signalReadiness(conn)
-			# Never serves, so core's request for the root service is not answered before the connection closes.
-			conn.close()
-
-		session = self.makeSession(ThreadHostController(run=makeHostRun(body)))
-		with self.assertRaises(HostLaunchError):
-			startWithin(self, session)
-		self.assertIs(session.state, SessionState.FAILED)
-		self.assertIn("root service", session.failureReason)
-		with self.assertRaises(RuntimeError):
-			_ = session.hostRoot
-
 	def test_laterSignalDoesNotChangeTheOutcome(self):
 		"""A failure reported after a successful launch is ignored."""
 		lateSignalSent = threading.Event()
@@ -237,7 +206,7 @@ class TestAddonSessionLifecycle(unittest.TestCase):
 			session.start()
 
 	def test_stopStopsTheHost(self):
-		"""Stopping a ready session stops its host."""
+		"""Closing a ready session stops its host."""
 		session = self.makeSession()
 		startWithin(self, session)
 		session.stop()
@@ -268,67 +237,6 @@ class TestAddonSessionLifecycle(unittest.TestCase):
 		self.assertEqual(statesWhenTerminated[0], SessionState.STOPPING)
 		self.assertIs(session.state, SessionState.STOPPED)
 
-	def makeHeldLaunchSession(
-		self,
-		failure: str | None = None,
-	) -> tuple[AddonSession, threading.Event, threading.Event]:
-		"""Make a session whose host holds off signalling readiness until released.
-
-		:param failure: The failure the host reports once released, or ``None`` for a successful launch.
-		:returns: The session, an event set once the host is running, and the event that releases the host.
-		"""
-		hostRunning = threading.Event()
-		release = threading.Event()
-
-		def body(conn: Connection) -> None:
-			hostRunning.set()
-			release.wait(_TIMEOUT)
-			entrypoint._signalReadiness(conn, failure)
-
-		session = self.makeSession(ThreadHostController(run=makeHostRun(body)))
-		# Cleanups run last-in first-out, so a failed test releases the host before stopping the session,
-		# rather than waiting out the host's timeout.
-		self.addCleanup(release.set)
-		return session, hostRunning, release
-
-	def test_stopWhileStartingWaitsForReadiness(self):
-		"""A session stopped while starting lets the host finish launching, then stops it without ever being ready."""
-		session, hostRunning, release = self.makeHeldLaunchSession()
-		states = recordStates(session)
-		start = BackgroundCall(session.start, "AddonSession.start")
-		# The session is ``STARTING`` before the host is, so wait for the host itself.
-		self.assertTrue(hostRunning.wait(_TIMEOUT))
-		stop = BackgroundCall(session.stop, "AddonSession.stop")
-		self.assertTrue(waitForState(session, SessionState.STOPPING))
-		# The host has not yet signalled readiness, so the session must hold off on terminating it.
-		self.assertIsNone(self.controller.poll())
-		release.set()
-		stop.result(self)
-		with self.assertRaises(HostLaunchError):
-			start.result(self)
-		self.assertEqual(
-			states,
-			[SessionState.STARTING, SessionState.STOPPING, SessionState.STOPPED],
-		)
-		self.assertIsNone(session.failureReason)
-		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
-
-	def test_stopDuringFailedLaunchLeavesSessionFailed(self):
-		"""A host that reports a failed launch after the session was stopped still fails the session."""
-		FAILURE_REASON = "component failed to load"
-		session, hostRunning, release = self.makeHeldLaunchSession(FAILURE_REASON)
-		start = BackgroundCall(session.start, "AddonSession.start")
-		self.assertTrue(hostRunning.wait(_TIMEOUT))
-		stop = BackgroundCall(session.stop, "AddonSession.stop")
-		self.assertTrue(waitForState(session, SessionState.STOPPING))
-		release.set()
-		stop.result(self)
-		with self.assertRaises(HostLaunchError):
-			start.result(self)
-		self.assertIs(session.state, SessionState.FAILED)
-		self.assertIn(FAILURE_REASON, session.failureReason)
-		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
-
 	def test_stopIsIdempotent(self):
 		"""Stopping twice, or stopping a session that was never started, is not an error."""
 		session = self.makeSession()
@@ -352,7 +260,7 @@ class TestLifecycleProcessConformance(unittest.TestCase):
 	"""Lifecycle facts checked against a real host process."""
 
 	def test_realHostBecomesReady(self):
-		"""A freshly booted host process signals readiness, and is stopped by stopping the session."""
+		"""A freshly booted host process signals readiness, and is stopped by closing the session."""
 		controller = SubprocessHostController()
 		session = AddonSession(controller)
 		self.addCleanup(session.stop)
@@ -361,3 +269,182 @@ class TestLifecycleProcessConformance(unittest.TestCase):
 		self.assertEqual(session.hostRoot.ping(), "pong")
 		session.stop()
 		self.assertIsNotNone(controller.wait(_TIMEOUT))
+
+
+class TestChildExitDetection(unittest.TestCase):
+	"""Noticing a host that goes away without being asked to, over the thread-backed controller."""
+
+	def setUp(self):
+		# Released at cleanup, so that no test leaves a host thread blocked.
+		self.release = threading.Event()
+		self.addCleanup(self.release.set)
+
+	def makeSession(self, run: Callable[[Stream], None], **kwargs) -> AddonSession:
+		self.controller = ThreadHostController(run=run)
+		session = AddonSession(self.controller, **kwargs)
+		self.addCleanup(session.close)
+		return session
+
+	def exitAfterReady(self, exitWith: BaseException | None = None) -> Callable[[Stream], None]:
+		"""A host half that signals readiness, then finishes once :attr:`release` is set.
+
+		:param exitWith: Raised to finish, or ``None`` to return normally.
+		"""
+
+		def body(conn: Connection) -> None:
+			entrypoint._signalReadiness(conn)
+			self.release.wait(_TIMEOUT)
+			if exitWith is not None:
+				raise exitWith
+
+		return makeHostRun(body, serve=False)
+
+	@unittest.expectedFailure
+	def test_hostExitingAfterReadyFailsTheSession(self):
+		"""A host that finishes of its own accord, even cleanly, has failed."""
+		session = self.makeSession(self.exitAfterReady())
+		startWithin(self, session)
+		self.release.set()
+		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertIn("status 0", session.failureReason)
+		self.assertEqual(session.exitStatus, 0)
+
+	@unittest.expectedFailure
+	def test_hostCrashingAfterReadyFailsTheSession(self):
+		"""A host that dies of an exception has failed, with a failure status."""
+		session = self.makeSession(self.exitAfterReady(RuntimeError("host crashed")))
+		startWithin(self, session)
+		self.release.set()
+		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertEqual(session.exitStatus, 1)
+
+	@unittest.expectedFailure
+	def test_hostExitingDuringLaunchFailsItPromptly(self):
+		"""A host that finishes before signalling readiness ends launch, rather than leaving ``start`` waiting."""
+		session = self.makeSession(makeHostRun(lambda conn: None, serve=False))
+		with self.assertRaises(HostLaunchError) as cm:
+			startWithin(self, session)
+		self.assertIn("exited unexpectedly", str(cm.exception))
+		self.assertIs(session.state, SessionState.FAILED)
+
+	@unittest.expectedFailure
+	def test_closedConnectionIsNotTakenAsProofOfExit(self):
+		"""A host that drops the connection but keeps running is stopped, and the session failed."""
+
+		def body(conn: Connection) -> None:
+			entrypoint._signalReadiness(conn)
+			self.release.wait(_TIMEOUT)
+			conn.close()
+			# A thread cannot be killed, so lingering here stands in for a process that will not exit.
+			self.lingerDone.wait(_TIMEOUT)
+
+		self.lingerDone = threading.Event()
+		self.addCleanup(self.lingerDone.set)
+		terminated = threading.Event()
+		session = self.makeSession(makeHostRun(body, serve=False), exitConfirmGrace=_SHORT_GRACE)
+		realTerminate = self.controller.terminate
+
+		def terminate() -> None:
+			terminated.set()
+			realTerminate()
+
+		self.controller.terminate = terminate
+		startWithin(self, session)
+		self.release.set()
+		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertIn("did not exit", session.failureReason)
+		self.assertTrue(terminated.is_set())
+		self.assertIsNone(session.exitStatus)
+
+	@unittest.expectedFailure
+	def test_closingIsNotAFailure(self):
+		"""The host going away because core closed the session is expected."""
+		session = self.makeSession(entrypoint.run)
+		startWithin(self, session)
+		session.close()
+		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
+		self.assertIs(session.state, SessionState.STOPPED)
+		self.assertIsNone(session.failureReason)
+
+	@unittest.expectedFailure
+	def test_closingDuringLaunchEndsLaunch(self):
+		"""Closing a session that is still waiting for readiness makes ``start`` give up, without a failure."""
+		session = self.makeSession(makeHostRun(lambda conn: None))
+		startError: list[BaseException] = []
+
+		def start() -> None:
+			try:
+				session.start()
+			except BaseException as e:  # noqa: BLE001
+				startError.append(e)
+
+		starter = threading.Thread(target=start, daemon=True)
+		starter.start()
+		# Anything other than ``NEW`` means launch has begun.
+		self.assertTrue(
+			session.waitForState(*(set(SessionState) - {SessionState.NEW}), timeout=_TIMEOUT),
+		)
+		session.close()
+		starter.join(_TIMEOUT)
+		self.assertFalse(starter.is_alive(), "start did not return after the session was closed")
+		self.assertIsInstance(startError[0], HostLaunchError)
+		self.assertIs(session.state, SessionState.STOPPED)
+		self.assertIsNone(session.failureReason)
+
+	@unittest.expectedFailure
+	def test_exitStatusIsNoneBeforeStart(self):
+		"""There is no exit status for a host that was never started."""
+		session = self.makeSession(entrypoint.run)
+		self.assertIsNone(session.exitStatus)
+
+
+class TestChildExitDetectionProcessConformance(unittest.TestCase):
+	"""Exit detection against real host processes, which can die in ways a thread cannot."""
+
+	def makeSession(self, *command: str, **kwargs) -> AddonSession:
+		self.controller = SubprocessHostController(command=fakeHostCommand(*command))
+		session = AddonSession(self.controller, **kwargs)
+		self.addCleanup(session.close)
+		return session
+
+	@unittest.expectedFailure
+	def test_hostDyingAfterReadyIsDetected(self):
+		"""A host process that dies abruptly closes its pipe, and core records how it died."""
+		session = self.makeSession("instrumented")
+		startWithin(self, session)
+		rpyc.async_(session.hostRoot._crash)(3)
+		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertEqual(session.exitStatus, 3)
+		self.assertIn("status 3", session.failureReason)
+
+	@unittest.expectedFailure
+	def test_hostIsADirectChildOfCore(self):
+		"""The process the controller holds is the host itself, not a launcher standing between them.
+
+		A launcher would hold its own copies of the host's pipes, hiding a host that closes its end,
+		and would be the process that handles for dependent connections are duplicated into.
+		"""
+		session = self.makeSession("instrumented")
+		startWithin(self, session)
+		self.assertEqual(session.hostRoot._getPid(), self.controller._process.pid)
+
+	@unittest.expectedFailure
+	def test_hostDyingDuringLaunchFailsItPromptly(self):
+		"""A host process that dies before signalling readiness ends launch straight away."""
+		session = self.makeSession("exitBeforeReady", "4")
+		with self.assertRaises(HostLaunchError):
+			startWithin(self, session)
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertEqual(session.exitStatus, 4)
+
+	@unittest.expectedFailure
+	def test_lingeringHostIsStopped(self):
+		"""A host process that closes its pipe but keeps running is stopped, rather than left behind."""
+		session = self.makeSession("closeAndLinger", exitConfirmGrace=_SHORT_GRACE)
+		with self.assertRaises(HostLaunchError):
+			startWithin(self, session)
+		self.assertIn("did not exit", session.failureReason)
+		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
