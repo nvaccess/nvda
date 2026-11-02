@@ -491,12 +491,14 @@ class Client:
 
 	def _isMessageWithinSizeLimit(self, data: bytes) -> bool:
 		messageSizeLimit = (
-			self._MAX_MESSAGE_SIZE_BYTES if self.authenticated else self._MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES
+			self._MAX_MESSAGE_SIZE_BYTES
+			if self.authenticated
+			else self._MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES
 		)
 		if len(data) <= messageSizeLimit:
 			return True
 		log.warning(
-			f"Client {self.id} exceeded the maximum message size of {messageSizeLimit} bytes"
+			f"Client {self.id} exceeded the maximum message size of {messageSizeLimit} bytes",
 		)
 		self.close()
 		return False
