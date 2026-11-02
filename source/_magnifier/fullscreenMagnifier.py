@@ -222,11 +222,13 @@ class FullScreenMagnifier(Magnifier):
 			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
 			# which is the call that fails when Windows Magnifier is running.
 			self._initializeNativeMagnification()
-			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 		except OSError:
 			log.error("Recovery failed", exc_info=True)  # noqa: G201
 			self._conductRecoveryFailure()
 			return
+
+		# Same path as start-up, so that recovery is subject to the flash limiter.
+		self._applyFilter()
 
 		self._consecutiveErrors = 0
 		log.debug("Full-screen magnifier recovery succeeded")
