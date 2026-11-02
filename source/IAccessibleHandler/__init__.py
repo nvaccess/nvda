@@ -567,7 +567,12 @@ def winEventToNVDAEvent(
 	# without waiting for its DWM ghost window to be created (which is the gap
 	# that previously froze NVDA for several seconds on first contact, and on
 	# every subsequent interaction with the hung window).
-	if winUser.isHungAppWindow(window):
+	# The classic task switcher is reported as hung while it emits MSAA focus events (#21052).
+	if winUser.isHungAppWindow(window) and not (
+		eventID in (winUser.EVENT_OBJECT_FOCUS, winUser.EVENT_SYSTEM_FOREGROUND)
+		and objectID == winUser.OBJID_CLIENT
+		and winUser.getClassName(window) in ("#32771", "TaskSwitcherWnd")
+	):
 		if isMSAADebugLoggingEnabled():
 			log.debugWarning(
 				f"Hung application. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
