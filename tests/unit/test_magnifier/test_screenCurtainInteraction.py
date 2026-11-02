@@ -5,10 +5,12 @@
 
 """Unit tests for the interaction between the magnifier and the screen curtain."""
 
+import unittest
 from unittest.mock import MagicMock, patch
 
 from _magnifier.utils.types import Coordinates
 from comtypes import COMError
+from screenCurtain._screenCurtain import ScreenCurtain
 
 from tests.unit.test_magnifier.test_magnifier import _TestMagnifier
 
@@ -36,3 +38,36 @@ class TestStartWhenTrackingFails(_TestMagnifier):
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(side_effect=AttributeError("bug"))
 		with self.assertRaises(AttributeError):
 			self.magnifier._startMagnifier()
+
+
+class TestScreenCurtainIsolatesMagnifier(unittest.TestCase):
+	def setUp(self):
+		self.curtain = ScreenCurtain.__new__(ScreenCurtain)
+		self.curtain._settings = {"enabled": False, "playToggleSounds": False, "warnOnLoad": False}
+		self.curtain._enabled = False
+		# Prevent __del__ from calling the real Magnification API after the patches are removed.
+		self.addCleanup(setattr, self.curtain, "_enabled", False)
+		self.failingMagnifier = MagicMock()
+		self.failingMagnifier.onScreenCurtainEnabled.side_effect = COMError(-1, "injected", (None,) * 5)
+		self.failingMagnifier.onScreenCurtainDisabled.side_effect = COMError(-1, "injected", (None,) * 5)
+		for patcher in (
+			patch("screenCurtain._screenCurtain.magnification"),
+			patch("screenCurtain._screenCurtain.isScreenFullyBlack", return_value=True),
+			patch("_magnifier.getMagnifier", return_value=self.failingMagnifier),
+		):
+			patcher.start()
+			self.addCleanup(patcher.stop)
+		logPatcher = patch("screenCurtain._screenCurtain.log")
+		self.mockLog = logPatcher.start()
+		self.addCleanup(logPatcher.stop)
+
+	def testDisableSurvivesMagnifierFailure(self):
+		self.curtain._enabled = True
+		self.curtain.disable(persist=False)
+		self.assertFalse(self.curtain.enabled)
+		self.mockLog.exception.assert_called_once()
+
+	def testEnableSurvivesMagnifierFailure(self):
+		self.curtain.enable(persist=False)
+		self.assertTrue(self.curtain.enabled)
+		self.mockLog.exception.assert_called_once()
