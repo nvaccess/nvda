@@ -11,6 +11,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 * Fixed NVDA leaking the Remote Access key. (#21037)
 * Updated certifi to 2026.10.23. ([GHSA-3j65-46c5-4grp](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp))
+* Prevent DOS when Remote Access is running. ([GHSA-v99h-jr79-r5cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp), @Cem-Kaya)
 
 ### Bug Fixes
 

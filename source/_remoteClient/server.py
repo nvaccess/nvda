@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2015-2026 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Server implementation for NVDA Remote relay functionality.
 
@@ -24,16 +24,16 @@ When clients disconnect or lose connection, the server automatically removes the
 notifies other connected clients of the departure.
 """
 
-import os  # noqa: I001
+import os
 import shutil
 import socket
 import ssl
 import tempfile
 import time
-from datetime import datetime, timedelta, UTC
+from datetime import UTC, datetime, timedelta
+from itertools import count
 from pathlib import Path
 from select import select
-from itertools import count
 from typing import Any, Final, cast
 
 import cffi  # noqa # required for cryptography
@@ -41,19 +41,12 @@ from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.x509.oid import NameOID
-from NVDAState import WritePaths, shouldWriteToDisk
 from logHandler import log
+from NVDAState import WritePaths, shouldWriteToDisk
 
 from . import configuration
 from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
-
-
-# Authentication messages are small, so use a lower limit before authentication
-# to minimize the memory an unauthenticated client can retain.
-MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES: Final[int] = 64 * 1024
-# Authenticated messages can include larger payloads such as clipboard text.
-MAX_MESSAGE_SIZE_BYTES: Final[int] = 10 * 1024 * 1024
 
 
 class RemoteCertificateManager:
@@ -447,6 +440,13 @@ class Client:
 
 	_idCounter = count(1)
 
+	_MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES: Final[int] = 64 * 1024
+	"""Authentication messages are small, so use a lower limit before authentication
+	to minimize the memory an unauthenticated client can retain."""
+
+	_MAX_MESSAGE_SIZE_BYTES: Final[int] = 10 * 1024 * 1024
+	"""Authenticated messages can include larger payloads such as clipboard text."""
+
 	def __init__(self, server: LocalRelayServer, socket: ssl.SSLSocket) -> None:
 		"""Initialize a client connection.
 
@@ -476,13 +476,13 @@ class Client:
 		data = self.buffer + sockData
 		self.buffer = b""
 		while b"\n" in data:
-			line, sep, data = data.partition(b"\n")  # noqa: RUF059
+			line, _sep, data = data.partition(b"\n")
 			if not self._isMessageWithinSizeLimit(line):
 				return
 			try:
 				self.parse(line)
 			except ValueError:
-				log.error(f"Error parsing message from client {self.id}", exc_info=True)  # noqa: G201
+				log.exception(f"Error parsing message from client {self.id}")
 				self.close()
 				return
 		if not self._isMessageWithinSizeLimit(data):
@@ -490,16 +490,13 @@ class Client:
 		self.buffer = data
 
 	def _isMessageWithinSizeLimit(self, data: bytes) -> bool:
-		"""Return whether a complete or partial message is within the size limit."""
 		messageSizeLimit = (
-			MAX_MESSAGE_SIZE_BYTES if self.authenticated else MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES
+			self._MAX_MESSAGE_SIZE_BYTES if self.authenticated else self._MAX_UNAUTHENTICATED_MESSAGE_SIZE_BYTES
 		)
 		if len(data) <= messageSizeLimit:
 			return True
 		log.warning(
-			"Client %s exceeded the maximum message size of %s bytes",
-			self.id,
-			messageSizeLimit,
+			f"Client {self.id} exceeded the maximum message size of {messageSizeLimit} bytes"
 		)
 		self.close()
 		return False
