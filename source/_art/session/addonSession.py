@@ -165,7 +165,11 @@ class AddonSession:
 				CoreRootService(onReady=self._onReady),
 				name=CONTROL_CONNECTION_NAME,
 			)
-			self._conn.bgEventLoop(daemon=True)
+			threading.Thread(
+				target=self._serveControlConnection,
+				name=f"ART connection event loop: {CONTROL_CONNECTION_NAME}",
+				daemon=True,
+			).start()
 		except Exception as e:
 			self._fail(f"Host could not be started: {e}")
 			raise HostLaunchError("Host could not be started") from e
@@ -214,6 +218,9 @@ class AddonSession:
 			self._readinessFailure = failure
 			self._readinessReported = True
 			self._stateChanged.notify_all()
+
+	def _serveControlConnection(self) -> None:
+		self._conn.eventLoop()
 
 	def stop(self) -> None:
 		"""Stop the session and its host.
