@@ -343,13 +343,6 @@ class Magnifier:
 		Handles disabling magnifier if it's active.
 		"""
 		if self._isActive:
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Spoken message when magnifier is disabled due to screen curtain being enabled.
-					"Disabling magnifier",
-				),
-			)
 			self._stopMagnifier()
 			self._screenCurtainIsActive = True
 		else:
@@ -362,13 +355,6 @@ class Magnifier:
 		"""
 		if self._screenCurtainIsActive:
 			self._screenCurtainIsActive = False
-			ui.message(
-				pgettext(
-					"magnifier",
-					# Translators: Spoken message when magnifier is re-enabled after screen curtain is disabled.
-					"Re-enabling magnifier",
-				),
-			)
 			try:
 				self._startMagnifier()
 			except MagnifierStartError as e:

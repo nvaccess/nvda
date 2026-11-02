@@ -8,6 +8,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
+from _magnifier.utils.errorHandling import MagnifierStartError
 from _magnifier.utils.types import Coordinates
 from comtypes import COMError
 from screenCurtain._screenCurtain import ScreenCurtain
@@ -38,6 +39,16 @@ class TestStartWhenTrackingFails(_TestMagnifier):
 		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(side_effect=AttributeError("bug"))
 		with self.assertRaises(AttributeError):
 			self.magnifier._startMagnifier()
+
+	def testRestartFailureIsSpokenOnce(self):
+		self.magnifier._screenCurtainIsActive = True
+		self.magnifier._startMagnifier = MagicMock(side_effect=MagnifierStartError("x"))
+		with (
+			patch("_magnifier.magnifier.ui.message") as mockMessage,
+			patch("_magnifier.magnifier.setEnabled"),
+		):
+			self.magnifier.onScreenCurtainDisabled()
+		mockMessage.assert_called_once_with("x")
 
 
 class TestScreenCurtainIsolatesMagnifier(unittest.TestCase):
