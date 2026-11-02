@@ -53,9 +53,8 @@ jobs:
       uses: astral-sh/setup-uv@v8.3.2
 
     - name: Download translations from Crowdin
-      run: uv run source/l10nUtil.py exportTranslations -o .
+      run: uv run miscDeps/tools/l10nUtil.exe exportTranslations -o .
       env:
-        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
 
     - name: Commit tracked files only
