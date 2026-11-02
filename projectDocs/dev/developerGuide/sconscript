@@ -5,12 +5,16 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import sys
+import os
 
 Import("env", "outputDir", "sourceDir", "userDocsDir")
 
 env = env.Clone()
 
 devDocsOutputDir = outputDir.Dir("devDocs")
+
+# Path to nvdaL10n.
+NVDAL10N = os.path.abspath(os.path.join("..", "..", "..", "miscDeps", "tools", "l10nUtil.exe"))
 
 # Build the developer guide and move it to the output directory
 mdFile = env.File("developerGuide.md")
@@ -25,7 +29,7 @@ mdFileSub = env.Substfile(
 htmlFile = env.Command(
 	target=mdFile.abspath.replace(".md", ".html"),
 	source=mdFileSub,
-	action=[f'@"{sys.executable}" source/md2html.py -t developerGuide "$SOURCE" "$TARGET"'],
+	action=[f'@"{NVDAL10N}" md2html -t developerGuide "$SOURCE" "$TARGET"'],
 )
 devGuide = env.Command(
 	target=userDocsDir.File("developerGuide.html"),

@@ -12,9 +12,10 @@ scons source
 ```
 
 You should do this again whenever the version of comtypes changes or language files are added or changed.
-Note that if you want to access user documentation from the help menu while running the source version, you will also need to add `user_docs` to the command line like so:
+Note that if you want to access user documentation from the help menu while running the source version, you will also need to have the `l10nUtil.exe` tool in `miscDeps/tools`, and add `user_docs` to the command line like so:
 
 ```cmd
+curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
 scons source user_docs
 ```
 
