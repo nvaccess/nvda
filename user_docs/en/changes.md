@@ -1,5 +1,11 @@
 # What's New in NVDA
 
+## 2027.2
+
+### New Features
+
+* A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+
 ## 2027.1
 
 ### Important notes
