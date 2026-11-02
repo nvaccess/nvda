@@ -21,9 +21,11 @@ from __future__ import annotations
 import contextlib
 import io
 import msvcrt
+import os
 import subprocess
 import sys
 import threading
+from collections.abc import Sequence
 from ctypes import WinError, byref
 from ctypes.wintypes import HANDLE
 from typing import Final, Protocol
@@ -49,6 +51,35 @@ _HOST_ENTRYPOINT_MODULE: Final[str] = "_art.host.entrypoint"
 
 #: Buffer size for pipes backing dependent connections, matching rpyc's own default.
 _PIPE_BUFFER_SIZE: Final[int] = 130000
+
+#: Environment variable through which a virtual environment's launcher tells the base interpreter which environment it belongs to.
+#: An implementation detail of CPython's venv support on Windows.
+_VENV_LAUNCHER_ENV: Final[str] = "__PYVENV_LAUNCHER__"
+
+
+def interpreterCommand(*arguments: str) -> list[str]:
+	"""The command line that runs the current interpreter with ``arguments``, as a direct child of this process.
+
+	In a virtual environment, :data:`sys.executable` is a launcher that runs the base interpreter as a child of its own.
+	A host started through it is our grandchild, so its process ID is not the one we hold,
+	and the launcher keeps its own copies of the host's standard handles for as long as the host runs.
+	The base interpreter is run directly instead; :class:`SubprocessHostController` tells it which environment it is in,
+	just as the launcher would.
+
+	:param arguments: Arguments to the interpreter.
+	:returns: The command line.
+	"""
+	return [sys._base_executable, *arguments]
+
+
+def _interpreterEnvironment() -> dict[str, str] | None:
+	"""The environment for a host run by :func:`interpreterCommand`.
+
+	:returns: The environment, or ``None`` to inherit this process's unchanged.
+	"""
+	if sys.prefix == sys.base_prefix:
+		return None
+	return {**os.environ, _VENV_LAUNCHER_ENV: sys.executable}
 
 
 class HostController[HostPipeEnd](Protocol):
@@ -106,8 +137,16 @@ class SubprocessHostController:
 	which requires NVDA to be running from source.
 	"""
 
-	def __init__(self) -> None:
-		"""Initializer."""
+	def __init__(self, command: Sequence[str] | None = None) -> None:
+		"""Initializer.
+
+		:param command: The command line that launches the host.
+			Since hosts currently run on the interpreter, this should be built with :func:`interpreterCommand`.
+			Defaults to running the host entry point module.
+		"""
+		self._command: list[str] = (
+			list(command) if command is not None else interpreterCommand("-m", _HOST_ENTRYPOINT_MODULE)
+		)
 		self._process: subprocess.Popen | None = None
 		self._stderrThread: threading.Thread | None = None
 
@@ -120,15 +159,16 @@ class SubprocessHostController:
 			raise RuntimeError("Host has already been started")
 		if not NVDAState.isRunningAsSource():
 			raise RuntimeError("The ART host can only be launched on the interpreter path")
-		log.debug(f"Launching ART host: {sys.executable} -m {_HOST_ENTRYPOINT_MODULE}")
+		log.debug(f"Launching ART host: {subprocess.list2cmdline(self._command)}")
 		self._process = subprocess.Popen(
-			[sys.executable, "-m", _HOST_ENTRYPOINT_MODULE],
+			self._command,
 			stdin=subprocess.PIPE,
 			stdout=subprocess.PIPE,
 			stderr=subprocess.PIPE,
 			# Running with the source directory as the working directory puts the _art package on
 			# the host's import path, which is what makes ``-m`` resolve.
 			cwd=globalVars.appDir,
+			env=_interpreterEnvironment(),
 			creationflags=subprocess.CREATE_NO_WINDOW,
 		)
 		self._startStderrDrain()
