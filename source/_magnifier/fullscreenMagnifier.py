@@ -48,6 +48,13 @@ class FullScreenMagnifier(Magnifier):
 		self._spotlightManager = SpotlightManager(self)
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
+		self.isSecureDesktopActive = False
+
+	def _onSecureDesktopChange(self, isSecureDesktop: bool) -> None:
+		"""Internal callback for secure desktop state changes.
+		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
+		"""
+		self.isSecureDesktopActive = isSecureDesktop
 
 	@staticmethod
 	def _isAccessDeniedError(error: OSError) -> bool:
@@ -81,6 +88,9 @@ class FullScreenMagnifier(Magnifier):
 			log.debug(
 				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen tracking mode {self._fullscreenMode}",
 			)
+		from winAPI.secureDesktop import post_secureDesktopStateChange
+
+		post_secureDesktopStateChange.register(self._onSecureDesktopChange)
 		try:
 			self._initializeNativeMagnification()
 		except OSError:
@@ -161,6 +171,9 @@ class FullScreenMagnifier(Magnifier):
 		Stop the Full-screen magnifier using windows DLL
 		"""
 		super()._stopMagnifier()
+		from winAPI.secureDesktop import post_secureDesktopStateChange
+
+		post_secureDesktopStateChange.unregister(self._onSecureDesktopChange)
 		self._resetMagnification()
 		self._uninitializeNativeMagnification()
 
@@ -284,7 +297,7 @@ class FullScreenMagnifier(Magnifier):
 			params.coordinates.x,
 			params.coordinates.y,
 		)
-		if self._inputTransformSupported:
+		if self._inputTransformSupported and not self.isSecureDesktopActive:
 			sourceRect = RECT(
 				params.coordinates.x,
 				params.coordinates.y,
