@@ -1659,6 +1659,8 @@ This feature is particularly useful for users with low vision who need to enlarg
 
 The NVDA Magnifier operates as a full-screen magnifier, meaning it enlarges the entire screen while following the system focus or mouse pointer.
 It provides several configuration options to customize the magnification experience according to your needs.
+When running a portable or temporary copy of NVDA, mouse and touch input is inaccurate while the Magnifier is enabled.
+See [Portable and Temporary Copy Restrictions](#PortableAndTemporaryCopyRestrictions).
 
 ### Enabling and Disabling the Magnifier {#MagnifierToggle}
 
