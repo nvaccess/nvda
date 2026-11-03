@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt, Wang Chong,
-# Leonard de Ruijter
+# Leonard de Ruijter, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -156,13 +156,25 @@ def doStartupDialogs():
 	if config.conf.baseConfigError:
 		import wx
 
-		gui.messageBox(
-			_(
+		if not globalVars.appArgs.launcher:
+			message = _(
 				# Translators: A message informing the user that there are errors in the configuration file.
 				"Your configuration file contains errors. "
 				"Your configuration has been reset to factory defaults.\n"
 				"More details about the errors can be found in the log file.",
-			),
+			)
+		else:
+			message = _(
+				# Translators: A message informing the user that their configuration file could not be loaded,
+				# for example when running an NVDA installer which is older than the installed copy of NVDA.
+				# This copy of NVDA uses factory defaults, but the configuration file on disk is not changed.
+				"Your configuration file could not be loaded, "
+				"possibly because it was saved by a newer version of NVDA. "
+				"This copy of NVDA is using factory defaults.\n"
+				"More details about the errors can be found in the log file.",
+			)
+		gui.messageBox(
+			message,
 			# Translators: The title of the dialog to tell users that there are errors in the configuration file.
 			_("Configuration File Error"),
 			wx.OK | wx.ICON_EXCLAMATION,
