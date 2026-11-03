@@ -3234,3 +3234,49 @@ def test_nativeSelectionMode_focusModeCaretMovement():
 		actualSpeech,
 		"out of list  after",
 	)
+
+
+MAX_LINE_LENGTH_KEY = ["virtualBuffers", "maxLineLength"]
+
+
+def _getLongParagraphWords(wordCount: int) -> list[str]:
+	"""Words of 8 characters each ("word 001"), up to 999 words.
+	Separated by spaces, every word starts on a multiple of 9, so a maximum line length of 1000
+	breaks the line after the 111th word, at character 999.
+	The number is separated from "word" as speech would separate them anyway.
+	"""
+	return [f"word {n:03d}" for n in range(1, wordCount + 1)]
+
+
+def _prepareLongParagraph(wordCount: int) -> list[str]:
+	words = _getLongParagraphWords(wordCount)
+	_chrome.prepareChrome(f"<p>{' '.join(words)}</p>")
+	return words
+
+
+def test_maxLineLength_zeroIsUnbounded():
+	"""A maximum line length of 0 reads the whole paragraph as one line."""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(MAX_LINE_LENGTH_KEY, 0)
+	words = _prepareLongParagraph(200)
+
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(" ".join(actualSpeech.split()), " ".join(words))
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "After Test Case Marker")
+
+
+def test_maxLineLength_upperLimit():
+	"""A maximum line length of 1000 splits the paragraph at the last word boundary within 1000 characters."""
+	spy = _NvdaLib.getSpyLib()
+	spy.set_configValue(MAX_LINE_LENGTH_KEY, 1000)
+	_prepareLongParagraph(200)
+
+	# 111 words of 8 characters and the 110 spaces between them.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_builtIn.should_be_equal_as_integers(len(actualSpeech.strip()), 998)
+	# The remaining 89 words of 8 characters and the 88 spaces between them.
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_builtIn.should_be_equal_as_integers(len(actualSpeech.strip()), 800)
+	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
+	_asserts.strings_match(actualSpeech, "After Test Case Marker")
