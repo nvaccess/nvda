@@ -3,32 +3,34 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes  # noqa: I001
-from comtypes import BSTR, COMError
-import colors
-import eventHandler
-import comInterfaces.tom
-from logHandler import log
-import languageHandler
-import config
-import oleacc
-import winKernel
+import ctypes
+
 import api
-import winUser
-from winAPI.winUser.functions import GetSysColor
-from winAPI.winUser.constants import SysColorIndex
+import colors
+import comInterfaces.tom
+import comtypes.client.dynamic
+import config
+import controlTypes
+import eventHandler
+import languageHandler
+import locationHelper
+import NVDAHelper.localLib
+import oleacc
 import textInfos
 import textInfos.offsets
-import controlTypes
-from controlTypes import TextPosition, TextAlign
-from . import Window
-from ..behaviors import EditableTextWithAutoSelectDetection
-import watchdog
-import locationHelper
 import textUtils
+import watchdog
+import winKernel
+import winUser
+from comtypes import BSTR, COMError
+from controlTypes import TextAlign, TextPosition
+from logHandler import log
 from textUtils.segFlag import CharSegFlag, WordSegFlag
-import NVDAHelper.localLib
+from winAPI.winUser.constants import SysColorIndex
+from winAPI.winUser.functions import GetSysColor
 
+from ..behaviors import EditableTextWithAutoSelectDetection
+from . import Window
 
 selOffsetsAtLastCaretEvent = None
 
@@ -49,6 +51,13 @@ EM_GETTEXTLENGTHEX = winUser.WM_USER + 95
 EM_GETPAGE = winUser.WM_USER + 228
 
 LF_FACESIZE = 32
+
+_maxListKind = 32
+"""The highest kind of list in the low word of ``ITextPara.ListType``; higher values are a bullet character.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/tom/nf-tom-itextpara-getlisttype
+"""
 
 # structures
 
@@ -677,10 +686,21 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	# C901 '_getFormatFieldAtRange' is too complex
 	# Note: when working on _getFormatFieldAtRange look for opportunities to simplify
 	# and move logic out into smaller helper functions.
-	def _getFormatFieldAtRange(self, textRange, formatConfig):
+	def _getFormatFieldAtRange(
+		self,
+		textRange: comInterfaces.tom.ITextRange,
+		formatConfig: dict,
+		paraFormatObj: comInterfaces.tom.ITextPara | None = None,
+	) -> textInfos.FormatField:
+		"""The formatting of ``textRange`` that ``formatConfig`` asks to report.
+
+		:param textRange: The range to read the formatting of.
+		:param formatConfig: The document formatting configuration.
+		:param paraFormatObj: The paragraph format of ``textRange``, if already fetched.
+		:return: The formatting, as a format field.
+		"""
 		formatField = textInfos.FormatField()
 		fontObj = None
-		paraFormatObj = None
 		if formatConfig["reportAlignment"]:
 			if not paraFormatObj:
 				paraFormatObj = textRange.para
@@ -696,6 +716,12 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			else:
 				log.debugWarning(f"Unsupported text-align: {alignment}")
 				formatField["text-align"] = TextAlign.UNDEFINED
+		if formatConfig["reportHeadings"]:
+			if not paraFormatObj:
+				paraFormatObj = textRange.para
+			style = paraFormatObj.style
+			if comInterfaces.tom.tomParaStyleHeading9 <= style <= comInterfaces.tom.tomParaStyleHeading1:
+				formatField["heading-level"] = comInterfaces.tom.tomParaStyleHeading1 - style + 1
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:
@@ -869,6 +895,51 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				newTextList.append(bufText[offset])
 		return "".join(newTextList)
 
+	def _getListMarker(self, paragraphStart: int, listType: int) -> str | None:
+		"""The bullet or number that the control draws before a list paragraph.
+
+		:param paragraphStart: The offset where the paragraph starts.
+		:param listType: The paragraph's ``ITextPara.ListType``.
+		"""
+		# The low word holds the kind of list or the bullet character itself.
+		kind = listType & 0xFFFF
+		if kind == comInterfaces.tom.tomListBullet:
+			return "\u2022"  # Bullet
+		elif kind > _maxListKind:
+			return chr(kind)
+		firstCharacter = self.obj.ITextDocumentObject.range(paragraphStart, paragraphStart + 1)
+		# Windows registers no proxy for ITextRange2, so querying for it fails across processes.
+		# Late binding through IDispatch still reaches it, and there GetText2 returns its text in an out parameter.
+		textWithMarker = BSTR()
+		try:
+			comtypes.client.dynamic.Dispatch(firstCharacter).GetText2(
+				comInterfaces.tom.tomIncludeNumbering,
+				ctypes.byref(textWithMarker),
+			)
+		except COMError:
+			log.debugWarning("Could not get the list marker", exc_info=True)
+			return None
+		withMarker = textWithMarker.value or ""
+		text = firstCharacter.text
+		if not withMarker.endswith(text):
+			return None
+		return withMarker.removesuffix(text).rstrip("\t") or None
+
+	def _iterFormatChunks(self, textRange, formatConfig):
+		"""Moves ``textRange`` over the runs of uniform formatting up to the end of this text info.
+
+		:return: ``textRange``, covering each run in turn.
+		"""
+		endLimit = self._rangeObj.end
+		while textRange.end < endLimit:
+			self._expandFormatRange(textRange, formatConfig)
+			yield textRange
+			end = textRange.end
+			textRange.start = end
+			# Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
+			if textRange.end < end:
+				break
+
 	def __init__(self, obj, position, _rangeObj=None):
 		super().__init__(obj, position)
 		if _rangeObj:
@@ -906,31 +977,50 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			formatConfig = config.conf["documentFormatting"]
 		textRange = self._rangeObj.duplicate
 		textRange.collapse(True)
-		if not formatConfig["detectFormatAfterCursor"]:
+		detectFormat = formatConfig["detectFormatAfterCursor"]
+		if detectFormat:
+			formatRanges = self._iterFormatChunks(textRange, formatConfig)
+		else:
 			textRange.expand(comInterfaces.tom.tomCharacter)
-			return [
-				textInfos.FieldCommand(
-					"formatChange",
-					self._getFormatFieldAtRange(textRange, formatConfig),
-				),
-				self._getTextAtRange(self._rangeObj),
-			]
+			formatRanges = [textRange]
+		end = self._rangeObj.end
 		commandList = []
-		endLimit = self._rangeObj.end
-		while textRange.end < endLimit:
-			self._expandFormatRange(textRange, formatConfig)
-			commandList.append(
-				textInfos.FieldCommand(
-					"formatChange",
-					self._getFormatFieldAtRange(textRange, formatConfig),
-				),
-			)
-			commandList.append(self._getTextAtRange(textRange))
-			end = textRange.end
-			textRange.start = end
-			# Trying to set the start past the end of the document forces both start and end back to the previous offset, so catch this
-			if textRange.end < end:
-				break
+		listItemField = None
+		# End of the current list paragraph.
+		# Format runs stop at paragraph ends, so a run that starts before it is part of the same list item.
+		paragraphEnd = -1
+		for formatRange in formatRanges:
+			start = formatRange.start
+			marker: str | None = None
+			if start >= paragraphEnd:
+				if listItemField is not None:
+					commandList.append(textInfos.FieldCommand("controlEnd", None))
+					listItemField = None
+				para = formatRange.para
+				if (listType := para.ListType) != comInterfaces.tom.tomListNone:
+					paragraph = self.obj.ITextDocumentObject.range(start, start)
+					paragraph.expand(comInterfaces.tom.tomParagraph)
+					paragraphStart, paragraphEnd = paragraph.start, paragraph.end
+					if formatConfig["reportLists"]:
+						listItemField = textInfos.ControlField()
+						listItemField["role"] = controlTypes.Role.LISTITEM
+						listItemField["level"] = para.ListLevelIndex + 1
+						# Ensure this controlField is unique to the list item
+						listItemField["startOffset"] = paragraphStart
+						listItemField["_startOfNode"] = start == paragraphStart
+						listItemField["_endOfNode"] = end >= paragraphEnd
+						commandList.append(textInfos.FieldCommand("controlStart", listItemField))
+					if start == paragraphStart and not listType & comInterfaces.tom.tomListNoNumber:
+						marker = self._getListMarker(paragraphStart, listType)
+			formatField = self._getFormatFieldAtRange(formatRange, formatConfig, para)
+			if marker:
+				formatField["line-prefix"] = marker
+				# Let speech know that line-prefix is safe to be spoken always, as it is only exposed on the first formatField of the list item.
+				formatField["line-prefix_speakAlways"] = True
+			commandList.append(textInfos.FieldCommand("formatChange", formatField))
+			commandList.append(self._getTextAtRange(formatRange if detectFormat else self._rangeObj))
+		if listItemField is not None:
+			commandList.append(textInfos.FieldCommand("controlEnd", None))
 		return commandList
 
 	def expand(self, unit):
