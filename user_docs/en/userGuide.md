@@ -3467,6 +3467,7 @@ This category contains the following options:
 ##### Maximum Number of Characters on One Line {#BrowseModeSettingsMaxLength}
 
 This field sets the maximum length of a line in browse mode (in characters).
+It can be set from 0 to 1000 characters. If set to 0, lines are not split by length anymore, but rather by the full length of the element in focus.
 
 ##### Maximum Lines Per Page {#BrowseModeSettingsPageLines}
 
