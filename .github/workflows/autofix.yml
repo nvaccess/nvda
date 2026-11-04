@@ -85,7 +85,7 @@ jobs:
     # testAndPublish.yml.
     - name: Lint gate
       if: github.event_name != 'push' || github.repository != 'nvaccess/nvda'
-      uses: j178/prek-action@v2
+      uses: j178/prek-action@v3.1.0
       with:
         extra-args: >-
           --all-files
