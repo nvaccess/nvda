@@ -637,7 +637,7 @@ jobs:
       contents: read
     steps:
     - name: Check if all tests pass
-      uses: re-actors/alls-green@v1.2.2
+      uses: re-actors/alls-green@v1.3.0
       with:
         jobs: ${{ toJSON(needs) }}
 
