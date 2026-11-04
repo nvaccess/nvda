@@ -37,7 +37,7 @@ jobs:
         submodules: true
         persist-credentials: false
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         # Keep in sync with defaultPythonVersion in testAndPublish.yml.
         python-version: '3.13.17'
