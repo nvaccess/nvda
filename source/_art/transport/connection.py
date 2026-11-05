@@ -71,6 +71,7 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 		"""
 		if self._conn is None:
 			raise RuntimeError(f"Connection {self._name!r} is closed")
+		print("Connection.remoteService: Fetching remote root service...")
 		return self._conn.root
 
 	def eventLoop(self) -> None:
@@ -135,8 +136,11 @@ class Connection[LocalService_t: Service | None, RemoteService_t: Service]:
 	@staticmethod
 	def _closeRawConnection(conn: rpyc.Connection, name: str) -> None:
 		try:
+			print("Connection._closeRawConnection: Attempting to close the RPyC connection...")
 			conn.close()
-		except Exception:  # noqa: BLE001
+			print("Connection._closeRawConnection: Success")
+		except Exception as e:  # noqa: BLE001
+			print(f"Connection._closeRawConnection: Failed with exception {e}")
 			if not conn.closed:
 				log.debugWarning(f"Error closing connection {name!r}", exc_info=True)
 
