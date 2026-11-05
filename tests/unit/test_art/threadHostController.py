@@ -66,6 +66,10 @@ class ThreadHostController:
 		else:
 			self._exitStatus = 0
 
+	@property
+	def started(self) -> bool:
+		return self._thread is not None
+
 	def poll(self) -> int | None:
 		"""Check whether the host thread has finished, without blocking."""
 		if self._thread is None:
