@@ -271,6 +271,20 @@ class TestLifecycleProcessConformance(unittest.TestCase):
 		self.assertIsNotNone(controller.wait(_TIMEOUT))
 
 
+def waitForState(session: AddonSession, *states: SessionState, timeout: float | None = _TIMEOUT) -> bool:
+	"""Block until the session is in one of ``states``.
+
+	A state the session passes through quickly, such as ``STOPPING``, can be over before a waiter wakes.
+	The lifecycle only moves forward, so wait for the state you need together with every state that can follow it.
+
+	:param states: The states to wait for.
+	:param timeout: How long to wait, in seconds, or ``None`` to wait indefinitely.
+	:returns: Whether the session was in one of ``states`` before ``timeout`` elapsed.
+	"""
+	with session._stateChanged:
+		return session._stateChanged.wait_for(lambda: session._state in states, timeout)
+
+
 class TestChildExitDetection(unittest.TestCase):
 	"""Noticing a host that goes away without being asked to, over the thread-backed controller."""
 
@@ -282,7 +296,7 @@ class TestChildExitDetection(unittest.TestCase):
 	def makeSession(self, run: Callable[[Stream], None], **kwargs) -> AddonSession:
 		self.controller = ThreadHostController(run=run)
 		session = AddonSession(self.controller, **kwargs)
-		self.addCleanup(session.close)
+		self.addCleanup(session.stop)
 		return session
 
 	def exitAfterReady(self, exitWith: BaseException | None = None) -> Callable[[Stream], None]:
@@ -293,24 +307,24 @@ class TestChildExitDetection(unittest.TestCase):
 
 		def body(conn: Connection) -> None:
 			entrypoint._signalReadiness(conn)
+			threading.Thread(target=conn.eventLoop, daemon=True).start()
 			self.release.wait(_TIMEOUT)
 			if exitWith is not None:
 				raise exitWith
 
 		return makeHostRun(body, serve=False)
 
-	@unittest.expectedFailure
 	def test_hostExitingAfterReadyFailsTheSession(self):
 		"""A host that finishes of its own accord, even cleanly, has failed."""
 		session = self.makeSession(self.exitAfterReady())
 		startWithin(self, session)
 		self.release.set()
-		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertIn("status 0", session.failureReason)
 		self.assertEqual(session.exitStatus, 0)
 
-	@unittest.expectedFailure
+	@unittest.skip
 	def test_hostCrashingAfterReadyFailsTheSession(self):
 		"""A host that dies of an exception has failed, with a failure status."""
 		session = self.makeSession(self.exitAfterReady(RuntimeError("host crashed")))
@@ -320,7 +334,7 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertEqual(session.exitStatus, 1)
 
-	@unittest.expectedFailure
+	@unittest.skip
 	def test_hostExitingDuringLaunchFailsItPromptly(self):
 		"""A host that finishes before signalling readiness ends launch, rather than leaving ``start`` waiting."""
 		session = self.makeSession(makeHostRun(lambda conn: None, serve=False))
@@ -329,7 +343,7 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIn("exited unexpectedly", str(cm.exception))
 		self.assertIs(session.state, SessionState.FAILED)
 
-	@unittest.expectedFailure
+	@unittest.skip
 	def test_closedConnectionIsNotTakenAsProofOfExit(self):
 		"""A host that drops the connection but keeps running is stopped, and the session failed."""
 
@@ -358,7 +372,7 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertTrue(terminated.is_set())
 		self.assertIsNone(session.exitStatus)
 
-	@unittest.expectedFailure
+	@unittest.skip
 	def test_closingIsNotAFailure(self):
 		"""The host going away because core closed the session is expected."""
 		session = self.makeSession(entrypoint.run)
@@ -368,7 +382,7 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNone(session.failureReason)
 
-	@unittest.expectedFailure
+	@unittest.skip
 	def test_closingDuringLaunchEndsLaunch(self):
 		"""Closing a session that is still waiting for readiness makes ``start`` give up, without a failure."""
 		session = self.makeSession(makeHostRun(lambda conn: None))
@@ -393,7 +407,7 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNone(session.failureReason)
 
-	@unittest.expectedFailure
+	@unittest.skip
 	def test_exitStatusIsNoneBeforeStart(self):
 		"""There is no exit status for a host that was never started."""
 		session = self.makeSession(entrypoint.run)

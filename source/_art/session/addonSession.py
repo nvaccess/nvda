@@ -27,6 +27,8 @@ if TYPE_CHECKING:
 
 #: Name of core's end of the control connection, used in logging.
 CONTROL_CONNECTION_NAME: Final[str] = "ART core control"
+#: How long to give a host before killing it when the control connection is lost.
+_EXIT_CONFIRM_GRACE: Final[int] = 1.0
 
 
 class SessionState(enum.Enum):
@@ -70,13 +72,16 @@ class AddonSession:
 	and the lifecycle that takes it from launch to readiness and back down again.
 	"""
 
-	def __init__(self, controller: HostController) -> None:
+	def __init__(self, controller: HostController, *, exitConfirmGrace: float = _EXIT_CONFIRM_GRACE) -> None:
 		"""Initializer.
 
 		:param controller: Starts, watches and stops the host.
 			Owned by the session from here on.
+		:param exitConfirmGrace: How long to give the host before killing it when the control connection is lost.
+			Defaults to :const:`_EXIT_CONFIRM_GRACE`.
 		"""
 		self._controller = controller
+		self._exitConfirmGrace = exitConfirmGrace
 		self._stateChanged = threading.Condition()
 		self._state = SessionState.NEW
 		self._failureReason: str | None = None
@@ -95,6 +100,13 @@ class AddonSession:
 	def failureReason(self) -> str | None:
 		"""Why the session failed, or ``None`` if it has not."""
 		return self._failureReason
+
+	@property
+	def exitStatus(self) -> int | None:
+		"""The host's exit status, or ``None`` if it has not been started or is still running."""
+		if not self._controller.started:
+			return None
+		return self._controller.poll()
 
 	@property
 	def hostRoot(self) -> HostRootService:
@@ -220,7 +232,22 @@ class AddonSession:
 			self._stateChanged.notify_all()
 
 	def _serveControlConnection(self) -> None:
-		self._conn.eventLoop()
+		try:
+			self._conn.eventLoop()
+		finally:
+			self._onControlConnectionLost()
+
+	def _onControlConnectionLost(self) -> None:
+		"""Work out why the control connection closed, and fail the session if core did not close it."""
+		with self._stateChanged:
+			if self._state is SessionState.STOPPING or self._state.isFinal:
+				# Core closed the connection itself, so the host stopping is expected.
+				return
+		exitStatus = self._controller.wait(self._exitConfirmGrace)
+		if exitStatus is None:
+			self._fail("Host closed the control connection, but did not exit")
+		else:
+			self._fail(f"Host exited unexpectedly with status {exitStatus}")
 
 	def stop(self) -> None:
 		"""Stop the session and its host.
