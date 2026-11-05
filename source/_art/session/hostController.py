@@ -93,6 +93,11 @@ class HostController[HostPipeEnd](Protocol):
 		"""
 		...
 
+	@property
+	def started(self) -> bool:
+		"""Whether the host has been started."""
+		...
+
 	def poll(self) -> int | None:
 		"""Check whether the host has finished, without blocking.
 
@@ -204,6 +209,10 @@ class SubprocessHostController:
 			# After this, the host attempting to write to the pipe will fail, but not block.
 			with contextlib.suppress(Exception):
 				stderr.close()
+
+	@property
+	def started(self) -> bool:
+		return self._process is not None
 
 	def poll(self) -> int | None:
 		"""Check whether the host process has exited, without blocking.

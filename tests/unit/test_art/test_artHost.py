@@ -139,41 +139,55 @@ class HostControllerConformanceMixin:
 
 	def test_pollBeforeStartIsRefused(self):
 		"""Polling a host that was never started is an error, not a silent ``None``."""
+		self.assertFalse(self.controller.started)
 		with self.assertRaises(RuntimeError):
 			self.controller.poll()
 
 	def test_waitBeforeStartIsRefused(self):
 		"""Waiting on a host that was never started is an error, not a silent ``None``."""
+		self.assertFalse(self.controller.started)
 		with self.assertRaises(RuntimeError):
 			self.controller.wait(_PROCESS_TIMEOUT)
 
 	def test_pollIsNoneWhileTheHostRuns(self):
 		"""A running host has no exit status yet."""
+		self.assertFalse(self.controller.started)
 		conn = self.startHost()
+		self.assertTrue(self.controller.started)
 		# Ping first, so we know the host is genuinely up rather than merely not yet started.
 		self.assertEqual(conn.remoteService.ping(), "pong")
 		self.assertIsNone(self.controller.poll())
 
 	def test_terminateStopsTheHost(self):
 		"""After ``terminate``, the host finishes and reports an exit status."""
+		self.assertFalse(self.controller.started)
 		conn = self.startHost()
+		self.assertTrue(self.controller.started)
 		self.assertEqual(conn.remoteService.ping(), "pong")
 		self.controller.terminate()
+		self.assertTrue(self.controller.started)
 		self.assertIsNotNone(self.controller.wait(_PROCESS_TIMEOUT))
 		self.assertIsNotNone(self.controller.poll())
 
 	def test_terminateIsSafeOnAStoppedHost(self):
 		"""Terminating twice is not an error."""
+		self.assertFalse(self.controller.started)
 		self.startHost()
+		self.assertTrue(self.controller.started)
 		self.controller.terminate()
+		self.assertTrue(self.controller.started)
 		self.controller.wait(_PROCESS_TIMEOUT)
 		self.controller.terminate()
+		self.assertTrue(self.controller.started)
 
 	def test_startingTwiceIsRefused(self):
 		"""A controller drives one host, not a series of them."""
+		self.assertFalse(self.controller.started)
 		self.startHost()
+		self.assertTrue(self.controller.started)
 		with self.assertRaises(RuntimeError):
 			self.controller.start()
+		self.assertTrue(self.controller.started)
 
 
 class TestThreadHostController(HostControllerConformanceMixin, unittest.TestCase):
