@@ -169,14 +169,17 @@ class AddonSession:
 				raise RuntimeError(f"Add-on session has already been started (state: {self._state.name})")
 			self._setState(SessionState.STARTING)
 		try:
+			print("start: Starting controller...")
 			stream = self._controller.start()
 			# Published straight away, so that a failure from here on closes it.
 			# Nothing can reach the host through it until the session is ``READY``.
+			print("start: Establishing connection...")
 			self._conn = Connection(
 				stream,
 				CoreRootService(onReady=self._onReady),
 				name=CONTROL_CONNECTION_NAME,
 			)
+			print("start: Starting control connection service thread...")
 			threading.Thread(
 				target=self._serveControlConnection,
 				name=f"ART connection event loop: {CONTROL_CONNECTION_NAME}",
@@ -185,6 +188,7 @@ class AddonSession:
 		except Exception as e:
 			self._fail(f"Host could not be started: {e}")
 			raise HostLaunchError("Host could not be started") from e
+		print("start: Waiting for a status update...")
 		with self._stateChanged:
 			# Not woken by a stop: the host must be left to finish launching before it is stopped.
 			self._stateChanged.wait_for(
@@ -192,18 +196,22 @@ class AddonSession:
 			)
 			state = self._state
 			failure = self._readinessFailure
+			print(f"start: Got {state=} and {failure=}")
 		if state is SessionState.STARTING and failure is None:
 			# A host that cannot expose its root service has failed to launch,
 			# and fetching it here means ``hostRoot`` never makes a round trip to the host.
 			# It is a round trip, so happens without ``_stateChanged`` held.
+			print("start: Fetching host root service...")
 			try:
 				hostRoot = self._conn.remoteService
 			except Exception as e:
 				self._fail(f"Could not fetch the host's root service: {e}")
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
+			print("start: Got host root service")
 			with self._stateChanged:
 				# The session may have been stopped, or failed, during the round trip.
 				if (state := self._state) is SessionState.STARTING:
+					print("start: Started successfully")
 					self._hostRoot = hostRoot
 					self._setState(SessionState.READY)
 					log.debug("ART add-on session is ready")
@@ -227,21 +235,26 @@ class AddonSession:
 		Runs on the control connection's serving thread, so only records the outcome.
 		"""
 		with self._stateChanged:
+			print(f"onReady: _onReady({failure=})")
 			self._readinessFailure = failure
 			self._readinessReported = True
 			self._stateChanged.notify_all()
 
 	def _serveControlConnection(self) -> None:
 		try:
+			print("serveControlConnection: Serving control connection...")
 			self._conn.eventLoop()
 		finally:
+			print("serveControlConnection: Control connection exhausted")
 			self._onControlConnectionLost()
 
 	def _onControlConnectionLost(self) -> None:
 		"""Work out why the control connection closed, and fail the session if core did not close it."""
+		print("_onControlConnectionLost: determining reason...")
 		with self._stateChanged:
 			if self._state is SessionState.STOPPING or self._state.isFinal:
 				# Core closed the connection itself, so the host stopping is expected.
+				print(f"_onControlConnectionLost: expected loss of control connection ({self._state=})")
 				return
 		exitStatus = self._controller.wait(self._exitConfirmGrace)
 		if exitStatus is None:

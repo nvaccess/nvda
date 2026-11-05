@@ -27,7 +27,7 @@ from rpyc.core.stream import Stream
 from .threadHostController import ThreadHostController
 
 #: Bound on anything involving a real process or a background thread, in seconds.
-_TIMEOUT: float = 30.0
+_TIMEOUT: float = 3.0
 #: Grace given to a host to exit once its control connection closes, in tests that expect it not to.
 _SHORT_GRACE: float = 0.2
 
@@ -76,12 +76,20 @@ def makeHostRun(body: Callable[[Connection], None], serve: bool = True) -> Calla
 	"""
 
 	def run(stream: Stream) -> None:
+		print("makeHostRun: Constructing connection...")
 		conn = Connection(stream, HostRootService(), name=entrypoint.CONTROL_CONNECTION_NAME)
 		try:
+			print("makeHostRun: calling body...")
 			body(conn)
+			print("makeHostRun: Returned from body")
 			if serve:
+				print("makeHostRun: serving control connection...")
 				conn.eventLoop()
+		except Exception as e:
+			print(f"makeHostRun: caught exception {e}")
+			raise
 		finally:
+			print("makeHostRun: closing connection...")
 			conn.close()
 
 	return run
@@ -306,19 +314,29 @@ class TestChildExitDetection(unittest.TestCase):
 		"""
 
 		def body(conn: Connection) -> None:
+			print("exitAfterReady->body: Signalling readiness...")
 			entrypoint._signalReadiness(conn)
+			print("exitAfterReady->body: serving control connection...")
 			threading.Thread(target=conn.eventLoop, daemon=True).start()
+			print("exitAfterReady->body: Waiting for event before exiting...")
 			self.release.wait(_TIMEOUT)
+			print("exitAfterReady->body: Release set or timed out!")
 			if exitWith is not None:
+				print("exitAfterReady->body: raising {exitWith}")
 				raise exitWith
+			print("exitAfterReady->body: Returning")
 
 		return makeHostRun(body, serve=False)
 
 	def test_hostExitingAfterReadyFailsTheSession(self):
 		"""A host that finishes of its own accord, even cleanly, has failed."""
+		print("Test: making session...")
 		session = self.makeSession(self.exitAfterReady())
+		print("Test: Starting session...")
 		startWithin(self, session)
+		print("Test: setting release event...")
 		self.release.set()
+		print("Test: waiting for state to be FAILED...")
 		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertIn("status 0", session.failureReason)
