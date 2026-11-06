@@ -205,7 +205,15 @@ class AddonSession:
 			try:
 				hostRoot = self._conn.remoteService
 			except Exception as e:
-				self._fail(f"Could not fetch the host's root service: {e}")
+				# If readiness was reported but the host terminated before serving the control conection,
+				# the connection will be closed, but _onControlConnectionLost may not have finished marking the session as failed.
+				# Wait for the session to be marked as failed before raising,
+				# so the top-most exception explains that this is due to the control connection dying.
+				if self._conn.closed:
+					with self._stateChanged:
+						self._stateChanged.wait_for(lambda: self._state is SessionState.FAILED)
+				else:
+					self._fail(f"Could not fetch the host's root service: {e}")
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
 			print("start: Got host root service")
 			with self._stateChanged:

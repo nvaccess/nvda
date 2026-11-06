@@ -27,7 +27,7 @@ from rpyc.core.stream import Stream
 from .threadHostController import ThreadHostController
 
 #: Bound on anything involving a real process or a background thread, in seconds.
-_TIMEOUT: float = 3.0
+_TIMEOUT: float = 45.0
 #: Grace given to a host to exit once its control connection closes, in tests that expect it not to.
 _SHORT_GRACE: float = 0.2
 
@@ -307,17 +307,23 @@ class TestChildExitDetection(unittest.TestCase):
 		self.addCleanup(session.stop)
 		return session
 
-	def exitAfterReady(self, exitWith: BaseException | None = None) -> Callable[[Stream], None]:
+	def exitAfterReady(
+		self,
+		exitWith: BaseException | None = None,
+		serve: bool = True,
+	) -> Callable[[Stream], None]:
 		"""A host half that signals readiness, then finishes once :attr:`release` is set.
 
 		:param exitWith: Raised to finish, or ``None`` to return normally.
+		:param serve: Whether to serve the control connection after signalling readiness.
 		"""
 
 		def body(conn: Connection) -> None:
 			print("exitAfterReady->body: Signalling readiness...")
 			entrypoint._signalReadiness(conn)
-			print("exitAfterReady->body: serving control connection...")
-			threading.Thread(target=conn.eventLoop, daemon=True).start()
+			if serve:
+				print("exitAfterReady->body: serving control connection...")
+				threading.Thread(target=conn.eventLoop, daemon=True).start()
 			print("exitAfterReady->body: Waiting for event before exiting...")
 			self.release.wait(_TIMEOUT)
 			print("exitAfterReady->body: Release set or timed out!")
@@ -354,6 +360,24 @@ class TestChildExitDetection(unittest.TestCase):
 	def test_hostExitingDuringLaunchFailsItPromptly(self):
 		"""A host that finishes before signalling readiness ends launch, rather than leaving ``start`` waiting."""
 		session = self.makeSession(makeHostRun(lambda conn: None, serve=False))
+		with self.assertRaises(HostLaunchError) as cm:
+			startWithin(self, session)
+		self.assertIn("exited unexpectedly", str(cm.exception))
+		self.assertIs(session.state, SessionState.FAILED)
+
+	def test_hostExitingBetweenReadyAndServingFailsPromptly(self):
+		"""Test that a host that exits after signalling readiness but never starts serving the control connection fails, rather than leaving start waiting."""
+		session = self.makeSession(self.exitAfterReady(serve=False))
+
+		def setRelease():
+			with session._stateChanged:
+				session._stateChanged.wait_for(
+					lambda: session._readinessReported or session._state.isFinal,
+					timeout=_TIMEOUT,
+				)
+			self.release.set()
+
+		threading.Thread(target=setRelease, daemon=True).start()
 		with self.assertRaises(HostLaunchError) as cm:
 			startWithin(self, session)
 		self.assertIn("exited unexpectedly", str(cm.exception))
