@@ -180,11 +180,8 @@ def toggleFilter() -> None:
 	):
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
+		# The filterType setter applies the filter, and this command only runs while active.
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
-			assert isinstance(magnifier, FullScreenMagnifier)
-			fullscreenMagnifier: FullScreenMagnifier = magnifier
-			fullscreenMagnifier._applyFilter()
 		setFilter(magnifier.filterType)
 
 		ui.message(
