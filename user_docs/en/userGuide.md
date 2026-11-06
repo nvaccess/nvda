@@ -1647,6 +1647,8 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.
 On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.
 Some screenshot utilities may not work.
+NVDA's [Magnifier](#Magnifier) is turned off while Screen Curtain is enabled, and is turned back on when Screen Curtain is disabled.
+Since the screen is black, this is not announced.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
@@ -1664,6 +1666,7 @@ To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When disabled, the screen returns to its normal size.
 As with other NVDA settings, the Magnifier state is preserved across sessions.
+The Magnifier is turned off while [Screen Curtain](#VisionScreenCurtain) is enabled, and is turned back on when Screen Curtain is disabled.
 
 ### Magnifier Commands {#MagnifierCommands}
 
