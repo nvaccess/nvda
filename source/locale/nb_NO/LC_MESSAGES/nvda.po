@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-20 22:20+0000\n"
-"PO-Revision-Date: 2026-10-26 00:22\n"
+"POT-Creation-Date: 2026-10-30 07:36+0000\n"
+"PO-Revision-Date: 2026-11-02 00:16\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -1690,7 +1690,7 @@ msgstr "Laster NVDA. Vennligst vent ..."
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
 #: core.py:970
 msgid "NVDA started with screen curtain enabled"
-msgstr "NVDA startet med skjermgardinen aktivert"
+msgstr "NVDA startet med skjermteppet på"
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 #: core.py:973
@@ -2002,23 +2002,23 @@ msgstr "Demping av annen lyd støttes ikke"
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:257
 msgid "Turns input help on or off. When on, any input such as pressing a key on the keyboard will tell you what script is associated with that input, if any."
-msgstr "Slår hjelp for inndata på eller av. Når på, vil inndata som trykk på tastaturet fortelle deg hvilket skript som er forbundet med handlingen, om det finnes noe."
+msgstr "Slår inndatahjelp på eller av. Når inndatahjelp er på, får du vite hvilken kommando som er knyttet til en inndatahandling, for eksempel et tastetrykk, hvis en kommando er tilordnet."
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:268
 #, python-brace-format
 msgid "input help on. Press {gestureKeys} again to turn it off."
-msgstr "Tastehjelp aktivert. Trykk {gestureKeys} igjen for å slå den av."
+msgstr "Inndatahjelp på. Trykk {gestureKeys} igjen for å slå den av."
 
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:272
 msgid "input help off"
-msgstr "inndatahjelp av"
+msgstr "Inndatahjelp av"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 #: globalCommands.py:278
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "Slår hvilemodus av eller på for det aktive programmet."
+msgstr "Slår dvalemodus av eller på for det aktive programmet."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:288
@@ -2605,12 +2605,12 @@ msgstr "Slår rapportering av grafikk av eller på"
 #. Translators: The message announced when toggling the report graphics document formatting setting.
 #: globalCommands.py:1139
 msgid "report graphics off"
-msgstr "Rapportering av grafikk deaktivert"
+msgstr "Rapportering av grafikk av"
 
 #. Translators: The message announced when toggling the report graphics document formatting setting.
 #: globalCommands.py:1143
 msgid "report graphics on"
-msgstr "rapporter grafikk  på"
+msgstr "Rapportering av grafikk på"
 
 #. Translators: Input help mode message for toggle report comments command.
 #: globalCommands.py:1149
@@ -2665,12 +2665,12 @@ msgstr "Slår rapportering av grupperinger av eller på"
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 #: globalCommands.py:1203
 msgid "report groupings off"
-msgstr "Rapportering av grupperinger deaktivert"
+msgstr "Rapportering av grupperinger av"
 
 #. Translators: The message announced when toggling the report block quotes document formatting setting.
 #: globalCommands.py:1207
 msgid "report groupings on"
-msgstr "rapporter grupperinger på"
+msgstr "Rapportering av grupperinger på"
 
 #. Translators: Input help mode message for toggle report block quotes command.
 #: globalCommands.py:1213
@@ -3447,7 +3447,7 @@ msgstr "rapporter endringer i dynamisk innhold på"
 #. Translators: Input help mode message for toggle caret moves review cursor command.
 #: globalCommands.py:3379
 msgid "Toggles on and off the movement of the review cursor due to the caret moving."
-msgstr "Slår på og av bevegelsen av objektet grunnet markørflytting."
+msgstr "Slår av eller på om lesemarkøren følger innsettingspunktet."
 
 #. Translators: presented when toggled.
 #: globalCommands.py:3386
@@ -3681,12 +3681,12 @@ msgstr "Slår Taleviser av eller på. Taleviser er et flytende vindu som viser a
 #. Translators: The message announced when disabling speech viewer.
 #: globalCommands.py:3782
 msgid "speech viewer disabled"
-msgstr "talelogg deaktivert"
+msgstr "Taleviser av"
 
 #. Translators: The message announced when enabling speech viewer.
 #: globalCommands.py:3787
 msgid "speech viewer enabled"
-msgstr "talelogg aktivert"
+msgstr "Taleviser på"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 #: globalCommands.py:3795
@@ -4265,12 +4265,12 @@ msgstr "Unicode-normalisering av tale: {state}"
 #. Translators: Describes a command.
 #: globalCommands.py:4959
 msgid "Toggles the state of the screen curtain, enable to make the screen black or disable to show the contents of the screen. Pressed once, screen curtain is enabled until you restart NVDA. Pressed twice, screen curtain is enabled until you disable it"
-msgstr "Slår skjermgardinen av eller på for å gjøre skjermen svart eller vise innholdet. Trykk én gang for å aktivere skjermgardinen til NVDA startes på nytt. Trykk to ganger for å aktivere skjermgardinen til du deaktiverer den"
+msgstr "Slår skjermteppet av eller på. Når det er på, er skjermen svart. Når det er av, vises skjerminnholdet. Trykk én gang for å slå på skjermteppet til NVDA startes på nytt. Trykk to ganger for å slå det på til du slår det av."
 
 #. Translators: Reported when the screen curtain is not available.
 #: globalCommands.py:4972 globalCommands.py:5098
 msgid "Screen curtain not available"
-msgstr "Skjermtappe ikke tilgjengelig"
+msgstr "Skjermteppe ikke tilgjengelig"
 
 #. Translators: Reported when the screen curtain is disabled.
 #: globalCommands.py:5018 globalCommands.py:5113
@@ -4290,12 +4290,12 @@ msgstr "Skjermteppe på"
 #. Translators: Reported when the screen curtain is temporarily enabled.
 #: globalCommands.py:5051 globalCommands.py:5105
 msgid "Temporary Screen curtain, enabled until next restart"
-msgstr "Midlertidig skjermteppe er aktiv til neste omstart"
+msgstr "Midlertidig skjermteppe på til neste omstart"
 
 #. Translators: Describes a command.
 #: globalCommands.py:5088
 msgid "Reports the state of the screen curtain."
-msgstr "Oppgir statusen til skjermgardinen."
+msgstr "Oppgir statusen til skjermteppet."
 
 #. Translators: Describes a command.
 #: globalCommands.py:5118
@@ -6385,13 +6385,13 @@ msgstr "Emulerer trykk på %s på systemtastaturet"
 
 #: speechViewer.py:41
 msgid "NVDA Speech Viewer"
-msgstr "NVDA Stemmeleser"
+msgstr "NVDA Taleviser"
 
 #. Translators: The label for a setting in the speech viewer that controls
 #. whether the speech viewer is shown at startup or not.
 #: speechViewer.py:91
 msgid "&Show Speech Viewer on Startup"
-msgstr "Vi&s taleleser ved oppstart"
+msgstr "Vi&s taleviser ved oppstart"
 
 #. Translators: Label for a setting in voice settings dialog.
 #: synthDriverHandler.py:122
@@ -11104,7 +11104,7 @@ msgstr "Innhold er ikke synlig"
 #. is enabled, but the system does not support the required screen capture API.
 #: contentRecog\recogUi.py:326
 msgid "Content recognition is unavailable while Screen Curtain is enabled on this system. Please disable Screen Curtain and try again."
-msgstr "Innholdsgjenkjenning er ikke tilgjengelig mens skjermgardinen er aktivert på dette systemet. Deaktiver skjermgardinen og prøv igjen."
+msgstr "Innholdsgjenkjenning er ikke tilgjengelig mens skjermteppet er aktivert på dette systemet. Slå av skjermteppet og prøv igjen."
 
 #. Translators: Reporting when content recognition (e.g. OCR) begins.
 #: contentRecog\recogUi.py:334
@@ -15721,7 +15721,7 @@ msgstr "Gjør skjermen svart (virker umiddelbart)"
 #. Translators: Description for a screen curtain setting to play sounds when enabling/disabling the curtain
 #: gui\settingsDialogs.py:6475
 msgid "&Play sound when toggling Screen Curtain"
-msgstr "S&pill av lyd når skjermteppe skrues av eller på"
+msgstr "S&pill av lyd når skjermteppet slås av eller på"
 
 #. Translators: The label for a setting in privacy and security settings to select NVDA's logging level
 #: gui\settingsDialogs.py:6490
@@ -19703,13 +19703,13 @@ msgstr "{val:g} pkt mellomrom før avsnittet"
 #: screenCurtain\_screenCurtain.py:30
 msgctxt "screenCurtain"
 msgid "Always &show a warning when enabling Screen Curtain"
-msgstr "Vis alltid en advarsel når skjermgardinen aktiveres"
+msgstr "&Vis alltid en advarsel når skjermteppet aktiveres"
 
 #. Translators: Warning message when trying to enable the screen curtain when OCR is active.
 #: screenCurtain\_screenCurtain.py:35
 msgctxt "screenCurtain"
 msgid "Cannot enable screen curtain while performing content recognition"
-msgstr "Kan ikke aktivere skjermgardinen under innholdsgjenkjenning"
+msgstr "Kan ikke aktivere skjermteppet under innholdsgjenkjenning"
 
 #. Translators: Reported when the screen curtain could not be enabled.
 #: screenCurtain\_screenCurtain.py:39
@@ -19721,14 +19721,14 @@ msgstr "Kunne ikke aktivere skjermteppe"
 #: screenCurtain\_screenCurtain.py:45
 msgctxt "screenCurtain"
 msgid "There was a problem enabling Screen Curtain. The contents of your screen are still visible. You may attempt to enable Screen Curtain manually."
-msgstr "Det oppsto et problem ved aktivering av skjermgardinen. Skjerminnholdet er fortsatt synlig. Du kan prøve å aktivere skjermgardinen manuelt."
+msgstr "Det oppsto et problem ved aktivering av skjermteppet. Skjerminnholdet er fortsatt synlig. Du kan prøve å aktivere skjermteppet manuelt."
 
 #. Translators: A warning shown when activating the screen curtain.
 #. the translation of "Screen Curtain" should match the "translated name"
 #: screenCurtain\_screenCurtain.py:74
 msgid "Enabling Screen Curtain will make the screen of your computer completely black. Ensure you will be able to navigate without any use of your screen before continuing. \n\n"
 "Do you wish to continue?"
-msgstr "Hvis du slår på skjermgardinen, blir skjermen på datamaskinen helt svart. Kontroller at du kan navigere uten å bruke skjermen før du fortsetter.\n\n"
+msgstr "Hvis du slår på skjermteppet, blir skjermen på datamaskinen helt svart. Kontroller at du kan navigere uten å bruke skjermen før du fortsetter.\n\n"
 "Vil du fortsette?"
 
 #. Translators: Reported when the language of the text being read is not supported by the current synthesizer.
@@ -20860,7 +20860,7 @@ msgstr "endre sporingsmodus"
 #: _magnifier\utils\types.py:89
 msgctxt "magnifier action"
 msgid "move mouse to view"
-msgstr "flytt musen for å vise"
+msgstr "flytt musepekeren til den forstørrede visningen"
 
 #. Translators: Action description for showing entire screen overview.
 #: _magnifier\utils\types.py:91
