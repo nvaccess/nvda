@@ -342,17 +342,15 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIn("status 0", session.failureReason)
 		self.assertEqual(session.exitStatus, 0)
 
-	@unittest.skip
 	def test_hostCrashingAfterReadyFailsTheSession(self):
 		"""A host that dies of an exception has failed, with a failure status."""
 		session = self.makeSession(self.exitAfterReady(RuntimeError("host crashed")))
 		startWithin(self, session)
 		self.release.set()
-		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertEqual(session.exitStatus, 1)
 
-	@unittest.skip
 	def test_hostExitingDuringLaunchFailsItPromptly(self):
 		"""A host that finishes before signalling readiness ends launch, rather than leaving ``start`` waiting."""
 		session = self.makeSession(makeHostRun(lambda conn: None, serve=False))
@@ -390,12 +388,11 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertTrue(terminated.is_set())
 		self.assertIsNone(session.exitStatus)
 
-	@unittest.skip
 	def test_closingIsNotAFailure(self):
 		"""The host going away because core closed the session is expected."""
 		session = self.makeSession(entrypoint.run)
 		startWithin(self, session)
-		session.close()
+		session.stop()
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNone(session.failureReason)
@@ -416,7 +413,7 @@ class TestChildExitDetection(unittest.TestCase):
 		starter.start()
 		# Anything other than ``NEW`` means launch has begun.
 		self.assertTrue(
-			session.waitForState(*(set(SessionState) - {SessionState.NEW}), timeout=_TIMEOUT),
+			waitForState(session, *(set(SessionState) - {SessionState.NEW})),
 		)
 		session.close()
 		starter.join(_TIMEOUT)
@@ -425,7 +422,6 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNone(session.failureReason)
 
-	@unittest.skip
 	def test_exitStatusIsNoneBeforeStart(self):
 		"""There is no exit status for a host that was never started."""
 		session = self.makeSession(entrypoint.run)
@@ -438,7 +434,7 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 	def makeSession(self, *command: str, **kwargs) -> AddonSession:
 		self.controller = SubprocessHostController(command=fakeHostCommand(*command))
 		session = AddonSession(self.controller, **kwargs)
-		self.addCleanup(session.close)
+		self.addCleanup(session.stop)
 		return session
 
 	@unittest.expectedFailure
