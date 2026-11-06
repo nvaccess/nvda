@@ -65,6 +65,14 @@ def _scheduleDelayedCall(
 	state.lastCallTimeMs = monotonic() * 1000
 
 
+def _cancelPendingCall(state: _DebounceState) -> None:
+	if state.pendingHandle is not None:
+		state.pendingHandle.Stop()
+		state.pendingHandle = None
+	state.pendingArgs = ()
+	state.pendingKwargs = {}
+
+
 def debounceLimiter(
 	*,
 	cooldownTimeMs: int = 50,
@@ -83,6 +91,10 @@ def debounceLimiter(
 	:param runImmediateFirstCall: Whether the first call in a burst should execute immediately.
 		If False, all calls are trailing-debounced by `delayTimeMs`.
 	:returns: A decorator that debounces calls to the decorated function.
+		The decorated function carries a ``cancel`` attribute, which drops a call that has been
+		delayed but not yet executed. For a decorated method, pass the instance to it, as the
+		state is kept per instance. The cooldown is left in place, so that cancelling cannot be
+		used to work around the rate limit.
 	:raises ValueError: If ``cooldownTimeMs`` or ``delayTimeMs`` is negative.
 	"""
 	if cooldownTimeMs < 0:
@@ -110,6 +122,10 @@ def debounceLimiter(
 			state.pendingKwargs = kwargs
 			_scheduleDelayedCall(state, delayTimeMs, func)
 
+		def cancel(*args: Any) -> None:
+			_cancelPendingCall(_getStateForCall(instanceStates, stateForDecorated, args))
+
+		wrapper.cancel = cancel
 		return wrapper
 
 	return decorator

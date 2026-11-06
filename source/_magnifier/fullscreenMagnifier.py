@@ -164,6 +164,10 @@ class FullScreenMagnifier(Magnifier):
 		self._resetMagnification()
 		self._uninitializeNativeMagnification()
 
+	@override
+	def _cancelPendingVisualUpdates(self) -> None:
+		self._applyFilter.cancel(self)
+
 	@trackNativeMagnifierErrors
 	def _resetMagnification(self) -> None:
 		"""

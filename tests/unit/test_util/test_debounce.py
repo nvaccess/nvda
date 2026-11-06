@@ -154,3 +154,79 @@ class TestDebounceLimiter(unittest.TestCase):
 		self.clock.now = 0.2
 		self.callLater.runPending()
 		self.assertEqual(["first"], calls)
+
+	def test_cancel_dropsPendingCall(self):
+		calls = []
+
+		@debounceLimiter(cooldownTimeMs=300, delayTimeMs=200)
+		def limited(value):
+			calls.append(value)
+
+		self.clock.now = 0.0
+		limited("first")
+		self.clock.now = 0.1
+		limited("second")
+		self.assertEqual(["first"], calls)
+
+		limited.cancel()
+
+		self.clock.now = 0.4
+		self.callLater.runPending()
+		self.assertEqual(["first"], calls)
+
+	def test_cancel_isPerInstance(self):
+		@debounceLimiter(cooldownTimeMs=300, delayTimeMs=200)
+		def limited(target: _Target, value: str):
+			target.calls.append(value)
+
+		target1 = _Target()
+		target2 = _Target()
+
+		self.clock.now = 0.0
+		limited(target1, "first")
+		limited(target2, "first")
+		self.clock.now = 0.1
+		limited(target1, "second")
+		limited(target2, "second")
+
+		limited.cancel(target1)
+
+		self.clock.now = 0.4
+		self.callLater.runPending()
+		self.assertEqual(["first"], target1.calls)
+		self.assertEqual(["first", "second"], target2.calls)
+
+	def test_cancel_withNothingPending_isHarmless(self):
+		calls = []
+
+		@debounceLimiter(cooldownTimeMs=300, delayTimeMs=200)
+		def limited(value):
+			calls.append(value)
+
+		limited.cancel()
+
+		self.clock.now = 0.0
+		limited("first")
+		self.assertEqual(["first"], calls)
+
+	def test_cancel_keepsTheCooldown(self):
+		"""Cancelling must not become a way to bypass the rate limit."""
+		calls = []
+
+		@debounceLimiter(cooldownTimeMs=300, delayTimeMs=200)
+		def limited(value):
+			calls.append(value)
+
+		self.clock.now = 0.0
+		limited("first")
+		self.clock.now = 0.1
+		limited("second")
+		limited.cancel()
+
+		self.clock.now = 0.2
+		limited("third")
+		self.assertEqual(["first"], calls)
+
+		self.clock.now = 0.5
+		self.callLater.runPending()
+		self.assertEqual(["first", "third"], calls)
