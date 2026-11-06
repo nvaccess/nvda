@@ -51,6 +51,46 @@ class TestStartWhenTrackingFails(_TestMagnifier):
 		mockMessage.assert_called_once_with("x")
 
 
+class TestRestartWithPersistentTrackingFailure(_TestMagnifier):
+	"""Disabling the screen curtain must still succeed when the position lookup keeps failing.
+
+	What the update loop does on the following timer ticks is the subject of #20992.
+	"""
+
+	def setUp(self):
+		super().setUp()
+		self.magnifier._screenCurtainIsActive = True
+		self.magnifier._focusManager.getCurrentFocusCoordinates = MagicMock(
+			side_effect=COMError(-2147023174, "RPC server unavailable", (None,) * 5),
+		)
+		self.magnifier._doUpdate = MagicMock()
+		self.magnifier._startTimer = MagicMock()
+		self.curtain = ScreenCurtain.__new__(ScreenCurtain)
+		self.curtain._settings = {"enabled": True, "playToggleSounds": False, "warnOnLoad": False}
+		self.curtain._enabled = True
+		# Prevent __del__ from calling the real Magnification API after the patches are removed.
+		self.addCleanup(setattr, self.curtain, "_enabled", False)
+		for patcher in (
+			patch("screenCurtain._screenCurtain.magnification"),
+			patch("_magnifier.getMagnifier", return_value=self.magnifier),
+			patch("_magnifier.magnifier.setEnabled"),
+			patch("_magnifier.magnifier.log"),
+		):
+			patcher.start()
+			self.addCleanup(patcher.stop)
+
+	def testCurtainIsDisabledAndMagnifierRestartsAtCentre(self):
+		with patch("_magnifier.magnifier.ui.message") as mockMessage:
+			self.curtain.disable(persist=False)
+		self.assertFalse(self.curtain.enabled)
+		self.assertTrue(self.magnifier._isActive)
+		expected = self.magnifier._clampCoordinates(
+			Coordinates(self.screenWidth // 2, self.screenHeight // 2),
+		)
+		self.assertEqual(self.magnifier.currentCoordinates, expected)
+		mockMessage.assert_not_called()
+
+
 class TestScreenCurtainIsolatesMagnifier(unittest.TestCase):
 	def setUp(self):
 		self.curtain = ScreenCurtain.__new__(ScreenCurtain)
