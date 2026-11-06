@@ -12,6 +12,7 @@ the screen.
 
 from unittest.mock import patch
 
+from _magnifier import commands
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
 from _magnifier.utils.filterHandler import FilterMatrix
 from _magnifier.utils.types import Filter
@@ -83,3 +84,20 @@ class TestFilterDeferral(_TestMagnifier):
 		self.fullscreenMagnifier._startMagnifier()
 		self.assertTrue(self.fullscreenMagnifier._isActive)
 		self.assertGreaterEqual(self._filterCallCount(), 1)
+
+	def testToggleFilterAppliesOnce(self):
+		"""A single filter change must not leave a second, deferred application queued."""
+		self.fullscreenMagnifier._startMagnifier()
+		self.clock.now = 10.0
+		self.fullscreenMagnifier.filterType = Filter.NORMAL
+		self.clock.now = 20.0
+		self.callLater.handles.clear()
+		with (
+			patch("_magnifier.commands.getMagnifier", return_value=self.fullscreenMagnifier),
+			patch("_magnifier.commands.magnifierIsActiveVerify", return_value=True),
+			patch("_magnifier.commands.setFilter"),
+			patch("_magnifier.commands.ui.message"),
+		):
+			commands.toggleFilter()
+		self.assertEqual(Filter.GRAYSCALE, self.fullscreenMagnifier.filterType)
+		self.assertEqual([], self.callLater.handles)
