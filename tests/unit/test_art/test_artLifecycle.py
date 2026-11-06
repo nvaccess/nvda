@@ -27,7 +27,7 @@ from rpyc.core.stream import Stream
 from .threadHostController import ThreadHostController
 
 #: Bound on anything involving a real process or a background thread, in seconds.
-_TIMEOUT: float = 45.0
+_TIMEOUT: float = 30.0
 #: Grace given to a host to exit once its control connection closes, in tests that expect it not to.
 _SHORT_GRACE: float = 0.2
 
@@ -383,12 +383,12 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIn("exited unexpectedly", str(cm.exception))
 		self.assertIs(session.state, SessionState.FAILED)
 
-	@unittest.skip
 	def test_closedConnectionIsNotTakenAsProofOfExit(self):
 		"""A host that drops the connection but keeps running is stopped, and the session failed."""
 
 		def body(conn: Connection) -> None:
 			entrypoint._signalReadiness(conn)
+			conn.bgEventLoop(daemon=True)
 			self.release.wait(_TIMEOUT)
 			conn.close()
 			# A thread cannot be killed, so lingering here stands in for a process that will not exit.
@@ -407,9 +407,9 @@ class TestChildExitDetection(unittest.TestCase):
 		self.controller.terminate = terminate
 		startWithin(self, session)
 		self.release.set()
-		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIn("did not exit", session.failureReason)
-		self.assertTrue(terminated.is_set())
+		self.assertTrue(terminated.wait(_SHORT_GRACE))
 		self.assertIsNone(session.exitStatus)
 
 	def test_closingIsNotAFailure(self):
