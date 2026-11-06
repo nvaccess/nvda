@@ -421,10 +421,9 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNone(session.failureReason)
 
-	@unittest.skip
-	def test_closingDuringLaunchEndsLaunch(self):
+	def test_stoppingDuringLaunchEndsLaunch(self):
 		"""Closing a session that is still waiting for readiness makes ``start`` give up, without a failure."""
-		session = self.makeSession(makeHostRun(lambda conn: None))
+		session = self.makeSession(makeHostRun(entrypoint._signalReadiness))
 		startError: list[BaseException] = []
 
 		def start() -> None:
@@ -439,7 +438,7 @@ class TestChildExitDetection(unittest.TestCase):
 		self.assertTrue(
 			waitForState(session, *(set(SessionState) - {SessionState.NEW})),
 		)
-		session.close()
+		session.stop()
 		starter.join(_TIMEOUT)
 		self.assertFalse(starter.is_alive(), "start did not return after the session was closed")
 		self.assertIsInstance(startError[0], HostLaunchError)
