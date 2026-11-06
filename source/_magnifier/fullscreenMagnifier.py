@@ -60,15 +60,6 @@ class FullScreenMagnifier(Magnifier):
 		if self._isActive:
 			self._applyFilter()
 
-	def event_gainFocus(
-		self,
-		obj,
-		nextHandler,
-	):
-		if _isDebug():
-			log.debug("Full-screen Magnifier gain focus event")
-		nextHandler()
-
 	@override
 	def _startMagnifier(self) -> None:
 		"""
