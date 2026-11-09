@@ -450,6 +450,37 @@ class TestChildExitDetection(unittest.TestCase):
 		session = self.makeSession(entrypoint.run)
 		self.assertIsNone(session.exitStatus)
 
+	def test_connectionLossAfterCallingStopBeforeReadinessDoesNotBlock(self):
+		self.started = threading.Event()
+		self.addCleanup(self.started.set)
+
+		def body(conn: Connection) -> None:
+			self.started.set()
+			self.release.wait(_TIMEOUT)
+
+		session = self.makeSession(makeHostRun(body, serve=False), exitConfirmGrace=_SHORT_GRACE)
+
+		def stopper() -> None:
+			self.started.wait(_TIMEOUT)
+			session.stop()
+
+		def releaser() -> None:
+			waitForState(session, SessionState.STOPPING)
+			self.release.set()
+
+		stopperThread = threading.Thread(target=stopper, daemon=True)
+		releaserThread = threading.Thread(target=releaser, daemon=True)
+		stopperThread.start()
+		releaserThread.start()
+		with self.assertRaises(HostLaunchError) as cm:
+			startWithin(self, session)
+		self.assertIn("exited unexpectedly", str(cm.exception))
+		self.assertIs(session.state, SessionState.FAILED)
+		stopperThread.join(_TIMEOUT)
+		releaserThread.join(_TIMEOUT)
+		self.assertFalse(stopperThread.is_alive())
+		self.assertFalse(releaserThread.is_alive())
+
 
 class TestChildExitDetectionProcessConformance(unittest.TestCase):
 	"""Exit detection against real host processes, which can die in ways a thread cannot."""
