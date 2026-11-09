@@ -207,16 +207,11 @@ class AddonSession:
 			except Exception as e:
 				# If readiness was reported but the host died before serving the control conection,
 				# the connection will be closed, but _onControlConnectionLost may not have finished marking the session as failed.
-				# Likewise, if this session was stopped while waiting for the host root service,
-				# stop will have set our state to STOPPING,
-				# and be waiting on us to move the state to a final one.
-				# Wait for the session to be marked as FAILED or STOPPING before raising,
+				# Wait for the session to be marked as FAILED before raising,
 				# so the top-most exception explains that this is due to the control connection dying.
 				if (conn := self._conn) is None or conn.closed:
 					with self._stateChanged:
-						self._stateChanged.wait_for(
-							lambda: self._state in (SessionState.STOPPING, SessionState.FAILED),
-						)
+						self._stateChanged.wait_for(lambda: self._state.isFinal)
 				else:
 					self._fail(f"Could not fetch the host's root service: {e}")
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
@@ -265,9 +260,11 @@ class AddonSession:
 		"""Work out why the control connection closed, and fail the session if core did not close it."""
 		print("_onControlConnectionLost: determining reason...")
 		with self._stateChanged:
-			if self._state is SessionState.STOPPING or self._state.isFinal:
+			if self._conn is None or self._state.isFinal:
 				# Core closed the connection itself, so the host stopping is expected.
-				print(f"_onControlConnectionLost: expected loss of control connection ({self._state=})")
+				print(
+					f"_onControlConnectionLost: expected loss of control connection ({self._state=}, {self._readinessReported=})",
+				)
 				return
 		exitStatus = self._controller.wait(self._exitConfirmGrace)
 		if exitStatus is None:
@@ -334,8 +331,9 @@ class AddonSession:
 		Closing the connection first lets a healthy host see end-of-file and exit by itself.
 		"""
 		self._hostRoot = None
-		conn = self._conn
-		self._conn = None
+		with self._stateChanged:
+			conn = self._conn
+			self._conn = None
 		if conn is not None:
 			conn.close()
 		self._controller.terminate()
