@@ -11,6 +11,7 @@ so the standard streams, host marker and logging are set up exactly as in a real
 but swaps in a host half that misbehaves in the way ``behaviour`` names:
 
 * ``exitBeforeReady <status>``: exits immediately with ``status``, without signalling readiness.
+* ``closeAndLinger``: closes the control connection without signalling readiness, then stays running.
 
 Unlike a probe, this does not check anything itself; the test observes how core copes with it.
 """
@@ -19,6 +20,7 @@ from __future__ import annotations
 
 import os
 import sys
+import time
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Final
 
@@ -27,13 +29,22 @@ from _art.host import entrypoint
 if TYPE_CHECKING:
 	from rpyc.core.stream import Stream
 
+#: How long a lingering host stays up, in seconds; far longer than any test should take to kill it.
+_LINGER_SECONDS: float = 600.0
+
 
 def _exitBeforeReady(stream: Stream, status: str) -> None:
 	os._exit(int(status))
 
 
+def _closeAndLinger(stream) -> None:
+	stream.close()
+	time.sleep(_LINGER_SECONDS)
+
+
 _BEHAVIOURS: Final[dict[str, Callable[Stream, str]]] = {
 	"exitBeforeReady": _exitBeforeReady,
+	"closeAndLinger": _closeAndLinger,
 }
 
 

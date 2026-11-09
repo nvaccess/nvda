@@ -490,7 +490,6 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertEqual(session.exitStatus, 4)
 
-	@unittest.expectedFailure
 	def test_lingeringHostIsStopped(self):
 		"""A host process that closes its pipe but keeps running is stopped, rather than left behind."""
 		session = self.makeSession("closeAndLinger", exitConfirmGrace=_SHORT_GRACE)
