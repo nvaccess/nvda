@@ -12,6 +12,8 @@
 * Update CLDR to version 49.0. (#21093, @OzancanKaratas)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+* NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
+Skype for Business remains supported. (#19781, @josephsl)
 
 ### Bug Fixes
 
@@ -97,6 +99,7 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `ITextDocument2` is now the Text Object Model 2 interface.
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
+* Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
 
 #### Deprecations
 
