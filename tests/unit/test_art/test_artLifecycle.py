@@ -460,18 +460,16 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 		self.addCleanup(session.stop)
 		return session
 
-	@unittest.expectedFailure
 	def test_hostDyingAfterReadyIsDetected(self):
 		"""A host process that dies abruptly closes its pipe, and core records how it died."""
 		session = self.makeSession("instrumented")
 		startWithin(self, session)
 		rpyc.async_(session.hostRoot._crash)(3)
-		self.assertTrue(session.waitForState(SessionState.FAILED, timeout=_TIMEOUT))
+		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertEqual(session.exitStatus, 3)
 		self.assertIn("status 3", session.failureReason)
 
-	@unittest.expectedFailure
 	def test_hostIsADirectChildOfCore(self):
 		"""The process the controller holds is the host itself, not a launcher standing between them.
 
