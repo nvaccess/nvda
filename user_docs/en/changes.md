@@ -9,6 +9,7 @@
 
 ### Changes
 
+* Update CLDR to version 49.0. (#21093, @OzancanKaratas)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
 * NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025. Skype for Business remains supported. (#19781, @josephsl)
