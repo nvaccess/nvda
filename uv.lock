@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.13.*"
 resolution-markers = [
     "sys_platform == 'win32'",
@@ -7,6 +7,19 @@ resolution-markers = [
 supported-markers = [
     "sys_platform == 'win32'",
 ]
+
+[options]
+exclude-newer = "0001-01-01T00:00:00Z" # This has no effect and is included for backwards compatibility when using relative exclude-newer values.
+exclude-newer-span = "P14D"
+
+[options.exclude-newer-package]
+accessible-output2 = false
+bookshare = false
+i18n-core = false
+libloader = false
+logger-setup = false
+platform-utils = false
+sound-lib = false
 
 [manifest]
 members = [
@@ -82,11 +95,11 @@ wheels = [
 
 [[package]]
 name = "cachetools"
-version = "7.2.6"
+version = "7.2.5"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f2/0f/e02be8857e0fc519a12337568f0bf4b0aad4f3a95d7303e9e9d9fbcca8c2/cachetools-7.2.6.tar.gz", hash = "sha256:1096513bdeed468ba505df3d123e4578a5a22c955f4a9ba3912fd71f3f95363a", size = 46662, upload-time = "2026-10-26T21:46:43.818Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5a/e5/43f9a3f926cc182a0ee95cfd53ec0b5ac0e2cdafa184af6fc50166fd03fd/cachetools-7.2.5.tar.gz", hash = "sha256:a2223b80de434291ddf4c105354e533bbaf4d29382f5d1bc3e4b9332cb31061e", size = 46088, upload-time = "2026-10-25T08:53:17.172Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/53/98/c8201d54b354857a3050a52751ca482eb143c404b387ab2c41a0f981b610/cachetools-7.2.6-py3-none-any.whl", hash = "sha256:8722e08fc36ae0838a9a0a2ab9935554720de3343a62dad7aae7c595854c8623", size = 19523, upload-time = "2026-10-26T21:46:42.277Z" },
+    { url = "https://files.pythonhosted.org/packages/4f/bd/bd8f45fbdf05ce06dbadda61bf0a09844bb0cf0a048d7f5c4a368d437e24/cachetools-7.2.5-py3-none-any.whl", hash = "sha256:9033308cc26b678784a27b096aab1541b9e698d785c3e9918b691ccd458d88df", size = 19132, upload-time = "2026-10-25T08:53:15.638Z" },
 ]
 
 [[package]]
@@ -1486,6 +1499,7 @@ dependencies = [
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/a7/da0cde189c0764e33ddb9f326005596956855de90d889a8025d517396ab6/wxpython-4.3.2.tar.gz", hash = "sha256:5531baa9344488a15081a6b2eaeb67af047d12a814cf657c082360ccc37204fb", size = 65858455, upload-time = "2026-10-13T22:52:48.462Z" }
 wheels = [
+    { url = "https://files.pythonhosted.org/packages/64/87/ee775d04b2966960819570be210692e66a5b3349369d6643af8a820c49e3/wxpython-4.3.2-cp313-cp313-win32.whl", hash = "sha256:6108b0515e4f2b6f8fbc1513253b746775cb0b33020054803175a6c7899aedde", size = 17152978, upload-time = "2026-10-16T00:49:23.849Z" },
     { url = "https://files.pythonhosted.org/packages/5c/8f/1f3c34a10209d534c12c5da28dcc68bdd8054682b76ac2216b165f7dcaf7/wxpython-4.3.2-cp313-cp313-win_amd64.whl", hash = "sha256:9ef2cec75f570ac09fbcfe31cd668bbf122dc650a2c43a9016aba668c557c725", size = 19665229, upload-time = "2026-10-13T22:46:43.133Z" },
     { url = "https://files.pythonhosted.org/packages/06/a8/1ac4e7c9b986170cf90fe4c08f1f01b9b5da259588c90964397ff872660b/wxpython-4.3.2-cp313-cp313-win_arm64.whl", hash = "sha256:100d532ddaf457e21421f69fbcaf63d6403dc10d70ca80c1726152aaf4967856", size = 17466924, upload-time = "2026-10-13T22:46:46.553Z" },
 ]

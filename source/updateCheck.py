@@ -56,6 +56,7 @@ import synthDriverHandler
 import braille
 import gui
 from gui import guiHelper
+from speech import sayAll
 from gui.message import DialogType, MessageDialog, ReturnCode, displayDialogAsModal
 from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
 from addonStore.models.version import (
@@ -481,6 +482,8 @@ class AutoUpdateChecker(UpdateChecker):
 		if not info:
 			return
 		if info.version == state["dontRemindVersion"]:
+			return
+		if sayAll.SayAllHandler.isRunning():
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
