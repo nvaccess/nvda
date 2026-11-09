@@ -13,6 +13,9 @@ but swaps in a host half that misbehaves in the way ``behaviour`` names:
 * ``exitBeforeReady <status>``: exits immediately with ``status``, without signalling readiness.
 * ``exitBeforeServe <status>``: exits immediately after signalling readiness with ``status``.
 * ``closeAndLinger``: closes the control connection without signalling readiness, then stays running.
+* ``instrumented``: signals readiness and serves normally, but its root service also exposes:
+	* ``_getPid()``, which returns the process ID of the host itself;
+	* ``_crash(status)``, which exits the process immediately with ``status``.
 
 Unlike a probe, this does not check anything itself; the test observes how core copes with it.
 """
@@ -52,10 +55,35 @@ def _closeAndLinger(stream) -> None:
 	time.sleep(_LINGER_SECONDS)
 
 
+def _instrumented(stream: Stream) -> None:
+	# Import late, as ``entrypoint.run`` does, so that ``main`` has set the host marker first.
+	import rpyc
+	from _art.host.rootService import HostRootService
+	from _art.transport import Connection, Service
+
+	@rpyc.service
+	class InstrumentedHostRootService(HostRootService):
+		@Service.exposed
+		def _getPid(self) -> int:
+			return os.getpid()
+
+		@Service.exposed
+		def _crash(self, status: int) -> None:
+			os._exit(status)
+
+	conn = Connection(stream, InstrumentedHostRootService(), name=entrypoint.CONTROL_CONNECTION_NAME)
+	try:
+		entrypoint._signalReadiness(conn)
+		conn.eventLoop()
+	finally:
+		conn.close()
+
+
 _BEHAVIOURS: Final[dict[str, Callable[Stream, str]]] = {
 	"exitBeforeReady": _exitBeforeReady,
 	"exitBeforeServe": _exitBeforeServe,
 	"closeAndLinger": _closeAndLinger,
+	"instrumented": _instrumented,
 }
 
 
