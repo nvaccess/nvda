@@ -46,6 +46,7 @@ from gui.message import DisplayableError, displayDialogAsModal, messageBox, _cou
 from gui.nvdaControls import _CheckListCtrl
 from logHandler import log
 import NVDAState
+from speech import sayAll
 from speech.priorities import SpeechPriority
 import ui
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
@@ -583,6 +584,8 @@ class UpdatableAddonsDialog(
 			case AddonsAutomaticUpdate.NOTIFY:
 
 				def delayCreateDialog():
+					if sayAll.SayAllHandler.isRunning():
+						return
 					winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 					displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
 
