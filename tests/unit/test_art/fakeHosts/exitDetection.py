@@ -25,8 +25,7 @@ from __future__ import annotations
 import os
 import sys
 import time
-from collections.abc import Callable
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING
 
 from _art.host import entrypoint
 
@@ -50,7 +49,7 @@ def _exitBeforeServe(stream: Stream, status: str) -> None:
 	os._exit(int(status))
 
 
-def _closeAndLinger(stream) -> None:
+def _closeAndLinger(stream: Stream) -> None:
 	stream.close()
 	time.sleep(_LINGER_SECONDS)
 
@@ -79,7 +78,7 @@ def _instrumented(stream: Stream) -> None:
 		conn.close()
 
 
-_BEHAVIOURS: Final[dict[str, Callable[Stream, str]]] = {
+_BEHAVIOURS = {
 	"exitBeforeReady": _exitBeforeReady,
 	"exitBeforeServe": _exitBeforeServe,
 	"closeAndLinger": _closeAndLinger,
