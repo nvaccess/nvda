@@ -490,6 +490,16 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertEqual(session.exitStatus, 4)
 
+	def test_hostDyingBeforeServingFailsLaunch(self):
+		"""A host process that dies between signalling readiness and serving the controll connection ends launch."""
+		session = self.makeSession("exitBeforeServe", "5")
+		session._onReady = MagicMock(wraps=session._onReady)
+		with self.assertRaises(HostLaunchError):
+			startWithin(self, session)
+		session._onReady.assert_called_once_with(None)
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertEqual(session.exitStatus, 5)
+
 	def test_lingeringHostIsStopped(self):
 		"""A host process that closes its pipe but keeps running is stopped, rather than left behind."""
 		session = self.makeSession("closeAndLinger", exitConfirmGrace=_SHORT_GRACE)

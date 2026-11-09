@@ -11,6 +11,7 @@ so the standard streams, host marker and logging are set up exactly as in a real
 but swaps in a host half that misbehaves in the way ``behaviour`` names:
 
 * ``exitBeforeReady <status>``: exits immediately with ``status``, without signalling readiness.
+* ``exitBeforeServe <status>``: exits immediately after signalling readiness with ``status``.
 * ``closeAndLinger``: closes the control connection without signalling readiness, then stays running.
 
 Unlike a probe, this does not check anything itself; the test observes how core copes with it.
@@ -37,6 +38,15 @@ def _exitBeforeReady(stream: Stream, status: str) -> None:
 	os._exit(int(status))
 
 
+def _exitBeforeServe(stream: Stream, status: str) -> None:
+	from _art.host.rootService import HostRootService
+	from _art.transport import Connection
+
+	conn = Connection(stream, HostRootService, name=entrypoint.CONTROL_CONNECTION_NAME)
+	entrypoint._signalReadiness(conn)
+	os._exit(int(status))
+
+
 def _closeAndLinger(stream) -> None:
 	stream.close()
 	time.sleep(_LINGER_SECONDS)
@@ -44,6 +54,7 @@ def _closeAndLinger(stream) -> None:
 
 _BEHAVIOURS: Final[dict[str, Callable[Stream, str]]] = {
 	"exitBeforeReady": _exitBeforeReady,
+	"exitBeforeServe": _exitBeforeServe,
 	"closeAndLinger": _closeAndLinger,
 }
 
