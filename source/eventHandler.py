@@ -511,7 +511,6 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 			"mscandui21.candidate",
 			"mscandui40.candidate",
 			"MSCandUIWindow_Candidate",  # IMM candidates
-			"TTrayAlert",  # 5405: Skype
 		)
 	if (
 		eventName == "alert"

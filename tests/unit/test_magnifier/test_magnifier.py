@@ -577,11 +577,12 @@ class TestMagnifier(_TestMagnifier):
 		"""When screen curtain is enabled while magnifier is active, magnifier stops."""
 		self.magnifier._isActive = True
 
-		with patch("_magnifier.magnifier.ui.message"):
+		with patch("_magnifier.magnifier.ui.message") as mock_message:
 			self.magnifier.onScreenCurtainEnabled()
 
 		self.assertFalse(self.magnifier._isActive)
 		self.assertTrue(self.magnifier._screenCurtainIsActive)
+		mock_message.assert_not_called()
 
 	def testOnScreenCurtainEnabledWhenInactive(self):
 		"""When screen curtain is enabled while magnifier is already inactive, _screenCurtainIsActive is False."""
@@ -597,12 +598,13 @@ class TestMagnifier(_TestMagnifier):
 		self.magnifier._startMagnifier = MagicMock()
 		self.magnifier._updateMagnifier = MagicMock()
 
-		with patch("_magnifier.magnifier.ui.message"):
+		with patch("_magnifier.magnifier.ui.message") as mock_message:
 			self.magnifier.onScreenCurtainDisabled()
 
 		self.magnifier._startMagnifier.assert_called_once()
 		self.magnifier._updateMagnifier.assert_called_once()
 		self.assertFalse(self.magnifier._screenCurtainIsActive)
+		mock_message.assert_not_called()
 
 	def testOnScreenCurtainDisabledDoesNothingWhenFlagIsFalse(self):
 		"""When screen curtain is disabled but _screenCurtainIsActive is False, nothing happens."""
