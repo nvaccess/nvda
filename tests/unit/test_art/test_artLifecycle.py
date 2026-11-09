@@ -32,12 +32,12 @@ _TIMEOUT: float = 30.0
 _SHORT_GRACE: float = 0.2
 
 
-def fakeHostCommand(behaviour: str, *arguments: str) -> list[str]:
+def fakeHostCommand(fakeHost: str, behaviour: str, *arguments: str) -> list[str]:
 	"""The command line that runs the fake host with ``behaviour``.
 
 	See ``fakeHosts/fakeHost.py`` for the behaviours available.
 	"""
-	script = pathlib.Path(__file__).parent / "fakeHosts" / "fakeHost.py"
+	script = pathlib.Path(__file__).parent / "fakeHosts" / fakeHost
 	return interpreterCommand(str(script), behaviour, *arguments)
 
 
@@ -455,7 +455,7 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 	"""Exit detection against real host processes, which can die in ways a thread cannot."""
 
 	def makeSession(self, *command: str, **kwargs) -> AddonSession:
-		self.controller = SubprocessHostController(command=fakeHostCommand(*command))
+		self.controller = SubprocessHostController(command=fakeHostCommand("exitDetection.py", *command))
 		session = AddonSession(self.controller, **kwargs)
 		self.addCleanup(session.stop)
 		return session
@@ -482,7 +482,6 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 		startWithin(self, session)
 		self.assertEqual(session.hostRoot._getPid(), self.controller._process.pid)
 
-	@unittest.expectedFailure
 	def test_hostDyingDuringLaunchFailsItPromptly(self):
 		"""A host process that dies before signalling readiness ends launch straight away."""
 		session = self.makeSession("exitBeforeReady", "4")
