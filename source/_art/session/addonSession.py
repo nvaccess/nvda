@@ -320,10 +320,12 @@ class AddonSession:
 		with self._stateChanged:
 			if self._state.isFinal:
 				return
+			log.warning(f"ART add-on session failed: {reason}")
 			self._failureReason = reason
-			self._setState(SessionState.FAILED)
-		log.warning(f"ART add-on session failed: {reason}")
-		self._stopHost()
+			try:
+				self._stopHost()
+			finally:
+				self._setState(SessionState.FAILED)
 
 	def _stopHost(self) -> None:
 		"""Close the control connection, then stop the host.
