@@ -5,9 +5,9 @@
 
 """Functions exported by wtsapi32.dll, and supporting data structures and enumerations."""
 
-from ctypes import (  # noqa: I001
-	WINFUNCTYPE,
+from ctypes import (
 	POINTER,
+	WINFUNCTYPE,
 	c_int,
 	c_void_p,
 	windll,
@@ -19,7 +19,6 @@ from ctypes.wintypes import (
 	LPWSTR,
 )
 from typing import Any
-
 
 try:
 	dll = windll.wtsapi32

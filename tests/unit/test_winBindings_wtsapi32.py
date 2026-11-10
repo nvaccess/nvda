@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# Copyright (C) 2026 NV Access Limited, Akash Kakkar
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
 import importlib
@@ -11,6 +11,13 @@ from ctypes.wintypes import BOOL, DWORD, HANDLE, LPWSTR
 from unittest import mock
 
 from winBindings import wtsapi32
+
+
+@unittest.skipUnless(wtsapi32.WTSAPI32_AVAILABLE, "Windows Terminal Services API is unavailable")
+class TestAvailableWtsApi32(unittest.TestCase):
+	def test_bindingsAreCtypesFunctions(self):
+		self.assertIsInstance(wtsapi32.WTSFreeMemory, ctypes._CFuncPtr)
+		self.assertIsInstance(wtsapi32.WTSQuerySessionInformation, ctypes._CFuncPtr)
 
 
 class TestUnavailableWtsApi32(unittest.TestCase):

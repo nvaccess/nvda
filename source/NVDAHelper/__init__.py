@@ -746,6 +746,9 @@ class _RemoteLoader:
 	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
 		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
+		self._startProcess(loaderDir, pipeReadOrig)
+
+	def _startProcess(self, loaderDir: str, pipeReadOrig: int | None) -> None:
 		pipeRead = nulHandle = token = None
 		pi = winBindings.advapi32.PROCESS_INFORMATION()
 		try:
@@ -801,7 +804,7 @@ def _tryStartRemoteLoader(loaderDir: str) -> _RemoteLoader | None:
 	try:
 		return _RemoteLoader(loaderDir)
 	except OSError:
-		log.error(f"Unable to start remote loader from {loaderDir}", exc_info=True)  # noqa: G201
+		log.exception("Unable to start remote loader from %s", loaderDir)
 		return None
 
 

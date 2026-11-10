@@ -14,15 +14,16 @@ Used to:
 - ensure object navigation cannot occur outside of the lockscreen
 """
 
-from __future__ import annotations  # noqa: I001
+from __future__ import annotations
+
 import ctypes
+import enum
+from collections.abc import Generator
 from contextlib import contextmanager
 from ctypes.wintypes import (
 	DWORD,
 	LPWSTR,
 )
-import enum
-from collections.abc import Generator
 
 from baseObject import AutoPropertyObject
 from logHandler import log
@@ -30,13 +31,13 @@ from NVDAState import _TrackNVDAInitialization
 from winBindings.wtsapi32 import WTSAPI32_AVAILABLE, WTSAPI32_LOAD_ERROR
 
 from ._wtsApi32 import (
-	WTSINFOEXW,
-	WTSQuerySessionInformation,
 	WTS_CURRENT_SERVER_HANDLE,
 	WTS_CURRENT_SESSION,
 	WTS_INFO_CLASS,
-	WTSFreeMemory,
+	WTSINFOEXW,
 	WTS_LockState,
+	WTSFreeMemory,
+	WTSQuerySessionInformation,
 )
 
 RPC_S_INVALID_BINDING = 0x6A6
@@ -72,6 +73,7 @@ _wasLockedPreviousPumpAll = False
 Each core pump cycle, the Windows lock state is updated.
 The previous value is tracked, so that changes to the lock state can be detected.
 """
+
 _loggedSessionQueryFailures: set[str] = set()
 """Session query failures already logged during this NVDA session."""
 
