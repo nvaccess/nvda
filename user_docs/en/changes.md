@@ -1,5 +1,34 @@
 # What's New in NVDA
 
+## 2027.2
+
+### Important notes
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+#### Braille
+
+#### Web browsers
+
+#### Applications
+
+#### Add-on Store
+
+#### Magnifier
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2027.1
 
 ### Important notes
