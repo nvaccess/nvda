@@ -1069,7 +1069,7 @@ class _DeterminateProgressDialog(_ProgressDialog):
 		:param step: The current step. The dialog message shows its display string.
 		:param percentage: The overall progress, or ``None`` for the start percentage of the step.
 		"""
-		self.setProgress(percentage or step.startPercentage, step.displayString)
+		self.setProgress(step.startPercentage if percentage is None else percentage, step.displayString)
 
 	def _applyLatest(self) -> None:
 		with self._latestLock:

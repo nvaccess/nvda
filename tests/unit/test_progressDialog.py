@@ -17,14 +17,15 @@ from utils._progress import ProgressStep
 
 class _Steps(ProgressStep):
 	FIRST = 1
+	SECOND = 2
 
 	@property
 	def _displayStringLabels(self) -> dict[Self, str]:
-		return {_Steps.FIRST: "First step"}
+		return {_Steps.FIRST: "First step", _Steps.SECOND: "Second step"}
 
 	@property
 	def _startPercentages(self) -> dict[Self, int]:
-		return {_Steps.FIRST: 0}
+		return {_Steps.FIRST: 0, _Steps.SECOND: 50}
 
 
 class Test_remoteProgress(unittest.TestCase):
@@ -55,7 +56,7 @@ class Test_remoteProgress(unittest.TestCase):
 	def test_unknownStep_isIgnored(self):
 		dialog = Mock()
 		gui._DeterminateProgressDialog._remoteProgressReceiver = (dialog, _Steps)
-		gui._DeterminateProgressDialog._handleRemoteProgress(2, 42)
+		gui._DeterminateProgressDialog._handleRemoteProgress(3, 42)
 		dialog.setStep.assert_not_called()
 
 	def test_withoutReceiver_isIgnored(self):
@@ -84,13 +85,18 @@ class Test_setProgress(unittest.TestCase):
 class Test_setStep(unittest.TestCase):
 	def test_withoutPercentage_setsStartPercentage(self):
 		dialog = Mock()
-		gui._DeterminateProgressDialog.setStep(dialog, _Steps.FIRST)
-		dialog.setProgress.assert_called_once_with(0, "First step")
+		gui._DeterminateProgressDialog.setStep(dialog, _Steps.SECOND)
+		dialog.setProgress.assert_called_once_with(50, "Second step")
 
 	def test_withPercentage_setsPercentage(self):
 		dialog = Mock()
 		gui._DeterminateProgressDialog.setStep(dialog, _Steps.FIRST, 42)
 		dialog.setProgress.assert_called_once_with(42, "First step")
+
+	def test_withZeroPercentage_setsZero(self):
+		dialog = Mock()
+		gui._DeterminateProgressDialog.setStep(dialog, _Steps.SECOND, 0)
+		dialog.setProgress.assert_called_once_with(0, "Second step")
 
 
 class Test_applyLatest(unittest.TestCase):
