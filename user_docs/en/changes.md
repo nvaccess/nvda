@@ -2,9 +2,34 @@
 
 ## 2027.2
 
+### Important notes
+
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+
+### Changes
+
+### Bug Fixes
+
+#### Braille
+
+#### Web browsers
+
+#### Applications
+
+#### Add-on Store
+
+#### Magnifier
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
 
 ## 2027.1
 
@@ -15,8 +40,11 @@
 
 ### Changes
 
+* Update CLDR to version 49.0. (#21093, @OzancanKaratas)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+* NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
+Skype for Business remains supported. (#19781, @josephsl)
 
 ### Bug Fixes
 
@@ -39,6 +67,7 @@
 
 * The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
 * Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+* When selecting text in browse mode with multiple routing keys, the selection is now announced and shown on the braille display. (#21086, @LeonarddeR)
 
 #### Web browsers
 
@@ -63,6 +92,8 @@
 * Profiles no longer interfere with Magnifier settings.
 Previously, saving magnifier settings could be ineffective while a profile was active.
 The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+* When disabling the Screen Curtain, NVDA no longer reports that it could not be disabled if the Magnifier has trouble determining what to follow, and the Magnifier is correctly restarted. (#20518, @JulienCochuyt)
+* NVDA no longer announces that the Magnifier is being disabled or re-enabled when toggling the Screen Curtain. (#19528, @JulienCochuyt)
 
 ### Changes for Developers
 
@@ -102,6 +133,7 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `ITextDocument2` is now the Text Object Model 2 interface.
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
+* Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
 
 #### Deprecations
 
