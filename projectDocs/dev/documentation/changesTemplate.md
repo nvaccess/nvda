@@ -26,7 +26,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 <!-- If this is a 20XY.1 release, uncomment, otherwise delete.
 
 * Note: this is an Add-on API compatibility breaking release.
-Add-ons will need to be re-tested and have their manifest updated. 
+Add-ons will need to be re-tested and have their manifest updated.
 
 #### API Breaking Changes
 
