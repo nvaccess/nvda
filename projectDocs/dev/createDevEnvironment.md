@@ -137,4 +137,4 @@ These packages will be installed into an isolated Python virtual environment wit
 
 The following dependencies aren't needed by most people:
 
-* To generate [developer documentation for nvdaHelper](./buildingDevDocumentation.md#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15.
+* To generate [developer documentation for nvdaHelper](./documentation/buildingDevDocumentation.md#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15.
