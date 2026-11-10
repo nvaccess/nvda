@@ -10,6 +10,8 @@
 
 ### Changes
 
+* While installing or updating NVDA, the progress dialog now reports the actual progress, the current step and the estimated remaining time, following the progress bar output settings. (#2313, @LeonarddeR)
+
 ### Bug Fixes
 
 #### Braille
