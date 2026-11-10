@@ -49,6 +49,18 @@ class FullScreenMagnifier(Magnifier):
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
 
+	def _onSecureDesktopChange(self, isSecureDesktop: bool) -> None:
+		"""Internal callback for secure desktop state changes.
+		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
+		"""
+		if isSecureDesktop:
+			# While secure desktop is active, the secure desktop masks the user's one, so updating magnification on
+			# the user's desktop is useless. But overall, calling magnification.MagSetInputTransform is not allowed
+			# and causes an error. Thus we disable magnifier update while secure desktop is active.
+			self._stopTimer()
+		else:
+			self._startTimer(self._updateMagnifier)
+
 	@staticmethod
 	def _isAccessDeniedError(error: OSError) -> bool:
 		"""Return True when OSError represents Windows access denied (WinError 5)."""
@@ -81,6 +93,9 @@ class FullScreenMagnifier(Magnifier):
 			log.debug(
 				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen tracking mode {self._fullscreenMode}",
 			)
+		from winAPI.secureDesktop import post_secureDesktopStateChange
+
+		post_secureDesktopStateChange.register(self._onSecureDesktopChange)
 		try:
 			self._initializeNativeMagnification()
 		except OSError:
@@ -161,6 +176,9 @@ class FullScreenMagnifier(Magnifier):
 		Stop the Full-screen magnifier using windows DLL
 		"""
 		super()._stopMagnifier()
+		from winAPI.secureDesktop import post_secureDesktopStateChange
+
+		post_secureDesktopStateChange.unregister(self._onSecureDesktopChange)
 		self._resetMagnification()
 		self._uninitializeNativeMagnification()
 
