@@ -7,6 +7,7 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* A new command line option, `--start-after-signin=True|False`, sets whether NVDA starts after the current user signs in. (#20619, @shidokorami)
 
 ### Changes
 

@@ -106,6 +106,23 @@ for name in pathAppArgs:
 		newVal = os.path.abspath(origVal)
 		setattr(globalVars.appArgs, name, newVal)
 
+if globalVars.appArgs.startAfterSignin is not None:
+	import config
+	from utils.security import isRunningOnSecureDesktop
+
+	if (
+		globalVars.appArgs.secure
+		or NVDAState._forceSecureModeEnabled()
+		or isRunningOnSecureDesktop()
+		or not config.isInstalledCopy()
+	):
+		sys.exit(1)
+	try:
+		config.setStartAfterLogon(globalVars.appArgs.startAfterSignin)
+	except (OSError, TypeError):
+		sys.exit(1)
+	sys.exit(0)
+
 
 def terminateRunningNVDA(window):
 	processID, threadID = winUser.getWindowThreadProcessID(window)  # noqa: RUF059
