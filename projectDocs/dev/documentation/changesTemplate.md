@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD041 -->
+
 ## 20XY.Z
 
 ### Important notes
