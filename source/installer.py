@@ -849,32 +849,26 @@ def tryCopyFile(
 
 		errorCode = ctypes.GetLastError()
 		log.debugWarning(
-			"Unable to copy %s, error %d, attempt %d/%d",
-			sourceFilePath,
-			errorCode,
-			attempt + 1,
-			numRetries,
+			f"Unable to copy {sourceFilePath}, error {errorCode}, attempt {attempt + 1}/{numRetries}",
 		)
 		if os.path.exists(destFilePath):
 			break
 		# Allow transient source-file locks to clear before trying again.
 		time.sleep(retryInterval)
 	else:
-		raise OSError(
-			"error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath),  # noqa: UP031
-		)
+		raise OSError(f"error {errorCode} copying {sourceFilePath} to {destFilePath}")
 
 	tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
 	try:
 		os.replace(destFilePath, tempPath)
 	except OSError:
-		log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)  # noqa: G201, UP031
-		raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)  # noqa: UP031
+		log.exception(f"Failed to rename {destFilePath} after failed overwrite")
+		raise RetriableFailure(f"Failed to rename {destFilePath} after failed overwrite")
 	winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 		errorCode = ctypes.GetLastError()
 		raise OSError(
-			"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),  # noqa: UP031
+			f"Unable to copy file {sourceFilePath} to {destFilePath}, error {errorCode}",
 		)
 
 
