@@ -41,6 +41,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 ### Changes
 
 * Update CLDR to version 49.0. (#21093, @OzancanKaratas)
+* A "White noise volume" setting has been added to the Audio category of NVDA settings. It can help when your audio device cuts off the end of speech even though "Time to keep audio device awake after speech" is set. (#19286, @Yashu16)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
 * NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.

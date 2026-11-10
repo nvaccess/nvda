@@ -2915,6 +2915,23 @@ Setting the value too high may cause the battery of the sound output device to d
 
 You can set the time to zero in order to disable this feature.
 
+##### White noise volume {#WhiteNoiseVolume}
+
+This edit box sets the volume of very quiet white noise that NVDA plays while keeping the audio device awake after speech.
+It only has an effect when "Time to keep audio device awake after speech" is greater than zero.
+
+Some audio drivers treat the silence NVDA plays to keep the device awake as nothing to play, and trim it.
+This can cut off the end of speech, even when the audio device is kept awake.
+Playing a small amount of white noise instead of silence can stop the driver from trimming it.
+
+The value ranges from 0 to 100.
+The default is 0, which disables the white noise.
+White noise can be loud, especially on headphones, so start with a low value such as 1 and increase it only if needed.
+
+If the end of speech is still cut off, your audio driver or its audio enhancements may be the cause.
+For example, on some laptops with Realtek audio drivers, disabling Windows audio enhancements for the output device in the Windows Sound settings has fixed the problem.
+Updating your audio driver may also help.
+
 #### Privacy and Security {#PrivacyAndSecuritySettings}
 
 This category allows you to adjust settings that affect your privacy and security while using NVDA.
