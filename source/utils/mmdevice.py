@@ -9,8 +9,14 @@ from collections.abc import Generator
 from typing import NamedTuple, cast
 
 import config
+from logHandler import log
 from pycaw.constants import DEVICE_STATE, EDataFlow
-from pycaw.utils import AudioUtilities
+
+try:
+	from pycaw.utils import AudioUtilities
+except (ImportError, OSError):
+	log.warning("Audio device enumeration is unavailable.", exc_info=True)
+	AudioUtilities = None
 
 
 class AudioOutputDevice(NamedTuple):
@@ -43,6 +49,8 @@ def getOutputDevices(
 			# Translators: Value to show when choosing to use the default audio output device.
 			friendlyName=_("Default output device"),
 		)
+	if AudioUtilities is None:
+		return
 	endpointCollection = AudioUtilities.GetDeviceEnumerator().EnumAudioEndpoints(
 		EDataFlow.eRender.value,
 		stateMask.value,
