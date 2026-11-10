@@ -154,4 +154,4 @@ self.loadChromeVbufWhenBusyCombo.saveCurrentValueToConf()
 
 ## User Guide Documentation
 
-Refer to [User Guide Standards](./userGuideStandards.md#feature-settings)
+Refer to [User Guide Standards](./documentation/userGuideStandards.md#feature-settings)

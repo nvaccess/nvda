@@ -90,7 +90,7 @@ Refer to ["Proposing Major Changes"](./proposingMajorChanges.md) before opening 
 1. Create a branch for the contribution, to be used for a pull request.
 	* Pull requests should be based on the latest commit in the official master branch.
 	This helps reduce the chance of merge conflicts.
-	* If you are adding a feature or changing something that will be noticeable to the user, you should update the [User Guide accordingly](./userGuideStandards.md).
+	* If you are adding a feature or changing something that will be noticeable to the user, you should update the [User Guide accordingly](./documentation/userGuideStandards.md).
 	New commands, drivers, settings, dialogs, etc. must be documented.
 1. [Build NVDA](./buildingNVDA.md) and run from source
 1. [Manually test the change](../testing/readme.md)
@@ -191,4 +191,4 @@ Please checkout our [technical design overview](../design/technicalDesignOvervie
 
 ## Copyright headers
 
-Please refer to our guide on creating or updating [copyright headers](./copyrightHeaders.md)
+Please refer to our guide on creating or updating [copyright headers](./documentation/copyrightHeaders.md)
