@@ -98,6 +98,9 @@ class TestUIAFocusEvent(unittest.TestCase):
 			getCachedValue.assert_not_called()
 
 	def test_focusEventObjectFetchesCurrentName(self) -> None:
+		"""An object created for a UIA focus event gets its name from the focus prefetch.
+		The name cached with the event is not used.
+		"""
 		sender = Mock()
 		sender.getCachedPropertyValueEx.return_value = "old name"
 		sender.buildUpdatedCache.return_value = Mock(
