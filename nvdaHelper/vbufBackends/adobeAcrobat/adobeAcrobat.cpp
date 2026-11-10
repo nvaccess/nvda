@@ -251,23 +251,24 @@ class AdobeAcrobatVBufStorage_controlFieldNode_t: public VBufStorage_controlFiel
 };
 
 /*
- * Adjusts the current column number to skip past columns spanned by previous rows,
- * decrementing row spans as they are encountered.
+ * Adjusts the current column number to skip past columns spanned by previous rows.
+ * Each spanned column records the last row it covers,
+ * so spans expire on their own even when no cell in a row lies to the right of them.
  */
 inline void handleColsSpannedByPrevRows(TableInfo& tableInfo) {
 	for (; ; ++tableInfo.curColumnNumber) {
-		map<int, int>::iterator it = tableInfo.columnRowSpans.find(tableInfo.curColumnNumber);
-		if (it == tableInfo.columnRowSpans.end()) {
+		map<int, int>::iterator it = tableInfo.columnLastSpannedRow.find(tableInfo.curColumnNumber);
+		if (it == tableInfo.columnLastSpannedRow.end()) {
 			// This column is not spanned by a previous row.
 			return;
 		}
-		nhAssert(it->second != 0); // 0 row span should never occur.
-		// This row has been covered, so decrement the row span.
-		--it->second;
-		if (it->second == 0)
-			tableInfo.columnRowSpans.erase(it);
+		if (it->second < tableInfo.curRowNumber) {
+			// The span ended before this row, so this column is free.
+			tableInfo.columnLastSpannedRow.erase(it);
+			return;
+		}
+		// This column is still covered by a cell from a previous row; skip it.
 	}
-	nhAssert(false); // Code should never reach this point.
 }
 
 /*
@@ -574,13 +575,15 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 				int span = _wtoi(tempBstr) - 1;
 				if (span > 0) {
 					// The row span needs to be recorded for each spanned column.
-					for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
-						tableInfo->columnRowSpans[col] = span;
 					endRow += span;
+					for (int col = startCol; col <= tableInfo->curColumnNumber; ++col)
+						tableInfo->columnLastSpannedRow[col] = endRow;
 				}
 				SysFreeString(tempBstr);
 			}
 		}
+		if (tableInfo->curColumnNumber > tableInfo->maxColumnNumber)
+			tableInfo->maxColumnNumber = tableInfo->curColumnNumber;
 		if (role == ROLE_SYSTEM_COLUMNHEADER || role == ROLE_SYSTEM_ROWHEADER) {
 			int headerType = 0;
 			if (domElement && domElement->GetAttribute(BSTR(L"Scope"), BSTR(L"Table"), &tempBstr) == S_OK && tempBstr) {
@@ -727,7 +730,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 		s << tableInfo->curRowNumber;
 		parentNode->addAttribute(L"table-rowcount", s.str());
 		s.str(L"");
-		s << tableInfo->curColumnNumber;
+		s << tableInfo->maxColumnNumber;
 		parentNode->addAttribute(L"table-columncount", s.str());
 		delete tableInfo;
 	}
