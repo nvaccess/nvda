@@ -48,6 +48,7 @@ Skype for Business remains supported. (#19781, @josephsl)
 
 ### Bug Fixes
 
+* NVDA now retries copying user settings for use during sign-in and on secure screens when a configuration file is temporarily locked. (#20118, @b-tanyileke)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
@@ -76,6 +77,7 @@ Skype for Business remains supported. (#19781, @josephsl)
 
 #### Applications
 
+* In Adobe Acrobat, NVDA now reports the correct column for every cell in tables where a header or cell in the last column spans several rows, so table navigation no longer skips that cell or reports "edge of table". (#21020, #5140, @raebened)
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
