@@ -199,7 +199,7 @@ class _VolumeRestorer(AudioSessionEvents):
 _applicationExitCallbacksLock = Lock()
 _applicationExitCallbacks: dict[int, _VolumeRestorer] = {}
 
-# Deprecated in 2027.1; remove in 2028.1.
+# Deprecated in 2027.2; remove in 2028.1.
 if BACK_COMPAT_TO < (2028, 1, 0):
 	__getattr__ = handleDeprecations(
 		MovedSymbol("SoundSplitState", "audio", "SoundSplitState"),
