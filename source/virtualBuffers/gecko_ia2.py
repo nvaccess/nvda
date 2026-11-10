@@ -18,9 +18,13 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
-from comtypes.gen.IAccessible2Lib import IAccessible2  # type: ignore[reportMissingImports]
 from comInterfaces import IAccessible2Lib as IA2
-from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection, IAccessibleText
+from comInterfaces.IAccessible2Lib import (
+	IAccessible2,
+	IAccessibleTextSelectionContainer,
+	IA2TextSelection,
+	IAccessibleText,
+)
 from comtypes import COMError
 from comtypes.hresult import E_INVALIDARG
 import aria

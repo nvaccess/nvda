@@ -26,7 +26,7 @@ dependencies = [
 	"comtypes==1.4.16",
 	"cryptography==50.0.2",
 	"pyserial==3.5",
-	"wxPython==4.2.4",
+	"wxPython==4.3.2",
 	# pinned to a commit in tool.uv.sources
 	"configobj",
 	"requests==2.34.2",
@@ -36,6 +36,8 @@ dependencies = [
 	"fast-diff-match-patch==2.1.0",
 	# pycaw is a Core Audio Windows Library used for sound split
 	"pycaw==20260927",
+	# Finding and ending running copies of NVDA when installing
+	"psutil==7.2.2",
 	# NVDA bridge for 32 bit shim
 	"rpyc==6.0.2",
 	"pywin32==312",

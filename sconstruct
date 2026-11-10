@@ -215,7 +215,7 @@ if apiSigningToken:
 elif certFile:
 	# Local code signing with a certFile
 	def signExecCert(target, source, env):
-		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages
+		# Sign with SHA256 digest algorithm
 		signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 		if certPassword:
 			signExecCmd.extend(("/p", certPassword))
@@ -689,19 +689,6 @@ symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path, "*.pdb")))
 symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)  # noqa: UP031
 env.Alias("symbolsArchive", symbolsArchive)
 
-appx_storeSubmission = env.SConscript(
-	"appx/sconscript",
-	exports={"env": env, "isStoreSubmission": True},
-	variant_dir="build\\appx_storeSubmission",
-)
-installed_appx_storeSubmission = env.Install("output", appx_storeSubmission)
-appx_sideLoadable = env.SConscript(
-	"appx/sconscript",
-	exports={"env": env, "isStoreSubmission": False},
-	variant_dir="build\\appx_sideLoadable",
-)
-installed_appx_sideLoadable = env.Install("output", appx_sideLoadable)
-env.Alias("appx", [installed_appx_storeSubmission, installed_appx_sideLoadable])
 
 env.Default(dist)
 

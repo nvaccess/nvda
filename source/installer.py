@@ -1,37 +1,39 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Iterable  # noqa: I001
-import json
-import comtypes.client
 import ctypes
-from enum import auto, Enum
-import pathlib
-import winreg
-import time
+import json
 import os
-import tempfile
+import pathlib
 import shutil
-import winBindings.kernel32
-import shellapi
+import tempfile
+import time
+import winreg
+from collections.abc import Iterable, Iterator, Sequence
+from enum import Enum, auto
+
+import addonHandler
+import buildVersion
+import COMRegistrationFixes
+import comtypes.client
+import config
+import easeOfAccess
+import fileUtils
 import globalVars
 import languageHandler
-import config
-from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
-import fileUtils
-import versionInfo
-import buildVersion
-from logHandler import log
-import addonHandler
-import easeOfAccess
-import COMRegistrationFixes
-import winKernel
 import NVDAState
+import psutil
+import shellapi
+import versionInfo
+import winBindings.kernel32
+import winKernel
+from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
+from logHandler import log
 from NVDAState import WritePaths
+from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
 from utils.tempFile import _createEmptyTempFileForDeletingFile
-from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
 
 _wsh = None
 
@@ -598,7 +600,7 @@ def _unregisterEaseOfAccessApp():
 		log.debug("Ease of Access app key not found. Nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
-	except OSError:
+	except (OSError, TypeError):
 		log.debug("Could not disable auto start on logon screen.")
 
 
@@ -854,6 +856,83 @@ _nvdaExes = {
 }
 
 
+def _getInstallDirs() -> list[str]:
+	"""Get the folders an installation replaces the NVDA executables in.
+
+	:return: The install folder, followed by the legacy x86 install folder when it exists separately.
+	"""
+	installDir = WritePaths.defaultInstallDir
+	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
+	dirs = [installDir]
+	if installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir:
+		dirs.append(installDirX86)
+	return dirs
+
+
+def _getRunningNVDAProcesses(installDirs: Sequence[str]) -> Iterator[psutil.Process]:
+	"""Find the processes running one of the NVDA executables from the install folders.
+	Processes in every session and of every user are included, as is any other copy of NVDA.
+	The current process is never included.
+	This needs no elevation.
+
+	:param installDirs: The folders to look in.
+	:return: An iterator over the processes found.
+	"""
+	exeNames = {os.path.normcase(exe) for exe in _nvdaExes}
+	exePaths = {
+		os.path.normcase(os.path.join(installDir, exe)) for installDir in installDirs for exe in _nvdaExes
+	}
+	for process in psutil.process_iter(["exe"]):
+		imagePath = process.info["exe"]
+		if process.pid == os.getpid() or not imagePath:
+			continue
+		normalizedPath = os.path.normcase(imagePath)
+		if normalizedPath in exePaths:
+			yield process
+		elif os.path.basename(normalizedPath) in exeNames:
+			log.debug(f"Ignoring {imagePath}, it is outside the install folders")
+
+
+def _waitForRunningNVDAProcesses(installDirs: Sequence[str], timeout: float = 3.0) -> list[psutil.Process]:
+	"""Wait for the processes found by :func:`_getRunningNVDAProcesses` to exit.
+	It polls whether the processes still run and needs no access to them.
+
+	:param installDirs: The folders to look in.
+	:param timeout: The maximum number of seconds to wait.
+	:return: The processes that are still running after the wait.
+	"""
+	processes = list(_getRunningNVDAProcesses(installDirs))
+	deadline = time.monotonic() + timeout
+	while True:
+		processes = [process for process in processes if process.is_running()]
+		if not processes or time.monotonic() >= deadline:
+			return processes
+		time.sleep(0.1)
+
+
+def _terminateProcesses(processes: Iterable[psutil.Process]) -> None:
+	"""Forcefully end processes.
+	This needs elevation to end processes of other users.
+	Failures are logged and do not stop the remaining processes from being terminated.
+
+	:param processes: The processes to end, as returned by :func:`psutil.process_iter` with the ``exe`` attribute.
+	"""
+	terminated: list[psutil.Process] = []
+	for process in processes:
+		log.info(f"Terminating process {process.pid} ({process.info['exe']})")
+		try:
+			process.kill()
+		except psutil.Error:
+			log.warning(f"Failed to terminate process {process.pid} ({process.info['exe']})", exc_info=True)
+		else:
+			terminated.append(process)
+	_gone, alive = psutil.wait_procs(terminated, timeout=2)
+	for process in alive:
+		log.warning(
+			f"Process {process.pid} ({process.info['exe']}) did not exit within 2 seconds of being terminated",
+		)
+
+
 def _revertGroupDelete(tempDir: str, installDir: str):
 	"""Move all files in tempDir back to installDir, retaining the same relative path"""
 	for tempFile in pathlib.Path(tempDir).rglob("*"):
@@ -919,17 +998,27 @@ def _deleteFileGroupOrFail(
 			log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
 
 
-def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True) -> None:
+def install(
+	shouldCreateDesktopShortcut: bool = True,
+	shouldRunAtLogon: bool = True,
+	shouldTerminateRunningNVDA: bool = False,
+) -> None:
+	"""Install NVDA.
+
+	:param shouldCreateDesktopShortcut: Whether to create a desktop shortcut.
+	:param shouldRunAtLogon: Whether NVDA starts at logon.
+	:param shouldTerminateRunningNVDA: Whether to end the running NVDA processes in the install folders
+		before their executables are deleted.
+	"""
 	prevInstallPath = WritePaths.installDir
-	installDir = WritePaths.defaultInstallDir
-	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
+	installDirs = _getInstallDirs()
+	installDir = installDirs[0]
+	shouldCleanX86 = len(installDirs) > 1
+	installDirX86 = installDirs[1] if shouldCleanX86 else None
 	startMenuFolder = WritePaths.defaultStartMenuFolder
-	shouldCleanX86 = (
-		installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir
-	)
-	# Give some time for the installed NVDA (which may have been running on a secure screen)
-	# to shut down before we start deleting files.
-	time.sleep(1)
+	runningProcesses = _waitForRunningNVDAProcesses(installDirs, timeout=1)
+	if shouldTerminateRunningNVDA:
+		_terminateProcesses(runningProcesses)
 
 	# Remove all the main executables always.
 	# We do this for two reasons:

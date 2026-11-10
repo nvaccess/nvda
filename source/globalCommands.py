@@ -200,6 +200,7 @@ class GlobalCommands(ScriptableObject):
 		self._reviewCopyStartMarker: textInfos.TextInfo | None = None
 		self._reviewCopyStartMarkerObj: documentBase.TextContainerObject | None = None
 		self._reviewSelectThenCopyRange: textInfos.TextInfo | None = None
+		self._pendingBrailleAutoScroll: wx.CallLater | None = None
 
 	def _clearReviewCopyStartMarker(self) -> None:
 		self._reviewCopyStartMarker = None
@@ -894,7 +895,9 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+alt+k",
 	)
 	def script_toggleBrailleAutoScroll(self, gesture: inputCore.InputGesture):
-		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None
+		shouldEnableAutoScroll = braille.handler._autoScrollCallLater is None and (
+			self._pendingBrailleAutoScroll is None or not self._pendingBrailleAutoScroll.IsRunning()
+		)
 		timeout = 0
 		if shouldEnableAutoScroll:
 			# Translators: Message reported when automatic scrolling has been enabled in braille.
@@ -907,7 +910,12 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Message reported when automatic scrolling has been disabled in braille.
 			ui.message(_("Automatic scrolling disabled"))
-		core.callLater(timeout, braille.handler.autoScroll, shouldEnableAutoScroll)
+			self._pendingBrailleAutoScroll.Stop()
+		self._pendingBrailleAutoScroll = core.callLater(
+			timeout,
+			braille.handler.autoScroll,
+			shouldEnableAutoScroll,
+		)
 
 	@script(
 		# Translators: Input help mode message for command to increase the rate for braille automatic scroll.
@@ -3746,7 +3754,6 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+control+z",
 	)
 	@gui.blockAction.when(
-		gui.blockAction.Context.WINDOWS_STORE_VERSION,
 		gui.blockAction.Context.SECURE_MODE,
 	)
 	def script_activatePythonConsole(self, gesture):
@@ -4301,16 +4308,26 @@ class GlobalCommands(ScriptableObject):
 		endPos = max(gesture.cellIndexes)
 		startInfo = braille.handler.getTextInfoForWindowPos(startPos)
 		endInfo = braille.handler.getTextInfoForWindowPos(endPos)
+		if startInfo is None and endInfo is None:
+			# Translators: Reported when none of the routing keys pressed to select text are on selectable text.
+			ui.message(_("No selectable text under routing keys"))
+			return
 		if startInfo is None or endInfo is None:
-			# Translators: Reported when selection via multiple routing keys is not possible.
-			ui.message(_("Cannot select from braille routing keys"))
+			# Translators: Reported when only one end of a selection made with routing keys is on selectable text.
+			ui.message(_("Selection must start and end in text"))
 			return
 		startInfo.setEndPoint(endInfo, "endToEnd")
+		oldInfo = None
 		try:
+			if hasattr(startInfo.obj, "reportSelectionChange"):
+				oldInfo = startInfo.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			startInfo.updateSelection()
 		except NotImplementedError:
-			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
-			ui.message(_("Selection not supported here"))
+			# Translators: Reported when the control does not support selecting text with routing keys.
+			ui.message(_("Unable to select text in this control"))
+			return
+		if oldInfo is not None:
+			startInfo.obj.reportSelectionChange(oldInfo)
 
 	@script(
 		# Translators: Input help mode message for a braille command.

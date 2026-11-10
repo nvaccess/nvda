@@ -1556,7 +1556,7 @@ class ExcelCellInfoQuicknavIterator(metaclass=abc.ABCMeta):
 		self.itemType = itemType
 		self.direction = direction if direction else "next"
 		self.includeCurrent = includeCurrent
-		self.selectedCellInfo = self.document._getSelection().excelCellInfo
+		self.selectedCellInfo = self.document._getActiveCell().excelCellInfo
 
 	@abc.abstractmethod
 	def collectionFromWorksheet(self, worksheetObject):

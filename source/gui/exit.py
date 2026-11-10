@@ -6,21 +6,20 @@
 # See the file COPYING for more details.
 
 
-import config  # noqa: I001
-import core
+import weakref
 from enum import auto, unique
+
+import core
 import globalVars
 import languageHandler
-from logHandler import log
 import queueHandler
-from utils.displayString import DisplayStringEnum
-import weakref
 import wx
+from logHandler import log
+from utils.displayString import DisplayStringEnum
 
 from . import guiHelper
 from .message import displayDialogAsModal
 from .startupDialogs import WelcomeDialog
-
 
 try:
 	import updateCheck
@@ -103,17 +102,11 @@ class ExitDialog(wx.Dialog):
 		# Translators: The label for actions list in the Exit dialog.
 		labelText = _("What would you like to &do?")
 		allowedActions = list(_ExitAction)
-		# Windows Store version of NVDA does not support add-ons yet.
-		if config.isAppX:
-			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
 		# Changing debug level on secure screen is not allowed.
 		# Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
 		if globalVars.appArgs.secure:
 			allowedActions.remove(_ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED)
-			try:
-				allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
-			except ValueError:  # If already removed before
-				pass
+			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
 		else:
 			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED)
 		# Installing updates should not happen in secure mode.

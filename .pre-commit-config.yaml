@@ -132,6 +132,11 @@ repos:
       groups: [autofix]
       # Override python interpreter from .python-versions as that is too strict for pre-commit.ci
       args: ["-p3.13"]
+    - id: uv-lock
+      name: Verify uv lock file (synthDriverHost32)
+      groups: [autofix]
+      files: ^runtime-builders/synthDriverHost32/
+      args: ["--project", "runtime-builders/synthDriverHost32", "-p3.13"]
 
 - repo: https://github.com/DavidAnson/markdownlint-cli2
   rev: v0.23.2
