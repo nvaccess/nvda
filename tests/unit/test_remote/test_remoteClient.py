@@ -3,9 +3,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import sys  # noqa: I001
+import sys
 import unittest
 from unittest.mock import ANY, MagicMock, patch
+
 import _remoteClient
 import _remoteClient.client as rcClient
 from _remoteClient.connectionInfo import ConnectionInfo, ConnectionMode

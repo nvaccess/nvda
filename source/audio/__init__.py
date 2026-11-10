@@ -13,9 +13,6 @@ except (ImportError, OSError):
 	log.warning("Sound Split is unavailable.", exc_info=True)
 	soundSplit = None
 
-SOUND_SPLIT_AVAILABLE: bool = soundSplit is not None
-"""True if the dependencies required for Sound Split are available."""
-
 __all__ = [
 	"SOUND_SPLIT_AVAILABLE",
 	"SoundSplitState",
@@ -24,6 +21,9 @@ __all__ = [
 	"initialize",
 	"terminate",
 ]
+
+SOUND_SPLIT_AVAILABLE: bool = soundSplit is not None
+"""True if the dependencies required for Sound Split are available."""
 
 
 def initialize() -> None:

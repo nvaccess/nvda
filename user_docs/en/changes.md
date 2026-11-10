@@ -40,8 +40,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 #### Deprecations
 
 * `audio.soundSplit.SoundSplitState` and `audio.soundSplit.VolumeTupleT` are deprecated.
-  Use `audio.SoundSplitState` and `audio.soundSplitState.VolumeTupleT` instead.
-  The old imports will be removed in 2028.1. (#21035, @akash07k)
+  Use `audio.SoundSplitState` and `audio.soundSplitState.VolumeTupleT` instead. (#21035, @akash07k)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->

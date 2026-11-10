@@ -3,24 +3,22 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import atexit  # noqa: I001
+import atexit
+from dataclasses import dataclass
+from threading import Lock
+
 import config
+import core
 import globalVars
+import ui
+from comtypes import COMError
 from logHandler import log
 from pycaw.api.audiopolicy import IAudioSessionManager2
-from pycaw.callbacks import AudioSessionNotification, AudioSessionEvents
+from pycaw.callbacks import AudioSessionEvents, AudioSessionNotification
 from pycaw.utils import AudioSession, AudioUtilities
-import ui
-from dataclasses import dataclass
-from comtypes import COMError
-from threading import Lock
-import core
-
-from addonAPIVersion import BACK_COMPAT_TO
 from utils._deprecate import MovedSymbol, handleDeprecations
 
 from .soundSplitState import SoundSplitState as _SoundSplitState
-
 
 _audioSessionManager: IAudioSessionManager2 | None = None
 _activeCallback: AudioSessionNotification | None = None
@@ -199,9 +197,7 @@ class _VolumeRestorer(AudioSessionEvents):
 _applicationExitCallbacksLock = Lock()
 _applicationExitCallbacks: dict[int, _VolumeRestorer] = {}
 
-# Deprecated in 2027.2; remove in 2028.1.
-if BACK_COMPAT_TO < (2028, 1, 0):
-	__getattr__ = handleDeprecations(
-		MovedSymbol("SoundSplitState", "audio", "SoundSplitState"),
-		MovedSymbol("VolumeTupleT", "audio.soundSplitState"),
-	)
+__getattr__ = handleDeprecations(
+	MovedSymbol("SoundSplitState", "audio", "SoundSplitState"),
+	MovedSymbol("VolumeTupleT", "audio.soundSplitState"),
+)
