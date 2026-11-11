@@ -95,6 +95,20 @@ def makeHostRun(body: Callable[[Connection], None], serve: bool = True) -> Calla
 	return run
 
 
+def waitForState(session: AddonSession, *states: SessionState, timeout: float | None = _TIMEOUT) -> bool:
+	"""Block until the session is in one of ``states``.
+
+	A state the session passes through quickly, such as ``STOPPING``, can be over before a waiter wakes.
+	The lifecycle only moves forward, so wait for the state you need together with every state that can follow it.
+
+	:param states: The states to wait for.
+	:param timeout: How long to wait, in seconds, or ``None`` to wait indefinitely.
+	:returns: Whether the session was in one of ``states`` before ``timeout`` elapsed.
+	"""
+	with session._stateChanged:
+		return session._stateChanged.wait_for(lambda: session._state in states, timeout)
+
+
 class TestReadinessSignalReceipt(unittest.TestCase):
 	"""Core's handling of the readiness signal, independent of any connection."""
 
@@ -277,20 +291,6 @@ class TestLifecycleProcessConformance(unittest.TestCase):
 		self.assertEqual(session.hostRoot.ping(), "pong")
 		session.stop()
 		self.assertIsNotNone(controller.wait(_TIMEOUT))
-
-
-def waitForState(session: AddonSession, *states: SessionState, timeout: float | None = _TIMEOUT) -> bool:
-	"""Block until the session is in one of ``states``.
-
-	A state the session passes through quickly, such as ``STOPPING``, can be over before a waiter wakes.
-	The lifecycle only moves forward, so wait for the state you need together with every state that can follow it.
-
-	:param states: The states to wait for.
-	:param timeout: How long to wait, in seconds, or ``None`` to wait indefinitely.
-	:returns: Whether the session was in one of ``states`` before ``timeout`` elapsed.
-	"""
-	with session._stateChanged:
-		return session._stateChanged.wait_for(lambda: session._state in states, timeout)
 
 
 class TestChildExitDetection(unittest.TestCase):
