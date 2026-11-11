@@ -12,6 +12,9 @@
 
 ### Bug Fixes
 
+* When running NVDA from the launcher, a configuration that can't be loaded, such as one saved by a newer version of NVDA, is no longer reset.
+NVDA uses factory defaults instead, and warns that installing that version will reset the configuration. (#18905, @akj)
+
 #### Braille
 
 #### Web browsers
@@ -61,8 +64,6 @@ Skype for Business remains supported. (#19781, @josephsl)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 * When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
 * Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
-* When running NVDA from the launcher, a configuration that can't be loaded, such as one saved by a newer version of NVDA, is no longer reset.
-NVDA uses factory defaults instead, and warns that installing that version will reset the configuration. (#18905, @akj)
 
 #### Performance
 
