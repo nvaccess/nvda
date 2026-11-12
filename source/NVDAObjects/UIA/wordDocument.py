@@ -676,7 +676,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			return self._moveEndpointBySentenceRemote(endPoint, direction)
 		if endPoint is None:
 			res: int
-			if unit == textInfos.UNIT_LINE and self.isCollapsed:
+			if unit == textInfos.UNIT_LINE and direction > 0 and self.isCollapsed:
 				# A collapsed UIA range can move beyond the final line to the document end.
 				# Expanding that position in Outlook can then wrap to the first line.
 				# Move an expanded line instead, preserving the original range at boundaries.
