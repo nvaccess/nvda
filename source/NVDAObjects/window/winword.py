@@ -1735,6 +1735,13 @@ class WordDocument(Window, EditableTextBase):
 			self._WinwordApplicationObject = self.WinwordWindowObject.application
 		return self._WinwordApplicationObject
 
+	def _get_isOvertypeMode(self) -> bool | None:
+		try:
+			return bool(self.WinwordApplicationObject.options.overtype)
+		except (COMError, AttributeError):
+			log.debugWarning("Unable to get overtype mode from the Word object model", exc_info=True)
+			return None
+
 	def _get_WinwordSelectionObject(self):
 		if not getattr(self, "_WinwordSelectionObject", None):
 			windowObject = self.WinwordWindowObject

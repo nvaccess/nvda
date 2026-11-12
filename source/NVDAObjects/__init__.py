@@ -632,6 +632,15 @@ class NVDAObject(
 		raise NotImplementedError
 
 	# Type info for auto property:
+	isOvertypeMode: bool | None
+
+	def _get_isOvertypeMode(self) -> bool | None:
+		"""Whether typing in this object replaces existing text (overtype mode) rather than inserting it.
+		:return: ``True`` or ``False`` if known, ``None`` if this object can't report its overtype state.
+		"""
+		return None
+
+	# Type info for auto property:
 	states: set[controlTypes.State]
 
 	def _get_states(self) -> set[controlTypes.State]:
