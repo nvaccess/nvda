@@ -2918,7 +2918,6 @@ You can set the time to zero in order to disable this feature.
 ##### White noise volume {#WhiteNoiseVolume}
 
 This edit box sets the volume of very quiet white noise that NVDA plays while keeping the audio device awake after speech.
-It only has an effect when "Time to keep audio device awake after speech" is greater than zero.
 
 Some audio drivers treat the silence NVDA plays to keep the device awake as nothing to play, and trim it.
 This can cut off the end of speech, even when the audio device is kept awake.

@@ -18,6 +18,7 @@ class Test_AudioPanel_whiteNoiseVolume(unittest.TestCase):
 		self.app = wx.App()
 		self.frame = wx.Frame(None)
 		self._origVolume = config.conf["audio"]["whiteNoiseVolume"]
+		self._origAwakeTime = config.conf["audio"]["audioAwakeTime"]
 		self.addCleanup(self._restoreVolume)
 		# Unit tests have no audio hardware, so avoid enumerating real output devices.
 		defaultDevice = config.conf.getConfigValidation(("audio", "outputDevice")).default
@@ -38,6 +39,7 @@ class Test_AudioPanel_whiteNoiseVolume(unittest.TestCase):
 
 	def _restoreVolume(self):
 		config.conf["audio"]["whiteNoiseVolume"] = self._origVolume
+		config.conf["audio"]["audioAwakeTime"] = self._origAwakeTime
 		self.frame.Destroy()
 		self.app.Destroy()
 
@@ -61,3 +63,33 @@ class Test_AudioPanel_whiteNoiseVolume(unittest.TestCase):
 		panel.whiteNoiseVolumeEdit.SetValue(40)
 		panel.onSave()
 		self.assertEqual(config.conf["audio"]["whiteNoiseVolume"], 40)
+
+	def test_controlDisabledWhenAwakeTimeIsZeroOnOpen(self):
+		"""The control starts disabled if the awake time is already 0 when the panel opens."""
+		config.conf["audio"]["audioAwakeTime"] = 0
+		panel = AudioPanel(self.frame)
+		self.assertFalse(panel.whiteNoiseVolumeEdit.IsEnabled())
+
+	def test_controlEnabledWhenAwakeTimeIsAboveZeroOnOpen(self):
+		"""The control starts enabled if the awake time is already above 0 when the panel opens."""
+		config.conf["audio"]["audioAwakeTime"] = 30
+		panel = AudioPanel(self.frame)
+		self.assertTrue(panel.whiteNoiseVolumeEdit.IsEnabled())
+
+	def test_controlTogglesLiveWithAwakeTimeChange(self):
+		"""Changing the awake time while the panel is open enables or disables the control immediately."""
+		config.conf["audio"]["audioAwakeTime"] = 30
+		panel = AudioPanel(self.frame)
+		self.assertTrue(panel.whiteNoiseVolumeEdit.IsEnabled())
+
+		panel.audioAwakeTimeEdit.SetValue(0)
+		zeroEvent = wx.SpinEvent(wx.wxEVT_SPINCTRL, panel.audioAwakeTimeEdit.GetId())
+		zeroEvent.SetInt(0)
+		panel._onAudioAwakeTimeChange(zeroEvent)
+		self.assertFalse(panel.whiteNoiseVolumeEdit.IsEnabled())
+
+		panel.audioAwakeTimeEdit.SetValue(15)
+		nonZeroEvent = wx.SpinEvent(wx.wxEVT_SPINCTRL, panel.audioAwakeTimeEdit.GetId())
+		nonZeroEvent.SetInt(15)
+		panel._onAudioAwakeTimeChange(nonZeroEvent)
+		self.assertTrue(panel.whiteNoiseVolumeEdit.IsEnabled())

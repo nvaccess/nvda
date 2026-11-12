@@ -7,7 +7,8 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
-* A "White noise volume" setting has been added to the Audio category of NVDA settings. It can help when your audio device cuts off the end of speech even though "Time to keep audio device awake after speech" is set. (#19286, @Yashu16)
+* A "White noise volume" setting has been added to the Audio category of NVDA settings.
+  It can help when your audio device cuts off the end of speech even though "Time to keep audio device awake after speech" is set. (#19286, @Yashu16)
 
 ### Changes
 
