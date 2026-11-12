@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import enum
 import threading
+import time
 from typing import TYPE_CHECKING, Final
 
 from logHandler import log
@@ -29,6 +30,8 @@ if TYPE_CHECKING:
 CONTROL_CONNECTION_NAME: Final[str] = "ART core control"
 #: How long to give a host before killing it when the control connection is lost.
 _EXIT_CONFIRM_GRACE: Final[int] = 1.0
+#: Maximum time from launch to a usable host root service, in seconds.
+_STARTUP_TIMEOUT: Final[float] = 30.0
 
 
 class SessionState(enum.Enum):
@@ -92,6 +95,8 @@ class AddonSession:
 		# Guarded by ``_stateChanged``, so that ``start`` can wait for readiness and failure together.
 		self._readinessReported = False
 		self._readinessFailure: str | None = None
+		# Also guarded by ``_stateChanged``; cancellation alone cannot stop an already running timer callback.
+		self._startupPending = True
 
 	@property
 	def state(self) -> SessionState:
@@ -155,21 +160,29 @@ class AddonSession:
 		self._state = state
 		self._stateChanged.notify_all()
 
-	def start(self) -> None:
+	def start(self, *, timeout: float = _STARTUP_TIMEOUT) -> None:
 		"""Launch the host and wait for it to signal readiness.
 
-		Blocks until the host's readiness signal arrives, or the session fails.
+		Blocks until the host is ready and its root service is available, or the session fails.
+		Startup is bounded by ``startupTimeout``, including when stopped while starting.
 		If the session is stopped in the meantime, the host is allowed to finish launching and then stopped.
 
+		:param timeout: Seconds allowed for launch, readiness and fetching the host's root service.
+			Defaults to :const:`_STARTUP_TIMEOUT`.
+		:raises ValueError: If ``timeout`` is nonpositive or infinite.
 		:raises RuntimeError: If the session has already been started.
 		:raises HostLaunchError: If the host could not be started, reported a failed launch,
-			did not expose its root service, or the session was stopped while starting.
+			did not expose its root service, startup timed out, or the session was stopped while starting.
 			The session is ``FAILED`` or ``STOPPED`` respectively, and the host has been stopped.
 		"""
+		if timeout <= 0 or not timeout < float("inf"):
+			raise ValueError("startupTimeout must be finite and positive")
+		print(f"start: called with {timeout=}")
 		with self._stateChanged:
 			if self._state is not SessionState.NEW:
 				raise RuntimeError(f"Add-on session has already been started (state: {self._state.name})")
 			self._setState(SessionState.STARTING)
+		deadline = time.monotonic() + timeout
 		try:
 			print("start: Starting controller...")
 			stream = self._controller.start()
@@ -190,6 +203,31 @@ class AddonSession:
 		except Exception as e:
 			self._fail(f"Host could not be started: {e}")
 			raise HostLaunchError("Host could not be started") from e
+		# Arm only once launch resources have been published, so timeout cleanup cannot race their creation.
+		# The original deadline includes the time spent creating them.
+		startupTimer = threading.Timer(
+			max(0.0, deadline - time.monotonic()),
+			self._onStartupTimeout,
+			args=(timeout,),
+		)
+		startupTimer.name = "ART startup timeout"
+		startupTimer.daemon = True
+		startupTimer.start()
+		try:
+			self._waitForReady()
+		finally:
+			with self._stateChanged:
+				self._startupPending = False
+			startupTimer.cancel()
+
+	def _onStartupTimeout(self, timeout: float) -> None:
+		"""Fail a launch that has not finished, including one with a pending stop request."""
+		with self._stateChanged:
+			if self._startupPending and self._state in (SessionState.STARTING, SessionState.STOPPING):
+				self._fail(f"Host startup timed out after {timeout:g} seconds")
+
+	def _waitForReady(self) -> None:
+		"""Wait for readiness and fetch the root service while the startup watchdog is armed."""
 		print("start: Waiting for a status update...")
 		with self._stateChanged:
 			# Not woken by a stop: the host must be left to finish launching before it is stopped.
@@ -223,6 +261,7 @@ class AddonSession:
 				if (state := self._state) is SessionState.STARTING:
 					print("start: Started successfully")
 					self._hostRoot = hostRoot
+					self._startupPending = False
 					self._setState(SessionState.READY)
 					log.debug("ART add-on session is ready")
 					return
