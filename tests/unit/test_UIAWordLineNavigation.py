@@ -161,7 +161,9 @@ class TestWordLineNavigation(unittest.TestCase):
 			with self.subTest(text=text, start=start, end=end, count=count):
 				obj: Mock = Mock()
 				info: WordDocumentTextInfo = WordDocumentTextInfo(
-					obj, None, _rangeObj=_LineRange(text, start, end)
+					obj,
+					None,
+					_rangeObj=_LineRange(text, start, end),
 				)
 				self.assertEqual(moved, info.move(textInfos.UNIT_LINE, count))
 				self.assertEqual(expectedOffset, info._rangeObj.start)
