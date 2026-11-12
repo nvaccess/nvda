@@ -30,12 +30,14 @@ jobs:
         submodules: true
 
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
-        python-version: '3.13.13'
+        python-version: '3.13.17'
 
     - name: setup uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
 
     - name: Download translations from Crowdin
       run: uv run source/l10nUtil.py exportTranslations -o . -l ${{ matrix.newLanguage }}

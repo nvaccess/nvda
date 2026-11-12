@@ -35,8 +35,8 @@ env:
   supportedRunners: '["windows-2022", "windows-2025-vs2026"]'
   defaultArch: x64
   supportedArchitectures: '["x64"]'
-  defaultPythonVersion: '3.13.15'
-  supportedPythonVersions: '["3.13.15"]'
+  defaultPythonVersion: '3.13.17'
+  supportedPythonVersions: '["3.13.17"]'
 
 jobs:
   matrix:
@@ -93,20 +93,21 @@ jobs:
             PowerShell -Command "Set-PSRepository PSGallery -InstallationPolicy Trusted"
             PowerShell -Command "Install-Module -Name SignPath -Force"
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
             update-environment: true
         - name: Install Python (32 bit)
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ matrix.pythonVersion }}
             architecture: x86
             update-environment: false
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
       with:
+        prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
@@ -121,7 +122,7 @@ jobs:
     # This information is static for the current Github Actions runner image.
     # Therefore, cache this information with a key scoped to the current image version, ensuring that subsequent workflow runs will be much faster.
     - name: SCons MSVC Cache
-      uses: actions/cache@v5
+      uses: actions/cache@v6
       with:
         path: ${{ env.SCONS_CACHE_MSVC_CONFIG }}
         key: ${{ env.SCONS_CACHE_KEY }}
@@ -138,7 +139,7 @@ jobs:
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
-      uses: actions/cache/save@v5
+      uses: actions/cache/save@v6
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
@@ -159,18 +160,20 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: Static type analysis
       run: ci/scripts/tests/typeCheckPyright.ps1
 
@@ -182,18 +185,20 @@ jobs:
       contents: read
     steps:
     - name: Checkout cached build
-      uses: actions/cache/restore@v5
+      uses: actions/cache/restore@v6
       with:
         path: .
         key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
         fail-on-cache-miss: true
     - name: Install Python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: Static type analysis
       run: ci/scripts/tests/typeCheckTy.ps1
 
@@ -210,12 +215,14 @@ jobs:
         # Include gettext
         submodules: true
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: Run prek
       run: |
         # Ensure uv environment is up to date.
@@ -240,18 +247,20 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
@@ -272,18 +281,20 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
 
@@ -305,19 +316,20 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
       with:
+        prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
@@ -351,13 +363,13 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
@@ -367,7 +379,9 @@ jobs:
             name: makePot results
             path: output
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: Upload translations to Crowdin
       env:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
@@ -397,19 +411,20 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
       with:
+        prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
@@ -515,13 +530,13 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
@@ -533,8 +548,9 @@ jobs:
         path: output
     - parallel:
         - name: Install the latest version of uv
-          uses: astral-sh/setup-uv@v7
+          uses: astral-sh/setup-uv@v10.3.3
           with:
+            prune-cache: true
             python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
         - name: Install NVDA
           run: ci/scripts/installNVDA.ps1
@@ -585,7 +601,7 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ matrix.pythonVersion }}-${{ matrix.arch }}
@@ -621,7 +637,7 @@ jobs:
       contents: read
     steps:
     - name: Check if all tests pass
-      uses: re-actors/alls-green@v1.2.2
+      uses: re-actors/alls-green@v1.3.0
       with:
         jobs: ${{ toJSON(needs) }}
 
@@ -635,13 +651,13 @@ jobs:
     steps:
     - parallel:
         - name: Checkout cached build
-          uses: actions/cache/restore@v5
+          uses: actions/cache/restore@v6
           with:
             path: .
             key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
             fail-on-cache-miss: true
         - name: Install Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@v7
           with:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
@@ -651,7 +667,9 @@ jobs:
             curl -L -o dump_syms.zip https://github.com/mozilla/dump_syms/releases/download/v2.3.5/dump_syms-x86_64-pc-windows-msvc.zip
             7z x dump_syms.zip dump_syms.exe
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
     - name: Upload symbols to Mozilla
       continue-on-error: true
       run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\mozillaSyms.py

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2024-2026 NV Access Limited, Leonard de Ruijter, Shimmy0530
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -10,12 +10,122 @@ import pathlib
 import tempfile
 import unittest
 from typing import NamedTuple
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import MagicMock, PropertyMock, call, patch
 
 import installer
 import psutil
 from gui import installerGui
+from gui.message import DisplayableError
 from parameterized import parameterized
+
+
+class Test_tryCopyFile(unittest.TestCase):
+	_sourcePath = r"C:\source.txt"
+	_destPath = r"C:\destination.txt"
+	_qualifiedSourcePath = rf"\\?\{_sourcePath}"
+	_qualifiedDestPath = rf"\\?\{_destPath}"
+
+	@patch("installer.time.sleep")
+	@patch("installer.winBindings.kernel32.CopyFile", return_value=1)
+	def test_successDoesNotRetry(self, copyFileMock: MagicMock, sleepMock: MagicMock):
+		installer.tryCopyFile(self._sourcePath, self._destPath)
+
+		copyFileMock.assert_called_once_with(
+			self._qualifiedSourcePath,
+			self._qualifiedDestPath,
+			False,
+		)
+		sleepMock.assert_not_called()
+
+	def test_temporaryFailuresAreRetried(self):
+		with (
+			patch(
+				"installer.winBindings.kernel32.CopyFile",
+				side_effect=(0, 0, 1),
+			) as copyFileMock,
+			patch("installer.ctypes.GetLastError", return_value=33),
+			patch("installer.os.path.exists", return_value=False),
+			patch("installer.time.sleep") as sleepMock,
+		):
+			installer.tryCopyFile(
+				self._sourcePath,
+				self._destPath,
+				numRetries=3,
+				retryInterval=0.25,
+			)
+
+		self.assertEqual(copyFileMock.call_count, 3)
+		self.assertEqual(
+			sleepMock.call_args_list,
+			[call(0.25), call(0.25)],
+		)
+
+	def test_exhaustedRetriesRaiseOriginalError(self):
+		with (
+			patch(
+				"installer.winBindings.kernel32.CopyFile",
+				return_value=0,
+			) as copyFileMock,
+			patch("installer.ctypes.GetLastError", return_value=33),
+			patch("installer.os.path.exists", return_value=False),
+			patch("installer.time.sleep") as sleepMock,
+			self.assertRaisesRegex(OSError, r"error 33 copying"),
+		):
+			installer.tryCopyFile(
+				self._sourcePath,
+				self._destPath,
+				numRetries=3,
+				retryInterval=0.25,
+			)
+
+		self.assertEqual(copyFileMock.call_count, 3)
+		self.assertEqual(
+			sleepMock.call_args_list,
+			[call(0.25), call(0.25), call(0.25)],
+		)
+
+	def test_existingDestinationUsesOverwriteFallbackWithoutRetry(self):
+		tempPath = r"C:\temporary.txt"
+		with (
+			patch(
+				"installer.winBindings.kernel32.CopyFile",
+				side_effect=(0, 1),
+			) as copyFileMock,
+			patch("installer.ctypes.GetLastError", return_value=5),
+			patch("installer.os.path.exists", return_value=True),
+			patch(
+				"installer._createEmptyTempFileForDeletingFile",
+				return_value=tempPath,
+			) as createTempFileMock,
+			patch("installer.os.replace") as replaceMock,
+			patch("installer.winKernel.moveFileEx") as moveFileMock,
+			patch("installer.time.sleep") as sleepMock,
+		):
+			installer.tryCopyFile(self._sourcePath, self._destPath)
+
+		self.assertEqual(
+			copyFileMock.call_args_list,
+			[
+				call(
+					self._qualifiedSourcePath,
+					self._qualifiedDestPath,
+					False,
+				),
+				call(
+					self._qualifiedSourcePath,
+					self._qualifiedDestPath,
+					False,
+				),
+			],
+		)
+		createTempFileMock.assert_called_once()
+		replaceMock.assert_called_once_with(self._qualifiedDestPath, tempPath)
+		moveFileMock.assert_called_once_with(
+			tempPath,
+			None,
+			installer.winKernel.MOVEFILE_DELAY_UNTIL_REBOOT,
+		)
+		sleepMock.assert_not_called()
 
 
 class Test_BatchDeletion(unittest.TestCase):
@@ -601,3 +711,56 @@ class Test_comparePreviousInstall(unittest.TestCase):
 			),
 		):
 			self.assertEqual(installer._comparePreviousInstall(), installer.ComparisonState.UPGRADE)
+
+
+class Test_validatePortableDirectory(unittest.TestCase):
+	"""Tests for the destination directory check in the Create Portable NVDA dialog (#20159)."""
+
+	def test_emptyDirectory_raises(self):
+		with self.assertRaises(DisplayableError) as cm:
+			installerGui._validatePortableDirectory("")
+		self.assertIn("Please specify a directory", cm.exception.displayMessage)
+
+	@parameterized.expand(
+		[
+			("bareDrive", "D:", "D:"),
+			("lowercaseBareDrive", "c:", "c:"),
+			("driveRelativeFolder", "D:folder", "D:"),
+		],
+	)
+	def test_driveWithoutBackslash_raisesDriveMessage(self, _name: str, path: str, drive: str):
+		with self.assertRaises(DisplayableError) as cm:
+			installerGui._validatePortableDirectory(path)
+		message = cm.exception.displayMessage
+		self.assertIn(f"use {drive}\\ for the root of the drive", message)
+		self.assertIn(f"Current path: {path}.", message)
+
+	@parameterized.expand(
+		[
+			("relativeFolder", "folder"),
+			("rootedWithoutDrive", "\\folder"),
+		],
+	)
+	def test_pathWithoutDrive_raisesGeneralMessage(self, _name: str, path: str):
+		with self.assertRaises(DisplayableError) as cm:
+			installerGui._validatePortableDirectory(path)
+		message = cm.exception.displayMessage
+		self.assertIn("(e.g. C:\\)", message)
+		self.assertNotIn("The drive letter must be followed by a backslash", message)
+
+	@parameterized.expand(
+		[
+			("driveRoot", "D:\\", "D:\\"),
+			("driveFolder", "D:\\portable\\NVDA", "D:\\portable\\NVDA"),
+			("uncShare", "\\\\server\\share\\NVDA", "\\\\server\\share\\NVDA"),
+		],
+	)
+	def test_absolutePath_returnsPath(self, _name: str, path: str, expected: str):
+		self.assertEqual(installerGui._validatePortableDirectory(path), expected)
+
+	def test_systemVariable_isExpanded(self):
+		with patch.dict(os.environ, {"NVDA_TEST_PORTABLE_DIR": "D:\\portable"}):
+			self.assertEqual(
+				installerGui._validatePortableDirectory("%NVDA_TEST_PORTABLE_DIR%\\NVDA"),
+				"D:\\portable\\NVDA",
+			)

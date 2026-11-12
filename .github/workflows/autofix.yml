@@ -37,13 +37,14 @@ jobs:
         submodules: true
         persist-credentials: false
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
         # Keep in sync with defaultPythonVersion in testAndPublish.yml.
-        python-version: '3.13.15'
+        python-version: '3.13.17'
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v7
+      uses: astral-sh/setup-uv@v10.3.3
       with:
+        prune-cache: true
         activate-environment: "false"
     # Autofix role: run the fixer hooks (the "autofix" group) and commit the fixes.
     - name: Apply prek auto-fixes
@@ -84,7 +85,7 @@ jobs:
     # testAndPublish.yml.
     - name: Lint gate
       if: github.event_name != 'push' || github.repository != 'nvaccess/nvda'
-      uses: j178/prek-action@v2
+      uses: j178/prek-action@v3.1.0
       with:
         extra-args: >-
           --all-files
