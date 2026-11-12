@@ -1243,7 +1243,7 @@ class IAccessible(Window):
 		if res:
 			parentObj = IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
 			if parentObj:  # noqa: SIM102
-				# Hack around bad MSAA implementations that deliberately skip the window root IAccessible in the ancestry (Skype, iTunes)
+				# Hack around bad MSAA implementations that deliberately skip the window root IAccessible in the ancestry (iTunes, for example)
 				if (
 					parentObj.windowHandle != self.windowHandle
 					and self.IAccessibleRole != oleacc.ROLE_SYSTEM_WINDOW

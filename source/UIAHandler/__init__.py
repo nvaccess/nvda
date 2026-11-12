@@ -3,60 +3,55 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import ctypes  # noqa: I001
+import ctypes
 import ctypes.wintypes
-from ctypes import (
-	POINTER,
-	CFUNCTYPE,  # noqa: F401
-	c_voidp,  # noqa: F401
-)
-
-import comtypes.client
-from comtypes.automation import VT_EMPTY
-from comtypes import (
-	COMError,
-	COMObject,
-	byref,
-	CLSCTX_INPROC_SERVER,
-	CoCreateInstance,
-	IUnknown,
-)
-
 import threading
 import time
-import IAccessibleHandler.internalWinEventHandler
+from ctypes import POINTER
+from queue import Queue
+from typing import Final
+
+import api
+import appModuleHandler
+import aria
+import comtypes.client
 import config
+import controlTypes
+import core
+import eventHandler
+import exceptions
+import globalVars
+import IAccessibleHandler.internalWinEventHandler
+import textInfos
+import watchdog
+import winBindings.kernel32
+import winBindings.ole32
+import winBindings.uiAutomationCore
+import winKernel
+import winUser
+import winVersion
+from comInterfaces import UIAutomationClient as UIA
+from comInterfaces.UIAutomationClient import *
+from comtypes import (
+	CLSCTX_INPROC_SERVER,
+	CoCreateInstance,
+	COMError,
+	COMObject,
+	IUnknown,
+	byref,
+)
+from comtypes.automation import VT_EMPTY
 from config import (
 	AllowUiaInChromium,
 	AllowUiaInMSWord,
 )
-import api
-import appModuleHandler
-import controlTypes
-import globalVars
-from winBindings import user32
-import winBindings.ole32
-import winBindings.kernel32
-import winKernel
-import winUser
-import winVersion
-import eventHandler
-import exceptions
-import watchdog
 from logHandler import log
-import winBindings.uiAutomationCore
-from . import utils
-from comInterfaces import UIAutomationClient as UIA
+from winBindings import user32
 
-# F403: unable to detect undefined names
-from comInterfaces.UIAutomationClient import *
-import textInfos
-from typing import Dict  # noqa: F401, UP035
-from queue import Queue
-import aria
 import NVDAHelper
-from . import remote as UIARemote
 
+from . import remote as UIARemote
+from . import utils
 
 baseCachePropertyIDs = {
 	UIA.UIA_FrameworkIdPropertyId,
@@ -81,6 +76,9 @@ so event senders and elements fetched through them carry these properties in the
 # Microsoft Word's UI Automation implementation
 # also exposes this value as the document UIA element's classname property.
 MS_WORD_DOCUMENT_WINDOW_CLASS = "_WwG"
+
+#: Window class for Microsoft Excel
+_MS_EXCEL_WINDOW_CLASS: Final[str] = "EXCEL7"
 
 HorizontalTextAlignment_Left = 0
 HorizontalTextAlignment_Centered = 1
@@ -885,15 +883,14 @@ class UIAHandler(COMObject):
 			return
 		self.lastFocusedUIAElement = sender
 		if not self.isNativeUIAElement(sender):
-			# #12982: This element may be the root of an MS Word document
+			# #12982, #20979: This element may be the root of an MS Word document or Excel worksheet
 			# for which we may be refusing to use UIA as its implementation may be incomplete.
-			# However, there are some controls embedded in the MS Word document window
-			# such as the Modern comments side track pane
-			# for which we do have to use UIA.
-			# But, if focus jumps from one of these controls back to the document (E.g. the user presses escape),
+			# However, Office has some embedded controls for which we do have to use UIA,
+			# such as the Modern comments side track pane in Word or the Copilot button in Excel.
+			# If focus jumps from one of these controls back to the document (E.g. the user presses escape),
 			# we receive no MSAA focus event, only a UIA focus event.
-			# As we are not treating the Word doc as UIA, we need to manually fire an MSAA focus event on the document.
-			self._emitMSAAFocusForWordDocIfNecessary(sender)
+			# As we are not treating the application as UIA, we need to manually fire an MSAA focus event on the document.
+			self._emitMSAAFocusForMSOfficeIfNecessary(sender)
 			if _isDebug():
 				log.debug(f"Ignoring for non native element {self.getUIAElementDebugString(sender)}")
 			return
@@ -1308,7 +1305,7 @@ class UIAHandler(COMObject):
 			# back to the MS Excel object model.
 			elif (
 				# An MS Excel spreadsheet window
-				windowClass == "EXCEL7"
+				windowClass == _MS_EXCEL_WINDOW_CLASS
 				# Disabling is only useful if we can inject in-process (and use our older code)
 				and appModule.helperLocalBindingHandle
 				# Allow the user to explicitly force UIA support for MS Excel spreadsheets
@@ -1459,19 +1456,19 @@ class UIAHandler(COMObject):
 		UIAElement._nearestWindowHandle = window
 		return window
 
-	def _isNetUIEmbeddedInWordDoc(self, element: UIA.IUIAutomationElement) -> bool:
+	def _isNetUIEmbeddedInMSOffice(self, element: UIA.IUIAutomationElement) -> bool:
 		"""
 		Detects if the given UIA element represents a control in a NetUI container
-		embedded within a MS Word document window.
-		E.g. the Modern Comments side track pane.
+		embedded within a MS Word or Excel window.
+		E.g. the Modern Comments side track pane in Word, or the Copilot button in Excel.
 		This method also caches the answer on the element itself
 		to both speed up checking later and to allow checking on an already dead element
 		E.g. a previous focus.
 		"""
-		if getattr(element, "_isNetUIEmbeddedInWordDoc", False):
+		if getattr(element, "_isNetUIEmbeddedInMSOffice", False):
 			return True
 		windowHandle = self.getNearestWindowHandle(element)
-		if winUser.getClassName(windowHandle) != MS_WORD_DOCUMENT_WINDOW_CLASS:
+		if winUser.getClassName(windowHandle) not in (MS_WORD_DOCUMENT_WINDOW_CLASS, _MS_EXCEL_WINDOW_CLASS):
 			return False
 		condition = utils.createUIAMultiPropertyCondition(
 			{UIA.UIA_ClassNamePropertyId: "NetUIHWNDElement"},
@@ -1482,36 +1479,50 @@ class UIAHandler(COMObject):
 		cacheRequest.AddProperty(UIA.UIA_ClassNamePropertyId)
 		cacheRequest.AddProperty(UIA.UIA_NativeWindowHandlePropertyId)
 		ancestor = walker.NormalizeElementBuildCache(element, cacheRequest)
-		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word document window
+		# ancestor will either be the embedded NetUIElement, or just hit the root of the MS Word/Excel window
 		if ancestor.CachedClassName != "NetUIHWNDElement":
 			return False
-		element._isNetUIEmbeddedInWordDoc = True
+		element._isNetUIEmbeddedInMSOffice = True
 		return True
 
-	def _emitMSAAFocusForWordDocIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
+	def _emitMSAAFocusForMSOfficeIfNecessary(self, element: UIA.IUIAutomationElement) -> None:
 		"""
 		Fires an MSAA focus event on the given UIA element
-		if the element is the root of a Word document,
-		and the focus was previously in a NetUI container embedded in this Word document.
+		if the element is the root of a Word document or a cell in an Excell spreadsheet,
+		and the focus was previously in a NetUI container embedded in the document.
 		"""
 		import NVDAObjects.UIA
 
 		oldFocus = eventHandler.lastQueuedFocusObject
-		if (
-			isinstance(oldFocus, NVDAObjects.UIA.UIA)
-			and getattr(oldFocus.UIAElement, "_isNetUIEmbeddedInWordDoc", False)
-			and element.CachedClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
-			and element.CachedControlType == UIA.UIA_DocumentControlTypeId
-			and self.getNearestWindowHandle(element) == oldFocus.windowHandle
-			and not self.isUIAWindow(oldFocus.windowHandle)
+		if isinstance(oldFocus, NVDAObjects.UIA.UIA) and getattr(
+			oldFocus.UIAElement,
+			"_isNetUIEmbeddedInMSOffice",
+			False,
 		):
-			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
-				winUser.EVENT_OBJECT_FOCUS,
-				oldFocus.windowHandle,
-				winUser.OBJID_CLIENT,
-				0,
-				oldFocus.windowThreadID,
-			)
+			elementClassName = element.CachedClassName
+			elementControlType = element.CachedControlType
+			if (
+				(
+					(
+						elementClassName == MS_WORD_DOCUMENT_WINDOW_CLASS
+						and elementControlType == UIA.UIA_DocumentControlTypeId
+					)
+					or (
+						elementClassName == "XLSpreadsheetCell"
+						and elementControlType == UIA.UIA_DataItemControlTypeId
+					)
+				)
+				and self.getNearestWindowHandle(element) == oldFocus.windowHandle
+				and not self.isUIAWindow(oldFocus.windowHandle)
+			):
+				IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
+					winUser.EVENT_OBJECT_FOCUS,
+					oldFocus.windowHandle,
+					winUser.OBJID_CLIENT,
+					0,
+					oldFocus.windowThreadID,
+				)
+				core.requestPump(immediate=True)
 
 	def isNativeUIAElement(self, UIAElement):
 		if _isDebug():
@@ -1541,16 +1552,16 @@ class UIAHandler(COMObject):
 						f"windowHandle {self.getWindowHandleDebugString(windowHandle)}. ",
 					)
 				return True
-			# #12982: although NVDA by default may not treat this element's window as native UIA,
+			# #12982, #20979: although NVDA by default may not treat this element's window as native UIA,
 			# E.g. it is proxied from MSAA, or NVDA has specifically black listed it,
-			# It may be an element from a NetUIcontainer embedded in a Word document,
-			# such as the MS Word Modern Comments side track pane.
+			# It may be an element from a NetUIcontainer embedded in Word or Excel,
+			# such as the MS Word Modern Comments side track pane or the Excel Copilot button.
 			# These elements are only exposed via UIA, and not MSAA,
 			# thus we must treat these elements as native UIA.
-			if self._isNetUIEmbeddedInWordDoc(UIAElement):
+			if self._isNetUIEmbeddedInMSOffice(UIAElement):
 				if _isDebug():
 					log.debug(
-						"treating as native as is a netUI embedded in word doc. ",
+						"treating as native as is a netUI embedded in MS Office. ",
 					)
 				return True
 			if (

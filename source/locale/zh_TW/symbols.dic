@@ -1,4 +1,4 @@
-# Edited by NVDA-Taiwan Volunteers Team on 2026/07/17
+# Edited by NVDA-Taiwan Volunteers Team on 2026/10/04
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (c) 2011-2026 NVDA Contributors
 # This file is covered by the GNU General Public License.
@@ -37,11 +37,11 @@ negative number	負	none	norep
 # Whitespace
 \0	blank	char	# null
 \t	tab
-\n	航尾	char	# 取行尾同音
+\n	換行	char
 \f	分頁符號	none
-\r	航尾	char
+\r	換行	char
  	空格	char
- 	space	char	# no-break space
+ 	不換行空格	char	# no-break space
 
 # Standard punctuation/symbols
 !	英文驚嘆號	all
@@ -63,22 +63,22 @@ $	錢號	all	norep
 )	右括號	most	always
 *	star	some
 ,	comma	all	always
-،	阿拉伯逗號	all	always
+،	阿拉伯文逗號	all	always
 -	dash	most	always
 .	dot	some
 /	slash	some
 :	colon	most	norep
 ;	semi	most
-؛	阿拉伯冒號	most
+؛	阿拉伯文分號	most
 ?	question	all
-؟	阿拉伯問號	all
+؟	阿拉伯文問號	all
 @	小老鼠	some
 [	左中括號	most	always
 ]	右中括號	most	always
 \\	backslash	most
 ^	caret	most
 _	底線	most
-‐	連字號	most	always
+‐	hyphen	most	always
 `	graav	most
 {	左大括號	most	always
 }	右大括號	most	always
@@ -120,12 +120,12 @@ _	底線	most
 ▪	實心小方形	some
 ◾	實心中小方形	some
 ◦	空心項目符號	some
-⇨	向右粗箭頭	some
-➔	向右鍵頭	some
-➢	right arrowhead	some
-❖	black diamond minus white X	some
-♣	黑桃	some
-♦	實心方塊	some
+⇨	向右空心箭頭	some
+➔	箭頭	some	# 用於 Google 文件項目符號
+➢	3D 箭頭	some	# 用於 Google 文件項目符號
+❖	十字菱形	some	# 用於 Google 文件項目符號
+♣	梅花	some	# 撲克牌花色
+♦	方塊	some	# 撲克牌花色
 §	章節符號	all
 °	度	some
 «	double left pointing angle bracket	most	always
@@ -169,13 +169,13 @@ _	底線	most
 ↑	上箭頭	some
 →	右箭頭	some
 ↓	下箭頭	some
-✓	勾選	some
-🡺	右箭頭	some
-✔	勾選	some
+✓	打勾	some
+🡺	向右箭頭	some
+✔	打勾	some
 †	拉丁十字	some
 ‡	雙拉丁十字	some
 ‣	三角形項目符號	none
-✗	x形項目符號	none
+✗	打叉	none
 ⊕	圓圈加號	none
 ⊖	圓圈減號	none
 ⇄	向右箭頭在上，向左箭頭在下	none
@@ -183,7 +183,7 @@ _	底線	most
 
 # Arithmetic operators
 +	plus	some
-−	minus	some
+−	減	some
 ×	乘以	some
 ⋅	乘以	some
 ⨯	乘以	none
@@ -266,7 +266,7 @@ _	底線	most
 ⊥	垂直	none
 ⟂	正交於	none
 ‖	向量範數	none
-̂	正規化	none
+̂	hat	none
 ∿	正弦波	none
 ∡	測量角	none
 ∢	球面角	none
@@ -513,50 +513,22 @@ _	底線	most
 ⑧	圓圈數字8	none
 ⑨	圓圈數字9	none
 ⑩	圓圈數字十	none
-Ⓐ	圓圈大寫字母A	none
-Ⓑ	圓圈大寫字母B	none
-Ⓒ	圓圈大寫字母C	none
-Ⓓ	圓圈大寫字母D	none
-Ⓔ	圓圈大寫字母E	none
-Ⓕ	圓圈大寫字母F	none
-ⓐ	圓圈小寫字母a	none
-ⓑ	圓圈小寫字母b	none
-ⓒ	圓圈小寫字母c	none
-ⓓ	圓圈小寫字母d	none
-ⓔ	圓圈小寫字母e	none
-ⓕ	圓圈小寫字母f	none
+Ⓐ	圓圈 A	none
+Ⓑ	圓圈 B	none
+Ⓒ	圓圈 C	none
+Ⓓ	圓圈 D	none
+Ⓔ	圓圈 E	none
+Ⓕ	圓圈 F	none
+ⓐ	圓圈 a	none
+ⓑ	圓圈 b	none
+ⓒ	圓圈 c	none
+ⓓ	圓圈 d	none
+ⓔ	圓圈 e	none
+ⓕ	圓圈 f	none
 	選項A	none
 	選項B	none
 	選項C	none
 	選項D	none
-
-# 全形英文大寫字母
-Ａ	A	none
-Ｂ	B	none
-Ｃ	C	none
-Ｄ	D	none
-Ｅ	E	none
-Ｆ	F	none
-Ｇ	G	none
-Ｈ	H	none
-ＩI		none
-Ｊ	J	none
-Ｋ	K	none
-Ｌ	L	none
-Ｍ	M	none
-Ｎ	N	none
-Ｏ	O	none
-Ｐ	P	none
-Ｑ	Q	none
-Ｒ	R	none
-Ｓ	S	none
-Ｔ	T	none
-Ｕ	U	none
-Ｖ	V	none
-Ｗ	W	none
-Ｘ	X	none
-Ｙ	Y	none
-Ｚ	Z	none
 
 # 希臘字母
 α	Alpha	none
@@ -991,9 +963,11 @@ _	底線	most
 饂	餛	none
 饹	了	none
 駅	驛	none
+鱛	增	none
 黽	敏	none
 龵	手	none
 龺	濁	none
+鿄	梁	none
 鿌	良	none
 鿍	槓	none
 鿎	妲	none
@@ -1970,8 +1944,32 @@ _	底線	most
 ‵	reversed prime	some
 Å	埃	none
 Å	埃	none
-K	克耳文	none
 Ω	歐姆	none
 ℥	盎司	none
+‑	non-breaking hyphen	most	always
+✘	打叉	none
+☑	核取方塊打勾	none
+🗹	核取方塊打勾	none
+☒	核取方塊打叉	none
+🗷	核取方塊打叉	none
+☐	核取方塊符號	none
+
+# Microsoft Office
+	實心點	some	# 用於 Microsoft Word 項目符號
+	實心方形	some	# 用於 Microsoft Word 項目符號
+	實心菱形	some	# 用於 Microsoft Word 項目符號
+	核取記號	some	# 用於 Microsoft Word 項目符號
+⮚	空心箭號	some	# 用於 Microsoft Word 項目符號
+	空心箭號	some	# 用於 Microsoft Word 項目符號
+	四芒星	some	# 用於 Microsoft Word 項目符號
+	粗框空心方塊	some	# 用於 Microsoft PowerPoint 項目符號
+	空心矩形	none	# 用於 Microsoft Word
+	核取方塊打勾	none	# 用於 Microsoft Word
+	核取方塊打勾	none	# 用於 Microsoft Word，Wingdings 2 字型
+	核取方塊打勾	none	# 用於 Microsoft Word，Wingdings 2 字型
+	核取方塊打叉	none	# 用於 Microsoft Word，Wingdings 2 字型
+	核取方塊打叉	none	# 用於 Microsoft Word，Wingdings 2 字型
+	打勾	none	# 用於 Microsoft Word，Wingdings 2 字型
+	打叉	none	# 用於 Microsoft Word，Wingdings 2 字型
 
 # End of file

@@ -1647,6 +1647,8 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.
 On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.
 Some screenshot utilities may not work.
+NVDA's [Magnifier](#Magnifier) is turned off while Screen Curtain is enabled, and is turned back on when Screen Curtain is disabled.
+Since the screen is black, this is not announced.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
@@ -1664,6 +1666,7 @@ To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When disabled, the screen returns to its normal size.
 As with other NVDA settings, the Magnifier state is preserved across sessions.
+The Magnifier is turned off while [Screen Curtain](#VisionScreenCurtain) is enabled, and is turned back on when Screen Curtain is disabled.
 
 ### Magnifier Commands {#MagnifierCommands}
 
@@ -2340,7 +2343,7 @@ Note that this setting is only available when "[Unicode normalization](#SpeechUn
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
-These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data Repository](http://cldr.unicode.org/).
+These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data and Rules](http://cldr.unicode.org/).
 If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this option.
 However, if you are using a speech synthesizer that supports speaking emoji descriptions natively, you may wish to turn this off.
 
@@ -2391,6 +2394,21 @@ For example, while reviewing a line by characters, when the letter "b" is read N
 This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the `control` key.
+
+##### Speak selected text if it has fewer characters than {#MaxSelectionReportingLength}
+
+This setting controls how much selected text NVDA speaks.
+When you select text, or use the read selection command (`NVDA+shift+upArrow`), NVDA speaks the selected text if it has fewer characters than this value.
+If the selection has this many characters or more, NVDA reports the number of selected characters instead.
+
+Pressing the read selection command twice or three times spells the selection only if it has fewer characters than this value.
+
+Speaking very long selections can be slow or even lead to crashes with some speech synthesizers, so take care when setting a high value.
+
+| . {.hideHeaderRow} |.|
+| --- | --- |
+| Options | 1 to 10000 |
+| Default | 512 |
 
 ##### Modes available in the Cycle speech mode command {#SpeechModesDisabling}
 
@@ -2683,8 +2701,6 @@ If the display had 20 cells, each line of braille would be shown for 2 seconds.
 While the automatic scroll option is enabled, you can still use the scroll back command to read previous contents again, and scroll forward, for example, to skip a blank line, or if the line being read is too short.
 
 Automatic scrolling will be disabled if a routing key is pressed, if a message is presented in braille, if a new object is displayed, when entering a secure screen, when the session is locked, or when the end of the window is reached.
-
-Commands can be assigned to toggle the automatic scroll option, and to increase or decrease the scroll rate, from the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
 ##### Text wrap {#BrailleSettingsWordWrap}
 
@@ -3297,7 +3313,7 @@ If this is unchecked, you need to double-tap on the key of the touch keyboard to
 ##### Enable edge gestures {#TouchEdgeGestures}
 
 This checkbox enables edge gesture support.
-When enabled, gestures that begin within 15 mm of any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
+When enabled, gestures that start from any screen edge are treated as distinct gestures and can be bound independently in the [Input Gestures dialog](#InputGestures).
 For example, a flick right that starts from the left edge of the screen can be bound to a different command from a flick right performed in the centre of the screen.
 If edge gestures are disabled after bindings have been set, those bindings will remain but will never be triggered.
 Note: Windows or the taskbar may intercept gestures on certain edges before they reach NVDA.
@@ -3547,12 +3563,11 @@ If the combo box interferes with your input method, such as with some IMEs, you 
 | Options | Default (Enabled), Disabled, Enabled |
 | Default | Enabled |
 
-##### Native selection mode {#NativeSelectionModeSetting}
+##### Native selection mode on page load {#NativeSelectionModeSetting}
 
-Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it.
+Disabled by default, this option determines whether [Native Selection Mode](#NativeSelectionMode) is automatically turned on in Browse Mode documents which support it when loaded.
 This setting does not affect Microsoft Word and Outlook, where Native Selection Mode is always used.
 When disabled, you can still turn on native selection mode manually per document with `NVDA+shift+f10`.
-Changing this option takes effect for newly loaded documents.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -4584,7 +4599,8 @@ For example, you may wish to have reporting of indentation enabled while you are
 NVDA allows you to do this using configuration profiles.
 
 A configuration profile contains only those settings which are changed while the profile is being edited.
-Most settings can be changed in configuration profiles except for those in the General category of the [NVDA Settings](#NVDASettings) dialog, which apply to the entirety of NVDA.
+Most settings can be changed in configuration profiles.
+Settings in the following categories of [NVDA Settings](#NVDASettings) dialog apply to the entirety of NVDA: General, Privacy and Security, Magnifier, Remote Access, Math, and Add-on Store.
 
 Configuration profiles can be manually activated either from a dialog or using custom added gestures.
 They can also be activated automatically due to triggers such as switching to a particular application.
@@ -6589,8 +6605,8 @@ Following are the command line options for NVDA:
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|
 |`-s` |`--secure` |Starts NVDA in [Secure Mode](#SecureMode)|
 |`-d` |`--disable-addons` |Add-ons will have no effect|
-|None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--loglevel`, `-l`) argument given, including no logging option.|
-|None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--loglevel`, `-l`) is specified from command line or if debug logging is turned on.|
+|None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--log-level`, `-l`) argument given, including no logging option.|
+|None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--log-level`, `-l`) is specified from command line or if debug logging is turned on.|
 |None |`--no-sr-flag` |Don't change the global system screen reader flag|
 |None |`--install` |Installs NVDA (starting the newly installed copy)|
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|

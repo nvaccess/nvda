@@ -1,5 +1,36 @@
 # What's New in NVDA
 
+## 2027.2
+
+### Important notes
+
+### New Features
+
+* A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+
+### Changes
+
+### Bug Fixes
+
+#### Braille
+
+#### Web browsers
+
+#### Applications
+
+#### Add-on Store
+
+#### Magnifier
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2027.1
 
 ### Important notes
@@ -9,21 +40,35 @@
 
 ### Changes
 
+* Update CLDR to version 49.0. (#21093, @OzancanKaratas)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
+* Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+* NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
+Skype for Business remains supported. (#19781, @josephsl)
 
 ### Bug Fixes
 
+* NVDA now retries copying user settings for use during sign-in and on secure screens when a configuration file is temporarily locked. (#20118, @b-tanyileke)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
   * If saving fails, NVDA now reports the error and continues saving other settings.
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
+* When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
+* Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
+* When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
+* The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
+* When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
+* Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
 
 #### Performance
 
 #### Braille
 
 * The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
+* Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+* When selecting text in browse mode with multiple routing keys, the selection is now announced and shown on the braille display. (#21086, @LeonarddeR)
 
 #### Web browsers
 
@@ -32,11 +77,25 @@
 
 #### Applications
 
+* In Adobe Acrobat, NVDA now reports the correct column for every cell in tables where a header or cell in the last column spans several rows, so table navigation no longer skips that cell or reports "edge of table". (#21020, #5140, @raebened)
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
+* In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
+  * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
+  * Resolved comments are reported as resolved, and are no longer missing from the Elements List. (#9685)
+* In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table start markers at the start of table cells and at the cursor position, and leave out the cell content before the cursor. (#20938, @LeonarddeR)
+* In Microsoft Excel, the "Chat with Copilot" button is now reported when not using UIA. (#20979)
 
 #### Add-on Store
 
 * The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
+
+#### Magnifier
+
+* Profiles no longer interfere with Magnifier settings.
+Previously, saving magnifier settings could be ineffective while a profile was active.
+The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+* When disabling the Screen Curtain, NVDA no longer reports that it could not be disabled if the Magnifier has trouble determining what to follow, and the Magnifier is correctly restarted. (#20518, @JulienCochuyt)
+* NVDA no longer announces that the Magnifier is being disabled or re-enabled when toggling the Screen Curtain. (#19528, @JulienCochuyt)
 
 ### Changes for Developers
 
@@ -45,7 +104,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Updated components:
-  * wxPython to 4.3.1, which is based on wxWidgets 3.3.3. (#20700, @LeonarddeR)
+  * wxPython to 4.3.2, which is based on wxWidgets 3.3.4. (#20882, #20983, @LeonarddeR, @cary-rowen)
 * The `appx` SCons build alias and packaging targets have been removed. (#18799, #20681, @makhlwf)
 * Overlapped writes in `hwIo.base.IoBase` now wait for completion on a dedicated event rather than on the device handle.
 A read completing on the same handle no longer ends the wait while the write is still pending. (#20569, @LeonarddeR)
@@ -58,6 +117,8 @@ A read completing on the same handle no longer ends the wait while the write is 
   * A `ValueError` is now raised for names with multiple non modifier keys, unknown key names, or an empty name.
 * The `speech.extensions.pre_speech` extension point now receives an `originalSpeechSequence` keyword argument containing the sequence passed to `speech.speak` before filtering.
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
+* `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
+* `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
 
 #### API Breaking Changes
 
@@ -70,6 +131,11 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 * The following symbols have been removed from `winKernel` with no replacement: `PROCESS_ALL_ACCESS`, `PROCESS_VM_OPERATION`, `PROCESS_VM_READ` and `PROCESS_VM_WRITE`. (#20836)
 * `config.isAppX` has been removed with no replacement, as support for running NVDA as a Windows Store application has been removed. (#18799, #20681, @makhlwf)
 * `gui.blockAction.Context.WINDOWS_STORE_VERSION` has been removed with no replacement. (#18799, #20681, @makhlwf)
+* Some symbols in `comInterfaces.tom` have changed, as it is now generated from the type library in `msftedit.dll`: (#20987, @LeonarddeR)
+  * `ITextDocument2` is now the Text Object Model 2 interface.
+  The interface previously available under this name has been removed with no replacement.
+  * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
+* Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
 
 #### Deprecations
 
@@ -77,9 +143,46 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `DUPLICATE_SAME_ACCESS`: use `winBindings.kernel32.DUPLICATE.SAME_ACCESS` instead.
   * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
   * `PROCESS_QUERY_INFORMATION` and `PROCESS_TERMINATE`: use `winBindings.kernel32.PROCESS.QUERY_INFORMATION` and `winBindings.kernel32.PROCESS.TERMINATE` instead.
+* `getCommentInfoFromPosition` and `getPresentableCommentInfoFromPosition` in `NVDAObjects.UIA.wordDocument` are deprecated with no public replacement. (#14985, @LeonarddeR)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
+
+## 2026.3.1
+
+This is a patch release to fix security issues.
+A bug fix is also included for an issue introduced in 2026.3 with the task switcher in Windows 10.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed NVDA leaking the Remote Access key. (#21037, [GHSA-prj7-9c78-744j](https://github.com/nvaccess/nvda/security/advisories/GHSA-prj7-9c78-744j))
+* Updated certifi to 2026.10.23. ([GHSA-3j65-46c5-4grp](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp))
+* Prevent DOS when Remote Access is running. ([GHSA-v99h-jr79-r5cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-v99h-jr79-r5cr), @Cem-Kaya)
+
+### Bug Fixes
+
+* Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
+* Updated eSpeak NG to [commit `b97de3cf2`](https://github.com/nvaccess/espeak-ng/commit/b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc).
+This changes Brazilian Portuguese back to how it worked in 2026.1. (#21059)
+
+### Changes for Developers
+
+* Updated Python to 3.13.17. (#21067)
+* Updated pip dependencies (#21067):
+  * cryptography to 50.0.2.
+  * url-normalize to 3.0.1.
+  * pycaw to 20260927.
+  * nh3 to 0.3.7.
+  * crowdin-api-client to 1.30.0.
+  * markdown to 3.11.2.
+  * lxml to 6.1.3.
+  * regex to 2026.9.29.
+  * scons to 4.11.1.
+  * uv to 0.13.5.
+  * sphinx to 9.2.0.
+  * robotframework to 7.5.
 
 ## 2026.3
 
@@ -89,7 +192,6 @@ Several performance improvements have been made to reduce lag and improve respon
 NVDA now fetches and caches more information about controls in the background, improving performance in controls such as combo boxes and File Explorer.
 NVDA no longer causes File Explorer or other applications to crash when NVDA is exited or restarted.
 NVDA now recovers more quickly when an application stops responding, and will no longer freeze or flood the log with errors from unresponsive applications.
-In live text regions, such as terminals, NVDA no longer freezes when substantial amounts of text are dumped to the screen.
 
 Context menus and keyboard shortcuts have been added to the Configuration Profiles, Input Gestures, and Speech Dictionaries dialogs, making these dialogs easier to use with the keyboard.
 It is also now possible to change an existing gesture directly in the Input Gestures dialog.
@@ -218,6 +320,7 @@ Previously these keys had no function when pressed on their own. (#20366, @fla-r
 #### Add-on Store
 
 * The Add-on Store no longer becomes unresponsive when navigating the list of add-ons quickly, such as by holding down an arrow key. (#17351, @christopherpross)
+* The Add-on Store no longer becomes unresponsive when searching for add-ons with a one-character query. (#20886, @Cary-rowen)
 * NVDA now restarts reliably when requested after installing an add-on package from File Explorer. (#17925, @cary-rowen)
 * The actions button can now be used when selecting multiple add-ons in the Add-on Store to perform batch actions, instead of just via the context menu in the add-ons list. (#19971, @amirmahdifard)
 * Updating an add-on no longer leaves modules of the old version loaded.

@@ -3,40 +3,49 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Generator  # noqa: I001
-
 import enum
-from comtypes import COMError
-import inputCore
-import mathPres
-import scriptHandler
-from scriptHandler import isScriptWaiting
-import textInfos
-import UIAHandler
-import UIAHandler.remote as UIARemote
-from logHandler import log
-import controlTypes
-import ui
-import speech
-import review
+from collections.abc import Generator, Iterable
+from dataclasses import dataclass
+from functools import cached_property
+
 import braille
 import browseMode
+import controlTypes
+import documentBase
+import eventHandler
+import inputCore
+import mathPres
+import review
+import scriptHandler
+import speech
+import textInfos
+import ui
+import UIAHandler
+import UIAHandler.remote as UIARemote
+from baseObject import AutoPropertyObject
+from comtypes import COMError
+from globalCommands import SCRCAT_SYSTEMCARET
+from logHandler import log
+from scriptHandler import isScriptWaiting, script
+from speech.commands import EndUtteranceCommand
 from UIAHandler.browseMode import (
+	TextAttribUIATextInfoQuickNavItem,
 	UIABrowseModeDocument,
 	UIADocumentWithTableNavigation,
 	UIATextAttributeQuicknavIterator,
-	TextAttribUIATextInfoQuickNavItem,
 )
-from . import UIA, UIATextInfo
+from UIAHandler.utils import CacheableUIAElementArray, createUIAMultiPropertyCondition
+from utils._deprecate import RemovedSymbol, handleDeprecations
+
+from NVDAObjects import NVDAObject
 from NVDAObjects.window.winword import (
 	WordDocument as WordDocumentBase,
+)
+from NVDAObjects.window.winword import (
 	WordDocumentTextInfo as LegacyWordDocumentTextInfo,
 )
-from NVDAObjects import NVDAObject
-from scriptHandler import script
-import eventHandler
-from globalCommands import SCRCAT_SYSTEMCARET
-import documentBase
+
+from . import UIA, UIATextInfo
 
 """Support for Microsoft Word via UI Automation."""
 
@@ -76,8 +85,16 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 	)
 
 
-class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+class _AnnotationUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
+	"""An annotation, which is never nested under a reply to a comment in the elements list."""
+
 	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
+
+	def isChild(self, parent: browseMode.QuickNavItem) -> bool:
+		return not isinstance(parent, CommentReplyUIATextInfoQuickNavItem) and super().isChild(parent)
+
+
+class RevisionUIATextInfoQuickNavItem(_AnnotationUIATextInfoQuickNavItem):
 	wantedAttribValues = {  # noqa: RUF012
 		UIAHandler.AnnotationType_InsertionChange,
 		UIAHandler.AnnotationType_DeletionChange,
@@ -147,13 +164,172 @@ class ReferenceUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 			return _("reference: {name}").format(name=name)
 
 
-def getCommentInfoFromPosition(position):
+def _getCommentThreadElement(element: UIAHandler.IUIAutomationElement) -> UIAHandler.IUIAutomationElement:
+	"""
+	Fetches the element of the comment thread that a comment element belongs to.
+	:param element: A comment element, cached with its control type.
+	:return: The comment thread element.
+	"""
+	cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
+	cacheRequest.addProperty(UIAHandler.UIA_ControlTypePropertyId)
+	cacheRequest.addProperty(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)
+	parent = UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(element, cacheRequest)
+	if (
+		parent
+		and parent.CachedControlType == element.CachedControlType
+		and parent.GetCachedPropertyValue(UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId)
+	):
+		# The comment element is a reply within the thread.
+		return parent
+	return element
+
+
+@dataclass(frozen=True, slots=True)
+class _CommentInfo:
+	"""Information about a comment in a word document."""
+
+	comment: str
+	"""The text of the comment."""
+	author: str
+	"""The name of the author of the comment."""
+	date: str | None = None
+	"""The date of the comment, or ``None`` if unknown."""
+	resolved: bool = False
+	"""Whether the comment is marked resolved."""
+	isReply: bool = False
+	"""Whether the comment is a reply in a comment thread."""
+	replies: tuple["_CommentInfo", ...] = ()
+	"""The replies to the comment, in the order of the comment thread."""
+	threadRuntimeId: tuple[int, ...] | None = None
+	"""The UIA runtime ID of the element of the comment thread, or ``None`` if the comment is not its root."""
+
+	def getPresentation(self) -> str:
+		"""
+		:return: The presentable text of the comment, without its replies.
+		"""
+		if self.date is None:
+			# Translators: The message reported for a comment in Microsoft Word
+			message = _("Comment: {comment} by {author}")
+		elif self.isReply:
+			# Translators: The message reported for a reply to a comment in Microsoft Word
+			message = _("Reply: {comment} by {author} on {date}")
+		elif self.resolved:
+			# Translators: The message reported for a comment in Microsoft Word that is marked resolved
+			message = _("Resolved comment: {comment} by {author} on {date}")
+		else:
+			# Translators: The message reported for a comment in Microsoft Word
+			message = _("Comment: {comment} by {author} on {date}")
+		return message.format(comment=self.comment, author=self.author, date=self.date)
+
+
+_COMMENT_THREAD_PROPERTY_IDS = (
+	UIAHandler.UIA_FullDescriptionPropertyId,
+	UIAHandler.UIA_AnnotationAuthorPropertyId,
+	UIAHandler.UIA_AnnotationDateTimePropertyId,
+)
+"""The UIA properties holding the text, author and date of a comment in a comment thread."""
+
+_COMMENT_THREAD_CONTROL_TYPES = [UIAHandler.UIA_TreeItemControlTypeId, UIAHandler.UIA_GroupControlTypeId]
+"""The UIA control types of the comments in a comment thread, for modern and classic comments."""
+
+
+def _getCommentEditText(element: UIAHandler.IUIAutomationElement) -> str:
+	"""
+	Fetches the text of a comment from the edit field in the element of the comment.
+	:param element: The element of the comment.
+	:return: The text of the comment, or an empty string if the element has no edit field.
+	"""
+	cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
+	cacheRequest.addPattern(UIAHandler.UIA_TextPatternId)
+	editElement = element.FindFirstBuildCache(
+		UIAHandler.TreeScope_Children,
+		UIAHandler.handler.clientObject.createPropertyCondition(
+			UIAHandler.UIA_ControlTypePropertyId,
+			UIAHandler.UIA_EditControlTypeId,
+		),
+		cacheRequest,
+	)
+	if not editElement:
+		return ""
+	textPattern = editElement.GetCachedPattern(UIAHandler.UIA_TextPatternId).QueryInterface(
+		UIAHandler.IUIAutomationTextPattern,
+	)
+	return textPattern.DocumentRange.GetText(-1).rstrip()
+
+
+def _getCachedCommentInfo(element: UIAHandler.IUIAutomationElement, **kwargs) -> _CommentInfo:
+	"""
+	Creates comment information from an element of a comment thread.
+	:param element: The element, cached with the properties in :data:`_COMMENT_THREAD_PROPERTY_IDS`.
+	:param kwargs: Further fields of the comment information.
+	:return: The comment information.
+	"""
+	comment, author, date = (
+		element.GetCachedPropertyValue(propertyId) for propertyId in _COMMENT_THREAD_PROPERTY_IDS
+	)
+	return _CommentInfo(comment=comment or _getCommentEditText(element), author=author, date=date, **kwargs)
+
+
+def _getCommentThreadInfo(threadElement: UIAHandler.IUIAutomationElement, resolved: bool) -> _CommentInfo:
+	"""
+	Fetches a comment thread with its replies.
+	:param threadElement: The element of the comment thread.
+	:param resolved: Whether the comment thread is marked resolved.
+	:return: The root comment of the thread, holding the replies.
+	"""
+	cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
+	for propertyId in _COMMENT_THREAD_PROPERTY_IDS:
+		cacheRequest.addProperty(propertyId)
+	cacheRequest.TreeScope = UIAHandler.TreeScope_Element | UIAHandler.TreeScope_Children
+	cacheRequest.treeFilter = createUIAMultiPropertyCondition(
+		{
+			UIAHandler.UIA_ControlTypePropertyId: _COMMENT_THREAD_CONTROL_TYPES,
+			UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId: True,
+		},
+	)
+	threadElement = threadElement.buildUpdatedCache(cacheRequest)
+	replyElements = CacheableUIAElementArray(threadElement.getCachedChildren())
+	replies = tuple(
+		_getCachedCommentInfo(replyElements.getElement(index), isReply=True)
+		for index in range(replyElements.length)
+	)
+	return _getCachedCommentInfo(
+		threadElement,
+		resolved=resolved,
+		replies=replies,
+		threadRuntimeId=threadElement.getRuntimeId(),
+	)
+
+
+def _isResolvedComment(annotationTypes: tuple[int, ...]) -> bool:
+	"""
+	Checks whether a comment in a word document is marked resolved.
+	:param annotationTypes: The annotation types of the text range of the comment.
+	:return: ``True`` if the comment is resolved, ``False`` otherwise.
+	"""
+	resolvedCommentId = UIA._UIACustomAnnotationTypes.microsoftWord_resolvedComment.id
+	return bool(resolvedCommentId) and resolvedCommentId in annotationTypes
+
+
+def _isResolvedCommentAtPosition(position: textInfos.TextInfo) -> bool:
+	"""
+	Checks whether the comment at the given position in a word document is marked resolved.
+	:param position: A TextInfo representing the span of the comment in the word document.
+	:return: ``True`` if the comment is resolved, ``False`` otherwise.
+	"""
+	annotationTypes = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationTypesAttributeId)
+	return _isResolvedComment(annotationTypes if isinstance(annotationTypes, tuple) else (annotationTypes,))
+
+
+def _getCommentInfoFromPosition(
+	position: textInfos.TextInfo,
+	resolved: bool | None = None,
+) -> _CommentInfo | None:
 	"""
 	Fetches information about the comment located at the given position in a word document.
-	@param position: a TextInfo representing the span of the comment in the word document.
-	@type L{TextInfo}
-	@return: A dictionary containing keys of comment, author and date
-	@rtype: dict
+	:param position: A TextInfo representing the span of the comment in the word document.
+	:param resolved: Whether the comment is marked resolved, or ``None`` to check this at the position.
+	:return: The comment information, or ``None`` if there is no comment at the position.
 	"""
 	val = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
 	if not val:
@@ -162,53 +338,142 @@ def getCommentInfoFromPosition(position):
 		UIAElementArray = val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 	except COMError:
 		return
+	cacheRequest = UIAHandler.handler.baseCacheRequest.clone()
+	for propertyId in (
+		UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId,
+		UIAHandler.UIA_AnnotationAuthorPropertyId,
+		UIAHandler.UIA_AnnotationDateTimePropertyId,
+	):
+		cacheRequest.addProperty(propertyId)
 	for index in range(UIAElementArray.length):
-		UIAElement = UIAElementArray.getElement(index)
-		UIAElement = UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
-		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
-		# Use Annotation Type Comment if available
-		if typeID == UIAHandler.AnnotationType_Comment:
-			comment = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
-			author = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
-			date = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId)
-			return dict(comment=comment, author=author, date=date)  # noqa: C408
-		else:
-			obj = UIA(UIAElement=UIAElement)
-			if (
-				not obj.parent
-				# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
-				or not obj.parent.UIAElement.getCurrentPropertyValue(
-					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId,
-				)
-			):
+		UIAElement = UIAElementArray.getElement(index).buildUpdatedCache(cacheRequest)
+		if not _isCommentElement(UIAElement):
+			# With classic comments, the annotation object is the edit field in the element of the comment.
+			UIAElement = UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(
+				UIAElement,
+				cacheRequest,
+			)
+			if not UIAElement or not _isCommentElement(UIAElement):
 				continue
-			comment = obj.makeTextInfo(textInfos.POSITION_ALL).text
-			tempObj = obj.previous.previous
-			authorObj = tempObj or obj.previous
-			author = authorObj.name
-			if not tempObj:
-				return dict(comment=comment, author=author)  # noqa: C408
-			dateObj = obj.previous
-			date = dateObj.name
-			return dict(comment=comment, author=author, date=date)  # noqa: C408
+		if UIAElement.CachedControlType in _COMMENT_THREAD_CONTROL_TYPES:
+			if resolved is None:
+				resolved = _isResolvedCommentAtPosition(position)
+			return _getCommentThreadInfo(_getCommentThreadElement(UIAElement), resolved=resolved)
+		return _CommentInfo(
+			comment=UIAElement.CachedName,
+			author=UIAElement.GetCachedPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId),
+			date=UIAElement.GetCachedPropertyValue(UIAHandler.UIA_AnnotationDateTimePropertyId),
+		)
 
 
-def getPresentableCommentInfoFromPosition(commentInfo):
-	if "date" not in commentInfo:
-		# Translators: The message reported for a comment in Microsoft Word
-		return _("Comment: {comment} by {author}").format(**commentInfo)
-	# Translators: The message reported for a comment in Microsoft Word
-	return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
+def _isCommentElement(element: UIAHandler.IUIAutomationElement) -> bool:
+	"""
+	Checks whether an element is the annotation element of a comment.
+	:param element: The element, cached with its annotation type.
+	:return: ``True`` if the element is the annotation element of a comment, ``False`` otherwise.
+	"""
+	return (
+		element.GetCachedPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
+		== UIAHandler.AnnotationType_Comment
+	)
 
 
-class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
-	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues = {UIAHandler.AnnotationType_Comment}  # noqa: RUF012
+def _getLegacyCommentInfoFromPosition(position: textInfos.TextInfo) -> dict[str, str] | None:
+	"""
+	Fetches information about the comment located at the given position in a word document,
+	as returned by the deprecated ``getCommentInfoFromPosition``.
+	:param position: A TextInfo representing the span of the comment in the word document.
+	:return: A dictionary containing keys of comment and author, and of date when known,
+		or ``None`` if there is no comment at the position.
+	"""
+	commentInfo = _getCommentInfoFromPosition(position)
+	if commentInfo is None:
+		return None
+	return {
+		key: getattr(commentInfo, key)
+		for key in ("comment", "author", "date")
+		if getattr(commentInfo, key) is not None
+	}
+
+
+__getattr__ = handleDeprecations(
+	RemovedSymbol("getCommentInfoFromPosition", _getLegacyCommentInfoFromPosition),
+	RemovedSymbol(
+		"getPresentableCommentInfoFromPosition",
+		lambda commentInfo: _CommentInfo(**commentInfo).getPresentation(),
+	),
+)
+
+
+class CommentUIATextInfoQuickNavItem(_AnnotationUIATextInfoQuickNavItem, AutoPropertyObject):
+	@classmethod
+	def _get_wantedAttribValues(cls) -> set[int]:
+		wantedAttribValues = {UIAHandler.AnnotationType_Comment}
+		resolvedCommentId = UIA._UIACustomAnnotationTypes.microsoftWord_resolvedComment.id
+		if resolvedCommentId:
+			wantedAttribValues.add(resolvedCommentId)
+		return wantedAttribValues
+
+	@cached_property
+	def commentInfo(self) -> _CommentInfo | None:
+		"""Information about the comment, as returned by :func:`_getCommentInfoFromPosition`."""
+		return _getCommentInfoFromPosition(self.textInfo, resolved=_isResolvedComment(self.attribValues))
+
+	@property
+	def threadRuntimeId(self) -> tuple[int, ...] | None:
+		"""The UIA runtime ID of the element of the comment thread, or ``None`` if the comment has no such element."""
+		return self.commentInfo.threadRuntimeId if self.commentInfo else None
 
 	@property
 	def label(self):
-		commentInfo = getCommentInfoFromPosition(self.textInfo)
-		return getPresentableCommentInfoFromPosition(commentInfo)
+		return self.commentInfo.getPresentation()
+
+
+class CommentReplyUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
+	"""A reply in a comment thread, sharing the position of the comment it replies to."""
+
+	def __init__(self, comment: CommentUIATextInfoQuickNavItem, replyInfo: _CommentInfo):
+		"""
+		:param comment: The item of the comment this reply belongs to.
+		:param replyInfo: Information about the reply.
+		"""
+		super().__init__(comment.itemType, comment.document, comment.textInfo.copy())
+		self.comment = comment
+		self.replyInfo = replyInfo
+
+	@property
+	def label(self) -> str:
+		return self.replyInfo.getPresentation()
+
+	def isChild(self, parent: browseMode.QuickNavItem) -> bool:
+		return parent is self.comment
+
+
+def _iterWithCommentReplies(
+	items: Iterable[browseMode.QuickNavItem],
+) -> Generator[browseMode.QuickNavItem]:
+	"""
+	Yields each item, followed by an item for each reply when the item is a comment.
+	A comment is skipped with its replies when it belongs to the same comment thread as the previous comment.
+	:param items: The items to yield.
+	"""
+	previousComment: CommentUIATextInfoQuickNavItem | None = None
+	for item in items:
+		if not isinstance(item, CommentUIATextInfoQuickNavItem):
+			yield item
+			continue
+		if (
+			previousComment is not None
+			and item.threadRuntimeId is not None
+			and item.threadRuntimeId == previousComment.threadRuntimeId
+		):
+			continue
+		previousComment = item
+		yield item
+		if item.commentInfo is None:
+			continue
+		for replyInfo in item.commentInfo.replies:
+			yield CommentReplyUIATextInfoQuickNavItem(item, replyInfo)
 
 
 class WordDocumentTextInfo(UIATextInfo):
@@ -733,7 +998,9 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 				pos,
 				direction=direction,
 			)
-			return browseMode.mergeQuickNavItemIterators([comments, revisions], direction)
+			return _iterWithCommentReplies(
+				browseMode.mergeQuickNavItemIterators([comments, revisions], direction),
+			)
 		elif nodeType == "reference":
 			return UIATextAttributeQuicknavIterator(
 				ReferenceUIATextInfoQuickNavItem,
@@ -886,12 +1153,22 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 	)
 	def script_reportCurrentComment(self, gesture: "inputCore.InputGesture") -> None:
 		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-		commentInfo = getCommentInfoFromPosition(caretInfo)
+		commentInfo = _getCommentInfoFromPosition(caretInfo)
 		if commentInfo is not None:
-			text = getPresentableCommentInfoFromPosition(commentInfo)
+			lines = [
+				commentInfo.getPresentation(),
+				*(reply.getPresentation() for reply in commentInfo.replies),
+			]
+			text = "\n".join(lines)
 			repeats = scriptHandler.getLastScriptRepeatCount()
 			if repeats == 0:
-				ui.message(text)
+				speechSequence = []
+				for line in lines:
+					if speechSequence:
+						speechSequence.append(EndUtteranceCommand())
+					speechSequence.append(line)
+				speech.speak(speechSequence)
+				braille.handler.message(text)
 			elif repeats == 1:
 				ui.browseableMessage(
 					text,
