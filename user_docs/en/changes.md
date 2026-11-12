@@ -7,7 +7,7 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
-* New options in NVDA's Keyboard settings control what happens when an NVDA key is pressed twice quickly. (@mehranlatifi83)
+* New options in NVDA's Keyboard settings control what happens when an NVDA key is pressed twice quickly. (#21139, @mehranlatifi83)
   * "Pass the NVDA key to the system when pressed twice" can be turned off to stop accidentally toggling caps lock or the insert/overtype mode.
   * "Report when the insert key is passed to the system" makes NVDA report when insert is pressed twice.
     In Microsoft Word and Scintilla based editors such as Notepad++, NVDA reports whether overtype mode is on or off.
