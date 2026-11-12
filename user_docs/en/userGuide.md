@@ -4529,7 +4529,7 @@ You can add new symbols by pressing the Add button.
 In the dialog that appears, enter the symbol and press the OK button.
 Then, change the fields for the new symbol as you would for other symbols.
 
-You can remove a symbol you previously added by pressing the Remove button.
+You can remove a symbol you previously added by pressing the Remove button, delete key, or pressing the application key on the selected symbol, and activating Remove option in the context menu.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
