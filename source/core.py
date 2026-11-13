@@ -156,14 +156,15 @@ def doStartupDialogs():
 	if config.conf.baseConfigError:
 		import wx
 
-		if not globalVars.appArgs.launcher:
+		message: str | None = None
+		if NVDAState.shouldWriteToDisk():
 			message = _(
 				# Translators: A message informing the user that there are errors in the configuration file.
 				"Your configuration file contains errors. "
 				"Your configuration has been reset to factory defaults.\n"
 				"More details about the errors can be found in the log file.",
 			)
-		else:
+		elif globalVars.appArgs.launcher:
 			message = _(
 				# Translators: A message informing the user that their configuration file could not be loaded,
 				# for example when running an NVDA installer which is older than the installed copy of NVDA.
@@ -173,12 +174,13 @@ def doStartupDialogs():
 				"This copy of NVDA is using factory defaults.\n"
 				"More details about the errors can be found in the log file.",
 			)
-		gui.messageBox(
-			message,
-			# Translators: The title of the dialog to tell users that there are errors in the configuration file.
-			_("Configuration File Error"),
-			wx.OK | wx.ICON_EXCLAMATION,
-		)
+		if message is not None:
+			gui.messageBox(
+				message,
+				# Translators: The title of the dialog to tell users that there are errors in the configuration file.
+				_("Configuration File Error"),
+				wx.OK | wx.ICON_EXCLAMATION,
+			)
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		from gui.startupDialogs import WelcomeDialog
 

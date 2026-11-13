@@ -545,17 +545,16 @@ class ConfigManager:
 				self.baseConfigError = False
 			except:  # noqa: E722
 				self.baseConfigError = True
-				if globalVars.appArgs.launcher:
+				if not NVDAState.shouldWriteToDisk():
 					# #18905: The launcher uses the installed copy's configuration,
 					# which may have been saved by a newer version of NVDA.
-					# Use factory defaults without changing the file the installed copy relies on.
+					# Use factory defaults without changing the file on disk.
 					# Load them before logging, as handling a logged error reads the configuration,
 					# which is empty while it is being reset.
 					self._initBaseConf(factoryDefaults=True)
-					log.error(  # noqa: G201
+					log.exception(
 						"Error loading base configuration; using factory defaults."
 						" The configuration file has not been changed.",
-						exc_info=True,
 					)
 					return
 				backupFileName = fn + ".corrupted.bak"

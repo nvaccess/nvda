@@ -1526,9 +1526,9 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		self.assertFalse(os.path.exists(self._configFile))
 		self.assertEqual(self._readFile(self._backupFile), self._INVALID_CONFIG)
 
-	def test_secureMode_backsUpConfigFile(self):
-		"""Secure mode, such as on the sign-in screen, moves the invalid configuration aside,
-		so that the error is not reported every time NVDA starts.
+	def test_secureMode_leavesConfigFileUnchanged(self):
+		"""Secure mode, such as on the sign-in screen, never writes to disk,
+		so it uses factory defaults without moving the invalid configuration aside.
 		"""
 		with (
 			patch.object(globalVars.appArgs, "launcher", False),
@@ -1536,5 +1536,6 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		):
 			manager = ConfigManager()
 		self.assertTrue(manager.baseConfigError)
-		self.assertFalse(os.path.exists(self._configFile))
-		self.assertEqual(self._readFile(self._backupFile), self._INVALID_CONFIG)
+		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
+		self.assertFalse(os.path.exists(self._backupFile))

@@ -614,8 +614,9 @@ class InstallingOverNewerVersionDialog(
 				warning = self._UNKNOWN_WARNING
 			case _:
 				raise ValueError(f"Invalid install state for warning dialog {self.installState}")
-		# The launcher loads the installed copy's configuration,
-		# so if the launcher could not load it, the installed earlier version will not be able to either.
+		# Only the launcher loads the installed copy's configuration.
+		# If it could not load it, the earlier version being installed will not be able to either.
+		# A portable copy can also install NVDA, but its configuration error is about its own configuration.
 		if self._CONFIG_RESET_WARNING and globalVars.appArgs.launcher and config.conf.baseConfigError:
 			warning = f"{warning}\n\n{self._CONFIG_RESET_WARNING}"
 		return warning
