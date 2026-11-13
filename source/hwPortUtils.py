@@ -21,6 +21,7 @@ from winAPI.constants import SystemErrorCodes
 from winBindings.advapi32 import RegCloseKey as _RegCloseKey
 from winBindings.bthprops import (
 	BLUETOOTH_DEVICE_INFO as _BLUETOOTH_DEVICE_INFO,
+	BLUETOOTH_LOAD_ERROR as _BLUETOOTH_LOAD_ERROR,
 	BluetoothGetDeviceInfo as _BluetoothGetDeviceInfo,
 )
 from winBindings.hid import (
@@ -54,6 +55,9 @@ from winBindings.setupapi import (
 	SetupDiOpenDevRegKey as _SetupDiOpenDevRegKey,
 	_Dummy,
 )
+
+if _BLUETOOTH_LOAD_ERROR is not None:
+	log.warning("Bluetooth support is unavailable.", exc_info=_BLUETOOTH_LOAD_ERROR)
 
 
 def _ValidHandle(value):
