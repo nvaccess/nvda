@@ -94,7 +94,8 @@ class TestOptionalApiBindings(unittest.TestCase):
 	def test_unavailableBindingsRetainIndependentMetadata(self):
 		bluetooth = _loadUnavailable(bthprops, "bthprops.cpl", OSError("missing"))
 		self.assertEqual(
-			bluetooth.BluetoothGetDeviceInfo.argtypes, (HANDLE, bluetooth.BLUETOOTH_DEVICE_INFO_P)
+			bluetooth.BluetoothGetDeviceInfo.argtypes,
+			(HANDLE, bluetooth.BLUETOOTH_DEVICE_INFO_P),
 		)
 		self.assertIs(bluetooth.BluetoothGetDeviceInfo.restype, DWORD)
 

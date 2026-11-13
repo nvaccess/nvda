@@ -66,7 +66,9 @@ BluetoothGetDeviceInfo = (
 	cpl.BluetoothGetDeviceInfo
 	if cpl is not None
 	else _makeUnavailable(
-		"BluetoothGetDeviceInfo", "The Bluetooth API is not available", BLUETOOTH_LOAD_ERROR
+		"BluetoothGetDeviceInfo",
+		"The Bluetooth API is not available",
+		BLUETOOTH_LOAD_ERROR,
 	)
 )
 """
