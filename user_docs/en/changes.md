@@ -12,7 +12,7 @@
 
 * The "Maximum number of characters on one line" browse mode setting can now be set from 0 to 1000 characters, instead of 10 to 250. (#20478, @think-tank0)
   * Setting it to 0 means lines are no longer split by length.
-  
+
 ### Bug Fixes
 
 #### Braille
