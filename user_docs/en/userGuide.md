@@ -6097,7 +6097,7 @@ The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are support
 These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
-In addition, in the key assignment tables of the models below, `doubleRouting` gesture corresponds to pressing a routing key twice quickly.
+Additionally, in the key assignment tables of the models below, the `doubleRouting` gesture corresponds to pressing a routing key twice quickly.
 
 These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
