@@ -13,6 +13,8 @@ from ctypes.wintypes import BOOL, LPRECT
 from _ctypes import CFuncPtr
 from typing import Any
 
+from winBindings._utils import _makeUnavailable
+
 try:
 	dll = windll.Magnification
 except (AttributeError, OSError) as e:
@@ -45,14 +47,13 @@ def _errCheck[T: tuple[Any]](result: int, func: CFuncPtr, args: T) -> T:
 	return args
 
 
-def _unavailable(*args: Any, **kwargs: Any) -> None:
-	raise OSError("The Magnification API is not available")
-
-
 def _bind(name: str, prototype: Any, paramFlags: tuple[Any, ...] | None = None) -> Any:
 	if dll is None:
-		return _unavailable
-	function = prototype((name, dll), paramFlags) if paramFlags is not None else prototype((name, dll))
+		function = _makeUnavailable(name, "The Magnification API is not available", MAGNIFICATION_LOAD_ERROR)
+		function.argtypes = prototype._argtypes_
+		function.restype = prototype._restype_
+	else:
+		function = prototype((name, dll), paramFlags) if paramFlags is not None else prototype((name, dll))
 	function.errcheck = _errCheck
 	return function
 

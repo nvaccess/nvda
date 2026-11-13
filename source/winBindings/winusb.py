@@ -22,6 +22,8 @@ from enum import IntEnum
 from serial.win32 import LPOVERLAPPED
 from typing import Any
 
+from winBindings._utils import _makeUnavailable
+
 try:
 	dll = windll.winusb
 except (AttributeError, OSError) as e:
@@ -96,14 +98,11 @@ class WINUSB_PIPE_INFORMATION(Structure):
 	)
 
 
-def _unavailable(*args: Any, **kwargs: Any) -> None:
-	raise OSError("WinUSB is not available")
-
-
 def _bind(name: str, argtypes: tuple[Any, ...], restype: Any) -> Any:
 	if dll is None:
-		return _unavailable
-	function = WINFUNCTYPE(None)((name, dll))
+		function = _makeUnavailable(name, "WinUSB is not available", WINUSB_LOAD_ERROR)
+	else:
+		function = WINFUNCTYPE(None)((name, dll))
 	function.argtypes = argtypes
 	function.restype = restype
 	return function

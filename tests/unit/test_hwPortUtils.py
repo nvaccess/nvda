@@ -8,6 +8,7 @@ from unittest import mock
 
 import hwPortUtils
 from winBindings import bthprops
+from winBindings._utils import _makeUnavailable
 
 
 class TestBluetoothDeviceInfo(unittest.TestCase):
@@ -19,7 +20,7 @@ class TestBluetoothDeviceInfo(unittest.TestCase):
 			mock.patch.object(
 				hwPortUtils,
 				"_BluetoothGetDeviceInfo",
-				bthprops._unavailableBluetoothGetDeviceInfo,
+				_makeUnavailable("BluetoothGetDeviceInfo", "The Bluetooth API is not available", None),
 			),
 			self.assertRaisesRegex(OSError, "Bluetooth API is not available"),
 		):

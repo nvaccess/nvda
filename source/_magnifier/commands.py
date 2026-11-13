@@ -9,7 +9,7 @@ Contains the command functions and their logic for keyboard shortcuts.
 """
 
 from collections.abc import Callable  # noqa: I001
-from typing import TYPE_CHECKING, Literal, cast
+from typing import Literal
 import speech
 import ui
 from . import changeMagnifiedView, getMagnifier, start, stop
@@ -24,6 +24,7 @@ from .config import (
 	_isDebug,
 )
 from .magnifier import Magnifier
+from .fullscreenMagnifier import FullScreenMagnifier
 from .utils.errorHandling import MagnifierStartError
 from .utils.types import (
 	Filter,
@@ -34,9 +35,6 @@ from .utils.types import (
 	MagnifierTrackingType,
 )
 from logHandler import log
-
-if TYPE_CHECKING:
-	from .fullscreenMagnifier import FullScreenMagnifier
 
 PAN_ACTION_TO_EDGE_MESSAGES = {
 	MagnifierAction.PAN_LEFT: pgettext(
@@ -184,7 +182,8 @@ def toggleFilter() -> None:
 		idx = filters.index(magnifier.filterType)
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
 		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
-			fullscreenMagnifier = cast("FullScreenMagnifier", magnifier)
+			assert isinstance(magnifier, FullScreenMagnifier)
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			fullscreenMagnifier._applyFilter()
 		setFilter(magnifier.filterType)
 
@@ -291,7 +290,7 @@ def toggleFullscreenMode() -> None:
 			magnifier,
 			MagnifierAction.CHANGE_FULLSCREEN_MODE,
 		):
-			fullscreenMagnifier = cast("FullScreenMagnifier", magnifier)
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			modes = list(FullScreenMode)
 			currentMode = fullscreenMagnifier._fullscreenMode
 			idx = modes.index(currentMode)
@@ -310,7 +309,7 @@ def toggleFullscreenMode() -> None:
 
 def startSpotlight() -> None:
 	"""Start spotlight mode in full-screen magnifier"""
-	magnifier: Magnifier | None = getMagnifier()
+	magnifier: FullScreenMagnifier = getMagnifier()
 	if magnifierIsActiveVerify(  # noqa: SIM102
 		magnifier,
 		MagnifierAction.START_SPOTLIGHT,
@@ -319,7 +318,7 @@ def startSpotlight() -> None:
 			magnifier,
 			MagnifierAction.START_SPOTLIGHT,
 		):
-			fullscreenMagnifier = cast("FullScreenMagnifier", magnifier)
+			fullscreenMagnifier: FullScreenMagnifier = magnifier
 			if _isDebug():
 				log.debug("trying to launch spotlight mode")
 			if fullscreenMagnifier._spotlightManager._spotlightIsActive:

@@ -16,8 +16,8 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, HANDLE, ULONG, WCHAR
-from typing import Any
 
+from winBindings._utils import _makeUnavailable
 from winBindings.kernel32 import SYSTEMTIME
 
 try:
@@ -62,20 +62,21 @@ class BLUETOOTH_DEVICE_INFO(Structure):
 BLUETOOTH_DEVICE_INFO_P = POINTER(BLUETOOTH_DEVICE_INFO)
 
 
-def _unavailableBluetoothGetDeviceInfo(*args: Any, **kwargs: Any) -> None:
-	raise OSError("The Bluetooth API is not available")
-
-
-BluetoothGetDeviceInfo = cpl.BluetoothGetDeviceInfo if cpl is not None else _unavailableBluetoothGetDeviceInfo
+BluetoothGetDeviceInfo = (
+	cpl.BluetoothGetDeviceInfo
+	if cpl is not None
+	else _makeUnavailable(
+		"BluetoothGetDeviceInfo", "The Bluetooth API is not available", BLUETOOTH_LOAD_ERROR
+	)
+)
 """
 Retrieves information about a remote Bluetooth device which has been identified through a successful device inquiry function call.
 
 ..seealso::
 	https://learn.microsoft.com/en-us/windows/win32/api/bluetoothapis/nf-bluetoothapis-bluetoothgetdeviceinfo
 """
-if cpl is not None:
-	BluetoothGetDeviceInfo.argtypes = (
-		HANDLE,  # hRadio
-		BLUETOOTH_DEVICE_INFO_P,  # pbtdi
-	)
-	BluetoothGetDeviceInfo.restype = DWORD
+BluetoothGetDeviceInfo.argtypes = (
+	HANDLE,  # hRadio
+	BLUETOOTH_DEVICE_INFO_P,  # pbtdi
+)
+BluetoothGetDeviceInfo.restype = DWORD
