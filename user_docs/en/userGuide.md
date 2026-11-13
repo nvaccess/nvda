@@ -5209,8 +5209,8 @@ The following displays support this automatic detection functionality.
 For each display, a table lists its key assignments.
 In these tables:
 
-* `routing` means pressing any routing key.
-* `multiRouting` means pressing two distinct routing key simultaneously.
+* `routing` means to press a single routing key.
+* `multiRouting` means to press two routing keys simultaneously.
 
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
 
