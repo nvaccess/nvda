@@ -12,6 +12,9 @@
 
 ### Bug Fixes
 
+* When running NVDA from the launcher, a configuration that can't be loaded, such as one saved by a newer version of NVDA, is no longer reset.
+NVDA uses factory defaults instead, and warns that installing that version will reset the configuration. (#18905, @akj)
+
 #### Braille
 
 #### Web browsers
