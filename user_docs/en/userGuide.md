@@ -4557,6 +4557,13 @@ You can also use the context menu to add, change, or remove gestures for each co
 To change an input gesture of a command, select the gesture and press the change button.
 Then, perform the new input gesture you wish to associate; that will replace the old one.
 To remove a gesture from a command, you can press the `delete` key or the remove button.
+NVDA will ask you to confirm before removing the gesture.
+
+To remove all gestures from every command in a category, select the category and press the `delete` key or the remove button, or choose "Remove all gestures" from the context menu.
+This is useful when the gestures of a feature you don't use conflict with those of an add-on.
+NVDA will ask you to confirm before removing the gestures.
+The category and its commands are kept, so you can assign new gestures to them later.
+If you have entered text in the Filter by edit box, only the gestures of the commands shown in the category are removed.
 
 The Emulated system keyboard keys category contains NVDA commands that emulate keys on the system keyboard.
 These emulated system keyboard keys can be used to control a system keyboard right from your braille display.

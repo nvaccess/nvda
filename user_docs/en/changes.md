@@ -7,6 +7,7 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* In the Input Gestures dialog, all gestures in a category can now be removed at once by selecting the category and pressing `delete` or the Remove button. NVDA now also asks for confirmation before removing a single gesture. (#21138, @jcoffin1)
 
 ### Changes
 
