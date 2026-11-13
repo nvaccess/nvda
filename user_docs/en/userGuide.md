@@ -5222,6 +5222,14 @@ The following displays support this automatic detection functionality.
 * NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
 
+### Key assignments
+
+For each display, a table lists its key assignments.
+In these tables:
+
+* `routing` means to press a single routing key.
+* `multiRouting` means to press two routing keys simultaneously.
+
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
 
 All Focus and PAC Mate displays from [Freedom Scientific](https://www.freedomscientific.com/) are supported when connected via USB or bluetooth.
@@ -6107,6 +6115,7 @@ The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are support
 These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+Additionally, in the key assignment tables of the models below, the `doubleRouting` gesture corresponds to pressing a routing key twice quickly.
 
 These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
@@ -6446,7 +6455,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
-| Select range from first up to last braille cell | multiple routing set 1 keys |
+| Select range from first up to last braille cell | two routing set 1 keys simultaneously |
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
