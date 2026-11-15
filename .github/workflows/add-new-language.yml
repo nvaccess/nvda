@@ -38,8 +38,10 @@ jobs:
       uses: astral-sh/setup-uv@v10.3.3
       with:
         prune-cache: true
-
+    - name: Download l10nUtil.exe
+      run:     curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Download translations from Crowdin
+      shell: bash
       run: uv run miscDeps/tools/l10nUtil.exe exportTranslations -o . -l ${{ matrix.newLanguage }}
       env:
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}

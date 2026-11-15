@@ -22,18 +22,6 @@ jobs:
     runs-on: windows-2025-vs2026
 
     steps:
-    - name: Early exit
-      shell: bash
-      run: |
-        if [ -z "${{ vars.CROWDIN_PROJECT_ID }}" ]; then
-          echo "CROWDIN_PROJECT_ID is not set. Exiting workflow."
-          gh run cancel ${{ github.run_id }}
-          gh run watch ${{ github.run_id }}
-        fi
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPO: ${{ github.repository }}
-
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
@@ -51,6 +39,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install lxml requests
 
+    - name: Download l10nUtil.exe
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o ./l10nUtil.exe
     - name: update xliff files
       shell: pwsh
       env:
@@ -70,7 +60,7 @@ jobs:
             $markdown = $file
             if (Test-Path $xliff) {
                 Write-Host "Updating $xliff with changes from $markdown"
-                python source/markdownTranslate.py updateXliff -x $xliff -m $file -o $tempXliff
+                ./l10nUtil.exe md2xliff $file $tempXliff -o $xliff
                 Write-Host "Renaming $tempXliff to $xliff"
                 move-item -Path $tempXliff -Destination $xliff -Force
             } else {
@@ -121,8 +111,7 @@ jobs:
         $changed = git diff --name-only ${{GITHUB.SHA}}.. -- user_docs/en/changes.xliff
         if ($changed) {
             Write-Host "Uploading changes.xliff to Crowdin"
-            # 20 is the file ID for changes.xliff in Crowdin.
-            python ci/scripts/crowdinSync.py uploadSourceFile 20 user_docs/en/changes.xliff
+            ./l10nUtil.exe uploadSourceFile user_docs/en/changes.xliff
         } else {
             Write-Host "Not uploading changes.xliff to Crowdin as it has not changed"
         }

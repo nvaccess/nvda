@@ -384,9 +384,10 @@ jobs:
       uses: astral-sh/setup-uv@v10.3.3
       with:
         prune-cache: true
+    - name: Download l10nUtil.exe
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Upload translations to Crowdin
       env:
-        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
       run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 
@@ -428,6 +429,8 @@ jobs:
       with:
         prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
+    - name: Download l10nUtil.exe
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -437,9 +440,7 @@ jobs:
     - parallel:
         - name: Build scons docs targets
           shell: cmd
-          run: |
-            curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
-            scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
+          run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
         # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
         - name: Install signpath
           env:
