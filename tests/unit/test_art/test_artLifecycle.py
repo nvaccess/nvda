@@ -163,7 +163,7 @@ class TestAddonSessionLaunch(unittest.TestCase):
 	def test_invalidExitConfirmGraceIsRejected(self):
 		"""Passing a non-positive or infinite value to ``AddonSession()`` fails."""
 		controller = MagicMock()
-		for exitConfirmGrace in (0, -1.23, float("inf"), float("-inf")):
+		for exitConfirmGrace in (0, -1.23, float("inf"), float("-inf"), float("nan")):
 			with self.subTest(exitConfirmGrace=exitConfirmGrace), self.assertRaises(ValueError):
 				AddonSession(controller, exitConfirmGrace=exitConfirmGrace)
 
