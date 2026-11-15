@@ -365,7 +365,7 @@ class TestStartupTimeout(unittest.TestCase):
 	def test_invalidTimeoutIsRejectedBeforeLaunch(self):
 		controller = MagicMock()
 		session = AddonSession(controller)
-		for timeout in (0, -1, float("inf"), float("nan")):
+		for timeout in (0, -1, float("inf"), float("-inf"), float("nan")):
 			with self.subTest(timeout=timeout):
 				with self.assertRaises(ValueError):
 					session.start(timeout=timeout)
