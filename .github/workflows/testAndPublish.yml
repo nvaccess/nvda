@@ -437,7 +437,9 @@ jobs:
     - parallel:
         - name: Build scons docs targets
           shell: cmd
-          run: scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
+          run: |
+            curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
+            scons %sconsDocsOutTargets% %sconsArgs% %sconsCores%
         # Run launcher separately as we can't safely generate that in parallel to docs scons targets (#18867)
         - name: Install signpath
           env:
