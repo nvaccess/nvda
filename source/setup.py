@@ -11,7 +11,7 @@ import os
 import sys
 import gettext
 from pathlib import Path
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING
 from buildVersion import (
 	formatBuildVersionString,
 	name,
@@ -36,7 +36,7 @@ import wx
 import importlib.machinery
 
 if TYPE_CHECKING:
-	from ast import AnnAssign, Assign
+	from ast import Assign
 
 	from py2exe.dllfinder import Scanner
 	from py2exe.mf310 import Module
