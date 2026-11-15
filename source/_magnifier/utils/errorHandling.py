@@ -7,19 +7,12 @@
 Error handling helpers for the magnifier module.
 """
 
-from collections.abc import Callable  # noqa: I001
+from collections.abc import Callable
 from functools import wraps
+
 from logHandler import log
-from typing import ParamSpec, TypeVar
+
 from ..config import _isDebug
-
-
-# ParamSpec captures the full parameter signature of a callable (names, types, defaults).
-# TypeVar captures the return type.
-# Together they allow the decorator to preserve the exact signature of the wrapped function,
-# so callers and type checkers see the original parameters and return type unchanged.
-_P = ParamSpec("_P")
-_R = TypeVar("_R")
 
 
 class MagnifierStartError(Exception):
@@ -39,7 +32,7 @@ class MagnifierStartError(Exception):
 		self.message = message
 
 
-def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R | None]:  # noqa: UP047
+def trackNativeMagnifierErrors[**P, R](func: Callable[P, R]) -> Callable[P, R | None]:
 	"""
 	Decorator for native magnifier API calls.
 
@@ -55,7 +48,7 @@ def trackNativeMagnifierErrors(func: Callable[_P, _R]) -> Callable[_P, _R | None
 	# onto _wrapped, so the wrapped method keeps its original identity in
 	# logs, debuggers and stack traces.
 	@wraps(func)
-	def _wrapped(*args: _P.args, **kwargs: _P.kwargs) -> _R | None:
+	def _wrapped(*args: P.args, **kwargs: P.kwargs) -> R | None:
 		try:
 			return func(*args, **kwargs)
 		except OSError:
