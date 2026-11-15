@@ -93,8 +93,8 @@ def debounceLimiter(
 	:returns: A decorator that debounces calls to the decorated function.
 		The decorated function carries a ``cancel`` attribute, which drops a call that has been
 		delayed but not yet executed. For a decorated method, pass the instance to it, as the
-		state is kept per instance. The cooldown is left in place, so that cancelling cannot be
-		used to work around the rate limit.
+		state is kept per instance; without arguments, every pending call is dropped. The cooldown
+		is left in place, so that cancelling cannot be used to work around the rate limit.
 	:raises ValueError: If ``cooldownTimeMs`` or ``delayTimeMs`` is negative.
 	"""
 	if cooldownTimeMs < 0:
@@ -123,7 +123,12 @@ def debounceLimiter(
 			_scheduleDelayedCall(state, delayTimeMs, func)
 
 		def cancel(*args: Any) -> None:
-			_cancelPendingCall(_getStateForCall(instanceStates, stateForDecorated, args))
+			if args:
+				_cancelPendingCall(_getStateForCall(instanceStates, stateForDecorated, args))
+				return
+			_cancelPendingCall(stateForDecorated)
+			for state in list(instanceStates.values()):
+				_cancelPendingCall(state)
 
 		wrapper.cancel = cancel
 		return wrapper

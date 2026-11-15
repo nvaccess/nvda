@@ -196,6 +196,28 @@ class TestDebounceLimiter(unittest.TestCase):
 		self.assertEqual(["first"], target1.calls)
 		self.assertEqual(["first", "second"], target2.calls)
 
+	def test_cancel_withoutArguments_dropsEveryPendingCall(self):
+		@debounceLimiter(cooldownTimeMs=300, delayTimeMs=200)
+		def limited(target: _Target, value: str):
+			target.calls.append(value)
+
+		target1 = _Target()
+		target2 = _Target()
+
+		self.clock.now = 0.0
+		limited(target1, "first")
+		limited(target2, "first")
+		self.clock.now = 0.1
+		limited(target1, "second")
+		limited(target2, "second")
+
+		limited.cancel()
+
+		self.clock.now = 0.4
+		self.callLater.runPending()
+		self.assertEqual(["first"], target1.calls)
+		self.assertEqual(["first"], target2.calls)
+
 	def test_cancel_withNothingPending_isHarmless(self):
 		calls = []
 
