@@ -80,6 +80,8 @@ class AddonSession:
 		:param exitConfirmGrace: How long to give the host before killing it when the control connection is lost.
 			Defaults to :const:`_EXIT_CONFIRM_GRACE`.
 		"""
+		if not 0 < exitConfirmGrace < float("inf"):
+			raise ValueError("exitConfirmGrace must be finite and positive")
 		self._controller = controller
 		self._exitConfirmGrace = exitConfirmGrace
 		self._stateChanged = threading.Condition()

@@ -160,6 +160,13 @@ class TestAddonSessionLaunch(unittest.TestCase):
 		self.addCleanup(session.stop)
 		return session
 
+	def test_invalidExitConfirmGraceIsRejected(self):
+		"""Passing a non-positive or infinite value to ``AddonSession()`` fails."""
+		controller = MagicMock()
+		for exitConfirmGrace in (0, -1.23, float("inf"), float("-inf")):
+			with self.subTest(exitConfirmGrace=exitConfirmGrace), self.assertRaises(ValueError):
+				AddonSession(controller, exitConfirmGrace=exitConfirmGrace)
+
 	def test_newSessionIsNotReady(self):
 		"""Nothing is reachable before the session has been started."""
 		session = self.makeSession()
