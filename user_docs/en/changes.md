@@ -10,6 +10,8 @@
 
 ### Changes
 
+* The input help for the Magnifier's "Increase the magnification level" command (`NVDA+shift+equals`) now mentions that it also starts the Magnifier when it is not running. (#20677, @JulienCochuyt)
+
 ### Bug Fixes
 
 #### Braille
