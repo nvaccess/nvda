@@ -237,19 +237,6 @@ freeze(
 		"company_name": publisher,
 	},
 	windows=_py2ExeWindows,
-	console=[
-		{
-			"script": "l10nUtil.py",
-			"version_info": {
-				"version": formatBuildVersionString(),
-				"description": "NVDA Localization Utility",
-				"product_name": name,
-				"product_version": version,
-				"copyright": NVDAcopyright,
-				"company_name": publisher,
-			},
-		},
-	],
 	options={
 		"verbose": 2,
 		# Removes assertions for builds.
