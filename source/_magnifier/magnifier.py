@@ -70,6 +70,7 @@ class Magnifier:
 		self._mouseHook: MagnifierMouseHook | None = None
 		self._pendingMouseCoordinates = Coordinates(0, 0)
 		self._mouseUpdatePending: bool = False
+		self._isTimerSuspended: bool = False
 		self._screenCurtainIsActive: bool = False
 
 	@property
@@ -345,6 +346,36 @@ class Magnifier:
 		self._isActive = False
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
+
+	def _suspend(self) -> bool:
+		"""
+		Stop following and updating, leaving the magnified view on screen as it is.
+
+		:return: True if suspended; False if the magnifier is in a state that cannot be suspended.
+		"""
+		if self._mouseHook:
+			self._mouseHook.stop()
+			self._mouseHook = None
+		self._isTimerSuspended = self._timer is not None
+		self._stopTimer()
+		return True
+
+	def _resume(self) -> None:
+		"""Resume following and updating after :meth:`_suspend`."""
+		self._mouseHook = MagnifierMouseHook(self._onMouseMove)
+		self._mouseHook.start()
+		if self._isTimerSuspended:
+			self._startTimer(self._updateMagnifier)
+
+	def _applyConfig(self) -> None:
+		"""Apply the current configuration in place, keeping the view position."""
+		self._zoomLevel = getZoomLevel()
+		self._panStep = getPanStep()
+		newFilter = getFilter()
+		if newFilter != self.filterType:
+			self.filterType = newFilter
+		# Clamp to the limits of the new zoom level.
+		self.currentCoordinates = self.currentCoordinates
 
 	def onScreenCurtainEnabled(self) -> None:
 		"""

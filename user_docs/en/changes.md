@@ -37,6 +37,7 @@
 #### Magnifier
 
 * The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
+* Reloading or reverting the configuration no longer briefly turns off the Magnifier and its colour filter, and the magnified view keeps its position. (#20786, @JulienCochuyt)
 
 ### Changes for Developers
 
