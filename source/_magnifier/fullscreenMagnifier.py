@@ -165,6 +165,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Stop the Full-screen magnifier using windows DLL
 		"""
+		self._spotlightManager.cancel()
 		super()._stopMagnifier()
 		from winAPI.secureDesktop import post_secureDesktopStateChange
 
