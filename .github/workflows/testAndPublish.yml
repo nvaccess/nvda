@@ -207,7 +207,7 @@ jobs:
   checkPo:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: matrix
+    needs: [matrix, buildNVDA]
     permissions:
       contents: read
     steps:
