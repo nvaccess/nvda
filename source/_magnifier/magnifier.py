@@ -388,6 +388,17 @@ class Magnifier:
 		else:
 			self._screenCurtainIsActive = False
 
+	def _isWaitingForScreenCurtain(self) -> bool:
+		"""
+		Whether the screen curtain stopped the magnifier and is still enabled,
+		so that the magnifier restarts when the curtain is disabled.
+		"""
+		return bool(
+			self._screenCurtainIsActive
+			and screenCurtain.screenCurtain
+			and screenCurtain.screenCurtain.enabled,
+		)
+
 	def onScreenCurtainDisabled(self) -> None:
 		"""
 		Called when screen curtain is being disabled.

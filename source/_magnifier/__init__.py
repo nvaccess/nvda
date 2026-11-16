@@ -121,7 +121,18 @@ def _resumeAfterConfigReset() -> None:
 		initialize()
 		return
 	if not _magnifier._isActive:
-		# Stopped during the reset, e.g. by the screen curtain.
+		if (
+			_magnifier._isWaitingForScreenCurtain()
+			and getEnabled()
+			and getMagnifiedView() == _magnifier._MAGNIFIED_VIEW
+		):
+			# Stopped by the screen curtain the reloaded configuration enabled: apply the reloaded settings,
+			# so that it restarts with them when the curtain is disabled.
+			_magnifier._applyConfig()
+			return
+		# Otherwise, such as when enabling the curtain failed, the reloaded configuration decides.
+		terminate()
+		initialize()
 		return
 	if getEnabled() and getMagnifiedView() == _magnifier._MAGNIFIED_VIEW:
 		log.debug("Applying the reset configuration to the running magnifier")

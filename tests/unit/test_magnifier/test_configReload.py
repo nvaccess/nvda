@@ -126,13 +126,43 @@ class TestConfigReload(_TestMagnifier):
 		self.assertIsNone(_magnifier._magnifier)
 		self.assertFalse(self.fullscreen._isActive)
 
-	def test_resume_afterStoppedDuringReset_leavesItStopped(self):
+	def test_resume_afterStoppedByCurtain_waitsWithTheReloadedSettings(self):
+		self._mockScreenCurtain(enabled=True)
+		self.config["zoom"] = 400
 		_magnifier._suspendForConfigReset()
 		# The screen curtain stops the magnifier when it is enabled by the reloaded configuration.
 		self.fullscreen.onScreenCurtainEnabled()
 		with patch("_magnifier.initialize") as mockInitialize:
 			_magnifier._resumeAfterConfigReset()
 		mockInitialize.assert_not_called()
+		self.assertIs(_magnifier._magnifier, self.fullscreen)
 		self.assertFalse(self.fullscreen._isActive)
 		self.assertTrue(self.fullscreen._screenCurtainIsActive)
+		self.assertEqual(self.fullscreen.zoomLevel, 400)
 		self.MockMouseHook.return_value.start.assert_not_called()
+
+	def test_resume_afterStoppedByCurtain_whenDisabled_restartsThroughInitialize(self):
+		self._mockScreenCurtain(enabled=True)
+		self.config["enabled"] = False
+		_magnifier._suspendForConfigReset()
+		self.fullscreen.onScreenCurtainEnabled()
+		with (
+			patch("_magnifier.terminate") as mockTerminate,
+			patch("_magnifier.initialize") as mockInitialize,
+		):
+			_magnifier._resumeAfterConfigReset()
+		mockTerminate.assert_called_once()
+		mockInitialize.assert_called_once()
+
+	def test_resume_whenTheCurtainFailedToEnable_restartsThroughInitialize(self):
+		self._mockScreenCurtain(enabled=False)
+		_magnifier._suspendForConfigReset()
+		# The curtain stops the magnifier before trying to enable itself, then fails.
+		self.fullscreen.onScreenCurtainEnabled()
+		with (
+			patch("_magnifier.terminate") as mockTerminate,
+			patch("_magnifier.initialize") as mockInitialize,
+		):
+			_magnifier._resumeAfterConfigReset()
+		mockTerminate.assert_called_once()
+		mockInitialize.assert_called_once()
