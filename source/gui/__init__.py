@@ -4,7 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Callable  # noqa: I001
+from collections.abc import Callable  # noqa: I001 (sorting puts speech before tones: circular import)
 import os
 import warnings
 import wx
