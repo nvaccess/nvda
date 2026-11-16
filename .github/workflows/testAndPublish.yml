@@ -211,11 +211,12 @@ jobs:
     permissions:
       contents: read
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v7
+    - name: Checkout cached build
+      uses: actions/cache/restore@v6
       with:
-        # Include gettext
-        submodules: true
+        path: .
+        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        fail-on-cache-miss: true
     - name: Set up python
       uses: actions/setup-python@v7
       with:
