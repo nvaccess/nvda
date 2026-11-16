@@ -52,6 +52,39 @@ class _TestScreenOverview(_TestMagnifier):
 		self.spotlight._timer = MagicMock()
 		return self.spotlight._timer
 
+	def _runPendingSteps(self) -> None:
+		"""Run the captured animation steps until none is pending."""
+		while self.mockCallLater.call_args is not None:
+			_delay, step = self.mockCallLater.call_args.args
+			self.mockCallLater.reset_mock()
+			step()
+
+
+class TestErrorDuringOverview(_TestScreenOverview):
+	def test_zoomBack_focusUnavailable_stillEndsTheOverview(self):
+		self._startDuringHold()
+		self.fullscreen._focusManager.getCurrentFocusCoordinates.side_effect = RuntimeError("test")
+		self.spotlight.zoomBack()
+		self._runPendingSteps()
+		self.assertFalse(self.spotlight._spotlightIsActive)
+		self.assertEqual(self.fullscreen.zoomLevel, 300)
+		self.mockUiMessage.assert_called_once()
+
+	def test_zoomBack_focusUnavailable_overviewCanStartAgain(self):
+		self._startDuringHold()
+		self.fullscreen._focusManager.getCurrentFocusCoordinates.side_effect = RuntimeError("test")
+		self.spotlight.zoomBack()
+		self._runPendingSteps()
+		self.fullscreen._focusManager.getCurrentFocusCoordinates.side_effect = None
+		self._startDuringAnimation()
+
+	def test_failedStep_restoresTheZoomLevel(self):
+		self._startDuringAnimation()
+		self.fullscreen._fullscreenMagnifier.side_effect = OSError("test")
+		self._runPendingSteps()
+		self.assertFalse(self.spotlight._spotlightIsActive)
+		self.assertEqual(self.fullscreen.zoomLevel, 300)
+
 
 class TestStopDuringOverview(_TestScreenOverview):
 	def test_stopDuringAnimation_stopsTheSteps(self):

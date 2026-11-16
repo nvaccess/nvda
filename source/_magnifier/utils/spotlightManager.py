@@ -10,6 +10,7 @@ Manages the spotlight effect, including zooming in on focus and zooming back.
 
 from typing import TYPE_CHECKING  # noqa: I001
 from collections.abc import Callable
+from comtypes import COMError
 import ui
 from .types import Coordinates, ZoomHistory, FullScreenMode
 import wx
@@ -77,6 +78,7 @@ class SpotlightManager:
 			self._timer = None
 
 		self._spotlightIsActive = False
+		self._fullscreenMagnifier._setZoomRawValue(self._originalZoomLevel)
 		self._fullscreenMagnifier._stopSpotlight()
 
 	def cancel(self) -> None:
@@ -186,7 +188,15 @@ class SpotlightManager:
 				f"zoom back with original zoom level {self._originalZoomLevel} and current zoom level {self._currentZoomLevel}",
 			)
 
-		focus = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
+		try:
+			focus = self._fullscreenMagnifier._focusManager.getCurrentFocusCoordinates()
+		except (COMError, LookupError, OSError, RuntimeError):
+			# Tracking reads UIA and COM; its failure must not leave the overview active.
+			log.warning(
+				"Could not determine where to return after the screen overview; using the last position",
+				exc_info=True,
+			)
+			focus = self._fullscreenMagnifier.currentCoordinates
 
 		if self._originalMode == FullScreenMode.RELATIVE:
 			savedZoom = self._fullscreenMagnifier.zoomLevel
