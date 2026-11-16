@@ -132,3 +132,23 @@ class TestZoomDuringOverview(_TestScreenOverview):
 		self.assertEqual(self.fullscreen.zoomLevel, 250)
 		self.assertTrue(self.fullscreen._timer.IsRunning())
 		self.mockUiMessage.assert_not_called()
+
+
+class TestSecureScreenDuringOverview(_TestScreenOverview):
+	def test_secureScreenDuringAnimation_endsTheOverviewSilently(self):
+		stepTimer = self._startDuringAnimation()
+		self.fullscreen._fullscreenMagnifier.reset_mock()
+		self.fullscreen._onSecureDesktopChange(True)
+		stepTimer.Stop.assert_called_once()
+		self.assertFalse(self.spotlight._spotlightIsActive)
+		self.assertEqual(self.fullscreen.zoomLevel, 300)
+		self.assertIsNone(self.fullscreen._timer)
+		self.fullscreen._fullscreenMagnifier.assert_not_called()
+		self.mockUiMessage.assert_not_called()
+
+	def test_secureScreenGone_resumesUpdatesWithoutTheOverview(self):
+		self._startDuringHold()
+		self.fullscreen._onSecureDesktopChange(True)
+		self.fullscreen._onSecureDesktopChange(False)
+		self.assertFalse(self.spotlight._spotlightIsActive)
+		self.assertTrue(self.fullscreen._timer.IsRunning())

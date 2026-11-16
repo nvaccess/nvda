@@ -57,6 +57,8 @@ class FullScreenMagnifier(Magnifier):
 			# While secure desktop is active, the secure desktop masks the user's one, so updating magnification on
 			# the user's desktop is useless. But overall, calling magnification.MagSetInputTransform is not allowed
 			# and causes an error. Thus we disable magnifier update while secure desktop is active.
+			# The screen overview animates on its own timers, so end it as well.
+			self._spotlightManager.cancel()
 			self._stopTimer()
 		else:
 			self._startTimer(self._updateMagnifier)
