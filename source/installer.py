@@ -1043,13 +1043,13 @@ def _deleteFileGroupOrFail(
 class _InstallStep(ProgressStep):
 	"""The steps of installing NVDA, as reported while installing."""
 
-	WAIT_FOR_RUNNING_COPIES = 1
-	ELEVATE = 2
-	REMOVE_PREVIOUS = 3
-	COPY_FILES = 4
-	REMOVE_OLD_FILES = 5
-	REGISTER = 6
-	FINISH = 7
+	WAIT_FOR_RUNNING_COPIES = auto()
+	ELEVATE = auto()
+	REMOVE_PREVIOUS = auto()
+	COPY_FILES = auto()
+	REMOVE_OLD_FILES = auto()
+	REGISTER = auto()
+	FINISH = auto()
 
 	@property
 	def _displayStringLabels(self) -> dict[Self, str]:
@@ -1074,7 +1074,7 @@ class _InstallStep(ProgressStep):
 	def _startPercentages(self) -> dict[Self, int]:
 		return {
 			_InstallStep.WAIT_FOR_RUNNING_COPIES: 0,
-			_InstallStep.ELEVATE: 0,
+			_InstallStep.ELEVATE: 1,
 			_InstallStep.REMOVE_PREVIOUS: 5,
 			_InstallStep.COPY_FILES: 30,
 			_InstallStep.REMOVE_OLD_FILES: 70,

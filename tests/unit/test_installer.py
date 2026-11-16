@@ -261,7 +261,7 @@ class Test_doInstallTerminateRunningNVDA(unittest.TestCase):
 	"""Tests for asking whether to end running copies of NVDA before installing."""
 
 	def setUp(self):
-		self.progressDialogMock = self.enterContext(patch("gui.installerGui.gui._DeterminateProgressDialog"))
+		self.progressDialogMock = self.enterContext(patch("gui.installerGui._DeterminateProgressDialog"))
 		self.errorMock = self.enterContext(patch("gui.installerGui._showInstallationFailedError"))
 		self.enterContext(patch("gui.installerGui._isOtherNVDARunning", return_value=True))
 		self.isUserAnAdminMock = self.enterContext(

@@ -39,6 +39,7 @@ import gui
 import gui.contextHelp
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from gui.progressDialog import _DeterminateProgressDialog
 
 from .message import DialogType, DisplayableError, MessageDialog, ReturnCode, displayDialogAsModal
 
@@ -256,7 +257,7 @@ def doInstall(
 	For updates that are not silent, the user is asked whether to end other copies of NVDA that keep running.
 	The installation fails if the user chooses not to end them.
 	"""
-	progressDialog = gui._DeterminateProgressDialog(
+	progressDialog = _DeterminateProgressDialog(
 		gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA")

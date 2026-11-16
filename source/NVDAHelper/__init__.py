@@ -750,9 +750,9 @@ def nvdaControllerInternal_progressNotify(step: int, percentage: int) -> int:
 	:param percentage: The overall progress of the operation, from 0 to 100.
 	:return: :attr:`SystemErrorCodes.SUCCESS`
 	"""
-	import gui
+	from gui.progressDialog import _DeterminateProgressDialog
 
-	gui._DeterminateProgressDialog._handleRemoteProgress(step, percentage)
+	_DeterminateProgressDialog._handleRemoteProgress(step, percentage)
 	return SystemErrorCodes.SUCCESS
 
 

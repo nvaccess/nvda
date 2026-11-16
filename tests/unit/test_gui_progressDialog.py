@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-"""Unit tests for :class:`gui._DeterminateProgressDialog`."""
+"""Unit tests for :class:`gui.progressDialog._DeterminateProgressDialog`."""
 
 import threading
 import types
@@ -11,7 +11,7 @@ import unittest
 from typing import Self
 from unittest.mock import Mock, patch
 
-import gui
+from gui.progressDialog import _DeterminateProgressDialog
 from utils._progress import ProgressStep
 
 
@@ -30,37 +30,37 @@ class _Steps(ProgressStep):
 
 class Test_remoteProgress(unittest.TestCase):
 	def tearDown(self) -> None:
-		gui._DeterminateProgressDialog._remoteProgressReceiver = None
+		_DeterminateProgressDialog._remoteProgressReceiver = None
 
 	def test_receiveRemoteProgress_registersDialogOnlyWhileActive(self):
 		dialog = Mock()
-		with gui._DeterminateProgressDialog.receiveRemoteProgress(dialog, _Steps):
-			self.assertEqual(gui._DeterminateProgressDialog._remoteProgressReceiver, (dialog, _Steps))
-		self.assertIsNone(gui._DeterminateProgressDialog._remoteProgressReceiver)
+		with _DeterminateProgressDialog.receiveRemoteProgress(dialog, _Steps):
+			self.assertEqual(_DeterminateProgressDialog._remoteProgressReceiver, (dialog, _Steps))
+		self.assertIsNone(_DeterminateProgressDialog._remoteProgressReceiver)
 
 	def test_receiveRemoteProgress_unregistersDialogOnError(self):
 		dialog = Mock()
 		with (
 			self.assertRaises(RuntimeError),
-			gui._DeterminateProgressDialog.receiveRemoteProgress(dialog, _Steps),
+			_DeterminateProgressDialog.receiveRemoteProgress(dialog, _Steps),
 		):
 			raise RuntimeError
-		self.assertIsNone(gui._DeterminateProgressDialog._remoteProgressReceiver)
+		self.assertIsNone(_DeterminateProgressDialog._remoteProgressReceiver)
 
 	def test_knownStep_setsStep(self):
 		dialog = Mock()
-		gui._DeterminateProgressDialog._remoteProgressReceiver = (dialog, _Steps)
-		gui._DeterminateProgressDialog._handleRemoteProgress(1, 42)
+		_DeterminateProgressDialog._remoteProgressReceiver = (dialog, _Steps)
+		_DeterminateProgressDialog._handleRemoteProgress(1, 42)
 		dialog.setStep.assert_called_once_with(_Steps.FIRST, 42)
 
 	def test_unknownStep_isIgnored(self):
 		dialog = Mock()
-		gui._DeterminateProgressDialog._remoteProgressReceiver = (dialog, _Steps)
-		gui._DeterminateProgressDialog._handleRemoteProgress(3, 42)
+		_DeterminateProgressDialog._remoteProgressReceiver = (dialog, _Steps)
+		_DeterminateProgressDialog._handleRemoteProgress(3, 42)
 		dialog.setStep.assert_not_called()
 
 	def test_withoutReceiver_isIgnored(self):
-		gui._DeterminateProgressDialog._handleRemoteProgress(1, 42)
+		_DeterminateProgressDialog._handleRemoteProgress(1, 42)
 
 
 class Test_setProgress(unittest.TestCase):
@@ -68,7 +68,7 @@ class Test_setProgress(unittest.TestCase):
 		self._dialog = types.SimpleNamespace(_latestLock=threading.Lock(), _latest=(0, "Initial"))
 
 	def _setProgress(self, percentage: int, message: str | None = None) -> None:
-		gui._DeterminateProgressDialog.setProgress(self._dialog, percentage, message)
+		_DeterminateProgressDialog.setProgress(self._dialog, percentage, message)
 
 	def test_percentage_isClampedBelowHundred(self):
 		self._setProgress(150)
@@ -85,17 +85,17 @@ class Test_setProgress(unittest.TestCase):
 class Test_setStep(unittest.TestCase):
 	def test_withoutPercentage_setsStartPercentage(self):
 		dialog = Mock()
-		gui._DeterminateProgressDialog.setStep(dialog, _Steps.SECOND)
+		_DeterminateProgressDialog.setStep(dialog, _Steps.SECOND)
 		dialog.setProgress.assert_called_once_with(50, "Second step")
 
 	def test_withPercentage_setsPercentage(self):
 		dialog = Mock()
-		gui._DeterminateProgressDialog.setStep(dialog, _Steps.FIRST, 42)
+		_DeterminateProgressDialog.setStep(dialog, _Steps.FIRST, 42)
 		dialog.setProgress.assert_called_once_with(42, "First step")
 
 	def test_withZeroPercentage_setsZero(self):
 		dialog = Mock()
-		gui._DeterminateProgressDialog.setStep(dialog, _Steps.SECOND, 0)
+		_DeterminateProgressDialog.setStep(dialog, _Steps.SECOND, 0)
 		dialog.setProgress.assert_called_once_with(0, "Second step")
 
 
@@ -111,8 +111,8 @@ class Test_applyLatest(unittest.TestCase):
 
 	def _applyLatest(self, latest: tuple[int, str]) -> None:
 		self._dialog._latest = latest
-		with patch("gui.ui.message") as self._uiMessage:
-			gui._DeterminateProgressDialog._applyLatest(self._dialog)
+		with patch("gui.progressDialog.ui.message") as self._uiMessage:
+			_DeterminateProgressDialog._applyLatest(self._dialog)
 
 	def test_unchanged_updatesNothing(self):
 		self._applyLatest((0, "Initial"))
