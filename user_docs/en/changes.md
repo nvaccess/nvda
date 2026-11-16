@@ -1,36 +1,5 @@
 # What's New in NVDA
 
-## 2027.2
-
-### Important notes
-
-### New Features
-
-* A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
-
-### Changes
-
-### Bug Fixes
-
-#### Braille
-
-#### Web browsers
-
-#### Applications
-
-#### Add-on Store
-
-#### Magnifier
-
-### Changes for Developers
-
-Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
-
-#### Deprecations
-
-<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
-<!-- markdownlint-disable -->
-
 ## 2027.1
 
 ### Important notes
@@ -120,8 +89,6 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
-
-* Used [nvdaL10n](https://github.com/nvaccess/nvdaL10n) for translations management. (#20777, @nvdaes)
 
 #### API Breaking Changes
 
