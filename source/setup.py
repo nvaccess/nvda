@@ -8,7 +8,7 @@ import os
 import sys
 import gettext
 from ast import NodeTransformer, fix_missing_locations, parse
-from __future__ import annotations  # noqa: I001
+from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING
 from buildVersion import (
