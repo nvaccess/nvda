@@ -178,3 +178,11 @@ class TestConfigReload(_TestMagnifier):
 		self.fullscreen._isManualPanning = True
 		self._reload()
 		self.assertTrue(self.fullscreen._isManualPanning)
+
+	def test_mouseMoveQueuedBeforeReload_isIgnoredOnceMouseFollowIsOff(self):
+		self.fullscreen._pendingMouseCoordinates = Coordinates(10, 10)
+		self.fullscreen._doUpdate = MagicMock()
+		with patch("_magnifier.magnifier.getFollowState", return_value=False):
+			self.fullscreen._applyPendingMousePosition()
+		self.fullscreen._doUpdate.assert_not_called()
+		self.assertNotEqual(self.fullscreen.currentCoordinates, Coordinates(10, 10))

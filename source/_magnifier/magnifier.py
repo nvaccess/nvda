@@ -322,7 +322,8 @@ class Magnifier:
 		where a mouse-driven update touches the Magnification API.
 		"""
 		self._mouseUpdatePending = False
-		if not self._isActive or self._isManualPanning:
+		# Checked again here: the setting may have changed since the move was queued, e.g. by a configuration reload.
+		if not self._isActive or self._isManualPanning or not getFollowState(MagnifierTrackingType.MOUSE):
 			return
 		try:
 			self.currentCoordinates = self._pendingMouseCoordinates
