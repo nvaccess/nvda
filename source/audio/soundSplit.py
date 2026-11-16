@@ -20,6 +20,11 @@ from utils._deprecate import MovedSymbol, handleDeprecations
 
 from .soundSplitState import SoundSplitState as _SoundSplitState
 
+__getattr__ = handleDeprecations(
+	MovedSymbol("SoundSplitState", "audio", "SoundSplitState"),
+	MovedSymbol("VolumeTupleT", "audio.soundSplitState"),
+)
+
 _audioSessionManager: IAudioSessionManager2 | None = None
 _activeCallback: AudioSessionNotification | None = None
 
@@ -196,8 +201,3 @@ class _VolumeRestorer(AudioSessionEvents):
 
 _applicationExitCallbacksLock = Lock()
 _applicationExitCallbacks: dict[int, _VolumeRestorer] = {}
-
-__getattr__ = handleDeprecations(
-	MovedSymbol("SoundSplitState", "audio", "SoundSplitState"),
-	MovedSymbol("VolumeTupleT", "audio.soundSplitState"),
-)
