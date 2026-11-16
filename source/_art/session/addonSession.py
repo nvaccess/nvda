@@ -175,7 +175,7 @@ class AddonSession:
 			did not expose its root service, startup timed out, or the session was stopped while starting.
 			The session is ``FAILED`` or ``STOPPED`` respectively, and the host has been stopped.
 		"""
-		if timeout <= 0 or not timeout < float("inf"):
+		if not 0 < timeout < float("inf"):
 			raise ValueError("startupTimeout must be finite and positive")
 		print(f"start: called with {timeout=}")
 		with self._stateChanged:
