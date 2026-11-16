@@ -15,6 +15,7 @@ from __future__ import annotations
 import enum
 import threading
 import time
+from collections.abc import Callable
 from typing import TYPE_CHECKING, Final
 
 from logHandler import log
@@ -56,7 +57,7 @@ class SessionState(enum.Enum):
 	STOPPED = enum.auto()
 	"""The session was stopped. Final."""
 	FAILED = enum.auto()
-	"""The session failed, and the host has been stopped. Final."""
+	"""The session failed. Final. A blocked launch is cleaned up when it returns."""
 
 	@property
 	def isFinal(self) -> bool:
@@ -95,8 +96,6 @@ class AddonSession:
 		# Guarded by ``_stateChanged``, so that ``start`` can wait for readiness and failure together.
 		self._readinessReported = False
 		self._readinessFailure: str | None = None
-		# Also guarded by ``_stateChanged``; cancellation alone cannot stop an already running timer callback.
-		self._startupPending = True
 
 	@property
 	def state(self) -> SessionState:
@@ -164,8 +163,9 @@ class AddonSession:
 		"""Launch the host and wait for it to signal readiness.
 
 		Blocks until the host is ready and its root service is available, or the session fails.
-		Startup is bounded by ``startupTimeout``, including when stopped while starting.
+		Startup is bounded by ``timeout``, including when stopped while starting.
 		If the session is stopped in the meantime, the host is allowed to finish launching and then stopped.
+		A controller still blocked at the deadline is cleaned up when it returns.
 
 		:param timeout: Seconds allowed for launch, readiness and fetching the host's root service.
 			Defaults to :const:`_STARTUP_TIMEOUT`.
@@ -173,7 +173,8 @@ class AddonSession:
 		:raises RuntimeError: If the session has already been started.
 		:raises HostLaunchError: If the host could not be started, reported a failed launch,
 			did not expose its root service, startup timed out, or the session was stopped while starting.
-			The session is ``FAILED`` or ``STOPPED`` respectively, and the host has been stopped.
+			The session is ``FAILED`` or ``STOPPED`` respectively; a blocked launch is cleaned up later.
+			Startup timeouts have a :class:`TimeoutError` as their cause.
 		"""
 		if not 0 < timeout < float("inf"):
 			raise ValueError("startupTimeout must be finite and positive")
@@ -184,55 +185,100 @@ class AddonSession:
 			self._setState(SessionState.STARTING)
 		deadline = time.monotonic() + timeout
 		try:
-			print("start: Starting controller...")
-			stream = self._controller.start()
-			# Published straight away, so that a failure from here on closes it.
-			# Nothing can reach the host through it until the session is ``READY``.
-			print("start: Establishing connection...")
-			self._conn = Connection(
-				stream,
-				CoreRootService(onReady=self._onReady),
-				name=CONTROL_CONNECTION_NAME,
-			)
+			self._conn = self._connectHost(deadline)
 			print("start: Starting control connection service thread...")
 			threading.Thread(
 				target=self._serveControlConnection,
 				name=f"ART connection event loop: {CONTROL_CONNECTION_NAME}",
 				daemon=True,
 			).start()
+			self._waitForReady(deadline)
+		except HostLaunchError:
+			raise
 		except Exception as e:
-			self._fail(f"Host could not be started: {e}")
-			raise HostLaunchError("Host could not be started") from e
-		# Arm only once launch resources have been published, so timeout cleanup cannot race their creation.
-		# The original deadline includes the time spent creating them.
-		startupTimer = threading.Timer(
-			max(0.0, deadline - time.monotonic()),
-			self._onStartupTimeout,
-			args=(timeout,),
-		)
-		startupTimer.name = "ART startup timeout"
-		startupTimer.daemon = True
-		startupTimer.start()
-		try:
-			self._waitForReady()
-		finally:
+			self._fail(str(e) if isinstance(e, TimeoutError) else f"Host could not be started: {e}")
+			raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
+
+	def _connectHost(self, deadline: float) -> Connection:
+		"""Bound controller startup and connection construction; dispose of a connection that arrives late."""
+		outcome: list[Connection | Exception] = []
+
+		def connect() -> None:
+			stream = None
+			try:
+				stream = self._controller.start()
+				result = Connection(
+					stream,
+					CoreRootService(onReady=self._onReady),
+					name=CONTROL_CONNECTION_NAME,
+				)
+			except Exception as e:  # noqa: BLE001 -- pass launch errors back to the starting thread.
+				result = e
+				if stream is not None:
+					stream.close()
 			with self._stateChanged:
-				self._startupPending = False
-			startupTimer.cancel()
+				if self._state in (SessionState.STARTING, SessionState.STOPPING):
+					outcome.append(result)
+					self._stateChanged.notify_all()
+					return
+			# Timeout won the race. Never publish these resources or terminate a controller
+			# concurrently with its start call.
+			try:
+				if not isinstance(result, Exception):
+					result.close()
+			finally:
+				self._controller.terminate()
 
-	def _onStartupTimeout(self, timeout: float) -> None:
-		"""Fail a launch that has not finished, including one with a pending stop request."""
 		with self._stateChanged:
-			if self._startupPending and self._state in (SessionState.STARTING, SessionState.STOPPING):
-				self._fail(f"Host startup timed out after {timeout:g} seconds")
+			threading.Thread(target=connect, name="ART host launch", daemon=True).start()
+			try:
+				self._waitForStartup(lambda: bool(outcome), deadline)
+			except TimeoutError as e:
+				self._fail(str(e), stopHost=False)
+				raise
+		result = outcome[0]
+		if isinstance(result, Exception):
+			raise result
+		return result
 
-	def _waitForReady(self) -> None:
-		"""Wait for readiness and fetch the root service while the startup watchdog is armed."""
+	def _waitForStartup(self, predicate: Callable[[], bool], deadline: float) -> None:
+		"""Wait for a startup step using the shared deadline, with ``_stateChanged`` held."""
+		if not self._stateChanged.wait_for(predicate, max(0.0, deadline - time.monotonic())):
+			raise TimeoutError("Host startup timed out")
+
+	def _fetchHostRoot(self, deadline: float) -> HostRootService:
+		"""Fetch the root off-thread so an unresponsive host cannot hold up startup."""
+		outcome: list[HostRootService | Exception] = []
+		conn = self._conn
+		assert conn is not None
+
+		def fetch() -> None:
+			try:
+				result = conn.remoteService
+			except Exception as e:  # noqa: BLE001 -- pass RPC errors back to the starting thread.
+				result = e
+			with self._stateChanged:
+				outcome.append(result)
+				self._stateChanged.notify_all()
+
+		with self._stateChanged:
+			threading.Thread(target=fetch, name="ART host root lookup", daemon=True).start()
+			self._waitForStartup(lambda: bool(outcome) or self._state is SessionState.FAILED, deadline)
+			if self._state is SessionState.FAILED:
+				raise HostLaunchError(f"Host did not launch: {self._failureReason}")
+		result = outcome[0]
+		if isinstance(result, Exception):
+			raise result
+		return result
+
+	def _waitForReady(self, deadline: float) -> None:
+		"""Wait for readiness and fetch the root service within the startup deadline."""
 		print("start: Waiting for a status update...")
 		with self._stateChanged:
 			# Not woken by a stop: the host must be left to finish launching before it is stopped.
-			self._stateChanged.wait_for(
+			self._waitForStartup(
 				lambda: self._readinessReported or self._state is SessionState.FAILED,
+				deadline,
 			)
 			state = self._state
 			failure = self._readinessFailure
@@ -243,7 +289,9 @@ class AddonSession:
 			# It is a round trip, so happens without ``_stateChanged`` held.
 			print("start: Fetching host root service...")
 			try:
-				hostRoot = self._conn.remoteService
+				hostRoot = self._fetchHostRoot(deadline)
+			except (TimeoutError, HostLaunchError):
+				raise
 			except Exception as e:
 				# If readiness was reported but the host died before serving the control conection,
 				# the connection will be closed, but _onControlConnectionLost may not have finished marking the session as failed.
@@ -251,7 +299,7 @@ class AddonSession:
 				# so the top-most exception explains that this is due to the control connection dying.
 				if (conn := self._conn) is None or conn.closed:
 					with self._stateChanged:
-						self._stateChanged.wait_for(lambda: self._state.isFinal)
+						self._waitForStartup(lambda: self._state.isFinal, deadline)
 				else:
 					self._fail(f"Could not fetch the host's root service: {e}")
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
@@ -261,7 +309,6 @@ class AddonSession:
 				if (state := self._state) is SessionState.STARTING:
 					print("start: Started successfully")
 					self._hostRoot = hostRoot
-					self._startupPending = False
 					self._setState(SessionState.READY)
 					log.debug("ART add-on session is ready")
 					return
@@ -351,12 +398,13 @@ class AddonSession:
 			if self._state is SessionState.STOPPING:
 				self._setState(SessionState.STOPPED)
 
-	def _fail(self, reason: str) -> None:
+	def _fail(self, reason: str, *, stopHost: bool = True) -> None:
 		"""Mark the session as failed, and stop the host.
 
 		Only the first failure is recorded.
 
 		:param reason: Why the session failed.
+		:param stopHost: False when a blocked launch must clean up its own resources later.
 		"""
 		with self._stateChanged:
 			if self._state.isFinal:
@@ -364,7 +412,8 @@ class AddonSession:
 			log.warning(f"ART add-on session failed: {reason}")
 			self._failureReason = reason
 			try:
-				self._stopHost()
+				if stopHost:
+					self._stopHost()
 			finally:
 				self._setState(SessionState.FAILED)
 

@@ -14,7 +14,7 @@ import threading
 import unittest
 from collections.abc import Callable
 from functools import partial
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 import rpyc
 from _art.host import entrypoint
@@ -340,9 +340,10 @@ class TestStartupTimeout(unittest.TestCase):
 
 	def assertTimedOut(self, session: AddonSession) -> None:
 		print("assertTimedOut: called")
-		with self.assertRaisesRegex(HostLaunchError, "startup timed out"):
+		with self.assertRaisesRegex(HostLaunchError, "startup timed out") as raised:
 			print("assertTimedOut: asserting startsWithin raises HostLaunchError")
 			startWithin(self, session)
+		self.assertIsInstance(raised.exception.__cause__, TimeoutError)
 		print("assertTimedOut: asserting session is FAILED")
 		self.assertIs(session.state, SessionState.FAILED)
 		print("assertTimedOut: asserting failure was due to timeout")
@@ -376,6 +377,64 @@ class TestStartupTimeout(unittest.TestCase):
 		self.assertTimedOut(session)
 		self.assertTrue(session._readinessReported)
 
+	def test_blockedLaunchTimesOutAndDisposesOfLateResources(self):
+		"""A blocked launch cannot hold up start or stop, or revive the session after timeout."""
+		for stage in ("controller", "connection", "launchError", "connectionError"):
+			for stopDuringLaunch in (False, True):
+				with self.subTest(stage=stage, stopDuringLaunch=stopDuringLaunch):
+					self.checkBlockedLaunch(stage, stopDuringLaunch)
+
+	def checkBlockedLaunch(self, stage: str, stopDuringLaunch: bool) -> None:
+		blocked = threading.Event()
+		release = threading.Event()
+		terminated = threading.Event()
+		controller, stream, conn = MagicMock(), MagicMock(), MagicMock()
+		controller.terminate.side_effect = terminated.set
+		session = AddonSession(controller)
+		session.start = partial(session.start, timeout=0.2)
+
+		def pause(result, fail: bool):
+			blocked.set()
+			release.wait(_TIMEOUT)
+			if fail:
+				raise OSError("late launch failure")
+			return result
+
+		def stop() -> None:
+			if blocked.wait(_TIMEOUT):
+				session.stop()
+
+		controller.start.return_value = stream
+		stopper = threading.Thread(target=stop, daemon=True) if stopDuringLaunch else None
+		with patch("_art.session.addonSession.Connection", return_value=conn) as connection:
+			if stage in ("controller", "launchError"):
+				controller.start.side_effect = lambda: pause(stream, stage == "launchError")
+			else:
+				connection.side_effect = lambda *args, **kwargs: pause(conn, stage == "connectionError")
+			try:
+				if stopper is not None:
+					stopper.start()
+				with self.assertRaisesRegex(HostLaunchError, "startup timed out") as raised:
+					startWithin(self, session, timeout=2.0)
+				self.assertIsInstance(raised.exception.__cause__, TimeoutError)
+				self.assertTrue(blocked.is_set())
+				self.assertIs(session.state, SessionState.FAILED)
+				self.assertIsNone(session._conn)
+				controller.terminate.assert_not_called()
+				if stopper is not None:
+					stopper.join(2.0)
+					self.assertFalse(stopper.is_alive(), "Stop waited for the blocked launch")
+			finally:
+				release.set()
+				self.assertTrue(terminated.wait(_TIMEOUT), "Late host was not stopped")
+		if stage == "connectionError":
+			stream.close.assert_called_once()
+		elif stage != "launchError":
+			conn.close.assert_called_once()
+		self.assertIsNone(session._conn)
+		self.assertIs(session.state, SessionState.FAILED)
+		self.assertIn("startup timed out", session.failureReason)
+
 	def test_stopDuringStartupCannotWaitForever(self):
 		"""Stopping a starting session does not block indefinitely."""
 		session = self.makeSession(self.makeBody(signalReadiness=False))
@@ -390,25 +449,44 @@ class TestStartupTimeout(unittest.TestCase):
 		stopper.join(_TIMEOUT)
 		self.assertFalse(stopper.is_alive(), "Stop did not return after startup timed out")
 
-	def test_timeoutCannotFailAReadySessionOrItsShutdown(self):
-		"""Startup timeout code is safe to call on a session that has already started."""
-		controller = ThreadHostController()
-		session = AddonSession(controller)
-		self.addCleanup(session.stop)
-		startWithin(self, session)
-		# A timer callback that already began may outlive cancellation and acquire the lock later.
-		session._onStartupTimeout(1)
-		self.assertIs(session.state, SessionState.READY)
-		realTerminate = controller.terminate
+	def test_stopDuringRootLookupCannotWaitForever(self):
+		"""A stop while fetching the root shares the startup timeout and its exception cause."""
+		session = self.makeSession(self.makeBody(signalReadiness=True))
+		fetch = session._fetchHostRoot
+		fetching = threading.Event()
 
-		def terminate() -> None:
-			session._onStartupTimeout(1)
-			realTerminate()
+		def fetchRoot(deadline: float):
+			fetching.set()
+			return fetch(deadline)
 
-		controller.terminate = terminate
-		session.stop()
-		self.assertIs(session.state, SessionState.STOPPED)
-		self.assertIsNone(session.failureReason)
+		def stop() -> None:
+			if fetching.wait(_TIMEOUT):
+				session.stop()
+
+		stopper = threading.Thread(target=stop, daemon=True)
+		with patch.object(session, "_fetchHostRoot", side_effect=fetchRoot):
+			stopper.start()
+			self.assertTimedOut(session)
+		stopper.join(_TIMEOUT)
+		self.assertFalse(stopper.is_alive(), "Stop did not return after root lookup timed out")
+
+	def test_launchTimeCountsAgainstReadinessDeadline(self):
+		"""Readiness gets only the time left after connecting to the host."""
+		session = self.makeSession(self.makeBody(signalReadiness=False))
+		connect = session._connectHost
+		with patch("_art.session.addonSession.time.monotonic", return_value=0) as clock:
+
+			def connectAfterDeadline(deadline: float) -> Connection:
+				conn = connect(deadline)
+				clock.return_value = deadline + 1
+				return conn
+
+			with (
+				patch.object(session, "_connectHost", side_effect=connectAfterDeadline),
+				patch.object(session._stateChanged, "wait_for", wraps=session._stateChanged.wait_for) as wait,
+			):
+				self.assertTimedOut(session)
+				self.assertEqual(wait.call_args.args[1], 0.0, "Readiness received a fresh timeout")
 
 
 class TestChildExitDetection(unittest.TestCase):
