@@ -49,6 +49,18 @@ class FullScreenMagnifier(Magnifier):
 		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
 
+	def _onSecureDesktopChange(self, isSecureDesktop: bool) -> None:
+		"""Internal callback for secure desktop state changes.
+		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
+		"""
+		if isSecureDesktop:
+			# While secure desktop is active, the secure desktop masks the user's one, so updating magnification on
+			# the user's desktop is useless. But overall, calling magnification.MagSetInputTransform is not allowed
+			# and causes an error. Thus we disable magnifier update while secure desktop is active.
+			self._stopTimer()
+		else:
+			self._startTimer(self._updateMagnifier)
+
 	@staticmethod
 	def _isAccessDeniedError(error: OSError) -> bool:
 		"""Return True when OSError represents Windows access denied (WinError 5)."""
@@ -59,15 +71,6 @@ class FullScreenMagnifier(Magnifier):
 		self._filterType = value
 		if self._isActive:
 			self._applyFilter()
-
-	def event_gainFocus(
-		self,
-		obj,
-		nextHandler,
-	):
-		if _isDebug():
-			log.debug("Full-screen Magnifier gain focus event")
-		nextHandler()
 
 	@override
 	def _startMagnifier(self) -> None:
@@ -89,6 +92,9 @@ class FullScreenMagnifier(Magnifier):
 			log.debug(
 				f"Starting magnifier with zoom level {self.zoomLevel} and filter {self.filterType} and full-screen tracking mode {self._fullscreenMode}",
 			)
+		from winAPI.secureDesktop import post_secureDesktopStateChange
+
+		post_secureDesktopStateChange.register(self._onSecureDesktopChange)
 		try:
 			self._initializeNativeMagnification()
 		except OSError:
@@ -169,6 +175,9 @@ class FullScreenMagnifier(Magnifier):
 		Stop the Full-screen magnifier using windows DLL
 		"""
 		super()._stopMagnifier()
+		from winAPI.secureDesktop import post_secureDesktopStateChange
+
+		post_secureDesktopStateChange.unregister(self._onSecureDesktopChange)
 		self._resetMagnification()
 		self._uninitializeNativeMagnification()
 
@@ -230,11 +239,13 @@ class FullScreenMagnifier(Magnifier):
 			# _initializeNativeMagnification also probes MagSetFullscreenTransform,
 			# which is the call that fails when Windows Magnifier is running.
 			self._initializeNativeMagnification()
-			magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 		except OSError:
 			log.error("Recovery failed", exc_info=True)  # noqa: G201
 			self._conductRecoveryFailure()
 			return
+
+		# Same path as start-up, so that recovery is subject to the flash limiter.
+		self._applyFilter()
 
 		self._consecutiveErrors = 0
 		log.debug("Full-screen magnifier recovery succeeded")

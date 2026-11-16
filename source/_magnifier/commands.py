@@ -280,7 +280,7 @@ def toggleAllFollow() -> None:
 
 
 def toggleFullscreenMode() -> None:
-	"""Cycle through full-screen modes (center, border, relative)"""
+	"""Cycle through full-screen modes (center, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(  # noqa: SIM102
 		magnifier,

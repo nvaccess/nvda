@@ -15,6 +15,8 @@
 * NVDA can now start in Windows PE when optional Windows APIs are unavailable.
   Depending on the image contents, affected features can include the Magnifier, Screen Curtain,
   Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
+* NVDA can now start when an architecture-specific remote helper loader fails or WTS session information is unavailable.
+  If lock-state queries fail, NVDA treats the session as unlocked, so lock-screen restrictions cannot be applied. (#19537, @akash07k)
 
 #### Braille
 
@@ -33,6 +35,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`,
   and `WINUSB_AVAILABLE`.
   Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
+* The WTS API binding exposes `WTSAPI32_AVAILABLE`; its function bindings remain callable and raise `OSError` when the API is unavailable. (#19537)
 
 #### Deprecations
 
@@ -104,6 +107,7 @@ Previously, saving magnifier settings could be ineffective while a profile was a
 The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
 * When disabling the Screen Curtain, NVDA no longer reports that it could not be disabled if the Magnifier has trouble determining what to follow, and the Magnifier is correctly restarted. (#20518, @JulienCochuyt)
 * NVDA no longer announces that the Magnifier is being disabled or re-enabled when toggling the Screen Curtain. (#19528, @JulienCochuyt)
+* Magnifier no longer stops when a secure screen such as UAC or logon screen pops up in the current session. (#20636, @CyrilleB79)
 
 ### Changes for Developers
 
