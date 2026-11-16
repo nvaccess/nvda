@@ -9,6 +9,7 @@ Implements the magnifier global class and its basic functionalities.
 """
 
 from collections.abc import Callable  # noqa: I001
+import dataclasses
 from comtypes import COMError
 from logHandler import log
 from NVDAState import _TrackNVDAInitialization
@@ -172,7 +173,9 @@ class Magnifier:
 		Called when display configuration changes
 		"""
 		log.debug("Display configuration changed, updating screen dimensions")
-		self.orientationState = orientationState
+		# The notifier passes a shared state object that it mutates in place.
+		self._displayOrientation = dataclasses.replace(orientationState)
+		self.currentCoordinates = self.currentCoordinates
 
 	def _isBlockedByScreenCurtain(self) -> bool:
 		"""
