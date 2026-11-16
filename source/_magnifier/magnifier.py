@@ -47,7 +47,7 @@ from .utils.mouseHook import MagnifierMouseHook
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
-	_MAX_CONSECUTIVE_ERRORS: int = 3
+	_MAX_CONSECUTIVE_ERRORS: int = 5
 	_MAGNIFIED_VIEW: MagnifiedView
 
 	def __init__(self):
@@ -321,7 +321,10 @@ class Magnifier:
 			self.currentCoordinates = self._pendingMouseCoordinates
 			self._doUpdate()
 		except OSError:
-			pass
+			# Counted so that a persistent failure still reaches recovery through the update loop.
+			if _isDebug():
+				log.debugWarning("Error applying mouse driven magnifier update", exc_info=True)
+			self._consecutiveErrors += 1
 
 	def _stopMagnifier(self) -> None:
 		"""
