@@ -717,11 +717,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				log.debugWarning(f"Unsupported text-align: {alignment}")
 				formatField["text-align"] = TextAlign.UNDEFINED
 		if formatConfig["reportHeadings"]:
-			if not paraFormatObj:
-				paraFormatObj = textRange.para
-			style = paraFormatObj.style
-			if comInterfaces.tom.tomParaStyleHeading9 <= style <= comInterfaces.tom.tomParaStyleHeading1:
-				formatField["heading-level"] = comInterfaces.tom.tomParaStyleHeading1 - style + 1
+			self._setFormatFieldHeadingLevel(paraFormatObj or textRange.para, formatField)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = textRange.getIndex(comInterfaces.tom.tomLine)
 		if formatConfig["reportFontName"]:
@@ -766,6 +762,16 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		except:  # noqa: E722
 			log.debugWarning("language error", exc_info=True)
 		return formatField
+
+	def _setFormatFieldHeadingLevel(
+		self,
+		paraFormatObj: comInterfaces.tom.ITextPara,
+		formatField: textInfos.FormatField,
+	) -> None:
+		"""Sets the heading level of a paragraph with a built-in heading style."""
+		style = paraFormatObj.style
+		if comInterfaces.tom.tomParaStyleHeading9 <= style <= comInterfaces.tom.tomParaStyleHeading1:
+			formatField["heading-level"] = comInterfaces.tom.tomParaStyleHeading1 - style + 1
 
 	def _setFormatFieldColor(
 		self,
