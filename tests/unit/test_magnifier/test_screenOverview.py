@@ -8,7 +8,7 @@
 from unittest.mock import MagicMock, patch
 
 from _magnifier.fullscreenMagnifier import FullScreenMagnifier
-from _magnifier.utils.types import Coordinates
+from _magnifier.utils.types import Coordinates, Direction
 
 from .test_magnifier import _TestMagnifier
 
@@ -112,4 +112,23 @@ class TestStopDuringOverview(_TestScreenOverview):
 		self.fullscreen._setZoomRawValue(250)
 		self.spotlight.cancel()
 		self.assertEqual(self.fullscreen.zoomLevel, 250)
+		self.mockUiMessage.assert_not_called()
+
+
+@patch("_magnifier.magnifier.setZoomLevel")
+class TestZoomDuringOverview(_TestScreenOverview):
+	def test_zoomInDuringAnimation_endsTheOverviewAndZoomsFromItsStart(self, mockSetZoomLevel: MagicMock):
+		stepTimer = self._startDuringAnimation()
+		self.fullscreen._zoom(Direction.IN)
+		stepTimer.Stop.assert_called_once()
+		self.assertFalse(self.spotlight._spotlightIsActive)
+		self.assertEqual(self.fullscreen.zoomLevel, 350)
+		mockSetZoomLevel.assert_called_once_with(350)
+
+	def test_zoomOutDuringHold_endsTheOverviewAndResumesUpdates(self, mockSetZoomLevel: MagicMock):
+		self._startDuringHold()
+		self.fullscreen._zoom(Direction.OUT)
+		self.assertFalse(self.spotlight._spotlightIsActive)
+		self.assertEqual(self.fullscreen.zoomLevel, 250)
+		self.assertTrue(self.fullscreen._timer.IsRunning())
 		self.mockUiMessage.assert_not_called()
