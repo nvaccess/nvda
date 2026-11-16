@@ -159,6 +159,11 @@ class AddonSession:
 		self._state = state
 		self._stateChanged.notify_all()
 
+	def _waitForStartupStep(self, predicate: Callable[[], bool], deadline: float) -> None:
+		"""Wait for a startup step using the shared deadline, with ``_stateChanged`` held."""
+		if not self._stateChanged.wait_for(predicate, max(0.0, deadline - time.monotonic())):
+			raise TimeoutError("Host startup timed out")
+
 	def start(self, *, timeout: float = _STARTUP_TIMEOUT) -> None:
 		"""Launch the host and wait for it to signal readiness.
 
@@ -232,7 +237,7 @@ class AddonSession:
 		with self._stateChanged:
 			threading.Thread(target=connect, name="ART host launch", daemon=True).start()
 			try:
-				self._waitForStartup(lambda: bool(outcome), deadline)
+				self._waitForStartupStep(lambda: bool(outcome), deadline)
 			except TimeoutError as e:
 				self._fail(str(e), stopHost=False)
 				raise
@@ -240,11 +245,6 @@ class AddonSession:
 		if isinstance(result, Exception):
 			raise result
 		return result
-
-	def _waitForStartup(self, predicate: Callable[[], bool], deadline: float) -> None:
-		"""Wait for a startup step using the shared deadline, with ``_stateChanged`` held."""
-		if not self._stateChanged.wait_for(predicate, max(0.0, deadline - time.monotonic())):
-			raise TimeoutError("Host startup timed out")
 
 	def _fetchHostRoot(self, deadline: float) -> HostRootService:
 		"""Fetch the root off-thread so an unresponsive host cannot hold up startup."""
@@ -263,7 +263,7 @@ class AddonSession:
 
 		with self._stateChanged:
 			threading.Thread(target=fetch, name="ART host root lookup", daemon=True).start()
-			self._waitForStartup(lambda: bool(outcome) or self._state is SessionState.FAILED, deadline)
+			self._waitForStartupStep(lambda: bool(outcome) or self._state is SessionState.FAILED, deadline)
 			if self._state is SessionState.FAILED:
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}")
 		result = outcome[0]
@@ -276,7 +276,7 @@ class AddonSession:
 		print("start: Waiting for a status update...")
 		with self._stateChanged:
 			# Not woken by a stop: the host must be left to finish launching before it is stopped.
-			self._waitForStartup(
+			self._waitForStartupStep(
 				lambda: self._readinessReported or self._state is SessionState.FAILED,
 				deadline,
 			)
@@ -299,7 +299,7 @@ class AddonSession:
 				# so the top-most exception explains that this is due to the control connection dying.
 				if (conn := self._conn) is None or conn.closed:
 					with self._stateChanged:
-						self._waitForStartup(lambda: self._state.isFinal, deadline)
+						self._waitForStartupStep(lambda: self._state.isFinal, deadline)
 				else:
 					self._fail(f"Could not fetch the host's root service: {e}")
 				raise HostLaunchError(f"Host did not launch: {self._failureReason}") from e
