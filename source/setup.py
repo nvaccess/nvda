@@ -3,14 +3,16 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
+
 import argparse
+import gettext
 import os
 import sys
-import gettext
 from ast import NodeTransformer, fix_missing_locations, parse
-from __future__ import annotations
 from pathlib import Path
 from typing import TYPE_CHECKING
+
 from buildVersion import (
 	formatBuildVersionString,
 	name,
