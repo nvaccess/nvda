@@ -337,7 +337,6 @@ freeze(
 		("louis/tables", glob("louis/tables/*")),
 		("cppjieba/dicts", glob("cppjieba/dicts/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
-		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ["message.html"]),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
