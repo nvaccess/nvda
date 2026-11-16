@@ -302,36 +302,83 @@ class TestLifecycleProcessConformance(unittest.TestCase):
 
 
 class TestStartupTimeout(unittest.TestCase):
-	"""Startup deadlines against hosts that remain alive with their control pipes open."""
+	"""Startup deadlines against hosts that are slow to signal readiness or service the control connection."""
 
-	def makeSession(self, behaviour: str, timeout: float = 0.2) -> AddonSession:
-		self.controller = SubprocessHostController(command=fakeHostCommand("startupTimeout.py", behaviour))
+	def makeSession(self, run: Callable[[Stream], None], timeout: float = 0.2) -> AddonSession:
+		self.controller = ThreadHostController(run=run)
 		session = AddonSession(self.controller)
 		session.start = partial(session.start, timeout=timeout)
+		realTerminate = self.controller.terminate
+
+		def terminate():
+			print("Custom terminate: setting release...")
+			self.release.set()
+			print("Custom terminate: calling original terminate...")
+			realTerminate()
+			print("Custom terminate: Joining thread...")
+			self.controller._thread.join(timeout=_TIMEOUT)
+			self.assertFalse(self.controller._thread.is_alive(), "host thread did not end in time.")
+			print("Custom terminate: done!")
+
+		self.controller.terminate = terminate
 		self.addCleanup(session.stop)
 		return session
 
+	def makeBody(self, signalReadiness: bool, timeout: float = _TIMEOUT) -> Callable[[Stream], None]:
+		self.release = threading.Event()
+		self.addCleanup(self.release.set)
+
+		def body(conn: Connection) -> None:
+			if signalReadiness:
+				print("waitReadyWait->body: signalling readiness...")
+				entrypoint._signalReadiness(conn)
+			print("waitReadyWait->body: waiting to return...")
+			self.release.wait(timeout)
+			print("waitReadyWait->body: done!")
+
+		return makeHostRun(body, serve=False)
+
 	def assertTimedOut(self, session: AddonSession) -> None:
+		print("assertTimedOut: called")
 		with self.assertRaisesRegex(HostLaunchError, "startup timed out"):
+			print("assertTimedOut: asserting startsWithin raises HostLaunchError")
 			startWithin(self, session)
+		print("assertTimedOut: asserting session is FAILED")
 		self.assertIs(session.state, SessionState.FAILED)
+		print("assertTimedOut: asserting failure was due to timeout")
 		self.assertIn("startup timed out", session.failureReason)
+		print("assertTimedOut: asserting host is no-longer running")
 		self.assertIsNotNone(self.controller.poll(), "Timed-out host was left running")
+		print("assertTimedOut: asserting connection is gone")
 		self.assertIsNone(session._conn)
 		with self.assertRaises(RuntimeError):
+			print("assertTimedOut: asserting hostRoot is inaccessible")
 			_ = session.hostRoot
 
+	def test_invalidTimeoutIsRejectedBeforeLaunch(self):
+		"""Nonpositive and infinite timeouts are rejected."""
+		controller = MagicMock()
+		session = AddonSession(controller)
+		for timeout in (0, -1, float("inf"), float("-inf"), float("nan")):
+			with self.subTest(timeout=timeout):
+				with self.assertRaises(ValueError):
+					session.start(timeout=timeout)
+				controller.start.assert_not_called()
+				self.assertIs(session.state, SessionState.NEW)
+
 	def test_hostThatNeverReportsReadinessIsKilled(self):
-		self.assertTimedOut(self.makeSession("beforeReady"))
+		"""A host that fails to report readiness is killed promptly."""
+		self.assertTimedOut(self.makeSession(self.makeBody(signalReadiness=False)))
 
 	def test_readyHostThatNeverServesRootIsKilled(self):
-		# Allow cold process startup, then verify that readiness alone did not disarm the deadline.
-		session = self.makeSession("afterReady")
+		"""A host that reports readiness but fails to serve the control connection is killed promptly."""
+		session = self.makeSession(self.makeBody(signalReadiness=True))
 		self.assertTimedOut(session)
 		self.assertTrue(session._readinessReported)
 
 	def test_stopDuringStartupCannotWaitForever(self):
-		session = self.makeSession("beforeReady")
+		"""Stopping a starting session does not block indefinitely."""
+		session = self.makeSession(self.makeBody(signalReadiness=False))
 
 		def stop() -> None:
 			if waitForState(session, SessionState.STARTING, SessionState.FAILED):
@@ -344,6 +391,7 @@ class TestStartupTimeout(unittest.TestCase):
 		self.assertFalse(stopper.is_alive(), "Stop did not return after startup timed out")
 
 	def test_timeoutCannotFailAReadySessionOrItsShutdown(self):
+		"""Startup timeout code is safe to call on a session that has already started."""
 		controller = ThreadHostController()
 		session = AddonSession(controller)
 		self.addCleanup(session.stop)
@@ -361,16 +409,6 @@ class TestStartupTimeout(unittest.TestCase):
 		session.stop()
 		self.assertIs(session.state, SessionState.STOPPED)
 		self.assertIsNone(session.failureReason)
-
-	def test_invalidTimeoutIsRejectedBeforeLaunch(self):
-		controller = MagicMock()
-		session = AddonSession(controller)
-		for timeout in (0, -1, float("inf"), float("-inf"), float("nan")):
-			with self.subTest(timeout=timeout):
-				with self.assertRaises(ValueError):
-					session.start(timeout=timeout)
-				controller.start.assert_not_called()
-				self.assertIs(session.state, SessionState.NEW)
 
 
 class TestChildExitDetection(unittest.TestCase):
