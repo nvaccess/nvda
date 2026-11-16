@@ -5146,7 +5146,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increase the magnification level",
+			"Increase the magnification level, or start the magnifier",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+=",
