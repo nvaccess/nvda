@@ -378,59 +378,98 @@ class TestStartupTimeout(unittest.TestCase):
 		self.assertTrue(session._readinessReported)
 
 	def test_blockedLaunchTimesOutAndDisposesOfLateResources(self):
-		"""A blocked launch cannot hold up start or stop, or revive the session after timeout."""
-		for stage in ("controller", "connection", "launchError", "connectionError"):
-			for stopDuringLaunch in (False, True):
-				with self.subTest(stage=stage, stopDuringLaunch=stopDuringLaunch):
-					self.checkBlockedLaunch(stage, stopDuringLaunch)
+		"""Timeout releases callers; a launch that finishes later must clean up its resources.
 
-	def checkBlockedLaunch(self, stage: str, stopDuringLaunch: bool) -> None:
-		blocked = threading.Event()
+		Block either controller.start() or Connection construction. After timeout, let that
+		operation either succeed or raise. Repeat with a concurrent stop() waiting for startup.
+		"""
+		for stage, failAfterRelease in (
+			("controller", False),
+			("controller", True),
+			("connection", False),
+			("connection", True),
+		):
+			for stopDuringLaunch in (False, True):
+				with self.subTest(
+					stage=stage,
+					failAfterRelease=failAfterRelease,
+					stopDuringLaunch=stopDuringLaunch,
+				):
+					self.checkBlockedLaunch(
+						stage=stage,
+						failAfterRelease=failAfterRelease,
+						stopDuringLaunch=stopDuringLaunch,
+					)
+
+	@staticmethod
+	def doBlockedOperation(blockedOperationStarted, release, failAfterRelease, blockedOperation):
+		def inner(*args, **kwargs):
+			blockedOperationStarted.set()
+			release.wait(_TIMEOUT)
+			if failAfterRelease:
+				raise OSError("late launch failure")
+			return blockedOperation.return_value
+
+		return inner
+
+	def checkBlockedLaunch(self, *, stage: str, failAfterRelease: bool, stopDuringLaunch: bool) -> None:
+		"""Hold a launch operation open until start() (and optionally stop()) has returned.
+
+		``stage`` is "controller" for controller.start(), or "connection" for Connection(...).
+		``failAfterRelease`` makes that operation raise instead of returning its resource.
+		The session must time out first, then dispose of whatever the late operation produced.
+		"""
+		blockedOperationStarted = threading.Event()
 		release = threading.Event()
-		terminated = threading.Event()
-		controller, stream, conn = MagicMock(), MagicMock(), MagicMock()
-		controller.terminate.side_effect = terminated.set
+		hostTerminated = threading.Event()
+		controller = MagicMock(name="controller")
+		stream = MagicMock(name="control stream")
+		conn = MagicMock(name="control connection")
+		controller.start.return_value = stream
+		controller.terminate.side_effect = hostTerminated.set
 		session = AddonSession(controller)
 		session.start = partial(session.start, timeout=0.2)
 
-		def pause(result, fail: bool):
-			blocked.set()
-			release.wait(_TIMEOUT)
-			if fail:
-				raise OSError("late launch failure")
-			return result
+		with patch("_art.session.addonSession.Connection", return_value=conn) as connectionFactory:
+			blockedOperation = controller.start if stage == "controller" else connectionFactory
+			blockedOperation.side_effect = self.doBlockedOperation(
+				blockedOperationStarted,
+				release,
+				failAfterRelease,
+				blockedOperation,
+			)
 
-		def stop() -> None:
-			if blocked.wait(_TIMEOUT):
-				session.stop()
-
-		controller.start.return_value = stream
-		stopper = threading.Thread(target=stop, daemon=True) if stopDuringLaunch else None
-		with patch("_art.session.addonSession.Connection", return_value=conn) as connection:
-			if stage in ("controller", "launchError"):
-				controller.start.side_effect = lambda: pause(stream, stage == "launchError")
-			else:
-				connection.side_effect = lambda *args, **kwargs: pause(conn, stage == "connectionError")
 			try:
-				if stopper is not None:
+				if stopDuringLaunch:
+					stopper = threading.Thread(
+						target=lambda: session.stop() if blockedOperationStarted.wait(_TIMEOUT) else None,
+						daemon=True,
+					)
 					stopper.start()
+				# Neither caller may wait for the blocked operation to finish.
 				with self.assertRaisesRegex(HostLaunchError, "startup timed out") as raised:
 					startWithin(self, session, timeout=2.0)
 				self.assertIsInstance(raised.exception.__cause__, TimeoutError)
-				self.assertTrue(blocked.is_set())
+				self.assertTrue(blockedOperationStarted.is_set())
 				self.assertIs(session.state, SessionState.FAILED)
 				self.assertIsNone(session._conn)
+				# Terminating a controller while it is creating resources would race launch.
 				controller.terminate.assert_not_called()
-				if stopper is not None:
+				if stopDuringLaunch:
 					stopper.join(2.0)
 					self.assertFalse(stopper.is_alive(), "Stop waited for the blocked launch")
 			finally:
+				# Release even if an assertion fails, so the worker can clean up.
 				release.set()
-				self.assertTrue(terminated.wait(_TIMEOUT), "Late host was not stopped")
-		if stage == "connectionError":
-			stream.close.assert_called_once()
-		elif stage != "launchError":
+				self.assertTrue(hostTerminated.wait(_TIMEOUT), "Late host was not stopped")
+
+		# Success produces a connection; failed construction leaves only the raw stream.
+		# If controller.start() raised, it never handed a resource to the session.
+		if not failAfterRelease:
 			conn.close.assert_called_once()
+		elif stage == "connection":
+			stream.close.assert_called_once()
+		# A late result or exception must not replace the timeout or revive the session.
 		self.assertIsNone(session._conn)
 		self.assertIs(session.state, SessionState.FAILED)
 		self.assertIn("startup timed out", session.failureReason)
@@ -470,23 +509,18 @@ class TestStartupTimeout(unittest.TestCase):
 		stopper.join(_TIMEOUT)
 		self.assertFalse(stopper.is_alive(), "Stop did not return after root lookup timed out")
 
-	def test_launchTimeCountsAgainstReadinessDeadline(self):
-		"""Readiness gets only the time left after connecting to the host."""
-		session = self.makeSession(self.makeBody(signalReadiness=False))
-		connect = session._connectHost
-		with patch("_art.session.addonSession.time.monotonic", return_value=0) as clock:
-
-			def connectAfterDeadline(deadline: float) -> Connection:
-				conn = connect(deadline)
-				clock.return_value = deadline + 1
-				return conn
-
-			with (
-				patch.object(session, "_connectHost", side_effect=connectAfterDeadline),
-				patch.object(session._stateChanged, "wait_for", wraps=session._stateChanged.wait_for) as wait,
-			):
-				self.assertTimedOut(session)
-				self.assertEqual(wait.call_args.args[1], 0.0, "Readiness received a fresh timeout")
+	def test_startupWaitUsesRemainingTime(self):
+		"""At t=107, a startup deadline of t=110 allows only three more seconds."""
+		session = AddonSession(MagicMock())
+		ready = MagicMock(return_value=False)
+		with (
+			patch("_art.session.addonSession.time.monotonic", return_value=107.0),
+			patch.object(session._stateChanged, "wait_for", return_value=False) as wait,
+			session._stateChanged,
+		):
+			with self.assertRaises(TimeoutError):
+				session._waitForStartupStep(ready, deadline=110.0)
+			wait.assert_called_once_with(ready, 3.0)
 
 
 class TestChildExitDetection(unittest.TestCase):
