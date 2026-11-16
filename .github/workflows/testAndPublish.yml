@@ -115,6 +115,8 @@ jobs:
       run: ci/scripts/setSconsArgs.ps1
       env:
         apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+    - name: Download l10nUtil
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Set cache key for SCons MSVC Cache
       shell: bash
       run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
@@ -223,8 +225,6 @@ jobs:
       uses: astral-sh/setup-uv@v10.3.3
       with:
         prune-cache: true
-    - name: Download l10nUtil
-      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Run prek
       run: |
         # Ensure uv environment is up to date.
@@ -384,8 +384,6 @@ jobs:
       uses: astral-sh/setup-uv@v10.3.3
       with:
         prune-cache: true
-    - name: Download l10nUtil.exe
-      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Upload translations to Crowdin
       env:
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
@@ -429,8 +427,6 @@ jobs:
       with:
         prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
-    - name: Download l10nUtil.exe
-      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
