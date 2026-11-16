@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2026 NV Access Limited, Cary-rowen
+# Copyright (C) 2026 NV Access Limited, Cary-rowen, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -96,6 +96,26 @@ class TestUIAFocusEvent(unittest.TestCase):
 		with patch.object(UIA, "_getUIACacheablePropertyValue", return_value=True) as getCachedValue:
 			self.assertFalse(obj._get_shouldAllowUIAFocusEvent())
 			getCachedValue.assert_not_called()
+
+	def test_focusEventObjectFetchesCurrentName(self) -> None:
+		"""An object created for a UIA focus event gets its name from the focus prefetch.
+		The name cached with the event is not used.
+		"""
+		sender = Mock()
+		sender.getCachedPropertyValueEx.return_value = "old name"
+		sender.buildUpdatedCache.return_value = Mock(
+			getCachedPropertyValueEx=Mock(return_value="new name"),
+		)
+		obj = UIA.__new__(UIA)
+		obj.UIAElement = sender
+		elementCache = obj._coreCycleUIAPropertyCacheElementCache
+		for ID in UIAHandler._focusEventCachedPropertyIDs:
+			elementCache[ID] = sender
+
+		with patch.object(UIAHandler, "handler"):
+			obj._prefetchUIACacheForPropertyIDs(obj._focusPrefetchUIAPropertyIDs | obj._UIAStatesPropertyIDs)
+		self.assertEqual(obj.name, "new name")
+		sender.getCurrentPropertyValueEx.assert_not_called()
 
 
 class TestMenuItemStates(unittest.TestCase):
