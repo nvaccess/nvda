@@ -4,6 +4,8 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import ctypes
+from collections.abc import Generator
+from typing import Any
 
 import api
 import colors
@@ -689,7 +691,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	def _getFormatFieldAtRange(
 		self,
 		textRange: comInterfaces.tom.ITextRange,
-		formatConfig: dict,
+		formatConfig: dict[str, Any],
 		paraFormatObj: comInterfaces.tom.ITextPara | None = None,
 	) -> textInfos.FormatField:
 		"""The formatting of ``textRange`` that ``formatConfig`` asks to report.
@@ -931,7 +933,11 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			return None
 		return withMarker.removesuffix(text).rstrip("\t") or None
 
-	def _iterFormatChunks(self, textRange, formatConfig):
+	def _iterFormatChunks(
+		self,
+		textRange: comInterfaces.tom.ITextRange,
+		formatConfig: dict[str, Any],
+	) -> Generator[comInterfaces.tom.ITextRange]:
 		"""Moves ``textRange`` over the runs of uniform formatting up to the end of this text info.
 
 		:return: ``textRange``, covering each run in turn.
