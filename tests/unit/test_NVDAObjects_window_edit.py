@@ -389,3 +389,17 @@ class TestHeadingsAndLists(unittest.TestCase):
 			_getTextWithFields(document),
 			[_linePrefix("\u2022"), "Item\r"],
 		)
+
+	def test_formatDetectionOffInItem(self):
+		document = _Document(_paragraph("One ", _Run("two\r", "Arial"), listType=tom.tomListBullet))
+		self.assertEqual(
+			_getTextWithFields(document, detectFormatAfterCursor=False, reportLists=True),
+			[_listItem(level=1, startOffset=0), _linePrefix("\u2022"), "One two\r", _LIST_ITEM_END],
+		)
+
+	def test_formatDetectionOffFromItemIntoLaterParagraphs(self):
+		document = _Document(_paragraph("Item\r", listType=tom.tomListBullet), _paragraph("After\r"))
+		self.assertEqual(
+			_getTextWithFields(document, detectFormatAfterCursor=False, reportLists=True),
+			[_listItem(level=1, startOffset=0), _linePrefix("\u2022"), "Item\rAfter\r", _LIST_ITEM_END],
+		)
