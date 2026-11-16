@@ -1,5 +1,11 @@
 # What's New in NVDA
 
+## 2026.3.2
+
+### Bug Fixes
+
+* The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
+
 ## 2026.3.1
 
 This is a patch release to fix security issues.
