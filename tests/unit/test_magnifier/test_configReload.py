@@ -166,3 +166,15 @@ class TestConfigReload(_TestMagnifier):
 			_magnifier._resumeAfterConfigReset()
 		mockTerminate.assert_called_once()
 		mockInitialize.assert_called_once()
+
+	def test_reload_withAnotherMode_endsManualPanning(self):
+		self.fullscreen._isManualPanning = True
+		self.config["mode"] = FullScreenMode.RELATIVE
+		self._reload()
+		self.assertFalse(self.fullscreen._isManualPanning)
+		self.assertEqual(self.fullscreen._fullscreenMode, FullScreenMode.RELATIVE)
+
+	def test_reload_withSameMode_keepsManualPanning(self):
+		self.fullscreen._isManualPanning = True
+		self._reload()
+		self.assertTrue(self.fullscreen._isManualPanning)

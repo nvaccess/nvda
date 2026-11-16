@@ -113,7 +113,12 @@ class FullScreenMagnifier(Magnifier):
 
 	@override
 	def _applyConfig(self) -> None:
-		self._fullscreenMode = getFullscreenMode()
+		newMode = getFullscreenMode()
+		if newMode != self._fullscreenMode:
+			# Panned coordinates place the view differently in another mode: follow the focus again,
+			# as after a restart.
+			self._isManualPanning = False
+			self._fullscreenMode = newMode
 		super()._applyConfig()
 
 	def _clearStaleApiState(self) -> None:
