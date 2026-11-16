@@ -85,7 +85,6 @@ class Context(_Context, Enum):
 		# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 		_("Action unavailable on secure screen"),
 	)
-	
 
 
 def when(*contexts: Context):
