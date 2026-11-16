@@ -178,19 +178,6 @@ wheels = [
 ]
 
 [[package]]
-name = "crowdin-api-client"
-version = "1.30.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "deprecated" },
-    { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c7/93/064ff3a5784ce5746bd4f56846bc741b50b4ea654a63352577be23b62528/crowdin_api_client-1.30.0.tar.gz", hash = "sha256:2e215f1ef3a28b8bee7c69313bd8219416df370f0daa10cb11d53ff6a252c322", size = 110050, upload-time = "2026-09-30T11:16:42.36Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d6/67/4f9762d4552f78efdabbf3510a0563d8baa7bb071dd8d639d33e29e8dbba/crowdin_api_client-1.30.0-py3-none-any.whl", hash = "sha256:fc538c5c7b7c371a268f34845740c2a5e087890aa51d7b6fec6d49299029c406", size = 160618, upload-time = "2026-09-30T11:16:41.289Z" },
-]
-
-[[package]]
 name = "cryptography"
 version = "50.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -217,18 +204,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/70/86/7902c4ee46f6d94d75b204569151924400455fb2a1b11ad2fafb5eff3ce5/depgather-0.5.0.tar.gz", hash = "sha256:0a9dd0980c9c8ae01c5acfbe76c97d2b5209a299defa520331a61a0846816f65", size = 112880, upload-time = "2026-06-17T20:47:35.243Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/75/45/4a7b3a6f2f26777428da4951576d62ad97ebc7737f42b39af1e0dc1efed0/depgather-0.5.0-py3-none-any.whl", hash = "sha256:ff92b0e2bde382537d139a2f1819d4d04ef1bf244fd216e0829e35007905e565", size = 16429, upload-time = "2026-06-17T20:47:33.973Z" },
-]
-
-[[package]]
-name = "deprecated"
-version = "3.0.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "wrapt" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/61/46/f6958cdfa8a801fc845e981a8a958dba2e74a386b026a8fd5cae58423f1f/deprecated-3.0.1.tar.gz", hash = "sha256:2f5a9fecc9961e26462846cf1e57f73a612b1d0b79c27dceeed8de647beadcee", size = 1074378, upload-time = "2026-10-30T11:15:39.954Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/82/f0/07de837adfa09d592747b82fd74316e88285d2d7057551f30e4b5ef81bd8/deprecated-3.0.1-py3-none-any.whl", hash = "sha256:eda314c115e8bc0fe52b90a6869e19240ac3cedb7449adfdba5981cf9ef693e1", size = 22191, upload-time = "2026-10-30T11:15:38.08Z" },
 ]
 
 [[package]]
@@ -538,7 +513,6 @@ dependencies = [
     { name = "bleak" },
     { name = "comtypes" },
     { name = "configobj" },
-    { name = "crowdin-api-client" },
     { name = "cryptography" },
     { name = "detect-secrets" },
     { name = "fast-diff-match-patch" },
@@ -601,7 +575,6 @@ requires-dist = [
     { name = "bleak", specifier = "==3.0.2" },
     { name = "comtypes", specifier = "==1.4.16" },
     { name = "configobj", git = "https://github.com/DiffSK/configobj?rev=9c8a0a80c767bf8a3d6493ed01df6c351bddca42" },
-    { name = "crowdin-api-client", specifier = "==1.30.0" },
     { name = "cryptography", specifier = "==50.0.2" },
     { name = "detect-secrets", specifier = "==1.5.0" },
     { name = "fast-diff-match-patch", specifier = "==2.1.0" },
@@ -1463,18 +1436,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/71/1c/c64902c94efd142398198a3aeffa4311cdfffd9b1a40da16771ee5bff3e1/winrt_windows_storage_streams-4!10.0.28000.2705.tar.gz", hash = "sha256:9511b19e9cc588dcc81969b2871e465385f2ab37a62a9019f90dc37e03a5dd16", size = 16617, upload-time = "2026-10-24T01:47:12.013Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/63/69/58254ddbc0ef0e19095e98bfce1cf3df98cf5611098db9147cf428bcd1a8/winrt_windows_storage_streams-4!10.0.28000.2705-py3-none-any.whl", hash = "sha256:2824e516e328c9ba76ffc7926431255b124b4a9f52c656f0b1e0056a7f8ca7b8", size = 18790, upload-time = "2026-10-24T01:32:31.342Z" },
-]
-
-[[package]]
-name = "wrapt"
-version = "2.5.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/9c/b0/f752d19e1e83ab8bd64aeccfde32ff086aee3ef08520f7340b69a8d0a4d2/wrapt-2.5.2.tar.gz", hash = "sha256:551cb49e88b3722faad780303833bc4fa70685fb1773270fb98b40d39d9fddbf", size = 186066, upload-time = "2026-10-29T23:06:39.868Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/86/74205217834201f27bc73a76b4db67f488fd07787e12a045fb2b39f09c29/wrapt-2.5.2-cp313-cp313-win32.whl", hash = "sha256:11655df8e17658a67628cdc97fe95d6b263e023213cf18067f21e5ec0b0285f3", size = 100634, upload-time = "2026-10-29T23:05:13.073Z" },
-    { url = "https://files.pythonhosted.org/packages/e0/56/7c732aed39116853d74485b4431a0ea37b05bd2bf250bdddc55ceb64f8c0/wrapt-2.5.2-cp313-cp313-win_amd64.whl", hash = "sha256:5726faa7342ba473041bc1a276486d232b42e3927d35427729b266b1b5ecaa42", size = 106044, upload-time = "2026-10-29T23:05:14.372Z" },
-    { url = "https://files.pythonhosted.org/packages/0c/a7/c4f7ae891bbfef566aa63effe846f6804dac4c0461601993f4c59deaf955/wrapt-2.5.2-cp313-cp313-win_arm64.whl", hash = "sha256:e1fb4af8aac3573770ed3e64efc39d953342b12bcb6e6479512a945eb5557523", size = 103077, upload-time = "2026-10-29T23:05:15.718Z" },
-    { url = "https://files.pythonhosted.org/packages/77/8b/1ea57b936b70f98e8e7620a352578096d778dbee95b262f73c066d210ffb/wrapt-2.5.2-py3-none-any.whl", hash = "sha256:61eb54e9540ea522c2c4752a57549a83d3c67e6704ed708403d28e067aaf90f0", size = 82025, upload-time = "2026-10-29T23:06:38.56Z" },
 ]
 
 [[package]]
