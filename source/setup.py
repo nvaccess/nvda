@@ -3,13 +3,12 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from __future__ import annotations  # noqa: I001
-
 import argparse
-from ast import NodeTransformer, fix_missing_locations, parse
 import os
 import sys
 import gettext
+from ast import NodeTransformer, fix_missing_locations, parse
+from __future__ import annotations  # noqa: I001
 from pathlib import Path
 from typing import TYPE_CHECKING
 from buildVersion import (
@@ -337,6 +336,7 @@ freeze(
 		("louis/tables", glob("louis/tables/*")),
 		("cppjieba/dicts", glob("cppjieba/dicts/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
+		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ["message.html"]),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
