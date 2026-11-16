@@ -57,3 +57,28 @@ class TestDisplayChanges(_TestMagnifier):
 		self.magnifier.currentCoordinates = Coordinates(3000, 2000)
 		self._notify(1000, 600)
 		self.assertEqual(self.magnifier.currentCoordinates, Coordinates(750, 450))
+
+	def _isRegistered(self) -> bool:
+		return any(
+			getattr(handler, "__self__", None) is self.magnifier
+			for handler in _displayTracking.displayChanged.handlers
+		)
+
+	def test_registration_followsStartAndStop(self):
+		self.assertFalse(self._isRegistered())
+		self.magnifier._startMagnifier()
+		self.assertTrue(self._isRegistered())
+		self.magnifier._stopMagnifier()
+		self.assertFalse(self._isRegistered())
+		self.magnifier._startMagnifier()
+		self.assertTrue(self._isRegistered())
+
+	def test_displayChange_whileStopped_isPickedUpOnStart(self):
+		self.magnifier._startMagnifier()
+		self.magnifier._stopMagnifier()
+		self._notify(1111, 777)
+		self.assertNotEqual(self.magnifier._displayOrientation.width, 1111)
+		newState = OrientationState(1111, 777, Orientation.LANDSCAPE)
+		with patch("_magnifier.magnifier.getPrimaryDisplayOrientation", return_value=newState):
+			self.magnifier._startMagnifier()
+		self.assertEqual(self.magnifier._displayOrientation, newState)
