@@ -15,6 +15,11 @@
 * NVDA can now start in Windows PE when optional Windows APIs are unavailable.
   Depending on the image contents, affected features can include the Magnifier, Screen Curtain,
   Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
+* NVDA can now start in Windows PE when optional components are unavailable.
+  Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
+  The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
+  Sound Split and audio device enumeration are unavailable without `pdh.dll`.
+  Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
 * NVDA can now start when an architecture-specific remote helper loader fails or WTS session information is unavailable.
   If lock-state queries fail, NVDA treats the session as unlocked, so lock-screen restrictions cannot be applied. (#19537, @akash07k)
 
@@ -35,9 +40,16 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 * Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`,
   and `WINUSB_AVAILABLE`.
   Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
+* `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
+  Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
+  which can be `None`.
+  `SoundSplitState` remains available from `audio` without Sound Split dependencies. (#19537)
 * The WTS API binding exposes `WTSAPI32_AVAILABLE`; its function bindings remain callable and raise `OSError` when the API is unavailable. (#19537)
 
 #### Deprecations
+
+* `audio.soundSplit.SoundSplitState` and `audio.soundSplit.VolumeTupleT` are deprecated.
+  Use `audio.SoundSplitState` and `audio.soundSplitState.VolumeTupleT` instead. (#21035, @akash07k)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
