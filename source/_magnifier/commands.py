@@ -77,8 +77,8 @@ PAN_ACTION_TO_EDGE_MESSAGES = {
 	),
 	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
 		"magnifier",
-		# Translators: Message announced when already at left edge of the screen while panning the magnified view
-		# to left edge
+		# Translators: Message announced when already at bottom edge of the screen while panning the magnified view
+		# to bottom edge
 		"bottom edge",
 	),
 }
@@ -280,7 +280,7 @@ def toggleAllFollow() -> None:
 
 
 def toggleFullscreenMode() -> None:
-	"""Cycle through full-screen modes (center, border, relative)"""
+	"""Cycle through full-screen modes (center, relative)"""
 	magnifier: Magnifier = getMagnifier()
 	if magnifierIsActiveVerify(  # noqa: SIM102
 		magnifier,

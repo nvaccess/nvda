@@ -8,46 +8,49 @@ Magnifier module.
 Implements the magnifier global class and its basic functionalities.
 """
 
-from collections.abc import Callable  # noqa: I001
+import dataclasses
+from collections.abc import Callable
+
+import mouseHandler
+import screenCurtain
+import ui
+import winUser
+import wx
 from comtypes import COMError
 from logHandler import log
 from NVDAState import _TrackNVDAInitialization
-import wx
-import ui
-import screenCurtain
-import mouseHandler
-import winUser
 from winAPI import _displayTracking
 from winAPI._displayTracking import OrientationState, getPrimaryDisplayOrientation
-from .utils.types import (
-	MagnifierParameters,
-	MagnifierAction,
-	MagnifiedView,
-	MagnifierTrackingType,
-	Direction,
-	Filter,
-	Coordinates,
-)
+
 from .config import (
-	getFollowState,
-	getZoomLevel,
-	getPanStep,
-	getFilter,
-	isTrueCentered,
-	setZoomLevel,
-	setEnabled,
 	ZoomLevel,
 	_isDebug,
+	getFilter,
+	getFollowState,
+	getPanStep,
+	getZoomLevel,
+	isTrueCentered,
+	setEnabled,
+	setZoomLevel,
 )
-from .utils.focusManager import FocusManager
 from .utils.errorHandling import MagnifierStartError
+from .utils.focusManager import FocusManager
 from .utils.mouseHook import MagnifierMouseHook
+from .utils.types import (
+	Coordinates,
+	Direction,
+	Filter,
+	MagnifiedView,
+	MagnifierAction,
+	MagnifierParameters,
+	MagnifierTrackingType,
+)
 
 
 class Magnifier:
 	_TIMER_INTERVAL_MS: int = 12
 	_MARGIN_BORDER: int = 50
-	_MAX_CONSECUTIVE_ERRORS: int = 3
+	_MAX_CONSECUTIVE_ERRORS: int = 5
 	_MAGNIFIED_VIEW: MagnifiedView
 
 	def __init__(self):
@@ -67,8 +70,6 @@ class Magnifier:
 		self._mouseHook: MagnifierMouseHook | None = None
 		self._pendingMouseCoordinates = Coordinates(0, 0)
 		self._mouseUpdatePending: bool = False
-		# Register for display changes
-		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		self._screenCurtainIsActive: bool = False
 
 	@property
@@ -172,7 +173,9 @@ class Magnifier:
 		Called when display configuration changes
 		"""
 		log.debug("Display configuration changed, updating screen dimensions")
-		self.orientationState = orientationState
+		# The notifier passes a shared state object that it mutates in place.
+		self._displayOrientation = dataclasses.replace(orientationState)
+		self.currentCoordinates = self.currentCoordinates
 
 	def _isBlockedByScreenCurtain(self) -> bool:
 		"""
@@ -210,6 +213,9 @@ class Magnifier:
 		if self._isBlockedByScreenCurtain():
 			return
 		self._isActive = True
+		# The display may have changed while the magnifier was stopped.
+		self._displayOrientation = getPrimaryDisplayOrientation()
+		_displayTracking.displayChanged.register(self._onDisplayChanged)
 		try:
 			self.currentCoordinates = self._focusManager.getCurrentFocusCoordinates()
 		except (COMError, LookupError, OSError, RuntimeError):
@@ -321,7 +327,10 @@ class Magnifier:
 			self.currentCoordinates = self._pendingMouseCoordinates
 			self._doUpdate()
 		except OSError:
-			pass
+			# Counted so that a persistent failure still reaches recovery through the update loop.
+			if _isDebug():
+				log.debugWarning("Error applying mouse driven magnifier update", exc_info=True)
+			self._consecutiveErrors += 1
 
 	def _stopMagnifier(self) -> None:
 		"""

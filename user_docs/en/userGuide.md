@@ -1677,7 +1677,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name | Key | Description |
 |---|---|---|
 | Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
-| Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
+| Increase the magnification level, or start the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
 | Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
