@@ -87,7 +87,7 @@ jobs:
         } else {
           Write-Host "No xliff files were changed. Skipping commit and push."
         }
-      if: $ {{ success() && secrets.CROWDIN_AUTH_TOKEN }}
+      if: success()
 
     - name: Crowdin upload
       # This step must only be run after successfully pushing changes to the repository.
