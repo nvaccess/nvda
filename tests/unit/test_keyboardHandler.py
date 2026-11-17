@@ -258,7 +258,7 @@ class TestDiscardReleasedModifiers(unittest.TestCase):
 				if released:
 					if keyUpDelivered:
 						self.assertTrue(
-							keyboardHandler.internal_keyUpEvent(winUser.VK_LCONTROL, 0, False, False)
+							keyboardHandler.internal_keyUpEvent(winUser.VK_LCONTROL, 0, False, False),
 						)
 					self.keysDownInWindows.discard(winUser.VK_LCONTROL)
 				self.assertTrue(keyboardHandler.internal_keyDownEvent(ord("B"), 0, False, False))
