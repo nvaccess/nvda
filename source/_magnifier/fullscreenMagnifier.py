@@ -15,7 +15,7 @@ import systemUtils
 import ui
 from logHandler import log
 from utils.debounce import PREVENT_THREE_HZ_FLASH_MS, debounceLimiter
-from winBindings import magnification
+from winBindings import magnification, user32
 
 from .config import _isDebug, getFullscreenMode, isTrueCentered
 from .magnifier import Magnifier
@@ -30,6 +30,17 @@ from .utils.types import (
 	MagnifierParameters,
 	Size,
 )
+
+_WINDOWS_MAGNIFIER_WINDOW_CLASS = "MagUIClass"
+"""Class of Windows Magnifier's main window, present whenever it runs."""
+
+
+def _getAnotherMagnifierRunningMessage() -> str:
+	return pgettext(
+		"magnifier",
+		# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
+		"Cannot start magnifier. Another magnifier application may already be running.",
+	)
 
 
 class FullScreenMagnifier(Magnifier):
@@ -65,6 +76,16 @@ class FullScreenMagnifier(Magnifier):
 		"""Return True when OSError represents Windows access denied (WinError 5)."""
 		return getattr(error, "winerror", None) == 5
 
+	@staticmethod
+	def _isWindowsMagnifierRunning() -> bool:
+		"""
+		Whether Windows Magnifier is running, whatever its view and zoom level.
+
+		At 100%, Windows Magnifier does not hold the full-screen transform, so the Magnification API
+		accepts ours and cannot be relied on to detect it.
+		"""
+		return bool(user32.FindWindow(_WINDOWS_MAGNIFIER_WINDOW_CLASS, None))
+
 	@Magnifier.filterType.setter
 	def filterType(self, value: Filter) -> None:
 		self._filterType = value
@@ -76,6 +97,10 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Start the Full-screen magnifier using windows DLL
 		"""
+		if not self._isActive and self._isWindowsMagnifierRunning():
+			# Checked first, so that nothing touches the full-screen transform Windows Magnifier may own.
+			log.info("Not starting the magnifier: Windows Magnifier is running")
+			raise MagnifierStartError(_getAnotherMagnifierRunningMessage())
 		super()._startMagnifier()
 		if not self._isActive:
 			return
@@ -92,13 +117,7 @@ class FullScreenMagnifier(Magnifier):
 			log.exception("Failed to initialize magnification API")
 			# _isActive is True from super(), so _stopMagnifier properly unregisters
 			self._stopMagnifier()
-			raise MagnifierStartError(
-				pgettext(
-					"magnifier",
-					# Translators: Message when NVDA's Magnifier cannot start because another magnifier is already running.
-					"Cannot start magnifier. Another magnifier application may already be running.",
-				),
-			)
+			raise MagnifierStartError(_getAnotherMagnifierRunningMessage())
 
 		if self._isActive:
 			self._applyFilter()
