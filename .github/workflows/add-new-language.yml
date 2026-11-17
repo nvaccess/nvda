@@ -10,6 +10,7 @@ on:
 
 jobs:
   add-new-languages:
+    if: ${{ vars.CROWDIN_PROJECT_ID }}
     runs-on: windows-2025-vs2026
     permissions:
       contents: write

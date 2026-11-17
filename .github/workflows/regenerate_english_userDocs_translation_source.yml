@@ -95,6 +95,7 @@ jobs:
       # which will cause needless retranslation of existing strings.
       env:
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+      if: ${{ env.crowdinAuthToken }}
       run: |
         # Check if we changed userGuide.xliff in this action.
         # If we did, upload it to Crowdin.
