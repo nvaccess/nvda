@@ -3616,7 +3616,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_CONFIG,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	def script_activateDocumentNavigationDialog(self, gesture):
+	def script_activateDocumentNavigationDialog(self, gesture: "inputCore.InputGesture"):
 		wx.CallAfter(gui.mainFrame.onDocumentNavigationSettingsCommand, None)
 
 	@script(

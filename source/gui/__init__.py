@@ -397,7 +397,11 @@ class MainFrame(wx.Frame):
 
 	@blockAction.when(blockAction.Context.SECURE_SCREEN)
 	def onMathSettingsCommand(self, evt):
-		self.popupSettingsDialog(NVDASettingsDialog, MathSettingsPanel)
+	def onDocumentNavigationSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, DocumentNavigationPanel)
+
+	@blockAction.when(blockAction.Context.SECURE_SCREEN)
+	def onMathSettingsCommand(self, evt: wx.CommandEvent):
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onAddonStoreSettingsCommand(self, evt: wx.CommandEvent):
