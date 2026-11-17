@@ -392,11 +392,6 @@ class MainFrame(wx.Frame):
 	def onDocumentFormattingCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
-	def onDocumentNavigationSettingsCommand(self, evt):
-		self.popupSettingsDialog(NVDASettingsDialog, DocumentNavigationPanel)
-
-	@blockAction.when(blockAction.Context.SECURE_SCREEN)
-	def onMathSettingsCommand(self, evt):
 	def onDocumentNavigationSettingsCommand(self, evt: wx.CommandEvent):
 		self.popupSettingsDialog(NVDASettingsDialog, DocumentNavigationPanel)
 
