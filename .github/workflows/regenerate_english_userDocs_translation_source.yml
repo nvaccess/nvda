@@ -18,10 +18,9 @@ permissions:
 
 jobs:
   rebuild-translation-source:
-    if: $ {{ github.ref == 'refs/heads/beta' && crowdinAuthToken }}
+    if: github.ref == 'refs/heads/beta'
     runs-on: windows-2025-vs2026
-    env:
-      crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
@@ -94,6 +93,8 @@ jobs:
       # This step must only be run after successfully pushing changes to the repository.
       # Otherwise if the push fails, subsequent runs may cause new translation IDs to be created,
       # which will cause needless retranslation of existing strings.
+      env:
+        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
       run: |
         # Check if we changed userGuide.xliff in this action.
         # If we did, upload it to Crowdin.
