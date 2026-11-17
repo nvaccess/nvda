@@ -3611,6 +3611,24 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to document navigation settings command.
+		description=_("Shows NVDA's document navigation settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateDocumentNavigationDialog(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onDocumentNavigationSettingsCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Math settings command.
+		description=_("Shows NVDA's math settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateMathSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onMathSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to Remote Access settings command.
 		description=pgettext("remote", "Shows the Remote Access settings"),
 		category=SCRCAT_CONFIG,
@@ -5146,7 +5164,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increase the magnification level",
+			"Increase the magnification level, or start the magnifier",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+=",

@@ -1677,7 +1677,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name | Key | Description |
 |---|---|---|
 | Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
-| Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
+| Increase the magnification level, or start the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
 | Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
@@ -3501,6 +3501,7 @@ This category contains the following options:
 ##### Maximum Number of Characters on One Line {#BrowseModeSettingsMaxLength}
 
 This field sets the maximum length of a line in browse mode (in characters).
+It can be set from 0 to 1000 characters. If set to 0, lines are not split by length anymore, but rather by the full length of the element in focus.
 
 ##### Maximum Lines Per Page {#BrowseModeSettingsPageLines}
 
@@ -4545,7 +4546,11 @@ You can add new symbols by pressing the Add button.
 In the dialog that appears, enter the symbol and press the OK button.
 Then, change the fields for the new symbol as you would for other symbols.
 
-You can remove a symbol you previously added by pressing the Remove button.
+You can remove a symbol you previously added by using:
+
+* the Remove button,
+* the `delete` key, or,
+* the application key on the selected symbol, and activating the Remove option in the context menu.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 

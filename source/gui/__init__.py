@@ -1,10 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis, Leonard de Ruijter
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Callable  # noqa: I001
+from collections.abc import Callable  # noqa: I001 (sorting puts speech before tones: circular import)
 import os
 import warnings
 import wx
@@ -25,6 +25,7 @@ import queueHandler
 import core
 from typing import Any
 import systemUtils
+from .progressDialog import _ProgressDialog
 from .message import (
 	Button,
 	Payload,
@@ -53,10 +54,12 @@ from .settingsDialogs import (
 	BrailleSettingsPanel,
 	BrowseModePanel,
 	DocumentFormattingPanel,
+	DocumentNavigationPanel,
 	GeneralSettingsPanel,
 	InputCompositionPanel,
 	KeyboardSettingsPanel,
 	MagnifierPanel,
+	MathSettingsPanel,
 	MouseSettingsPanel,
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
@@ -389,6 +392,13 @@ class MainFrame(wx.Frame):
 
 	def onDocumentFormattingCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
+
+	def onDocumentNavigationSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, DocumentNavigationPanel)
+
+	@blockAction.when(blockAction.Context.SECURE_SCREEN)
+	def onMathSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, MathSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onAddonStoreSettingsCommand(self, evt: wx.CommandEvent):
@@ -965,44 +975,30 @@ def runScriptModalDialog(dialog: wx.Dialog, callback: Callable[[int], Any] | Non
 	wx.CallAfter(run)
 
 
-class IndeterminateProgressDialog(wx.ProgressDialog):
+class IndeterminateProgressDialog(_ProgressDialog):
 	def __init__(self, parent: wx.Window, title: str, message: str):
-		super().__init__(title, message, parent=parent)
+		super().__init__(parent, title, message)
 		self._speechCounter = -1
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
-		self.CentreOnScreen()
-		self.Raise()
 
 	def Pulse(self):
 		super().Pulse()
 		# We want progress to be spoken on the first pulse and every 10 pulses thereafter.
 		# Therefore, cycle from 0 to 9 inclusive.
 		self._speechCounter = (self._speechCounter + 1) % 10
+		if not self._shouldReportProgress():
+			return
 		pbConf = config.conf["presentation"]["progressBarUpdates"]
-		if pbConf["progressBarOutputMode"] == "off":
-			return
-		if not pbConf["reportBackgroundProgressBars"] and not self.IsActive():
-			return
 		if pbConf["progressBarOutputMode"] in ("beep", "both"):
 			tones.beep(440, 40)
 		if pbConf["progressBarOutputMode"] in ("speak", "both") and self._speechCounter == 0:
 			# Translators: Announced periodically to indicate progress for an indeterminate progress bar.
 			speech.speakMessage(_("Please wait"))
 
-	def IsActive(self):
-		# 4714: In wxPython 3, ProgressDialog.IsActive always seems to return False.
-		return winUser.isDescendantWindow(winUser.getForegroundWindow(), self.Handle)
-
 	def done(self):
 		self.timer.Stop()
-		pbConf = config.conf["presentation"]["progressBarUpdates"]
-		if pbConf["progressBarOutputMode"] in ("beep", "both") and (
-			pbConf["reportBackgroundProgressBars"] or self.IsActive()
-		):
-			tones.beep(1760, 40)
-		self.Hide()
-		self.Destroy()
+		super().done()
 
 
 def shouldConfigProfileTriggersBeSuspended():

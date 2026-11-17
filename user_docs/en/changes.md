@@ -9,10 +9,24 @@
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
 * A "White noise volume" setting has been added to the Audio category of NVDA settings.
   It can help when your audio device cuts off the end of speech even though "Time to keep audio device awake after speech" is set. (#19286, @Yashu16)
+* Added context menu and shortcuts support to the Symbol Pronunciation dialog. (#20692, @amirmahdifard)
+* In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
 
 ### Changes
 
+* While installing or updating NVDA, the progress dialog now reports the actual progress, the current step and the estimated remaining time, following the progress bar output settings. (#2313, @LeonarddeR)
+* The "Maximum number of characters on one line" browse mode setting can now be set from 0 to 1000 characters, instead of 10 to 250. (#20478, @think-tank0)
+  * Setting it to 0 means lines are no longer split by length.
+
 ### Bug Fixes
+
+* NVDA can now start in Windows PE when optional components are unavailable.
+  Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
+  The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
+  Sound Split and audio device enumeration are unavailable without `pdh.dll`.
+  Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
+* NVDA can now start when an architecture-specific remote helper loader fails or WTS session information is unavailable.
+  If lock-state queries fail, NVDA treats the session as unlocked, so lock-screen restrictions cannot be applied. (#19537, @akash07k)
 
 #### Braille
 
@@ -24,11 +38,22 @@
 
 #### Magnifier
 
+* The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
+  Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
+  which can be `None`.
+  `SoundSplitState` remains available from `audio` without Sound Split dependencies. (#19537)
+* The WTS API binding exposes `WTSAPI32_AVAILABLE`; its function bindings remain callable and raise `OSError` when the API is unavailable. (#19537)
+
 #### Deprecations
+
+* `audio.soundSplit.SoundSplitState` and `audio.soundSplit.VolumeTupleT` are deprecated.
+  Use `audio.SoundSplitState` and `audio.soundSplitState.VolumeTupleT` instead. (#21035, @akash07k)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
@@ -98,6 +123,7 @@ Previously, saving magnifier settings could be ineffective while a profile was a
 The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
 * When disabling the Screen Curtain, NVDA no longer reports that it could not be disabled if the Magnifier has trouble determining what to follow, and the Magnifier is correctly restarted. (#20518, @JulienCochuyt)
 * NVDA no longer announces that the Magnifier is being disabled or re-enabled when toggling the Screen Curtain. (#19528, @JulienCochuyt)
+* Magnifier no longer stops when a secure screen such as UAC or logon screen pops up in the current session. (#20636, @CyrilleB79)
 
 ### Changes for Developers
 
