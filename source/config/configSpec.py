@@ -213,6 +213,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
 	multiPressTimeout = integer(default=500, min=100, max=20000)
+	# Whether pressing an NVDA modifier key twice quickly passes it through to the system,
+	# e.g. to toggle caps lock or the insert/overtype mode of the focused application.
+	passNVDAModifierThroughOnDoublePress = boolean(default=true)
+	# Whether to report when the insert key is passed through to the system.
+	reportInsertKeyPassThrough = boolean(default=true)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)

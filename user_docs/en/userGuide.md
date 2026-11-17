@@ -3237,6 +3237,22 @@ For the example command, a too short timeout will cause two presses to report th
 The default timeout is 500 ms, i.e. half a second.
 Increasing this timeout may be especially useful for people using sticky keys, or who have a physical disability.
 
+##### Pass the NVDA key to the system when pressed twice {#KeyboardSettingsPassNVDAModifierThrough}
+
+When this option is on, pressing an NVDA key twice quickly sends the key to Windows and applications instead of NVDA using it.
+For example, pressing caps lock twice toggles caps lock, and pressing insert twice toggles the insert/overtype mode of the focused application.
+In overtype mode, typed text replaces the existing text instead of being inserted.
+If you often turn on overtype mode or caps lock by accident, you can turn this option off.
+Note that when this option is off, a key which is set as an NVDA key can no longer be used for its normal function.
+This option is on by default.
+
+##### Report when the insert key is passed to the system {#KeyboardSettingsReportInsertPassThrough}
+
+When this option is on, NVDA reports when the insert key is passed to the system by pressing it twice.
+In applications which make it possible, such as Microsoft Word and editors based on Scintilla like Notepad++, NVDA reports whether overtype mode is now on or off.
+In other applications, NVDA just says "insert", as it can't tell whether the application uses overtype mode.
+This option is on by default.
+
 #### Mouse {#MouseSettings}
 
 <!-- KC:setting -->

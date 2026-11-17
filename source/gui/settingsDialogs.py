@@ -2196,6 +2196,33 @@ class KeyboardSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("MultiPressTimeout", self.multiPressTimeoutEdit)
 
+		# Translators: This is the label for a checkbox in the keyboard settings panel.
+		# When checked, pressing an NVDA modifier key twice quickly sends it to the system,
+		# e.g. to toggle caps lock or the insert/overtype mode.
+		passNVDAModifierThroughText = _("&Pass the NVDA key to the system when pressed twice")
+		self.passNVDAModifierThroughCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=passNVDAModifierThroughText),
+		)
+		self.bindHelpEvent(
+			"KeyboardSettingsPassNVDAModifierThrough",
+			self.passNVDAModifierThroughCheckBox,
+		)
+		self.passNVDAModifierThroughCheckBox.SetValue(
+			config.conf["keyboard"]["passNVDAModifierThroughOnDoublePress"],
+		)
+
+		# Translators: This is the label for a checkbox in the keyboard settings panel.
+		# When checked, NVDA reports when the insert key is passed through to the system by pressing it twice.
+		reportInsertPassThroughText = _("Report when the &insert key is passed to the system")
+		self.reportInsertPassThroughCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=reportInsertPassThroughText),
+		)
+		self.bindHelpEvent(
+			"KeyboardSettingsReportInsertPassThrough",
+			self.reportInsertPassThroughCheckBox,
+		)
+		self.reportInsertPassThroughCheckBox.SetValue(config.conf["keyboard"]["reportInsertKeyPassThrough"])
+
 	def isValid(self) -> bool:
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
@@ -2228,6 +2255,12 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["alertForSpellingErrors"] = self.alertForSpellingErrorsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"] = self.handleInjectedKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["multiPressTimeout"] = self.multiPressTimeoutEdit.GetValue()
+		config.conf["keyboard"]["passNVDAModifierThroughOnDoublePress"] = (
+			self.passNVDAModifierThroughCheckBox.IsChecked()
+		)
+		config.conf["keyboard"]["reportInsertKeyPassThrough"] = (
+			self.reportInsertPassThroughCheckBox.IsChecked()
+		)
 
 
 class MouseSettingsPanel(SettingsPanel):

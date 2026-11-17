@@ -49,6 +49,7 @@ SCI_WORDENDPOSITION = 2267
 SC_WRAP_NONE = 0
 SCI_GETWRAPMODE = 2269
 SCI_GETCODEPAGE = 2137
+SCI_GETOVERTYPE = 2187
 SCI_POSITIONAFTER = 2418
 
 # constants
@@ -337,3 +338,6 @@ class Scintilla(EditableTextWithAutoSelectDetection, Window):
 		# Scintilla controls are always multiline.
 		states.add(controlTypes.State.MULTILINE)
 		return states
+
+	def _get_isOvertypeMode(self) -> bool:
+		return bool(watchdog.cancellableSendMessage(self.windowHandle, SCI_GETOVERTYPE, 0, 0))

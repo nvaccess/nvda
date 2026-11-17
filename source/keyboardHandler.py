@@ -202,6 +202,26 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 	)
 
 
+def _reportInsertKeyPassThrough() -> None:
+	"""Report that the insert key was passed through to the system by pressing it twice.
+	If the focused control can tell us whether overtype mode is now on, report that state instead.
+	"""
+	if not config.conf["keyboard"]["reportInsertKeyPassThrough"]:
+		return
+	overtype = api.getFocusObject().isOvertypeMode
+	if overtype is None:
+		insertLabel = localizedKeyLabels.get("insert", "insert")
+		ui.message(insertLabel)
+	elif overtype:
+		# Translators: Reported when overtype mode is turned on
+		# by pressing the NVDA insert key twice, so typing replaces existing text.
+		ui.message(_("overtype on"))
+	else:
+		# Translators: Reported when overtype mode is turned off (insert mode is back)
+		# by pressing the NVDA insert key twice.
+		ui.message(_("overtype off"))
+
+
 def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: bool) -> bool:
 	"""Event called by winInputHook when it receives a keyDown.
 
@@ -249,7 +269,8 @@ def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: 
 		if not (stickyKeysFlags & winUser.SKF_STICKYKEYSON) and (
 			bypassNVDAModifier
 			or (
-				keyCode == lastNVDAModifier
+				config.conf["keyboard"]["passNVDAModifierThroughOnDoublePress"]
+				and keyCode == lastNVDAModifier
 				and lastNVDAModifierReleaseTime
 				and (
 					time.time() - lastNVDAModifierReleaseTime
@@ -259,6 +280,10 @@ def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: 
 		):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
 			# There may be key repeats, so ensure we do this until they stop.
+			if not bypassNVDAModifier and vkCode == winUser.VK_INSERT:
+				# Only report the first press, not key repeats.
+				# Give the application time to process the key before querying its overtype state.
+				core.callLater(100, _reportInsertKeyPassThrough)
 			bypassNVDAModifier = True
 			gesture.isNVDAModifierKey = False
 		lastNVDAModifierReleaseTime = None
