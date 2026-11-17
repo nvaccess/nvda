@@ -7,6 +7,7 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
 
 ### Changes
 
