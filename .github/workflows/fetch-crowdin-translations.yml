@@ -14,6 +14,7 @@ on:
 
 jobs:
   download-from-crowdin:
+    if: ${{ crowdinAuthToken  }}
     runs-on: windows-2025-vs2026
     permissions:
       contents: write
@@ -23,6 +24,7 @@ jobs:
       branchName: "updateCrowdinTranslations${{ github.run_id }}-${{ github.run_attempt }}"
       workflowRunUrl: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}
       workflowRunName: "${{ github.workflow }} #${{ github.run_number }}-${{ github.run_attempt }}"
+      crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
 
     steps:
     - name: Checkout repository
@@ -47,9 +49,7 @@ jobs:
       run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Download translations from Crowdin
       run: uv run miscDeps/tools/l10nUtil.exe exportTranslations -o .
-      env:
-        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-
+      
     - name: Commit tracked files only
       id: commit
       run: ci/scripts/checkAndCommitTranslations.ps1 -branchName ${{ env.branchName }}

@@ -360,9 +360,11 @@ jobs:
     name: Upload translations to Crowdin
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA, checkPot]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && crowdinAuthToken }}
     permissions:
       contents: read
+    env:
+      crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
     steps:
     - parallel:
         - name: Checkout cached build
@@ -386,8 +388,6 @@ jobs:
       with:
         prune-cache: true
     - name: Upload translations to Crowdin
-      env:
-        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
       run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 
   createLauncher:

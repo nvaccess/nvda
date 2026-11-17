@@ -10,6 +10,7 @@ on:
 
 jobs:
   add-new-languages:
+    if: ${{ crowdinAuthToken }}
     runs-on: windows-2025-vs2026
     permissions:
       contents: write
@@ -20,6 +21,7 @@ jobs:
         newLanguage: ${{ fromJson(github.event.inputs.newLanguages) }}
     env:
       branchName: addLanguage_${{ matrix.newLanguage }}${{ github.run_id }}
+      crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
 
     steps:
     - name: Checkout repository
@@ -43,9 +45,6 @@ jobs:
     - name: Download translations from Crowdin
       shell: bash
       run: uv run miscDeps/tools/l10nUtil.exe exportTranslations -o . -l ${{ matrix.newLanguage }}
-      env:
-        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-
     - name: Commit language files only
       id: commit
       shell: bash
