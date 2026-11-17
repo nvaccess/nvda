@@ -3790,6 +3790,7 @@ class AudioPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
 		self.audioAwakeTimeEdit.Bind(wx.EVT_SPINCTRL, self._onAudioAwakeTimeChange)
+		self.audioAwakeTimeEdit.Bind(wx.EVT_TEXT, self._onAudioAwakeTimeChange)
 
 		whiteNoiseVolumeLabelText = _(
 			# Translators: The label for a setting in Audio settings panel
@@ -3812,8 +3813,8 @@ class AudioPanel(SettingsPanel):
 		self.bindHelpEvent("WhiteNoiseVolume", self.whiteNoiseVolumeEdit)
 		self.whiteNoiseVolumeEdit.Enable(config.conf["audio"]["audioAwakeTime"] > 0)
 
-	def _onAudioAwakeTimeChange(self, evt: wx.SpinEvent) -> None:
-		self.whiteNoiseVolumeEdit.Enable(evt.GetInt() > 0)
+	def _onAudioAwakeTimeChange(self, evt: wx.Event) -> None:
+		self.whiteNoiseVolumeEdit.Enable(self.audioAwakeTimeEdit.GetValue() > 0)
 		evt.Skip()
 
 	def _appendSoundSplitModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:

@@ -93,3 +93,15 @@ class Test_AudioPanel_whiteNoiseVolume(unittest.TestCase):
 		nonZeroEvent.SetInt(15)
 		panel._onAudioAwakeTimeChange(nonZeroEvent)
 		self.assertTrue(panel.whiteNoiseVolumeEdit.IsEnabled())
+
+	def test_controlTogglesWhenAwakeTimeIsTyped(self):
+		"""Typing a new awake time directly into its text field enables or disables the control,
+		not only using the spin arrows."""
+		config.conf["audio"]["audioAwakeTime"] = 30
+		panel = AudioPanel(self.frame)
+		self.assertTrue(panel.whiteNoiseVolumeEdit.IsEnabled())
+
+		panel.audioAwakeTimeEdit.SetValue(0)
+		textEvent = wx.CommandEvent(wx.wxEVT_TEXT, panel.audioAwakeTimeEdit.GetId())
+		panel._onAudioAwakeTimeChange(textEvent)
+		self.assertFalse(panel.whiteNoiseVolumeEdit.IsEnabled())
