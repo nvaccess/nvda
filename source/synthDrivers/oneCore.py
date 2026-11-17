@@ -423,6 +423,7 @@ class OneCoreSynthDriver(SynthDriver):
 
 	def _processQueue(self):
 		if not self._queuedSpeech and self._player is None:
+			self._isProcessing = False
 			# If oneCore speech has not been successful yet the player will not have initialised. (#11544)
 			# We can't sync the player in this instance.
 			log.debugWarning("Cannot process speech queue as player not set and no speech queued")
@@ -489,12 +490,16 @@ class OneCoreSynthDriver(SynthDriver):
 			# Speech failed
 			self._handleSpeechFailure()
 			return
-		else:
-			self._consecutiveSpeechFailures = 0
 		# This gets called in a background thread.
 		stream = io.BytesIO(ctypes.string_at(bytes, WAVE_HEADER_LENGTH))
 		wav = wave.open(stream, "r")  # noqa: SIM115
-		self._maybeInitPlayer(wav)
+		try:
+			self._maybeInitPlayer(wav)
+		except OSError:
+			log.exception("Error initializing OneCore audio playback")
+			self._handleSpeechFailure()
+			return
+		self._consecutiveSpeechFailures = 0
 		data = bytes + WAVE_HEADER_LENGTH
 		dataLen = wav.getnframes() * wav.getnchannels() * wav.getsampwidth()
 		if markers:
