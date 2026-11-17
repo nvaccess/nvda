@@ -360,7 +360,7 @@ jobs:
     name: Upload translations to Crowdin
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA, checkPot]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && vars.CROWDIN_PROJECT_ID }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/beta' && secrets.CROWDIN_AUTH_TOKEN }}
     permissions:
       contents: read
     steps:
