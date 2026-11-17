@@ -83,6 +83,7 @@ class AddonSession:
 			Owned by the session from here on.
 		:param exitConfirmGrace: How long to give the host before killing it when the control connection is lost.
 			Defaults to :const:`_EXIT_CONFIRM_GRACE`.
+		:raises ValueError: If ``exitConfirmGrace`` is nonpositive or infinite.
 		"""
 		if not 0 < exitConfirmGrace < float("inf"):
 			raise ValueError("exitConfirmGrace must be finite and positive")
