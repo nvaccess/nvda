@@ -766,3 +766,30 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 			startWithin(self, session)
 		self.assertIn("did not exit", session.failureReason)
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
+
+
+class TestHeartbeat(unittest.TestCase):
+	"""Noticing when a host has frozen."""
+
+	def test_invalidHeartbeatIntervalIsRejected(self):
+		"""Passing a non-positive or infinite value of ``heartbeatInterval`` to ``AddonSession()`` fails."""
+		controller = MagicMock()
+		for heartbeatInterval in (0, -42, float("inf"), float("-inf"), float("nan")):
+			with self.subTest(heartbeatInterval=heartbeatInterval), self.assertRaises(ValueError):
+				AddonSession(controller, heartbeatInterval=heartbeatInterval)
+
+	def test_invalidConsecutiveHeartbeatMissLimitIsRejected(self):
+		"""Passing a non-positive or non-integer value of ``consecutiveHeartbeatMissLimit`` to ``AddonSession()`` fails."""
+		controller = MagicMock()
+		for consecutiveHeartbeatMissLimit in (0, -42):
+			with (
+				self.subTest(consecutiveHeartbeatMissLimit=consecutiveHeartbeatMissLimit),
+				self.assertRaises(ValueError),
+			):
+				AddonSession(controller, consecutiveHeartbeatMissLimit=consecutiveHeartbeatMissLimit)
+		for consecutiveHeartbeatMissLimit in (3.14, float("inf"), float("-inf"), float("nan")):
+			with (
+				self.subTest(consecutiveHeartbeatMissLimit=consecutiveHeartbeatMissLimit),
+				self.assertRaises(TypeError),
+			):
+				AddonSession(controller, consecutiveHeartbeatMissLimit=consecutiveHeartbeatMissLimit)
