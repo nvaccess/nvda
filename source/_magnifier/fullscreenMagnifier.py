@@ -46,7 +46,6 @@ class FullScreenMagnifier(Magnifier):
 		self._fullscreenMode = getFullscreenMode()
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
-		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
 
 	def _onSecureDesktopChange(self, isSecureDesktop: bool) -> None:

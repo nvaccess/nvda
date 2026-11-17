@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2023-2026 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -49,7 +49,7 @@ class _Context:
 class Context(_Context, Enum):
 	SECURE_MODE = (
 		lambda: globalVars.appArgs.secure,
-		# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+		# Translators: Reported when an action cannot be performed because NVDA is running in secure mode
 		_("Action unavailable in secure context"),
 	)
 	MODAL_DIALOG_OPEN = (
@@ -79,6 +79,11 @@ class Context(_Context, Enum):
 		_isRemoteAccessDisabled,
 		# Translators: Reported when an action cannot be performed because Remote Access functionality is disabled.
 		pgettext("remote", "Action unavailable when Remote Access is disabled"),
+	)
+	SECURE_SCREEN = (
+		isRunningOnSecureDesktop,
+		# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
+		_("Action unavailable on secure screen"),
 	)
 
 

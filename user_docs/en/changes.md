@@ -7,8 +7,14 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* Added context menu and shortcuts support to the Symbol Pronunciation dialog. (#20692, @amirmahdifard)
+* In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
 
 ### Changes
+
+* While installing or updating NVDA, the progress dialog now reports the actual progress, the current step and the estimated remaining time, following the progress bar output settings. (#2313, @LeonarddeR)
+* The "Maximum number of characters on one line" browse mode setting can now be set from 0 to 1000 characters, instead of 10 to 250. (#20478, @think-tank0)
+  * Setting it to 0 means lines are no longer split by length.
 
 ### Bug Fixes
 
@@ -31,6 +37,8 @@ NVDA uses factory defaults instead, and warns that installing that version will 
 #### Add-on Store
 
 #### Magnifier
+
+* The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
 
 ### Changes for Developers
 
