@@ -33,6 +33,10 @@ CONTROL_CONNECTION_NAME: Final[str] = "ART core control"
 _EXIT_CONFIRM_GRACE: Final[int] = 1.0
 #: Maximum time from launch to a usable host root service, in seconds.
 _STARTUP_TIMEOUT: Final[float] = 30.0
+#: How frequently to send a heartbeat request to the host, in seconds.
+_HEARTBEAT_INTERVAL: Final[float] = 5.0
+#: Limit on how many heartbeat requests a host may fail to acknowledge in a timely manner before being considered unresponsive.
+_CONSECUTIVE_HEARTBEAT_MISS_LIMIT: Final[int] = 3
 
 
 class SessionState(enum.Enum):
@@ -76,19 +80,41 @@ class AddonSession:
 	and the lifecycle that takes it from launch to readiness and back down again.
 	"""
 
-	def __init__(self, controller: HostController, *, exitConfirmGrace: float = _EXIT_CONFIRM_GRACE) -> None:
+	def __init__(
+		self,
+		controller: HostController,
+		*,
+		exitConfirmGrace: float = _EXIT_CONFIRM_GRACE,
+		heartbeatInterval: float = _HEARTBEAT_INTERVAL,
+		consecutiveHeartbeatMissLimit: int = _CONSECUTIVE_HEARTBEAT_MISS_LIMIT,
+	) -> None:
 		"""Initializer.
 
 		:param controller: Starts, watches and stops the host.
 			Owned by the session from here on.
 		:param exitConfirmGrace: How long to give the host before killing it when the control connection is lost.
 			Defaults to :const:`_EXIT_CONFIRM_GRACE`.
+		:param heartbeatInterval: How frequently to send heartbeat requests to the host, in seconds.
+			Defaults to :const:`_HEARTBEAT_INTERVAL`.
+		:param consecutiveHeartbeatMissLimit: The number of heartbeat requests the host may fail to acknowledge on time before being considered unresponsive.
+			Defaults to :const:`_CONSECUTIVE_HEARTBEAT_MISS_LIMIT`.
 		:raises ValueError: If ``exitConfirmGrace`` is nonpositive or infinite.
+		:raises ValueError: If ``heartbeatInterval`` is nonpositive or infinite.
+		:raises ValueError: if ``consecutiveHeartbeatMissLimit`` is nonpositive.
+		:raises TypeError: If ``consecutiveHeartbeatMissLimit`` is not an integer.
 		"""
 		if not 0 < exitConfirmGrace < float("inf"):
 			raise ValueError("exitConfirmGrace must be finite and positive")
+		if not 0 < heartbeatInterval < float("inf"):
+			raise ValueError("heartbeatInterval must be finite and positive")
+		if not isinstance(consecutiveHeartbeatMissLimit, int):
+			raise TypeError("consecutiveHeartbeatMissLimit must be integral.")
+		if not 0 < consecutiveHeartbeatMissLimit:
+			raise ValueError("consecutiveHeartbeatMissLimit must be positive.")
 		self._controller = controller
 		self._exitConfirmGrace = exitConfirmGrace
+		self._heartbeatInterval = heartbeatInterval
+		self._consecutiveHeartbeatMissLimit = consecutiveHeartbeatMissLimit
 		self._stateChanged = threading.Condition()
 		self._state = SessionState.NEW
 		self._failureReason: str | None = None
