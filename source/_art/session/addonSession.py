@@ -115,7 +115,11 @@ class AddonSession:
 		self._exitConfirmGrace = exitConfirmGrace
 		self._heartbeatInterval = heartbeatInterval
 		self._consecutiveHeartbeatMissLimit = consecutiveHeartbeatMissLimit
-		self._stateChanged = threading.Condition()
+		# stateChanged and heartbeatCond guard some of the same resources, and have overlapping interests.
+		# Make them share the same underlying reentrant lock.
+		rLock = threading.RLock()
+		self._stateChanged = threading.Condition(rLock)
+		self._heartbeatCond = threading.Condition(rLock)
 		self._state = SessionState.NEW
 		self._failureReason: str | None = None
 		self._conn: Connection[CoreRootService, HostRootService] | None = None
@@ -183,8 +187,11 @@ class AddonSession:
 		assert self._isTransitionValid(self._state, state), (
 			f"Cannot transition from {self._state.name} to {state.name}"
 		)
+		wasReady = self._state is SessionState.READY
 		self._state = state
 		self._stateChanged.notify_all()
+		if wasReady:
+			self._heartbeatCond.notify_all()
 
 	def _waitForStartupStep(self, predicate: Callable[[], bool], deadline: float) -> None:
 		"""Wait for a startup step using the shared deadline, with ``_stateChanged`` held."""

@@ -793,3 +793,27 @@ class TestHeartbeat(unittest.TestCase):
 				self.assertRaises(TypeError),
 			):
 				AddonSession(controller, consecutiveHeartbeatMissLimit=consecutiveHeartbeatMissLimit)
+
+	def test_stateTransitionsNotifyHeartbeadCond(self) -> None:
+		"""Moving from ``READY`` to another state should notify the heartbeat condition."""
+		session = AddonSession(MagicMock())
+		session._heartbeatCond = MagicMock(wraps=session._heartbeatCond)
+		for old, new, notify in (
+			(SessionState.NEW, SessionState.STARTING, False),
+			(SessionState.NEW, SessionState.STOPPED, False),
+			(SessionState.STARTING, SessionState.READY, False),
+			(SessionState.STARTING, SessionState.FAILED, False),
+			(SessionState.READY, SessionState.STOPPING, True),
+			(SessionState.READY, SessionState.FAILED, True),
+			(SessionState.STOPPING, SessionState.STOPPED, False),
+			(SessionState.STOPPING, SessionState.FAILED, False),
+		):
+			session._state = old
+			with self.subTest(old=old, new=new):
+				with session._stateChanged:
+					session._setState(new)
+				if notify:
+					session._heartbeatCond.notify_all.assert_called_once()
+				else:
+					session._heartbeatCond.notify_all.assert_not_called()
+			session._heartbeatCond.reset_mock()
