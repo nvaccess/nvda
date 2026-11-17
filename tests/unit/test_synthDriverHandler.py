@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021-2024 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2021-2026 NV Access Limited, Leonard de Ruijter, Cyrille Bougot
 
 """Unit tests for the synthDriverHandler"""
 
@@ -28,6 +28,9 @@ class MockSynth:
 		pass
 
 	def terminate(self):
+		pass
+
+	def saveSettings(self):
 		pass
 
 	def initSettings(self):

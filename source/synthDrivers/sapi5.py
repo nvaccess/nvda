@@ -573,6 +573,7 @@ class SynthDriver(SynthDriver):
 		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
+		super().__init__()
 		self._pitch = 50
 		self._rate = 50
 		self._volume = 100
@@ -608,6 +609,7 @@ class SynthDriver(SynthDriver):
 		self._isStoppingThread = False
 
 	def terminate(self):
+		super().terminate()
 		self._stopThread()
 		self.tts = None
 		if self.player:

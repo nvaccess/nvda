@@ -75,6 +75,7 @@ class SynthDriver(SynthDriver):
 		return True
 
 	def __init__(self):
+		super().__init__()
 		_espeak.initialize(self._onIndexReached)
 		log.info("Using eSpeak NG version %s" % _espeak.info())  # noqa: UP031
 		lang = getLanguage()
@@ -346,6 +347,7 @@ class SynthDriver(SynthDriver):
 			synthDoneSpeaking.notify(synth=self)
 
 	def terminate(self):
+		super().terminate()
 		_espeak.terminate()
 
 	def _get_variant(self):

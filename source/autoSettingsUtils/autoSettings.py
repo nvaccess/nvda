@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2025 NV Access Limited
+# Copyright (C) 2019-2026 NV Access Limited
 
 """autoSettings for add-ons"""
 
@@ -103,9 +103,11 @@ class AutoSettings(AutoPropertyObject):
 			cls._loadSpecificSettings(clsOrInst, settings)
 
 	def initSettings(self):
-		"""Initializes the configuration for this AutoSettings instance.
-		This method is called when initializing the AutoSettings instance.
+		"""Initialize settings and record the current profile stack.
+
+		Overrides must call this method or set ``_settingsProfiles`` to ``config.conf.profiles``.
 		"""
+		self._settingsProfiles = config.conf.profiles
 		self._initSpecificSettings(self, self.supportedSettings)
 
 	#: Typing for auto property L{_get_supportedSettings}
@@ -146,16 +148,17 @@ class AutoSettings(AutoPropertyObject):
 		cls,
 		clsOrInst: Any,
 		settings: SupportedSettingType,
+		*,
+		conf: "config.AggregatedSection | None" = None,
 	) -> None:
+		"""Save setting values from matching attributes to the configuration.
+
+		:param clsOrInst: The object containing the setting values.
+		:param settings: The settings to save.
+		:param conf: The destination section, or the active configuration if omitted.
 		"""
-		Save values for settings to config.
-		The values from the attributes of `clsOrInst` that match the `id` of each setting are saved to config.
-		@param clsOrInst: Destination for the values.
-		@param settings: The settings to load.
-		"""
-		section = cls._getConfigSection()
-		settingsId = cls.getId()
-		conf = config.conf[section][settingsId]
+		if conf is None:
+			conf = config.conf[cls._getConfigSection()][cls.getId()]
 		for setting in settings:
 			if not setting.useConfig:
 				continue
@@ -171,12 +174,21 @@ class AutoSettings(AutoPropertyObject):
 			log.debug(f"Saved settings for {cls.__qualname__}")
 
 	def saveSettings(self):
-		"""
-		Saves the current settings for the AutoSettings instance to the configuration.
-		This method is also executed when the AutoSettings instance is loaded for the first time,
-		in order to populate the configuration with the initial settings..
-		"""
-		self._saveSpecificSettings(self, self.supportedSettings)
+		"""Save settings to the profile stack recorded by :meth:`initSettings` or :meth:`loadSettings`."""
+		manager = config.conf
+		root = manager.rootSection
+		if self._settingsProfiles is not root.profiles:
+			root = config.AggregatedSection(manager, (), manager.spec, self._settingsProfiles)
+		try:
+			self._saveSpecificSettings(
+				self,
+				self.supportedSettings,
+				conf=root[self._getConfigSection()][self.getId()],
+			)
+		finally:
+			if root is not manager.rootSection:
+				# The active stack may inherit values saved to an underlying profile.
+				manager.rootSection._cache.clear()
 
 	@classmethod
 	def _loadSpecificSettings(
@@ -219,13 +231,14 @@ class AutoSettings(AutoPropertyObject):
 			)
 
 	def loadSettings(self, onlyChanged: bool = False):
+		"""Load settings from the configuration and record the current profile stack.
+
+		Overrides must call this method or set ``_settingsProfiles`` to ``config.conf.profiles``.
+		The instance must have an attribute or property for each setting in :attr:`supportedSettings`.
+
+		:param onlyChanged: Only apply settings whose configured values differ from the current values.
 		"""
-		Loads settings for this AutoSettings instance from the configuration.
-		This method assumes that the instance has attributes o/properties
-		corresponding with the name of every setting in L{supportedSettings}.
-		@param onlyChanged: When loading settings, only apply those for which
-			the value in the configuration differs from the current value.
-		"""
+		self._settingsProfiles = config.conf.profiles
 		self._loadSpecificSettings(self, self.supportedSettings, onlyChanged)
 
 	@classmethod

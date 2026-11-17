@@ -1532,6 +1532,7 @@ For examples of how to define and use new extension points, please see the code 
 
 | Type | Extension Point | Description |
 | --- | --- | --- |
+| `Action` | `pre_configProfileSwitch` | Notifies before switching configuration profiles, while the current configuration is still readable and writable. Not called for speech-only profile switches. |
 | `Action` | `post_configProfileSwitch` | Notifies after the configuration profile has been switched. |
 | `Action` | `pre_configSave` | Notifies before NVDA's configuration is saved to disk. |
 | `Action` | `post_configSave` | Notifies after NVDA's configuration has been saved to disk. |

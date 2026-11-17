@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V.
 
 """Module within the vision framework that contains the base vision enhancement provider class."""
 
@@ -40,6 +40,9 @@ class VisionEnhancementProviderSettings(AutoSettings):
 	def __init__(self):
 		super().__init__()
 		self.initSettings()  # ensure that settings are loaded at construction time.
+
+	def _registerConfigSaveAction(self) -> None:
+		"""Leave saving to VisionHandler, since settings can outlive their active provider."""
 
 	@classmethod
 	def _getConfigSection(cls) -> str:

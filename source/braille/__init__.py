@@ -5,7 +5,6 @@
 
 from __future__ import annotations  # noqa: I001
 
-import config
 import louisHelper
 from logHandler import log
 
@@ -24,7 +23,6 @@ def initialize():
 	log.info("Using pySerial version %s" % serial.VERSION)  # noqa: UP031
 	handler = _brailleHandler.BrailleHandler()
 	handler.handlePostConfigProfileSwitch()
-	config.post_configProfileSwitch.register(handler.handlePostConfigProfileSwitch)
 
 
 def pumpAll():

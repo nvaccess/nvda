@@ -911,6 +911,7 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		spec = configobj.ConfigObj({"someBool": "boolean(default=True)"})
 		self.baseConfig = configobj.ConfigObj({"someBool": True})
 		self.profile = configobj.ConfigObj()
+		self.profile.name = "test"
 		self.testSection = AggregatedSection(
 			manager=manager,
 			path=(),

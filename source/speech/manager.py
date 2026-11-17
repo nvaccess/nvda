@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2025 NV Access Limited
+# Copyright (C) 2006-2026 NV Access Limited
 import typing  # noqa: I001
 
 import queueHandler
@@ -735,6 +735,7 @@ class SpeechManager:
 			command,
 			ConfigProfileTriggerCommand,
 		), "First pending command should be a ConfigProfileTriggerCommand"
+		synthDriverHandler.handlePreConfigProfileSwitch()
 		if command.enter:
 			try:
 				command.trigger.enter()
@@ -750,19 +751,23 @@ class SpeechManager:
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _exitProfileTriggers(self, triggers):
-		for trigger in reversed(triggers):
-			try:
-				trigger.exit()
-			except:  # noqa: E722
-				log.exception("Error exiting profile trigger %r" % trigger.spec)  # noqa: UP031
+		synthDriverHandler.handlePreConfigProfileSwitch()
+		with config.conf.atomicProfileSwitch():
+			for trigger in reversed(triggers):
+				try:
+					trigger.exit()
+				except:  # noqa: E722
+					log.exception("Error exiting profile trigger %r" % trigger.spec)  # noqa: UP031
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _restoreProfileTriggers(self, triggers):
-		for trigger in triggers:
-			try:
-				trigger.enter()
-			except:  # noqa: E722
-				log.exception("Error entering profile trigger %r" % trigger.spec)  # noqa: UP031
+		synthDriverHandler.handlePreConfigProfileSwitch()
+		with config.conf.atomicProfileSwitch():
+			for trigger in triggers:
+				try:
+					trigger.enter()
+				except:  # noqa: E722
+					log.exception("Error entering profile trigger %r" % trigger.spec)  # noqa: UP031
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def cancel(self):
