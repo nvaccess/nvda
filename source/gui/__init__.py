@@ -54,10 +54,12 @@ from .settingsDialogs import (
 	BrailleSettingsPanel,
 	BrowseModePanel,
 	DocumentFormattingPanel,
+	DocumentNavigationPanel,
 	GeneralSettingsPanel,
 	InputCompositionPanel,
 	KeyboardSettingsPanel,
 	MagnifierPanel,
+	MathSettingsPanel,
 	MouseSettingsPanel,
 	MultiCategorySettingsDialog,
 	NVDASettingsDialog,
@@ -390,6 +392,13 @@ class MainFrame(wx.Frame):
 
 	def onDocumentFormattingCommand(self, evt):
 		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
+
+	def onDocumentNavigationSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, DocumentNavigationPanel)
+
+	@blockAction.when(blockAction.Context.SECURE_SCREEN)
+	def onMathSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, MathSettingsPanel)
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onAddonStoreSettingsCommand(self, evt: wx.CommandEvent):
