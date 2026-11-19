@@ -192,6 +192,14 @@ Export("outFilePrefix")
 outputDir = Dir(env["outputDir"])
 Export("outputDir")
 
+executablesToSign = (
+	".exe",  # Executables
+	".dll",  # DLLs
+	".pyd",  # Python C extensions
+	".pywinrt",  # Windows Runtime modules
+)
+"""We must sign all files that contain executable code on Windows to comply with Smart App Control."""
+
 assert not (apiSigningToken and certFile), (
 	"Cannot specify signing with both API token (cloud) and local certificate"
 )
@@ -202,7 +210,7 @@ if apiSigningToken:
 			print(f"Iterating through {len(target)} files passed to signExecApi")
 		retval = 1  # error value
 		for targetFile in target:
-			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
+			if (abspath := targetFile.abspath).endswith(executablesToSign):
 				ps_cmd = (
 					rf"PowerShell -File ci\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
 				)
@@ -385,20 +393,14 @@ env.SConscript("cldrDict_sconscript", exports=["env", "sourceDir"])
 
 
 def signAllBinaries(target, source, env):
-	# Only files that contain executable code on Windows.
-	# We must sign them all to comply with Smart App Control.
-	executablesToSign = (
-		"*.exe",  # Executables
-		"*.dll",  # DLLs
-		"*.pyd",  # Python C extensions
-		"*.pywinrt",  # Windows Runtime modules
-	)
 	bundlePath = target[0].abspath
 	for root, _dirs, files in os.walk(bundlePath):
 		for file in files:
 			if file.endswith(executablesToSign):
 				filePath = os.path.join(root, file)
-				env["signExec"]([File(filePath)], source, env)
+				result = env["signExec"]([File(filePath)], source, env)
+				if result != 0:
+					raise RuntimeError(f"Signing failed for {filePath}")
 
 
 # A builder to generate an NVDA distribution.
