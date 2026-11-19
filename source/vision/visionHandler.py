@@ -1,8 +1,7 @@
-# vision/visionHandler.py
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2018-2022 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2018-2026 NV Access Limited, Babbage B.V., Cyrille Bougot, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Module containing the vision handler.
 
@@ -95,6 +94,8 @@ class VisionHandler(AutoPropertyObject):
 		"""
 		self._updateAllProvidersList()
 		self.handleConfigProfileSwitch()
+		config.pre_configProfileSwitch.register(self.saveSettings)
+		config.pre_configSave.register(self.saveSettings)
 		config.post_configProfileSwitch.register(self.handleConfigProfileSwitch)
 
 	_allProviders: list[providerInfo.ProviderInfo] = []  # noqa: RUF012
@@ -188,19 +189,26 @@ class VisionHandler(AutoPropertyObject):
 		@param provider: The provider to terminate.
 		@param saveSettings: Whether settings should be saved on termination.
 		"""
-		providerId = provider.providerId
-		# Remove the provider from the _providers dictionary.
-		providerInstance = self._providers.pop(providerId, None)
-		if not providerInstance:
+		providerInstance = self._providers.get(provider.providerId)
+		if providerInstance is None:
 			raise exceptions.ProviderTerminateException(
-				f"Tried to terminate uninitialized provider {providerId!r}",
+				f"Tried to terminate uninitialized provider {provider.providerId!r}",
 			)
-		exception = None
 		if saveSettings:
 			try:
 				providerInstance.getSettings().saveSettings()
-			except Exception:  # noqa: BLE001
-				log.error(f"Error while saving settings during termination of {providerId}")
+			except Exception:
+				log.exception(f"Error saving settings for {provider.providerId}")
+		try:
+			self._terminateProvider(provider)
+		finally:
+			providerInstance.enableInConfig(False)
+
+	def _terminateProvider(self, provider: providerInfo.ProviderInfo) -> None:
+		"""Release a provider without changing its configuration."""
+		providerId = provider.providerId
+		providerInstance = self._providers.pop(providerId)
+		exception = None
 		try:
 			providerInstance.terminate()
 		except Exception as e:  # noqa: BLE001
@@ -208,7 +216,6 @@ class VisionHandler(AutoPropertyObject):
 			# A provider can raise whatever exception,
 			# therefore it is unknown what to expect.
 			exception = e
-		providerInstance.enableInConfig(False)
 		# As we cant rely on providers to de-register themselves from extension points when terminating them,
 		# Re-create our extension points instance and ask active providers to reregister.
 		self.extensionPoints = EventExtensionPoints()
@@ -276,25 +283,20 @@ class VisionHandler(AutoPropertyObject):
 		if not temporary:
 			providerInst.enableInConfig(True)
 		self._providers[providerId] = providerInst
-		try:
-			self.initialFocus()
-		except Exception:  # noqa: BLE001
-			# #8877: initialFocus might fail because NVDA tries to focus
-			# an object for which property fetching raises an exception.
-			# We should handle this more gracefully, since this is no reason
-			# to stop a provider from loading successfully.
-			log.debugWarning("Error in initial focus after provider load", exc_info=True)
-		try:
-			self.initialNavigatorObject()
-		except Exception:  # noqa: BLE001
-			# initialNavigatorObject might fail in case NVDA's current navigator object is an object
-			# for which property fetching raises an exception.
-			# We should handle this more gracefully, since this is no reason
-			# to stop a provider from loading successfully.
-			log.debugWarning("Error in initial navigator object after provider load", exc_info=True)
+		self._updateProviderPositions()
+
+	def _updateProviderPositions(self) -> None:
+		for update in (self.initialFocus, self.initialNavigatorObject):
+			try:
+				update()
+			except Exception:  # noqa: BLE001
+				# An inaccessible object must not prevent providers from starting or applying settings.
+				log.debugWarning(f"Error in {update.__name__} after provider settings load", exc_info=True)
 
 	def terminate(self) -> None:
 		self.extensionPoints = None
+		config.pre_configProfileSwitch.unregister(self.saveSettings)
+		config.pre_configSave.unregister(self.saveSettings)
 		config.post_configProfileSwitch.unregister(self.handleConfigProfileSwitch)
 		for instance in self._providers.values():
 			instance.terminate()
@@ -333,6 +335,14 @@ class VisionHandler(AutoPropertyObject):
 		# For now, mouse moves execute once per core cycle.
 		self.extensionPoints.post_mouseMove.notify(obj=obj, x=x, y=y)
 
+	def saveSettings(self) -> None:
+		"""Save the settings of active providers."""
+		for providerId, instance in self._providers.items():
+			try:
+				instance.getSettings().saveSettings()
+			except Exception:
+				log.exception(f"Error saving settings for {providerId}")
+
 	def handleConfigProfileSwitch(self) -> None:
 		configuredProviders: set[providerInfo.ProviderIdT] = set(  # noqa: C401
 			info.providerId for info in self.getConfiguredProviderInfos()
@@ -343,16 +353,26 @@ class VisionHandler(AutoPropertyObject):
 		for providerId in providersToTerminate:
 			try:
 				info = self.getProviderInfo(providerId)
-				self.terminateProvider(info)
+				self._terminateProvider(info)
 			except Exception:
 				log.error(  # noqa: G201
 					f"Could not terminate the {providerId} vision enhancement provider",
 					exc_info=True,
 				)
+		# Inactive providers also retain settings objects used by the settings dialog.
+		for info in self._allProviders:
+			try:
+				info.providerClass.getSettings().loadSettings(onlyChanged=True)
+				if instance := self._providers.get(info.providerId):
+					instance.invalidateCache()
+			except Exception:
+				log.exception(f"Error loading settings for {info.providerId}")
+		if self._providers:
+			self._updateProviderPositions()
 		for providerId in providersToInitialize:
 			try:
 				info = self.getProviderInfo(providerId)
-				self.initializeProvider(info)
+				self.initializeProvider(info, temporary=True)
 			except Exception:
 				log.error(  # noqa: G201
 					f"Could not initialize the {providerId} vision enhancement provider",

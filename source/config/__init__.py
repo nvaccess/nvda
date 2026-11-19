@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Manages NVDA configuration.
 The heart of NVDA's configuration is Configuration Manager, which records current options, profile information and functions to load, save, and switch amongst configuration profiles.
@@ -54,10 +54,18 @@ from NVDAState import WritePaths
 #: @type: ConfigManager
 conf = None
 
+pre_configProfileSwitch = extensionPoints.Action()
+"""Notifies before switching configuration profiles, while the current configuration is readable and writable.
+
+Handlers receive no arguments. Changes grouped by :meth:`ConfigManager.atomicProfileSwitch`
+notify once, only if the active profile stack changes.
+Not called during initialization, reset, or speech-only profile switches.
+"""
+
 #: Notifies after the configuration profile has been switched.
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
-#: Handlers are called with no arguments.
+#: Handlers receive ``prevConf``, the previous configuration after pre-switch saves.
 post_configProfileSwitch = extensionPoints.Action()
 #: Notifies when NVDA is saving current configuration.
 #: Handlers can listen to "pre" and/or "post" action to perform tasks prior to and/or after NVDA's own configuration is saved.
@@ -511,7 +519,8 @@ class ConfigManager:
 		)
 		self.rootSection: AggregatedSection | None = None
 		self._shouldHandleProfileSwitch: bool = True
-		self._pendingHandleProfileSwitch: bool = False
+		self._pendingProfiles: list[ConfigObj] | None = None
+		self._pendingProfileSwitchNotify: bool = False
 		self._suspendedTriggers: list[ProfileTrigger] | None = None
 		self._initBaseConf()
 		#: Maps triggers to profiles.
@@ -520,19 +529,34 @@ class ConfigManager:
 		#: The names of all profiles that have been modified since they were last saved.
 		self._dirtyProfiles: set[str] = set()
 
-	def _handleProfileSwitch(self, shouldNotify=True):
-		if not self._shouldHandleProfileSwitch:
-			self._pendingHandleProfileSwitch = True
+	def _getProfileStack(self) -> list[ConfigObj]:
+		"""Return a copy of the target stack, including any pending atomic changes."""
+		return (self._pendingProfiles if self._pendingProfiles is not None else self.profiles).copy()
+
+	def _handleProfileSwitch(self, profiles: list[ConfigObj], shouldNotify: bool = True) -> None:
+		if not self._shouldHandleProfileSwitch and self.rootSection is not None:
+			self._pendingProfiles = profiles
+			self._pendingProfileSwitchNotify |= shouldNotify
 			return
 		currentRootSection = self.rootSection
 		init = currentRootSection is None
+		if (
+			not init
+			and len(profiles) == len(self.profiles)
+			and all(old is new for old, new in zip(self.profiles, profiles))
+		):
+			return
+		if not init and shouldNotify:
+			pre_configProfileSwitch.notify()
+			prevConf = currentRootSection.dict()
+		self.profiles = profiles
 		# Reset the cache.
 		self.rootSection = AggregatedSection(self, (), self.spec, self.profiles)
 		if init:
 			# We're still initialising, so don't notify anyone about this change.
 			return
 		if shouldNotify:
-			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
+			post_configProfileSwitch.notify(prevConf=prevConf)
 
 	def _initBaseConf(self, factoryDefaults=False):
 		fn = WritePaths.nvdaConfigFile
@@ -574,8 +598,7 @@ class ConfigManager:
 			profile.validate(self.validator, section=sect)
 
 		self._profileCache[None] = profile
-		self.profiles.append(profile)
-		self._handleProfileSwitch()
+		self._handleProfileSwitch([profile])
 
 	@staticmethod
 	def _shouldLogConfigAtStartup(profile: ConfigObj) -> bool:
@@ -694,22 +717,26 @@ class ConfigManager:
 		@param name: The name of the profile or C{None} for no profile.
 		@type name: str
 		"""
-		if len(self.profiles) > 1:
-			profile = self.profiles[-1]
+		newProfile = self._getProfile(name) if name else None
+		profiles = self._getProfileStack()
+		if len(profiles) > 1:
+			profile = profiles[-1]
 			if profile.manual:
-				del self.profiles[-1]
+				del profiles[-1]
 				profile.manual = False
-		if name:
-			profile = self._getProfile(name)
-			profile.manual = True
-			self.profiles.append(profile)
-		self._handleProfileSwitch()
+		if newProfile is not None:
+			newProfile.manual = True
+			profiles.append(newProfile)
+		self._handleProfileSwitch(profiles)
 
-	def _markWriteProfileDirty(self):
-		if len(self.profiles) == 1:
-			# There's nothing other than the base config, which is always saved anyway.
+	def _markWriteProfileDirty(self, profile: ConfigObj):
+		if profile.name is None:
+			# The base config is always saved.
 			return
-		self._dirtyProfiles.add(self.profiles[-1].name)
+		name = profile.name
+		if name in self._profileCache:
+			# An active profile may have been deleted during an atomic switch.
+			self._dirtyProfiles.add(name)
 
 	def _writeProfileToFile(self, filename: str, profile: ConfigObj):
 		with FaultTolerantFile(filename) as f:
@@ -743,6 +770,8 @@ class ConfigManager:
 		@type factoryDefaults: bool
 		"""
 		pre_configReset.notify(factoryDefaults=factoryDefaults)
+		self._pendingProfiles = None
+		self._pendingProfileSwitchNotify = False
 		self.profiles = []
 		self._profileCache.clear()
 		self._dirtyProfiles.clear()
@@ -791,10 +820,6 @@ class ConfigManager:
 		from globalCommands import ConfigProfileActivationCommands
 
 		ConfigProfileActivationCommands.removeScriptForProfile(name)
-		try:
-			del self._profileCache[name]
-		except KeyError:
-			pass
 		# Remove any triggers associated with this profile.
 		allTriggers = self.triggersToProfiles
 		# You can't delete from a dict while iterating through it.
@@ -803,23 +828,20 @@ class ConfigManager:
 			for trigSpec in delTrigs:
 				del allTriggers[trigSpec]
 			self.saveProfileTriggers()
-		# Remove the profile from the dirty profile list
-		try:
-			self._dirtyProfiles.remove(name)
-		except KeyError:
-			# The profile wasn't dirty.
-			pass
 		# Check if this profile was active.
 		delProfile = None
-		for index in range(len(self.profiles) - 1, -1, -1):
-			profile = self.profiles[index]
+		profiles = self._getProfileStack()
+		for index in range(len(profiles) - 1, -1, -1):
+			profile = profiles[index]
 			if profile.name == name:
 				# Deactivate it.
-				del self.profiles[index]
+				del profiles[index]
 				delProfile = profile
+		self._handleProfileSwitch(profiles)
+		self._profileCache.pop(name, None)
+		self._dirtyProfiles.discard(name)
 		if not delProfile:
 			return
-		self._handleProfileSwitch()
 		if self._suspendedTriggers:
 			# Remove any suspended triggers referring to this profile.
 			# As the dictionary changes during iteration, wrap this inside a list call.
@@ -896,13 +918,14 @@ class ConfigManager:
 			trigger._profile = None
 			raise
 		profile.triggered = True
-		if len(self.profiles) > 1 and self.profiles[-1].manual:
+		profiles = self._getProfileStack()
+		if len(profiles) > 1 and profiles[-1].manual:
 			# There's a manually activated profile.
 			# Manually activated profiles must be at the top of the stack, so insert this one below.
-			self.profiles.insert(-1, profile)
+			profiles.insert(-1, profile)
 		else:
-			self.profiles.append(profile)
-		self._handleProfileSwitch(trigger._shouldNotifyProfileSwitch)
+			profiles.append(profile)
+		self._handleProfileSwitch(profiles, trigger._shouldNotifyProfileSwitch)
 
 	def _triggerProfileExit(self, trigger):
 		"""Called by L{ProfileTrigger.exit}}}."""
@@ -922,13 +945,14 @@ class ConfigManager:
 			return
 		log.debug("Deactivating triggered profile %s" % trigger.profileName)  # noqa: UP031
 		profile.triggered = False
+		profiles = self._getProfileStack()
 		try:
-			self.profiles.remove(profile)
+			profiles.remove(profile)
 		except ValueError:
 			# This is probably due to the user resetting the configuration.
 			log.debugWarning("Profile not active when exiting trigger")
 			return
-		self._handleProfileSwitch(trigger._shouldNotifyProfileSwitch)
+		self._handleProfileSwitch(profiles, trigger._shouldNotifyProfileSwitch)
 
 	@contextlib.contextmanager
 	def atomicProfileSwitch(self):
@@ -939,14 +963,18 @@ class ConfigManager:
 		e.g. unnecessarily switching speech synthesizers or braille displays.
 		This is a context manager to be used with the C{with} statement.
 		"""
+		wasHandlingProfileSwitch = self._shouldHandleProfileSwitch
 		self._shouldHandleProfileSwitch = False
 		try:
 			yield
 		finally:
-			self._shouldHandleProfileSwitch = True
-			if self._pendingHandleProfileSwitch:
-				self._handleProfileSwitch()
-				self._pendingHandleProfileSwitch = False
+			self._shouldHandleProfileSwitch = wasHandlingProfileSwitch
+			if wasHandlingProfileSwitch and self._pendingProfiles is not None:
+				profiles = self._pendingProfiles
+				shouldNotify = self._pendingProfileSwitchNotify
+				self._pendingProfiles = None
+				self._pendingProfileSwitchNotify = False
+				self._handleProfileSwitch(profiles, shouldNotify)
 
 	def suspendProfileTriggers(self):
 		"""Suspend handling of profile triggers.
@@ -980,14 +1008,15 @@ class ConfigManager:
 		if not self.profileTriggersEnabled:
 			return
 		self.profileTriggersEnabled = False
-		for profile in self.profiles[1:]:
+		profiles = self._getProfileStack()
+		for profile in profiles[1:]:
 			profile.triggered = False
-		if len(self.profiles) > 1 and self.profiles[-1].manual:
-			del self.profiles[1:-1]
+		if len(profiles) > 1 and profiles[-1].manual:
+			del profiles[1:-1]
 		else:
-			del self.profiles[1:]
+			del profiles[1:]
 		self._suspendedTriggers = None
-		self._handleProfileSwitch()
+		self._handleProfileSwitch(profiles)
 
 	def enableProfileTriggers(self):
 		"""Re-enable profile triggers after they were previously disabled."""
@@ -1153,7 +1182,7 @@ class ConfigValidationData:
 
 
 class AggregatedSection:
-	"""A view of a section of configuration which aggregates settings from all active profiles."""
+	"""A view of a section of configuration which aggregates settings from a stack of profiles."""
 
 	# TODO: move to config.aggregatedSection
 
@@ -1163,12 +1192,16 @@ class AggregatedSection:
 		path: tuple[str, ...],
 		spec: ConfigObj,
 		profiles: list[ConfigObj],
+		*,
+		_rootSection: "AggregatedSection | None" = None,
 	):
 		self.manager = manager
 		self.path = path
 		self._spec = spec
 		#: The relevant section in all of the profiles.
 		self.profiles = profiles
+		# Keep writes bound to this view even if the manager switches profiles.
+		self._rootSection = _rootSection if _rootSection is not None else self
 		self._cache: aggregatedSection._cacheT = {}
 
 	@staticmethod
@@ -1237,7 +1270,13 @@ class AggregatedSection:
 			self._spec[key] = {}
 			# ConfigObj might have mutated this into a configobj.Section.
 			spec = self._spec[key]
-		sect = self._cache[key] = AggregatedSection(self.manager, self.path + (key,), spec, subProfiles)
+		sect = self._cache[key] = AggregatedSection(
+			self.manager,
+			self.path + (key,),
+			spec,
+			subProfiles,
+			_rootSection=self._rootSection,
+		)
 		return sect
 
 	def __contains__(self, key):
@@ -1331,7 +1370,7 @@ class AggregatedSection:
 			# Update the profile.
 			updateSect = self._getUpdateSection()
 			updateSect[key] = val
-			self.manager._markWriteProfileDirty()
+			self.manager._markWriteProfileDirty(self._rootSection.profiles[-1])
 			# ConfigObj will have mutated this into a configobj.Section.
 			val = updateSect[key]
 			cache = self._cache.get(key)
@@ -1369,7 +1408,7 @@ class AggregatedSection:
 
 		# Set this value in the most recently activated profile.
 		self._getUpdateSection()[key] = val
-		self.manager._markWriteProfileDirty()
+		self.manager._markWriteProfileDirty(self._rootSection.profiles[-1])
 		self._cache[key] = val
 
 		# Alias old config items to their new counterparts for backwards compatibility.
@@ -1446,7 +1485,7 @@ class AggregatedSection:
 			# This section already exists in the profile.
 			return profile
 
-		section = self.manager.rootSection
+		section = self._rootSection
 		profile = section.profiles[-1]
 		for part in self.path:
 			parentProfile = profile

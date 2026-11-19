@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from collections.abc import Callable, Generator  # noqa: I001
 import enum
@@ -911,6 +911,7 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		spec = configobj.ConfigObj({"someBool": "boolean(default=True)"})
 		self.baseConfig = configobj.ConfigObj({"someBool": True})
 		self.profile = configobj.ConfigObj()
+		self.profile.name = "test"
 		self.testSection = AggregatedSection(
 			manager=manager,
 			path=(),
