@@ -3306,7 +3306,7 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
-		smallCapsText = _("Small Caps (Microsoft Word with UIA)")
+		smallCapsText = _("Small Caps")
 		self.smallCapsCheckBox = fontGroup.addItem(
 			wx.CheckBox(fontGroupBox, label=smallCapsText),
 		)
