@@ -508,6 +508,7 @@ formatConfigFlagsMap = {
 	"reportSuperscriptsAndSubscripts": 0x80000,
 	"reportGraphics": 0x100000,
 	"reportHighlight": 0x200000,
+	"reportSmallCaps": 0x400000,
 }
 formatConfigFlag_includeLayoutTables = 0x20000
 

@@ -10,6 +10,8 @@
 * Added context menu and shortcuts support to the Symbol Pronunciation dialog. (#20692, @amirmahdifard)
 * In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
 * Two new unassigned commands have been added to open the NVDA Settings dialog in the Math and in the Document Navigation categories. (#21158, @CyrilleB79)
+* Small Caps has been added to Document Formatting settings.
+Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Changes
 
