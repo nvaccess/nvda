@@ -71,7 +71,7 @@ The archive will be placed in the output directory.
 
 ### Building developer documentation
 
-Refer to [building developer documentation](./buildingDevDocumentation.md).
+Refer to [building developer documentation](./documentation/buildingDevDocumentation.md).
 
 ### Generate debug symbols archive
 
