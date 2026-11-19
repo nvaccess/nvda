@@ -72,6 +72,9 @@ The base cache request is attached to all event handler registrations and to the
 so event senders and elements fetched through them carry these properties in their element cache.
 """
 
+_focusEventCachedPropertyIDs = baseCachePropertyIDs - {UIA.UIA_NamePropertyId}
+"""UIA property IDs for which the NVDAObject created for a focus event uses the sender's cached values."""
+
 #: The window class name for Microsoft Word documents.
 # Microsoft Word's UI Automation implementation
 # also exposes this value as the document UIA element's classname property.
@@ -926,7 +929,11 @@ class UIAHandler(COMObject):
 				)
 			return
 		try:
-			obj = NVDAObjects.UIA.UIA(windowHandle=window, UIAElement=sender)
+			obj = NVDAObjects.UIA.UIA(
+				windowHandle=window,
+				UIAElement=sender,
+				initialUIACachedPropertyIDs=_focusEventCachedPropertyIDs,
+			)
 		except Exception:  # noqa: BLE001
 			if _isDebug():
 				log.debugWarning(
