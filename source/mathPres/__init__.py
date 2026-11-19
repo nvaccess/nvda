@@ -76,6 +76,7 @@ class MathPresentationProvider:
 speechProvider: MathPresentationProvider | None = None
 brailleProvider: MathPresentationProvider | None = None
 interactionProvider: MathPresentationProvider | None = None
+_mathCATAvailable: bool = True
 
 
 def registerProvider(
@@ -109,14 +110,21 @@ def terminate() -> None:
 
 
 def initialize() -> None:
+	global _mathCATAvailable
+	try:
+		from .MathCAT import MathCAT
+	except Exception:
+		_mathCATAvailable = False
+		log.warning("MathCAT not available.", exc_info=True)
+		return
+	_mathCATAvailable = True
 	# Register builtin providers if a plugin hasn't registered others.
 	if not speechProvider or not brailleProvider or not interactionProvider:
-		from .MathCAT import MathCAT
-
 		try:
 			provider = MathCAT.MathCAT()
-		except:  # noqa: E722
-			log.warning("MathCAT not available.")
+		except Exception:
+			_mathCATAvailable = False
+			log.warning("MathCAT not available.", exc_info=True)
 		else:
 			MathCAT.MathCATInteraction._createNavScripts()
 			registerProvider(
