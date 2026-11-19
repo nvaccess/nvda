@@ -1,30 +1,29 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2013-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
-# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Cyrille Bougot, Justin Coffin
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import itertools  # noqa: I001
+import itertools
 import re
+from locale import strxfrm
 from typing import Union
 
-import wx
-from wx.lib.mixins.treemixin import VirtualTree
-import wx.lib.newevent
-import gui
-from logHandler import log
-
-import keyboardHandler
-from . import guiHelper
 import inputCore
+import keyboardHandler
 import keyLabels
-from locale import strxfrm
+import wx
+import wx.lib.newevent
+from logHandler import log
+from wx.lib.mixins.treemixin import VirtualTree
+
+import gui
+
+from . import guiHelper
 from .message import DialogType, MessageDialog, ReturnCode
 from .settingsDialogs import SettingsDialog
-
 
 #: Type for structure returned by inputCore
 _ScriptsModel = dict[
@@ -152,11 +151,11 @@ class _ScriptVM:
 class _CategoryGestureRemoval:
 	"""Allows removing every gesture from the scripts of a category at once.
 	The category and its scripts are kept; only their gestures are removed.
-	Only the scripts in L{scripts} are affected, so a filtered category only removes gestures
+	Only the scripts in :attr:`scripts` are affected, so a filtered category only removes gestures
 	from the scripts that match the filter.
 	"""
 
-	scripts: list
+	scripts: "list[_ScriptVMTypes]"
 
 	def _getRemovableGestures(self) -> list[tuple[_ScriptVM, _GestureVM]]:
 		return [
@@ -678,7 +677,11 @@ class InputGesturesDialog(SettingsDialog):
 		self.changeButton.Disable()
 
 		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
-		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
+		self._removeGestureLabel = _("&Remove")
+		# Translators: The label of a button to remove all gestures from the selected category
+		# in the Input Gestures dialog.
+		self._removeAllGesturesLabel = _("&Remove all gestures")
+		self.removeButton = bHelper.addButton(self, label=self._removeGestureLabel)
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
 
@@ -789,6 +792,13 @@ class InputGesturesDialog(SettingsDialog):
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.changeButton.Enabled = bool(item and item.canChange and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
+		if isinstance(item, _CategoryGestureRemoval):
+			removeLabel = self._removeAllGesturesLabel
+		else:
+			removeLabel = self._removeGestureLabel
+		if self.removeButton.GetLabel() != removeLabel:
+			self.removeButton.SetLabel(removeLabel)
+			self.Layout()
 
 	def onAdd(self, evt: wx.CommandEvent):
 		if inputCore.manager._captureFunc:
@@ -951,8 +961,6 @@ class InputGesturesDialog(SettingsDialog):
 				return
 			catVM.removeAllGestures()
 		elif gestureVM is not None:  # removing a gesture
-			if not self._confirmGestureRemoval(scriptVM, gestureVM):
-				return
 			scriptVM.removeGesture(gestureVM)
 		elif isinstance(scriptVM, _EmulatedGestureVM):  # removing a emulated KB gesture
 			if not isinstance(catVM, _EmuCategoryVM):
@@ -968,34 +976,6 @@ class InputGesturesDialog(SettingsDialog):
 		self.tree.doRefresh()
 		self._refreshButtonState()
 
-	def _confirmRemoval(self, message: str) -> bool:
-		confirmationDialog = (
-			MessageDialog(
-				self,
-				message,
-				# Translators: The title of the prompt for confirmation to remove gestures
-				# in the Input Gestures dialog.
-				_("Are you sure?"),
-				DialogType.WARNING,
-				buttons=None,
-			)
-			.addNoButton(defaultFocus=True, fallbackAction=True)
-			.addYesButton()
-		)
-		return confirmationDialog.ShowModal() == ReturnCode.YES
-
-	def _confirmGestureRemoval(self, scriptVM: _ScriptVMTypes, gestureVM: _GestureVM) -> bool:
-		return self._confirmRemoval(
-			# Translators: A prompt for confirmation to remove a gesture from a command
-			# in the Input Gestures dialog.
-			# {gesture} is replaced with the gesture, e.g. NVDA+shift+= (desktop keyboard).
-			# {command} is replaced with the name of the command, e.g. Zoom in.
-			_("Do you want to remove the input gesture {gesture} from {command}?").format(
-				gesture=gestureVM.displayName,
-				command=scriptVM.displayName,
-			),
-		)
-
 	def _confirmCategoryGestureRemoval(self, catVM: _CategoryVMTypes) -> bool:
 		gestureCount = catVM.getRemovableGestureCount()
 		if not gestureCount:
@@ -1010,7 +990,20 @@ class InputGesturesDialog(SettingsDialog):
 			"You will not be able to use these commands until you assign them new input gestures.",
 			gestureCount,
 		).format(count=gestureCount, category=catVM.displayName)
-		return self._confirmRemoval(message)
+		confirmationDialog = (
+			MessageDialog(
+				self,
+				message,
+				# Translators: The title of the prompt for confirmation to remove all gestures from a category
+				# in the Input Gestures dialog.
+				_("Are you sure?"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
 
 	def onReset(self, evt):
 		if (

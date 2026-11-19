@@ -4557,9 +4557,8 @@ You can also use the context menu to add, change, or remove gestures for each co
 To change an input gesture of a command, select the gesture and press the change button.
 Then, perform the new input gesture you wish to associate; that will replace the old one.
 To remove a gesture from a command, you can press the `delete` key or the remove button.
-NVDA will ask you to confirm before removing the gesture.
 
-To remove all gestures from every command in a category, select the category and press the `delete` key or the remove button, or choose "Remove all gestures" from the context menu.
+To remove all gestures from every command in a category, select the category and press the `delete` key or the "Remove all gestures" button, or choose "Remove all gestures" from the context menu.
 This is useful when the gestures of a feature you don't use conflict with those of an add-on.
 NVDA will ask you to confirm before removing the gestures.
 The category and its commands are kept, so you can assign new gestures to them later.
