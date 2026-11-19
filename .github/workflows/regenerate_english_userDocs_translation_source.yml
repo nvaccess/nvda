@@ -22,6 +22,18 @@ jobs:
     runs-on: windows-2025-vs2026
 
     steps:
+    - name: Early exit
+      shell: bash
+      run: |
+        if [ -z "${{ vars.CROWDIN_PROJECT_ID }}" ]; then
+          echo "CROWDIN_PROJECT_ID is not set. Exiting workflow."
+          gh run cancel ${{ github.run_id }}
+          gh run watch ${{ github.run_id }}
+        fi
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
