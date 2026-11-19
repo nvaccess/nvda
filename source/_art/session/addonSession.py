@@ -13,12 +13,14 @@ host process, loaded add-on, granted capabilities, and the control connection be
 from __future__ import annotations
 
 import enum
+import itertools
 import queue
 import threading
 import time
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Final
 
+import rpyc
 from logHandler import log
 
 from ..transport import Connection
@@ -344,23 +346,9 @@ class AddonSession:
 				# The session may have been stopped, or failed, during the round trip.
 				if (state := self._state) is SessionState.STARTING:
 					print("start: Started successfully")
-					send = queue.Queue(maxsize=self._consecutiveHeartbeatMissLimit)
-					watchdog = threading.Thread(
-						target=self._watchHeartbeats,
-						args=(send,),
-						daemon=True,
-						name="ART heartbeat watchdog",
-					)
-					sender = threading.Thread(
-						target=self._sendHeartbeats,
-						args=(send,),
-						daemon=True,
-						name="ART heartbeat sender",
-					)
 					self._hostRoot = hostRoot
 					self._setState(SessionState.READY)
-					watchdog.start()
-					sender.start()
+					self._startWatchdog()
 					log.debug("ART add-on session is ready")
 					return
 		# Stopping the host blocks this thread,
@@ -411,112 +399,89 @@ class AddonSession:
 		else:
 			self._fail(f"Host exited unexpectedly with status {exitStatus}")
 
-	def _watchHeartbeats(self, send: queue.Queue) -> None:
-		import itertools
+	def _startWatchdog(self) -> None:
+		send = queue.Queue(maxsize=self._consecutiveHeartbeatMissLimit)
+		watchdog = threading.Thread(
+			target=self._watchHeartbeats,
+			args=(send,),
+			daemon=True,
+			name="ART heartbeat watchdog",
+		)
+		sender = threading.Thread(
+			target=self._sendHeartbeats,
+			args=(send,),
+			daemon=True,
+			name="ART heartbeat sender",
+		)
+		watchdog.start()
+		sender.start()
 
+	def _watchHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
 		idGen = itertools.count()
 		missed = 0
 		fail = False
-		print(
-			f"_watchHeartbeats: entering ({self._heartbeatInterval=}, {self._consecutiveHeartbeatMissLimit=})...",
-		)
 		try:
-			print("_watchHeartbeats: acquiring _heartbeatCond...")
 			with self._heartbeatCond:
-				print("_watchHeartbeats: _heartbeatCond acquired. Checking state")
 				if self._state is not SessionState.READY:
-					print(f"_watchHeartbeats: No-longer ready ({self._state=}); returning...")
 					return
 				while True:
-					print("_watchHeartbeats: start of loop...")
 					id = next(idGen)
-					deadline = time.monotonic()
-					print(f"_watchHeartbeats: now={deadline}")
-					deadline += self._heartbeatInterval
-					print(f"_watchHeartbeats: sending request for heartbeat with {id=} and {deadline=}...")
+					deadline = time.monotonic() + self._heartbeatInterval
 					try:
 						send.put_nowait((id, deadline))
 					except queue.Full:
 						fail = True
 						break
-					print("_watchHeartbeats: waiting...")
 					self._heartbeatCond.wait_for(
 						lambda id=id: self._heartbeatAckId == id or self._state is not SessionState.READY,
 						timeout=max(0, deadline - time.monotonic()),
 					)
 					if self._state is not SessionState.READY:
-						print(f"_watchHeartbeats: No-longer ready ({self._state=}); returning...")
 						break
 					if self._heartbeatAckId != id:
-						print(
-							f"_watchHeartbeats: acknowledgement does not match: want {id}, got {self._heartbeatAckId}. Setting misses to {missed + 1}",
-						)
 						missed += 1
-						if missed > self._consecutiveHeartbeatMissLimit:
-							print(
-								f"_watchHeartbeats: {missed=} is greater than {self._consecutiveHeartbeatMissLimit=}; failing...",
-							)
+						if missed >= self._consecutiveHeartbeatMissLimit:
 							fail = True
 							break
 					else:
-						print("_watchHeartbeats: Received a response in time, resetting misses...")
 						missed = 0
-					print("_watchHeartbeats: waiting to the end of this period...")
 					if self._heartbeatCond.wait_for(
 						lambda: self._state is not SessionState.READY,
 						timeout=max(0, deadline - time.monotonic()),
 					):
-						print(f"_watchHeartbeats: No-longer ready ({self._state=}); returning...")
 						break
-					print("_watchHeartbeats: end of loop...")
 		finally:
-			print("_watchHeartbeats: Shutting down the send queue...")
 			send.shutdown(immediate=True)
 			if fail:
-				print("_watchHeartbeats: failing session...")
 				self._fail("Add-on stopped responding.")
-			print("_watchHeartbeats: Done")
 
-	def _sendHeartbeats(self, send: queue.Queue) -> None:
-		print("_sendHeartbeats: entering...")
+	def _sendHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
 		while True:
-			print("_sendHeartbeats: loop start")
 			try:
-				print("_sendHeartbeats: waiting for heartbeat request message...")
 				id, deadline = send.get()
-				print(f"_sendHeartbeats: got request {id=}, {deadline=}")
 			except queue.ShutDown:
-				print("_sendHeartbeats: queue was shut down")
 				break
 			if deadline <= time.monotonic():
-				print("_sendHeartbeats: deadline has passed; skipping...")
 				continue
-			print("_sendHeartbeats: creating callback...")
-			callback = self._heartbeatCallbackFactory(id, deadline)
-			# Make async request, handler=HANDLE_PING, data=id, callback=callback
-			# if failed due to closed conn, bale
-			# otherwise, log and continue
-			print("_sendHeartbeats: calling callback in background thread...")
-			threading.Thread(target=callback, daemon=True).start()
-			print("_sendHeartbeats: loop end")
-		print("_sendHeartbeats: done")
+			req = self._conn._conn.async_request(rpyc.core.consts.HANDLE_PING, id)
+			req.add_callback(self._heartbeatCallbackFactory(id, deadline))
 
-	def _heartbeatCallbackFactory(self, id, deadline) -> Callable[[], None]:
-		def callback() -> None:
-			print("Heartbeat callback: acquiring _heartbeatCond...")
+	def _heartbeatCallbackFactory(
+		self,
+		id: int,
+		deadline: float,
+	) -> Callable[[rpyc.core.async_.AsyncResult], None]:
+		def callback(res: rpyc.core.async_.AsyncResult) -> None:
 			with self._heartbeatCond:
-				print("Heartbeat callback: acquired _heartbeatCond; checking prereqs...")
 				if not (
 					self._state is SessionState.READY
-					# check that response is successful
-					# check that response data matches id
 					and time.monotonic() < deadline
+					and res.ready
+					and not res.error
+					and res.value == id
 				):
-					print("Heartbeat callback: heartbeat was stale; returning...")
 					return
-				print("Heartbeat callback: setting _heartbeatAckId")
 				self._heartbeatAckId = id
-				print("Heartbeat callback: notifying _heartbeatCond...")
 				self._heartbeatCond.notify_all()
 
 		return callback

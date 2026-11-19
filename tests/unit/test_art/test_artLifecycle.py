@@ -14,6 +14,7 @@ import threading
 import unittest
 from collections.abc import Callable
 from functools import partial
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import rpyc
@@ -817,3 +818,67 @@ class TestHeartbeat(unittest.TestCase):
 				else:
 					session._heartbeatCond.notify_all.assert_not_called()
 			session._heartbeatCond.reset_mock()
+
+	@staticmethod
+	def sideEffectFactory[**FP, **RP, RR](
+		factory: Callable[FP, Callable[RP, RR]],
+		sideEffect: Callable[[], Any],
+	) -> Callable[FP, Callable[RP, RR]]:
+		def outer(*args: FP.args, **kwargs: FP.kwargs) -> Callable[RP, RR]:
+			orig = factory(*args, **kwargs)
+
+			def inner(*args: RP.args, **kwargs: RP.kwargs) -> RR:
+				res = orig(*args, **kwargs)
+				sideEffect()
+				return res
+
+			return inner
+
+		return outer
+
+	@staticmethod
+	def ignorePings[T](after: int = 0) -> Callable[[rpyc.core.protocol.Connection, T], T | None]:
+		pingNum = 0
+
+		def handlePing[T](self: rpyc.core.protocol.Connection, data: T) -> T | None:
+			nonlocal pingNum
+			if pingNum < after:
+				pingNum += 1
+				return data
+			return None
+
+		return handlePing
+
+	def makeBody[T](
+		self,
+		pingHandler: Callable[[rpyc.core.protocol.Connection, T], Any],
+	) -> Callable[[Connection], None]:
+		self.release = threading.Event()
+		self.addCleanup(self.release.set)
+
+		def body(conn: Connection) -> None:
+			conn._conn._HANDLERS[rpyc.core.consts.HANDLE_PING] = pingHandler
+			entrypoint._signalReadiness(conn)
+			conn.bgEventLoop(daemon=True)
+			self.release.wait(timeout=_TIMEOUT)
+
+		return body
+
+	def test_heartbeatMissesFailSession(self):
+		with patch("_art.session.addonSession.time.monotonic", return_value=0) as mockMonotonic:
+			session = AddonSession(
+				ThreadHostController(run=makeHostRun(self.makeBody(self.ignorePings(after=1)), serve=False)),
+				heartbeatInterval=0.05,
+				consecutiveHeartbeatMissLimit=2,
+			)
+
+			def incMonotonic():
+				mockMonotonic.return_value += 1
+
+			session._heartbeatCallbackFactory = MagicMock(
+				side_effect=self.sideEffectFactory(session._heartbeatCallbackFactory, incMonotonic),
+			)
+			startWithin(self, session)
+			self.assertTrue(waitForState(session, SessionState.FAILED))
+		self.assertIn("stopped responding", session.failureReason)
+		self.assertEqual(session._heartbeatCallbackFactory.call_count, 3)
