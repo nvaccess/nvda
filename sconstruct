@@ -385,7 +385,8 @@ env.SConscript("cldrDict_sconscript", exports=["env", "sourceDir"])
 
 
 def signAllBinaries(target, source, env):
-	# Only files that contain executable code on Windows
+	# Only files that contain executable code on Windows.
+	# We must sign them all to comply with Smart App Control.
 	executablesToSign = (
 		"*.exe",  # Executables
 		"*.dll",  # DLLs
