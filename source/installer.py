@@ -1,37 +1,41 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2011-2026 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from collections.abc import Iterable  # noqa: I001
-import json
-import comtypes.client
 import ctypes
-from enum import auto, Enum
-import pathlib
-import winreg
-import time
+import json
 import os
-import tempfile
+import pathlib
 import shutil
-import winBindings.kernel32
-import shellapi
+import tempfile
+import time
+import winreg
+from collections.abc import Callable, Iterable, Iterator, Sequence
+from enum import Enum, auto
+from typing import Self
+
+import addonHandler
+import buildVersion
+import COMRegistrationFixes
+import comtypes.client
+import config
+import easeOfAccess
+import fileUtils
 import globalVars
 import languageHandler
-import config
-from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
-import fileUtils
-import versionInfo
-import buildVersion
-from logHandler import log
-import addonHandler
-import easeOfAccess
-import COMRegistrationFixes
-import winKernel
 import NVDAState
+import psutil
+import shellapi
+import versionInfo
+import winBindings.kernel32
+import winKernel
+from config.registry import NVDA_ADDON_PROG_ID, RegistryKey, _deleteKeyAndSubkeys
+from logHandler import log
 from NVDAState import WritePaths
+from utils._deprecate import MovedSymbol, RemovedSymbol, handleDeprecations
+from utils._progress import ProgressStep, ProgressTracker
 from utils.tempFile import _createEmptyTempFileForDeletingFile
-from utils._deprecate import handleDeprecations, MovedSymbol, RemovedSymbol
 
 _wsh = None
 
@@ -200,25 +204,40 @@ def getDocFilePath(fileName: str, installDir: str):
 			return tryPath
 
 
-def copyProgramFiles(destPath: str):
-	sourcePath = globalVars.appDir
-	detectUserConfig = True
+def _walkProgramFiles(sourcePath: str) -> Iterator[tuple[str, list[str]]]:
+	"""Walk the program files of an NVDA directory.
+
+	:param sourcePath: The NVDA directory.
+	:return: For each directory, its path relative to ``sourcePath`` and the names of the files to copy from it.
+	"""
 	for curSourceDir, subDirs, files in os.walk(sourcePath):
-		if detectUserConfig:
-			detectUserConfig = False
-			subDirs[:] = [
-				x for x in subDirs if os.path.basename(x).lower() not in ("userconfig", "systemconfig")
-			]
-		curDestDir = os.path.join(destPath, os.path.relpath(curSourceDir, sourcePath))
+		if curSourceDir == sourcePath:
+			subDirs[:] = [x for x in subDirs if x.lower() not in ("userconfig", "systemconfig")]
+			# Never copy nvda.exe as one of the other executables will be renamed later
+			files = [f for f in files if f.lower() != "nvda.exe"]
+		yield os.path.relpath(curSourceDir, sourcePath), files
+
+
+def copyProgramFiles(destPath: str, onFileCopied: Callable[[int, int], None] | None = None):
+	"""Copy the program files of the running copy of NVDA.
+
+	:param destPath: The directory to copy to.
+	:param onFileCopied: Called after each copied file with the number of files copied so far and the total number of files.
+	"""
+	sourcePath = globalVars.appDir
+	directories = list(_walkProgramFiles(sourcePath))
+	total = sum(len(fileNames) for _relDir, fileNames in directories)
+	copied = 0
+	for relDir, fileNames in directories:
+		curSourceDir = os.path.normpath(os.path.join(sourcePath, relDir))
+		curDestDir = os.path.normpath(os.path.join(destPath, relDir))
 		if not os.path.isdir(curDestDir):
 			os.makedirs(curDestDir)
-		for f in files:
-			# Never copy nvda.exe as one of the other executables will be renamed later
-			if sourcePath == curSourceDir and f.lower() == "nvda.exe":
-				continue
-			sourceFilePath = os.path.join(curSourceDir, f)
-			destFilePath = os.path.join(destPath, os.path.relpath(sourceFilePath, sourcePath))
-			tryCopyFile(sourceFilePath, destFilePath)
+		for f in fileNames:
+			tryCopyFile(os.path.join(curSourceDir, f), os.path.join(curDestDir, f))
+			copied += 1
+			if onFileCopied is not None:
+				onFileCopied(copied, total)
 
 
 def copyUserConfig(destPath: str):
@@ -598,7 +617,7 @@ def _unregisterEaseOfAccessApp():
 		log.debug("Ease of Access app key not found. Nothing to unregister.")
 	try:
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
-	except OSError:
+	except (OSError, TypeError):
 		log.debug("Could not disable auto start on logon screen.")
 
 
@@ -821,28 +840,53 @@ def tryRemoveFile(
 	raise RetriableFailure("File %s could not be removed" % path)  # noqa: UP031
 
 
-def tryCopyFile(sourceFilePath: str, destFilePath: str):
+def tryCopyFile(
+	sourceFilePath: str,
+	destFilePath: str,
+	numRetries: int = 6,
+	retryInterval: float = 0.5,
+) -> None:
+	"""Copy a file, retrying initial-copy failures before using the overwrite fallback.
+
+	:param sourceFilePath: The path of the file to copy.
+	:param destFilePath: The destination path for the copied file.
+	:param numRetries: The maximum number of initial copy attempts.
+	:param retryInterval: The time in seconds between initial copy attempts.
+	:raises OSError: If the file cannot be copied after all attempts.
+	:raises RetriableFailure: If an existing destination cannot be renamed.
+	"""
 	if not sourceFilePath.startswith("\\\\"):
 		sourceFilePath = "\\\\?\\" + sourceFilePath
 	if not destFilePath.startswith("\\\\"):
 		destFilePath = "\\\\?\\" + destFilePath
+
+	for attempt in range(numRetries):
+		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) != 0:
+			return
+
+		errorCode = ctypes.GetLastError()
+		log.debugWarning(
+			f"Unable to copy {sourceFilePath}, error {errorCode}, attempt {attempt + 1}/{numRetries}",
+		)
+		if os.path.exists(destFilePath):
+			break
+		# Allow transient source-file locks to clear before trying again.
+		time.sleep(retryInterval)
+	else:
+		raise OSError(f"error {errorCode} copying {sourceFilePath} to {destFilePath}")
+
+	tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
+	try:
+		os.replace(destFilePath, tempPath)
+	except OSError:
+		log.exception(f"Failed to rename {destFilePath} after failed overwrite")
+		raise RetriableFailure(f"Failed to rename {destFilePath} after failed overwrite")
+	winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
 	if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
 		errorCode = ctypes.GetLastError()
-		log.debugWarning("Unable to copy %s, error %d" % (sourceFilePath, errorCode))  # noqa: UP031
-		if not os.path.exists(destFilePath):
-			raise OSError("error %d copying %s to %s" % (errorCode, sourceFilePath, destFilePath))  # noqa: UP031
-		tempPath = _createEmptyTempFileForDeletingFile(dir=os.path.dirname(destFilePath))
-		try:
-			os.replace(destFilePath, tempPath)
-		except OSError:
-			log.error("Failed to rename %s after failed overwrite" % destFilePath, exc_info=True)  # noqa: G201, UP031
-			raise RetriableFailure("Failed to rename %s after failed overwrite" % destFilePath)  # noqa: UP031
-		winKernel.moveFileEx(tempPath, None, winKernel.MOVEFILE_DELAY_UNTIL_REBOOT)
-		if winBindings.kernel32.CopyFile(sourceFilePath, destFilePath, False) == 0:
-			errorCode = ctypes.GetLastError()
-			raise OSError(
-				"Unable to copy file %s to %s, error %d" % (sourceFilePath, destFilePath, errorCode),  # noqa: UP031
-			)
+		raise OSError(
+			f"Unable to copy file {sourceFilePath} to {destFilePath}, error {errorCode}",
+		)
 
 
 _nvdaExes = {
@@ -852,6 +896,83 @@ _nvdaExes = {
 	"nvda_dmp.exe",
 	"nvda_slave.exe",
 }
+
+
+def _getInstallDirs() -> list[str]:
+	"""Get the folders an installation replaces the NVDA executables in.
+
+	:return: The install folder, followed by the legacy x86 install folder when it exists separately.
+	"""
+	installDir = WritePaths.defaultInstallDir
+	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
+	dirs = [installDir]
+	if installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir:
+		dirs.append(installDirX86)
+	return dirs
+
+
+def _getRunningNVDAProcesses(installDirs: Sequence[str]) -> Iterator[psutil.Process]:
+	"""Find the processes running one of the NVDA executables from the install folders.
+	Processes in every session and of every user are included, as is any other copy of NVDA.
+	The current process is never included.
+	This needs no elevation.
+
+	:param installDirs: The folders to look in.
+	:return: An iterator over the processes found.
+	"""
+	exeNames = {os.path.normcase(exe) for exe in _nvdaExes}
+	exePaths = {
+		os.path.normcase(os.path.join(installDir, exe)) for installDir in installDirs for exe in _nvdaExes
+	}
+	for process in psutil.process_iter(["exe"]):
+		imagePath = process.info["exe"]
+		if process.pid == os.getpid() or not imagePath:
+			continue
+		normalizedPath = os.path.normcase(imagePath)
+		if normalizedPath in exePaths:
+			yield process
+		elif os.path.basename(normalizedPath) in exeNames:
+			log.debug(f"Ignoring {imagePath}, it is outside the install folders")
+
+
+def _waitForRunningNVDAProcesses(installDirs: Sequence[str], timeout: float = 3.0) -> list[psutil.Process]:
+	"""Wait for the processes found by :func:`_getRunningNVDAProcesses` to exit.
+	It polls whether the processes still run and needs no access to them.
+
+	:param installDirs: The folders to look in.
+	:param timeout: The maximum number of seconds to wait.
+	:return: The processes that are still running after the wait.
+	"""
+	processes = list(_getRunningNVDAProcesses(installDirs))
+	deadline = time.monotonic() + timeout
+	while True:
+		processes = [process for process in processes if process.is_running()]
+		if not processes or time.monotonic() >= deadline:
+			return processes
+		time.sleep(0.1)
+
+
+def _terminateProcesses(processes: Iterable[psutil.Process]) -> None:
+	"""Forcefully end processes.
+	This needs elevation to end processes of other users.
+	Failures are logged and do not stop the remaining processes from being terminated.
+
+	:param processes: The processes to end, as returned by :func:`psutil.process_iter` with the ``exe`` attribute.
+	"""
+	terminated: list[psutil.Process] = []
+	for process in processes:
+		log.info(f"Terminating process {process.pid} ({process.info['exe']})")
+		try:
+			process.kill()
+		except psutil.Error:
+			log.warning(f"Failed to terminate process {process.pid} ({process.info['exe']})", exc_info=True)
+		else:
+			terminated.append(process)
+	_gone, alive = psutil.wait_procs(terminated, timeout=2)
+	for process in alive:
+		log.warning(
+			f"Process {process.pid} ({process.info['exe']}) did not exit within 2 seconds of being terminated",
+		)
 
 
 def _revertGroupDelete(tempDir: str, installDir: str):
@@ -919,17 +1040,76 @@ def _deleteFileGroupOrFail(
 			log.debugWarning(f"Failed to remove temp directory {tempDir}", exc_info=True)
 
 
-def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = True) -> None:
+class _InstallStep(ProgressStep):
+	"""The steps of installing NVDA, as reported while installing."""
+
+	WAIT_FOR_RUNNING_COPIES = auto()
+	ELEVATE = auto()
+	REMOVE_PREVIOUS = auto()
+	COPY_FILES = auto()
+	REMOVE_OLD_FILES = auto()
+	REGISTER = auto()
+	FINISH = auto()
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: Reported while installing NVDA, when other copies of NVDA are given time to close.
+			_InstallStep.WAIT_FOR_RUNNING_COPIES: _("Waiting for other copies of NVDA to close"),
+			# Translators: Reported while installing NVDA, when Windows asks the user for administrative permissions.
+			_InstallStep.ELEVATE: _("Gaining administrative permissions"),
+			# Translators: Reported while installing NVDA, when the previous installation is being removed.
+			_InstallStep.REMOVE_PREVIOUS: _("Removing previous version"),
+			# Translators: Reported while installing NVDA, when the program files are being copied.
+			_InstallStep.COPY_FILES: _("Copying files"),
+			# Translators: Reported while installing NVDA, when files of the previous version are being removed.
+			_InstallStep.REMOVE_OLD_FILES: _("Removing old files"),
+			# Translators: Reported while installing NVDA, when NVDA is being registered with Windows.
+			_InstallStep.REGISTER: _("Registering NVDA"),
+			# Translators: Reported while installing NVDA, when the installation is being finished.
+			_InstallStep.FINISH: _("Finishing"),
+		}
+
+	@property
+	def _startPercentages(self) -> dict[Self, int]:
+		return {
+			_InstallStep.WAIT_FOR_RUNNING_COPIES: 0,
+			_InstallStep.ELEVATE: 1,
+			_InstallStep.REMOVE_PREVIOUS: 5,
+			_InstallStep.COPY_FILES: 30,
+			_InstallStep.REMOVE_OLD_FILES: 70,
+			_InstallStep.REGISTER: 75,
+			_InstallStep.FINISH: 85,
+		}
+
+
+def install(
+	shouldCreateDesktopShortcut: bool = True,
+	shouldRunAtLogon: bool = True,
+	shouldTerminateRunningNVDA: bool = False,
+	*,
+	progressCallback: Callable[[int, int], None] | None = None,
+) -> None:
+	"""Install NVDA.
+
+	:param shouldCreateDesktopShortcut: Whether to create a desktop shortcut.
+	:param shouldRunAtLogon: Whether NVDA starts at logon.
+	:param shouldTerminateRunningNVDA: Whether to end the running NVDA processes in the install folders
+		before their executables are deleted.
+	:param progressCallback: Called with the current :class:`_InstallStep` and the overall percentage
+		whenever one of them changes.
+	"""
+	progress = ProgressTracker(_InstallStep, progressCallback)
 	prevInstallPath = WritePaths.installDir
-	installDir = WritePaths.defaultInstallDir
-	installDirX86 = WritePaths._installDirX86 or WritePaths._defaultInstallDirX86
+	installDirs = _getInstallDirs()
+	installDir = installDirs[0]
+	shouldCleanX86 = len(installDirs) > 1
+	installDirX86 = installDirs[1] if shouldCleanX86 else None
 	startMenuFolder = WritePaths.defaultStartMenuFolder
-	shouldCleanX86 = (
-		installDirX86 is not None and os.path.isdir(installDirX86) and installDirX86 != installDir
-	)
-	# Give some time for the installed NVDA (which may have been running on a secure screen)
-	# to shut down before we start deleting files.
-	time.sleep(1)
+	runningProcesses = _waitForRunningNVDAProcesses(installDirs, timeout=1)
+	if shouldTerminateRunningNVDA:
+		_terminateProcesses(runningProcesses)
+	progress.startStep(_InstallStep.REMOVE_PREVIOUS)
 
 	# Remove all the main executables always.
 	# We do this for two reasons:
@@ -959,7 +1139,8 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	removeOldProgramFiles(installDir)
 	if shouldCleanX86:
 		removeOldProgramFiles(installDirX86)
-	copyProgramFiles(installDir)
+	progress.startStep(_InstallStep.COPY_FILES)
+	copyProgramFiles(installDir, progress.stepProgress)
 	for f in ("nvda_UIAccess.exe", "nvda_noUIAccess.exe"):
 		f = os.path.join(installDir, f)
 		if os.path.isfile(f):
@@ -967,9 +1148,11 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 			break
 	else:
 		raise RuntimeError("No available executable to use as nvda.exe")
+	progress.startStep(_InstallStep.REMOVE_OLD_FILES)
 	removeOldLibFiles(installDir, rebootOK=True)
 	if shouldCleanX86:
 		removeOldLibFiles(installDirX86, rebootOK=True)
+	progress.startStep(_InstallStep.REGISTER)
 	registerInstallation(
 		installDir,
 		startMenuFolder,
@@ -977,6 +1160,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		shouldRunAtLogon,
 		NVDAState._configInLocalAppDataEnabled(),
 	)
+	progress.startStep(_InstallStep.FINISH)
 	if shouldCleanX86:
 		oldSystemConfigPath = os.path.join(installDirX86, "systemConfig")
 		if os.path.isdir(oldSystemConfigPath):

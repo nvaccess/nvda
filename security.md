@@ -2,7 +2,6 @@
 
 Please do not report security vulnerabilities through public GitHub issues.
 You can report security issues directly through [a GitHub Security Advisory](https://github.com/nvaccess/nvda/security/advisories/new).
-Please use [our advisory template](./projectDocs/issues/securityAdvisoryTemplate.md).
 Alternatively, please report security issues via an email to [info@nvaccess.org](mailto:info@nvaccess.org).
 
 You should receive an acknowledgement in the advisory or via email response within 3 business days.

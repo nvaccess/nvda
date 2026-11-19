@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2023-2026 NV Access Limited, Cyrille Bougot
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Functions to create speech sequences for shortcut keys."""
 
@@ -77,7 +77,10 @@ def _getKeyboardShortcutSpeech(keyboardShortcut: str) -> SpeechSequence:
 
 def shouldUseSpellingFunctionality() -> bool:
 	synth = getSynth()
-	return config.conf["speech"][synth.name]["useSpellingFunctionality"]
+	return (
+		CharacterModeCommand in synth.supportedCommands
+		and config.conf["speech"][synth.name]["useSpellingFunctionality"]
+	)
 
 
 def _getKeySpeech(key: str) -> SpeechSequence:

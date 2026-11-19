@@ -49,7 +49,7 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.13.15, 64-bit.
+[Python](https://www.python.org/), version 3.13.17, 64-bit.
 Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv
@@ -89,14 +89,16 @@ In this case, run `git submodule sync --recursive` to update the local submodule
 
 #### Run time dependencies
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `f1354994057fa9b85001675732e7fed2d437292b`
+* [eSpeak NG](https://github.com/nvaccess/espeak-ng), commit `b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc`
+  * We currently maintain a fork of eSpeak to remove commits which introduce regressions, in an effort to make a stable release quality version of eSpeak.
+  We can switch back if [espeak-ng/espeak-ng#2531](https://github.com/espeak-ng/espeak-ng/issues/2531) is resolved.
 * [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
 * [liblouis](http://www.liblouis.io/), version 3.39.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 48.2
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `9764cebcb1a75940e68fa83d6730ffaf0f669401`
-* brlapi Python bindings, version 0.8.7 or later, built with [GitHub Actions in the NV Access fork of the brlTTY repository](https://github.com/nvaccess/brltty/actions)
+* [BrlAPI Python bindings from BRLTTY](https://github.com/brltty/brltty), commit `34571edfcbe2d47a952fcab58587a9fa46b6e29e` (BrlAPI version 0.8.8), built against Python's limited API
 * lilli.dll, version 2.1.0.0
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.11
 * [Java Access Bridge 64 bit, from Zulu Community OpenJDK build 17.0.16+8 Zulu (17.60.17)](https://github.com/nvaccess/javaAccessBridge32-bin)

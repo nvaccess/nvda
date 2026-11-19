@@ -15,6 +15,16 @@ $releaseAssets = gh release view $env:GITHUB_REF_NAME `
   --json assets | ConvertFrom-Json
 $installerUrl = ($releaseAssets.assets | Where-Object { $_.name -like "*.exe" }).url
 
+# Sync winget-pkgs repository with upstream master branch before opening a PR
+$githubToken = $env:GH_TOKEN
+try {
+  # We need the user's GitHub token to sync the repository
+	$env:GH_TOKEN = $env:WINGET_CREATE_GITHUB_TOKEN
+	gh repo sync nvaccessAuto/winget-pkgs -b master
+} finally {
+	$env:GH_TOKEN = $githubToken
+}
+
 # Install wingetcreate and submit PR
 winget install --id Microsoft.WingetCreate --installer-type msix --source winget
 wingetcreate update $wingetPackageId `

@@ -160,19 +160,6 @@ class CustomCheckListBox(wx.CheckListBox):
 		super().__init__(*args, **kwargs)
 		# Register a custom wx.Accessible implementation to fix accessibility incompleties
 		self.SetAccessible(ListCtrlAccessible(self))
-		# Register ourself with ourself's selected event, so that we can notify winEvent of the state change.
-		self.Bind(wx.EVT_CHECKLISTBOX, self.notifyIAccessible)
-
-	def notifyIAccessible(self, evt):
-		# Notify winEvent that something changed.
-		# We must do this, so that NVDA receives a stateChange.
-		evt.Skip()
-		winUser.NotifyWinEvent(
-			winUser.EVENT_OBJECT_STATECHANGE,
-			self.Handle,
-			winUser.OBJID_CLIENT,
-			evt.Selection + 1,
-		)
 
 
 class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):

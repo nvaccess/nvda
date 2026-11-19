@@ -742,42 +742,58 @@ def nvdaControllerInternal_handleRemoteURL(url):
 		return -1
 
 
+@WINFUNCTYPE(c_long, c_long, c_long)
+def nvdaControllerInternal_progressNotify(step: int, percentage: int) -> int:
+	"""Handles progress reported by an operation that NVDA started in another process.
+
+	:param step: The step the operation is in.
+	:param percentage: The overall progress of the operation, from 0 to 100.
+	:return: :attr:`SystemErrorCodes.SUCCESS`
+	"""
+	from gui.progressDialog import _DeterminateProgressDialog
+
+	_DeterminateProgressDialog._handleRemoteProgress(step, percentage)
+	return SystemErrorCodes.SUCCESS
+
+
 class _RemoteLoader:
 	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
 		pipeReadOrig, self._pipeWrite = winKernel.CreatePipe(None, 0)
-		# Make the read end of the pipe inheritable.
-		pipeRead = self._duplicateAsInheritable(pipeReadOrig)
-		winKernel.closeHandle(pipeReadOrig)
-		# stdout/stderr of the loader process should go to nul.
-		# Though we aren't using pythonic functions to write to nul,
-		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
-		with open("nul", "wb") as nul:
-			nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
-		# Set the process to start with the appropriate std* handles.
-		si = winBindings.advapi32.STARTUPINFO(
-			dwFlags=winKernel.STARTF_USESTDHANDLES,
-			hSTDInput=pipeRead,
-			hSTDOutput=nulHandle,
-			hSTDError=nulHandle,
-		)
+		self._startProcess(loaderDir, pipeReadOrig)
+
+	def _startProcess(self, loaderDir: str, pipeReadOrig: int | None) -> None:
+		pipeRead = nulHandle = token = None
 		pi = winBindings.advapi32.PROCESS_INFORMATION()
-		# Even if we have uiAccess privileges, they will not be inherited by default.
-		# Therefore, explicitly specify our own process token, which causes them to be inherited.
-		token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 		try:
+			# Make the read end of the pipe inheritable.
+			pipeRead = self._duplicateAsInheritable(pipeReadOrig)
+			winKernel.closeHandle(pipeReadOrig)
+			pipeReadOrig = None
+			# stdout/stderr of the loader process should go to nul.
+			with open("nul", "wb") as nul:
+				nulHandle = self._duplicateAsInheritable(msvcrt.get_osfhandle(nul.fileno()))
+			# Set the process to start with the appropriate std* handles.
+			si = winBindings.advapi32.STARTUPINFO(
+				dwFlags=winKernel.STARTF_USESTDHANDLES,
+				hSTDInput=pipeRead,
+				hSTDOutput=nulHandle,
+				hSTDError=nulHandle,
+			)
+			# Even if we have uiAccess privileges, they will not be inherited by default.
+			# Therefore, explicitly specify our own process token, which causes them to be inherited.
+			token = winKernel.OpenProcessToken(winKernel.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED)
 			loaderPath = os.path.join(loaderDir, "nvdaHelperRemoteLoader.exe")
 			log.debug(f"Starting {loaderPath}")
 			winKernel.CreateProcessAsUser(token, None, loaderPath, None, None, True, 0, None, None, si, pi)
-			# We don't need the thread handle.
-			winKernel.closeHandle(pi.hThread)
 			self._process = pi.hProcess
 		except:
 			winKernel.closeHandle(self._pipeWrite)
 			raise
 		finally:
-			winKernel.closeHandle(pipeRead)
-			winKernel.closeHandle(token)
+			for handle in (pipeReadOrig, pipeRead, nulHandle, token, pi.hThread):
+				if handle:
+					winKernel.closeHandle(handle)
 
 	def _duplicateAsInheritable(self, handle):
 		curProc = winKernel.GetCurrentProcess()
@@ -796,6 +812,14 @@ class _RemoteLoader:
 		# Wait until it's dead.
 		winKernel.waitForSingleObject(self._process, winKernel.INFINITE)
 		winKernel.closeHandle(self._process)
+
+
+def _tryStartRemoteLoader(loaderDir: str) -> _RemoteLoader | None:
+	try:
+		return _RemoteLoader(loaderDir)
+	except OSError:
+		log.exception("Unable to start remote loader from %s", loaderDir)
+		return None
 
 
 def initialize() -> None:
@@ -838,6 +862,7 @@ def initialize() -> None:
 		("nvdaControllerInternal_drawFocusRectNotify", nvdaControllerInternal_drawFocusRectNotify),
 		("nvdaControllerInternal_openConfigDirectory", nvdaControllerInternal_openConfigDirectory),
 		("nvdaControllerInternal_handleRemoteURL", nvdaControllerInternal_handleRemoteURL),
+		("nvdaControllerInternal_progressNotify", nvdaControllerInternal_progressNotify),
 	]:
 		try:
 			_setDllFuncPointer(localLib.dll, f"_{name}", func)
@@ -849,10 +874,6 @@ def initialize() -> None:
 			)
 			raise e  # noqa: TRY201
 	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
-	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
-	if config.isAppX:
-		log.info("Remote injection disabled due to running as a Windows Store Application")
-		return
 	# Load nvdaHelperRemote.dll
 	h = winBindings.kernel32.LoadLibraryEx(
 		ReadPaths.nvdaHelperRemoteDll,
@@ -875,35 +896,34 @@ def initialize() -> None:
 	arch = winVersion.getWinVer().processorArchitecture
 	if arch == "AMD64":
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
-			_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
+			_remoteLoaderX86 = _tryStartRemoteLoader(ReadPaths.versionedLibX86Path)
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:
-			_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
+			_remoteLoaderAMD64 = _tryStartRemoteLoader(ReadPaths.versionedLibAMD64Path)
 	elif arch == "ARM64":
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibX86Path:
-			_remoteLoaderX86 = _RemoteLoader(ReadPaths.versionedLibX86Path)
+			_remoteLoaderX86 = _tryStartRemoteLoader(ReadPaths.versionedLibX86Path)
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibAMD64Path:  # noqa: SIM102
 			# Windows 10 on ARM does not support AMD64 emulation.
 			# Thus only start the AMD64 remote loader if on Windows 11 or above.
 			if winVersion.getWinVer() >= winVersion.WIN11:
-				_remoteLoaderAMD64 = _RemoteLoader(ReadPaths.versionedLibAMD64Path)
+				_remoteLoaderAMD64 = _tryStartRemoteLoader(ReadPaths.versionedLibAMD64Path)
 		if ReadPaths.coreArchLibPath != ReadPaths.versionedLibARM64Path:
-			_remoteLoaderARM64 = _RemoteLoader(ReadPaths.versionedLibARM64Path)
+			_remoteLoaderARM64 = _tryStartRemoteLoader(ReadPaths.versionedLibARM64Path)
 
 
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	if not config.isAppX:
-		if not _remoteLib.uninstallIA2Support():
-			log.debugWarning("Error uninstalling IA2 support")
-		if _remoteLib.injection_terminate() == 0:
-			raise RuntimeError("Error terminating NVDAHelperRemote")
-		_remoteLib = None
-		if _remoteLoaderAMD64:
-			_remoteLoaderAMD64.terminate()
-			_remoteLoaderAMD64 = None
-		if _remoteLoaderARM64:
-			_remoteLoaderARM64.terminate()
-			_remoteLoaderARM64 = None
+	if not _remoteLib.uninstallIA2Support():
+		log.debugWarning("Error uninstalling IA2 support")
+	if _remoteLib.injection_terminate() == 0:
+		raise RuntimeError("Error terminating NVDAHelperRemote")
+	_remoteLib = None
+	if _remoteLoaderAMD64:
+		_remoteLoaderAMD64.terminate()
+		_remoteLoaderAMD64 = None
+	if _remoteLoaderARM64:
+		_remoteLoaderARM64.terminate()
+		_remoteLoaderARM64 = None
 	localLib.nvdaHelperLocal_terminate()
 
 

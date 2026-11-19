@@ -205,7 +205,11 @@ class ScreenCurtain:
 
 		magnifierInstance = _magnifier.getMagnifier()
 		if magnifierInstance:
-			magnifierInstance.onScreenCurtainEnabled()
+			try:
+				magnifierInstance.onScreenCurtainEnabled()
+			except Exception:
+				# A magnifier failure must not prevent the screen from being hidden.
+				log.exception("Error stopping the magnifier before enabling the screen curtain")
 
 		log.debug("Enabling ScreenCurtain")
 		for attempt in range(self._MAX_ENABLE_RETRIES):
@@ -264,7 +268,11 @@ class ScreenCurtain:
 
 		magnifierInstance = _magnifier.getMagnifier()
 		if magnifierInstance:
-			magnifierInstance.onScreenCurtainDisabled()
+			try:
+				magnifierInstance.onScreenCurtainDisabled()
+			except Exception:
+				# The screen curtain is already disabled; a magnifier failure must not be reported as ours.
+				log.exception("Error restoring the magnifier after disabling the screen curtain")
 
 	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""
