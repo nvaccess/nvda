@@ -384,6 +384,22 @@ for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.
 env.SConscript("cldrDict_sconscript", exports=["env", "sourceDir"])
 
 
+def signAllBinaries(target, source, env):
+	# Only files that contain executable code on Windows
+	executablesToSign = (
+		"*.exe",  # Executables
+		"*.dll",  # DLLs
+		"*.pyd",  # Python C extensions
+		"*.pywinrt",  # Windows Runtime modules
+	)
+	bundlePath = target[0].abspath
+	for root, _dirs, files in os.walk(bundlePath):
+		for file in files:
+			if file.endswith(executablesToSign):
+				filePath = os.path.join(root, file)
+				env["signExec"]([File(filePath)], source, env)
+
+
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
 	buildVersionFn = os.path.join(str(source[0]), "_buildVersion.py")
@@ -418,20 +434,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 	action.append(buildCmd)
 
 	if certFile or apiSigningToken:
-		executablesToSign = (
-			"nvda_noUIAccess.exe",
-			"nvda_uiAccess.exe",
-			"nvda_slave.exe",
-			"l10nUtil.exe",
-			os.path.join("lib", version, "x86", "synthDriverHost-runtime", "nvda_synthDriverHost.exe"),
-		)
-		for prog in executablesToSign:
-			path = os.path.join(target[0].abspath, prog)
-			action.append(
-				lambda target, source, env, pathByVal=path: (
-					env["signExec"]([File(pathByVal)], source, env) if os.path.isfile(pathByVal) else None
-				),
-			)
+		action.append(signAllBinaries)
 
 	action.extend((Delete(buildVersionFn), Delete(importlib.util.cache_from_source(buildVersionFn))))
 
