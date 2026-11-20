@@ -11,6 +11,7 @@ Only facts that need a real process run against :class:`SubprocessHostController
 
 import pathlib
 import threading
+import time
 import unittest
 from collections.abc import Callable
 from functools import partial
@@ -769,6 +770,31 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 
 
+def assertThreadsStopped(
+	testCase: unittest.TestCase,
+	*threads: threading.Thread,
+	timeout: float = _TIMEOUT,
+) -> None:
+	"""Assert that multiple threads have started, and are no-longer alive.
+
+	For each thread in ``threads``, attempt to join the thread, then assert that it is no-longer alive.
+	Failure to join (most likely due to the thread not having been started), or the thread still being alive after joining it, will create a failing subtest on ``testCase``.
+	Threads are tested sequentially, with a shared deadline ``timeout`` seconds in the future.
+
+	:param testCase: The test case to fail if any of the threads hasn't started or finished.
+	:param threads: The threads to check.
+	:param timeout: How long to wait for all threads to complete, defaults to :const:`_TIMEOUT`.
+	"""
+	deadline = time.monotonic() + timeout
+	for thread in threads:
+		with testCase.subTest(thread=thread):
+			try:
+				thread.join(timeout=max(0, deadline - time.monotonic()))
+			except RuntimeError as exc:
+				testCase.fail(f"failed to join thread: {exc}")
+			testCase.assertFalse(thread.is_alive(), "thread is still alive")
+
+
 class TestHeartbeat(unittest.TestCase):
 	"""Noticing when a host has frozen."""
 
@@ -864,7 +890,7 @@ class TestHeartbeat(unittest.TestCase):
 
 		return body
 
-	def test_heartbeatMissesFailSession(self):
+	def test_consecutiveHeartbeatMissesFailSession(self):
 		session = AddonSession(
 			ThreadHostController(run=makeHostRun(self.makeBody(self.ignorePings(after=1)), serve=False)),
 			heartbeatInterval=1,
@@ -886,8 +912,7 @@ class TestHeartbeat(unittest.TestCase):
 
 			mockCallbackFactory.side_effect = self.sideEffectFactory(heartbeatCallbackFactory, incAndNotify)
 			startWithin(self, session)
-			print(", ".join(t.name for t in threading.enumerate()))
 			self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIn("stopped responding", session.failureReason)
 		self.assertEqual(mockCallbackFactory.call_count, 3)
-		print(", ".join(t.name for t in threading.enumerate()))
+		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
