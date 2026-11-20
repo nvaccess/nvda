@@ -92,6 +92,7 @@ __all__ = (
 	"GetStdHandle",
 	"GetSystemPowerStatus",
 	"GetThreadLocale",
+	"GetTickCount",
 	"GetTimeFormatEx",
 	"GetUserDefaultUILanguage",
 	"GlobalAlloc",
@@ -1762,3 +1763,13 @@ OpenFileMapping.argtypes = (
 	BOOL,  # bInheritHandle
 	LPCWSTR,  # lpName
 )
+
+GetTickCount = WINFUNCTYPE(None)(("GetTickCount", dll))
+"""
+Retrieves the number of milliseconds that have elapsed since the system was started, up to 49.7 days.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount
+"""
+GetTickCount.restype = DWORD
+GetTickCount.argtypes = ()

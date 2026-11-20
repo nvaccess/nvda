@@ -28,6 +28,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
   Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
 * NVDA can now start when an architecture-specific remote helper loader fails or WTS session information is unavailable.
   If lock-state queries fail, NVDA treats the session as unlocked, so lock-screen restrictions cannot be applied. (#19537, @akash07k)
+* NVDA is less likely to treat Control, Shift, Alt or Windows as held down after they have been released, for example after becoming unresponsive. (#21083)
 
 #### Braille
 
