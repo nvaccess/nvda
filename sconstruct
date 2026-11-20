@@ -493,6 +493,25 @@ def ZipArchiveAction(target, source, env):
 
 env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 
+# Plug-ins the launcher reserves and extracts before the install section runs.
+# Smart App Control blocks those extracted DLLs unless they are signed.
+# Sign copies so the NSIS tree under include/nsis stays unchanged.
+signedNsisPlugins = []
+signedNsisPluginsDefine: list[str] = []
+if certFile or apiSigningToken:
+	signedNsisPluginsDir = env.Dir("build/signedNsisPlugins")
+	nsisUnicodePluginsDir = env.Dir("include/nsis/NSIS/Plugins/x86-unicode")
+	for pluginName in ("System.dll", "Banner.dll"):
+		signedPlugin = env.Command(
+			signedNsisPluginsDir.File(pluginName),
+			nsisUnicodePluginsDir.File(pluginName),
+			Copy("$TARGET", "$SOURCE"),
+		)
+		env.AddPostAction(signedPlugin, env["signExec"])
+		signedNsisPlugins.append(signedPlugin)
+	env["SIGNED_NSIS_PLUGINS"] = signedNsisPluginsDir.abspath.replace("\\", "/")
+	signedNsisPluginsDefine = ["/DSIGNED_NSIS_PLUGINS=$SIGNED_NSIS_PLUGINS"]
+
 uninstFile = File("dist/uninstall.exe")
 uninstGen = env.Command(
 	File("uninstaller/uninstGen.exe"),
@@ -510,6 +529,7 @@ uninstGen = env.Command(
 			'/DVERSION_BUILD="$version_build"',
 			"/DUNINSTEXE=%s" % uninstFile.abspath,  # noqa: UP031
 			"/DINSTEXE=${TARGET.abspath}",
+			*signedNsisPluginsDefine,
 			"$SOURCE",
 		],
 	],
@@ -517,6 +537,8 @@ uninstGen = env.Command(
 uninstaller = env.Command(uninstFile, uninstGen, [uninstGen])
 if certFile or apiSigningToken:
 	env.AddPostAction(uninstaller, [env["signExec"]])
+if signedNsisPlugins:
+	env.Depends(uninstGen, signedNsisPlugins)
 
 devDocTargets = env.SConscript(
 	"projectDocs/dev/developerGuide/sconscript",
@@ -548,12 +570,15 @@ launcher = env.Command(
 			'/DVERSION_BUILD="$version_build"',
 			"/DNVDADistDir=${SOURCES[1].abspath}",
 			"/DLAUNCHEREXE=${TARGET.abspath}",
+			*signedNsisPluginsDefine,
 			"$SOURCE",
 		],
 	],
 )
 if certFile or apiSigningToken:
 	env.AddPostAction(launcher, [env["signExec"]])
+if signedNsisPlugins:
+	env.Depends(launcher, signedNsisPlugins)
 env.Alias("launcher", launcher)
 
 clientArchive = env.ZipArchive(
