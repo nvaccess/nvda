@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2026 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2016-2026 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot, Leonard de Ruijter, Nicolai Svendsen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -668,13 +668,26 @@ class WordDocumentTextInfo(UIATextInfo):
 		self._rangeObj = newRange
 		return actualMoved
 
-	def move(self, unit, direction, endPoint=None):
+	def move(self, unit: str, direction: int, endPoint: str | None = None) -> int:
+		"""Move by text units, stopping line movement at document boundaries."""
 		if unit == textInfos.UNIT_SENTENCE:
 			if endPoint is None:
 				return self._moveBySentenceRemote(direction)
 			return self._moveEndpointBySentenceRemote(endPoint, direction)
 		if endPoint is None:
-			res = super().move(unit, direction)
+			res: int
+			if unit == textInfos.UNIT_LINE and direction > 0 and self.isCollapsed:
+				# A collapsed UIA range can move beyond the final line to the document end.
+				# Expanding that position in Outlook can then wrap to the first line.
+				# Move an expanded line instead, preserving the original range at boundaries.
+				lineInfo: WordDocumentTextInfo = self.copy()
+				lineInfo.expand(unit)
+				res = super(WordDocumentTextInfo, lineInfo).move(unit, direction)
+				if res:
+					lineInfo.collapse()
+					self._rangeObj = lineInfo._rangeObj
+			else:
+				res = super().move(unit, direction)
 			if res == 0:
 				return 0
 			# Skip over end of Row marks
@@ -684,7 +697,8 @@ class WordDocumentTextInfo(UIATextInfo):
 			return res
 		return super().move(unit, direction, endPoint)
 
-	def expand(self, unit):
+	def expand(self, unit: str) -> None:
+		"""Expand to an enclosing text unit, correcting Word's final-line wraparound."""
 		match unit:
 			case textInfos.UNIT_CELL:
 				cell = self.obj._getTableCellCoordsCached(self, axis=None)
@@ -697,7 +711,17 @@ class WordDocumentTextInfo(UIATextInfo):
 				return
 			case _:
 				pass
+		lineAnchor: WordDocumentTextInfo | None = (
+			self.copy() if unit == textInfos.UNIT_LINE and self.isCollapsed else None
+		)
 		super().expand(unit)
+		if lineAnchor is not None and self.compareEndPoints(lineAnchor, "endToStart") < 0:
+			# At the document's final insertion point, Word can expand to the first line.
+			# Retry from the preceding character, which belongs to the actual final line.
+			log.debug("Word UIA line expansion moved before its anchor; retrying from the previous character")
+			self._rangeObj = lineAnchor._rangeObj
+			super().move(textInfos.UNIT_CHARACTER, -1)
+			super().expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
 		# Therefore work around this by detecting if the expand to line failed, and moving the end of the range to the end of the document manually.

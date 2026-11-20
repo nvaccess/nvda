@@ -35,6 +35,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 #### Applications
 
+* In classic Microsoft Outlook and Microsoft Word with UI Automation enabled, pressing Down Arrow on the last line or pressing Control+End now reads the final line instead of an earlier line. (#21047, @chojiro)
+
 #### Add-on Store
 
 #### Magnifier
