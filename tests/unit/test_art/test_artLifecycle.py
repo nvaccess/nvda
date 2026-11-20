@@ -112,6 +112,31 @@ def waitForState(session: AddonSession, *states: SessionState, timeout: float | 
 		return session._stateChanged.wait_for(lambda: session._state in states, timeout)
 
 
+def assertThreadsStopped(
+	testCase: unittest.TestCase,
+	*threads: threading.Thread,
+	timeout: float = _TIMEOUT,
+) -> None:
+	"""Assert that multiple threads have started, and are no-longer alive.
+
+	For each thread in ``threads``, attempt to join the thread, then assert that it is no-longer alive.
+	Failure to join (most likely due to the thread not having been started), or the thread still being alive after joining it, will create a failing subtest on ``testCase``.
+	Threads are tested sequentially, with a shared deadline ``timeout`` seconds in the future.
+
+	:param testCase: The test case to fail if any of the threads hasn't started or finished.
+	:param threads: The threads to check.
+	:param timeout: How long to wait for all threads to complete, defaults to :const:`_TIMEOUT`.
+	"""
+	deadline = time.monotonic() + timeout
+	for thread in threads:
+		with testCase.subTest(thread=thread):
+			try:
+				thread.join(timeout=max(0, deadline - time.monotonic()))
+			except RuntimeError as exc:
+				testCase.fail(f"failed to join thread: {exc}")
+			testCase.assertFalse(thread.is_alive(), "thread is still alive")
+
+
 class TestReadinessSignalReceipt(unittest.TestCase):
 	"""Core's handling of the readiness signal, independent of any connection."""
 
@@ -770,31 +795,6 @@ class TestChildExitDetectionProcessConformance(unittest.TestCase):
 		self.assertIsNotNone(self.controller.wait(_TIMEOUT))
 
 
-def assertThreadsStopped(
-	testCase: unittest.TestCase,
-	*threads: threading.Thread,
-	timeout: float = _TIMEOUT,
-) -> None:
-	"""Assert that multiple threads have started, and are no-longer alive.
-
-	For each thread in ``threads``, attempt to join the thread, then assert that it is no-longer alive.
-	Failure to join (most likely due to the thread not having been started), or the thread still being alive after joining it, will create a failing subtest on ``testCase``.
-	Threads are tested sequentially, with a shared deadline ``timeout`` seconds in the future.
-
-	:param testCase: The test case to fail if any of the threads hasn't started or finished.
-	:param threads: The threads to check.
-	:param timeout: How long to wait for all threads to complete, defaults to :const:`_TIMEOUT`.
-	"""
-	deadline = time.monotonic() + timeout
-	for thread in threads:
-		with testCase.subTest(thread=thread):
-			try:
-				thread.join(timeout=max(0, deadline - time.monotonic()))
-			except RuntimeError as exc:
-				testCase.fail(f"failed to join thread: {exc}")
-			testCase.assertFalse(thread.is_alive(), "thread is still alive")
-
-
 class TestHeartbeat(unittest.TestCase):
 	"""Noticing when a host has frozen."""
 
@@ -908,43 +908,51 @@ class TestHeartbeat(unittest.TestCase):
 
 		return body
 
-	def test_consecutiveHeartbeatMissesFailSession(self):
+	def makeSession(
+		self,
+		body: Callable[[Connection], None],
+		*,
+		serve: bool = False,
+		heartbeatInterval: float = 1,
+		consecutiveHeartbeatMissLimit: int = 2,
+	) -> AddonSession:
 		session = AddonSession(
-			ThreadHostController(run=makeHostRun(self.makeBody(self.ignorePings(after=1)), serve=False)),
-			heartbeatInterval=1,
-			consecutiveHeartbeatMissLimit=2,
+			ThreadHostController(run=makeHostRun(self.makeBody(body), serve=serve)),
+			heartbeatInterval=heartbeatInterval,
+			consecutiveHeartbeatMissLimit=consecutiveHeartbeatMissLimit,
 		)
 		heartbeatCondNotifyAll = session._heartbeatCond.notify_all
-		heartbeatCallbackFactory = session._heartbeatCallbackFactory
-		with (
-			patch.object(session._heartbeatCond, "notify_all"),
-			patch("time.monotonic", return_value=0) as mockMonotonic,
-			patch("threading._time", new=mockMonotonic),
-			patch.object(session, "_heartbeatCallbackFactory") as mockCallbackFactory,
-		):
+		mockMonotonic = MagicMock(spec_set=time.monotonic, return_value=0)
 
-			def incAndNotify() -> None:
-				mockMonotonic.return_value += 1
-				with session._heartbeatCond:
-					heartbeatCondNotifyAll()
+		def incAndNotify() -> None:
+			mockMonotonic.return_value += 1
+			with session._heartbeatCond:
+				heartbeatCondNotifyAll()
 
-			mockCallbackFactory.side_effect = self.sideEffectFactory(heartbeatCallbackFactory, incAndNotify)
-			startWithin(self, session)
-			self.assertTrue(waitForState(session, SessionState.FAILED))
+		session._heartbeatCallbackFactory = MagicMock(
+			side_effect=self.sideEffectFactory(session._heartbeatCallbackFactory, incAndNotify),
+		)
+		session._heartbeatCond.notify_all = MagicMock()
+		addonSessionMonotonicPatcher = patch("_art.session.addonSession.time.monotonic", new=mockMonotonic)
+		self.addCleanup(addonSessionMonotonicPatcher.stop)
+		addonSessionMonotonicPatcher.start()
+		threadingMonotonicPatcher = patch("threading._time", new=mockMonotonic)
+		self.addCleanup(threadingMonotonicPatcher.stop)
+		threadingMonotonicPatcher.start()
+		return session
+
+	def test_consecutiveHeartbeatMissesFailSession(self):
+		session = self.makeSession(self.ignorePings(after=1))
+		startWithin(self, session)
+		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIn("stopped responding", session.failureReason)
-		self.assertEqual(mockCallbackFactory.call_count, 3)
+		self.assertEqual(session._heartbeatCallbackFactory.call_count, 3)
 		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
 
 	def test_intermittentHeartbeatMissesAreDisregarded(self):
 		release = threading.Event()
 		self.addCleanup(release.set)
-		session = AddonSession(
-			ThreadHostController(
-				run=makeHostRun(self.makeBody(self.dropEverySecondPing(event=release)), serve=False),
-			),
-			heartbeatInterval=1,
-			consecutiveHeartbeatMissLimit=2,
-		)
+		session = self.makeSession(self.dropEverySecondPing(event=release))
 
 		def stop():
 			release.wait(timeout=_TIMEOUT)
@@ -952,23 +960,8 @@ class TestHeartbeat(unittest.TestCase):
 
 		stopper = threading.Thread(target=stop, daemon=True)
 		stopper.start()
-		heartbeatCondNotifyAll = session._heartbeatCond.notify_all
-		heartbeatCallbackFactory = session._heartbeatCallbackFactory
-		with (
-			patch.object(session._heartbeatCond, "notify_all"),
-			patch("time.monotonic", return_value=0) as mockMonotonic,
-			patch("threading._time", new=mockMonotonic),
-			patch.object(session, "_heartbeatCallbackFactory") as mockCallbackFactory,
-		):
-
-			def incAndNotify() -> None:
-				mockMonotonic.return_value += 1
-				with session._heartbeatCond:
-					heartbeatCondNotifyAll()
-
-			mockCallbackFactory.side_effect = self.sideEffectFactory(heartbeatCallbackFactory, incAndNotify)
-			startWithin(self, session)
-			self.assertTrue(waitForState(session, SessionState.STOPPED))
+		startWithin(self, session)
+		self.assertTrue(waitForState(session, SessionState.STOPPED))
 		self.assertIsNone(session.failureReason)
-		self.assertGreaterEqual(mockCallbackFactory.call_count, 5)
+		self.assertGreaterEqual(session._heartbeatCallbackFactory.call_count, 5)
 		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
