@@ -104,6 +104,23 @@ class FullScreenMagnifier(Magnifier):
 			self._applyFilter()
 		self._startTimer(self._updateMagnifier)
 
+	@override
+	def _suspend(self) -> bool:
+		# The screen overview animates on its own timers.
+		if self._spotlightManager._spotlightIsActive:
+			return False
+		return super()._suspend()
+
+	@override
+	def _applyConfig(self) -> None:
+		newMode = getFullscreenMode()
+		if newMode != self._fullscreenMode:
+			# Panned coordinates place the view differently in another mode: follow the focus again,
+			# as after a restart.
+			self._isManualPanning = False
+			self._fullscreenMode = newMode
+		super()._applyConfig()
+
 	def _clearStaleApiState(self) -> None:
 		"""
 		Dummy MagInitialize/MagUninitialize cycle to clear stale Windows API state.

@@ -70,6 +70,7 @@ class Magnifier:
 		self._mouseHook: MagnifierMouseHook | None = None
 		self._pendingMouseCoordinates = Coordinates(0, 0)
 		self._mouseUpdatePending: bool = False
+		self._isTimerSuspended: bool = False
 		self._screenCurtainIsActive: bool = False
 
 	@property
@@ -321,7 +322,8 @@ class Magnifier:
 		where a mouse-driven update touches the Magnification API.
 		"""
 		self._mouseUpdatePending = False
-		if not self._isActive or self._isManualPanning:
+		# Checked again here: the setting may have changed since the move was queued, e.g. by a configuration reload.
+		if not self._isActive or self._isManualPanning or not getFollowState(MagnifierTrackingType.MOUSE):
 			return
 		try:
 			self.currentCoordinates = self._pendingMouseCoordinates
@@ -346,6 +348,36 @@ class Magnifier:
 		# Unregister from display changes
 		_displayTracking.displayChanged.unregister(self._onDisplayChanged)
 
+	def _suspend(self) -> bool:
+		"""
+		Stop following and updating, leaving the magnified view on screen as it is.
+
+		:return: True if suspended; False if the magnifier is in a state that cannot be suspended.
+		"""
+		if self._mouseHook:
+			self._mouseHook.stop()
+			self._mouseHook = None
+		self._isTimerSuspended = self._timer is not None
+		self._stopTimer()
+		return True
+
+	def _resume(self) -> None:
+		"""Resume following and updating after :meth:`_suspend`."""
+		self._mouseHook = MagnifierMouseHook(self._onMouseMove)
+		self._mouseHook.start()
+		if self._isTimerSuspended:
+			self._startTimer(self._updateMagnifier)
+
+	def _applyConfig(self) -> None:
+		"""Apply the current configuration in place, keeping the view position."""
+		self._zoomLevel = getZoomLevel()
+		self._panStep = getPanStep()
+		newFilter = getFilter()
+		if newFilter != self.filterType:
+			self.filterType = newFilter
+		# Clamp to the limits of the new zoom level.
+		self.currentCoordinates = self.currentCoordinates
+
 	def onScreenCurtainEnabled(self) -> None:
 		"""
 		Called when screen curtain is being enabled.
@@ -356,6 +388,17 @@ class Magnifier:
 			self._screenCurtainIsActive = True
 		else:
 			self._screenCurtainIsActive = False
+
+	def _isWaitingForScreenCurtain(self) -> bool:
+		"""
+		Whether the screen curtain stopped the magnifier and is still enabled,
+		so that the magnifier restarts when the curtain is disabled.
+		"""
+		return bool(
+			self._screenCurtainIsActive
+			and screenCurtain.screenCurtain
+			and screenCurtain.screenCurtain.enabled,
+		)
 
 	def onScreenCurtainDisabled(self) -> None:
 		"""
