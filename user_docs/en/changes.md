@@ -14,6 +14,11 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 * Ensure NVDA can still be installed with Window's Smart App Control enabled. (#21124)
 
+### Changes for developers
+
+* Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
+This fixes an issue with compiling on MSVC 14.52. (#21174)
+
 ## 2026.3.1
 
 This is a patch release to fix security issues.
