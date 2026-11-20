@@ -24,6 +24,7 @@ from .utils.filterHandler import FilterMatrix
 from .utils.spotlightManager import SpotlightManager
 from .utils.types import (
 	Coordinates,
+	Direction,
 	Filter,
 	FullScreenMode,
 	MagnifiedView,
@@ -56,6 +57,8 @@ class FullScreenMagnifier(Magnifier):
 			# While secure desktop is active, the secure desktop masks the user's one, so updating magnification on
 			# the user's desktop is useless. But overall, calling magnification.MagSetInputTransform is not allowed
 			# and causes an error. Thus we disable magnifier update while secure desktop is active.
+			# The screen overview animates on its own timers, so end it as well.
+			self._spotlightManager.cancel()
 			self._stopTimer()
 		else:
 			self._startTimer(self._updateMagnifier)
@@ -165,6 +168,7 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Stop the Full-screen magnifier using windows DLL
 		"""
+		self._spotlightManager.cancel()
 		super()._stopMagnifier()
 		from winAPI.secureDesktop import post_secureDesktopStateChange
 
@@ -394,6 +398,17 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		self._spotlightManager._spotlightIsActive = False
 		self._startTimer(self._updateMagnifier)
+
+	@override
+	def _zoom(self, direction: Direction) -> None:
+		"""
+		Adjust the zoom level. During the screen overview, end it first, so the change applies to the
+		zoom level it started from rather than to an intermediate one.
+		"""
+		if self._spotlightManager._spotlightIsActive:
+			self._spotlightManager.cancel()
+			self._startTimer(self._updateMagnifier)
+		super()._zoom(direction)
 
 	@override
 	def _getMagnifierParameters(self, coordinates: Coordinates) -> MagnifierParameters:
