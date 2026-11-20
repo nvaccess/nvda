@@ -40,6 +40,8 @@ The examples below use the project's uv environment (`uv run prek run …`); if 
 * You can filter files with `--files` and `--all-files`
 * You can also compare two revisions:
 `uv run prek run --from-ref origin/master --to-ref HEAD`
+* To run the checkPo hook, ensure l10nUtil.exe is placed in miscDeps/tools:
+`curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe`
 
 ## Translatable string checks
 

@@ -109,6 +109,7 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
 * Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
+* Removed `source/markdownTranslate.py`, `source/md2html.py`. (#20796, @nvdaes)
 
 #### Deprecations
 
