@@ -21,6 +21,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Bug Fixes
 
+* NVDA can now start in Windows PE when optional Windows APIs are unavailable.
+  Depending on the image contents, affected features can include the Magnifier, Screen Curtain, Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
   The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
@@ -45,6 +47,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`, and `WINUSB_AVAILABLE`.
+  Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
 * `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
   Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
   which can be `None`.

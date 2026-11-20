@@ -681,6 +681,16 @@ def _setUpWxApp() -> "wx.App":
 	return app
 
 
+def _getInitialBrailleMessage() -> str:
+	import screenCurtain
+
+	if screenCurtain.screenCurtain is not None and screenCurtain.screenCurtain.enabled:
+		# Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
+		return _("NVDA started with screen curtain enabled")
+	# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
+	return _("NVDA started")
+
+
 def main():
 	"""NVDA's core main loop.
 	This initializes all modules such as audio, IAccessible, keyboard, mouse, and GUI.
@@ -959,14 +969,8 @@ def main():
 			warnForNonEmptyDirectory=warnForNonEmptyDirectory,
 		)
 	elif not globalVars.appArgs.minimal:
-		if screenCurtain.screenCurtain.enabled:
-			# Translators: This is shown on a braille display (if one is connected) when NVDA starts with the screen curtain enabled.
-			initialMessage = _("NVDA started with screen curtain enabled")
-		else:
-			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-			initialMessage = _("NVDA started")
 		try:
-			braille.handler.message(initialMessage)
+			braille.handler.message(_getInitialBrailleMessage())
 		except:  # noqa: E722
 			log.error("", exc_info=True)  # noqa: G201
 		if globalVars.appArgs.launcher:
