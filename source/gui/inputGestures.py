@@ -1,29 +1,29 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2013-2020 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2013-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
-# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers
-# Julien Cochuyt, Cyrille Bougot
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
+# Julien Cochuyt, Cyrille Bougot, Justin Coffin
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-import itertools  # noqa: I001
+import itertools
 import re
+from locale import strxfrm
 from typing import Union
 
-import wx
-from wx.lib.mixins.treemixin import VirtualTree
-import wx.lib.newevent
-import gui
-from logHandler import log
-
-import keyboardHandler
-from . import guiHelper
 import inputCore
+import keyboardHandler
 import keyLabels
-from locale import strxfrm
-from .settingsDialogs import SettingsDialog
+import wx
+import wx.lib.newevent
+from logHandler import log
+from wx.lib.mixins.treemixin import VirtualTree
 
+import gui
+
+from . import guiHelper
+from .message import DialogType, MessageDialog, ReturnCode
+from .settingsDialogs import SettingsDialog
 
 #: Type for structure returned by inputCore
 _ScriptsModel = dict[
@@ -148,12 +148,48 @@ class _ScriptVM:
 		self.gestures.remove(gestureVM)
 
 
-class _CategoryVM:
+class _CategoryGestureRemoval:
+	"""Allows removing every gesture from the scripts of a category at once.
+	The category and its scripts are kept; only their gestures are removed.
+	Only the scripts in :attr:`scripts` are affected, so a filtered category only removes gestures
+	from the scripts that match the filter.
+	"""
+
+	scripts: "list[_ScriptVMTypes]"
+
+	def _getRemovableGestures(self) -> list[tuple[_ScriptVM, _GestureVM]]:
+		return [
+			(scriptVM, gestureVM)
+			for scriptVM in self.scripts
+			# Pending emulated gestures have no gestures yet.
+			for gestureVM in getattr(scriptVM, "gestures", ())
+			# Pending gestures have not been entered yet, so there is nothing to remove.
+			if isinstance(gestureVM, _GestureVM)
+		]
+
+	def getRemovableGestureCount(self) -> int:
+		return len(self._getRemovableGestures())
+
+	@property
+	def canRemove(self) -> bool:
+		"""Gestures can be removed from a category when at least one of its scripts has a gesture."""
+		return bool(self._getRemovableGestures())
+
+	def removeAllGestures(self) -> int:
+		"""Remove every gesture from the scripts of this category.
+		:return: The number of gestures removed.
+		"""
+		removableGestures = self._getRemovableGestures()
+		for scriptVM, gestureVM in removableGestures:
+			scriptVM.removeGesture(gestureVM)
+		return len(removableGestures)
+
+
+class _CategoryVM(_CategoryGestureRemoval):
 	displayName: str  #: Translated display name for the category
 	scripts: list[_ScriptVM]
 	canAdd = False  #: not able to add Scripts
 	canChange = False  #: categories can not be changed
-	canRemove = False  #: categories can not be removed
 
 	def __init__(self, displayName: str, scripts: _ScriptsModel):
 		self.displayName = displayName
@@ -210,12 +246,11 @@ class _PendingEmulatedGestureVM:
 		return "PendingEmulatedGesture"
 
 
-class _EmuCategoryVM:
+class _EmuCategoryVM(_CategoryGestureRemoval):
 	displayName = inputCore.SCRCAT_KBEMU  #: Translated display name for the gesture emulation category
 	scripts: list[_ScriptVM | _EmulatedGestureVM | _PendingEmulatedGestureVM]
 	canAdd = True  #: Can add new emulated gestures
 	canChange = False  #: categories can not be changed
-	canRemove = False  #: categories can not be removed
 	addedKbEmulation: list[_EmulatedGestureVM]  #: These will also be in self.scripts
 	#: These will not be in self.scripts anymore. Key is the scriptInfo display name.
 	removedKbEmulation: dict[str, _EmulatedGestureVM]
@@ -642,7 +677,11 @@ class InputGesturesDialog(SettingsDialog):
 		self.changeButton.Disable()
 
 		# Translators: The label of a button to remove a gesture in the Input Gestures dialog.
-		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
+		self._removeGestureLabel = _("&Remove")
+		# Translators: The label of a button to remove all gestures from the selected category
+		# in the Input Gestures dialog.
+		self._removeAllGesturesLabel = _("&Remove all gestures")
+		self.removeButton = bHelper.addButton(self, label=self._removeGestureLabel)
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
 
@@ -696,8 +735,14 @@ class InputGesturesDialog(SettingsDialog):
 				changeItem = menu.Append(wx.ID_ANY, _("C&hange"))
 				self.Bind(wx.EVT_MENU, self.onChange, changeItem)
 			if item.canRemove:
-				# Translators: Context menu item label to remove a gesture
-				removeItem = menu.Append(wx.ID_ANY, _("&Remove"))
+				if isinstance(item, _CategoryGestureRemoval):
+					# Translators: Context menu item label to remove all gestures from a category
+					# in the Input Gestures dialog
+					removeLabel = _("Remove &all gestures")
+				else:
+					# Translators: Context menu item label to remove a gesture
+					removeLabel = _("&Remove")
+				removeItem = menu.Append(wx.ID_ANY, removeLabel)
 				self.Bind(wx.EVT_MENU, self.onRemove, removeItem)
 		self.PopupMenu(menu)
 		menu.Destroy()
@@ -747,6 +792,13 @@ class InputGesturesDialog(SettingsDialog):
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.changeButton.Enabled = bool(item and item.canChange and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
+		if isinstance(item, _CategoryGestureRemoval):
+			removeLabel = self._removeAllGesturesLabel
+		else:
+			removeLabel = self._removeGestureLabel
+		if self.removeButton.GetLabel() != removeLabel:
+			self.removeButton.SetLabel(removeLabel)
+			self.Layout()
 
 	def onAdd(self, evt: wx.CommandEvent):
 		if inputCore.manager._captureFunc:
@@ -904,7 +956,11 @@ class InputGesturesDialog(SettingsDialog):
 		selectedItems = self.tree.getSelectedItemData()
 		assert selectedItems is not None
 		catVM, scriptVM, gestureVM = selectedItems
-		if gestureVM is not None:  # removing a gesture
+		if scriptVM is None:  # removing all gestures from a category
+			if not self._confirmCategoryGestureRemoval(catVM):
+				return
+			catVM.removeAllGestures()
+		elif gestureVM is not None:  # removing a gesture
 			scriptVM.removeGesture(gestureVM)
 		elif isinstance(scriptVM, _EmulatedGestureVM):  # removing a emulated KB gesture
 			if not isinstance(catVM, _EmuCategoryVM):
@@ -919,6 +975,35 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		self.tree.doRefresh()
 		self._refreshButtonState()
+
+	def _confirmCategoryGestureRemoval(self, catVM: _CategoryVMTypes) -> bool:
+		gestureCount = catVM.getRemovableGestureCount()
+		if not gestureCount:
+			return False
+		message = ngettext(
+			# Translators: A prompt for confirmation to remove all gestures from a category
+			# in the Input Gestures dialog.
+			# {count} is replaced with the number of gestures, {category} with the name of the category.
+			"This action will remove {count} input gesture from the {category} category. "
+			"You will not be able to use this command until you assign it a new input gesture.",
+			"This action will remove {count} input gestures from the {category} category. "
+			"You will not be able to use these commands until you assign them new input gestures.",
+			gestureCount,
+		).format(count=gestureCount, category=catVM.displayName)
+		confirmationDialog = (
+			MessageDialog(
+				self,
+				message,
+				# Translators: The title of the prompt for confirmation to remove all gestures from a category
+				# in the Input Gestures dialog.
+				_("Are you sure?"),
+				DialogType.WARNING,
+				buttons=None,
+			)
+			.addNoButton(defaultFocus=True, fallbackAction=True)
+			.addYesButton()
+		)
+		return confirmationDialog.ShowModal() == ReturnCode.YES
 
 	def onReset(self, evt):
 		if (
