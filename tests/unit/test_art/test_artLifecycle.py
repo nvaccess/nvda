@@ -875,6 +875,24 @@ class TestHeartbeat(unittest.TestCase):
 
 		return handlePing
 
+	@staticmethod
+	def dropEverySecondPing[T](
+		event: threading.Event,
+		setAfter: int = 5,
+	) -> Callable[[rpyc.core.protocol.Connection, T], T | None]:
+		pingNum = -1
+
+		def handlePing[T](self: rpyc.core.protocol.Connection, data: T) -> T | None:
+			nonlocal pingNum
+			pingNum += 1
+			if pingNum == setAfter:
+				event.set()
+			if pingNum % 2 == 1:
+				return data
+			return None
+
+		return handlePing
+
 	def makeBody[T](
 		self,
 		pingHandler: Callable[[rpyc.core.protocol.Connection, T], Any],
@@ -915,4 +933,42 @@ class TestHeartbeat(unittest.TestCase):
 			self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIn("stopped responding", session.failureReason)
 		self.assertEqual(mockCallbackFactory.call_count, 3)
+		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
+
+	def test_intermittentHeartbeatMissesAreDisregarded(self):
+		release = threading.Event()
+		self.addCleanup(release.set)
+		session = AddonSession(
+			ThreadHostController(
+				run=makeHostRun(self.makeBody(self.dropEverySecondPing(event=release)), serve=False),
+			),
+			heartbeatInterval=1,
+			consecutiveHeartbeatMissLimit=2,
+		)
+
+		def stop():
+			release.wait(timeout=_TIMEOUT)
+			session.stop()
+
+		stopper = threading.Thread(target=stop, daemon=True)
+		stopper.start()
+		heartbeatCondNotifyAll = session._heartbeatCond.notify_all
+		heartbeatCallbackFactory = session._heartbeatCallbackFactory
+		with (
+			patch.object(session._heartbeatCond, "notify_all"),
+			patch("time.monotonic", return_value=0) as mockMonotonic,
+			patch("threading._time", new=mockMonotonic),
+			patch.object(session, "_heartbeatCallbackFactory") as mockCallbackFactory,
+		):
+
+			def incAndNotify() -> None:
+				mockMonotonic.return_value += 1
+				with session._heartbeatCond:
+					heartbeatCondNotifyAll()
+
+			mockCallbackFactory.side_effect = self.sideEffectFactory(heartbeatCallbackFactory, incAndNotify)
+			startWithin(self, session)
+			self.assertTrue(waitForState(session, SessionState.STOPPED))
+		self.assertIsNone(session.failureReason)
+		self.assertGreaterEqual(mockCallbackFactory.call_count, 5)
 		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
