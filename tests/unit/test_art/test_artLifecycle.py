@@ -865,20 +865,29 @@ class TestHeartbeat(unittest.TestCase):
 		return body
 
 	def test_heartbeatMissesFailSession(self):
-		with patch("_art.session.addonSession.time.monotonic", return_value=0) as mockMonotonic:
-			session = AddonSession(
-				ThreadHostController(run=makeHostRun(self.makeBody(self.ignorePings(after=1)), serve=False)),
-				heartbeatInterval=0.05,
-				consecutiveHeartbeatMissLimit=2,
-			)
+		session = AddonSession(
+			ThreadHostController(run=makeHostRun(self.makeBody(self.ignorePings(after=1)), serve=False)),
+			heartbeatInterval=1,
+			consecutiveHeartbeatMissLimit=2,
+		)
+		heartbeatCondNotifyAll = session._heartbeatCond.notify_all
+		heartbeatCallbackFactory = session._heartbeatCallbackFactory
+		with (
+			patch.object(session._heartbeatCond, "notify_all"),
+			patch("time.monotonic", return_value=0) as mockMonotonic,
+			patch("threading._time", new=mockMonotonic),
+			patch.object(session, "_heartbeatCallbackFactory") as mockCallbackFactory,
+		):
 
-			def incMonotonic():
+			def incAndNotify() -> None:
 				mockMonotonic.return_value += 1
+				with session._heartbeatCond:
+					heartbeatCondNotifyAll()
 
-			session._heartbeatCallbackFactory = MagicMock(
-				side_effect=self.sideEffectFactory(session._heartbeatCallbackFactory, incMonotonic),
-			)
+			mockCallbackFactory.side_effect = self.sideEffectFactory(heartbeatCallbackFactory, incAndNotify)
 			startWithin(self, session)
+			print(", ".join(t.name for t in threading.enumerate()))
 			self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIn("stopped responding", session.failureReason)
-		self.assertEqual(session._heartbeatCallbackFactory.call_count, 3)
+		self.assertEqual(mockCallbackFactory.call_count, 3)
+		print(", ".join(t.name for t in threading.enumerate()))

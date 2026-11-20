@@ -42,6 +42,14 @@ _HEARTBEAT_INTERVAL: Final[float] = 5.0
 _CONSECUTIVE_HEARTBEAT_MISS_LIMIT: Final[int] = 3
 
 
+def dbg(msg: str) -> None:
+	import datetime
+	import inspect
+
+	now = datetime.datetime.now()  # noqa: DTZ005
+	print(f"{inspect.stack()[1].function} {now.second}.{now.microsecond // 1000:03d}: {msg}")
+
+
 class SessionState(enum.Enum):
 	"""Where an add-on session is in its lifecycle.
 
@@ -400,7 +408,9 @@ class AddonSession:
 			self._fail(f"Host exited unexpectedly with status {exitStatus}")
 
 	def _startWatchdog(self) -> None:
+		dbg("Creating request queue...")
 		send = queue.Queue(maxsize=self._consecutiveHeartbeatMissLimit)
+		dbg("Creating heartbeat watcher and server...")
 		watchdog = threading.Thread(
 			target=self._watchHeartbeats,
 			args=(send,),
@@ -413,58 +423,85 @@ class AddonSession:
 			daemon=True,
 			name="ART heartbeat sender",
 		)
+		dbg("Starting watchdog threads...")
 		watchdog.start()
 		sender.start()
 
 	def _watchHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
+		dbg("Entering")
 		idGen = itertools.count()
 		missed = 0
 		fail = False
 		try:
 			with self._heartbeatCond:
 				if self._state is not SessionState.READY:
+					dbg(f"Exiting early as state is {self._state.name}")
 					return
 				while True:
 					id = next(idGen)
 					deadline = time.monotonic() + self._heartbeatInterval
+					dbg(f"Sending heartbead request with {id=} and {deadline=}")
 					try:
 						send.put_nowait((id, deadline))
 					except queue.Full:
+						dbg("Queue full, failing")
 						fail = True
 						break
+					now = time.monotonic()
+					timeout = max(0, deadline - now)
+					dbg(f"Waiting for {timeout} ({now=})")
 					self._heartbeatCond.wait_for(
 						lambda id=id: self._heartbeatAckId == id or self._state is not SessionState.READY,
-						timeout=max(0, deadline - time.monotonic()),
+						timeout=timeout,
 					)
+					dbg(f"Woke at {time.monotonic()}")
 					if self._state is not SessionState.READY:
+						dbg(f"exiting as state is {self._state.name}")
 						break
 					if self._heartbeatAckId != id:
+						dbg(f"want {id}, got {self._heartbeatAckId}. Incrementing missed from {missed}")
 						missed += 1
 						if missed >= self._consecutiveHeartbeatMissLimit:
+							dbg(f"{missed=} >= {self._consecutiveHeartbeatMissLimit=}, failing")
 							fail = True
 							break
 					else:
+						dbg("resetting missed to 0")
 						missed = 0
+					now = time.monotonic()
+					timeout = max(0, deadline - now)
+					dbg(f"Waiting for {timeout} ({now=})")
 					if self._heartbeatCond.wait_for(
 						lambda: self._state is not SessionState.READY,
-						timeout=max(0, deadline - time.monotonic()),
+						timeout=timeout,
 					):
+						dbg(f"exiting as state is {self._state.name}")
 						break
 		finally:
+			dbg("Shutting down send queue")
 			send.shutdown(immediate=True)
 			if fail:
+				dbg("Failing session")
 				self._fail("Add-on stopped responding.")
+				dbg("done")
 
 	def _sendHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
+		dbg("entering")
 		while True:
+			dbg("Waiting for request")
 			try:
 				id, deadline = send.get()
 			except queue.ShutDown:
+				dbg("Queue shutdown, exiting")
 				break
-			if deadline <= time.monotonic():
+			dbg(f"got request with {id=} and {deadline=}")
+			if deadline <= (now := time.monotonic()):
+				dbg(f"{deadline=} <= {now=}, dropping")
 				continue
+			dbg("Creating and sending ping")
 			req = self._conn._conn.async_request(rpyc.core.consts.HANDLE_PING, id)
 			req.add_callback(self._heartbeatCallbackFactory(id, deadline))
+		dbg("done")
 
 	def _heartbeatCallbackFactory(
 		self,
@@ -472,7 +509,9 @@ class AddonSession:
 		deadline: float,
 	) -> Callable[[rpyc.core.async_.AsyncResult], None]:
 		def callback(res: rpyc.core.async_.AsyncResult) -> None:
+			dbg("entering")
 			with self._heartbeatCond:
+				dbg(f"Checking prereqs ({id=}, {deadline=}, {res=}")
 				if not (
 					self._state is SessionState.READY
 					and time.monotonic() < deadline
@@ -480,9 +519,12 @@ class AddonSession:
 					and not res.error
 					and res.value == id
 				):
+					dbg("Prerequisites not satisfied, dropping")
 					return
+				dbg("prereqs met, setting heartbeatAckId and notifying heartbeatCond")
 				self._heartbeatAckId = id
 				self._heartbeatCond.notify_all()
+			dbg("done")
 
 		return callback
 
