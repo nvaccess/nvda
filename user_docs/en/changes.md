@@ -6,6 +6,11 @@
 
 * The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
 
+### Changes for developers
+
+* Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
+This fixes an issue with compiling on MSVC 14.52. (#21174)
+
 ## 2026.3.1
 
 This is a patch release to fix security issues.
