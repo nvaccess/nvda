@@ -139,6 +139,8 @@ class AddonSession:
 		self._readinessReported = False
 		self._readinessFailure: str | None = None
 		self._heartbeatAckId = None
+		self._heartbeatSender: threading.Thread | None = None
+		self._heartbeatWatcher: threading.Thread | None = None
 
 	@property
 	def state(self) -> SessionState:
@@ -411,20 +413,20 @@ class AddonSession:
 		dbg("Creating request queue...")
 		send = queue.Queue(maxsize=self._consecutiveHeartbeatMissLimit)
 		dbg("Creating heartbeat watcher and server...")
-		watchdog = threading.Thread(
+		self._heartbeatWatcher = watcher = threading.Thread(
 			target=self._watchHeartbeats,
 			args=(send,),
 			daemon=True,
 			name="ART heartbeat watchdog",
 		)
-		sender = threading.Thread(
+		self._heartbeatSender = sender = threading.Thread(
 			target=self._sendHeartbeats,
 			args=(send,),
 			daemon=True,
 			name="ART heartbeat sender",
 		)
 		dbg("Starting watchdog threads...")
-		watchdog.start()
+		watcher.start()
 		sender.start()
 
 	def _watchHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
