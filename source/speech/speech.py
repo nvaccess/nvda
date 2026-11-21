@@ -3063,8 +3063,10 @@ def getFormatFieldSpeech(
 		link = attrs.get("link")
 		oldLink = attrsCache.get("link") if attrsCache is not None else None
 		if (link or oldLink is not None) and link != oldLink:
-			text = _("link") if link else _("out of %s") % _("link")
-			textList.append(text)
+			if link:
+				textList.append(_("link"))
+			elif extraDetail:
+				textList.append(_("out of %s") % _("link"))
 	if formatConfig["reportComments"]:
 		comment = attrs.get("comment")
 		oldComment = attrsCache.get("comment") if attrsCache is not None else None
