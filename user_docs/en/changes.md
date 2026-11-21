@@ -33,6 +33,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 #### Web browsers
 
+* In Chromium-based web browsers, opening the context menu from browse mode with the applications key or `Shift+F10` no longer bounces focus back to browse mode. (#18670, @nibarAhmed)
+
 #### Applications
 
 #### Add-on Store
