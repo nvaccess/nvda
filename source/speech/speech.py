@@ -2872,31 +2872,36 @@ def getFormatFieldSpeech(
 				text = _("no revised %s") % oldRevision
 			textList.append(text)
 	if formatConfig["reportHighlight"]:
+		isContinuousReading = (
+			reason == OutputReason.SAYALL
+			or unit in (
+				textInfos.UNIT_LINE,
+				textInfos.UNIT_SENTENCE,
+				textInfos.UNIT_PARAGRAPH,
+				textInfos.UNIT_READINGCHUNK,
+			)
+		)
 		# marked text
 		marked = attrs.get("marked")
 		oldMarked = attrsCache.get("marked") if attrsCache is not None else None
 		if (marked or oldMarked is not None) and marked != oldMarked:
-			text = (
+			if marked:
 				# Translators: Reported when text is marked
-				_("marked")
-				if marked
+				textList.append(_("marked"))
+			elif not isContinuousReading:
 				# Translators: Reported when text is no longer marked
-				else _("not marked")
-			)
-			textList.append(text)
+				textList.append(_("not marked"))
 		# color-highlighted text in Word
 		hlColor = attrs.get("highlight-color")
 		oldHlColor = attrsCache.get("highlight-color") if attrsCache is not None else None
 		if (hlColor or oldHlColor is not None) and hlColor != oldHlColor:
-			colorName = hlColor.name if isinstance(hlColor, colors.RGB) else hlColor
-			text = (
+			if hlColor:
+				colorName = hlColor.name if isinstance(hlColor, colors.RGB) else hlColor
 				# Translators: Reported when text is color-highlighted
-				_("highlighted in {color}").format(color=colorName)
-				if hlColor
+				textList.append(_("highlighted in {color}").format(color=colorName))
+			elif not isContinuousReading:
 				# Translators: Reported when text is no longer marked
-				else _("not highlighted")
-			)
-			textList.append(text)
+				textList.append(_("not highlighted"))
 	if formatConfig["reportEmphasis"]:
 		# strong text
 		strong = attrs.get("strong")
