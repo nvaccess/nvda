@@ -885,6 +885,8 @@ def getObjectSpeech(
 			and not obj.treeInterceptor.passThrough
 			and obj == obj.treeInterceptor.rootNVDAObject
 		)
+		# Spinbuttons report their value property rather than raw text buffer content
+		or obj.role == controlTypes.Role.SPINBUTTON
 		# objects that do not report as having navigableText should not report their text content either
 		or not obj._hasNavigableText
 	)

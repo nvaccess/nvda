@@ -73,6 +73,30 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 		):
 			# Chromium doesn't expose the `<figure>` element as a figure.
 			attrs["role"] = controlTypes.Role.FIGURE
+
+		if attrs["role"] == controlTypes.Role.SPINBUTTON:
+			el_id = attrs.get("IAccessible2::attribute_id")
+			if el_id:
+				import UIAHandler
+				if UIAHandler.handler and UIAHandler.handler.clientObject:
+					try:
+						import winBindings
+						rootHwnd = winBindings.user32.dll.GetAncestor(self.obj.rootNVDAObject.windowHandle, 2) or self.obj.rootNVDAObject.windowHandle
+						win_el = UIAHandler.handler.clientObject.ElementFromHandle(rootHwnd)
+						if win_el:
+							cond = UIAHandler.handler.clientObject.CreatePropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, el_id)
+							el = win_el.FindFirst(UIAHandler.TreeScope_Descendants, cond)
+							if el:
+								props = getattr(el, "CurrentAriaProperties", "") or ""
+								for part in props.split(";"):
+									if part.startswith("valuetext="):
+										vt = part.split("=", 1)[1]
+										if vt.strip():
+											attrs["value"] = vt
+											break
+					except Exception:
+						pass
+
 		return attrs
 
 
@@ -179,6 +203,69 @@ class Editor(ia2Web.Editor):
 	TextInfo = EditorTextInfo
 
 
+class SpinButton(ia2Web.Ia2Web):
+	"""Overlay class for spinbutton controls in Chromium.
+	Chromium's IAccessible2 implementation sets IA2Attributes['valuetext'] to the raw
+	input buffer rather than aria-valuetext for editable spinbuttons.
+	This overlay queries Chromium's UIAutomation provider, which correctly exposes
+	aria-valuetext in AriaProperties.
+	"""
+
+	def _get_value(self) -> str | None:
+		val = self._getValueFromUia()
+		if val:
+			return val
+		return super()._get_value()
+
+	def _getValueFromUia(self) -> str | None:
+		import UIAHandler
+		if not UIAHandler.handler or not UIAHandler.handler.clientObject:
+			return None
+		try:
+			from ..UIA import UIA
+			if self.hasFocus:
+				kwargs = {}
+				if UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False):
+					uiaObj = UIA(**kwargs)
+					val = getattr(uiaObj, "value", None)
+					if val and val.strip():
+						return val
+
+			client = UIAHandler.handler.clientObject
+			import winBindings
+			rootHwnd = winBindings.user32.dll.GetAncestor(self.windowHandle, 2) or self.windowHandle
+			win_el = client.ElementFromHandle(rootHwnd)
+			if not win_el:
+				return None
+
+			el_id = self.IA2Attributes.get("id")
+			if el_id:
+				cond = client.CreatePropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, el_id)
+				el = win_el.FindFirst(UIAHandler.TreeScope_Descendants, cond)
+				if el:
+					props = getattr(el, "CurrentAriaProperties", "") or ""
+					for part in props.split(";"):
+						if part.startswith("valuetext="):
+							vt = part.split("=", 1)[1]
+							if vt.strip():
+								return vt
+
+			name = self.name
+			if name:
+				cond = client.CreatePropertyCondition(UIAHandler.UIA_NamePropertyId, name)
+				el = win_el.FindFirst(UIAHandler.TreeScope_Descendants, cond)
+				if el:
+					props = getattr(el, "CurrentAriaProperties", "") or ""
+					for part in props.split(";"):
+						if part.startswith("valuetext="):
+							vt = part.split("=", 1)[1]
+							if vt.strip():
+								return vt
+		except Exception:
+			log.debugWarning("Failed to resolve valuetext from UIA for Chromium spinbutton", exc_info=True)
+		return None
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -196,6 +283,8 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(PresentationalList)
 	elif obj.role == controlTypes.Role.GROUPING and obj.IA2Attributes.get("tag", "").casefold() == "figure":
 		clsList.append(Figure)
+	elif obj.role == controlTypes.Role.SPINBUTTON:
+		clsList.insert(0, SpinButton)
 	ia2Web.findExtraOverlayClasses(
 		obj,
 		clsList,

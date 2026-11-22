@@ -131,6 +131,12 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		if placeholder is not None:
 			attrs["placeholder"] = placeholder
 
+		valuetext = attrs.get("IAccessible2::attribute_valuetext") or attrs.get(
+			"IAccessible2::attribute_aria-valuetext",
+		)
+		if valuetext and not valuetext.isspace():
+			attrs["value"] = valuetext
+
 		role = IAccessibleHandler.NVDARoleFromAttr(attrs["IAccessible::role"])
 		if attrs.get("IAccessible2::attribute_tag", "").lower() == "blockquote":
 			role = controlTypes.Role.BLOCKQUOTE

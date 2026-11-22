@@ -867,12 +867,10 @@ def initialize() -> None:
 		try:
 			_setDllFuncPointer(localLib.dll, f"_{name}", func)
 		except AttributeError as e:
-			log.error(  # noqa: G201
-				"nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"  # noqa: UP031
+			log.warning(
+				"nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"
 				% name,
-				exc_info=True,
 			)
-			raise e  # noqa: TRY201
 	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
 	# Load nvdaHelperRemote.dll
 	h = winBindings.kernel32.LoadLibraryEx(
