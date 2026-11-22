@@ -180,6 +180,9 @@ class Ia2Web(IAccessible):
 			log.debugWarning(f"Unknown 'current' IA2Attribute value: {ia2attrCurrent}")
 			return controlTypes.IsCurrent.NO
 
+	def isDuplicateIAccessibleEvent(self, obj):
+		return self == obj
+
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get("placeholder", None)
 		return placeholder
