@@ -21,6 +21,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Bug Fixes
 
+* In `ui.browseableMessage`, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
   The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
