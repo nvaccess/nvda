@@ -2,7 +2,7 @@
 
 ## 2026.3.2
 
-This is a patch release to fix a security issue and an issue installing NVDA on some systems.
+This is a patch release to fix a security issue and an issue using NVDA on some systems.
 
 ### Security fixes
 
@@ -12,7 +12,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 ### Bug Fixes
 
-* Ensure NVDA can still be installed with Window's Smart App Control enabled. (#21124)
+* Ensure NVDA can still be used with Windows Smart App Control enabled. (#21124)
 
 ### Changes for developers
 
