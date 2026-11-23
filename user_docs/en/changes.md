@@ -2,7 +2,7 @@
 
 ## 2027.1
 
-The NVDA interface is now translated to Turkmen.
+The NVDA interface is now translated to Turkmen and Azerbaijani.
 
 ### Important notes
 
@@ -12,7 +12,7 @@ The NVDA interface is now translated to Turkmen.
 ### Changes
 
 * Update CLDR to version 49.0. (#21093, @OzancanKaratas)
-* The NVDA interface is now translated to Turkmen. (#21171)
+* The NVDA interface is now translated to Turkmen and Azerbaijani. (#21171, #21193)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
 * NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
