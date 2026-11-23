@@ -2,9 +2,17 @@
 
 ## 2026.3.2
 
-### Bug Fixes
+This is a patch release to fix a security issue and an issue using NVDA on some systems.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
 
 * The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
+
+### Bug Fixes
+
+* Ensure NVDA can still be used with Windows Smart App Control enabled. (#21124)
 
 ### Changes for developers
 
