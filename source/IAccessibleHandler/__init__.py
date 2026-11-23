@@ -524,7 +524,7 @@ def winEventToNVDAEvent(
 	objectID: int,
 	childID: int,
 	useCache: bool = True,
-) -> tuple[str, NVDAObjects.IAccessible.IAccessible] | None:
+) -> tuple[str, "NVDAObjects.IAccessible.IAccessible"] | None:
 	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
 	@param eventID: the win event ID (type)
@@ -764,7 +764,7 @@ def processFocusWinEvent(window: int, objectID: int, childID: int, force: bool =
 	return processFocusNVDAEvent(obj, force=force)
 
 
-def _hasActiveUIAFocusInSameProcess(obj: NVDAObjects.IAccessible.IAccessible) -> bool:
+def _hasActiveUIAFocusInSameProcess(obj: "NVDAObjects.IAccessible.IAccessible") -> bool:
 	"""Return whether the last queued focus object is a UIA object in the same process
 	that still holds keyboard focus, when the incoming MSAA event is for Chromium web content.
 
