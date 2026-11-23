@@ -8,14 +8,16 @@ Spotlight manager module for full-screen magnifier.
 Manages the spotlight effect, including zooming in on focus and zooming back.
 """
 
-from typing import TYPE_CHECKING  # noqa: I001
 from collections.abc import Callable
-from comtypes import COMError
+from typing import TYPE_CHECKING
+
 import ui
-from .types import Coordinates, ZoomHistory, FullScreenMode
 import wx
+from comtypes import COMError
 from logHandler import log
+
 from ..config import _isDebug
+from .types import Coordinates, FullScreenMode, ZoomHistory
 
 if TYPE_CHECKING:
 	from _magnifier.fullscreenMagnifier import FullScreenMagnifier

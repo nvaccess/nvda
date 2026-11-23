@@ -37,7 +37,9 @@
 #### Magnifier
 
 * The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
-* The screen overview no longer continues after the Magnifier is turned off, and the Magnifier then restarts at its zoom level. The overview can no longer get stuck as already active after an error. Zooming during the overview now ends it instead of failing. (#21148, @JulienCochuyt)
+* The screen overview no longer continues after the Magnifier is turned off, and the Magnifier then restarts at its zoom level.
+The overview can no longer get stuck as already active after an error.
+Zooming during the overview now ends it instead of failing. (#21148, @JulienCochuyt)
 
 ### Changes for Developers
 
