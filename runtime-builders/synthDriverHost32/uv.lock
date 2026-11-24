@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.13.*"
 resolution-markers = [
     "sys_platform == 'win32'",
@@ -58,7 +58,7 @@ name = "plumbum"
 version = "1.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pywin32", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'win32'" },
+    { name = "pywin32", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/dc/c8/11a5f792704b70f071a3dbc329105a98e9cc8d25daaf09f733c44eb0ef8e/plumbum-1.10.0.tar.gz", hash = "sha256:f8cbf0ecec0b73ff4e349398b65112a9e3f9300e7dc019001217dcc148d5c97c", size = 320039, upload-time = "2025-10-31T05:02:48.697Z" }
 wheels = [
@@ -70,9 +70,9 @@ name = "py2exe"
 version = "0.14.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cachetools", marker = "sys_platform == 'win32'" },
-    { name = "packaging", marker = "sys_platform == 'win32'" },
-    { name = "pefile", marker = "sys_platform == 'win32'" },
+    { name = "cachetools" },
+    { name = "packaging" },
+    { name = "pefile" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/df/7b/630718ad481a3803e1339d263d4266f84a36cb2073d36eca71a25571777e/py2exe-0.14.1.1-cp313-cp313-win32.whl", hash = "sha256:3fe5f8fa6cd986d97ffd116355a9ed807e23349ad3c108d7b43e90e51ef9d60d", size = 113462, upload-time = "2026-06-05T21:06:08.564Z" },
@@ -103,7 +103,7 @@ name = "rpyc"
 version = "6.0.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "plumbum", marker = "sys_platform == 'win32'" },
+    { name = "plumbum" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/e7/1c17410673b634f4658bb5d2232d0c4507432a97508b2c6708e59481644a/rpyc-6.0.2.tar.gz", hash = "sha256:8e780a6a71b842128a80a337c64adfb6f919014e069951832161c9efc630c93b", size = 62321, upload-time = "2025-04-18T16:33:21.693Z" }
 wheels = [
@@ -112,28 +112,29 @@ wheels = [
 
 [[package]]
 name = "setuptools"
-version = "80.10.2"
+version = "84.2.1"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/76/95/faf61eb8363f26aa7e1d762267a8d602a1b26d4f3a1e758e92cb3cb8b054/setuptools-80.10.2.tar.gz", hash = "sha256:8b0e9d10c784bf7d262c4e5ec5d4ec94127ce206e8738f29a437945fbc219b70", size = 1200343, upload-time = "2026-01-25T22:38:17.252Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/70/b3/c19426f783614d625699a4b247faf628ea9ab1db228674491767b417f9e1/setuptools-84.2.1.tar.gz", hash = "sha256:3ff8b3b5492a0aa66960f4419365a86b84e013070d4313e4d4a6894f5d64d6bc", size = 1230289, upload-time = "2026-10-20T19:01:37.742Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/94/b8/f1f62a5e3c0ad2ff1d189590bfa4c46b4f3b6e49cef6f26c6ee4e575394d/setuptools-80.10.2-py3-none-any.whl", hash = "sha256:95b30ddfb717250edb492926c92b5221f7ef3fbcc2b07579bcd4a27da21d0173", size = 1064234, upload-time = "2026-01-25T22:38:15.216Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/55/6dc6d6bb953bdfc52519a0059592c52b6e3b8ad51cf8256dffceb55b0610/setuptools-84.2.1-py3-none-any.whl", hash = "sha256:ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2", size = 876263, upload-time = "2026-10-20T19:01:35.678Z" },
 ]
 
 [[package]]
 name = "synthdriverhost32-runtime-builder"
 source = { editable = "." }
+default-groups = "all"
 dependencies = [
-    { name = "comtypes", marker = "sys_platform == 'win32'" },
-    { name = "configobj", marker = "sys_platform == 'win32'" },
-    { name = "pyserial", marker = "sys_platform == 'win32'" },
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
-    { name = "rpyc", marker = "sys_platform == 'win32'" },
+    { name = "comtypes" },
+    { name = "configobj" },
+    { name = "pyserial" },
+    { name = "pywin32" },
+    { name = "rpyc" },
 ]
 
 [package.dev-dependencies]
 dev = [
-    { name = "py2exe", marker = "sys_platform == 'win32'" },
-    { name = "setuptools", marker = "sys_platform == 'win32'" },
+    { name = "py2exe" },
+    { name = "setuptools" },
 ]
 
 [package.metadata]
@@ -148,5 +149,5 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "py2exe", specifier = "==0.14.1.1" },
-    { name = "setuptools", specifier = "~=80.10.2" },
+    { name = "setuptools", specifier = "~=84.2.0" },
 ]
