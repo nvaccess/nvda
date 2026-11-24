@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 05:18+0000\n"
-"PO-Revision-Date: 2026-11-16 00:17\n"
+"POT-Creation-Date: 2026-11-16 07:04+0000\n"
+"PO-Revision-Date: 2026-11-23 00:15\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -3963,17 +3963,17 @@ msgstr "選取點字第一方到最後一方的文字"
 #. Translators: Reported when none of the routing keys pressed to select text are on selectable text.
 #: globalCommands.py:4313
 msgid "No selectable text under routing keys"
-msgstr ""
+msgstr "游標定位鍵沒有可選取的文字"
 
 #. Translators: Reported when only one end of a selection made with routing keys is on selectable text.
 #: globalCommands.py:4317
 msgid "Selection must start and end in text"
-msgstr ""
+msgstr "選取範圍的開頭和結尾必須是文字"
 
 #. Translators: Reported when the control does not support selecting text with routing keys.
 #: globalCommands.py:4327
 msgid "Unable to select text in this control"
-msgstr ""
+msgstr "無法在此控制項中選取文字"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4334
@@ -13278,12 +13278,12 @@ msgstr "重設為預設值(&D)"
 #. Translators: An error displayed when a gesture is already assigned.
 #: gui\inputGestures.py:862
 msgid "This gesture is already assigned to this script."
-msgstr ""
+msgstr "此手勢已指派給此腳本。"
 
 #. Translators: An error displayed when a gesture is already assigned.
 #: gui\inputGestures.py:864
 msgid "Gesture already assigned"
-msgstr ""
+msgstr "手勢已指派"
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:927
@@ -13339,12 +13339,12 @@ msgstr "無法重新啟動 Windows，請手動重新啟動 Windows。"
 #. Translators: a message dialog asking whether to end running copies of NVDA before installing
 #: gui\installerGui.py:218
 msgid "Other copies of NVDA are running on this system. This can be a copy on the Windows sign-in screen or on another logged-on user account. They must be ended to continue the installation. They will not be restarted automatically. Users of those copies will lose any NVDA settings they have not saved. Do you want to end them now?"
-msgstr ""
+msgstr "此系統上正在執行其他 NVDA，這些執行個體可能位於 Windows 登入畫面，或其他已登入的使用者帳戶中。必須結束這些 NVDA 才能繼續安裝，且它們不會自動重新啟動。使用這些 NVDA 的使用者將會遺失所有未儲存的 NVDA 設定。您現在要結束它們嗎?"
 
 #. Translators: the title of a yes no dialog asking whether to end running copies of NVDA before installing
 #: gui\installerGui.py:226
 msgid "NVDA Still Running"
-msgstr ""
+msgstr "NVDA 仍在執行"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui\installerGui.py:240
@@ -13522,7 +13522,8 @@ msgstr "請指定用來建立可攜式版的目錄。"
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. The drive letter must be followed by a backslash: use {drive}\\ for the root of the drive, or {drive}\\folder for a folder on it.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "請指定建立可攜式版的絕對路徑。磁碟機代號後必須接反斜線: 使用 {drive}\\ 表示磁碟機的根目錄，或 {drive}\\資料夾表示其中的資料夾。\n"
+"目前路徑: {path}。 "
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
@@ -13530,7 +13531,8 @@ msgstr ""
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:\\). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "請指定建立可攜式版的絕對路徑。它必須由一個磁碟機代號開頭 (例如: C:\\)，它也可以使用系統變數 (例如: %temp%、%homepath%) 作為路徑中的一𠍭分。\n"
+"目前路徑: {path}。 "
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:806
@@ -13839,12 +13841,12 @@ msgstr "已成功複製 NVDA 使用者設定"
 #. Translators: An error when changing whether NVDA starts automatically after signing in.
 #: gui\settingsDialogs.py:1086 gui\startupDialogs.py:149
 msgid "Unable to change the setting to start NVDA after you sign in."
-msgstr ""
+msgstr "無法變更登入後啟動 NVDA 的設定。"
 
 #. Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
 #: gui\settingsDialogs.py:1104
 msgid "Unable to change the setting to use NVDA during sign-in."
-msgstr ""
+msgstr "無法變更在登入畫面使用 NVDA 的設定。"
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1131 gui\settingsDialogs.py:3953
@@ -14377,7 +14379,7 @@ msgstr "保留尋找記錄(&K)"
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2731
 msgid "Nati&ve selection mode on page load"
-msgstr ""
+msgstr "頁面載入時啟用源生選取模式(&V)"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2747
@@ -17823,13 +17825,13 @@ msgstr "註解: {comment} 由 {author} 加註"
 #: NVDAObjects\UIA\wordDocument.py:215
 #, python-brace-format
 msgid "Reply: {comment} by {author} on {date}"
-msgstr ""
+msgstr "回覆: {comment} 來自 {author} 在 {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word that is marked resolved
 #: NVDAObjects\UIA\wordDocument.py:218
 #, python-brace-format
 msgid "Resolved comment: {comment} by {author} on {date}"
-msgstr ""
+msgstr "已解決的註解: {comment} 來自 {author} 在 {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:221

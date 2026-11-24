@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 05:18+0000\n"
-"PO-Revision-Date: 2026-11-16 00:17\n"
+"POT-Creation-Date: 2026-11-16 07:04+0000\n"
+"PO-Revision-Date: 2026-11-23 00:15\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian Nynorsk\n"
 "Language: nn_NO\n"
@@ -1754,7 +1754,7 @@ msgstr "Setningsvis navigering blir ikkje støtta i dette dokumentet"
 #: cursorManager.py:686 globalCommands.py:144 globalCommands.py:441
 #: appModules\eclipse.py:70
 msgid "No selection"
-msgstr "Inga markert tekst"
+msgstr "Inga markering"
 
 #. Translators: Abbreviation for points, a measurement of font size.
 #: displayModel.py:556 appModules\powerpnt.py:1223 appModules\soffice.py:95
@@ -2013,12 +2013,12 @@ msgstr "Inndatahjelp på. Trykk {gestureKeys} igjen for å slå ho av."
 #. Translators: This will be presented when the input help is toggled.
 #: globalCommands.py:273
 msgid "input help off"
-msgstr "hjelp for inndata av"
+msgstr "Inndatahjelp av"
 
 #. Translators: Input help mode message for toggle sleep mode command.
 #: globalCommands.py:279
 msgid "Toggles sleep mode on and off for the active application."
-msgstr "Slår kvilemodus av eller på for det aktive programmet."
+msgstr "Slår dvalemodus av eller på for det aktive programmet."
 
 #. Translators: This is presented when sleep mode is deactivated, NVDA will continue working as expected.
 #: globalCommands.py:289
@@ -2088,7 +2088,7 @@ msgstr "Rull til høgre ved muspeikaren"
 #. Translators: Input help mode message for report current selection command.
 #: globalCommands.py:418
 msgid "Announces the current selection in edit controls and documents. Pressing twice spells this information. Pressing three times spells it using character descriptions. Pressing four times shows it in a browsable message. "
-msgstr "Meld frå om gjeldande markering i redigeringskontrollar og dokument. Trykk to gonger for å stave denne informasjonen. Trykk tre gonger for å stave den med teiknbeskrivingar. Trykk fire gonger for å vise den i ei lesbar melding."
+msgstr "Meld frå om gjeldande markering i redigeringskontrollar og dokument. Trykk to gonger for å stave denne informasjonen. Trykk tre gonger for å stave den med teiknbeskrivingar. Trykk fire gonger for å vise den i ei lesbar melding. "
 
 #. Translators: The message reported after selected text
 #. Translators: This is spoken to indicate what has just been selected.
@@ -2107,12 +2107,12 @@ msgstr "Trykk ein gong for å lese nåverande tidspunkt, trykk to gonger for å 
 #. Translators: Input help mode message for set the first value in the synth ring setting.
 #: globalCommands.py:508
 msgid "Set the first value of the current setting in the synth settings ring"
-msgstr "Vel den første verdien for den gjeldande innstillinga i innstillingsringen for talesyntese."
+msgstr "Vel den første verdien for den gjeldande innstillinga i innstillingsringen for talesyntese"
 
 #. Translators: Input help mode message for set the last value in the synth ring settings.
 #: globalCommands.py:521
 msgid "Set the last value of the current setting in the synth settings ring"
-msgstr "Vel den siste verdien for den gjeldande innstillinga i innstillingsringen for talesyntese."
+msgstr "Vel den siste verdien for den gjeldande innstillinga i innstillingsringen for talesyntese"
 
 #. Translators: Input help mode message for increase synth setting value command.
 #: globalCommands.py:534
@@ -2122,7 +2122,7 @@ msgstr "Aukar den aktive innstillinga i talesyntese-innstillingsringen"
 #. Translators: Input help mode message for increasing synth setting value command in larger steps.
 #: globalCommands.py:548
 msgid "Increases the currently active setting in the synth settings ring in a larger step"
-msgstr "Aukar den aktive innstillinga i innstillingsringen for talesyntese med eit større steg."
+msgstr "Aukar den aktive innstillinga i innstillingsringen for talesyntese med eit større steg"
 
 #. Translators: Input help mode message for decrease synth setting value command.
 #: globalCommands.py:562
@@ -2132,7 +2132,7 @@ msgstr "Reduserer den aktive innstillinga i talesyntese-innstillingsringen"
 #. Translators: Input help mode message for decreasing synth setting value command in larger steps.
 #: globalCommands.py:576
 msgid "Decreases the currently active setting in the synth settings ring in a larger step"
-msgstr "Reduserer den aktive innstillinga i innstillingsringen for talesyntese med eit større steg."
+msgstr "Reduserer den aktive innstillinga i innstillingsringen for talesyntese med eit større steg"
 
 #. Translators: Input help mode message for next synth setting command.
 #: globalCommands.py:590
@@ -2228,7 +2228,7 @@ msgstr "sei skriftstorleik på"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:718
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
-msgstr "Går gjennom rapportering av skriftattributt med tale, punktskrift, tale og punktskrift eller av"
+msgstr "Går gjennom rapportering av skriftattributt med tale, punktskrift, tale og punktskrift eller av."
 
 #. Translators: A state in which font attributes are not reported.
 #: globalCommands.py:728
@@ -3153,7 +3153,7 @@ msgstr "Talemodus: {mode}"
 #. mostly used in web browsing to move from embedded object to the webpage document.
 #: globalCommands.py:2542
 msgid "Moves the focus out of the current embedded object and into the document that contains it"
-msgstr "Flyttar fokus ut av det innebygde objektet og til dokumentet som inneholder det"
+msgstr "Flyttar fokus ut av det innebygde objektet og til dokumentet som inneheld det"
 
 #. Translators: Input help mode message for toggle focus and browse mode command
 #. in web browsing and other situations.
@@ -3681,12 +3681,12 @@ msgstr "Slår Talevising av eller på. Talevising er eit flytande vindauge som g
 #. Translators: The message announced when disabling speech viewer.
 #: globalCommands.py:3789
 msgid "speech viewer disabled"
-msgstr "talevising av"
+msgstr "Talevising av"
 
 #. Translators: The message announced when enabling speech viewer.
 #: globalCommands.py:3794
 msgid "speech viewer enabled"
-msgstr "talevising på"
+msgstr "Talevising på"
 
 #. Translators: Input help mode message for toggle Braille viewer command.
 #: globalCommands.py:3802
@@ -3910,7 +3910,7 @@ msgstr "Start markert"
 #. select or copy command
 #: globalCommands.py:4152
 msgid "Move the review cursor to the position marked as the start of text to be selected or copied"
-msgstr "Flyttar lesemarkøren til posisjonen som er markert som start på tekst som skal merkes eller kopieres"
+msgstr "Flyttar lesemarkøren til posisjonen som er markert som start på tekst som skal merkjast eller kopierast"
 
 #. Translators: Presented when attempting to move to the start marker for copy but none has been set.
 #. Translators: Presented when attempting to copy some review cursor text but there is no start marker.
@@ -3967,17 +3967,17 @@ msgstr "Markerer teksten frå den første til den siste punktskriftcella"
 #. Translators: Reported when none of the routing keys pressed to select text are on selectable text.
 #: globalCommands.py:4313
 msgid "No selectable text under routing keys"
-msgstr ""
+msgstr "Ingen merkt tekst under rutetastane"
 
 #. Translators: Reported when only one end of a selection made with routing keys is on selectable text.
 #: globalCommands.py:4317
 msgid "Selection must start and end in text"
-msgstr ""
+msgstr "Markeringa må starte og slutte i tekst"
 
 #. Translators: Reported when the control does not support selecting text with routing keys.
 #: globalCommands.py:4327
 msgid "Unable to select text in this control"
-msgstr ""
+msgstr "Kan ikkje velje tekst i denne kontrollen"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4334
@@ -7397,14 +7397,14 @@ msgstr "Du treng ein nyare versjon av NVDA. NVDA-versjon {nvdaVersion} eller nya
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of this add-on is required. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
-msgstr "Du treng ei oppdatert utgåve av dette tillegget. Tillegget vart sist testa med NVDA {lastTestedNVDAVersion}. NVDA krev at tillegget er testa med NVDA {nvdaVersion} eller nyare. Du kan slå på tillegget på eige ansvar."
+msgstr "Du treng ei oppdatert utgåve av dette tillegget. Tillegget vart sist testa med NVDA {lastTestedNVDAVersion}. NVDA krev at tillegget er testa med NVDA {nvdaVersion} eller nyare. Du kan slå på tillegget på eige ansvar. "
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
 #: addonStore\models\version.py:144
 msgctxt "addonStore"
 msgid "Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. These add-ons will be disabled after installation. After installation, you will be able to manually re-enable these add-ons at your own risk. If you rely on these add-ons, please review the list to decide whether to continue with the installation. "
-msgstr "NVDA-konfigurasjonen inneheld tillegg som ikkje er kompatible med denne versjonen av NVDA. Tillegga blir slått av etter installasjonen. Du kan slå dei på att manuelt på eige ansvar. Dersom du er avhengig av desse tillegga, bør du sjå gjennom lista før du avgjer om du vil halde fram med installasjonen."
+msgstr "NVDA-konfigurasjonen inneheld tillegg som ikkje er kompatible med denne versjonen av NVDA. Tillegga blir slått av etter installasjonen. Du kan slå dei på att manuelt på eige ansvar. Dersom du er avhengig av desse tillegga, bør du sjå gjennom lista før du avgjer om du vil halde fram med installasjonen. "
 
 #. Translators: A message to confirm that the user understands that incompatible add-ons
 #. will be disabled after installation, and can be manually re-enabled.
@@ -13307,12 +13307,12 @@ msgstr "Tilbakestill til fabrikk&innstillingar"
 #. Translators: An error displayed when a gesture is already assigned.
 #: gui\inputGestures.py:862
 msgid "This gesture is already assigned to this script."
-msgstr ""
+msgstr "Denne rørsla er alt knytt til dette skriptet."
 
 #. Translators: An error displayed when a gesture is already assigned.
 #: gui\inputGestures.py:864
 msgid "Gesture already assigned"
-msgstr ""
+msgstr "Rørsla er alt knytt til"
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:927
@@ -13368,12 +13368,12 @@ msgstr "Kunne ikkje starte Windows på nytt. Start Windows på nytt manuelt."
 #. Translators: a message dialog asking whether to end running copies of NVDA before installing
 #: gui\installerGui.py:218
 msgid "Other copies of NVDA are running on this system. This can be a copy on the Windows sign-in screen or on another logged-on user account. They must be ended to continue the installation. They will not be restarted automatically. Users of those copies will lose any NVDA settings they have not saved. Do you want to end them now?"
-msgstr ""
+msgstr "Andre kopiar av NVDA køyrer på dette systemet. Det kan vere ein kopi på Windows-påloggingsskjermen eller på ein annan brukarkonto som er logga på. Dei må avsluttast før installasjonen kan halde fram. Dei blir ikkje starta på nytt automatisk. Brukarane av desse kopiane mistar NVDA-innstillingar dei ikkje har lagra. Vil du avslutte dei no?"
 
 #. Translators: the title of a yes no dialog asking whether to end running copies of NVDA before installing
 #: gui\installerGui.py:226
 msgid "NVDA Still Running"
-msgstr ""
+msgstr "NVDA køyrer framleis"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui\installerGui.py:240
@@ -13514,7 +13514,7 @@ msgstr "Det finst ein flyttbar kopi"
 #: gui\installerGui.py:689
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
-msgstr "Den oppgitte mappa «{portableDirectory}» er ikkje tom. Viss du held fram, blir eksisterande filer i mappa sletta og erstatta. Vil du overskrive innhaldet i denne mappa?"
+msgstr "Den oppgitte mappa «{portableDirectory}» er ikkje tom. Viss du held fram, blir eksisterande filer i mappa sletta og erstatta. Vil du overskrive innhaldet i denne mappa? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
@@ -13551,7 +13551,8 @@ msgstr "Ver venleg å spesifisere ei mappe du vil opprette den portable kopien i
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. The drive letter must be followed by a backslash: use {drive}\\ for the root of the drive, or {drive}\\folder for a folder on it.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Oppgje den absolutte banen der den flyttbare kopien skal opprettast. Stasjonsbokstaven må følgjast av ein omvend skråstrek: bruk {drive}\\ for rota av stasjonen eller {drive}\\mappe for ei mappe på stasjonen.\n"
+"Gjeldande bane: {path}. "
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
@@ -13559,7 +13560,8 @@ msgstr ""
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:\\). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Oppgje den absolutte banen der den flyttbare kopien skal opprettast. Han må starte med ein stasjonsbokstav (t.d. C:\\). Han kan innehalde systemvariablar (t.d. %temp%, %homepath%) som plasshaldarar for delar av banen.\n"
+"Gjeldande bane: {path}. "
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:806
@@ -13867,12 +13869,12 @@ msgstr "Vellykka kopiering av NVDA brukarinnstillingar"
 #. Translators: An error when changing whether NVDA starts automatically after signing in.
 #: gui\settingsDialogs.py:1086 gui\startupDialogs.py:149
 msgid "Unable to change the setting to start NVDA after you sign in."
-msgstr ""
+msgstr "Kan ikkje endre innstillinga for å starte NVDA etter at du har logga inn."
 
 #. Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
 #: gui\settingsDialogs.py:1104
 msgid "Unable to change the setting to use NVDA during sign-in."
-msgstr ""
+msgstr "Kan ikkje endre innstillinga for å bruke NVDA under pålogging."
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1131 gui\settingsDialogs.py:3953
@@ -14405,7 +14407,7 @@ msgstr "Behald &søkjehistorikk"
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2731
 msgid "Nati&ve selection mode on page load"
-msgstr ""
+msgstr "Opprinneleg markeringsmodus når sida blir lasta inn"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2747
@@ -15986,7 +15988,7 @@ msgstr "&Vis denne dialogen når NVDA startar"
 #. Translators: The title of an error message box displayed when validating the startup dialog
 #: gui\startupDialogs.py:129
 msgid "At least one NVDA modifier key must be set. Caps lock will remain as an NVDA modifier key. "
-msgstr "Minst éin NVDA-modifikatortast må vere vald. Caps Lock blir verande som NVDA-modifikatortast."
+msgstr "Minst éin NVDA-modifikatortast må vere vald. Caps Lock blir verande som NVDA-modifikatortast. "
 
 #. Translators: The label of the button in NVDA installation program to install NvDA on the user's computer.
 #: gui\startupDialogs.py:212
@@ -16306,7 +16308,7 @@ msgctxt "addonStore"
 msgid "Warning: add-on installation may result in downgrade: {name}. The installed add-on version cannot be compared with the add-on store version. Installed version: {oldVersion}. Available version: {version}.\n"
 "Proceed with installation anyway? "
 msgstr "Åtvaring: Installasjon av tillegget kan føre til nedgradering: {name}. Den installerte versjonen av tillegget kan ikkje samanliknast med versjonen i Tilleggsbutikken. Installert versjon: {oldVersion}. Tilgjengeleg versjon: {version}.\n"
-"Vil du likevel halde fram med installasjonen?"
+"Vil du likevel halde fram med installasjonen? "
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:144
@@ -16337,7 +16339,7 @@ msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
 msgstr "Åtvaring: Tillegget er ikkje kompatibelt: {name} {version}. Sjå om det finst ei oppdatert utgåve av tillegget. Tillegget vart sist testa med NVDA {lastTestedNVDAVersion}. NVDA krev at tillegget er testa med NVDA {nvdaVersion} eller nyare. Installasjonen kan føre til at NVDA blir ustabilt.\n"
-"Vil du likevel installere tillegget?"
+"Vil du likevel installere tillegget? "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -16347,7 +16349,7 @@ msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
 msgstr "Åtvaring: Tillegget er ikkje kompatibelt: {name} {version}. Sjå om det finst ei oppdatert utgåve av tillegget. Tillegget vart sist testa med NVDA {lastTestedNVDAVersion}. NVDA krev at tillegget er testa med NVDA {nvdaVersion} eller nyare. Dersom du slår det på, kan NVDA bli ustabilt.\n"
-"Vil du likevel slå på tillegget?"
+"Vil du likevel slå på tillegget? "
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:233
@@ -16468,7 +16470,7 @@ msgstr "Oppdateringar for tillegg er tilgjengelege"
 #: gui\addonStoreGui\controls\messageDialogs.py:429
 msgctxt "addonStore"
 msgid "Updates are available for some of your installed add-ons. "
-msgstr "Det finst oppdateringar for nokre av dei installerte tillegga."
+msgstr "Det finst oppdateringar for nokre av dei installerte tillegga. "
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:442
@@ -17868,13 +17870,13 @@ msgstr "Kommentar: {comment} av {author}"
 #: NVDAObjects\UIA\wordDocument.py:215
 #, python-brace-format
 msgid "Reply: {comment} by {author} on {date}"
-msgstr ""
+msgstr "Svar: {comment} av {author} den {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word that is marked resolved
 #: NVDAObjects\UIA\wordDocument.py:218
 #, python-brace-format
 msgid "Resolved comment: {comment} by {author} on {date}"
-msgstr ""
+msgstr "Løyst kommentar: {comment} av {author} den {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:221
@@ -18622,7 +18624,7 @@ msgstr "Logaritmisk"
 #. Translators: Indicates that trendline type is Moving Average
 #: NVDAObjects\window\_msOfficeChart.py:1042
 msgid "Moving Average"
-msgstr "Glidende gjennomsnitt"
+msgstr "Glidande gjennomsnitt"
 
 #. Translators: Indicates that trendline type is Polynomial
 #: NVDAObjects\window\_msOfficeChart.py:1044
@@ -19582,7 +19584,7 @@ msgstr "Store bokstavar på"
 #. Translators: a message when toggling formatting to 'small capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1840
 msgid "Small caps on"
-msgstr "Kapitélar på"
+msgstr "Kapitel på"
 
 #. Translators: a message when toggling formatting to 'No capital' in Microsoft word
 #: NVDAObjects\window\winword.py:1843
@@ -21200,7 +21202,7 @@ msgstr "Ekstern IP-adresse er henta, men port {port} er truleg ikkje vidaresend.
 #. Translators: Error message when unable to get IP address from portcheck server
 #: _remoteClient\dialogs.py:304
 msgid "Unable to contact portcheck server, please manually retrieve your IP address"
-msgstr "Kunne ikkje kontakte tenaren for portkontroll. Hent IP-adressa manuelt."
+msgstr "Kunne ikkje kontakte tenaren for portkontroll. Hent IP-adressa manuelt"
 
 #. Translators: Message displayed when the host or key field is empty and the user tries to connect.
 #: _remoteClient\dialogs.py:414
