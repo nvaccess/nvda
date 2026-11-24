@@ -101,6 +101,48 @@ def terminate() -> None:
 	_magnifier = None
 
 
+def _suspendForConfigReset() -> None:
+	"""
+	Prepare the magnifier for a configuration reset.
+
+	An active magnifier is suspended, so that the screen stays magnified while the configuration
+	is reloaded (#20786). Otherwise, the magnifier is terminated.
+	Must be followed by :func:`_resumeAfterConfigReset` once the configuration has been reset.
+	"""
+	if isActive() and _magnifier._suspend():
+		log.debug("Suspending magnifier for configuration reset")
+		return
+	terminate()
+
+
+def _resumeAfterConfigReset() -> None:
+	"""Apply the reset configuration after :func:`_suspendForConfigReset`."""
+	if _magnifier is None:
+		initialize()
+		return
+	if not _magnifier._isActive:
+		if (
+			_magnifier._isWaitingForScreenCurtain()
+			and getEnabled()
+			and getMagnifiedView() == _magnifier._MAGNIFIED_VIEW
+		):
+			# Stopped by the screen curtain the reloaded configuration enabled: apply the reloaded settings,
+			# so that it restarts with them when the curtain is disabled.
+			_magnifier._applyConfig()
+			return
+		# Otherwise, such as when enabling the curtain failed, the reloaded configuration decides.
+		terminate()
+		initialize()
+		return
+	if getEnabled() and getMagnifiedView() == _magnifier._MAGNIFIED_VIEW:
+		log.debug("Applying the reset configuration to the running magnifier")
+		_magnifier._applyConfig()
+		_magnifier._resume()
+		return
+	terminate()
+	initialize()
+
+
 def start() -> None:
 	"""Start the magnifier.
 
