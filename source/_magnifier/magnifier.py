@@ -332,12 +332,21 @@ class Magnifier:
 				log.debugWarning("Error applying mouse driven magnifier update", exc_info=True)
 			self._consecutiveErrors += 1
 
+	def _cancelPendingVisualUpdates(self) -> None:
+		"""
+		Drop any rate limited call that could still repaint the screen after the magnifier has stopped.
+
+		Whatever stops the magnifier, typically the screen curtain, owns the screen from then on.
+		Subclasses that defer native calls must override this.
+		"""
+
 	def _stopMagnifier(self) -> None:
 		"""
 		Stop the magnifier
 		"""
 		if not self._isActive:
 			return
+		self._cancelPendingVisualUpdates()
 		if self._mouseHook:
 			self._mouseHook.stop()
 			self._mouseHook = None

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 05:18+0000\n"
-"PO-Revision-Date: 2026-11-16 00:17\n"
+"POT-Creation-Date: 2026-11-16 07:04+0000\n"
+"PO-Revision-Date: 2026-11-23 00:15\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
 "Language: ca_ES\n"
@@ -3967,17 +3967,17 @@ msgstr "Selecciona el text des de la primera fins a l'última cel·la en braille
 #. Translators: Reported when none of the routing keys pressed to select text are on selectable text.
 #: globalCommands.py:4313
 msgid "No selectable text under routing keys"
-msgstr ""
+msgstr "No hi ha text seleccionable sota les claus d'encaminament"
 
 #. Translators: Reported when only one end of a selection made with routing keys is on selectable text.
 #: globalCommands.py:4317
 msgid "Selection must start and end in text"
-msgstr ""
+msgstr "La selecció ha de començar i acabar en text"
 
 #. Translators: Reported when the control does not support selecting text with routing keys.
 #: globalCommands.py:4327
 msgid "Unable to select text in this control"
-msgstr ""
+msgstr "No s'ha pogut seleccionar text en aquest control"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4334
@@ -13307,12 +13307,12 @@ msgstr "Restableix als valors pre&determinats de fàbrica"
 #. Translators: An error displayed when a gesture is already assigned.
 #: gui\inputGestures.py:862
 msgid "This gesture is already assigned to this script."
-msgstr ""
+msgstr "Aquest gest ja està assignat a aquest script."
 
 #. Translators: An error displayed when a gesture is already assigned.
 #: gui\inputGestures.py:864
 msgid "Gesture already assigned"
-msgstr ""
+msgstr "El gest ja està assignat"
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:927
@@ -13368,12 +13368,12 @@ msgstr "No s'ha pogut reiniciar el Windows. Reinicieu el Windows manualment."
 #. Translators: a message dialog asking whether to end running copies of NVDA before installing
 #: gui\installerGui.py:218
 msgid "Other copies of NVDA are running on this system. This can be a copy on the Windows sign-in screen or on another logged-on user account. They must be ended to continue the installation. They will not be restarted automatically. Users of those copies will lose any NVDA settings they have not saved. Do you want to end them now?"
-msgstr ""
+msgstr "Altres còpies de NVDA s'estan executant en aquest sistema. Això pot ser una còpia a la pantalla d'inici de sessió de Windows o en un altre compte d'usuari connectat. S'han de cancel·lar per continuar la instal·lació. No es reiniciaran automàticament. Els usuaris d'aquestes còpies perdran qualsevol configuració de NVDA que no hagin guardat. Vols acabar amb elles ara?"
 
 #. Translators: the title of a yes no dialog asking whether to end running copies of NVDA before installing
 #: gui\installerGui.py:226
 msgid "NVDA Still Running"
-msgstr ""
+msgstr "NVDA encara en funcionament"
 
 #. Translators: The message displayed when an error occurs during installation of NVDA.
 #: gui\installerGui.py:240
@@ -13551,7 +13551,8 @@ msgstr "Especifica el directori on vols crear la versió portable."
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. The drive letter must be followed by a backslash: use {drive}\\ for the root of the drive, or {drive}\\folder for a folder on it.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Si us plau, especifiqueu la ruta absoluta on s'ha de crear la còpia portàtil. La lletra de la unitat ha d'anar seguida d'una barra inversa: utilitzeu {drive}\\ per a l'arrel de la unitat, o {drive}\\carpeta per a una carpeta que hi hagi a sobre. \n"
+"Camí actual: {path}. "
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
@@ -13559,7 +13560,8 @@ msgstr ""
 #, python-brace-format
 msgid "Please specify the absolute path where the portable copy should be created. It must start with a drive letter (e.g. C:\\). It may include system variables (e.g. %temp%, %homepath%) as placeholders for parts of the path.\n"
 "Current path: {path}. "
-msgstr ""
+msgstr "Si us plau, especifiqueu la ruta absoluta on s'ha de crear la còpia portàtil. Ha de començar amb una lletra de unitat (p. ex. C:\\). Pot incloure variables del sistema (p. ex. %temp%, %homepath%) com a marcadors de posició per a parts de la ruta. \n"
+"Camí actual: {path}. "
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:806
@@ -13867,12 +13869,12 @@ msgstr "La configuració d'usuari de NVDA s'ha copiat amb èxit"
 #. Translators: An error when changing whether NVDA starts automatically after signing in.
 #: gui\settingsDialogs.py:1086 gui\startupDialogs.py:149
 msgid "Unable to change the setting to start NVDA after you sign in."
-msgstr ""
+msgstr "No es pot canviar la configuració per iniciar NVDA després d'iniciar sessió."
 
 #. Translators: An error when changing whether NVDA starts automatically on the sign-in screen.
 #: gui\settingsDialogs.py:1104
 msgid "Unable to change the setting to use NVDA during sign-in."
-msgstr ""
+msgstr "No s'ha pogut canviar la configuració per utilitzar NVDA durant l'inici de sessió."
 
 #. Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
 #: gui\settingsDialogs.py:1131 gui\settingsDialogs.py:3953
@@ -14405,7 +14407,7 @@ msgstr "&Conserva l'historial de cerca"
 #. Translators: This is the label for a combo box in the browse mode settings panel.
 #: gui\settingsDialogs.py:2731
 msgid "Nati&ve selection mode on page load"
-msgstr ""
+msgstr "Mode de selecció &natiu en carregar la pàgina"
 
 #. Translators: Label for the list of browse mode touch navigation element types in browse mode settings.
 #: gui\settingsDialogs.py:2747
@@ -17868,13 +17870,13 @@ msgstr "Comentari: {comment} per {author}"
 #: NVDAObjects\UIA\wordDocument.py:215
 #, python-brace-format
 msgid "Reply: {comment} by {author} on {date}"
-msgstr ""
+msgstr "Resposta: {comment} de {author} el dia {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word that is marked resolved
 #: NVDAObjects\UIA\wordDocument.py:218
 #, python-brace-format
 msgid "Resolved comment: {comment} by {author} on {date}"
-msgstr ""
+msgstr "Comentari resolt: {comment} per {author} el dia {date}"
 
 #. Translators: The message reported for a comment in Microsoft Word
 #: NVDAObjects\UIA\wordDocument.py:221
