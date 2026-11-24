@@ -9,6 +9,7 @@ import gettext  # noqa: I001
 import unittest
 
 import config
+import controlTypes
 import textInfos
 from speech import speech as speechModule
 from characterProcessing import processSpeechSymbol
@@ -739,3 +740,65 @@ class SpeechExtensionPoints(unittest.TestCase):
 
 		with actionTester(self, post_speechPaused, switch=False):
 			pauseSpeech(False)
+
+
+class Test_getControlFieldSpeech(unittest.TestCase):
+	def test_spinbuttonInheritsReadonlyFromAncestorInput(self):
+		parentField = textInfos.ControlField(
+			{
+				"role": controlTypes.Role.GROUPING,
+				"IAccessible2::attribute_tag": "input",
+				"states": {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE},
+			},
+		)
+		wrapperField = textInfos.ControlField(
+			{
+				"role": controlTypes.Role.GROUPING,
+				"IAccessible2::attribute_tag": "div",
+				"states": set(),
+			},
+		)
+		spinField = textInfos.ControlField(
+			{
+				"role": controlTypes.Role.SPINBUTTON,
+				"states": {controlTypes.State.FOCUSABLE},
+				"value": "11",
+			},
+		)
+		seq = speechModule.getControlFieldSpeech(
+			spinField,
+			ancestorAttrs=[parentField, wrapperField],
+			fieldType="start_addedToControlFieldStack",
+			reason=controlTypes.OutputReason.CARET,
+		)
+		self.assertIn("read only", seq)
+
+	def test_spinbuttonInheritsReadonlyFromAncestorInput_focusReason(self):
+		parentField = textInfos.ControlField(
+			{
+				"role": controlTypes.Role.GROUPING,
+				"IAccessible2::attribute_tag": "input",
+				"states": {controlTypes.State.READONLY, controlTypes.State.FOCUSABLE},
+			},
+		)
+		wrapperField = textInfos.ControlField(
+			{
+				"role": controlTypes.Role.GROUPING,
+				"IAccessible2::attribute_tag": "div",
+				"states": set(),
+			},
+		)
+		spinField = textInfos.ControlField(
+			{
+				"role": controlTypes.Role.SPINBUTTON,
+				"states": {controlTypes.State.FOCUSABLE},
+				"value": "11",
+			},
+		)
+		seq = speechModule.getControlFieldSpeech(
+			spinField,
+			ancestorAttrs=[parentField, wrapperField],
+			fieldType="end_relative",
+			reason=controlTypes.OutputReason.FOCUS,
+		)
+		self.assertIn("read only", seq)

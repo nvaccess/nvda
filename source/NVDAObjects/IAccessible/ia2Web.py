@@ -221,6 +221,38 @@ class Ia2Web(IAccessible):
 				states.add(popupState)
 		if self.role == controlTypes.Role.LINK and controlTypes.State.LINKED in states and self.linkType:
 			states.add(self.linkType)
+		# Internal sub-fields (such as hours, minutes, day, month spinbuttons in Chromium)
+		# reside inside a readonly <input> (date, time, datetime-local, etc.)
+		# where the browser fails to propagate the readonly state to the inner spinbuttons.
+		if controlTypes.State.READONLY not in states and self.role == controlTypes.Role.SPINBUTTON:
+			parent = getattr(self, "parent", None)
+			while parent and getattr(parent, "role", None) not in (
+				controlTypes.Role.DOCUMENT,
+				controlTypes.Role.APPLICATION,
+				controlTypes.Role.WINDOW,
+				None,
+			):
+				parentRole = getattr(parent, "role", None)
+				parentTag = getattr(parent, "IA2Attributes", {}).get("tag")
+				if (
+					parentRole
+					in (
+						controlTypes.Role.DATEEDITOR,
+						controlTypes.Role.GROUPING,
+						controlTypes.Role.EDITABLETEXT,
+					)
+					and parentTag == "input"
+				) or parentRole == controlTypes.Role.DATEEDITOR:
+					if controlTypes.State.READONLY in parent.states:
+						states.add(controlTypes.State.READONLY)
+					break
+				if parentRole not in (
+					controlTypes.Role.GROUPING,
+					controlTypes.Role.SECTION,
+					controlTypes.Role.UNKNOWN,
+				):
+					break
+				parent = getattr(parent, "parent", None)
 		return states
 
 	def _get_landmark(self):

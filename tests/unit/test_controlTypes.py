@@ -104,6 +104,79 @@ class TestProcessStates(unittest.TestCase):
 			{controlTypes.State.CHECKED},
 		)
 
+	def test_readonlyPositiveStates_retainedForSupportedRoles(self):
+		"""Ensures State.READONLY is retained in positive states for editable, spinbutton, date, slider, and combobox roles (#20525)."""
+		supported_roles = [
+			controlTypes.Role.EDITABLETEXT,
+			controlTypes.Role.CHECKBOX,
+			controlTypes.Role.SPINBUTTON,
+			controlTypes.Role.DATEEDITOR,
+			controlTypes.Role.SLIDER,
+			controlTypes.Role.COMBOBOX,
+			controlTypes.Role.GROUPING,
+		]
+		raw_states = {controlTypes.State.FOCUSABLE, controlTypes.State.READONLY}
+		for role in supported_roles:
+			with self.subTest(role=role):
+				processed = _processPositiveStates(
+					role,
+					raw_states,
+					controlTypes.OutputReason.FOCUS,
+				)
+				self.assertIn(controlTypes.State.READONLY, processed)
+
+	def test_readonlyPositiveStates_discardedForUnsupportedRoles(self):
+		"""Ensures State.READONLY is discarded in positive states for roles that do not support readonly."""
+		unsupported_roles = [
+			controlTypes.Role.BUTTON,
+			controlTypes.Role.LINK,
+			controlTypes.Role.STATICTEXT,
+			controlTypes.Role.RADIOBUTTON,
+		]
+		raw_states = {controlTypes.State.FOCUSABLE, controlTypes.State.READONLY}
+		for role in unsupported_roles:
+			with self.subTest(role=role):
+				processed = _processPositiveStates(
+					role,
+					raw_states,
+					controlTypes.OutputReason.FOCUS,
+				)
+				self.assertNotIn(controlTypes.State.READONLY, processed)
+
+	def test_readonlyReportedInProcessAndLabelStates(self):
+		"""Ensures processAndLabelStates labels State.READONLY for spinbutton, date, slider, and combobox (#20525)."""
+		for role in (
+			controlTypes.Role.SPINBUTTON,
+			controlTypes.Role.DATEEDITOR,
+			controlTypes.Role.SLIDER,
+			controlTypes.Role.COMBOBOX,
+			controlTypes.Role.GROUPING,
+		):
+			with self.subTest(role=role):
+				labels = controlTypes.processAndLabelStates(
+					role,
+					{controlTypes.State.FOCUSABLE, controlTypes.State.READONLY},
+					controlTypes.OutputReason.FOCUS,
+				)
+				self.assertIn(controlTypes.State.READONLY.displayString, labels)
+
+	def test_editableStateDiscardedWhenReadonlyOrForSpecialRoles(self):
+		"""Ensures State.EDITABLE is discarded when State.READONLY is present or for roles that do not report it (#20525)."""
+		for role in (
+			controlTypes.Role.EDITABLETEXT,
+			controlTypes.Role.SPINBUTTON,
+			controlTypes.Role.DATEEDITOR,
+			controlTypes.Role.COMBOBOX,
+		):
+			with self.subTest(role=role):
+				processed = _processPositiveStates(
+					role,
+					{controlTypes.State.FOCUSABLE, controlTypes.State.EDITABLE, controlTypes.State.READONLY},
+					controlTypes.OutputReason.FOCUS,
+				)
+				self.assertNotIn(controlTypes.State.EDITABLE, processed)
+				self.assertIn(controlTypes.State.READONLY, processed)
+
 
 class TestStateOrder(unittest.TestCase):
 	def test_positiveMergedStatesOutput(self):

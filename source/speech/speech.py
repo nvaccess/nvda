@@ -2327,6 +2327,27 @@ def getControlFieldSpeech(
 	else:
 		name = ""
 	states = attrs.get("states", set())
+	if role == controlTypes.Role.SPINBUTTON and controlTypes.State.READONLY not in states:
+		for a in reversed(ancestorAttrs):
+			if not isinstance(a, textInfos.ControlField):
+				continue
+			aRole = a.get("role")
+			aTag = a.get("IAccessible2::attribute_tag")
+			aStates = a.get("states", set())
+			if (
+				aRole
+				in (controlTypes.Role.DATEEDITOR, controlTypes.Role.GROUPING, controlTypes.Role.EDITABLETEXT)
+				and aTag == "input"
+			) or aRole == controlTypes.Role.DATEEDITOR:
+				if controlTypes.State.READONLY in aStates:
+					states = states | {controlTypes.State.READONLY}
+				break
+			if aRole not in (
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.SECTION,
+				controlTypes.Role.UNKNOWN,
+			):
+				break
 	keyboardShortcut = attrs.get("keyboardShortcut", "")
 	isCurrent = attrs.get("current", controlTypes.IsCurrent.NO)
 	hasDetails = attrs.get("hasDetails", False)
