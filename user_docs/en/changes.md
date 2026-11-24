@@ -18,6 +18,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 * Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
 This fixes an issue with compiling on MSVC 14.52. (#21174)
+* Updated setuptools to 84.2.1. (#21195)
 
 ## 2026.3.1
 
