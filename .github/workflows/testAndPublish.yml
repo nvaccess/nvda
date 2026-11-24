@@ -388,7 +388,7 @@ jobs:
     - name: Upload translations to Crowdin
       env:
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-      run: miscDeps/tools/l10nUtil.exe uploadSourceFile nvda.pot
+      run: miscDeps/tools/l10nUtil.exe uploadSourceFile output/nvda.pot
 
   createLauncher:
     name: Create launcher
