@@ -323,7 +323,6 @@ def resetConfiguration(factoryDefaults=False):
 	import hwIo
 	import tones
 	import audio
-	import screenCurtain
 	import mathPres
 	import textUtils._wordSeg
 	import _magnifier as magnifier
@@ -331,8 +330,6 @@ def resetConfiguration(factoryDefaults=False):
 	magnifier.terminate()
 	log.debug("Terminating vision")
 	vision.terminate()
-	log.debug("Terminating Screen Curtain")
-	screenCurtain.terminate()
 	log.debug("Terminating math presentation")
 	mathPres.terminate()
 	log.debug("Terminating braille")
@@ -403,8 +400,6 @@ def resetConfiguration(factoryDefaults=False):
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
-	log.debug("initializing Screen Curtain")
-	screenCurtain.initialize()
 	magnifier.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
