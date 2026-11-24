@@ -43,11 +43,9 @@ dependencies = [
 	"pywin32==312",
 	# Sanitize HTML for browsable messages and documentation output to prevent XSS from translators
 	"nh3==0.3.7",
-	# l10nUtil requires Crowdin
-	"crowdin-api-client==1.30.0",
 	# fuzzy search
 	"fuzzysearch==0.8.1",
-	# Building user documentation and the l10nUtil
+	# Building user documentation
 	"markdown==3.11.2",
 	"lxml==6.1.3",
 	"mdx_truly_sane_lists==1.3",
