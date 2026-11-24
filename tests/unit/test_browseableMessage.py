@@ -15,7 +15,7 @@ class TestBrowseableMessageFormatting(unittest.TestCase):
 		lines = message.splitlines(keepends=True)
 		divs = "".join(f"<div>{escape(line)}</div>" for line in lines)
 		sanitized = f"<pre>{divs}</pre>"
-		
+
 		# Verify each line has its own <div> inside <pre>
 		self.assertIn("<pre>", sanitized)
 		self.assertIn("</pre>", sanitized)
