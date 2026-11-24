@@ -1032,9 +1032,8 @@ class MSHTML(IAccessible):
 				elemHeight = bottom - top
 				elemWidth = right - left
 
-				verticallyVisible = (
-					(top >= 0 and bottom <= viewportHeight)
-					or (elemHeight >= viewportHeight and top <= 0 and bottom >= viewportHeight)
+				verticallyVisible = (top >= 0 and bottom <= viewportHeight) or (
+					elemHeight >= viewportHeight and top <= 0 and bottom >= viewportHeight
 				)
 				horizontallyVisible = (
 					viewportWidth == 0
