@@ -129,7 +129,9 @@ def browseableMessage(
 
 	# Sanitize/prepare HTML
 	if not isHtml:
-		messageSanitized = f"<pre>{escape(message)}</pre>"
+		lines = message.splitlines(keepends=True)
+		divs = "".join(f"<div>{escape(line)}</div>" for line in lines)
+		messageSanitized = f"<pre>{divs}</pre>"
 	else:
 		messageSanitized = sanitizeHtmlFunc(message)
 

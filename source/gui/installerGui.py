@@ -39,6 +39,7 @@ import gui
 import gui.contextHelp
 from gui import guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from gui.progressDialog import _DeterminateProgressDialog
 
 from .message import DialogType, DisplayableError, MessageDialog, ReturnCode, displayDialogAsModal
 
@@ -256,7 +257,7 @@ def doInstall(
 	For updates that are not silent, the user is asked whether to end other copies of NVDA that keep running.
 	The installation fails if the user chooses not to end them.
 	"""
-	progressDialog = gui.IndeterminateProgressDialog(
+	progressDialog = _DeterminateProgressDialog(
 		gui.mainFrame,
 		# Translators: The title of the dialog presented while NVDA is being updated.
 		_("Updating NVDA")
@@ -269,24 +270,30 @@ def doInstall(
 		# Translators: The message displayed while NVDA is being installed.
 		else _("Please wait while NVDA is being installed"),
 	)
-	shouldTerminateRunningNVDA = isUpdate and not silent and _isOtherNVDARunning()
+	shouldTerminateRunningNVDA = False
+	if isUpdate and not silent:
+		progressDialog.setStep(installer._InstallStep.WAIT_FOR_RUNNING_COPIES)
+		shouldTerminateRunningNVDA = _isOtherNVDARunning()
 	if shouldTerminateRunningNVDA and not _confirmTerminateRunningNVDA():
 		progressDialog.done()
 		log.warning("Installation cancelled, the user chose not to end the running copies of NVDA")
 		_showInstallationFailedError()
 		return
+	if not shell32.IsUserAnAdmin():
+		progressDialog.setStep(installer._InstallStep.ELEVATE)
 	try:
-		res = systemUtils.execElevated(
-			config.SLAVE_FILENAME,
-			[
-				"install",
-				str(int(createDesktopShortcut)),
-				str(int(startOnLogon)),
-				str(int(shouldTerminateRunningNVDA)),
-			],
-			wait=True,
-			handleAlreadyElevated=True,
-		)
+		with progressDialog.receiveRemoteProgress(installer._InstallStep):
+			res = systemUtils.execElevated(
+				config.SLAVE_FILENAME,
+				[
+					"install",
+					str(int(createDesktopShortcut)),
+					str(int(startOnLogon)),
+					str(int(shouldTerminateRunningNVDA)),
+				],
+				wait=True,
+				handleAlreadyElevated=True,
+			)
 		if res == 2:
 			raise installer.RetriableFailure
 		if copyPortableConfig:

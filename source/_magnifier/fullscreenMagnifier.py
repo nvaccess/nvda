@@ -46,7 +46,6 @@ class FullScreenMagnifier(Magnifier):
 		self._fullscreenMode = getFullscreenMode()
 		self.currentCoordinates = Coordinates(0, 0)
 		self._spotlightManager = SpotlightManager(self)
-		self._displaySize = Size(self._displayOrientation.width, self._displayOrientation.height)
 		self._inputTransformSupported = systemUtils.hasUiAccess()
 
 	def _onSecureDesktopChange(self, isSecureDesktop: bool) -> None:
@@ -181,6 +180,10 @@ class FullScreenMagnifier(Magnifier):
 		self._resetMagnification()
 		self._uninitializeNativeMagnification()
 
+	@override
+	def _cancelPendingVisualUpdates(self) -> None:
+		self._applyFilter.cancel(self)
+
 	@trackNativeMagnifierErrors
 	def _resetMagnification(self) -> None:
 		"""
@@ -286,6 +289,10 @@ class FullScreenMagnifier(Magnifier):
 
 		If an OSError occurs (native API failure), it is logged and execution continues.
 		"""
+		if not self._isActive:
+			# The limiter can defer this call past a stop, and whatever stopped us, typically the
+			# screen curtain, owns the full-screen color effect from then on.
+			return
 		magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 
 	def _fullscreenMagnifier(self, coordinates: Coordinates) -> None:

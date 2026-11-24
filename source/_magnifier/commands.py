@@ -77,8 +77,8 @@ PAN_ACTION_TO_EDGE_MESSAGES = {
 	),
 	MagnifierAction.PAN_BOTTOM_EDGE: pgettext(
 		"magnifier",
-		# Translators: Message announced when already at left edge of the screen while panning the magnified view
-		# to left edge
+		# Translators: Message announced when already at bottom edge of the screen while panning the magnified view
+		# to bottom edge
 		"bottom edge",
 	),
 }
@@ -180,11 +180,8 @@ def toggleFilter() -> None:
 	):
 		filters = list(Filter)
 		idx = filters.index(magnifier.filterType)
+		# The filterType setter applies the filter, and this command only runs while active.
 		magnifier.filterType = filters[(idx + 1) % len(filters)]
-		if magnifier._MAGNIFIED_VIEW == MagnifiedView.FULLSCREEN:
-			assert isinstance(magnifier, FullScreenMagnifier)
-			fullscreenMagnifier: FullScreenMagnifier = magnifier
-			fullscreenMagnifier._applyFilter()
 		setFilter(magnifier.filterType)
 
 		ui.message(

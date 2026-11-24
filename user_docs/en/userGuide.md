@@ -28,7 +28,7 @@ Major highlights include:
 * Ability to [connect to and control another computer running NVDA](#RemoteAccess) for remote assistance or collaboration
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
-* Translated into 56 languages
+* Translated into 58 languages
 * Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
@@ -59,7 +59,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 ### Internationalization {#Internationalization}
 
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 56 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 58 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Azerbaijani, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Turkmen, Ukrainian and Vietnamese.
 
 ### Speech Synthesizer Support {#SpeechSynthesizerSupport}
 
@@ -1677,7 +1677,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name | Key | Description |
 |---|---|---|
 | Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
-| Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
+| Increase the magnification level, or start the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
 | Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
@@ -3485,6 +3485,7 @@ This category contains the following options:
 ##### Maximum Number of Characters on One Line {#BrowseModeSettingsMaxLength}
 
 This field sets the maximum length of a line in browse mode (in characters).
+It can be set from 0 to 1000 characters. If set to 0, lines are not split by length anymore, but rather by the full length of the element in focus.
 
 ##### Maximum Lines Per Page {#BrowseModeSettingsPageLines}
 
@@ -3602,6 +3603,7 @@ You can configure reporting of:
   * Font size
   * Font attributes [(Off, Speech, Braille, Speech and braille)](#DocumentFormattingFontAttributes)
   * Superscripts and subscripts
+  * Small Caps
   * Emphasis
   * Highlighted (Marked) text
   * Style
@@ -4529,7 +4531,11 @@ You can add new symbols by pressing the Add button.
 In the dialog that appears, enter the symbol and press the OK button.
 Then, change the fields for the new symbol as you would for other symbols.
 
-You can remove a symbol you previously added by pressing the Remove button.
+You can remove a symbol you previously added by using:
+
+* the Remove button,
+* the `delete` key, or,
+* the application key on the selected symbol, and activating the Remove option in the context menu.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 

@@ -7,13 +7,23 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* Added context menu and shortcuts support to the Symbol Pronunciation dialog. (#20692, @amirmahdifard)
+* In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
+* Two new unassigned commands have been added to open the NVDA Settings dialog in the Math and in the Document Navigation categories. (#21158, @CyrilleB79)
+* Small Caps has been added to Document Formatting settings.
+Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Changes
+
+* While installing or updating NVDA, the progress dialog now reports the actual progress, the current step and the estimated remaining time, following the progress bar output settings. (#2313, @LeonarddeR)
+* The "Maximum number of characters on one line" browse mode setting can now be set from 0 to 1000 characters, instead of 10 to 250. (#20478, @think-tank0)
+  * Setting it to 0 means lines are no longer split by length.
 
 ### Bug Fixes
 
 * NVDA can now start in Windows PE when optional Windows APIs are unavailable.
   Depending on the image contents, affected features can include the Magnifier, Screen Curtain, Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
+* In browsable message dialogs, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
   The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
@@ -31,6 +41,8 @@
 #### Add-on Store
 
 #### Magnifier
+
+* The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
 
 ### Changes for Developers
 
@@ -54,6 +66,8 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 ## 2027.1
 
+The NVDA interface is now translated to Turkmen and Azerbaijani.
+
 ### Important notes
 
 ### New Features
@@ -62,6 +76,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 ### Changes
 
 * Update CLDR to version 49.0. (#21093, @OzancanKaratas)
+* The NVDA interface is now translated to Turkmen and Azerbaijani. (#21171, #21193)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
 * NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
@@ -77,6 +92,7 @@ Skype for Business remains supported. (#19781, @josephsl)
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* NVDA no longer announces the old name of an item that gains focus while its name changes, such as a file in File Explorer after renaming it, or a message in Unigram. (#21116, @LeonarddeR)
 * MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
 * When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
@@ -169,6 +185,25 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
+
+## 2026.3.2
+
+This is a patch release to fix a security issue and an issue using NVDA on some systems.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
+
+### Bug Fixes
+
+* Ensure NVDA can still be used with Windows Smart App Control enabled. (#21124)
+
+### Changes for developers
+
+* Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
+This fixes an issue with compiling on MSVC 14.52. (#21174)
 
 ## 2026.3.1
 
