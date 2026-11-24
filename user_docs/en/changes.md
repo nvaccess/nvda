@@ -22,7 +22,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 ### Bug Fixes
 
 * In browsable message dialogs, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)
-* OneCore speech can resume after an error creating its audio player once the audio device becomes available again. (#21159)
+* OneCore speech resumes when an audio device becomes available after NVDA started without one, for example in a Remote Desktop session. (#21212, @helmsaccess)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
   The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
