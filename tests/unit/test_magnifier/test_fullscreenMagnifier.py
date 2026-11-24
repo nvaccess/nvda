@@ -237,6 +237,8 @@ class TestFullscreenMagnifierEndToEnd(_TestMagnifier):
 		):
 			magnifier = FullScreenMagnifier()
 		magnifier._consecutiveErrors = 3
+		# The colour filter is applied only while the magnifier is running.
+		magnifier._isActive = True
 		magnifier._startTimer = MagicMock()
 
 		self.mock_mag_fs.reset_mock()
@@ -313,6 +315,9 @@ class TestRecoveryFlashLimiter(_TestMagnifier):
 		):
 			self.fsMagnifier = FullScreenMagnifier()
 		self.fsMagnifier.filterType = Filter.INVERTED
+		# Set after the filter so the setter does not apply it and start the flash limiter.
+		# Recovery restores the filter only while the magnifier is running.
+		self.fsMagnifier._isActive = True
 		self.fsMagnifier._startTimer = MagicMock()
 		self.mock_mag_fs.reset_mock()
 
