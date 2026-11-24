@@ -162,9 +162,16 @@ class ScreenCurtain:
 	def __init__(self):
 		"""Initializer."""
 		super().__init__()
-		self._settings: ScreenCurtainSettings = cast(ScreenCurtainSettings, config.conf["screenCurtain"])
+		self._settings: ScreenCurtainSettings
 		self._enabled: bool = False
-		if self.settings["enabled"]:
+		config.post_configReset.register(self._onConfigReset)
+		self._applyConfig()
+
+	def _applyConfig(self) -> None:
+		"""Apply the current screen curtain settings."""
+		# Resetting the config rebuilds it, so changes to settings won't be reflected in old dictionaries.
+		self._settings = cast(ScreenCurtainSettings, config.conf["screenCurtain"])
+		if self.settings["enabled"] and not self.enabled:
 			try:
 				self.enable()
 			except RuntimeError:
@@ -173,6 +180,16 @@ class ScreenCurtain:
 					self._postInitialisationActivationFailureMessage()
 				else:
 					postNvdaStartup.register(self._postInitialisationActivationFailureMessage)
+		elif self.enabled and not self.settings["enabled"]:
+			self.disable()
+
+	def _onConfigReset(self, factoryDefaults: bool) -> None:
+		"""Re-apply settings when the config is reset.
+
+		:param factoryDefaults: Whether this was a reset to factory configuration.
+			Unused, but required by the extension point.
+		"""
+		self._applyConfig()
 
 	def _postInitialisationActivationFailureMessage(self) -> None:
 		wx.CallAfter(ModernMessageDialog.alert, ERROR_ENABLING_AT_STARTUP_MESSAGE, ERROR_ENABLING_MESSAGE)
@@ -276,6 +293,7 @@ class ScreenCurtain:
 
 	def __del__(self) -> None:
 		"""Custom deleter that disables the Screen Curtain if necessary when this object is garbage collected."""
+		config.post_configReset.unregister(self._onConfigReset)
 		if self._enabled:
 			self.disable(persist=False)
 		if hasattr(super(), "__del__"):
