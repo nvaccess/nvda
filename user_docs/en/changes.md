@@ -172,6 +172,7 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
 * Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
+* Removed `source/markdownTranslate.py`, `source/md2html.py`. (#20796, @nvdaes)
 
 #### Deprecations
 
@@ -193,6 +194,7 @@ This is a patch release to fix a security issue and an issue using NVDA on some 
 Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
 
 * The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
+* The screen is no longer briefly revealed when reverting or resetting the configuration if the Screen Curtain is enabled in both the old and new configurations. (#21163)
 
 ### Bug Fixes
 
@@ -202,6 +204,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 
 * Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
 This fixes an issue with compiling on MSVC 14.52. (#21174)
+* Updated setuptools to 84.2.1. (#21195)
 
 ## 2026.3.1
 

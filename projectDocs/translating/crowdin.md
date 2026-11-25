@@ -55,14 +55,11 @@ PoEdit's homepage is: <http://www.poedit.net/>
 1. Download the latest Windows PoEdit version at <https://poedit.net/download>
 1. Install it by following the on-screen instructions, the default options should be sufficient.
 
-#### Locating the NVDA l10n utility
+#### Downloading the NVDA l10n utility
 
 The NVDA l10n utility is required for safely and efficiently downloading and uploading translation files from / to Crowdin when translating with Poedit.
 
-This utility is included with all versions of NVDA from 2025.1beta1 onwards.
-
-* For installed copies of NVDA, its path is: `c:\Program Files (x86)\nvda\l10nUtil.exe`
-* For portable copies, it can be found as `l10nUtil.exe` in the root directory of the portable copy.
+[Download the NVDA l10n utility](https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe).
 
 #### Downloading po / xliff files with NVDA's l10n utility
 
