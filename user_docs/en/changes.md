@@ -21,6 +21,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Bug Fixes
 
+* NVDA no longer announces "out of link" when navigating by line across links in rich edit controls, UIA text controls, Microsoft PowerPoint, and LibreOffice. (#21182, @daarshnicsanjeev)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
   The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
