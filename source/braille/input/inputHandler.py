@@ -21,6 +21,7 @@ import speech
 import winBindings.user32
 import winUser
 from baseObject import AutoPropertyObject
+from editableText import EditableText
 from logHandler import log
 
 from .constants import (
@@ -93,9 +94,13 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def _get_currentFocusIsTextObj(self):
 		focusObj = api.getFocusObject()
-		return focusObj._hasNavigableText and (
-			not focusObj.treeInterceptor or focusObj.treeInterceptor.passThrough
-		)
+		treeInterceptor = focusObj.treeInterceptor
+		if treeInterceptor and not treeInterceptor.passThrough:
+			# Normally, this means the focus is in browse mode, so we aren't typing into text.
+			# However, some tree interceptors, such as the compound document used for LibreOffice Writer,
+			# are editable text themselves and never switch to pass through.
+			return isinstance(treeInterceptor, EditableText)
+		return focusObj._hasNavigableText
 
 	# Provided by auto property: :meth:`_get_useContractedForCurrentFocus`
 	useContractedForCurrentFocus: bool
