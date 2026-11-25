@@ -14,6 +14,7 @@ on:
 
 jobs:
   download-from-crowdin:
+    if: ${{ vars.CROWDIN_PROJECT_ID }}
     runs-on: windows-2025-vs2026
     permissions:
       contents: write
@@ -25,17 +26,6 @@ jobs:
       workflowRunName: "${{ github.workflow }} #${{ github.run_number }}-${{ github.run_attempt }}"
 
     steps:
-    - name: Early exit
-      run: |
-        if ("${{ vars.CROWDIN_PROJECT_ID }}".length -eq 0) {
-          Write-Output "CROWDIN_PROJECT_ID is not set. Exiting workflow."
-          gh run cancel ${{ github.run_id }}
-          gh run watch ${{ github.run_id }}
-        }
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPO: ${{ github.repository }}
-
     - name: Checkout repository
       uses: actions/checkout@v7
       with:
@@ -54,10 +44,11 @@ jobs:
       with:
         prune-cache: true
 
+    - name: Download l10nUtil.exe
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Download translations from Crowdin
-      run: uv run source/l10nUtil.py exportTranslations -o .
+      run: uv run miscDeps/tools/l10nUtil.exe exportTranslations -o .
       env:
-        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
 
     - name: Commit tracked files only
