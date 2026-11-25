@@ -33,6 +33,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 #### Web browsers
 
+* In web browsers (Mozilla Firefox, Google Chrome, Microsoft Edge), NVDA now reports formatted spin button values in both speech and braille. (#21169, @daarshnicsanjeev)
+
 #### Applications
 
 #### Add-on Store

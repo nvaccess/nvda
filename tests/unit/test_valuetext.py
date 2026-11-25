@@ -10,9 +10,7 @@ from unittest.mock import Mock, patch
 
 import IAccessibleHandler  # noqa: F401  # Break NVDAObjects circular import
 from NVDAObjects.IAccessible import IAccessible
-from NVDAObjects.IAccessible.ia2Web import Ia2Web
 from NVDAObjects.UIA import UIA
-from NVDAObjects.UIA.web import UIAWeb
 
 
 class TestIAccessibleValueText(unittest.TestCase):
@@ -72,7 +70,7 @@ class TestSpinbuttonSpeech(unittest.TestCase):
 
 	def test_spinbutton_speaks_value_instead_of_raw_text(self):
 		import controlTypes
-		from speech.speech import getObjectSpeech, OutputReason
+		from speech.speech import OutputReason, getObjectSpeech
 
 		obj = Mock()
 		obj.role = controlTypes.Role.SPINBUTTON
@@ -119,3 +117,33 @@ class TestChromiumSpinButton(unittest.TestCase):
 		obj._getValueFromUia = Mock(return_value="12euros")
 		self.assertEqual(obj._get_value(), "12euros")
 
+
+class TestSpinbuttonBraille(unittest.TestCase):
+	"""Test NVDAObjectRegion braille rendering for editable spinbuttons (#21169)."""
+
+	def test_spinbutton_braille_includes_valuetext(self):
+		import controlTypes
+		from braille.regions.NVDAObject import NVDAObjectRegion
+
+		obj = Mock()
+		obj.role = controlTypes.Role.SPINBUTTON
+		obj.states = {controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED, controlTypes.State.EDITABLE}
+		obj.name = "Amount"
+		obj.value = "12euros"
+		obj.placeholder = None
+		obj._isTextEmpty = False
+		obj.errorMessage = None
+		obj.description = None
+		obj.annotations = None
+		obj.roleTextBraille = None
+		obj.isCurrent = controlTypes.IsCurrent.NO
+		obj.keyboardShortcut = None
+		obj.positionInfo = {}
+		obj.cellCoordsText = None
+		obj._hasNavigableText = True
+		obj.TextInfo = Mock
+
+		with patch("braille.regions.NVDAObject.objectBelowLockScreenAndWindowsIsLocked", return_value=False):
+			region = NVDAObjectRegion(obj)
+			region.update()
+		self.assertIn("12euros", region.rawText)

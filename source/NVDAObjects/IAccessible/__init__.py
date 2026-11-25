@@ -978,7 +978,9 @@ class IAccessible(Window):
 
 	def _get_value(self):
 		valuetext = getattr(self, "IA2Attributes", {}).get("valuetext") or getattr(
-			self, "IA2Attributes", {}
+			self,
+			"IA2Attributes",
+			{},
 		).get("aria-valuetext")
 		if valuetext is not None and not valuetext.isspace():
 			return valuetext

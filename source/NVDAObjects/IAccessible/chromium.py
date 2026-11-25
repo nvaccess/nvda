@@ -78,13 +78,21 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 			el_id = attrs.get("IAccessible2::attribute_id")
 			if el_id:
 				import UIAHandler
+
 				if UIAHandler.handler and UIAHandler.handler.clientObject:
 					try:
 						import winBindings
-						rootHwnd = winBindings.user32.dll.GetAncestor(self.obj.rootNVDAObject.windowHandle, 2) or self.obj.rootNVDAObject.windowHandle
+
+						rootHwnd = (
+							winBindings.user32.dll.GetAncestor(self.obj.rootNVDAObject.windowHandle, 2)
+							or self.obj.rootNVDAObject.windowHandle
+						)
 						win_el = UIAHandler.handler.clientObject.ElementFromHandle(rootHwnd)
 						if win_el:
-							cond = UIAHandler.handler.clientObject.CreatePropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, el_id)
+							cond = UIAHandler.handler.clientObject.CreatePropertyCondition(
+								UIAHandler.UIA_AutomationIdPropertyId,
+								el_id,
+							)
 							el = win_el.FindFirst(UIAHandler.TreeScope_Descendants, cond)
 							if el:
 								props = getattr(el, "CurrentAriaProperties", "") or ""
@@ -94,8 +102,8 @@ class ChromeVBufTextInfo(GeckoVBufTextInfo):
 										if vt.strip():
 											attrs["value"] = vt
 											break
-					except Exception:
-						pass
+					except (COMError, AttributeError, RuntimeError, ValueError):
+						log.debugWarning("Failed to resolve valuetext from UIA in ChromeVBuf", exc_info=True)
 
 		return attrs
 
@@ -219,10 +227,12 @@ class SpinButton(ia2Web.Ia2Web):
 
 	def _getValueFromUia(self) -> str | None:
 		import UIAHandler
+
 		if not UIAHandler.handler or not UIAHandler.handler.clientObject:
 			return None
 		try:
 			from ..UIA import UIA
+
 			if self.hasFocus:
 				kwargs = {}
 				if UIA.kwargsFromSuper(kwargs, relation="focus", ignoreNonNativeElementsWithFocus=False):
@@ -233,6 +243,7 @@ class SpinButton(ia2Web.Ia2Web):
 
 			client = UIAHandler.handler.clientObject
 			import winBindings
+
 			rootHwnd = winBindings.user32.dll.GetAncestor(self.windowHandle, 2) or self.windowHandle
 			win_el = client.ElementFromHandle(rootHwnd)
 			if not win_el:
@@ -261,7 +272,7 @@ class SpinButton(ia2Web.Ia2Web):
 							vt = part.split("=", 1)[1]
 							if vt.strip():
 								return vt
-		except Exception:
+		except (COMError, AttributeError, RuntimeError, ValueError):
 			log.debugWarning("Failed to resolve valuetext from UIA for Chromium spinbutton", exc_info=True)
 		return None
 

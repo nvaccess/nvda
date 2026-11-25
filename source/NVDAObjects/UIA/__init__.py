@@ -2405,7 +2405,9 @@ class UIA(Window):
 
 	def _get_value(self) -> str | None:
 		valuetext = getattr(self, "ariaProperties", {}).get("valuetext") or getattr(
-			self, "ariaProperties", {}
+			self,
+			"ariaProperties",
+			{},
 		).get("aria-valuetext")
 		if valuetext is not None and not valuetext.isspace():
 			return valuetext

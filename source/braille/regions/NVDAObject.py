@@ -95,7 +95,9 @@ class NVDAObjectRegion(Region):
 			placeholder=placeholderValue,
 			hasDetails=bool(obj.annotations),
 			detailsRoles=detailsRoles,
-			value=obj.value if not NVDAObjectHasUsefulText(obj) else None,
+			value=obj.value
+			if (not NVDAObjectHasUsefulText(obj) or role == controlTypes.Role.SPINBUTTON)
+			else None,
 			states=obj.states,
 			description=description,
 			keyboardShortcut=obj.keyboardShortcut if presConfig["reportKeyboardShortcuts"] else None,
