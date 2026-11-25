@@ -22,6 +22,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 ### Bug Fixes
 
 * NVDA no longer announces "out of link" when navigating by line across links in rich edit controls, UIA text controls, Microsoft PowerPoint, and LibreOffice. (#21182, @daarshnicsanjeev)
+* In browsable message dialogs, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
   The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
@@ -33,6 +34,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 #### Braille
 
 #### Web browsers
+
+* In Chromium-based web browsers, opening the context menu from browse mode with the applications key or `shift+f10` no longer bounces focus back to browse mode. (#18670, @nibarAhmed)
 
 #### Applications
 
@@ -62,7 +65,7 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
 
 ## 2027.1
 
-The NVDA interface is now translated to Turkmen.
+The NVDA interface is now translated to Turkmen and Azerbaijani.
 
 ### Important notes
 
@@ -72,7 +75,7 @@ The NVDA interface is now translated to Turkmen.
 ### Changes
 
 * Update CLDR to version 49.0. (#21093, @OzancanKaratas)
-* The NVDA interface is now translated to Turkmen. (#21171)
+* The NVDA interface is now translated to Turkmen and Azerbaijani. (#21171, #21193)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
 * NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
@@ -170,6 +173,7 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
 * Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
+* Removed `source/markdownTranslate.py`, `source/md2html.py`. (#20796, @nvdaes)
 
 #### Deprecations
 
@@ -181,6 +185,27 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
+
+## 2026.3.2
+
+This is a patch release to fix a security issue and an issue using NVDA on some systems.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
+* The screen is no longer briefly revealed when reverting or resetting the configuration if the Screen Curtain is enabled in both the old and new configurations. (#21163)
+
+### Bug Fixes
+
+* Ensure NVDA can still be used with Windows Smart App Control enabled. (#21124)
+
+### Changes for developers
+
+* Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
+This fixes an issue with compiling on MSVC 14.52. (#21174)
+* Updated setuptools to 84.2.1. (#21195)
 
 ## 2026.3.1
 

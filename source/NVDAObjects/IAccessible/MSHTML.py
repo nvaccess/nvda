@@ -1018,9 +1018,46 @@ class MSHTML(IAccessible):
 		if not self.HTMLNode:
 			return
 		try:
+			rect = self.HTMLNode.getBoundingClientRect()
+			doc = self.HTMLNode.document
+			docElem = getattr(doc, "documentElement", None)
+			body = getattr(doc, "body", None)
+			viewportHeight = getattr(docElem, "clientHeight", 0) or getattr(body, "clientHeight", 0)
+			viewportWidth = getattr(docElem, "clientWidth", 0) or getattr(body, "clientWidth", 0)
+			if viewportHeight > 0:
+				top = rect.top
+				bottom = rect.bottom
+				left = rect.left
+				right = rect.right
+				elemHeight = bottom - top
+				elemWidth = right - left
+
+				verticallyVisible = (top >= 0 and bottom <= viewportHeight) or (
+					elemHeight >= viewportHeight and top <= 0 and bottom >= viewportHeight
+				)
+				horizontallyVisible = (
+					viewportWidth == 0
+					or (left >= 0 and right <= viewportWidth)
+					or (elemWidth >= viewportWidth and left <= 0 and right >= viewportWidth)
+				)
+
+				# If already fully visible in the viewport both vertically and horizontally, do not scroll
+				if verticallyVisible and horizontallyVisible:
+					return
+				# If below viewport or extends horizontally past the right edge, scroll bottom/right into view
+				if bottom > viewportHeight or (viewportWidth > 0 and right > viewportWidth):
+					self.HTMLNode.scrollInToView(False)
+					return
+				# If above viewport or extends past the left edge, scroll top/left into view
+				if top < 0 or (viewportWidth > 0 and left < 0):
+					self.HTMLNode.scrollInToView(True)
+					return
 			self.HTMLNode.scrollInToView()
-		except (COMError, NameError):
-			pass
+		except (COMError, NameError, AttributeError):
+			try:
+				self.HTMLNode.scrollInToView()
+			except (COMError, NameError):
+				pass
 
 	def doAction(self, index=None):
 		if self.HTMLNode:

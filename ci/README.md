@@ -97,6 +97,8 @@ To enable, set:
 * `CROWDIN_PROJECT_ID` as a variable.
 * `CROWDIN_AUTH_TOKEN` as a secret.
 
+Note that Crowdin syncronization is no longer supported for forks, and only works with NV Access's Crowdin repository.
+
 ### Code signing
 
 NV Access signs snapshot/tagged builds with SignPath.
