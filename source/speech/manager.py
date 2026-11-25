@@ -2,6 +2,7 @@
 # Copyright (C) 2006-2026 NV Access Limited, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 import typing  # noqa: I001
 
 import queueHandler
@@ -756,7 +757,7 @@ class SpeechManager:
 				try:
 					trigger.exit()
 				except:  # noqa: E722
-					log.exception("Error exiting profile trigger %r" % trigger.spec)  # noqa: UP031
+					log.exception(f"Error exiting profile trigger {trigger.spec!r}")
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def _restoreProfileTriggers(self, triggers):
@@ -766,7 +767,7 @@ class SpeechManager:
 				try:
 					trigger.enter()
 				except:  # noqa: E722
-					log.exception("Error entering profile trigger %r" % trigger.spec)  # noqa: UP031
+					log.exception(f"Error entering profile trigger {trigger.spec!r}")
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
 	def cancel(self):
