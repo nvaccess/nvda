@@ -28,7 +28,7 @@ Major highlights include:
 * Ability to [connect to and control another computer running NVDA](#RemoteAccess) for remote assistance or collaboration
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
-* Translated into 63 languages
+* Translated into 64 languages
 * Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
@@ -59,7 +59,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 ### Internationalization {#Internationalization}
 
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 63 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Azerbaijani, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Central Kurdish, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Northern Kurdish, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Somali, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Turkmen, Ukrainian, Urdu and Vietnamese.
+Besides English, NVDA has been translated into 64 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Azerbaijani, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Central Kurdish, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Northern Kurdish, Norwegian (Bokmål and Nynorsk), Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Somali, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Turkmen, Ukrainian, Urdu and Vietnamese.
 
 ### Speech Synthesizer Support {#SpeechSynthesizerSupport}
 
