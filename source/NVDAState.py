@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2025 NV Access Limited
+# Copyright (C) 2022-2026 NV Access Limited
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,11 @@ class _WritePaths:
 
 	@property
 	def updateCheckStateFile(self) -> str:
+		return os.path.join(self.configDir, "updateCheckState.json")
+
+	@property
+	def _oldUpdateCheckStateFile(self) -> str:
+		"""The legacy pickled update check state file, which is removed without being loaded (#19560)."""
 		return os.path.join(self.configDir, "updateCheckState.pickle")
 
 	@property

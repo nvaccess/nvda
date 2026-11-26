@@ -18,6 +18,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 * While installing or updating NVDA, the progress dialog now reports the actual progress, the current step and the estimated remaining time, following the progress bar output settings. (#2313, @LeonarddeR)
 * The "Maximum number of characters on one line" browse mode setting can now be set from 0 to 1000 characters, instead of 10 to 250. (#20478, @think-tank0)
   * Setting it to 0 means lines are no longer split by length.
+* NVDA now stores the state of update checks in a safer format. (#19560, @0x1bitcrack3r)
+  The previous state is not carried over: after updating, a postponed update needs to be downloaded again, and an update you chose not to be reminded about may be offered again.
 
 ### Bug Fixes
 
@@ -53,6 +55,10 @@ Please refer to [the developer guide](https://download.nvaccess.org/documentatio
   which can be `None`.
   `SoundSplitState` remains available from `audio` without Sound Split dependencies. (#19537)
 * The WTS API binding exposes `WTSAPI32_AVAILABLE`; its function bindings remain callable and raise `OSError` when the API is unavailable. (#19537)
+* The update check state is now stored as JSON in `updateCheckState.json` instead of being pickled in `updateCheckState.pickle`. (#19560, @0x1bitcrack3r)
+  `NVDAState.WritePaths.updateCheckStateFile` now points to the JSON file.
+  The old pickle file is deleted without being loaded.
+  Values loaded from the file are validated, and API versions in `updateCheck.state` are still tuples.
 
 #### Deprecations
 
