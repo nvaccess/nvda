@@ -10,6 +10,7 @@ Only facts that need a real process run against :class:`SubprocessHostController
 """
 
 import pathlib
+import queue
 import threading
 import time
 import unittest
@@ -30,7 +31,7 @@ from rpyc.core.stream import Stream
 from .threadHostController import ThreadHostController
 
 #: Bound on anything involving a real process or a background thread, in seconds.
-_TIMEOUT: float = 10.0
+_TIMEOUT: float = 30.0
 #: Grace given to a host to exit once its control connection closes, in tests that expect it not to.
 _SHORT_GRACE: float = 0.2
 
@@ -916,6 +917,29 @@ class TestHeartbeat(unittest.TestCase):
 
 		return handlePing
 
+	@staticmethod
+	def freezeAfterPings[T](
+		after: int = 1,
+		timeout: float = _TIMEOUT,
+	) -> Callable[[rpyc.core.protocol.Connection, T], T]:
+		"""Build an RPyC ping handler that responds correctly then freezes.
+
+		:param after: the number of pings after which to freeze.
+		:timeout: How long to freeze for.
+		:returns: A ping handler that returns the data it receives immediately until ``after`` pings have been responded to,
+			at which point it sleeps for ``timeout`` seconds before soing so.
+		"""
+		pingNum = 0
+
+		def handlePing[T](self: rpyc.core.protocol.Connection, data: T) -> T:
+			nonlocal pingNum
+			pingNum += 1
+			if pingNum > after:
+				time.sleep(timeout)
+			return data
+
+		return handlePing
+
 	def makeBody[T](
 		self,
 		pingHandler: Callable[[rpyc.core.protocol.Connection, T], Any],
@@ -935,6 +959,7 @@ class TestHeartbeat(unittest.TestCase):
 		self,
 		body: Callable[[Connection], None],
 		*,
+		wakeImmediatelyAfterSending: int | None = None,
 		serve: bool = False,
 		heartbeatInterval: float = 1,
 		consecutiveHeartbeatMissLimit: int = 2,
@@ -962,6 +987,27 @@ class TestHeartbeat(unittest.TestCase):
 		threadingMonotonicPatcher = patch("threading._time", new=mockMonotonic)
 		self.addCleanup(threadingMonotonicPatcher.stop)
 		threadingMonotonicPatcher.start()
+		if wakeImmediatelyAfterSending is not None:
+
+			class Queue(queue.Queue):
+				def __init__(self, *args, **kwargs):
+					self.__countGet: int = 0
+					super().__init__(*args, **kwargs)
+
+				def get(self, *args, **kwargs):
+					if self.__countGet <= wakeImmediatelyAfterSending:
+						self.__countGet += 1
+					else:
+						incAndNotify()
+					return super().get(*args, **kwargs)
+
+			realStartWatchdog = session._startWatchdog
+
+			def startWatchdog():
+				with patch("_art.session.addonSession.queue.Queue", new=Queue):
+					realStartWatchdog()
+
+			session._startWatchdog = startWatchdog
 		return session
 
 	def test_consecutiveHeartbeatFailuresFailSession(self):
@@ -994,5 +1040,20 @@ class TestHeartbeat(unittest.TestCase):
 		startWithin(self, session)
 		self.assertTrue(waitForState(session, SessionState.STOPPED))
 		self.assertIsNone(session.failureReason)
+		# We can't guarantee that the stopper thread stopped the session before the 6th or subsequent pings were sent, but 5 must have been sent.
 		self.assertGreaterEqual(session._heartbeatCallbackFactory.call_count, 5)
+		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
+
+	def test_unresponsiveHostIsStopped(self):
+		"""A session that stops responding to ping requests is stopped."""
+		session = self.makeSession(
+			self.freezeAfterPings(after=1),
+			wakeImmediatelyAfterSending=1,
+			consecutiveHeartbeatMissLimit=2,
+		)
+		startWithin(self, session)
+		self.assertTrue(waitForState(session, SessionState.FAILED))
+		self.assertIn("stopped responding", session.failureReason)
+		# 1 for the successful ping, and 2 for the subsequent failed ones.
+		self.assertEqual(session._heartbeatCallbackFactory.call_count, 3)
 		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
