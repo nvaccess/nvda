@@ -18,7 +18,7 @@ import queue
 import threading
 import time
 from collections.abc import Callable
-from typing import TYPE_CHECKING, Final
+from typing import TYPE_CHECKING, Final, NamedTuple
 
 import rpyc
 from logHandler import log
@@ -82,6 +82,11 @@ class SessionState(enum.Enum):
 
 class HostLaunchError(RuntimeError):
 	"""The host could not be brought to readiness."""
+
+
+class _HeartbeatRequest(NamedTuple):
+	id: int
+	deadline: float
 
 
 class AddonSession:
@@ -411,7 +416,7 @@ class AddonSession:
 
 	def _startWatchdog(self) -> None:
 		dbg("Creating request queue...")
-		send = queue.Queue(maxsize=self._consecutiveHeartbeatMissLimit)
+		send = queue.Queue[_HeartbeatRequest](maxsize=self._consecutiveHeartbeatMissLimit)
 		dbg("Creating heartbeat watcher and server...")
 		self._heartbeatWatcher = watcher = threading.Thread(
 			target=self._watchHeartbeats,
@@ -429,7 +434,7 @@ class AddonSession:
 		watcher.start()
 		sender.start()
 
-	def _watchHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
+	def _watchHeartbeats(self, send: queue.Queue[_HeartbeatRequest]) -> None:
 		dbg("Entering")
 		idGen = itertools.count()
 		missed = 0
@@ -444,7 +449,7 @@ class AddonSession:
 					deadline = time.monotonic() + self._heartbeatInterval
 					dbg(f"Sending heartbead request with {id=} and {deadline=}")
 					try:
-						send.put_nowait((id, deadline))
+						send.put_nowait(_HeartbeatRequest(id=id, deadline=deadline))
 					except queue.Full:
 						dbg("Queue full, failing")
 						fail = True
@@ -487,44 +492,43 @@ class AddonSession:
 				self._fail("Add-on stopped responding.")
 				dbg("done")
 
-	def _sendHeartbeats(self, send: queue.Queue[tuple[int, float]]) -> None:
+	def _sendHeartbeats(self, send: queue.Queue[_HeartbeatRequest]) -> None:
 		dbg("entering")
 		while True:
 			dbg("Waiting for request")
 			try:
-				id, deadline = send.get()
+				request = send.get()
 			except queue.ShutDown:
 				dbg("Queue shutdown, exiting")
 				break
-			dbg(f"got request with {id=} and {deadline=}")
-			if deadline <= (now := time.monotonic()):
-				dbg(f"{deadline=} <= {now=}, dropping")
+			dbg(f"got {request=}")
+			if request.deadline <= (now := time.monotonic()):
+				dbg(f"{request.deadline=} <= {now=}, dropping")
 				continue
 			dbg("Creating and sending ping")
-			req = self._conn._conn.async_request(rpyc.core.consts.HANDLE_PING, id)
-			req.add_callback(self._heartbeatCallbackFactory(id, deadline))
+			req = self._conn._conn.async_request(rpyc.core.consts.HANDLE_PING, request.id)
+			req.add_callback(self._heartbeatCallbackFactory(request))
 		dbg("done")
 
 	def _heartbeatCallbackFactory(
 		self,
-		id: int,
-		deadline: float,
+		request: _HeartbeatRequest,
 	) -> Callable[[rpyc.core.async_.AsyncResult], None]:
 		def callback(res: rpyc.core.async_.AsyncResult) -> None:
 			dbg("entering")
 			with self._heartbeatCond:
-				dbg(f"Checking prereqs ({id=}, {deadline=}, {res=}")
+				dbg(f"Checking prereqs ({request=}, {res=}")
 				if not (
 					self._state is SessionState.READY
-					and time.monotonic() < deadline
+					and time.monotonic() < request.deadline
 					and res.ready
 					and not res.error
-					and res.value == id
+					and res.value == request.id
 				):
 					dbg("Prerequisites not satisfied, dropping")
 					return
 				dbg("prereqs met, setting heartbeatAckId and notifying heartbeatCond")
-				self._heartbeatAckId = id
+				self._heartbeatAckId = request.id
 				self._heartbeatCond.notify_all()
 			dbg("done")
 
