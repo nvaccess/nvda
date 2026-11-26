@@ -506,7 +506,17 @@ class AddonSession:
 				dbg(f"{request.deadline=} <= {now=}, dropping")
 				continue
 			dbg("Creating and sending ping")
-			req = self._conn._conn.async_request(rpyc.core.consts.HANDLE_PING, request.id)
+			if (conn := self._conn) is None or (rawConn := conn._conn) is None:
+				break
+			try:
+				req = rawConn.async_request(rpyc.core.consts.HANDLE_PING, request.id)
+			except EOFError:
+				break
+			# RPyC teardown can release the send lock before the sender releases it again.
+			except RuntimeError:
+				if rawConn.closed:
+					break
+				raise
 			req.add_callback(self._heartbeatCallbackFactory(request))
 		dbg("done")
 
