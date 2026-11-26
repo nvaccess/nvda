@@ -18,7 +18,8 @@ class TestTryStartRemoteLoader(unittest.TestCase):
 			loader = NVDAHelper._tryStartRemoteLoader("loaderPath")
 
 		self.assertIsNone(loader)
-		logException.assert_called_once_with("Unable to start remote loader from %s", "loaderPath")
+		# log.exception does not support lazy %-style interpolation, so the path must be in the message itself.
+		logException.assert_called_once_with("Unable to start remote loader from loaderPath")
 
 
 class TestRemoteLoaderHandles(unittest.TestCase):
