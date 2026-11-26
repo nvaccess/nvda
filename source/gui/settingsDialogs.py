@@ -6,7 +6,7 @@
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß, Tianze
-# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu.
+# Neil Soiffer, Ryan McCleary, Wang Chong, Kefas Lungu, Andrew Johnson, Carter Temm.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -1619,20 +1619,21 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				pass
 
 	def onDiscard(self):
-		# unbind change events for string settings as wx closes combo boxes on cancel
-		settingsInst = self.getSettings()
-		for setting in settingsInst.supportedSettings:
-			if isinstance(setting, (NumericDriverSetting, BooleanDriverSetting)):
-				continue
-			getattr(self, f"{setting.id}List").Unbind(wx.EVT_CHOICE)
+		# unbind change events for string settings as wx closes combo boxes on cancel.
+		# Use the controls that were created, as the settings instance may have changed since (#6469).
+		for settingId in self.sizerDict:
+			if combo := getattr(self, f"{settingId}List", None):
+				combo.Unbind(wx.EVT_CHOICE)
 		# restore settings
-		settingsInst.loadSettings()
+		self.getSettings().loadSettings()
 
 	def onSave(self):
 		self.getSettings().saveSettings()
 
 	def refreshGui(self):
-		if not self._currentSettingsRef():
+		# The previous settings instance may outlive its replacement (e.g. a terminated synth awaiting
+		# garbage collection), so compare identity rather than waiting for the weakref to die (#6469).
+		if self._currentSettingsRef() is not self.getSettings():
 			if gui._isDebug():
 				log.debug("refreshing panel")
 			self.sizerDict.clear()
@@ -1642,6 +1643,7 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				lambda ref: wx.CallAfter(self.refreshGui),
 			)
 			self.makeSettings(self.settingsSizer)
+			self.settingsSizer.Layout()
 
 	def onPanelActivated(self):
 		"""Called after the panel has been activated
@@ -1881,6 +1883,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.useSpellingFunctionalityCheckBox.SetValue(
 			config.conf["speech"][self.driver.name]["useSpellingFunctionality"],
 		)
+		self._appendMaxSelectionReportingLength(settingsSizerHelper)
 		self._appendSpeechModesList(settingsSizerHelper)
 
 	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
@@ -1931,6 +1934,19 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.speechModesList.Bind(wx.EVT_CHECKLISTBOX, self._onSpeechModesListChange)
 		self.speechModesList.Select(0)
 
+	def _appendMaxSelectionReportingLength(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		validation = config.conf.getConfigValidation(("speech", "maxSelectionReportingLength"))
+		self.maxSelectionReportingLengthEdit = settingsSizerHelper.addLabeledControl(
+			# Translators: This is the label for an edit box in the voice settings panel.
+			# Longer selections are reported as a number of characters.
+			_("Speak selected &text if it has fewer characters than"),
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=int(validation.kwargs["min"]),
+			max=int(validation.kwargs["max"]),
+			initial=config.conf["speech"]["maxSelectionReportingLength"],
+		)
+		self.bindHelpEvent("MaxSelectionReportingLength", self.maxSelectionReportingLengthEdit)
+
 	def _appendDelayedCharacterDescriptions(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		# Translators: This is the label for a checkbox in the voice settings panel.
 		delayedCharacterDescriptionsText = _("&Delayed descriptions for characters on cursor movement")
@@ -1980,6 +1996,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
+		config.conf["speech"]["maxSelectionReportingLength"] = self.maxSelectionReportingLengthEdit.Value
 		config.conf["speech"][self.driver.name]["capPitchChange"] = self.capPitchChangeEdit.Value
 		config.conf["speech"][self.driver.name]["sayCapForCapitals"] = self.sayCapForCapsCheckBox.IsChecked()
 		config.conf["speech"][self.driver.name]["beepForCapitals"] = self.beepForCapsCheckBox.IsChecked()
@@ -2611,8 +2628,8 @@ class BrowseModePanel(SettingsPanel):
 			maxLengthLabelText,
 			nvdaControls.SelectOnFocusSpinCtrl,
 			# min and max are not enforced in the config for virtualBuffers.maxLineLength
-			min=10,
-			max=250,
+			min=0,
+			max=1000,
 			initial=config.conf["virtualBuffers"]["maxLineLength"],
 		)
 		self.bindHelpEvent("BrowseModeSettingsMaxLength", self.maxLengthEdit)
@@ -3289,6 +3306,16 @@ class DocumentFormattingPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
+		smallCapsText = _("Small Caps")
+		self.smallCapsCheckBox = fontGroup.addItem(
+			wx.CheckBox(fontGroupBox, label=smallCapsText),
+		)
+		self.smallCapsCheckBox.SetValue(
+			config.conf["documentFormatting"]["reportSmallCaps"],
+		)
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
 		emphasisText = _("E&mphasis")
 		self.emphasisCheckBox = fontGroup.addItem(wx.CheckBox(fontGroupBox, label=emphasisText))
 		self.emphasisCheckBox.SetValue(config.conf["documentFormatting"]["reportEmphasis"])
@@ -3593,6 +3620,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
 			self.superscriptsAndSubscriptsCheckBox.IsChecked()
 		)
+		config.conf["documentFormatting"]["reportSmallCaps"] = self.smallCapsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportColor"] = self.colorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportComments"] = self.commentsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportBookmarks"] = self.bookmarksCheckBox.IsChecked()
@@ -3696,9 +3724,11 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
+		self._outputDeviceEnumerationAvailable = mmdevice.AudioUtilities is not None
 		self._deviceIds, deviceNames = zip(*mmdevice.getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
+		self._updateOutputDeviceEnumerationAvailability(sHelper)
 		selectedOutputDevice = config.conf["audio"]["outputDevice"]
 		if selectedOutputDevice == config.conf.getConfigValidation(("audio", "outputDevice")).default:
 			selection = 0
@@ -3754,6 +3784,7 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitComboBox.SetSelection(index)
 
 		self._appendSoundSplitModesList(sHelper)
+		self._updateSoundSplitAvailability(sHelper)
 
 		self._onSoundVolChange(None)
 
@@ -3788,7 +3819,41 @@ class AudioPanel(SettingsPanel):
 		]
 		self.soundSplitModesList.Select(0)
 
-	def onSave(self):
+	def _updateSoundSplitAvailability(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		if audio.SOUND_SPLIT_AVAILABLE:
+			return
+		self.soundSplitComboBox.Disable()
+		self.soundSplitModesList.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				label=_(
+					# Translators: Explanation shown when the Sound Split feature cannot be used.
+					"Sound Split is unavailable because required Windows audio components are missing.",
+				),
+			),
+		)
+
+	def _updateOutputDeviceEnumerationAvailability(
+		self,
+		settingsSizerHelper: guiHelper.BoxSizerHelper,
+	) -> None:
+		if self._outputDeviceEnumerationAvailable:
+			return
+		self.deviceList.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				label=_(
+					# Translators: Explanation shown when audio output device selection cannot be used.
+					"Audio output device selection is unavailable because required audio components are missing.",
+				),
+			),
+		)
+
+	def _saveOutputDevice(self) -> None:
+		if not self._outputDeviceEnumerationAvailable:
+			return
 		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
 		if config.conf["audio"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
@@ -3803,6 +3868,8 @@ class AudioPanel(SettingsPanel):
 			tones.terminate()
 			tones.initialize()
 
+	def onSave(self):
+		self._saveOutputDevice()
 		config.conf["audio"]["soundVolumeFollowsVoice"] = self.soundVolFollowCheckBox.IsChecked()
 		config.conf["audio"]["soundVolume"] = self.soundVolSlider.GetValue()
 
@@ -3831,7 +3898,7 @@ class AudioPanel(SettingsPanel):
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
-		if len(enabledSoundSplitModes) < 1:
+		if audio.SOUND_SPLIT_AVAILABLE and len(enabledSoundSplitModes) < 1:
 			log.debugWarning("No sound split modes enabled.")
 			self._validationErrorMessageBox(
 				# Translators: Message shown when no sound split modes are enabled.
@@ -3979,6 +4046,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
 		self.bindHelpEvent("RemoteEnable", self.enableRemote)
+		self._updateRemoteClientAvailability(sHelper)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
@@ -4083,6 +4151,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			# Where users set the key for their connection.
 			_("&Key:"),
 			wx.TextCtrl,
+			style=wx.TE_PASSWORD if globalVars.appArgs.secure else 0,
 		)
 		self.bindHelpEvent("RemoteAutoconnectKey", self.key)
 
@@ -4097,6 +4166,23 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		if globalVars.appArgs.secure:
 			self._disableDescendants(sizer, enabledInSecureMode)
+
+	def _updateRemoteClientAvailability(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		import _remoteClient
+
+		if _remoteClient.remoteClientAvailable():
+			return
+		self.enableRemote.Disable()
+		settingsSizerHelper.addItem(
+			wx.StaticText(
+				self,
+				label=pgettext(
+					"remote",
+					# Translators: Explanation shown in Remote Access settings when the client cannot be loaded.
+					"Remote Access is unavailable because its required components could not be loaded.",
+				),
+			),
+		)
 
 	def _disableDescendants(self, sizer: wx.Sizer, excluded: Container[wx.Window]):
 		"""Disable all but the specified discendant windows of this sizer.
@@ -6702,6 +6788,20 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	if not globalVars.appArgs.secure:
 		categoryClasses.append(AdvancedPanel)
 
+	@classmethod
+	def _getCategoryClasses(cls) -> list[type[SettingsPanel]]:
+		import mathPres
+
+		return [
+			category
+			for category in cls.categoryClasses
+			if category is not MathSettingsPanel or mathPres._mathCATAvailable
+		]
+
+	def __init__(self, parent: wx.Window, initialCategory: type[SettingsPanel] | None = None):
+		self.categoryClasses = self._getCategoryClasses()
+		super().__init__(parent, initialCategory)
+
 	def makeSettings(self, settingsSizer):
 		# Ensure that after the settings dialog is created the name is set correctly
 		super().makeSettings(settingsSizer)
@@ -6832,6 +6932,8 @@ class SpeechSymbolsDialog(SettingsDialog):
 		# See the "Punctuation/Symbol Pronunciation" section of the User Guide for details.
 		self.symbolsList.AppendColumn(_("Preserve"))
 		self.symbolsList.Bind(wx.EVT_LIST_ITEM_FOCUSED, self.onListItemFocused)
+		self.symbolsList.Bind(wx.EVT_CONTEXT_MENU, self.onContextMenu)
+		self.symbolsList.Bind(wx.EVT_CHAR_HOOK, self.onCharHook)
 
 		# Translators: The label for the group of controls in symbol pronunciation dialog to change the pronunciation of a symbol.
 		changeSymbolText = _("Change selected symbol")
@@ -7040,6 +7142,30 @@ class SpeechSymbolsDialog(SettingsDialog):
 			# We don't get a new focus event with the new index.
 			self.symbolsList.sendListItemFocusedEvent(index)
 		self.symbolsList.SetFocus()
+
+	def onCharHook(self, evt: wx.KeyEvent):
+		key = evt.GetKeyCode()
+		# Get the selected symbol, if there is one.
+		index = self.symbolsList.GetFirstSelected()
+		if index >= 0:
+			symbol = self.filteredSymbols[index]
+			if key == wx.WXK_DELETE and not self.symbolProcessor.isBuiltin(symbol.identifier):
+				self.OnRemoveClick(None)
+		evt.Skip()
+
+	def onContextMenu(self, evt: wx.ContextMenuEvent):
+		# Get the selected symbol, if there is one.
+		index = self.symbolsList.GetFirstSelected()
+		menu = wx.Menu()
+		if index >= 0:
+			symbol = self.filteredSymbols[index]
+			# Built-in symbols can't be removed.
+			if not self.symbolProcessor.isBuiltin(symbol.identifier):
+				# Translators: Context menu item label to remove a symbol
+				removeItem = menu.Append(wx.ID_ANY, _("Re&move"))
+				self.Bind(wx.EVT_MENU, self.OnRemoveClick, removeItem)
+		self.PopupMenu(menu)
+		menu.Destroy()
 
 	def onOk(self, evt):
 		self.onSymbolEdited()

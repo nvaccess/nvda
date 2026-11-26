@@ -1,3 +1,7 @@
+!ifdef SIGNED_NSIS_PLUGINS
+!addplugindir "${SIGNED_NSIS_PLUGINS}"
+!endif
+
 !include "fileFunc.nsh"
 !include "LogicLib.nsh"
 !include "MUI2.nsh"
@@ -10,8 +14,13 @@ SilentInstall silent
 RequestExecutionLevel user
 CRCCheck on
 
+!ifdef SIGNED_NSIS_PLUGINS
+ReserveFile "${SIGNED_NSIS_PLUGINS}\System.dll"
+ReserveFile "${SIGNED_NSIS_PLUGINS}\Banner.dll"
+!else
 ReserveFile "${NSISDIR}\Plugins\x86-unicode\system.dll"
 ReserveFile "${NSISDIR}\Plugins\x86-unicode\banner.dll"
+!endif
 
 Name "NVDA"
 VIProductVersion "${VERSION_YEAR}.${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_BUILD}" ;Needs to be here so other version info shows up

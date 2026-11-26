@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka, Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2006-2026 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, nibarAhmed
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import typing  # noqa: I001
 
@@ -567,7 +567,12 @@ def winEventToNVDAEvent(
 	# without waiting for its DWM ghost window to be created (which is the gap
 	# that previously froze NVDA for several seconds on first contact, and on
 	# every subsequent interaction with the hung window).
-	if winUser.isHungAppWindow(window):
+	# The classic task switcher is reported as hung while it emits MSAA focus events (#21052).
+	if winUser.isHungAppWindow(window) and not (
+		eventID in (winUser.EVENT_OBJECT_FOCUS, winUser.EVENT_SYSTEM_FOREGROUND)
+		and objectID == winUser.OBJID_CLIENT
+		and winUser.getClassName(window) in ("#32771", "TaskSwitcherWnd")
+	):
 		if isMSAADebugLoggingEnabled():
 			log.debugWarning(
 				f"Hung application. Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID)}",
@@ -759,6 +764,32 @@ def processFocusWinEvent(window: int, objectID: int, childID: int, force: bool =
 	return processFocusNVDAEvent(obj, force=force)
 
 
+def _hasActiveUIAFocusInSameProcess(obj: NVDAObjects.IAccessible.IAccessible) -> bool:
+	"""Return whether the last queued focus object is a UIA object in the same process
+	that still holds keyboard focus, when the incoming MSAA event is for Chromium web content.
+
+	Used to prevent delayed or racing MSAA/IAccessible focus events from a Chromium renderer
+	(for example, after focusing an element while opening a native UIA context menu) from
+	overriding a newer UIA focus object, without affecting legitimate MSAA controls such as
+	Win32 popup menus.
+	"""
+	if obj.windowClassName != "Chrome_RenderWidgetHostHWND":
+		return False
+	if not UIAHandler.handler:
+		return False
+	import NVDAObjects.UIA
+
+	focus = eventHandler.lastQueuedFocusObject
+	if not isinstance(focus, NVDAObjects.UIA.UIA):
+		return False
+	if focus.processID != obj.processID:
+		return False
+	try:
+		return bool(focus.UIAElement.currentHasKeyboardFocus)
+	except COMError:
+		return False
+
+
 def processFocusNVDAEvent(obj, force=False):
 	"""Processes a focus NVDA event.
 	If the focus event is valid, it is queued.
@@ -778,6 +809,13 @@ def processFocusNVDAEvent(obj, force=False):
 		if not obj.shouldAllowIAccessibleFocusEvent:
 			if isMSAADebugLoggingEnabled():
 				log.debug(f"IAccessible focus event not allowed by {obj}")
+			return False
+		if _hasActiveUIAFocusInSameProcess(obj):
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					f"Dropping IAccessible focus event for {obj} as UIA focus object "
+					f"{eventHandler.lastQueuedFocusObject} still has keyboard focus",
+				)
 			return False
 	eventHandler.queueEvent("gainFocus", obj)
 	return True

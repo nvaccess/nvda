@@ -49,7 +49,7 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.13.15, 64-bit.
+[Python](https://www.python.org/), version 3.13.17, 64-bit.
 Install the python version listed in [.python-versions](../../.python-versions)
 
 #### uv
@@ -89,7 +89,9 @@ In this case, run `git submodule sync --recursive` to update the local submodule
 
 #### Run time dependencies
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), commit `f1354994057fa9b85001675732e7fed2d437292b`
+* [eSpeak NG](https://github.com/nvaccess/espeak-ng), commit `c6c19ba855410c788a0afbd9b517b9ae66f19986`
+  * We currently maintain a fork of eSpeak to remove commits which introduce regressions, in an effort to make a stable release quality version of eSpeak.
+  We can switch in 2027.1 now that [espeak-ng/espeak-ng#2531](https://github.com/espeak-ng/espeak-ng/issues/2531) is resolved.
 * [Sonic](https://github.com/waywardgeek/sonic), commit `b93885dcb70aae50c6f76b0fe4e0868f029a077e`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `c9ae003d9c85eb707716928de97e055f5b77189c`
 * [liblouis](http://www.liblouis.io/), version 3.39.0
@@ -135,4 +137,4 @@ These packages will be installed into an isolated Python virtual environment wit
 
 The following dependencies aren't needed by most people:
 
-* To generate [developer documentation for nvdaHelper](./buildingDevDocumentation.md#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15.
+* To generate [developer documentation for nvdaHelper](./documentation/buildingDevDocumentation.md#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15.

@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# Copyright (C) 2007-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Leonard de Ruijter, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import os  # noqa: I001
 from collections import OrderedDict
@@ -75,6 +75,7 @@ class SynthDriver(SynthDriver):
 		return True
 
 	def __init__(self):
+		super().__init__()
 		_espeak.initialize(self._onIndexReached)
 		log.info("Using eSpeak NG version %s" % _espeak.info())  # noqa: UP031
 		lang = getLanguage()
@@ -346,6 +347,7 @@ class SynthDriver(SynthDriver):
 			synthDoneSpeaking.notify(synth=self)
 
 	def terminate(self):
+		super().terminate()
 		_espeak.terminate()
 
 	def _get_variant(self):

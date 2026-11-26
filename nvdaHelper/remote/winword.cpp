@@ -53,8 +53,17 @@ constexpr int formatConfig_reportLineSpacing = 0x40000;
 constexpr int formatConfig_reportSuperscriptsAndSubscripts = 0x80000;
 constexpr int formatConfig_reportGraphics = 0x100000;
 constexpr int formatConfig_reportHighlightColor = 0x200000;
+constexpr int formatConfig_reportSmallCaps = 0x400000;
 
-constexpr int formatConfig_fontFlags =(formatConfig_reportFontName|formatConfig_reportFontSize|formatConfig_reportFontAttributes|formatConfig_reportColor|formatConfig_reportSuperscriptsAndSubscripts);
+
+constexpr int formatConfig_fontFlags = (
+	formatConfig_reportFontName |
+	formatConfig_reportFontSize |
+	formatConfig_reportFontAttributes |
+	formatConfig_reportColor |
+	formatConfig_reportSuperscriptsAndSubscripts |
+	formatConfig_reportSmallCaps
+);
 constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatConfig_reportLineNumber|formatConfig_reportTables|formatConfig_reportHeadings|formatConfig_includeLayoutTables);
 
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
@@ -670,6 +679,11 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				}
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_HIDDEN,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"hidden=\"1\" ";
+				}
+			}
+			if (formatConfig & formatConfig_reportSmallCaps) {
+				if (_com_dispatch_raw_propget(pDispatchFont, wdDISPID_FONT_SMALLCAPS, VT_I4, &iVal) == S_OK && iVal) {
+					formatAttribsStream<<L"smallCaps=\"1\" ";
 				}
 			}
 			if(formatConfig&formatConfig_reportSuperscriptsAndSubscripts) {

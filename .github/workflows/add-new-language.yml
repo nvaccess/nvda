@@ -10,6 +10,7 @@ on:
 
 jobs:
   add-new-languages:
+    if: ${{ vars.CROWDIN_PROJECT_ID }}
     runs-on: windows-2025-vs2026
     permissions:
       contents: write
@@ -30,17 +31,20 @@ jobs:
         submodules: true
 
     - name: Set up python
-      uses: actions/setup-python@v6
+      uses: actions/setup-python@v7
       with:
-        python-version: '3.13.13'
+        python-version: '3.13.17'
 
     - name: setup uv
-      uses: astral-sh/setup-uv@v7
-
+      uses: astral-sh/setup-uv@v10.3.3
+      with:
+        prune-cache: true
+    - name: Download l10nUtil.exe
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Download translations from Crowdin
-      run: uv run source/l10nUtil.py exportTranslations -o . -l ${{ matrix.newLanguage }}
+      shell: bash
+      run: uv run miscDeps/tools/l10nUtil.exe exportTranslations -o . -l ${{ matrix.newLanguage }}
       env:
-        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
 
     - name: Commit language files only

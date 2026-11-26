@@ -3,14 +3,16 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from __future__ import annotations  # noqa: I001
+from __future__ import annotations
 
 import argparse
-from ast import NodeTransformer, fix_missing_locations, parse
+import gettext
 import os
 import sys
-import gettext
-from typing import TYPE_CHECKING, Final
+from ast import NodeTransformer, fix_missing_locations, parse
+from pathlib import Path
+from typing import TYPE_CHECKING
+
 from buildVersion import (
 	formatBuildVersionString,
 	name,
@@ -35,7 +37,8 @@ import wx
 import importlib.machinery
 
 if TYPE_CHECKING:
-	from ast import AnnAssign  # noqa: I001
+	from ast import Assign
+
 	from py2exe.dllfinder import Scanner
 	from py2exe.mf310 import Module
 
@@ -58,67 +61,52 @@ def determine_dll_type(self, imagename):
 DllFinder.determine_dll_type = determine_dll_type
 
 
-class _Latex2mathmlSymbolsParserTransformer(NodeTransformer):
-	"""Rewrite the ``SYMBOLS_FILE`` path to resolve relative to the frozen executable."""
+class _WinrtProjectionTransformer(NodeTransformer):
+	"""Resolve projection tables outside library.zip in frozen builds."""
 
-	def __init__(self, relpath: str):
+	def __init__(self) -> None:
 		super().__init__()
 		self.rewritten: bool = False
-		self.relpath = relpath
 
-	def visit_AnnAssign(self, node: AnnAssign) -> AnnAssign:
-		# 1 indicates a "simple" target.
-		# That is, a target that consists solely of a Name node that does not appear between parentheses.
-		if node.simple == 1 and node.target.id == "SYMBOLS_FILE":
-			# Replace the original path expression with one based on sys.executable,
-			# so the frozen build finds the bundled unimathsymbols.txt.
+	def visit_Assign(self, node: Assign) -> Assign:
+		if len(node.targets) == 1 and getattr(node.targets[0], "id", None) == "table":
 			node.value = (
-				# the result of parse is a ``ast.Module`` whose body contains one ``ast.Expr`` node.
-				# We only want the value of that expression.
-				parse(f"os.path.join(os.path.dirname(sys.executable), {self.relpath!r})").body[0].value
+				parse(
+					"os.path.join(os.path.dirname(sys.executable), *spec.name.split('.'), TABLE_NAME)",
+				)
+				.body[0]
+				.value
 			)
 			self.rewritten = True
 		return node
 
 
-def _hook_latex2mathml_symbols_parser(finder: Scanner, module: Module) -> None:
-	"""py2exe hook for the latex2mathml.symbols_parser module.
+def _hook_winrt_runtime_internals(finder: Scanner, module: Module) -> None:
+	"""Bundle WinRT 4 projection tables on disk and redirect the frozen loader.
 
-	latex2mathml locates its ``unimathsymbols.txt`` data file at runtime
-	relative to its own package directory (via ``__file__``).
-	After the application is frozen, that path no longer exists, so this hook:
-
-	1. Copies the data file into the frozen distribution
-		so it ships alongside the executable.
-	2. Rewrites the module's ``SYMBOLS_FILE`` assignment via an AST transformation
-		so it resolves relative to ``sys.executable`` (the frozen exe)
-		instead of the original package location.
+	The native runtime memory-maps these tables, so they cannot be read from
+	inside library.zip. Include every installed projection namespace as well,
+	since the runtime imports dependencies that modulefinder cannot see.
 	"""
-	import latex2mathml.symbols_parser
+	import winrt
 
-	FILENAME: Final[str] = "unimathsymbols.txt"
-	RELPATH: Final[str] = os.path.join("latex2mathml", FILENAME)
-	# Include the data file in the frozen build output.
-	finder.add_datafile(
-		RELPATH,
-		os.path.join(os.path.dirname(latex2mathml.symbols_parser.__file__), FILENAME),
-	)
 	tree = parse(module.__source__)
-	# Inject ``import sys`` so the rewritten path expression can reference it.
-	tree.body.insert(0, parse("import sys").body[0])
-	transformer = _Latex2mathmlSymbolsParserTransformer(RELPATH)
+	transformer = _WinrtProjectionTransformer()
 	newTree = fix_missing_locations(transformer.visit(tree))
 	if not transformer.rewritten:
 		raise RuntimeError(
-			"py2exe hook failed to rewrite SYMBOLS_FILE in latex2mathml.symbols_parser. The upstream module may have changed its variable declaration.",
+			"py2exe hook failed to rewrite the WinRT projection table path. "
+			"The upstream loader may have changed.",
 		)
 	module.__code_object__ = compile(newTree, module.__file__, "exec", optimize=module.__optimize__)
+	for packagePath in winrt.__path__:
+		for tablePath in Path(packagePath).rglob("_table.pywinrt"):
+			relativePath = Path("winrt") / tablePath.relative_to(packagePath)
+			finder.add_datafile(str(relativePath), str(tablePath))
+			finder.import_hook(".".join(relativePath.parent.parts))
 
 
-# Register the hook with py2exe.
-# py2exe discovers hooks by name:
-# ``hook_<dotted_module_name_with_underscores>`` on the ``py2exe.hooks`` module.
-py2exe.hooks.hook_latex2mathml_symbols_parser = _hook_latex2mathml_symbols_parser
+py2exe.hooks.hook_winrt_runtime__internals = _hook_winrt_runtime_internals
 
 
 def _parsePartialArguments() -> argparse.Namespace:
@@ -250,19 +238,6 @@ freeze(
 		"company_name": publisher,
 	},
 	windows=_py2ExeWindows,
-	console=[
-		{
-			"script": "l10nUtil.py",
-			"version_info": {
-				"version": formatBuildVersionString(),
-				"description": "NVDA Localization Utility",
-				"product_name": name,
-				"product_version": version,
-				"copyright": NVDAcopyright,
-				"company_name": publisher,
-			},
-		},
-	],
 	options={
 		"verbose": 2,
 		# Removes assertions for builds.
@@ -363,7 +338,6 @@ freeze(
 		("louis/tables", glob("louis/tables/*")),
 		("cppjieba/dicts", glob("cppjieba/dicts/*")),
 		("COMRegistrationFixes", glob("COMRegistrationFixes/*.reg")),
-		("miscDeps/tools", ["../miscDeps/tools/msgfmt.exe"]),
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ["message.html"]),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),

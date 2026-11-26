@@ -28,7 +28,7 @@ Major highlights include:
 * Ability to [connect to and control another computer running NVDA](#RemoteAccess) for remote assistance or collaboration
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
-* Translated into 56 languages
+* Translated into 58 languages
 * Support for [modern Windows Operating Systems](#MinimumSystemRequirements)
 * Ability to run during Windows sign-in and [other secure screens](#SecureScreens)
 * Announcing controls and text while using touch gestures
@@ -59,7 +59,7 @@ Windows Server 2016, 2019, 2022 and 2025.
 ### Internationalization {#Internationalization}
 
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 56 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 58 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Azerbaijani, Bosnian, Bulgarian, Burmese, Cambodian, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Turkmen, Ukrainian and Vietnamese.
 
 ### Speech Synthesizer Support {#SpeechSynthesizerSupport}
 
@@ -1647,6 +1647,8 @@ You can enable Screen Curtain in the [Privacy and Security category](#PrivacyAnd
 When Screen Curtain is enabled, some features that rely on what is literally on screen will not function.
 On supported systems, [Windows OCR](#Win10Ocr) can still be used while Screen Curtain is enabled.
 Some screenshot utilities may not work.
+NVDA's [Magnifier](#Magnifier) is turned off while Screen Curtain is enabled, and is turned back on when Screen Curtain is disabled.
+Since the screen is black, this is not announced.
 
 Please note that while Windows Magnifier is running and inverted screen colors are being used, Screen Curtain cannot be enabled.
 
@@ -1664,6 +1666,7 @@ To enable or disable the magnifier, press `NVDA+shift+w`.
 The "Increase magnification level" keystroke, `NVDA+shift+equals`, will start the magnifier if it is not running.
 When disabled, the screen returns to its normal size.
 As with other NVDA settings, the Magnifier state is preserved across sessions.
+The Magnifier is turned off while [Screen Curtain](#VisionScreenCurtain) is enabled, and is turned back on when Screen Curtain is disabled.
 
 ### Magnifier Commands {#MagnifierCommands}
 
@@ -1674,7 +1677,7 @@ Once the magnifier is enabled, you can use the following keyboard commands to co
 | Name | Key | Description |
 |---|---|---|
 | Toggle the magnifier on and off | `NVDA+shift+w` | Enables or disables the magnifier |
-| Increase the magnification level | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
+| Increase the magnification level, or start the magnifier | `NVDA+shift+equals` | Increases the zoom level. Starts the magnifier if it's not already running. |
 | Decrease the magnification level | `NVDA+shift+minus` | Decreases the zoom level |
 | Cycle color filters | `NVDA+shift+i` | Cycles through the available color filters (normal, grayscale, inverted) |
 | Cycle tracking mode | None | Cycles through tracking modes (center, relative) |
@@ -2340,7 +2343,7 @@ Note that this setting is only available when "[Unicode normalization](#SpeechUn
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
-These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data Repository](http://cldr.unicode.org/).
+These dictionaries contain descriptions for symbols (particularly emoji) that are provided by the [Unicode Consortium](https://www.unicode.org/consortium/) as part of their [Common Locale Data and Rules](http://cldr.unicode.org/).
 If you want NVDA to speak descriptions of emoji characters based on this data, you should enable this option.
 However, if you are using a speech synthesizer that supports speaking emoji descriptions natively, you may wish to turn this off.
 
@@ -2391,6 +2394,21 @@ For example, while reviewing a line by characters, when the letter "b" is read N
 This can be useful if it is hard to distinguish between pronunciation of symbols, or for hearing impaired users.
 
 The delayed character description will be cancelled if other text is spoken during that time, or if you press the `control` key.
+
+##### Speak selected text if it has fewer characters than {#MaxSelectionReportingLength}
+
+This setting controls how much selected text NVDA speaks.
+When you select text, or use the read selection command (`NVDA+shift+upArrow`), NVDA speaks the selected text if it has fewer characters than this value.
+If the selection has this many characters or more, NVDA reports the number of selected characters instead.
+
+Pressing the read selection command twice or three times spells the selection only if it has fewer characters than this value.
+
+Speaking very long selections can be slow or even lead to crashes with some speech synthesizers, so take care when setting a high value.
+
+| . {.hideHeaderRow} |.|
+| --- | --- |
+| Options | 1 to 10000 |
+| Default | 512 |
 
 ##### Modes available in the Cycle speech mode command {#SpeechModesDisabling}
 
@@ -3467,6 +3485,7 @@ This category contains the following options:
 ##### Maximum Number of Characters on One Line {#BrowseModeSettingsMaxLength}
 
 This field sets the maximum length of a line in browse mode (in characters).
+It can be set from 0 to 1000 characters. If set to 0, lines are not split by length anymore, but rather by the full length of the element in focus.
 
 ##### Maximum Lines Per Page {#BrowseModeSettingsPageLines}
 
@@ -3584,6 +3603,7 @@ You can configure reporting of:
   * Font size
   * Font attributes [(Off, Speech, Braille, Speech and braille)](#DocumentFormattingFontAttributes)
   * Superscripts and subscripts
+  * Small Caps
   * Emphasis
   * Highlighted (Marked) text
   * Style
@@ -4511,7 +4531,11 @@ You can add new symbols by pressing the Add button.
 In the dialog that appears, enter the symbol and press the OK button.
 Then, change the fields for the new symbol as you would for other symbols.
 
-You can remove a symbol you previously added by pressing the Remove button.
+You can remove a symbol you previously added by using:
+
+* the Remove button,
+* the `delete` key, or,
+* the application key on the selected symbol, and activating the Remove option in the context menu.
 
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
@@ -5203,6 +5227,14 @@ The following displays support this automatic detection functionality.
 * Tivomatic Caiku Albatross 46/80 displays
 * NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
+
+### Key assignments
+
+For each display, a table lists its key assignments.
+In these tables:
+
+* `routing` means to press a single routing key.
+* `multiRouting` means to press two routing keys simultaneously.
 
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
 
@@ -6089,6 +6121,7 @@ The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are support
 These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
+Additionally, in the key assignment tables of the models below, the `doubleRouting` gesture corresponds to pressing a routing key twice quickly.
 
 These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
@@ -6428,7 +6461,7 @@ Following are the current key assignments for these displays.
 |Scroll braille display back |pan left or rocker up|
 |Scroll braille display forward |pan right or rocker down|
 |Route to braille cell |routing set 1|
-| Select range from first up to last braille cell | multiple routing set 1 keys |
+| Select range from first up to last braille cell | two routing set 1 keys simultaneously |
 |Toggle braille tethered to |up+down|
 |upArrow key |joystick up, dpad up or space+dot1|
 |downArrow key |joystick down, dpad down or space+dot4|
