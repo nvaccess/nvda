@@ -850,6 +850,14 @@ class TestHeartbeat(unittest.TestCase):
 		factory: Callable[FP, Callable[RP, RR]],
 		sideEffect: Callable[[], Any],
 	) -> Callable[FP, Callable[RP, RR]]:
+		"""Add a side effect to a callable returned from a factory function.
+
+		:factory: A callable that returns a callable.
+		:sideEffect: The side-effect to attach to the return from ``factory``.
+		:returns: A callable with the same call signature as ``factory``.
+			When called, it returns a callable with the same call signature as that returned from ``factory``, but which executes ``sideEffect`` before returning the original result.
+		"""
+
 		def outer(*args: FP.args, **kwargs: FP.kwargs) -> Callable[RP, RR]:
 			orig = factory(*args, **kwargs)
 
@@ -864,6 +872,12 @@ class TestHeartbeat(unittest.TestCase):
 
 	@staticmethod
 	def ignorePings[T](after: int = 0) -> Callable[[rpyc.core.protocol.Connection, T], T | None]:
+		"""Build an RPyC ping handler that temporarily responds correctly before returning ``None``.
+
+		:param after: the number of pings after which to begin returning ``None``.
+		:returns: A ping handler that returns the data it receives until ``after`` pings have been responded to,
+			at which point it responds ``None`` to all subsequent pings.
+		"""
 		pingNum = 0
 
 		def handlePing[T](self: rpyc.core.protocol.Connection, data: T) -> T | None:
@@ -878,8 +892,17 @@ class TestHeartbeat(unittest.TestCase):
 	@staticmethod
 	def dropEverySecondPing[T](
 		event: threading.Event,
-		setAfter: int = 5,
+		setAfter: int,
 	) -> Callable[[rpyc.core.protocol.Connection, T], T | None]:
+		"""Build an RPyC ping handler that alternates responding correctly and returning ``None``.
+
+		:param event: A :class:`threading.Event` to set after a certain number of ping requests have been received.
+		:param setAfter:  The number of ping requests after which to set ``event``.
+		:returns: A ping handler that alternates whether it responds correctly to requests. Counting from 0:
+			* On request ``setAfter`` it sets ``event``; and
+			* On even-numbered requests it returns the received data; or
+			* On odd-numbered requests it returns ``None``.
+		"""
 		pingNum = -1
 
 		def handlePing[T](self: rpyc.core.protocol.Connection, data: T) -> T | None:
@@ -887,7 +910,7 @@ class TestHeartbeat(unittest.TestCase):
 			pingNum += 1
 			if pingNum == setAfter:
 				event.set()
-			if pingNum % 2 == 1:
+			if pingNum % 2 == 0:
 				return data
 			return None
 
@@ -941,18 +964,26 @@ class TestHeartbeat(unittest.TestCase):
 		threadingMonotonicPatcher.start()
 		return session
 
-	def test_consecutiveHeartbeatMissesFailSession(self):
-		session = self.makeSession(self.ignorePings(after=1))
+	def test_consecutiveHeartbeatFailuresFailSession(self):
+		"""A session that responds to a ping request with the wrong value multiple times consecutively fails the session."""
+		session = self.makeSession(self.ignorePings(after=1), consecutiveHeartbeatMissLimit=2)
 		startWithin(self, session)
 		self.assertTrue(waitForState(session, SessionState.FAILED))
 		self.assertIn("stopped responding", session.failureReason)
+		# 1 for the successful ping, and 2 for the subsequent failed ones.
 		self.assertEqual(session._heartbeatCallbackFactory.call_count, 3)
 		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
 
-	def test_intermittentHeartbeatMissesAreDisregarded(self):
+	def test_intermittentHeartbeatFailuresAreDisregarded(self):
+		"""A session that responds to a ping request with the wrong value multiple times with correct responses between them does not fail the session."""
 		release = threading.Event()
 		self.addCleanup(release.set)
-		session = self.makeSession(self.dropEverySecondPing(event=release))
+		# success, failure, success, failure, success
+		# Ensures that the second success resets the accumulated misses, otherwise the 5th ping wouldn't be sent.
+		session = self.makeSession(
+			self.dropEverySecondPing(event=release, setAfter=5),
+			consecutiveHeartbeatMissLimit=2,
+		)
 
 		def stop():
 			release.wait(timeout=_TIMEOUT)
