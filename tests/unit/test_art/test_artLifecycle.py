@@ -1057,3 +1057,29 @@ class TestHeartbeat(unittest.TestCase):
 		# 1 for the successful ping, and 2 for the subsequent failed ones.
 		self.assertEqual(session._heartbeatCallbackFactory.call_count, 3)
 		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)
+
+	@staticmethod
+	def subclassedResponsePings[T](event: threading.Event) -> Callable[[rpyc.core.protocol.Connection, T], T]:
+		def handlePing[T](self: rpyc.core.protocol.Connection, data: T) -> T:
+			class Subclass(type(data)):
+				def exposed___eq__(self, other):
+					event.set()
+					return super().__eq__(self, other)
+
+			return Subclass(data)
+
+		return handlePing
+
+	def test_remoteEqualityCheckNotCalled(self):
+		"""The watchdog must never call a remote equality check, as doing so may block."""
+		remoteEqCalled = threading.Event()
+		session = self.makeSession(
+			self.subclassedResponsePings(event=remoteEqCalled),
+			consecutiveHeartbeatMissLimit=1,
+		)
+		startWithin(self, session)
+		self.assertTrue(waitForState(session, SessionState.FAILED))
+		self.assertIn("stopped responding", session.failureReason)
+		self.assertFalse(remoteEqCalled.is_set(), "Remote equality function must not be called.")
+		self.assertEqual(session._heartbeatCallbackFactory.call_count, 1)
+		assertThreadsStopped(self, session._heartbeatWatcher, session._heartbeatSender)

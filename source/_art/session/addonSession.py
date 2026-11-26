@@ -516,20 +516,17 @@ class AddonSession:
 	) -> Callable[[rpyc.core.async_.AsyncResult], None]:
 		def callback(res: rpyc.core.async_.AsyncResult) -> None:
 			dbg("entering")
-			with self._heartbeatCond:
-				dbg(f"Checking prereqs ({request=}, {res=}")
-				if not (
-					self._state is SessionState.READY
-					and time.monotonic() < request.deadline
-					and res.ready
-					and not res.error
-					and res.value == request.id
-				):
-					dbg("Prerequisites not satisfied, dropping")
-					return
-				dbg("prereqs met, setting heartbeatAckId and notifying heartbeatCond")
-				self._heartbeatAckId = request.id
-				self._heartbeatCond.notify_all()
+			dbg(f"Checking prereqs ({request=}, {res=}")
+			if res.ready and not res.error and type(value := res.value) is int:
+				with self._heartbeatCond:
+					if (
+						self._state is SessionState.READY
+						and time.monotonic() < request.deadline
+						and value == request.id
+					):
+						dbg("prereqs met, setting heartbeatAckId and notifying heartbeatCond")
+						self._heartbeatAckId = request.id
+						self._heartbeatCond.notify_all()
 			dbg("done")
 
 		return callback
