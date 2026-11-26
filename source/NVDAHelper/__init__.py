@@ -818,7 +818,7 @@ def _tryStartRemoteLoader(loaderDir: str) -> _RemoteLoader | None:
 	try:
 		return _RemoteLoader(loaderDir)
 	except OSError:
-		log.exception("Unable to start remote loader from %s", loaderDir)
+		log.exception(f"Unable to start remote loader from {loaderDir}")
 		return None
 
 
