@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
-# Joseph Lee, Arnold Loubriat, Leonard de Ruijter
+# Joseph Lee, Arnold Loubriat, Leonard de Ruijter, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -362,6 +362,7 @@ class SynthDriver(driverHandler.Driver):
 		return False
 
 	def initSettings(self):
+		self._settingsProfiles = config.conf.profiles
 		firstLoad = not config.conf[self._configSection].isSet(self.name)
 		if firstLoad:
 			# Create the new section.
@@ -385,6 +386,7 @@ class SynthDriver(driverHandler.Driver):
 
 	def loadSettings(self, onlyChanged=False):
 		# Method override due to specific logic needed when changing a voice.
+		self._settingsProfiles = config.conf.profiles
 		c = config.conf[self._configSection][self.name]
 		if self.isSupported("voice"):
 			voice = c.get("voice", None)
@@ -433,6 +435,7 @@ _audioOutputDevice = None
 
 
 def initialize():
+	config.pre_configProfileSwitch.register(handlePreConfigProfileSwitch)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 
@@ -513,6 +516,18 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 		If ``None``, the list will be calculated automatically.
 	:return: ``True`` if switching to the named synthesizer succeeds; ``False`` otherwise.
 	"""
+	if name is not None:
+		handlePreConfigProfileSwitch()
+	success = _setSynth(name, _leftToTry=_leftToTry)
+	if success and name is not None:
+		if not isFallback:
+			config.conf["speech"]["synth"] = _curSynth.name
+		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
+	return success
+
+
+def _setSynth(name: str | None, *, _leftToTry: list[str] | None = None) -> bool:
+	"""Apply a synth selection after its owner has saved any outgoing settings."""
 	from synthDrivers.silence import SynthDriver as SilenceSynthDriver
 
 	asDefault = False
@@ -540,10 +555,7 @@ def setSynth(name: str | None, isFallback: bool = False, *, _leftToTry: list[str
 
 	if _curSynth is not None:
 		_audioOutputDevice = config.conf["audio"]["outputDevice"]
-		if not isFallback:
-			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
-		synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=isFallback)
 		return True
 	# As there was an error loading this synth:
 	elif prevSynthName and not prevSynthName == SilenceSynthDriver.name:  # noqa: SIM201
@@ -579,23 +591,36 @@ def findAndSetNextSynth(currentSynthName: str, *, _leftToTry: list[str] | None =
 		return False
 
 
+def handlePreConfigProfileSwitch() -> None:
+	"""Save the active synthesizer while its configuration is still current."""
+	if _curSynth is not None:
+		try:
+			_curSynth.saveSettings()
+		except Exception:
+			log.exception("Error saving synthesizer settings")
+
+
 def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
-	"""
-	Switches synthesizers and or applies new voice settings to the synth due to a config profile switch.
-	@var resetSpeechIfNeeded: if true and a new synth will be loaded, speech queues are fully reset first.
-	This is what happens by default.
-	However, Speech itself may call this with false internally if this is a config profile switch within a
-	currently processing speech sequence.
-	@type resetSpeechIfNeeded: bool
+	"""Switch synthesizers or load voice settings after a configuration profile switch.
+
+	:param resetSpeechIfNeeded: Reset speech queues if a new synthesizer is loaded.
+		The speech manager passes ``False`` for profile switches within a speech sequence.
 	"""
 	conf = config.conf["speech"]
-	if conf["synth"] != _curSynth.name or config.conf["audio"]["outputDevice"] != _audioOutputDevice:
+	if (
+		_curSynth is None
+		or conf["synth"] != _curSynth.name
+		or config.conf["audio"]["outputDevice"] != _audioOutputDevice
+	):
+		if _setSynth(conf["synth"]):
+			if conf["synth"] == "auto":
+				conf["synth"] = defaultSynthPriorityList[0]
+			synthChanged.notify(synth=_curSynth, audioOutputDevice=_audioOutputDevice, isFallback=False)
 		if resetSpeechIfNeeded:
-			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
+			# Cancellation can exit speech profile triggers, so first load the incoming settings they will save.
 			import speech
 
 			speech.cancelSpeech()
-		setSynth(conf["synth"])
 		return
 	_curSynth.loadSettings(onlyChanged=True)
 

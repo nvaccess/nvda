@@ -34,6 +34,7 @@ Skype for Business remains supported. (#19781, @josephsl)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 * When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
 * Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
+* Switching configuration profiles no longer overwrites synthesizer, braille display or vision enhancement settings in the new profile, including when profiles use different audio output devices. (#21162, #20292, @cary-rowen)
 
 #### Performance
 
@@ -92,6 +93,8 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
+* Added the `config.pre_configProfileSwitch` extension point, called before switching configuration profiles while the current configuration is still readable and writable.
+It is not called for speech-only profile switches. (#21162, @cary-rowen)
 
 #### API Breaking Changes
 
@@ -110,6 +113,15 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
 * Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
 * Removed `source/markdownTranslate.py`, `source/md2html.py`. (#20796, @nvdaes)
+* `driverHandler.Driver.terminate()` no longer saves settings.
+NVDA saves settings for drivers it manages before replacement or profile switching.
+Code managing its own drivers must call `saveSettings()` before replacement or from a `config.pre_configProfileSwitch` handler to keep changes.
+Overrides of `terminate()` must not save settings and must call `super().terminate()` for cleanup. (#21162, @cary-rowen)
+* `autoSettingsUtils.autoSettings.AutoSettings.saveSettings()` now saves to the profile stack used by the most recent `initSettings()` or `loadSettings()` call.
+Overrides of these methods must call the superclass method or preserve its profile tracking. (#21162, @cary-rowen)
+* `vision.providerBase.VisionEnhancementProviderSettings` no longer registers a `config.pre_configSave` callback.
+`vision.visionHandler.VisionHandler` saves settings for active providers only.
+Code editing inactive providers' settings must call `saveSettings()` explicitly. (#21162, @cary-rowen)
 
 #### Deprecations
 
