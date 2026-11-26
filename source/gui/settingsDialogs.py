@@ -3820,19 +3820,22 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Select(0)
 
 	def _updateSoundSplitAvailability(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
-		if audio.SOUND_SPLIT_AVAILABLE:
+		if not audio.SOUND_SPLIT_AVAILABLE:
+			explanation = _(
+				# Translators: Explanation shown when the Sound Split feature cannot be used.
+				"Sound Split is unavailable because required Windows audio components are missing.",
+			)
+		elif isRunningOnSecureDesktop():
+			explanation = _(
+				# Translators: Explanation shown in Audio settings when NVDA is running on a secure screen,
+				# such as the Windows sign-in screen, where the Sound Split feature cannot be used.
+				"Sound Split is unavailable on secure screens.",
+			)
+		else:
 			return
 		self.soundSplitComboBox.Disable()
 		self.soundSplitModesList.Disable()
-		settingsSizerHelper.addItem(
-			wx.StaticText(
-				self,
-				label=_(
-					# Translators: Explanation shown when the Sound Split feature cannot be used.
-					"Sound Split is unavailable because required Windows audio components are missing.",
-				),
-			),
-		)
+		settingsSizerHelper.addItem(wx.StaticText(self, label=explanation))
 
 	def _updateOutputDeviceEnumerationAvailability(
 		self,

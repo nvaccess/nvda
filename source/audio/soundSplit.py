@@ -42,6 +42,11 @@ def initialize() -> None:
 
 @atexit.register
 def terminate():
+	if _audioSessionManager is None:
+		# Sound split was never initialized, e.g. on secure screens (#19872),
+		# so there is nothing to restore.
+		# Restoring here would reset the volume of applications whose sound split is managed by another copy of NVDA.
+		return
 	state = _SoundSplitState(config.conf["audio"]["soundSplitState"])
 	if state != _SoundSplitState.OFF:
 		_setSoundSplitState(_SoundSplitState.OFF)

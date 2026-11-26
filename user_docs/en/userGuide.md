@@ -2891,6 +2891,9 @@ For example, if an application is playing a stereo sound track while sound split
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
 In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
+Sound split is unavailable on [secure screens](#SecureScreens), such as the Windows sign-in screen.
+On these screens, NVDA does not change the volume of any application, even if sound split is enabled in the configuration used on secure screens.
+
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
 
 This checkable list allows selecting which sound split modes are included when cycling between them using `NVDA+alt+s`.
