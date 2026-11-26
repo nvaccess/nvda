@@ -16,6 +16,7 @@ import time
 import unittest
 from collections.abc import Callable
 from functools import partial
+from types import SimpleNamespace
 from typing import Any
 from unittest.mock import MagicMock, patch
 
@@ -971,22 +972,34 @@ class TestHeartbeat(unittest.TestCase):
 		)
 		heartbeatCondNotifyAll = session._heartbeatCond.notify_all
 		mockMonotonic = MagicMock(spec_set=time.monotonic, return_value=0)
+		realWaitFor = session._heartbeatCond.wait_for
+
+		def waitForHeartbeat(predicate: Callable[[], bool], timeout: float | None = None) -> bool:
+			if timeout is None:
+				return realWaitFor(predicate)
+			deadline = mockMonotonic() + timeout
+			realWaitFor(
+				lambda: predicate() or mockMonotonic() >= deadline,
+				timeout=timeout,
+			)
+			# An elapsed simulated deadline is a timeout, not a satisfied predicate.
+			return predicate()
+
+		session._heartbeatCond.wait_for = waitForHeartbeat
 
 		def incAndNotify() -> None:
-			mockMonotonic.return_value += 1
 			with session._heartbeatCond:
+				mockMonotonic.return_value += 1
 				heartbeatCondNotifyAll()
 
 		session._heartbeatCallbackFactory = MagicMock(
 			side_effect=self.sideEffectFactory(session._heartbeatCallbackFactory, incAndNotify),
 		)
 		session._heartbeatCond.notify_all = MagicMock()
-		addonSessionMonotonicPatcher = patch("_art.session.addonSession.time.monotonic", new=mockMonotonic)
-		self.addCleanup(addonSessionMonotonicPatcher.stop)
-		addonSessionMonotonicPatcher.start()
-		threadingMonotonicPatcher = patch("threading._time", new=mockMonotonic)
-		self.addCleanup(threadingMonotonicPatcher.stop)
-		threadingMonotonicPatcher.start()
+		# Leave the shared time module and threading's timeout clock untouched.
+		self.enterContext(
+			patch("_art.session.addonSession.time", new=SimpleNamespace(monotonic=mockMonotonic)),
+		)
 		if wakeImmediatelyAfterSending is not None:
 
 			class Queue(queue.Queue):
