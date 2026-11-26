@@ -38,6 +38,13 @@ class _TestMagnifier(unittest.TestCase):
 		self.MockMouseHook = self.mouseHook_patcher.start()
 		self.mock_hook_instance = MagicMock()
 		self.MockMouseHook.return_value = self.mock_hook_instance
+		# Independent of whether Windows Magnifier runs on the test machine.
+		windowsMagnifierPatcher = patch(
+			"_magnifier.fullscreenMagnifier.FullScreenMagnifier._isWindowsMagnifierRunning",
+			return_value=False,
+		)
+		self.mockIsWindowsMagnifierRunning = windowsMagnifierPatcher.start()
+		self.addCleanup(windowsMagnifierPatcher.stop)
 
 		self.magnifier = Magnifier()
 		self.magnifier.zoomLevel = 200

@@ -43,6 +43,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 #### Magnifier
 
 * The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
+* NVDA's Magnifier no longer starts while Windows Magnifier is running at 100%, which made the two conflict. (#21152, @JulienCochuyt)
 
 ### Changes for Developers
 
