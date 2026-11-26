@@ -345,6 +345,7 @@ class MSHTML(VirtualBuffer):
 						oleacc.ROLE_SYSTEM_PUSHBUTTON,
 						oleacc.ROLE_SYSTEM_PAGETAB,
 						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+						oleacc.ROLE_SYSTEM_SPINBUTTON,
 					],
 					f"IAccessible::state_{oleacc.STATE_SYSTEM_READONLY}": [None],
 				},

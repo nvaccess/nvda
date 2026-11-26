@@ -637,6 +637,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation, browseMode.BrowseMod
 						UIAHandler.UIA_CheckBoxControlTypeId,
 						UIAHandler.UIA_ComboBoxControlTypeId,
 						UIAHandler.UIA_RadioButtonControlTypeId,
+						UIAHandler.UIA_SpinnerControlTypeId,
 						UIAHandler.UIA_TabItemControlTypeId,
 					],
 				},

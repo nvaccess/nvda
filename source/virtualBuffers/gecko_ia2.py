@@ -432,6 +432,7 @@ class Gecko_ia2(VirtualBuffer):
 						oleacc.ROLE_SYSTEM_OUTLINE,
 						oleacc.ROLE_SYSTEM_PUSHBUTTON,
 						oleacc.ROLE_SYSTEM_RADIOBUTTON,
+						oleacc.ROLE_SYSTEM_SPINBUTTON,
 						oleacc.ROLE_SYSTEM_PAGETAB,
 						IA2.IA2_ROLE_TOGGLE_BUTTON,
 					],
