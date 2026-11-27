@@ -1316,6 +1316,9 @@ class NVDAObject(
 		# If this object's container / parent is being controlled by the focus,
 		# then report this selection.
 		focus = api.getFocusObject()
+		if not focus or self == focus:
+			self.event_stateChange()
+			return
 		controls = focus.controllerFor
 		for control in controls:
 			# The focus is controling one or more objects.

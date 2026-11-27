@@ -115,7 +115,7 @@ class Ia2Web(IAccessible):
 		if not isinstance(obj, Ia2Web):
 			# #4080: Input composition NVDAObjects are the same window but not IAccessible2!
 			raise NotImplementedError
-		accId = obj.IA2UniqueID
+		accId = self.IA2UniqueID
 		try:
 			res = obj.IAccessibleObject.accChild(accId)
 		except COMError:

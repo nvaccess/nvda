@@ -862,6 +862,8 @@ class IAccessible(Window):
 
 	def isDuplicateIAccessibleEvent(self, obj):
 		"""Compaires the object of an event to self to see if the event should be treeted as duplicate."""
+		if self == obj:
+			return True
 		# MSAA child elements do not have unique winEvent params as a childID could be reused if an element was deleted etc
 		if self.IAccessibleChildID > 0:
 			return False
