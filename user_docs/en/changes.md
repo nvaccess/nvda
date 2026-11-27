@@ -37,6 +37,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 #### Web browsers
 
 * In Chromium-based web browsers, opening the context menu from browse mode with the applications key or `shift+f10` no longer bounces focus back to browse mode. (#18670, @nibarAhmed)
+* Spin buttons, such as elements with `role="spinbutton"`, are now included when moving by form field with `f` and `shift+f`, and in the form fields of the Elements List. (#21161, @adityaanikam)
 
 #### Applications
 

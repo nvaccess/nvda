@@ -130,6 +130,7 @@ class AdobeAcrobat(VirtualBuffer):
 					oleacc.ROLE_SYSTEM_COMBOBOX,
 					oleacc.ROLE_SYSTEM_LIST,
 					oleacc.ROLE_SYSTEM_OUTLINE,
+					oleacc.ROLE_SYSTEM_SPINBUTTON,
 					oleacc.ROLE_SYSTEM_TEXT,
 				],
 				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_READONLY: [None],  # noqa: UP031
