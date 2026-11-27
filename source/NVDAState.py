@@ -82,12 +82,6 @@ class _WritePaths:
 		return os.path.join(self.configDir, STATE_FILENAME)
 
 	@property
-	def _oldAddonStateFile(self) -> str:
-		from addonHandler import _OLD_STATE_FILENAME
-
-		return os.path.join(self.configDir, _OLD_STATE_FILENAME)
-
-	@property
 	def profileTriggersFile(self) -> str:
 		return os.path.join(self.configDir, "profileTriggers.ini")
 
@@ -101,7 +95,7 @@ class _WritePaths:
 
 	@property
 	def updateCheckStateFile(self) -> str:
-		return os.path.join(self.configDir, "updateCheckState.pickle")
+		return os.path.join(self.configDir, "updateCheckState.json")
 
 	@property
 	def guiStateFile(self) -> str:
