@@ -130,8 +130,8 @@ Code editing inactive providers' settings must call `saveSettings()` explicitly.
   * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
   * `PROCESS_QUERY_INFORMATION` and `PROCESS_TERMINATE`: use `winBindings.kernel32.PROCESS.QUERY_INFORMATION` and `winBindings.kernel32.PROCESS.TERMINATE` instead.
 * `getCommentInfoFromPosition` and `getPresentableCommentInfoFromPosition` in `NVDAObjects.UIA.wordDocument` are deprecated with no public replacement. (#14985, @LeonarddeR)
-* The built-in `pickle` module is deprecated, and should not be used.
-It may become forcibly removed from the NVDA API in a future API breaking release. (#19745)
+* The Python standard library `pickle` module is deprecated, and should not be used.
+It may be removed from the subset of the standard library shipped with NVDA in a future API breaking release. (#19745)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
