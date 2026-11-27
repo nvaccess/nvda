@@ -345,7 +345,7 @@ def _setSystemConfig(
 			The system config will be in a ``systemConfig`` subdirectory of this directory.
 	:param addonsToCopy: List of add-on IDs to include in the system configuration, defaults to `()`.
 	:param isMigration: Whether this is a migration from one system config location to another, defaults to ``False``.
-		When this is ``True``, the ``addons/`` directory and ``addonsState.pickle``/``addonsState.json`` in ``fromPath`` will be copied as-is, if they exist.
+		When this is ``True``, the ``addons/`` directory and ``addonsState.json``/``addonsState.json`` in ``fromPath`` will be copied as-is, if they exist.
 	"""
 	import installer  # noqa: I001
 	import addonHandler
@@ -397,7 +397,7 @@ def _prepareToCopyAddons(fromPath: str, toPath: str, addonDirs: list[str], addon
 	.. Note::
 		While this function returns ``None``, it has two major side-effects:
 		1. The ``addonDirs`` list is mutated to contain only the add-ons that should be copied.
-		2. A new `addonsState.pickle` is created in ``toPath``.
+		2. A new `addonsState.json` is created in ``toPath``.
 
 	:param fromPath: Root of the source configuration directory.
 	:param toPath: Root of the destination configuration directory

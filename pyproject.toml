@@ -136,6 +136,7 @@ logger-objects = ["logHandler.log"]
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "winsound.PlaySound".msg= "PlaySound uses winmm, which is deprecated in favor of the Windows core audio APIs."
+"pickle".msg= "Pickle is an unsafe format and should never be used."
 
 [tool.licensecheck]
 only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]

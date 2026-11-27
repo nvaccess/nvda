@@ -160,15 +160,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			# Make the list of strings unique and case insensitive.
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(stateDict.get(category, []))
 
-	def fromPickledDict(
-		self,
-		pickledState: dict[str, set[str] | addonAPIVersion.AddonApiVersionT | MajorMinorPatch],
-	) -> None:
-		log.warning(
-			"addonHandler.AddonsState.fromPickledDict is deprecated. Use addonHandler.AddonsState.fromDict instead.",
-		)
-		return self.fromDict(pickledState)
-
 	def toDict(self) -> dict[str, list[str] | addonAPIVersion.AddonApiVersionT]:
 		"""Convert state to a dict that can be dumped to JSON."""
 		serializeableState: dict[str, list[str] | addonAPIVersion.AddonApiVersionT] = dict()  # noqa: C408
@@ -179,7 +170,8 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def load(self) -> None:
 		"""Populates state with the default content and then loads values from the config."""
-		self._loadWithFallback()
+		if os.path.isfile(self.statePath):
+			self._load(self.statePath)
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
@@ -226,30 +218,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				)
 				return
 			self.fromDict(stateDict)
-
-	def _loadWithFallback(self) -> None:
-		if os.path.isfile(self.statePath):
-			self._load(self.statePath)
-		else:
-			if not isRunningOnSecureDesktop() and os.path.isfile(WritePaths._oldAddonStateFile):
-				# Only import if absolutely necessary.
-				from ._pickleToJsonMigration import _getAddonsStateDictFromPickle
-
-				log.warning("Loading add-ons state from pickle.")
-				try:
-					self.fromDict(_getAddonsStateDictFromPickle(WritePaths._oldAddonStateFile))
-				except Exception:
-					log.error("Failed to load pickled add-ons state.", exc_info=True)  # noqa: G201
-				else:
-					if NVDAState.shouldWriteToDisk():
-						self.save()
-				finally:
-					if NVDAState.shouldWriteToDisk():
-						log.debug("Backing up pickled add-ons state.")
-						try:
-							os.replace(WritePaths._oldAddonStateFile, WritePaths._oldAddonStateFile + ".bak")
-						except Exception:
-							log.debug("Unable to backup old add-ons state pickle file.", exc_info=True)
 
 	def removeStateFile(self) -> None:
 		if not NVDAState.shouldWriteToDisk():

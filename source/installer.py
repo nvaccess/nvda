@@ -1096,7 +1096,6 @@ def install(
 		if os.path.isdir(oldSystemConfigPath):
 			config._setSystemConfig(oldSystemConfigPath, prefix=installDir, isMigration=True)
 		tryRemoveFile(installDirX86, rebootOK=True)
-	_migratePickledAddonsStateToJson(os.path.join(installDir, "systemConfig"))
 	COMRegistrationFixes.fixCOMRegistrations()
 
 
@@ -1114,38 +1113,6 @@ def removeOldLoggedFiles(installPath: str):
 		filePath = line.rstrip("\n")
 		if os.path.exists(filePath):
 			tryRemoveFile(filePath, rebootOK=True)
-
-
-def _migratePickledAddonsStateToJson(configPath: str) -> None:
-	pickledPath = os.path.join(configPath, addonHandler._OLD_STATE_FILENAME)
-	if not os.path.isfile(pickledPath):
-		log.debug("Pickled add-ons state does not exist. No migration necessary.")
-		return
-	try:
-		# Only import if absolutely necessary.
-		from addonHandler._pickleToJsonMigration import _getAddonsStateDictFromPickle
-
-		jsonState = _getAddonsStateDictFromPickle(pickledPath)
-	except Exception:
-		log.error("Failed to load pickled add-ons state.", exc_info=True)  # noqa: G201
-	else:
-		jsonPath = os.path.join(configPath, addonHandler.STATE_FILENAME)
-		try:
-			if os.path.exists(jsonPath):
-				tryRemoveFile(jsonPath)
-		except Exception:
-			log.error(f"Failed to remove existing {jsonPath}.", exc_info=True)  # noqa: G201
-		else:
-			try:
-				with open(jsonPath, "wt", encoding="utf-8") as file:
-					json.dump(jsonState, file)
-			except Exception:
-				log.error("Failed to dump JSON add-ons state.", exc_info=True)  # noqa: G201
-	finally:
-		try:
-			os.replace(pickledPath, pickledPath + ".bak")
-		except Exception:
-			log.error("Failed to back up pickled add-ons state.", exc_info=True)  # noqa: G201
 
 
 def createPortableCopy(destPath: str, shouldCopyUserConfig: bool = True):

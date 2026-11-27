@@ -10,6 +10,7 @@
 
 from collections.abc import Callable  # noqa: I001
 from datetime import datetime
+import json
 from typing import (
 	Any,
 	Optional,
@@ -39,7 +40,6 @@ import os
 import inspect
 import threading
 import time
-import pickle
 
 # #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
 import urllib.request
@@ -989,9 +989,8 @@ class DonateRequestDialog(wx.Dialog):
 
 def saveState():
 	try:
-		# #9038: Python 3 requires binary format when working with pickles.
-		with open(WritePaths.updateCheckStateFile, "wb") as f:
-			pickle.dump(state, f, protocol=0)
+		with open(WritePaths.updateCheckStateFile, "w", encoding="utf-8") as f:
+			json.dump(state, f)
 	except:  # noqa: E722
 		log.debugWarning("Error saving state", exc_info=True)
 
@@ -1032,9 +1031,8 @@ def _warnAndConfirmIfUpdatingRemotely() -> bool:
 def initialize():
 	global state, autoChecker
 	try:
-		# #9038: Python 3 requires binary format when working with pickles.
-		with open(WritePaths.updateCheckStateFile, "rb") as f:
-			state = pickle.load(f)
+		with open(WritePaths.updateCheckStateFile, "r", encoding="utf-8") as f:
+			state = json.load(f)
 	except:  # noqa: E722
 		log.debugWarning("Couldn't retrieve update state", exc_info=True)
 		state = None
