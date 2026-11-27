@@ -28,7 +28,10 @@ def _processPositiveStates(
 	"""
 	positiveStates = positiveStates.copy() if positiveStates is not None else states.copy()
 	# The user never cares about certain states.
-	if role == Role.EDITABLETEXT:
+	if (
+		role in (Role.EDITABLETEXT, Role.SPINBUTTON, Role.DATEEDITOR, Role.COMBOBOX)
+		or State.READONLY in positiveStates
+	):
 		positiveStates.discard(State.EDITABLE)
 	if role != Role.LINK:
 		positiveStates.discard(State.VISITED)
@@ -81,7 +84,15 @@ def _processPositiveStates(
 			and State.SELECTABLE in states
 		):
 			positiveStates.discard(State.SELECTED)
-	if role not in (Role.EDITABLETEXT, Role.CHECKBOX):
+	if role not in (
+		Role.EDITABLETEXT,
+		Role.CHECKBOX,
+		Role.SPINBUTTON,
+		Role.DATEEDITOR,
+		Role.SLIDER,
+		Role.COMBOBOX,
+		Role.GROUPING,
+	):
 		positiveStates.discard(State.READONLY)
 	if role == Role.CHECKBOX:
 		positiveStates.discard(State.PRESSED)
