@@ -5,18 +5,17 @@
 
 """Unit tests verifying loading and saving of addon state."""
 
-import json  # noqa: I001
+import json
 import os
 import tempfile
-from typing import Any
 import unittest
+from typing import Any
 from unittest.mock import patch
 
-from addonHandler._pickleToJsonMigration import _pickledStateDictToJsonStateDict
-import addonStore.models.status
 import addonHandler
-from addonStore.models.version import MajorMinorPatch
+import addonStore.models.status
 import utils.caseInsensitiveCollections
+from addonStore.models.version import MajorMinorPatch
 
 DEFAULT_BACKCOMPAT_VERSION = MajorMinorPatch(2023, 1, 0)
 
@@ -159,109 +158,6 @@ class TestSerialization(unittest.TestCase):
 		with patch("NVDAState.shouldWriteToDisk", return_value=False):  # noqa: SIM117
 			with self.assertRaises(RuntimeError):
 				state._save(self.statePath)
-
-
-class TestPickleToJsonConversion(unittest.TestCase):
-	def test_fullyPopulatedState(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{
-					"PENDING_OVERRIDE_COMPATIBILITY": {"addonPendingOverrideCompatibility"},
-					"backCompatToAPIVersion": (2025, 1, 0),
-					"blocked": {"blockedAddon"},
-					"disabledAddons": {"disabledAddon"},
-					"overrideCompatibility": {"addonWithOverriddenCompatibility"},
-					"pendingDisableSet": {"addonPendingDisable"},
-					"pendingEnableSet": {"addonPendingEnable"},
-					"pendingInstallsSet": {"addonPendingInstall"},
-					"pendingRemovesSet": {"addonPendingRemoval"},
-				},
-			),
-			{
-				"PENDING_OVERRIDE_COMPATIBILITY": ["addonPendingOverrideCompatibility"],
-				"backCompatToAPIVersion": (2025, 1, 0),
-				"blocked": ["blockedAddon"],
-				"disabledAddons": ["disabledAddon"],
-				"overrideCompatibility": ["addonWithOverriddenCompatibility"],
-				"pendingDisableSet": ["addonPendingDisable"],
-				"pendingEnableSet": ["addonPendingEnable"],
-				"pendingInstallsSet": ["addonPendingInstall"],
-				"pendingRemovesSet": ["addonPendingRemoval"],
-			},
-		)
-
-	def test_categoryWithMultipleIds(self):
-		converted = _pickledStateDictToJsonStateDict(
-			{"disabledAddons": {"firstDisabledAddon", "2ndDisabledAddon", "disabledAddonIII"}},
-		)
-		addons = converted.pop("disabledAddons")
-		self.assertCountEqual(addons, ("firstDisabledAddon", "2ndDisabledAddon", "disabledAddonIII"))
-		self.assertEqual(len(converted), 0)
-
-	def test_invalidAddonIds(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict({"blocked": {"disabledAddon1", True, None, 42}}),
-			{"blocked": ["disabledAddon1"]},
-		)
-
-	def test_invalidCategoryValue(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{"overrideCompatibility": 42, "PENDING_OVERRIDE_COMPATIBILITY": {"addon"}},
-			),
-			{"PENDING_OVERRIDE_COMPATIBILITY": ["addon"]},
-		)
-
-	def test_invalidCategoryKey(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{"pendingEnableSet": {"addonPendingEnable"}, "notAKey": ("shouldn't", "be", "here")},
-			),
-			{"pendingEnableSet": ["addonPendingEnable"]},
-		)
-
-	def test_insufficientVersionParts(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{"backCompatToAPIVersion": (1,), "pendingDisableSet": {"addonPendingDisable"}},
-			),
-			{"pendingDisableSet": ["addonPendingDisable"]},
-		)
-
-	def test_surplusVersionParts(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{"backCompatToAPIVersion": (1, 2, 3, 4), "pendingEnableSet": {"addonPendingEnable"}},
-			),
-			{"pendingEnableSet": ["addonPendingEnable"]},
-		)
-
-	def test_invalidVersionParts(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{
-					"backCompatToAPIVersion": ("not", "a", "version"),
-					"pendingInstallsSet": {"addonPendingInstall"},
-				},
-			),
-			{"pendingInstallsSet": ["addonPendingInstall"]},
-		)
-
-	def test_invalidVersionType(self):
-		self.assertDictEqual(
-			_pickledStateDictToJsonStateDict(
-				{"backCompatToAPIVersion": 42, "pendingRemovesSet": {"addonPendingRemoval"}},
-			),
-			{"pendingRemovesSet": ["addonPendingRemoval"]},
-		)
-
-	def test_nonDictInputReturnsEmptyDict(self):
-		for invalidInput in (["a", "list"], "a string", None, 42):
-			with self.subTest(invalidInput=invalidInput):
-				self.assertDictEqual(
-					_pickledStateDictToJsonStateDict(invalidInput),
-					{},
-				)
 
 
 class TestSaveLoadRoundTrip(AddonsStateTestCase):
