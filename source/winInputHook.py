@@ -61,8 +61,8 @@ LRESULT = c_void_p
 keyDownCallback = None
 keyUpCallback = None
 mouseCallback = None
-#: Timestamp of the event being handled, or ``None`` outside the keyboard hook.
 _currentKeyEventTime: int | None = None
+"""Timestamp of the event being handled, or ``None`` outside the keyboard hook."""
 
 
 def _getCurrentKeyEventDelay() -> int | None:

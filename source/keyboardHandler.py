@@ -49,11 +49,14 @@ type _ModifierT = tuple[int, bool]  # noqa: PYI043
 _TO_UNICODE_EX_FLAG_NO_STATE_CHANGE = 0x04
 _TO_UNICODE_EX_BUFFER_LENGTH = 5
 _KEY_PRESSED_STATE = 0x80
-#: The bit set in the value returned by GetAsyncKeyState when the key is down.
 _ASYNC_KEY_STATE_DOWN = 0x8000
-#: Skip modifier reconciliation when Windows key state may no longer match a delayed event.
-# shortcut: hook timeouts below 200 ms need a lower cutoff; revisit if those configurations need support.
+"""The bit set in the value returned by GetAsyncKeyState when the key is down."""
+
 _MAX_KEY_DOWN_DELAY_TO_CHECK_MODIFIERS_MS = 200
+"""Skip modifier reconciliation when Windows key state may no longer match a delayed event.
+
+shortcut: hook timeouts below 200 ms need a lower cutoff; revisit if those configurations need support.
+"""
 
 
 def _getKeyStates(
