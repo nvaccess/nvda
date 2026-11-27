@@ -4,44 +4,43 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
-from __future__ import annotations  # Avoids quoting of forward references  # noqa: I001
+from __future__ import annotations  # Avoids quoting of forward references
 
-from abc import abstractmethod, ABC
-from collections.abc import Callable, Mapping
-import json
-import sys
-import os.path
+import collections
 import gettext
+import importlib
 import inspect
 import itertools
-import collections
+import json
+import os.path
 import shutil
+import sys
+import zipfile
+from abc import ABC, abstractmethod
+from collections.abc import Callable, Mapping
 from io import StringIO
+from types import ModuleType
 from typing import (
 	IO,
+	TYPE_CHECKING,
 	Any,
 	Final,
 	Literal,
-	TYPE_CHECKING,
 )
-import zipfile
-from configobj import ConfigObj
-from configobj.validate import Validator
-from config.registry import ADDON_BUNDLE_EXTENSION
-import languageHandler
-from logHandler import log
-from utils.security import isRunningOnSecureDesktop
-import winBindings.kernel32
-import addonAPIVersion
-import importlib
-import NVDAState
-from NVDAState import WritePaths
-from types import ModuleType
 
+import addonAPIVersion
+import extensionPoints
+import languageHandler
+import NVDAState
+import winBindings.kernel32
 from addonStore.models.status import AddonStateCategory, SupportsAddonState
 from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
-import extensionPoints
-from utils._deprecate import handleDeprecations, MovedSymbol
+from config.registry import ADDON_BUNDLE_EXTENSION
+from configobj import ConfigObj
+from configobj.validate import Validator
+from logHandler import log
+from NVDAState import WritePaths
+from utils._deprecate import MovedSymbol, handleDeprecations
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
@@ -54,9 +53,9 @@ from .packaging import (
 )
 
 if TYPE_CHECKING:
-	from addonStore.models.addon import (  # noqa: I001
-		AddonManifestModel,
+	from addonStore.models.addon import (
 		AddonHandlerModelGeneratorT,
+		AddonManifestModel,
 		InstalledAddonStoreModel,
 	)
 

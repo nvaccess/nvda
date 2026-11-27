@@ -8,14 +8,14 @@
 import json
 import os
 import tempfile
-from typing import Any
 import unittest
+from typing import Any
 from unittest.mock import patch
 
-import addonStore.models.status
 import addonHandler
-from addonStore.models.version import MajorMinorPatch
+import addonStore.models.status
 import utils.caseInsensitiveCollections
+from addonStore.models.version import MajorMinorPatch
 
 DEFAULT_BACKCOMPAT_VERSION = MajorMinorPatch(2023, 1, 0)
 
@@ -158,7 +158,6 @@ class TestSerialization(unittest.TestCase):
 		with patch("NVDAState.shouldWriteToDisk", return_value=False):  # noqa: SIM117
 			with self.assertRaises(RuntimeError):
 				state._save(self.statePath)
-
 
 
 class TestSaveLoadRoundTrip(AddonsStateTestCase):
