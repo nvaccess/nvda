@@ -12,6 +12,7 @@
 * Two new unassigned commands have been added to open the NVDA Settings dialog in the Math and in the Document Navigation categories. (#21158, @CyrilleB79)
 * Small Caps has been added to Document Formatting settings.
 Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
+* In the Input Gestures dialog, all gestures in a category can now be removed at once by selecting the category and pressing `delete` or the "Remove all gestures" button. (#21138, @jcoffin1)
 
 ### Changes
 
