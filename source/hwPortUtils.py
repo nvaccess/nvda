@@ -1,5 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2001-2025 Chris Liechti, NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2001-2026 Chris Liechti, NV Access Limited, Babbage B.V., Leonard de Ruijter, Akash Kakkar
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 # Based on serial scanner code by Chris Liechti from https://raw.githubusercontent.com/pyserial/pyserial/81167536e796cc2e13aa16abd17a14634dc3aed1/pyserial/examples/scanwin32.py
 
 """Utilities for working with hardware connection ports."""
@@ -21,6 +23,7 @@ from winAPI.constants import SystemErrorCodes
 from winBindings.advapi32 import RegCloseKey as _RegCloseKey
 from winBindings.bthprops import (
 	BLUETOOTH_DEVICE_INFO as _BLUETOOTH_DEVICE_INFO,
+	BLUETOOTH_LOAD_ERROR as _BLUETOOTH_LOAD_ERROR,
 	BluetoothGetDeviceInfo as _BluetoothGetDeviceInfo,
 )
 from winBindings.hid import (
@@ -54,6 +57,9 @@ from winBindings.setupapi import (
 	SetupDiOpenDevRegKey as _SetupDiOpenDevRegKey,
 	_Dummy,
 )
+
+if _BLUETOOTH_LOAD_ERROR is not None:
+	log.warning("Bluetooth support is unavailable.", exc_info=_BLUETOOTH_LOAD_ERROR)
 
 
 def _ValidHandle(value):

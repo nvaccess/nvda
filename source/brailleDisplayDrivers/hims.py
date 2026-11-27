@@ -17,6 +17,7 @@ from io import BytesIO
 import hwIo
 from hwIo import intToByte
 from hwIo.base import _isDebug as _isHwIoDebug
+from logHandler import log
 import winKernel
 from winAPI.constants import SystemErrorCodes
 from winBindings.setupapi import (
@@ -30,11 +31,14 @@ from winBindings.setupapi import (
 	SetupDiGetDeviceInterfaceDetail,
 	_Dummy as _SP_DEVICE_INTERFACE_DETAIL_DATA_PACKING,
 )
+
 from winBindings.winusb import (
 	USB_INTERFACE_DESCRIPTOR,
 	USBD_PIPE_TYPE,
-	WINUSB_PIPE_POLICY,
+	WINUSB_AVAILABLE,
+	WINUSB_LOAD_ERROR,
 	WINUSB_PIPE_INFORMATION,
+	WINUSB_PIPE_POLICY,
 	WinUsb_Free,
 	WinUsb_Initialize,
 	WinUsb_QueryInterfaceSettings,
@@ -43,19 +47,22 @@ from winBindings.winusb import (
 	WinUsb_SetPipePolicy,
 	WinUsb_WritePipe,
 )
-from winBindings import kernel32
+import math
+import time
+from collections import OrderedDict
+
+import bdDetect
 import braille
 import braille.display
 import braille.display.driver
 import braille.display.gesture
-from logHandler import log
-from collections import OrderedDict
-import inputCore
 import braille.input.gesture
+import inputCore
 from baseObject import AutoPropertyObject
-import time
-import bdDetect
-import math
+from winBindings import kernel32
+
+if not WINUSB_AVAILABLE:
+	log.warning("WinUSB support is unavailable.", exc_info=WINUSB_LOAD_ERROR)
 
 BAUD_RATE = 115200
 PARITY = serial.PARITY_NONE
@@ -636,6 +643,8 @@ class BrailleDisplayDriver(braille.display.driver.BrailleDisplayDriver):
 							# available -- e.g. Windows 11 blocks installation of unsigned/non-WHCP
 							# kernel drivers. Fall back to WinUSB (winusb.sys, an inbox driver) if
 							# the vendor's WinUSB INF (hims_winusb.inf) is installed for this device.
+							if not WINUSB_AVAILABLE:
+								raise
 							log.debug(
 								f"hwIo.Bulk(port={port!r}) failed ({bulkError}); trying WinUSB fallback",
 							)

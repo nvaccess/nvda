@@ -1,12 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2024 NV Access Limited.
+# Copyright (C) 2024-2026 NV Access Limited, Akash Kakkar
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Unit tests for the magnification Windows API."""
 
 import unittest
+from unittest import mock
 
+import screenCurtain
 from screenCurtain._screenCurtain import TRANSFORM_BLACK
 from winBindings import magnification
 from winBindings.magnification import MAGCOLOREFFECT
@@ -18,6 +20,26 @@ class _Test_MagnificationAPI(unittest.TestCase):
 
 	def tearDown(self):
 		self.assertTrue(magnification.MagUninitialize())
+
+
+class TestScreenCurtainAvailability(unittest.TestCase):
+	def test_unavailableMagnificationPreventsInitialization(self):
+		loadError = OSError("missing Magnification.dll")
+		with (
+			mock.patch.object(screenCurtain, "MAGNIFICATION_AVAILABLE", False),
+			mock.patch.object(screenCurtain, "MAGNIFICATION_LOAD_ERROR", loadError),
+			mock.patch.object(screenCurtain, "screenCurtain", None),
+			mock.patch.object(screenCurtain, "ScreenCurtain") as screenCurtainClass,
+			mock.patch.object(screenCurtain.log, "warning") as logWarning,
+		):
+			screenCurtain.initialize()
+
+			screenCurtainClass.assert_not_called()
+			self.assertIsNone(screenCurtain.screenCurtain)
+			logWarning.assert_called_once_with(
+				"Screen Curtain unavailable because the Windows Magnification API is unavailable.",
+				exc_info=loadError,
+			)
 
 
 class Test_ScreenCurtain(_Test_MagnificationAPI):
