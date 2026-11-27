@@ -7,6 +7,8 @@
 ### New Features
 
 * A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* A "White noise volume" setting has been added to the Audio category of NVDA settings.
+  It can help when your audio device cuts off the end of speech even though "Time to keep audio device awake after speech" is set. (#19286, @Yashu16)
 * Added context menu and shortcuts support to the Symbol Pronunciation dialog. (#20692, @amirmahdifard)
 * In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
 * Two new unassigned commands have been added to open the NVDA Settings dialog in the Math and in the Document Navigation categories. (#21158, @CyrilleB79)
