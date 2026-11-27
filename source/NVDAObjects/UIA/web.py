@@ -407,6 +407,12 @@ class UIAWeb(UIA):
 				)
 		return controlTypes.IsCurrent.NO
 
+	def _get_value(self):
+		valuetext = self.ariaProperties.get("valuetext") or self.ariaProperties.get("aria-valuetext")
+		if valuetext is not None and not valuetext.isspace():
+			return valuetext
+		return super().value
+
 	def _get_roleText(self):
 		roleText = self.ariaProperties.get("roledescription", None)
 		if roleText:

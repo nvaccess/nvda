@@ -37,6 +37,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 #### Web browsers
 
+* In web browsers (Mozilla Firefox, Google Chrome, Microsoft Edge), NVDA now reports formatted spin button values in both speech and braille. (#21169, @daarshnicsanjeev)
 * In Chromium-based web browsers, opening the context menu from browse mode with the applications key or `shift+f10` no longer bounces focus back to browse mode. (#18670, @nibarAhmed)
 
 #### Applications

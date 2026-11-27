@@ -180,6 +180,12 @@ class Ia2Web(IAccessible):
 			log.debugWarning(f"Unknown 'current' IA2Attribute value: {ia2attrCurrent}")
 			return controlTypes.IsCurrent.NO
 
+	def _get_value(self):
+		valuetext = self.IA2Attributes.get("valuetext") or self.IA2Attributes.get("aria-valuetext")
+		if valuetext is not None and not valuetext.isspace():
+			return valuetext
+		return super().value
+
 	def _get_placeholder(self):
 		placeholder = self.IA2Attributes.get("placeholder", None)
 		return placeholder
