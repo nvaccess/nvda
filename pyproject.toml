@@ -113,6 +113,7 @@ line-ending = "lf"
 max-complexity = 15
 
 [tool.ruff.lint]
+extend-select = ["TID251"]
 ignore = [
 	# indentation contains tabs
 	"W191",
