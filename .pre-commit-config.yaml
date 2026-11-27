@@ -129,7 +129,7 @@ repos:
       groups: [autofix]
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.12.5
+  rev: 0.13.5
   hooks:
     - id: uv-lock
       name: Verify uv lock file
@@ -166,8 +166,8 @@ repos:
   hooks:
     - id: checkPo
       name: Check po files
-      entry: uv run source/l10nUtil.py checkPo
-      language: python
+      entry: miscDeps/tools/l10nUtil.exe checkPo
+      language: system
       types: [pofile]
     - id: scons-source
       name: build c/c++ files

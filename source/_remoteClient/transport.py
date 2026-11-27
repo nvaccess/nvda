@@ -654,7 +654,7 @@ class RelayTransport(TCPTransport):
 			insecure=insecure,
 			trustedFingerprint=trustedFingerprint,
 		)
-		log.info(f"Connecting to {address} channel {channel}")
+		log.info(f"Connecting to {address}")
 		self.channel: str | None = channel
 		"""Relay channel name"""
 

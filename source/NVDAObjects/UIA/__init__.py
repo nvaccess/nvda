@@ -232,6 +232,15 @@ class UIATextInfo(textInfos.TextInfo):
 				textPosition = TextPosition.BASELINE
 		formatField["text-position"] = textPosition
 
+	def _getFormatFieldSmallCaps(
+		self,
+		fetch: Callable[[int], int],
+		formatField: textInfos.FormatField,
+	):
+		val = fetch(UIAHandler.UIA_CapStyleAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			formatField["smallCaps"] = val == 1
+
 	def _getFormatFieldStyle(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_StyleNameAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
@@ -398,6 +407,8 @@ class UIATextInfo(textInfos.TextInfo):
 			if formatConfig["reportSuperscriptsAndSubscripts"]:
 				IDs.add(UIAHandler.UIA_IsSuperscriptAttributeId)
 				IDs.add(UIAHandler.UIA_IsSubscriptAttributeId)
+			if formatConfig["reportSmallCaps"]:
+				IDs.add(UIAHandler.UIA_CapStyleAttributeId)
 			if formatConfig["reportParagraphIndentation"]:
 				IDs.update(set(paragraphIndentIDs))
 			if formatConfig["reportAlignment"]:
@@ -430,6 +441,8 @@ class UIATextInfo(textInfos.TextInfo):
 			self._getFormatFieldFontAttributes(fetch, formatField)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			self._getFormatFieldSuperscriptsAndSubscripts(fetch, formatField)
+		if formatConfig["reportSmallCaps"]:
+			self._getFormatFieldSmallCaps(fetch, formatField)
 		if formatConfig["reportStyle"]:
 			self._getFormatFieldStyle(fetch, formatField)
 		if formatConfig["reportParagraphIndentation"]:
@@ -1986,7 +1999,8 @@ class UIA(Window):
 		UIAHandler.UIA_DragIsGrabbedPropertyId,
 	}
 
-	_focusPrefetchUIAPropertyIDs = {  # noqa: RUF012
+	_focusPrefetchUIAPropertyIDs: typing.ClassVar[set[int]] = {
+		UIAHandler.UIA_NamePropertyId,
 		UIAHandler.UIA_FullDescriptionPropertyId,
 		UIAHandler.UIA_HelpTextPropertyId,
 		UIAHandler.UIA_AccessKeyPropertyId,
@@ -2576,6 +2590,11 @@ class UIA(Window):
 					speechPriority = speech.priorities.Spri.NOW
 				else:
 					speech.cancelSpeech()
+			elif notificationProcessing in (
+				UIAHandler.NotificationProcessing_ImportantAll,
+				UIAHandler.NotificationProcessing_ImportantCurrentThenMostRecent,
+			):
+				speechPriority = speech.priorities.Spri.NEXT
 			ui.message(displayString, speechPriority=speechPriority)
 
 	def event_UIA_dragDropEffect(self):

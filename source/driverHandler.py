@@ -1,8 +1,7 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Leonard de Ruijter, Cary-rowen
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 """Handler for driver functionality that is global to synthesizers and braille displays."""
 
@@ -41,12 +40,12 @@ class Driver(AutoSettings):
 		super().__init__()
 
 	def terminate(self):
-		"""Save settings and terminate this driver.
-		This should be used for any required clean up.
-		@precondition: L{initialize} has been called.
-		@postcondition: This driver can no longer be used.
+		"""Release driver resources without saving settings.
+
+		Code managing this driver must call :meth:`saveSettings` before replacement or profile switching
+		when changes should be kept. Overrides must call this method to unregister configuration save callbacks.
+		The driver must not be used after termination.
 		"""
-		self.saveSettings()
 		self._unregisterConfigSaveAction()
 
 	def __repr__(self):

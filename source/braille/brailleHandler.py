@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau, Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau, Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -145,6 +145,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		self._cells = []
 		self._cursorBlinkTimer = None
 		self._autoScrollCallLater: wx.CallLater | None = None
+		config.pre_configProfileSwitch.register(self.handlePreConfigProfileSwitch)
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 		if config.conf["braille"]["tetherTo"] == TetherTo.AUTO.value:
 			self._tether = TetherTo.FOCUS.value
@@ -181,6 +182,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._cursorBlinkTimer.Stop()
 			self._cursorBlinkTimer = None
 		self.autoScroll(enable=False)
+		config.pre_configProfileSwitch.unregister(self.handlePreConfigProfileSwitch)
 		config.post_configProfileSwitch.unregister(self.handlePostConfigProfileSwitch)
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopStateChanged)
 		post_sessionLockStateChanged.unregister(self._onSessionLockStateChanged)
@@ -448,6 +450,17 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		isFallback: bool = False,
 		detected: bdDetect.DeviceMatch | None = None,
 	) -> bool:
+		"""Save the current display's settings and select a display."""
+		self.handlePreConfigProfileSwitch()
+		return self._setDisplayByName(name, isFallback=isFallback, detected=detected)
+
+	def _setDisplayByName(
+		self,
+		name: str,
+		isFallback: bool = False,
+		detected: bdDetect.DeviceMatch | None = None,
+	) -> bool:
+		"""Apply a display selection without saving outgoing settings."""
 		if name == AUTO_DISPLAY_NAME:
 			# Calling _enableDetection will set the display to noBraille until a display is detected.
 			# Note that L{isFallback} is ignored in these cases.
@@ -978,7 +991,16 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# an object for which property fetching raises an exception.
 			log.debugWarning("Error in initial display", exc_info=True)
 
+	def handlePreConfigProfileSwitch(self) -> None:
+		"""Save the active display while its configuration is still current."""
+		if self.display is not None:
+			try:
+				self.display.saveSettings()
+			except Exception:
+				log.exception("Error saving braille display settings")
+
 	def handlePostConfigProfileSwitch(self):
+		oldDisplay = self.display
 		display = config.conf["braille"]["display"]
 		# #7459: the syncBraille has been dropped in favor of the native hims driver.
 		# Migrate to renamed drivers as smoothly as possible.
@@ -998,7 +1020,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				)
 			)
 		):
-			self.setDisplayByName(display)
+			self._setDisplayByName(display)
 		elif (
 			# Auto detection should be active
 			display == AUTO_DISPLAY_NAME
@@ -1009,6 +1031,11 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			and self.display.name == NO_BRAILLE_DISPLAY_NAME
 		):
 			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
+		if self.display is not None and self.display is oldDisplay:
+			try:
+				self.display.loadSettings(onlyChanged=True)
+			except Exception:
+				log.exception("Error loading braille display settings")
 
 		if (configuredTether := config.conf["braille"]["tetherTo"]) != TetherTo.AUTO.value:
 			self._tether = configuredTether
@@ -1065,7 +1092,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		:param preferredDevice: An optional preferred device to use for detection.
 			this device is attempted to be used before a scan is started.
 		"""
-		self.setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
+		self._setDisplayByName(NO_BRAILLE_DISPLAY_NAME, isFallback=True)
 		if self._detector:
 			self._detector.rescan(
 				usb=usb,

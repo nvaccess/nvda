@@ -326,7 +326,6 @@ def resetConfiguration(factoryDefaults=False):
 	import hwIo
 	import tones
 	import audio
-	import screenCurtain
 	import mathPres
 	import textUtils._wordSeg
 	import _magnifier as magnifier
@@ -334,8 +333,6 @@ def resetConfiguration(factoryDefaults=False):
 	magnifier.terminate()
 	log.debug("Terminating vision")
 	vision.terminate()
-	log.debug("Terminating Screen Curtain")
-	screenCurtain.terminate()
 	log.debug("Terminating math presentation")
 	mathPres.terminate()
 	log.debug("Terminating braille")
@@ -351,7 +348,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("terminating tones")
 	tones.terminate()
 	log.debug("terminating sound split")
-	audio.soundSplit.terminate()
+	audio.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
 	log.debug("Terminating background i/o")
@@ -384,7 +381,7 @@ def resetConfiguration(factoryDefaults=False):
 	tones.initialize()
 	# Sound split
 	log.debug("initializing sound split")
-	audio.soundSplit.initialize()
+	audio.initialize()
 	# Character processing
 	log.debug("initializing character processing")
 	characterProcessing.initialize()
@@ -406,8 +403,6 @@ def resetConfiguration(factoryDefaults=False):
 	# Vision
 	log.debug("initializing vision")
 	vision.initialize()
-	log.debug("initializing Screen Curtain")
-	screenCurtain.initialize()
 	magnifier.initialize()
 	log.debug("Reloading user and locale input gesture maps")
 	inputCore.manager.loadUserGestureMap()
@@ -789,7 +784,7 @@ def main():
 	log.debug("Initializing sound split")
 	import audio
 
-	audio.soundSplit.initialize()
+	audio.initialize()
 	import speechDictHandler
 
 	log.debug("Speech Dictionary processing")

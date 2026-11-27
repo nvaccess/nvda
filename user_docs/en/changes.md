@@ -1,6 +1,70 @@
 # What's New in NVDA
 
+## 2027.2
+
+### Important notes
+
+### New Features
+
+* A new setting in NVDA's Speech settings, "Speak selected text if it has fewer characters than", sets how long a selection NVDA speaks before it reports only the number of selected characters. (#21066, @cartertemm)
+* Added context menu and shortcuts support to the Symbol Pronunciation dialog. (#20692, @amirmahdifard)
+* In rich edit controls, NVDA now reports headings with their level and list items with their bullet or number. (#20982, @LeonarddeR)
+* Two new unassigned commands have been added to open the NVDA Settings dialog in the Math and in the Document Navigation categories. (#21158, @CyrilleB79)
+* Small Caps has been added to Document Formatting settings.
+Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
+
+### Changes
+
+* While installing or updating NVDA, the progress dialog now reports the actual progress, the current step and the estimated remaining time, following the progress bar output settings. (#2313, @LeonarddeR)
+* The "Maximum number of characters on one line" browse mode setting can now be set from 0 to 1000 characters, instead of 10 to 250. (#20478, @think-tank0)
+  * Setting it to 0 means lines are no longer split by length.
+
+### Bug Fixes
+
+* In browsable message dialogs, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)
+* NVDA can now start in Windows PE when optional components are unavailable.
+  Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
+  The Remote Access enable control is disabled with an explanation when its optional client cannot be loaded.
+  Sound Split and audio device enumeration are unavailable without `pdh.dll`.
+  Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
+* NVDA can now start when an architecture-specific remote helper loader fails or WTS session information is unavailable.
+  If lock-state queries fail, NVDA treats the session as unlocked, so lock-screen restrictions cannot be applied. (#19537, @akash07k)
+
+#### Braille
+
+#### Web browsers
+
+* In Chromium-based web browsers, opening the context menu from browse mode with the applications key or `shift+f10` no longer bounces focus back to browse mode. (#18670, @nibarAhmed)
+
+#### Applications
+
+#### Add-on Store
+
+#### Magnifier
+
+* The Magnifier now adapts when the screen resolution or orientation changes, or another display is used, including after it has been turned off and on. (#21146, @JulienCochuyt)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
+  Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
+  which can be `None`.
+  `SoundSplitState` remains available from `audio` without Sound Split dependencies. (#19537)
+* The WTS API binding exposes `WTSAPI32_AVAILABLE`; its function bindings remain callable and raise `OSError` when the API is unavailable. (#19537)
+
+#### Deprecations
+
+* `audio.soundSplit.SoundSplitState` and `audio.soundSplit.VolumeTupleT` are deprecated.
+  Use `audio.SoundSplitState` and `audio.soundSplitState.VolumeTupleT` instead. (#21035, @akash07k)
+
+<!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
+<!-- markdownlint-disable -->
+
 ## 2027.1
+
+The NVDA interface is now translated to Turkmen and Azerbaijani.
 
 ### Important notes
 
@@ -9,11 +73,16 @@
 
 ### Changes
 
+* Update CLDR to version 49.0. (#21093, @OzancanKaratas)
+* The NVDA interface is now translated to Turkmen and Azerbaijani. (#21171, #21193)
 * The magnifier now follows what is being read when navigating in math expressions. (#20321, @CyrilleB79)
 * Windows OneCore voices now support spelling functionality. (#8237, #13596, #15301)
+* NVDA no longer supports Skype as it was discontinued by Microsoft in May 2025.
+Skype for Business remains supported. (#19781, @josephsl)
 
 ### Bug Fixes
 
+* NVDA now retries copying user settings for use during sign-in and on secure screens when a configuration file is temporarily locked. (#20118, @b-tanyileke)
 * The "Start NVDA after I sign in" and "Use NVDA during sign-in" settings: (#20864, @cary-rowen)
   * Fixed an issue that could prevent automatic startup from being enabled on some systems.
   * Saving other settings no longer unexpectedly disables automatic startup.
@@ -21,7 +90,13 @@
 * Corrected the English pronunciation of Unicode braille characters ⡸, ⢸ and ⣸, and several mathematical symbols. (#20632)
 * When using Windows OneCore voices, numbers in keyboard shortcuts are no longer run together with numbers immediately following them, such as a menu item's position in its menu. (#20828)
 * Prevent adding a duplicate gesture for the same script. (#20890, @theshippeys)
+* NVDA no longer announces the old name of an item that gains focus while its name changes, such as a file in File Explorer after renaming it, or a message in Unigram. (#21116, @LeonarddeR)
 * MathCAT no longer reports a division by zero error when the speech rate is 0%, and its pauses now take eSpeak's rate boost into account. (#19894, #21019, @tareh7z)
+* When installing or updating NVDA while another copy of NVDA is running on this system, such as on the Windows sign-in screen while connected over Remote Desktop, NVDA now offers to end that copy instead of failing with a "File in Use" error. (#9178, @LeonarddeR)
+* The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
+* When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
+* Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
+* Switching configuration profiles no longer overwrites synthesizer, braille display or vision enhancement settings in the new profile, including when profiles use different audio output devices. (#21162, #20292, @cary-rowen)
 
 #### Performance
 
@@ -29,6 +104,7 @@
 
 * The "Prevent display from turning off during say all or reading with braille" setting now also applies while braille automatic scrolling is active. (#20790, @cary-rowen)
 * Automatic scrolling can be disabled immediately by pressing `NVDA+alt+k`. (#20950, @nvdaes)
+* When selecting text in browse mode with multiple routing keys, the selection is now announced and shown on the braille display. (#21086, @LeonarddeR)
 
 #### Web browsers
 
@@ -37,6 +113,7 @@
 
 #### Applications
 
+* In Adobe Acrobat, NVDA now reports the correct column for every cell in tables where a header or cell in the last column spans several rows, so table navigation no longer skips that cell or reports "edge of table". (#21020, #5140, @raebened)
 * Fixed an issue where formulas and notes were not listed in Excel's elements list when it was opened from a sheet with multiple cells selected. (#20806, @CyrilleB79)
 * In Microsoft Word accessed via UI Automation, NVDA no longer fails to report the text of a comment with the report comment command (`NVDA+alt+c`) and in the Elements List (`NVDA+f7`). (#14985, #4336, @LeonarddeR)
   * Replies are now reported after the comment they reply to, and listed under it in the Elements List.
@@ -53,6 +130,9 @@
 * Profiles no longer interfere with Magnifier settings.
 Previously, saving magnifier settings could be ineffective while a profile was active.
 The NVDA Magnifier settings window also incorrectly stated that its options were profile-dependent. (#21004, @CyrilleB79)
+* When disabling the Screen Curtain, NVDA no longer reports that it could not be disabled if the Magnifier has trouble determining what to follow, and the Magnifier is correctly restarted. (#20518, @JulienCochuyt)
+* NVDA no longer announces that the Magnifier is being disabled or re-enabled when toggling the Screen Curtain. (#19528, @JulienCochuyt)
+* Magnifier no longer stops when a secure screen such as UAC or logon screen pops up in the current session. (#20636, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -76,6 +156,8 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
+* Added the `config.pre_configProfileSwitch` extension point, called before switching configuration profiles while the current configuration is still readable and writable.
+It is not called for speech-only profile switches. (#21162, @cary-rowen)
 
 #### API Breaking Changes
 
@@ -92,6 +174,17 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `ITextDocument2` is now the Text Object Model 2 interface.
   The interface previously available under this name has been removed with no replacement.
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
+* Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
+* Removed `source/markdownTranslate.py`, `source/md2html.py`. (#20796, @nvdaes)
+* `driverHandler.Driver.terminate()` no longer saves settings.
+NVDA saves settings for drivers it manages before replacement or profile switching.
+Code managing its own drivers must call `saveSettings()` before replacement or from a `config.pre_configProfileSwitch` handler to keep changes.
+Overrides of `terminate()` must not save settings and must call `super().terminate()` for cleanup. (#21162, @cary-rowen)
+* `autoSettingsUtils.autoSettings.AutoSettings.saveSettings()` now saves to the profile stack used by the most recent `initSettings()` or `loadSettings()` call.
+Overrides of these methods must call the superclass method or preserve its profile tracking. (#21162, @cary-rowen)
+* `vision.providerBase.VisionEnhancementProviderSettings` no longer registers a `config.pre_configSave` callback.
+`vision.visionHandler.VisionHandler` saves settings for active providers only.
+Code editing inactive providers' settings must call `saveSettings()` explicitly. (#21162, @cary-rowen)
 
 #### Deprecations
 
@@ -103,6 +196,63 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
+
+## 2026.3.2
+
+This is a patch release to fix a security issue and an issue using NVDA on some systems.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* The screen is no longer briefly revealed when enabling the Screen Curtain just after changing the Magnifier's colour filter. (#21109, @JulienCochuyt)
+* The screen is no longer briefly revealed when reverting or resetting the configuration if the Screen Curtain is enabled in both the old and new configurations. (#21163)
+
+### Bug Fixes
+
+* Ensure NVDA can still be used with Windows Smart App Control enabled. (#21124)
+
+### Changes for developers
+
+* Updated eSpeak NG to [commit `c6c19ba85`](https://github.com/nvaccess/espeak-ng/commit/c6c19ba855410c788a0afbd9b517b9ae66f19986).
+This fixes an issue with compiling on MSVC 14.52. (#21174)
+* Updated setuptools to 84.2.1. (#21195)
+
+## 2026.3.1
+
+This is a patch release to fix security issues.
+A bug fix is also included for an issue introduced in 2026.3 with the task switcher in Windows 10.
+
+### Security fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Fixed NVDA leaking the Remote Access key. (#21037, [GHSA-prj7-9c78-744j](https://github.com/nvaccess/nvda/security/advisories/GHSA-prj7-9c78-744j))
+* Updated certifi to 2026.10.23. ([GHSA-3j65-46c5-4grp](https://github.com/nvaccess/nvda/security/advisories/GHSA-3j65-46c5-4grp))
+* Prevent DOS when Remote Access is running. ([GHSA-v99h-jr79-r5cr](https://github.com/nvaccess/nvda/security/advisories/GHSA-v99h-jr79-r5cr), @Cem-Kaya)
+
+### Bug Fixes
+
+* Fixed bug where on Windows 10, the classic `alt+tab` task switcher no longer announced changing the selected task. (#21052, @Cary-rowen)
+* Updated eSpeak NG to [commit `b97de3cf2`](https://github.com/nvaccess/espeak-ng/commit/b97de3cf2ad32c1d48c6bd36dfbf57a9c587fedc).
+This changes Brazilian Portuguese back to how it worked in 2026.1. (#21059)
+
+### Changes for Developers
+
+* Updated Python to 3.13.17. (#21067)
+* Updated pip dependencies (#21067):
+  * cryptography to 50.0.2.
+  * url-normalize to 3.0.1.
+  * pycaw to 20260927.
+  * nh3 to 0.3.7.
+  * crowdin-api-client to 1.30.0.
+  * markdown to 3.11.2.
+  * lxml to 6.1.3.
+  * regex to 2026.9.29.
+  * scons to 4.11.1.
+  * uv to 0.13.5.
+  * sphinx to 9.2.0.
+  * robotframework to 7.5.
 
 ## 2026.3
 

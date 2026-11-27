@@ -2,7 +2,7 @@
 # Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
-# Burman's Computer and Education Ltd, Cary-rowen.
+# Burman's Computer and Education Ltd, Cary-rowen, Carter Temm.
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -450,7 +450,7 @@ class GlobalCommands(ScriptableObject):
 				ui.browseableMessage(info.text, copyButton=True, closeButton=True)
 				return
 
-			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
+			elif speech.speech._isSelectionShortEnoughToSpeak(info.text):
 				speech.speakSpelling(info.text, useCharacterDescriptions=scriptCount > 1)
 			else:
 				speech.speakTextSelected(info.text)
@@ -2673,6 +2673,7 @@ class GlobalCommands(ScriptableObject):
 			"reportFontSize",
 			"fontAttributeReporting",
 			"reportSuperscriptsAndSubscripts",
+			"reportSmallCaps",
 			"reportHighlight",
 			"reportColor",
 			"reportStyle",
@@ -3611,6 +3612,24 @@ class GlobalCommands(ScriptableObject):
 		wx.CallAfter(gui.mainFrame.onDocumentFormattingCommand, None)
 
 	@script(
+		# Translators: Input help mode message for go to document navigation settings command.
+		description=_("Shows NVDA's document navigation settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateDocumentNavigationDialog(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onDocumentNavigationSettingsCommand, None)
+
+	@script(
+		# Translators: Input help mode message for go to Math settings command.
+		description=_("Shows NVDA's math settings"),
+		category=SCRCAT_CONFIG,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	def script_activateMathSettings(self, gesture: "inputCore.InputGesture"):
+		wx.CallAfter(gui.mainFrame.onMathSettingsCommand, None)
+
+	@script(
 		# Translators: Input help mode message for go to Remote Access settings command.
 		description=pgettext("remote", "Shows the Remote Access settings"),
 		category=SCRCAT_CONFIG,
@@ -4308,16 +4327,26 @@ class GlobalCommands(ScriptableObject):
 		endPos = max(gesture.cellIndexes)
 		startInfo = braille.handler.getTextInfoForWindowPos(startPos)
 		endInfo = braille.handler.getTextInfoForWindowPos(endPos)
+		if startInfo is None and endInfo is None:
+			# Translators: Reported when none of the routing keys pressed to select text are on selectable text.
+			ui.message(_("No selectable text under routing keys"))
+			return
 		if startInfo is None or endInfo is None:
-			# Translators: Reported when selection via multiple routing keys is not possible.
-			ui.message(_("Cannot select from braille routing keys"))
+			# Translators: Reported when only one end of a selection made with routing keys is on selectable text.
+			ui.message(_("Selection must start and end in text"))
 			return
 		startInfo.setEndPoint(endInfo, "endToEnd")
+		oldInfo = None
 		try:
+			if hasattr(startInfo.obj, "reportSelectionChange"):
+				oldInfo = startInfo.obj.makeTextInfo(textInfos.POSITION_SELECTION)
 			startInfo.updateSelection()
 		except NotImplementedError:
-			# Translators: Reported when selection via multiple routing keys is not supported by the focused control.
-			ui.message(_("Selection not supported here"))
+			# Translators: Reported when the control does not support selecting text with routing keys.
+			ui.message(_("Unable to select text in this control"))
+			return
+		if oldInfo is not None:
+			startInfo.obj.reportSelectionChange(oldInfo)
 
 	@script(
 		# Translators: Input help mode message for a braille command.
@@ -5136,7 +5165,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increase the magnification level",
+			"Increase the magnification level, or start the magnifier",
 		),
 		category=SCRCAT_MAGNIFIER,
 		gesture="kb:NVDA+shift+=",
