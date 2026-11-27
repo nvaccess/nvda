@@ -21,6 +21,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Bug Fixes
 
+* NVDA no longer announces "out of link" when navigating by line in some documents or edit fields, such as in Microsoft Word, Microsoft PowerPoint, and LibreOffice. (#21182, @daarshnicsanjeev)
 * NVDA can now start in Windows PE when optional Windows APIs are unavailable.
   Depending on the image contents, affected features can include the Magnifier, Screen Curtain, Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
 * In browsable message dialogs, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)

@@ -55,6 +55,46 @@ class Test_getFormatFieldSpeech(unittest.TestCase):
 			["not small caps"],
 		)
 
+	def test_links(self):
+		formatConfig = dict.fromkeys(config.conf["documentFormatting"], False)
+		formatConfig["reportLinks"] = True
+
+		# Entering link on line reading
+		self.assertEqual(
+			speechModule.getFormatFieldSpeech(
+				textInfos.FormatField({"link": True}),
+				attrsCache=textInfos.FormatField({"link": False}),
+				formatConfig=formatConfig,
+				unit=textInfos.UNIT_LINE,
+				extraDetail=False,
+			),
+			["link"],
+		)
+
+		# Exiting link on line reading: should NOT report "out of link" (#21182)
+		self.assertEqual(
+			speechModule.getFormatFieldSpeech(
+				textInfos.FormatField({"link": False}),
+				attrsCache=textInfos.FormatField({"link": True}),
+				formatConfig=formatConfig,
+				unit=textInfos.UNIT_LINE,
+				extraDetail=False,
+			),
+			[],
+		)
+
+		# Exiting link on character navigation: SHOULD report "out of link"
+		self.assertEqual(
+			speechModule.getFormatFieldSpeech(
+				textInfos.FormatField({"link": False}),
+				attrsCache=textInfos.FormatField({"link": True}),
+				formatConfig=formatConfig,
+				unit=textInfos.UNIT_CHARACTER,
+				extraDetail=True,
+			),
+			["out of link"],
+		)
+
 
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 	def test_symbolNamesAtStartAndEnd(self):
