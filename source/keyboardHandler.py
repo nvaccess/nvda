@@ -49,6 +49,14 @@ type _ModifierT = tuple[int, bool]  # noqa: PYI043
 _TO_UNICODE_EX_FLAG_NO_STATE_CHANGE = 0x04
 _TO_UNICODE_EX_BUFFER_LENGTH = 5
 _KEY_PRESSED_STATE = 0x80
+_ASYNC_KEY_STATE_DOWN = 0x8000
+"""The bit set in the value returned by GetAsyncKeyState when the key is down."""
+
+_MAX_KEY_DOWN_DELAY_TO_CHECK_MODIFIERS_MS = 200
+"""Skip modifier reconciliation when Windows key state may no longer match a delayed event.
+
+shortcut: hook timeouts below 200 ms need a lower cutoff; revisit if those configurations need support.
+"""
 
 
 def _getKeyStates(
@@ -202,6 +210,35 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 	)
 
 
+def _discardReleasedModifiers() -> None:
+	"""Recover from missed modifier key ups before constructing a gesture.
+
+	Windows cannot verify keys trapped by NVDA, and a sticky NVDA modifier can remain latched after release.
+	For late events, Windows may have processed later input, so its current state is not reliable.
+	"""
+	if not currentModifiers:
+		return
+	releasedModifiers = [
+		keyCode
+		for keyCode in tuple(currentModifiers)
+		if keyCode not in trappedKeys
+		and keyCode != stickyNVDAModifier
+		and not winUser.getAsyncKeyState(keyCode[0]) & _ASYNC_KEY_STATE_DOWN
+	]
+	# Check after querying Windows, as the hook thread may have stalled during the queries.
+	delay = winInputHook._getCurrentKeyEventDelay()
+	if delay is not None and delay > _MAX_KEY_DOWN_DELAY_TO_CHECK_MODIFIERS_MS:
+		return
+	for keyCode in releasedModifiers:
+		log.debugWarning(
+			f"Discarding modifier {KeyboardInputGesture.getVkName(*keyCode)!r} "
+			"as Windows reports it is no longer held down",
+		)
+		currentModifiers.discard(keyCode)
+	if not currentModifiers:
+		inputCore.manager.lastModifierWasInSayAll = False
+
+
 def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: bool) -> bool:
 	"""Event called by winInputHook when it receives a keyDown.
 
@@ -245,6 +282,7 @@ def internal_keyDownEvent(vkCode: int, scanCode: int, extended: bool, injected: 
 			currentModifiers.discard(stickyNVDAModifier)
 			stickyNVDAModifier = None
 			stickyNVDAModifierLocked = False
+		_discardReleasedModifiers()
 		gesture = KeyboardInputGesture(currentModifiers, vkCode, scanCode, extended)
 		if not (stickyKeysFlags & winUser.SKF_STICKYKEYSON) and (
 			bypassNVDAModifier

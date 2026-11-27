@@ -21,7 +21,9 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 ### Bug Fixes
 
-* NVDA no longer announces "out of link" when navigating by line across links in some documents or edit fields (Microsoft Word, Microsoft PowerPoint, LibreOffice). (#21182, @daarshnicsanjeev)
+* NVDA no longer announces "out of link" when navigating by line in some documents or edit fields, such as in Microsoft Word, Microsoft PowerPoint, and LibreOffice. (#21182, @daarshnicsanjeev)
+* NVDA can now start in Windows PE when optional Windows APIs are unavailable.
+  Depending on the image contents, affected features can include the Magnifier, Screen Curtain, Bluetooth device identification, and the HIMS WinUSB fallback. (#19537, @akash07k)
 * In browsable message dialogs, navigating lines in plain text messages, paragraphs, and table cells in HTML messages now correctly scrolls content into view. (#21181, @daarshnicsanjeev)
 * NVDA can now start in Windows PE when optional components are unavailable.
   Depending on the image contents, affected features can include Remote Access, MathCAT, Sound Split, and audio device enumeration.
@@ -30,6 +32,7 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
   Users must still add compatible audio components to their Windows PE image for NVDA audio output. (#19537, @akash07k)
 * NVDA can now start when an architecture-specific remote helper loader fails or WTS session information is unavailable.
   If lock-state queries fail, NVDA treats the session as unlocked, so lock-screen restrictions cannot be applied. (#19537, @akash07k)
+* NVDA is less likely to treat `control`, `shift`, `alt` or the `Windows` key as held down after they have been released, for example after becoming unresponsive. (#21083)
 
 #### Braille
 
@@ -49,6 +52,8 @@ Currently this setting is only supported in Microsoft Word. (#20922, @burrm)
 
 Please refer to [the developer guide](https://download.nvaccess.org/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Optional Windows API bindings now expose `MAGNIFICATION_AVAILABLE`, `BLUETOOTH_AVAILABLE`, and `WINUSB_AVAILABLE`.
+  Their function bindings remain callable and raise `OSError` when the corresponding API is unavailable. (#19537)
 * `audio.SOUND_SPLIT_AVAILABLE` indicates whether Sound Split dependencies loaded successfully.
   Use `audio.initialize()` and `audio.terminate()` rather than calling through `audio.soundSplit`,
   which can be `None`.
@@ -97,6 +102,7 @@ Skype for Business remains supported. (#19781, @josephsl)
 * The NVDA settings dialog can now be cancelled after changing the synthesizer or reverting the configuration while it is open, and the voice settings are no longer drawn on top of each other. (#6469, @akj)
 * When creating a portable copy, a destination with a drive letter but no backslash after it, such as `D:`, now shows an error that explains the backslash is needed, and the example drive in the error message is now `C:\`. (#20159, @Shimmy0530)
 * Ensure the Input Gestures dialog is still accessible even if a new Input Gesture is not added. (#21058, @theshippeys)
+* Switching configuration profiles no longer overwrites synthesizer, braille display or vision enhancement settings in the new profile, including when profiles use different audio output devices. (#21162, #20292, @cary-rowen)
 
 #### Performance
 
@@ -156,6 +162,8 @@ A read completing on the same handle no longer ends the wait while the write is 
 Existing handlers which only accept `speechSequence` remain compatible. (#20766, @cary-rowen)
 * `speech.speech.getSpellingSpeech` and `speech.shortcutKeys.shouldUseSpellingFunctionality` now only use spelling functionality if the active synthesizer declares support for `CharacterModeCommand` in its `supportedCommands`. (#20831)
 * `comInterfaces.tom` is now generated from the Text Object Model type library in `msftedit.dll`. (#20987, @LeonarddeR)
+* Added the `config.pre_configProfileSwitch` extension point, called before switching configuration profiles while the current configuration is still readable and writable.
+It is not called for speech-only profile switches. (#21162, @cary-rowen)
 
 #### API Breaking Changes
 
@@ -174,6 +182,15 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `ITextMsgFilter`, `tomAlignGlyphs`, `tomAlignSnapGrid` and `tomMatchFontCharset` have been removed with no replacement.
 * Removed app module and support code for Skype (discontinued by Microsoft in May 2025). (#19781, @josephsl)
 * Removed `source/markdownTranslate.py`, `source/md2html.py`. (#20796, @nvdaes)
+* `driverHandler.Driver.terminate()` no longer saves settings.
+NVDA saves settings for drivers it manages before replacement or profile switching.
+Code managing its own drivers must call `saveSettings()` before replacement or from a `config.pre_configProfileSwitch` handler to keep changes.
+Overrides of `terminate()` must not save settings and must call `super().terminate()` for cleanup. (#21162, @cary-rowen)
+* `autoSettingsUtils.autoSettings.AutoSettings.saveSettings()` now saves to the profile stack used by the most recent `initSettings()` or `loadSettings()` call.
+Overrides of these methods must call the superclass method or preserve its profile tracking. (#21162, @cary-rowen)
+* `vision.providerBase.VisionEnhancementProviderSettings` no longer registers a `config.pre_configSave` callback.
+`vision.visionHandler.VisionHandler` saves settings for active providers only.
+Code editing inactive providers' settings must call `saveSettings()` explicitly. (#21162, @cary-rowen)
 
 #### Deprecations
 
@@ -182,6 +199,8 @@ Refer to the [wxPython changelog](https://github.com/wxWidgets/Phoenix/blob/wxPy
   * `GENERIC_READ` and `GENERIC_WRITE`: use `winBindings.kernel32.GENERIC.READ` and `winBindings.kernel32.GENERIC.WRITE` instead.
   * `PROCESS_QUERY_INFORMATION` and `PROCESS_TERMINATE`: use `winBindings.kernel32.PROCESS.QUERY_INFORMATION` and `winBindings.kernel32.PROCESS.TERMINATE` instead.
 * `getCommentInfoFromPosition` and `getPresentableCommentInfoFromPosition` in `NVDAObjects.UIA.wordDocument` are deprecated with no public replacement. (#14985, @LeonarddeR)
+* The Python standard library `pickle` module is deprecated, and should not be used.
+It may be removed from the subset of the standard library shipped with NVDA in a future API breaking release. (#19745)
 
 <!-- Beyond this point, Markdown should not be automatically linted, as we don't modify old change log sections and lint rules may change over time. -->
 <!-- markdownlint-disable -->
