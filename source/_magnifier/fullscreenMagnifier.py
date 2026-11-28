@@ -76,6 +76,14 @@ class FullScreenMagnifier(Magnifier):
 		"""
 		Start the Full-screen magnifier using windows DLL
 		"""
+		if not magnification.MAGNIFICATION_AVAILABLE:
+			raise MagnifierStartError(
+				pgettext(
+					"magnifier",
+					# Translators: Message when NVDA's Magnifier cannot start because the Windows Magnification API is unavailable.
+					"Cannot start magnifier because the Windows Magnification API is unavailable.",
+				),
+			)
 		super()._startMagnifier()
 		if not self._isActive:
 			return
@@ -171,6 +179,10 @@ class FullScreenMagnifier(Magnifier):
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopChange)
 		self._resetMagnification()
 		self._uninitializeNativeMagnification()
+
+	@override
+	def _cancelPendingVisualUpdates(self) -> None:
+		self._applyFilter.cancel(self)
 
 	@trackNativeMagnifierErrors
 	def _resetMagnification(self) -> None:
@@ -277,6 +289,10 @@ class FullScreenMagnifier(Magnifier):
 
 		If an OSError occurs (native API failure), it is logged and execution continues.
 		"""
+		if not self._isActive:
+			# The limiter can defer this call past a stop, and whatever stopped us, typically the
+			# screen curtain, owns the full-screen color effect from then on.
+			return
 		magnification.MagSetFullscreenColorEffect(self._getFilterMatrix().value)
 
 	def _fullscreenMagnifier(self, coordinates: Coordinates) -> None:

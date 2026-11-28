@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419, Leonard de Ruijter
+# Copyright (C) 2006-2026 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419, Leonard de Ruijter, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -573,6 +573,7 @@ class SynthDriver(SynthDriver):
 		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
+		super().__init__()
 		self._pitch = 50
 		self._rate = 50
 		self._volume = 100
@@ -608,6 +609,7 @@ class SynthDriver(SynthDriver):
 		self._isStoppingThread = False
 
 	def terminate(self):
+		super().terminate()
 		self._stopThread()
 		self.tts = None
 		if self.player:

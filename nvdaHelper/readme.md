@@ -138,7 +138,7 @@ Please see the `release` keyword argument for what compiler optimizations it wil
 
 ## Building nvdaHelper developer documentation
 
-[Refer to this section](../projectDocs/dev/buildingDevDocumentation.md#building-nvdahelper-developer-documentation)
+[Refer to this section](../projectDocs/dev/documentation/buildingDevDocumentation.md#building-nvdahelper-developer-documentation)
 
 ## Virtual Buffer Backends
 

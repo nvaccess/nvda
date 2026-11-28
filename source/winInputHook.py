@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited
+# Copyright (C) 2006-2026 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -61,29 +61,45 @@ LRESULT = c_void_p
 keyDownCallback = None
 keyUpCallback = None
 mouseCallback = None
+_currentKeyEventTime: int | None = None
+"""Timestamp of the event being handled, or ``None`` outside the keyboard hook."""
+
+
+def _getCurrentKeyEventDelay() -> int | None:
+	"""Return the current keyboard event's age in milliseconds, or ``None`` outside the hook."""
+	eventTime = _currentKeyEventTime
+	if eventTime is None:
+		return None
+	# Both are 32 bit tick counts which wrap around, so their difference must wrap in the same way.
+	return (kernel32.GetTickCount() - eventTime) & 0xFFFFFFFF
 
 
 @user32.HOOKPROC
 def keyboardHook(code, wParam, lParam):
+	global _currentKeyEventTime
 	if code != HC_ACTION:
 		return user32.CallNextHookEx(0, code, wParam, lParam)
 	kbd = KBDLLHOOKSTRUCT.from_address(lParam)
-	if keyUpCallback and kbd.flags & LLKHF_UP:
-		if not keyUpCallback(
-			kbd.vkCode,
-			kbd.scanCode,
-			bool(kbd.flags & LLKHF_EXTENDED),
-			bool(kbd.flags & LLKHF_INJECTED),
-		):
-			return 1
-	elif keyDownCallback:  # noqa: SIM102
-		if not keyDownCallback(
-			kbd.vkCode,
-			kbd.scanCode,
-			bool(kbd.flags & LLKHF_EXTENDED),
-			bool(kbd.flags & LLKHF_INJECTED),
-		):
-			return 1
+	_currentKeyEventTime = kbd.time
+	try:
+		if keyUpCallback and kbd.flags & LLKHF_UP:
+			if not keyUpCallback(
+				kbd.vkCode,
+				kbd.scanCode,
+				bool(kbd.flags & LLKHF_EXTENDED),
+				bool(kbd.flags & LLKHF_INJECTED),
+			):
+				return 1
+		elif keyDownCallback:  # noqa: SIM102
+			if not keyDownCallback(
+				kbd.vkCode,
+				kbd.scanCode,
+				bool(kbd.flags & LLKHF_EXTENDED),
+				bool(kbd.flags & LLKHF_INJECTED),
+			):
+				return 1
+	finally:
+		_currentKeyEventTime = None
 	return user32.CallNextHookEx(0, code, wParam, lParam)
 
 

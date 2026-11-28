@@ -115,6 +115,8 @@ jobs:
       run: ci/scripts/setSconsArgs.ps1
       env:
         apiSigningToken: ${{ github.event_name == 'push' && secrets.API_SIGNING_TOKEN || '' }}
+    - name: Download l10nUtil
+      run: curl https://github.com/nvaccess/nvdaL10n/releases/latest/download/l10nUtil.exe -L -o miscDeps/tools/l10nUtil.exe
     - name: Set cache key for SCons MSVC Cache
       shell: bash
       run: echo "SCONS_CACHE_KEY=${RUNNER_OS}-${ImageVersion}" >> $GITHUB_ENV
@@ -205,15 +207,16 @@ jobs:
   checkPo:
     name: Check po files for errors
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
-    needs: matrix
+    needs: [matrix, buildNVDA]
     permissions:
       contents: read
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v7
+    - name: Checkout cached build
+      uses: actions/cache/restore@v6
       with:
-        # Include gettext
-        submodules: true
+        path: .
+        key: ${{ github.ref }}-${{ github.run_id }}-${{ env.defaultPythonVersion }}-${{ env.defaultArch }}
+        fail-on-cache-miss: true
     - name: Set up python
       uses: actions/setup-python@v7
       with:
@@ -384,15 +387,14 @@ jobs:
         prune-cache: true
     - name: Upload translations to Crowdin
       env:
-        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-      run: uv run --with requests --directory ${{ github.workspace }} ci\scripts\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
+      run: miscDeps/tools/l10nUtil.exe uploadSourceFile output/nvda.pot
 
   createLauncher:
     name: Create launcher
     runs-on: ${{ needs.matrix.outputs.defaultRunner }}
     needs: [matrix, buildNVDA]
-    timeout-minutes: 35
+    timeout-minutes: 45
     permissions:
       contents: read
       actions: write

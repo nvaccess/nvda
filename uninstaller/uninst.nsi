@@ -1,3 +1,7 @@
+!ifdef SIGNED_NSIS_PLUGINS
+!addplugindir "${SIGNED_NSIS_PLUGINS}"
+!endif
+
 !include "MUI2.nsh"
 
 !define appName "NVDA"
@@ -65,6 +69,10 @@ SectionEnd
 !insertmacro MUI_LANGUAGE "Bulgarian"
 !insertmacro MUI_LANGUAGE "Norwegian"
 !insertmacro MUI_LANGUAGE "NorwegianNynorsk"
+
+!ifdef SIGNED_NSIS_PLUGINS
+ReserveFile "${SIGNED_NSIS_PLUGINS}\System.dll"
+!endif
 
 Function un.onInit
 ; Get the locale language ID from kernel32.dll and dynamically change language of the installer

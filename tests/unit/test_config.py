@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter, Andrew Johnson
+# Copyright (C) 2022-2026 NV Access Limited, Cyrille Bougot, Leonard de Ruijter, Cary-rowen, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -917,6 +917,7 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		spec = configobj.ConfigObj({"someBool": "boolean(default=True)"})
 		self.baseConfig = configobj.ConfigObj({"someBool": True})
 		self.profile = configobj.ConfigObj()
+		self.profile.name = "test"
 		self.testSection = AggregatedSection(
 			manager=manager,
 			path=(),
@@ -1475,11 +1476,16 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		:return: The error sound setting read for each logged error.
 		"""
 		values: list[int] = []
+		testCase = self
 
 		class ConfigReadingHandler(logging.Handler):
 			def handle(self, record: logging.LogRecord) -> bool:
 				# Errors raised here propagate to the code that logged, as they do from NVDA's file handler.
 				values.append(manager["featureFlag"]["playErrorSound"])
+				# Verify log.exception still captured the config-load exception after loading defaults.
+				testCase.assertIsNotNone(record.exc_info)
+				assert record.exc_info is not None
+				testCase.assertIsNotNone(record.exc_info[1])
 				return True
 
 		handler = ConfigReadingHandler(logging.ERROR)
@@ -1499,7 +1505,10 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		with patch.object(globalVars.appArgs, "launcher", True):
 			manager = ConfigManager()
 		self.assertTrue(manager.baseConfigError)
-		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertIs(
+			manager["general"]["saveConfigurationOnExit"],
+			manager.getConfigValidation(("general", "saveConfigurationOnExit")).default,
+		)
 		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
 		self.assertFalse(os.path.exists(self._backupFile))
 
@@ -1511,9 +1520,15 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 			manager = ConfigManager()
 			errorSoundSettings = self._readConfigOnLoggedErrors(manager)
 			manager.reset()
-		self.assertEqual(errorSoundSettings, [0])
+		self.assertEqual(
+			errorSoundSettings,
+			[manager.getConfigValidation(("featureFlag", "playErrorSound")).default],
+		)
 		self.assertTrue(manager.baseConfigError)
-		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertIs(
+			manager["general"]["saveConfigurationOnExit"],
+			manager.getConfigValidation(("general", "saveConfigurationOnExit")).default,
+		)
 		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
 		self.assertFalse(os.path.exists(self._backupFile))
 
@@ -1522,9 +1537,35 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		with patch.object(globalVars.appArgs, "launcher", False):
 			manager = ConfigManager()
 		self.assertTrue(manager.baseConfigError)
-		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertIs(
+			manager["general"]["saveConfigurationOnExit"],
+			manager.getConfigValidation(("general", "saveConfigurationOnExit")).default,
+		)
 		self.assertFalse(os.path.exists(self._configFile))
 		self.assertEqual(self._readFile(self._backupFile), self._INVALID_CONFIG)
+
+	def test_writableCopy_revertBacksUpConfigFile(self):
+		"""Reverting to an invalid saved configuration in a writable copy loads factory defaults
+		before logging and moves the invalid configuration aside.
+		"""
+		revertedInvalidConfig = "schemaVersion = 100\n[general]\nsaveConfigurationOnExit = stillNotABoolean\n"
+		with patch.object(globalVars.appArgs, "launcher", False):
+			manager = ConfigManager()
+			with open(self._configFile, "w", encoding="utf-8") as f:
+				f.write(revertedInvalidConfig)
+			errorSoundSettings = self._readConfigOnLoggedErrors(manager)
+			manager.reset()
+		self.assertEqual(
+			errorSoundSettings,
+			[manager.getConfigValidation(("featureFlag", "playErrorSound")).default],
+		)
+		self.assertTrue(manager.baseConfigError)
+		self.assertIs(
+			manager["general"]["saveConfigurationOnExit"],
+			manager.getConfigValidation(("general", "saveConfigurationOnExit")).default,
+		)
+		self.assertFalse(os.path.exists(self._configFile))
+		self.assertEqual(self._readFile(self._backupFile), revertedInvalidConfig)
 
 	def test_secureMode_leavesConfigFileUnchanged(self):
 		"""Secure mode, such as on the sign-in screen, never writes to disk,
@@ -1536,6 +1577,9 @@ class Config_initBaseConf_invalidConfig(unittest.TestCase):
 		):
 			manager = ConfigManager()
 		self.assertTrue(manager.baseConfigError)
-		self.assertIs(manager["general"]["saveConfigurationOnExit"], True)
+		self.assertIs(
+			manager["general"]["saveConfigurationOnExit"],
+			manager.getConfigValidation(("general", "saveConfigurationOnExit")).default,
+		)
 		self.assertEqual(self._readFile(self._configFile), self._INVALID_CONFIG)
 		self.assertFalse(os.path.exists(self._backupFile))

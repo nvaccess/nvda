@@ -1,11 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau, Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
+# Copyright (C) 2008-2026 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau, Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt, Cary-rowen
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 from __future__ import annotations  # noqa: I001
 
-import config
 import louisHelper
 from logHandler import log
 
@@ -24,7 +23,6 @@ def initialize():
 	log.info("Using pySerial version %s" % serial.VERSION)  # noqa: UP031
 	handler = _brailleHandler.BrailleHandler()
 	handler.handlePostConfigProfileSwitch()
-	config.post_configProfileSwitch.register(handler.handlePostConfigProfileSwitch)
 
 
 def pumpAll():
