@@ -42,7 +42,7 @@ jobs:
         # Keep in sync with defaultPythonVersion in testAndPublish.yml.
         python-version: '3.13.17'
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
         activate-environment: "false"
@@ -85,7 +85,7 @@ jobs:
     # testAndPublish.yml.
     - name: Lint gate
       if: github.event_name != 'push' || github.repository != 'nvaccess/nvda'
-      uses: j178/prek-action@v3.1.0
+      uses: j178/prek-action@v3.1.1
       with:
         extra-args: >-
           --all-files

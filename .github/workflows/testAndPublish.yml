@@ -105,7 +105,7 @@ jobs:
             architecture: x86
             update-environment: false
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
@@ -173,7 +173,7 @@ jobs:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Static type analysis
@@ -198,7 +198,7 @@ jobs:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Static type analysis
@@ -223,7 +223,7 @@ jobs:
         python-version: ${{ env.defaultPythonVersion }}
         architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Run prek
@@ -261,7 +261,7 @@ jobs:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Check comments for translators
@@ -295,7 +295,7 @@ jobs:
             python-version: ${{ env.defaultPythonVersion }}
             architecture: ${{ env.defaultArch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: License check
@@ -330,7 +330,7 @@ jobs:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
@@ -382,7 +382,7 @@ jobs:
             name: makePot results
             path: output
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Upload translations to Crowdin
@@ -424,7 +424,7 @@ jobs:
             python-version: ${{ matrix.pythonVersion }}
             architecture: ${{ matrix.arch }}
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
         python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
@@ -550,7 +550,7 @@ jobs:
         path: output
     - parallel:
         - name: Install the latest version of uv
-          uses: astral-sh/setup-uv@v10.3.3
+          uses: astral-sh/setup-uv@v10.4.0
           with:
             prune-cache: true
             python-version: cpython-${{ matrix.pythonVersion }}-windows-${{ env.uv-arch }}-none
@@ -669,7 +669,7 @@ jobs:
             curl -L -o dump_syms.zip https://github.com/mozilla/dump_syms/releases/download/v2.3.5/dump_syms-x86_64-pc-windows-msvc.zip
             7z x dump_syms.zip dump_syms.exe
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Upload symbols to Mozilla

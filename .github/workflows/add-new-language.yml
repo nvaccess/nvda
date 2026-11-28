@@ -36,7 +36,7 @@ jobs:
         python-version: '3.13.17'
 
     - name: setup uv
-      uses: astral-sh/setup-uv@v10.3.3
+      uses: astral-sh/setup-uv@v10.4.0
       with:
         prune-cache: true
     - name: Download l10nUtil.exe
