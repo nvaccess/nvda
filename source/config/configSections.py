@@ -5,10 +5,10 @@
 
 
 import yaml  # noqa: I001
-from configobj.validate import Validator,  VdtParamError, VdtUnknownCheckError, ValidateError
+from configobj.validate import Validator, VdtParamError, VdtUnknownCheckError, ValidateError
 from typing import Any
 
-import globalVars  # noqa: I001
+import globalVars
 from .configSpec import confspec
 from logHandler import log
 from NVDAState import shouldWriteToDisk, WritePaths
@@ -57,6 +57,7 @@ def _loadCustomSections() -> None:
 		isBaseOnly = bool(entry.get("isBaseOnly", False))
 		_addSection(name, entry["spec"], isBaseOnly)
 
+
 def _isValidSpec(spec: dict) -> bool:
 	"""Check if the given spec is valid.
 
@@ -78,6 +79,7 @@ def _isValidSpec(spec: dict) -> bool:
 			except ValidateError:
 				pass  # Syntax is valid; the empty value just failed the check.
 	return True
+
 
 def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
 	"""Add a section to the configuration.
