@@ -108,6 +108,8 @@ def registerSection(
 		log.debugWarning(f"Registering custom section {sectionName!r} that is already registered.")
 	if not isinstance(sectionSpec, dict):
 		raise TypeError(f"sectionSpec for {sectionName!r} must be a dict.")
+	if not _isValidSpec(sectionSpec):
+		raise ValueError(f"sectionSpec for {sectionName!r} is not valid.")
 	_customSections[sectionName] = {"spec": sectionSpec, "isBaseOnly": isBaseOnly}
 	_saveCustomSections()
 
