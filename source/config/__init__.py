@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2026 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot, Cary-rowen
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot, Cary-rowen, Andrew Johnson
 # This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
@@ -568,23 +568,30 @@ class ConfigManager:
 				profile = self._loadConfig(fn)  # a blank config returned if fn does not exist
 				self.baseConfigError = False
 			except:  # noqa: E722
-				backupFileName = fn + ".corrupted.bak"
-				log.error(  # noqa: G201
-					"Error loading base configuration; the base configuration file will be reinitialized."
-					f" A copy of your previous configuration file will be saved at {backupFileName}",
-					exc_info=True,
-				)
-				try:
-					if os.path.exists(backupFileName):
-						os.unlink(backupFileName)
-					os.rename(fn, backupFileName)
-				except Exception:
-					log.error(  # noqa: G201
-						f"Unable to save a copy of the corrupted configuration to {backupFileName}",
-						exc_info=True,
-					)
 				self.baseConfigError = True
-				return self._initBaseConf(factoryDefaults=True)
+				# Load factory defaults before logging, as handling a logged error reads the configuration,
+				# which is empty while it is being reset.
+				self._initBaseConf(factoryDefaults=True)
+				if NVDAState.shouldWriteToDisk():
+					backupFileName = fn + ".corrupted.bak"
+					log.exception(
+						"Error loading base configuration; the base configuration file will be reinitialized."
+						f" A copy of your previous configuration file will be saved at {backupFileName}",
+					)
+					try:
+						if os.path.exists(backupFileName):
+							os.unlink(backupFileName)
+						os.rename(fn, backupFileName)
+					except Exception:
+						log.exception(
+							f"Unable to save a copy of the corrupted configuration to {backupFileName}",
+						)
+				else:
+					log.exception(
+						"Error loading base configuration; using factory defaults."
+						" The configuration file has not been changed.",
+					)
+				return
 
 		for key in self.BASE_ONLY_SECTIONS:
 			# These sections are returned directly from the base config, so validate them here.
