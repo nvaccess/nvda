@@ -5,8 +5,10 @@
 
 
 import yaml  # noqa: I001
+from configobj.validate import Validator,  VdtParamError, VdtUnknownCheckError, ValidateError
 from typing import Any
 
+import globalVars  # noqa: I001
 from .configSpec import confspec
 from logHandler import log
 from NVDAState import shouldWriteToDisk, WritePaths
@@ -17,6 +19,9 @@ _customSections: dict[str, dict[str, Any]] = {}
 
 def _loadCustomSections() -> None:
 	"""Add registered customSections to the configuration."""
+	if globalVars.appArgs.disableAddons:
+		return
+
 	path = WritePaths.nvdaCustomSectionsFile
 	try:
 		with open(path, encoding="utf-8") as _f:
@@ -46,9 +51,33 @@ def _loadCustomSections() -> None:
 		if not isinstance(entry["spec"], dict):
 			log.debugWarning(f"Custom section {name} has a non-mapping spec; skipping.")
 			continue
+		if not _isValidSpec(entry["spec"]):
+			log.debugWarning(f"Custom section {name} has an invalid spec; skipping.")
+			continue
 		isBaseOnly = bool(entry.get("isBaseOnly", False))
 		_addSection(name, entry["spec"], isBaseOnly)
 
+def _isValidSpec(spec: dict) -> bool:
+	"""Check if the given spec is valid.
+
+	:param spec: The spec dictionary to validate.
+	:return: True if the spec is valid, False otherwise.
+	"""
+	validator = Validator()
+	for value in spec.values():
+		if isinstance(value, dict):
+			if not _isValidSpec(value):
+				return False
+		elif not isinstance(value, str):
+			return False
+		else:
+			try:
+				validator.check(value, "")
+			except (VdtUnknownCheckError, VdtParamError):
+				return False
+			except ValidateError:
+				pass  # Syntax is valid; the empty value just failed the check.
+	return True
 
 def _addSection(sectionName: str, sectionSpec: dict[str, Any], isBaseOnly: bool = False):
 	"""Add a section to the configuration.
